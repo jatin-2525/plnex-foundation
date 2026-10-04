@@ -10,6 +10,7 @@ import { Drawer } from '../../components/shared/Drawer';
 import { ProgressBar } from '../../components/shared/ProgressBar';
 import { ConfidenceBadge } from '../../components/shared/ConfidenceBadge';
 import { MatchExplanation } from '../../components/shared/MatchExplanation';
+import { WhyButton } from '../../components/shared/WhyButton';
 import { DisciplineType } from '../../types';
 import {
   Layers,
@@ -451,7 +452,7 @@ const MOCK_INTELLIGENCE_EVENTS: ExecutionIntelligenceEvent[] = [
 ];
 
 export default function ExecutionIntelligencePage() {
-  const { activeProject, openActivityDrawer } = useApp();
+  const { activeProject, openActivityDrawer, openWhyExplanation } = useApp();
   const { addToast } = useToast();
 
   const [events, setEvents] = useState<ExecutionIntelligenceEvent[]>(MOCK_INTELLIGENCE_EVENTS);
@@ -946,23 +947,18 @@ export default function ExecutionIntelligencePage() {
               <thead>
                 <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[11px] font-bold uppercase tracking-wider text-[#596579]">
                   <th className="p-3.5 whitespace-nowrap">Event ID</th>
-                  <th className="p-3.5 whitespace-nowrap">Source</th>
-                  <th className="p-3.5 min-w-[220px]">Field Statement</th>
-                  <th className="p-3.5 whitespace-nowrap text-right">Qty</th>
-                  <th className="p-3.5 whitespace-nowrap">Unit</th>
-                  <th className="p-3.5 whitespace-nowrap">Area / Line</th>
-                  <th className="p-3.5 whitespace-nowrap">Discipline</th>
-                  <th className="p-3.5 min-w-[180px]">Candidate Activity</th>
-                  <th className="p-3.5 whitespace-nowrap text-center">Confidence</th>
-                  <th className="p-3.5 whitespace-nowrap text-center">Evidence</th>
+                  <th className="p-3.5 min-w-[280px]">Field Statement</th>
+                  <th className="p-3.5 min-w-[200px]">Activity</th>
+                  <th className="p-3.5 whitespace-nowrap">Confidence</th>
                   <th className="p-3.5 whitespace-nowrap">Status</th>
-                  <th className="p-3.5 whitespace-nowrap">Created At</th>
+                  <th className="p-3.5 whitespace-nowrap">Date</th>
+                  <th className="p-3.5 whitespace-nowrap text-right">Action</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-[#D9DEE5]">
                 {filteredEvents.length === 0 ? (
                   <tr>
-                    <td colSpan={12} className="p-8 text-center text-[#596579]">
+                    <td colSpan={7} className="p-8 text-center text-[#596579]">
                       <HelpCircle className="w-8 h-8 text-[#8A94A6] mx-auto mb-2" />
                       <p className="font-semibold text-sm text-[#172033]">No execution events match your filters</p>
                       <p className="text-xs text-[#8A94A6] mt-0.5">Try resetting search query or status filters.</p>
@@ -996,77 +992,32 @@ export default function ExecutionIntelligencePage() {
                           {evt.id}
                         </td>
 
-                        {/* 2. Source */}
-                        <td className="p-3.5 whitespace-nowrap">
-                          <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-[#F0F2F5] text-[#596579] border border-[#D9DEE5]">
-                            {evt.source === 'DPR_PDF' && <FileText className="w-3 h-3 text-[#176B87]" />}
-                            {evt.source === 'VOICE_AGENT' && <Mic className="w-3 h-3 text-[#D98B32]" />}
-                            {evt.source === 'FIELD_QUICK_FORM' && <Sparkles className="w-3 h-3 text-[#176B87]" />}
-                            {evt.source === 'EXCEL_SHEET' && <FileSpreadsheet className="w-3 h-3 text-[#2E7D5B]" />}
-                            {evt.source === 'SITE_DIARY' && <Edit3 className="w-3 h-3 text-[#596579]" />}
-                            <span>{evt.source}</span>
-                          </span>
-                        </td>
-
-                        {/* 3. Field Statement */}
-                        <td className="p-3.5 text-[#172033] max-w-[260px]">
-                          <p className="truncate font-medium" title={evt.rawFieldStatement}>
+                        {/* 2. Field Statement (clean primary text) */}
+                        <td className="p-3.5 text-[#172033] max-w-[320px]">
+                          <p className="font-medium line-clamp-2" title={evt.rawFieldStatement}>
                             {evt.rawFieldStatement}
                           </p>
-                        </td>
-
-                        {/* 4. Extracted Quantity */}
-                        <td className="p-3.5 whitespace-nowrap text-right font-mono font-bold text-[#172033]">
-                          {evt.extractedQuantity}
-                        </td>
-
-                        {/* 5. Unit */}
-                        <td className="p-3.5 whitespace-nowrap text-[#596579] font-medium">
-                          {evt.unit}
-                        </td>
-
-                        {/* 6. Area / Line */}
-                        <td className="p-3.5 whitespace-nowrap text-[#596579]">
-                          <span className="font-semibold text-[#172033] block truncate max-w-[140px]">
-                            {evt.area}
-                          </span>
-                          {evt.line && (
-                            <span className="text-[10px] text-[#8A94A6] font-mono block">
-                              {evt.line}
-                            </span>
-                          )}
-                        </td>
-
-                        {/* 7. Discipline */}
-                        <td className="p-3.5 whitespace-nowrap">
-                          <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-[#F0F2F5] text-[#596579]">
-                            {evt.discipline}
+                          <span className="text-[10px] text-[#8A94A6] font-mono mt-0.5 inline-block">
+                            Source: {evt.source} • {evt.discipline}
                           </span>
                         </td>
 
-                        {/* 8. Candidate Activity */}
-                        <td className="p-3.5 max-w-[200px]">
+                        {/* 3. Candidate Activity */}
+                        <td className="p-3.5 max-w-[220px]">
                           {evt.candidateActivityId ? (
                             <div>
-                              <div className="flex items-center gap-1.5">
-                                <button
-                                  type="button"
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    openActivityDrawer(evt.candidateActivityId!);
-                                  }}
-                                  className="font-mono font-bold text-[#176B87] hover:underline inline-flex items-center gap-1 text-left"
-                                  title="Open Activity Detail Drawer"
-                                >
-                                  <span>{evt.candidateActivityId}</span>
-                                  <ArrowUpRight className="w-3 h-3 text-[#176B87]" />
-                                </button>
-                                {evt.candidateWbs && (
-                                  <span className="text-[10px] font-mono text-[#8A94A6]">
-                                    WBS {evt.candidateWbs}
-                                  </span>
-                                )}
-                              </div>
+                              <button
+                                type="button"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  openActivityDrawer(evt.candidateActivityId!);
+                                }}
+                                className="font-mono font-bold text-[#176B87] hover:underline inline-flex items-center gap-1 text-left"
+                                title="Open Activity Detail Drawer"
+                              >
+                                <span>{evt.candidateActivityId}</span>
+                                <ArrowUpRight className="w-3 h-3 text-[#176B87]" />
+                              </button>
                               <p className="text-[11px] text-[#596579] truncate" title={evt.candidateActivityName || ''}>
                                 {evt.candidateActivityName}
                               </p>
@@ -1078,24 +1029,20 @@ export default function ExecutionIntelligencePage() {
                           )}
                         </td>
 
-                        {/* 9. Confidence */}
-                        <td className="p-3.5 whitespace-nowrap text-center">
-                          <ConfidenceBadge score={evt.confidence} size="sm" />
+                        {/* 4. Confidence (with transparent Why? explanation trigger) */}
+                        <td className="p-3.5 whitespace-nowrap">
+                          <div className="flex items-center gap-1.5">
+                            <ConfidenceBadge score={evt.confidence} size="sm" />
+                            <WhyButton
+                              onClick={() =>
+                                openWhyExplanation(`confidence:${evt.id}`, evt.id)
+                              }
+                              title="Why is this match confidence computed?"
+                            />
+                          </div>
                         </td>
 
-                        {/* 10. Evidence */}
-                        <td className="p-3.5 whitespace-nowrap text-center">
-                          {evt.evidenceCount > 0 ? (
-                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-mono bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]">
-                              <Camera className="w-3 h-3" />
-                              <span>{evt.evidenceCount}</span>
-                            </span>
-                          ) : (
-                            <span className="text-[11px] text-[#8A94A6]">—</span>
-                          )}
-                        </td>
-
-                        {/* 11. Status */}
+                        {/* 5. Status */}
                         <td className="p-3.5 whitespace-nowrap">
                           <span
                             className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded text-[11px] font-bold border ${statusBadge.bg} ${statusBadge.border} ${statusBadge.text}`}
@@ -1105,9 +1052,41 @@ export default function ExecutionIntelligencePage() {
                           </span>
                         </td>
 
-                        {/* 12. Created At */}
-                        <td className="p-3.5 whitespace-nowrap text-[#8A94A6] font-mono text-[11px]">
+                        {/* 6. Date */}
+                        <td className="p-3.5 whitespace-nowrap text-[#596579] font-mono text-[11px]">
                           {evt.createdAt}
+                        </td>
+
+                        {/* 7. Action (Primary: Review Match | Secondary: Inspect Details) */}
+                        <td className="p-3.5 whitespace-nowrap text-right">
+                          <div className="flex items-center justify-end gap-1.5">
+                            {evt.status === 'Needs Review' ? (
+                              <button
+                                type="button"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setSelectedEventForDrawer(evt);
+                                }}
+                                className="px-2.5 py-1 text-xs font-semibold text-white bg-[#176B87] hover:bg-[#12546A] rounded transition-colors inline-flex items-center gap-1 shadow-2xs"
+                                title="Review match and confirm activity assignment"
+                              >
+                                <span>Review Match</span>
+                              </button>
+                            ) : (
+                              <button
+                                type="button"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setSelectedEventForDrawer(evt);
+                                }}
+                                className="px-2 py-1 text-xs font-medium text-[#596579] hover:text-[#172033] hover:bg-[#F0F2F5] border border-[#D9DEE5] rounded transition-colors inline-flex items-center gap-1"
+                                title="Inspect extraction breakdown and evidence"
+                              >
+                                <Eye className="w-3.5 h-3.5 text-[#8A94A6]" />
+                                <span>Inspect</span>
+                              </button>
+                            )}
+                          </div>
                         </td>
                       </tr>
                     );

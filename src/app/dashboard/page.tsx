@@ -13,6 +13,7 @@ import { VarianceBadge } from '../../components/shared/VarianceBadge';
 import { ProgressBar } from '../../components/shared/ProgressBar';
 import { Modal } from '../../components/shared/Modal';
 import { ConfirmationDialog } from '../../components/shared/ConfirmationDialog';
+import { WhyButton } from '../../components/shared/WhyButton';
 import { projectService } from '../../lib/api/projectService';
 import {
   MOCK_ACTIVITIES,
@@ -41,10 +42,11 @@ import {
   Info,
   Calendar,
   ExternalLink,
+  Sparkles,
 } from 'lucide-react';
 
 export default function ManagerDashboardPage() {
-  const { activeProject } = useApp();
+  const { activeProject, openActivityDrawer, openWhyExplanation } = useApp();
   const { addToast } = useToast();
 
   const [reviewEvents, setReviewEvents] = useState<ExecutionEvent[]>(
@@ -147,51 +149,117 @@ export default function ManagerDashboardPage() {
       />
 
       <StateWrapper>
-        {/* Core Manager Focus: "What needs my attention now?" */}
-        <div className="bg-[#FDF6ED] border border-[#F0D4A6] rounded-lg p-4">
-          <div className="flex items-start gap-3">
-            <div className="w-8 h-8 rounded-md bg-[#D98B32] text-white flex items-center justify-center flex-shrink-0 mt-0.5">
-              <AlertTriangle className="w-4 h-4" />
+        {/* =========================================================================
+            PROGRESSIVE DISCLOSURE EXECUTIVE PANEL (Priority 3 Requirement 6):
+            1. What happened?
+            2. What changed?
+            3. What needs attention?
+            4. What should I do?
+            ========================================================================= */}
+        <div className="bg-white border border-[#D9DEE5] rounded-xl p-5 shadow-xs space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#E8EBF0] pb-3">
+            <div>
+              <span className="text-[10px] uppercase font-bold text-[#8A94A6] tracking-wider">
+                Progressive Operational Brief
+              </span>
+              <h2 className="text-sm font-bold text-[#172033]">
+                Daily Project Controls Overview • 18 Sep 2026 Cutoff
+              </h2>
             </div>
-            <div className="flex-1 min-w-0">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-1">
-                <h3 className="text-sm font-bold text-[#172033]">
-                  What Needs My Attention Now? (2 Critical Items)
-                </h3>
-                <span className="text-[11px] font-mono text-[#D98B32] font-semibold">
-                  Action Required Today
-                </span>
+            <span className="px-2.5 py-0.5 rounded bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0] text-[10px] font-mono font-bold">
+              Baseline: {CANONICAL_SCHEDULE_VERSION_LABEL}
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 text-xs">
+            {/* 1. What Happened? */}
+            <div className="p-3.5 rounded-lg bg-[#F7F8FA] border border-[#D9DEE5] space-y-2">
+              <div className="flex items-center gap-1.5 font-bold text-[#172033]">
+                <CheckCircle2 className="w-4 h-4 text-[#2E7D5B]" />
+                <span>What Happened?</span>
               </div>
-              <p className="text-xs text-[#596579] leading-relaxed mb-3">
-                Immediate schedule intervention needed on <strong>Line 24-XX</strong> critical path delay, and <strong>2 field progress records</strong> await planner verification before baseline synchronizations can commit.
+              <p className="text-[11px] text-[#596579] leading-relaxed">
+                Foundations completed at <strong>100%</strong>. 12 pipe spools erected on Line 24. 4 field joint welds finished and verified in today&apos;s shift log.
               </p>
+              <div className="pt-1 border-t border-[#D9DEE5]/60 flex items-center justify-between text-[10px]">
+                <span className="font-mono text-[#2E7D5B] font-bold">16 Units Verified</span>
+                <Link href="/execution" className="text-[#176B87] hover:underline font-semibold">
+                  Events &rarr;
+                </Link>
+              </div>
+            </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs">
-                <div className="p-2.5 bg-white border border-[#F0D4A6] rounded flex items-center justify-between">
-                  <div>
-                    <span className="font-bold text-[#B5473C] font-mono">1. Critical Path Slip: PIP-24-001</span>
-                    <p className="text-[11px] text-[#596579]">Line 24-XX header slip (+2d) delays downstream hydro-test.</p>
-                  </div>
-                  <a
-                    href="#delay-impact"
-                    className="ml-2 px-2.5 py-1 bg-[#176B87] text-white text-[11px] font-semibold rounded hover:bg-[#135A72] whitespace-nowrap"
-                  >
-                    View Delay Chain
-                  </a>
+            {/* 2. What Changed? */}
+            <div className="p-3.5 rounded-lg bg-[#FEF7EE] border border-[#ECD1A4] space-y-2">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-1.5 font-bold text-[#9A5B13]">
+                  <TrendingDown className="w-4 h-4 text-[#9A5B13]" />
+                  <span>What Changed?</span>
                 </div>
+                <WhyButton
+                  onClick={() => openWhyExplanation('variance:portfolio')}
+                  title="Why did variance change?"
+                />
+              </div>
+              <p className="text-[11px] text-[#596579] leading-relaxed">
+                Line 24-XX welding slipped <strong>+2 days</strong> against P6 baseline. Overall schedule variance widened to <strong>-7.0%</strong> (-15% on critical path).
+              </p>
+              <div className="pt-1 border-t border-[#ECD1A4]/60 flex items-center justify-between text-[10px]">
+                <span className="font-mono text-[#B5473C] font-bold">+2d Slip</span>
+                <Link href="/progress" className="text-[#176B87] hover:underline font-semibold">
+                  Variance &rarr;
+                </Link>
+              </div>
+            </div>
 
-                <div className="p-2.5 bg-white border border-[#F0D4A6] rounded flex items-center justify-between">
-                  <div>
-                    <span className="font-bold text-[#D98B32] font-mono">2. Review Queue: {reviewEvents.length} Events</span>
-                    <p className="text-[11px] text-[#596579]">Line 24 spool welding (86% conf) & drain pipe (47% conf).</p>
-                  </div>
-                  <a
-                    href="#review-required"
-                    className="ml-2 px-2.5 py-1 bg-[#176B87] text-white text-[11px] font-semibold rounded hover:bg-[#135A72] whitespace-nowrap"
-                  >
-                    Resolve Matches
-                  </a>
+            {/* 3. What Needs Attention? */}
+            <div className="p-3.5 rounded-lg bg-[#FDF6ED] border border-[#F0D4A6] space-y-2">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-1.5 font-bold text-[#D98B32]">
+                  <AlertTriangle className="w-4 h-4 text-[#D98B32]" />
+                  <span>What Needs Attention?</span>
                 </div>
+                <WhyButton
+                  onClick={() => openWhyExplanation('delay:PIP-24-002')}
+                  title="Why does this need attention?"
+                />
+              </div>
+              <p className="text-[11px] text-[#596579] leading-relaxed">
+                <strong>Critical Path PIP-24-001</strong> delay threatens hydro-test start date. <strong>{reviewEvents.length} field records</strong> in Review Queue await planner match confirmation.
+              </p>
+              <div className="pt-1 border-t border-[#F0D4A6]/60 flex items-center justify-between text-[10px]">
+                <span className="font-mono text-[#D98B32] font-bold">2 Priority Alerts</span>
+                <Link href="/risks" className="text-[#176B87] hover:underline font-semibold">
+                  Delay Chain &rarr;
+                </Link>
+              </div>
+            </div>
+
+            {/* 4. What Should I Do? */}
+            <div className="p-3.5 rounded-lg bg-[#EDF7F2] border border-[#B8DCC9] space-y-2 flex flex-col justify-between">
+              <div>
+                <div className="flex items-center gap-1.5 font-bold text-[#2E7D5B]">
+                  <Sparkles className="w-4 h-4 text-[#2E7D5B]" />
+                  <span>What Should I Do?</span>
+                </div>
+                <p className="text-[11px] text-[#596579] leading-relaxed mt-1">
+                  Reconcile the {reviewEvents.length} pending field matches, and run a What-If simulation to absorb the 2-day slip.
+                </p>
+              </div>
+              <div className="pt-2 flex flex-col gap-1.5">
+                {/* PRIMARY ACTIONS */}
+                <Link
+                  href="/review"
+                  className="w-full py-1.5 px-2 bg-[#176B87] hover:bg-[#135A72] text-white text-[11px] font-bold rounded shadow-xs text-center transition-colors block"
+                >
+                  Approve Review Queue ({reviewEvents.length})
+                </Link>
+                <Link
+                  href="/what-if"
+                  className="w-full py-1 px-2 bg-white hover:bg-[#F0F2F5] text-[#172033] border border-[#D9DEE5] text-[10px] font-semibold rounded text-center transition-colors block"
+                >
+                  Run What-If Simulation
+                </Link>
               </div>
             </div>
           </div>
@@ -206,13 +274,13 @@ export default function ManagerDashboardPage() {
             </div>
             <div className="flex items-center gap-2">
               <Link
-                href="/matching"
+                href="/review"
                 className="px-3 py-1.5 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-semibold rounded shadow-xs transition-colors"
               >
                 Open Full Review Queue ({reviewEvents.length})
               </Link>
               <Link
-                href="/variance"
+                href="/what-if"
                 className="px-3 py-1.5 bg-white hover:bg-[#F0F2F5] text-[#172033] border border-[#D9DEE5] text-xs font-medium rounded transition-colors"
               >
                 What-If Simulator
@@ -229,8 +297,11 @@ export default function ManagerDashboardPage() {
               <span className="text-[10px] text-[#596579]">Baseline Target: {activeProject.plannedProgress}%</span>
             </div>
 
-            <div className="p-3 bg-[#FBEFEE] border border-[#E4B0AA] rounded-md">
-              <span className="text-[11px] font-medium text-[#B5473C] block">Schedule Variance</span>
+            <div className="p-3 bg-[#FBEFEE] border border-[#E4B0AA] rounded-md relative">
+              <div className="flex items-center justify-center gap-1.5">
+                <span className="text-[11px] font-medium text-[#B5473C]">Schedule Variance</span>
+                <WhyButton onClick={() => openWhyExplanation('variance:portfolio')} title="Why is variance -7%?" />
+              </div>
               <span className="text-2xl font-black font-mono text-[#B5473C] mt-0.5 block">
                 {activeProject.variance}%
               </span>
@@ -245,8 +316,11 @@ export default function ManagerDashboardPage() {
               <span className="text-[10px] text-[#596579]">Requires Planner Approval</span>
             </div>
 
-            <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-md">
-              <span className="text-[11px] font-medium text-[#596579] block">Open Critical Risks</span>
+            <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-md relative">
+              <div className="flex items-center justify-center gap-1.5">
+                <span className="text-[11px] font-medium text-[#596579]">Critical Path Delay</span>
+                <WhyButton onClick={() => openWhyExplanation('delay:PIP-24-002')} title="Why is Line 24 delayed?" />
+              </div>
               <span className="text-2xl font-black font-mono text-[#172033] mt-0.5 block">
                 {activeProject.delayedCount}
               </span>

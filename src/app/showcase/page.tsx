@@ -62,6 +62,19 @@ export default function ShowcasePage() {
     { label: 'Design System & Component Showcase', current: true },
   ];
 
+  if (userSession?.role !== 'admin') {
+    return (
+      <div className="space-y-6">
+        <Breadcrumbs items={[{ label: 'System' }, { label: 'Showcase', current: true }]} />
+        <PermissionDenied
+          requiredPermission="role:admin"
+          role={userSession?.role || 'user'}
+          message="The PLnEX Foundation Showcase, component catalog, and design system reference are restricted to administrators. Use the deliberate Admin navigation to access developer tools."
+        />
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-8 pb-12">
       <Breadcrumbs items={breadcrumbs} />

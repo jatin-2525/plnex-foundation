@@ -14,7 +14,7 @@ export interface TopHeaderProps {
 }
 
 export function TopHeader({ onMobileToggle }: TopHeaderProps) {
-  const { setGlobalSearchOpen, activeProject } = useApp();
+  const { setGlobalSearchOpen, activeProject, userSession } = useApp();
 
   return (
     <header className="fixed top-0 left-0 right-0 h-14 bg-white border-b border-[#D9DEE5] z-40 px-3 sm:px-4 flex items-center justify-between gap-3">
@@ -67,13 +67,15 @@ export function TopHeader({ onMobileToggle }: TopHeaderProps) {
 
       {/* Right: Sample Indicator + Cutoff Status + Notifications + User Profile */}
       <div className="flex items-center gap-2 sm:gap-3">
-        {/* Sample Project Indicator */}
-        <span
-          className="hidden xl:inline-flex items-center gap-1 px-2.5 py-1 rounded bg-[#FEF3C7] text-[#92400E] border border-[#FDE68A] text-[10px] font-mono font-bold uppercase tracking-wider"
-          title="This application is displaying sample project data for the Oil India Duliajan asset."
-        >
-          Sample Project Data
-        </span>
+        {/* Sample Project Indicator (Visible only to Admin to keep normal user navigation clean) */}
+        {userSession?.role === 'admin' && (
+          <span
+            className="hidden xl:inline-flex items-center gap-1 px-2.5 py-1 rounded bg-[#FEF3C7] text-[#92400E] border border-[#FDE68A] text-[10px] font-mono font-bold uppercase tracking-wider"
+            title="This application is displaying sample project data for the Oil India Duliajan asset."
+          >
+            Sample Project Data
+          </span>
+        )}
 
         {/* Global Connection Control (Priority 2 Requirement 2) */}
         <ConnectionStatusControl />

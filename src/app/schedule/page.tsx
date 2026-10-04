@@ -12,6 +12,7 @@ import { VarianceBadge } from '../../components/shared/VarianceBadge';
 import { ProgressBar } from '../../components/shared/ProgressBar';
 import { Modal } from '../../components/shared/Modal';
 import { Drawer } from '../../components/shared/Drawer';
+import { WhyButton } from '../../components/shared/WhyButton';
 import { ScheduleActivity, WBSLevel, DisciplineType } from '../../types';
 import {
   Upload,
@@ -528,8 +529,11 @@ const DEFAULT_VERSIONS: ScheduleVersionItem[] = [
 ];
 
 export default function SchedulePage() {
-  const { activeProject, openActivityDrawer } = useApp();
+  const { activeProject, openActivityDrawer, openWhyExplanation, userSession } = useApp();
   const { addToast } = useToast();
+
+  // Progressive Disclosure: Operational view (8 cols) vs Detailed Full P6 Matrix (14 cols)
+  const [viewMode, setViewMode] = useState<'operational' | 'detailed'>('operational');
 
   // Versions State
   const [versions, setVersions] = useState<ScheduleVersionItem[]>(DEFAULT_VERSIONS);
@@ -861,19 +865,21 @@ export default function SchedulePage() {
                 <span>Import Schedule</span>
               </button>
 
-              {/* Demo Mode Toggle: Simulate Empty State */}
-              <button
-                type="button"
-                onClick={() => setIsSimulatedEmpty(!isSimulatedEmpty)}
-                className={`px-2.5 py-2 text-xs rounded-md border transition-colors ${
-                  isSimulatedEmpty
-                    ? 'bg-[#B5473C] text-white border-[#B5473C]'
-                    : 'bg-white text-[#596579] border-[#D9DEE5] hover:bg-[#F0F2F5]'
-                }`}
-                title="Toggle demonstration of empty schedule state"
-              >
-                {isSimulatedEmpty ? 'Reset Schedule' : 'Test Empty State'}
-              </button>
+              {/* Demo Mode Toggle: Simulate Empty State (Admin Only) */}
+              {userSession?.role === 'admin' && (
+                <button
+                  type="button"
+                  onClick={() => setIsSimulatedEmpty(!isSimulatedEmpty)}
+                  className={`px-2.5 py-2 text-xs rounded-md border transition-colors ${
+                    isSimulatedEmpty
+                      ? 'bg-[#B5473C] text-white border-[#B5473C]'
+                      : 'bg-white text-[#596579] border-[#D9DEE5] hover:bg-[#F0F2F5]'
+                  }`}
+                  title="Toggle demonstration of empty schedule state (Admin only)"
+                >
+                  {isSimulatedEmpty ? 'Reset Schedule' : 'Test Empty State'}
+                </button>
+              )}
             </div>
           </div>
         </div>
@@ -1166,8 +1172,8 @@ export default function SchedulePage() {
             </div>
           </div>
 
-          {/* Results count strip */}
-          <div className="flex items-center justify-between text-xs text-[#596579] pt-2 border-t border-[#F0F2F5]">
+          {/* Results count strip & View Mode Toggle */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between text-xs text-[#596579] pt-2 border-t border-[#F0F2F5] gap-2">
             <div className="flex items-center gap-2">
               <span>
                 Showing <strong className="text-[#172033] font-mono">{filteredActivities.length}</strong> of{' '}
@@ -1179,8 +1185,34 @@ export default function SchedulePage() {
                 </span>
               )}
             </div>
-            <div className="text-[11px] text-[#8A94A6]">
-              Primavera P6 XML • Precedence Diagram Method (PDM)
+
+            {/* View Mode Toggle: Progressive Disclosure */}
+            <div className="flex items-center gap-2">
+              <span className="text-[11px] text-[#8A94A6]">View Mode:</span>
+              <div className="inline-flex items-center p-0.5 bg-[#F0F2F5] rounded-md border border-[#D9DEE5]">
+                <button
+                  type="button"
+                  onClick={() => setViewMode('operational')}
+                  className={`px-2.5 py-1 text-xs rounded transition-colors ${
+                    viewMode === 'operational'
+                      ? 'bg-white text-[#172033] font-semibold shadow-xs'
+                      : 'text-[#596579] hover:text-[#172033]'
+                  }`}
+                >
+                  Operational (8 cols)
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setViewMode('detailed')}
+                  className={`px-2.5 py-1 text-xs rounded transition-colors ${
+                    viewMode === 'detailed'
+                      ? 'bg-white text-[#172033] font-semibold shadow-xs'
+                      : 'text-[#596579] hover:text-[#172033]'
+                  }`}
+                >
+                  Full P6 Matrix (14 cols)
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -1226,175 +1258,318 @@ export default function SchedulePage() {
           /* MAIN SCHEDULE DATA TABLE */
           <div className="bg-white border border-[#D9DEE5] rounded-lg overflow-hidden">
             <div className="overflow-x-auto">
-              <table className="w-full text-left text-xs border-collapse">
-                <thead>
-                  <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[#596579] font-medium">
-                    <th className="py-3 px-3 whitespace-nowrap">Activity ID</th>
-                    <th className="py-3 px-3 whitespace-nowrap min-w-[220px]">Activity Name</th>
-                    <th className="py-3 px-2 text-center whitespace-nowrap">Level</th>
-                    <th className="py-3 px-3 whitespace-nowrap">WBS</th>
-                    <th className="py-3 px-3 whitespace-nowrap">Area</th>
-                    <th className="py-3 px-3 whitespace-nowrap">Discipline</th>
-                    <th className="py-3 px-3 whitespace-nowrap">Planned Start</th>
-                    <th className="py-3 px-3 whitespace-nowrap">Planned Finish</th>
-                    <th className="py-3 px-3 whitespace-nowrap">Actual Start</th>
-                    <th className="py-3 px-3 whitespace-nowrap">Actual Finish</th>
-                    <th className="py-3 px-3 whitespace-nowrap min-w-[140px]">Progress</th>
-                    <th className="py-3 px-3 whitespace-nowrap">Status</th>
-                    <th className="py-3 px-3 whitespace-nowrap">Variance</th>
-                    <th className="py-3 px-3 whitespace-nowrap min-w-[180px]">Dependencies</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-[#E8EBF0]">
-                  {filteredActivities.map((row) => {
-                    const levelColors: Record<WBSLevel, { bg: string; text: string; border: string }> = {
-                      L1: { bg: 'bg-[#176B87]/10', text: 'text-[#176B87]', border: 'border-[#176B87]/30' },
-                      L2: { bg: 'bg-[#3B6EA8]/10', text: 'text-[#3B6EA8]', border: 'border-[#3B6EA8]/30' },
-                      L3: { bg: 'bg-[#2E7D5B]/10', text: 'text-[#2E7D5B]', border: 'border-[#2E7D5B]/30' },
-                      L4: { bg: 'bg-[#D98B32]/10', text: 'text-[#D98B32]', border: 'border-[#D98B32]/30' },
-                      L5: { bg: 'bg-[#8A94A6]/10', text: 'text-[#172033]', border: 'border-[#8A94A6]/30' },
-                      L6: { bg: 'bg-[#F0F2F5]', text: 'text-[#596579]', border: 'border-[#D9DEE5]' },
-                    };
-                    const badge = levelColors[row.wbsLevel] || levelColors.L5;
-
-                    return (
-                      <tr
-                        key={row.id}
-                        onClick={() => {
-                          setActiveActivity(row);
-                          openActivityDrawer(row.id);
-                        }}
-                        className="hover:bg-[#F9FAFC] cursor-pointer transition-colors group"
-                      >
-                        {/* 1. Activity ID */}
-                        <td className="py-3 px-3 align-middle whitespace-nowrap">
-                          <span className="font-mono font-bold text-[#176B87] group-hover:underline">
-                            {row.id}
-                          </span>
-                        </td>
-
-                        {/* 2. Activity Name */}
-                        <td className="py-3 px-3 align-middle">
-                          <div className="flex items-center gap-1.5">
-                            <span className="font-semibold text-[#172033] group-hover:text-[#176B87] transition-colors">
-                              {row.name}
+              {viewMode === 'operational' ? (
+                /* 8-COLUMN OPERATIONAL CLEAN VIEW */
+                <table className="w-full text-left text-xs border-collapse">
+                  <thead>
+                    <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[#596579] font-medium">
+                      <th className="py-3 px-3.5 whitespace-nowrap">Activity ID</th>
+                      <th className="py-3 px-3.5 whitespace-nowrap min-w-[220px]">Activity</th>
+                      <th className="py-3 px-3.5 whitespace-nowrap">Area</th>
+                      <th className="py-3 px-3.5 whitespace-nowrap">Discipline</th>
+                      <th className="py-3 px-3.5 whitespace-nowrap min-w-[140px]">Progress</th>
+                      <th className="py-3 px-3.5 whitespace-nowrap">Variance</th>
+                      <th className="py-3 px-3.5 whitespace-nowrap">Status</th>
+                      <th className="py-3 px-3.5 whitespace-nowrap text-right">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-[#E8EBF0]">
+                    {filteredActivities.map((row) => {
+                      const isSlipped = row.delayDays > 0;
+                      return (
+                        <tr
+                          key={row.id}
+                          onClick={() => {
+                            setActiveActivity(row);
+                            openActivityDrawer(row.id);
+                          }}
+                          className="hover:bg-[#F9FAFC] cursor-pointer transition-colors group"
+                        >
+                          {/* 1. Activity ID */}
+                          <td className="py-3 px-3.5 align-middle whitespace-nowrap">
+                            <span className="font-mono font-bold text-[#176B87] group-hover:underline">
+                              {row.id}
                             </span>
-                            {row.isCritical && (
-                              <span className="text-[10px] font-mono text-[#B5473C] bg-[#FBEFEE] border border-[#E4B0AA] px-1 py-0.2 rounded font-bold flex-shrink-0">
-                                CRITICAL
+                          </td>
+
+                          {/* 2. Activity */}
+                          <td className="py-3 px-3.5 align-middle">
+                            <div className="flex items-center gap-1.5">
+                              <span className="font-semibold text-[#172033] group-hover:text-[#176B87] transition-colors">
+                                {row.name}
                               </span>
-                            )}
-                          </div>
-                        </td>
-
-                        {/* 3. Level */}
-                        <td className="py-3 px-2 align-middle text-center whitespace-nowrap">
-                          <span
-                            className={`font-mono text-[10px] px-1.5 py-0.5 rounded border font-bold ${badge.bg} ${badge.text} ${badge.border}`}
-                          >
-                            {row.wbsLevel}
-                          </span>
-                        </td>
-
-                        {/* 4. WBS */}
-                        <td className="py-3 px-3 align-middle whitespace-nowrap">
-                          <span className="font-mono text-xs text-[#596579] font-medium">
-                            {row.wbs}
-                          </span>
-                        </td>
-
-                        {/* 5. Area */}
-                        <td className="py-3 px-3 align-middle whitespace-nowrap text-[#596579]">
-                          {row.area}
-                        </td>
-
-                        {/* 6. Discipline */}
-                        <td className="py-3 px-3 align-middle whitespace-nowrap">
-                          <span className="px-2 py-0.5 bg-[#F0F2F5] border border-[#D9DEE5] rounded text-[11px] text-[#172033] font-medium">
-                            {row.discipline}
-                          </span>
-                        </td>
-
-                        {/* 7. Planned Start */}
-                        <td className="py-3 px-3 align-middle whitespace-nowrap font-mono text-[11px] text-[#596579]">
-                          {row.plannedStart}
-                        </td>
-
-                        {/* 8. Planned Finish */}
-                        <td className="py-3 px-3 align-middle whitespace-nowrap font-mono text-[11px] text-[#172033] font-medium">
-                          {row.plannedFinish}
-                        </td>
-
-                        {/* 9. Actual Start */}
-                        <td className="py-3 px-3 align-middle whitespace-nowrap font-mono text-[11px]">
-                          {row.actualStart ? (
-                            <span className="text-[#172033]">{row.actualStart}</span>
-                          ) : (
-                            <span className="text-[#8A94A6] italic">-</span>
-                          )}
-                        </td>
-
-                        {/* 10. Actual Finish */}
-                        <td className="py-3 px-3 align-middle whitespace-nowrap font-mono text-[11px]">
-                          {row.actualFinish ? (
-                            <span className="text-[#2E7D5B] font-semibold">{row.actualFinish}</span>
-                          ) : row.actualStart ? (
-                            <span className="text-[#176B87] italic">In Progress</span>
-                          ) : (
-                            <span className="text-[#8A94A6] italic">-</span>
-                          )}
-                        </td>
-
-                        {/* 11. Progress */}
-                        <td className="py-3 px-3 align-middle">
-                          <div className="space-y-1">
-                            <div className="flex items-center justify-between text-[11px] font-mono">
-                              <span className="font-bold text-[#172033]">{row.actualProgress}%</span>
-                              <span className="text-[#596579]">T: {row.plannedProgress}%</span>
+                              {row.isCritical && (
+                                <span className="text-[10px] font-mono text-[#B5473C] bg-[#FBEFEE] border border-[#E4B0AA] px-1 py-0.2 rounded font-bold flex-shrink-0">
+                                  CRITICAL
+                                </span>
+                              )}
                             </div>
-                            <ProgressBar
-                              actual={row.actualProgress}
-                              planned={row.plannedProgress}
-                              size="sm"
-                              status={row.status}
-                              showLabels={false}
-                            />
-                          </div>
-                        </td>
+                          </td>
 
-                        {/* 12. Status */}
-                        <td className="py-3 px-3 align-middle whitespace-nowrap">
-                          <StatusBadge status={row.status} size="sm" />
-                        </td>
+                          {/* 3. Area */}
+                          <td className="py-3 px-3.5 align-middle whitespace-nowrap text-[#596579]">
+                            {row.area}
+                          </td>
 
-                        {/* 13. Variance */}
-                        <td className="py-3 px-3 align-middle whitespace-nowrap">
-                          <VarianceBadge daysDelay={row.delayDays} size="sm" />
-                        </td>
+                          {/* 4. Discipline */}
+                          <td className="py-3 px-3.5 align-middle whitespace-nowrap">
+                            <span className="px-2 py-0.5 bg-[#F0F2F5] border border-[#D9DEE5] rounded text-[11px] text-[#172033] font-medium">
+                              {row.discipline}
+                            </span>
+                          </td>
 
-                        {/* 14. Dependencies */}
-                        <td className="py-3 px-3 align-middle">
-                          <div className="flex flex-col gap-0.5 text-[10px] font-mono">
-                            {row.predecessors.length > 0 ? (
-                              <span className="text-[#596579]">
-                                Pred:{' '}
-                                <strong className="text-[#176B87]">{row.predecessors.join(', ')}</strong> [FS]
+                          {/* 5. Progress */}
+                          <td className="py-3 px-3.5 align-middle">
+                            <div className="space-y-1">
+                              <div className="flex items-center justify-between text-[11px] font-mono">
+                                <span className="font-bold text-[#172033]">{row.actualProgress}%</span>
+                                <span className="text-[#596579]">Target: {row.plannedProgress}%</span>
+                              </div>
+                              <ProgressBar
+                                actual={row.actualProgress}
+                                planned={row.plannedProgress}
+                                size="sm"
+                                status={row.status}
+                                showLabels={false}
+                              />
+                            </div>
+                          </td>
+
+                          {/* 6. Variance */}
+                          <td className="py-3 px-3.5 align-middle whitespace-nowrap">
+                            <div className="flex items-center gap-1.5">
+                              <VarianceBadge daysDelay={row.delayDays} size="sm" />
+                              {isSlipped && (
+                                <WhyButton
+                                  onClick={() => openWhyExplanation(`delay:${row.id}`, row.id)}
+                                  title="Why is this activity delayed?"
+                                />
+                              )}
+                            </div>
+                          </td>
+
+                          {/* 7. Status */}
+                          <td className="py-3 px-3.5 align-middle whitespace-nowrap">
+                            <div className="flex items-center gap-1.5">
+                              <StatusBadge status={row.status} size="sm" />
+                              {(row.status === 'delayed' || row.status === 'at-risk') && (
+                                <WhyButton
+                                  variant="subtle"
+                                  onClick={() => openWhyExplanation(`delay:${row.id}`, row.id)}
+                                  title="Why is this activity at risk?"
+                                />
+                              )}
+                            </div>
+                          </td>
+
+                          {/* 8. Action */}
+                          <td className="py-3 px-3.5 align-middle text-right whitespace-nowrap">
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setActiveActivity(row);
+                                openActivityDrawer(row.id);
+                              }}
+                              className="px-2.5 py-1 text-xs font-medium text-[#176B87] hover:bg-[#E8F1F5] border border-[#C5D9E2] rounded transition-colors"
+                            >
+                              Details
+                            </button>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              ) : (
+                /* FULL 14-COLUMN P6 MATRIX VIEW */
+                <table className="w-full text-left text-xs border-collapse">
+                  <thead>
+                    <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[#596579] font-medium">
+                      <th className="py-3 px-3 whitespace-nowrap">Activity ID</th>
+                      <th className="py-3 px-3 whitespace-nowrap min-w-[220px]">Activity Name</th>
+                      <th className="py-3 px-2 text-center whitespace-nowrap">Level</th>
+                      <th className="py-3 px-3 whitespace-nowrap">WBS</th>
+                      <th className="py-3 px-3 whitespace-nowrap">Area</th>
+                      <th className="py-3 px-3 whitespace-nowrap">Discipline</th>
+                      <th className="py-3 px-3 whitespace-nowrap">Planned Start</th>
+                      <th className="py-3 px-3 whitespace-nowrap">Planned Finish</th>
+                      <th className="py-3 px-3 whitespace-nowrap">Actual Start</th>
+                      <th className="py-3 px-3 whitespace-nowrap">Actual Finish</th>
+                      <th className="py-3 px-3 whitespace-nowrap min-w-[140px]">Progress</th>
+                      <th className="py-3 px-3 whitespace-nowrap">Status</th>
+                      <th className="py-3 px-3 whitespace-nowrap">Variance</th>
+                      <th className="py-3 px-3 whitespace-nowrap min-w-[180px]">Dependencies</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-[#E8EBF0]">
+                    {filteredActivities.map((row) => {
+                      const levelColors: Record<WBSLevel, { bg: string; text: string; border: string }> = {
+                        L1: { bg: 'bg-[#176B87]/10', text: 'text-[#176B87]', border: 'border-[#176B87]/30' },
+                        L2: { bg: 'bg-[#3B6EA8]/10', text: 'text-[#3B6EA8]', border: 'border-[#3B6EA8]/30' },
+                        L3: { bg: 'bg-[#2E7D5B]/10', text: 'text-[#2E7D5B]', border: 'border-[#2E7D5B]/30' },
+                        L4: { bg: 'bg-[#D98B32]/10', text: 'text-[#D98B32]', border: 'border-[#D98B32]/30' },
+                        L5: { bg: 'bg-[#8A94A6]/10', text: 'text-[#172033]', border: 'border-[#8A94A6]/30' },
+                        L6: { bg: 'bg-[#F0F2F5]', text: 'text-[#596579]', border: 'border-[#D9DEE5]' },
+                      };
+                      const badge = levelColors[row.wbsLevel] || levelColors.L5;
+
+                      return (
+                        <tr
+                          key={row.id}
+                          onClick={() => {
+                            setActiveActivity(row);
+                            openActivityDrawer(row.id);
+                          }}
+                          className="hover:bg-[#F9FAFC] cursor-pointer transition-colors group"
+                        >
+                          {/* 1. Activity ID */}
+                          <td className="py-3 px-3 align-middle whitespace-nowrap">
+                            <span className="font-mono font-bold text-[#176B87] group-hover:underline">
+                              {row.id}
+                            </span>
+                          </td>
+
+                          {/* 2. Activity Name */}
+                          <td className="py-3 px-3 align-middle">
+                            <div className="flex items-center gap-1.5">
+                              <span className="font-semibold text-[#172033] group-hover:text-[#176B87] transition-colors">
+                                {row.name}
                               </span>
+                              {row.isCritical && (
+                                <span className="text-[10px] font-mono text-[#B5473C] bg-[#FBEFEE] border border-[#E4B0AA] px-1 py-0.2 rounded font-bold flex-shrink-0">
+                                  CRITICAL
+                                </span>
+                              )}
+                            </div>
+                          </td>
+
+                          {/* 3. Level */}
+                          <td className="py-3 px-2 align-middle text-center whitespace-nowrap">
+                            <span
+                              className={`font-mono text-[10px] px-1.5 py-0.5 rounded border font-bold ${badge.bg} ${badge.text} ${badge.border}`}
+                            >
+                              {row.wbsLevel}
+                            </span>
+                          </td>
+
+                          {/* 4. WBS */}
+                          <td className="py-3 px-3 align-middle whitespace-nowrap">
+                            <span className="font-mono text-xs text-[#596579] font-medium">
+                              {row.wbs}
+                            </span>
+                          </td>
+
+                          {/* 5. Area */}
+                          <td className="py-3 px-3 align-middle whitespace-nowrap text-[#596579]">
+                            {row.area}
+                          </td>
+
+                          {/* 6. Discipline */}
+                          <td className="py-3 px-3 align-middle whitespace-nowrap">
+                            <span className="px-2 py-0.5 bg-[#F0F2F5] border border-[#D9DEE5] rounded text-[11px] text-[#172033] font-medium">
+                              {row.discipline}
+                            </span>
+                          </td>
+
+                          {/* 7. Planned Start */}
+                          <td className="py-3 px-3 align-middle whitespace-nowrap font-mono text-[11px] text-[#596579]">
+                            {row.plannedStart}
+                          </td>
+
+                          {/* 8. Planned Finish */}
+                          <td className="py-3 px-3 align-middle whitespace-nowrap font-mono text-[11px] text-[#172033] font-medium">
+                            {row.plannedFinish}
+                          </td>
+
+                          {/* 9. Actual Start */}
+                          <td className="py-3 px-3 align-middle whitespace-nowrap font-mono text-[11px]">
+                            {row.actualStart ? (
+                              <span className="text-[#172033]">{row.actualStart}</span>
                             ) : (
-                              <span className="text-[#8A94A6] italic">No Predecessors</span>
+                              <span className="text-[#8A94A6] italic">-</span>
                             )}
-                            {row.successors.length > 0 && (
-                              <span className="text-[#8A94A6]">
-                                Succ: {row.successors.join(', ')}
-                              </span>
+                          </td>
+
+                          {/* 10. Actual Finish */}
+                          <td className="py-3 px-3 align-middle whitespace-nowrap font-mono text-[11px]">
+                            {row.actualFinish ? (
+                              <span className="text-[#2E7D5B] font-semibold">{row.actualFinish}</span>
+                            ) : row.actualStart ? (
+                              <span className="text-[#176B87] italic">In Progress</span>
+                            ) : (
+                              <span className="text-[#8A94A6] italic">-</span>
                             )}
-                          </div>
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
+                          </td>
+
+                          {/* 11. Progress */}
+                          <td className="py-3 px-3 align-middle">
+                            <div className="space-y-1">
+                              <div className="flex items-center justify-between text-[11px] font-mono">
+                                <span className="font-bold text-[#172033]">{row.actualProgress}%</span>
+                                <span className="text-[#596579]">T: {row.plannedProgress}%</span>
+                              </div>
+                              <ProgressBar
+                                actual={row.actualProgress}
+                                planned={row.plannedProgress}
+                                size="sm"
+                                status={row.status}
+                                showLabels={false}
+                              />
+                            </div>
+                          </td>
+
+                          {/* 12. Status */}
+                          <td className="py-3 px-3 align-middle whitespace-nowrap">
+                            <div className="flex items-center gap-1.5">
+                              <StatusBadge status={row.status} size="sm" />
+                              {(row.status === 'delayed' || row.status === 'at-risk') && (
+                                <WhyButton
+                                  variant="subtle"
+                                  onClick={() => openWhyExplanation(`delay:${row.id}`, row.id)}
+                                  title="Why is this activity at risk?"
+                                />
+                              )}
+                            </div>
+                          </td>
+
+                          {/* 13. Variance */}
+                          <td className="py-3 px-3 align-middle whitespace-nowrap">
+                            <div className="flex items-center gap-1.5">
+                              <VarianceBadge daysDelay={row.delayDays} size="sm" />
+                              {row.delayDays > 0 && (
+                                <WhyButton
+                                  onClick={() => openWhyExplanation(`delay:${row.id}`, row.id)}
+                                  title="Why is this activity delayed?"
+                                />
+                              )}
+                            </div>
+                          </td>
+
+                          {/* 14. Dependencies */}
+                          <td className="py-3 px-3 align-middle">
+                            <div className="flex flex-col gap-0.5 text-[10px] font-mono">
+                              {row.predecessors.length > 0 ? (
+                                <span className="text-[#596579]">
+                                  Pred:{' '}
+                                  <strong className="text-[#176B87]">{row.predecessors.join(', ')}</strong> [FS]
+                                </span>
+                              ) : (
+                                <span className="text-[#8A94A6] italic">No Predecessors</span>
+                              )}
+                              {row.successors.length > 0 && (
+                                <span className="text-[#8A94A6]">
+                                  Succ: {row.successors.join(', ')}
+                                </span>
+                              )}
+                            </div>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              )}
             </div>
 
             {/* Table Footer */}
@@ -1403,6 +1578,8 @@ export default function SchedulePage() {
                 <span>Active Version: <strong className="font-mono text-[#172033]">{activeVersion.versionCode}</strong></span>
                 <span>•</span>
                 <span>Total Activities: {filteredActivities.length}</span>
+                <span>•</span>
+                <span className="font-medium text-[#176B87]">Mode: {viewMode === 'operational' ? 'Operational Clean' : 'Full P6 Matrix'}</span>
               </div>
               <div className="text-[11px] text-[#8A94A6]">
                 Click any activity row to view complete dependencies, baseline dates, and audit evidence.

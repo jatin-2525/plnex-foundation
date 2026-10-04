@@ -5,6 +5,7 @@ import { PortfolioProject, UserRole, UserSession, DataState } from '../types';
 import { MOCK_PROJECTS } from '../lib/api/mockData';
 import { ActivityDrawerTab } from '../lib/domain/activityDetailData';
 import { authService, StoredSession } from '../lib/api/authService';
+import { WhyExplanationData, getWhyExplanation } from '../lib/domain/whyExplanations';
 
 interface AppContextType {
   activeProject: PortfolioProject;
@@ -29,6 +30,10 @@ interface AppContextType {
   activityDrawerTab: ActivityDrawerTab;
   openActivityDrawer: (id: string, initialTab?: ActivityDrawerTab) => void;
   closeActivityDrawer: () => void;
+  // Global "Why?" Transparent Explanation Panel
+  whyModalData: import('../lib/domain/whyExplanations').WhyExplanationData | null;
+  openWhyExplanation: (keyOrData: string | import('../lib/domain/whyExplanations').WhyExplanationData, fallbackSubjectId?: string) => void;
+  closeWhyExplanation: () => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -44,6 +49,23 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [notificationOpen, setNotificationOpen] = useState(false);
   const [activityDrawerActivityId, setActivityDrawerActivityId] = useState<string | null>(null);
   const [activityDrawerTab, setActivityDrawerTab] = useState<ActivityDrawerTab>('overview');
+  const [whyModalData, setWhyModalData] = useState<WhyExplanationData | null>(null);
+
+  const openWhyExplanation = (
+    keyOrData: string | WhyExplanationData,
+    fallbackSubjectId?: string
+  ) => {
+    if (typeof keyOrData === 'string') {
+      const data = getWhyExplanation(keyOrData, fallbackSubjectId);
+      setWhyModalData(data);
+    } else {
+      setWhyModalData(keyOrData);
+    }
+  };
+
+  const closeWhyExplanation = () => {
+    setWhyModalData(null);
+  };
 
   // Check stored session on mount
   useEffect(() => {
@@ -149,6 +171,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
         activityDrawerTab,
         openActivityDrawer,
         closeActivityDrawer,
+        whyModalData,
+        openWhyExplanation,
+        closeWhyExplanation,
       }}
     >
       {children}

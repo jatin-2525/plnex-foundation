@@ -8,17 +8,24 @@ import { Sidebar } from './Sidebar';
 import { GlobalSearch } from './GlobalSearch';
 import { ToastContainer } from '../shared/Toast';
 import { ActivityDetailDrawer } from '../shared/ActivityDetailDrawer';
+import { WhyExplanationModal } from '../shared/WhyExplanationModal';
 import { canAccessRoute, getResourceName } from '../../types/permissions';
 import { Loader2 } from 'lucide-react';
 
 export interface AppShellProps {
   children: ReactNode;
 }
-
 export function AppShell({ children }: AppShellProps) {
   const pathname = usePathname();
   const router = useRouter();
-  const { isAuthenticated, isAuthReady, userSession } = useApp();
+  const {
+    isAuthenticated,
+    isAuthReady,
+    userSession,
+    whyModalData,
+    closeWhyExplanation,
+    openActivityDrawer,
+  } = useApp();
 
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -156,6 +163,14 @@ export function AppShell({ children }: AppShellProps) {
 
       {/* Reusable Activity Detail Drawer */}
       <ActivityDetailDrawer />
+
+      {/* Global "Why?" Transparent Explanation Panel */}
+      <WhyExplanationModal
+        isOpen={!!whyModalData}
+        onClose={closeWhyExplanation}
+        data={whyModalData}
+        onOpenActivityDrawer={(actId) => openActivityDrawer(actId)}
+      />
 
       {/* Mobile Backdrop */}
       {mobileMenuOpen && (

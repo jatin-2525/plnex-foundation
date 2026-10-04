@@ -11,6 +11,7 @@ import { StatusBadge } from '../../components/shared/StatusBadge';
 import { ProgressBar } from '../../components/shared/ProgressBar';
 import { Drawer } from '../../components/shared/Drawer';
 import { Modal } from '../../components/shared/Modal';
+import { WhyButton } from '../../components/shared/WhyButton';
 import { ActivityStatus, DisciplineType } from '../../types';
 import {
   ListChecks,
@@ -278,7 +279,7 @@ const INITIAL_ASSIGNED_ACTIVITIES: AssignedActivity[] = [
 ];
 
 export default function MyActivitiesPage() {
-  const { activeProject, openActivityDrawer } = useApp();
+  const { activeProject, openActivityDrawer, openWhyExplanation } = useApp();
   const { addToast } = useToast();
 
   const [activities, setActivities] = useState<AssignedActivity[]>(INITIAL_ASSIGNED_ACTIVITIES);
@@ -692,123 +693,154 @@ export default function MyActivitiesPage() {
               <thead>
                 <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[#596579] font-medium">
                   <th className="py-3 px-3.5 whitespace-nowrap">Activity ID</th>
-                  <th className="py-3 px-3.5 whitespace-nowrap min-w-[220px]">Activity Name</th>
+                  <th className="py-3 px-3.5 whitespace-nowrap min-w-[240px]">Activity</th>
                   <th className="py-3 px-3.5 whitespace-nowrap">Area</th>
                   <th className="py-3 px-3.5 whitespace-nowrap">Discipline</th>
-                  <th className="py-3 px-3.5 whitespace-nowrap">Planned Start</th>
-                  <th className="py-3 px-3.5 whitespace-nowrap">Planned Finish</th>
                   <th className="py-3 px-3.5 whitespace-nowrap min-w-[150px]">Progress</th>
-                  <th className="py-3 px-3.5 whitespace-nowrap">Last Update</th>
+                  <th className="py-3 px-3.5 whitespace-nowrap">Variance</th>
                   <th className="py-3 px-3.5 whitespace-nowrap">Status</th>
-                  <th className="py-3 px-3.5 whitespace-nowrap text-right">Capture Action</th>
+                  <th className="py-3 px-3.5 whitespace-nowrap text-right">Action</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-[#E8EBF0]">
-                {filteredActivities.map((act) => (
-                  <tr
-                    key={act.id}
-                    onClick={() => handleOpenDrawer(act)}
-                    className="hover:bg-[#F9FAFC] cursor-pointer transition-colors group"
-                  >
-                    {/* 1. Activity ID */}
-                    <td className="py-3 px-3.5 align-middle whitespace-nowrap">
-                      <span className="font-mono font-bold text-[#176B87] group-hover:underline">
-                        {act.id}
-                      </span>
-                    </td>
+                {filteredActivities.map((act) => {
+                  const isSlipped = act.delayDays > 0;
+                  const isBehindProgress = act.actualProgress < act.plannedProgress;
 
-                    {/* 2. Activity Name */}
-                    <td className="py-3 px-3.5 align-middle">
-                      <div className="font-semibold text-[#172033] group-hover:text-[#176B87] transition-colors">
-                        {act.name}
-                      </div>
-                      <div className="text-[11px] text-[#596579] mt-0.5">
-                        WBS {act.wbs} ({act.wbsLevel})
+                  return (
+                    <tr
+                      key={act.id}
+                      onClick={() => handleOpenDrawer(act)}
+                      className="hover:bg-[#F9FAFC] cursor-pointer transition-colors group"
+                    >
+                      {/* 1. Activity ID */}
+                      <td className="py-3 px-3.5 align-middle whitespace-nowrap">
+                        <span className="font-mono font-bold text-[#176B87] group-hover:underline">
+                          {act.id}
+                        </span>
+                      </td>
+
+                      {/* 2. Activity (Clean title without cluttered inline WBS) */}
+                      <td className="py-3 px-3.5 align-middle">
+                        <div className="font-semibold text-[#172033] group-hover:text-[#176B87] transition-colors">
+                          {act.name}
+                        </div>
                         {act.isCritical && (
-                          <span className="ml-2 text-[10px] font-mono text-[#B5473C] font-bold">
+                          <span className="inline-block mt-0.5 text-[10px] font-mono text-[#B5473C] font-bold">
                             CRITICAL PATH
                           </span>
                         )}
-                      </div>
-                    </td>
+                      </td>
 
-                    {/* 3. Area */}
-                    <td className="py-3 px-3.5 align-middle whitespace-nowrap text-[#596579]">
-                      {act.area}
-                    </td>
+                      {/* 3. Area */}
+                      <td className="py-3 px-3.5 align-middle whitespace-nowrap text-[#596579]">
+                        {act.area}
+                      </td>
 
-                    {/* 4. Discipline */}
-                    <td className="py-3 px-3.5 align-middle whitespace-nowrap">
-                      <span className="px-2 py-0.5 bg-[#F0F2F5] border border-[#D9DEE5] rounded text-[11px] text-[#172033] font-medium">
-                        {act.discipline}
-                      </span>
-                    </td>
+                      {/* 4. Discipline */}
+                      <td className="py-3 px-3.5 align-middle whitespace-nowrap">
+                        <span className="px-2 py-0.5 bg-[#F0F2F5] border border-[#D9DEE5] rounded text-[11px] text-[#172033] font-medium">
+                          {act.discipline}
+                        </span>
+                      </td>
 
-                    {/* 5. Planned Start */}
-                    <td className="py-3 px-3.5 align-middle whitespace-nowrap font-mono text-[11px] text-[#596579]">
-                      {act.plannedStart}
-                    </td>
-
-                    {/* 6. Planned Finish */}
-                    <td className="py-3 px-3.5 align-middle whitespace-nowrap font-mono text-[11px] text-[#172033] font-medium">
-                      {act.plannedFinish}
-                    </td>
-
-                    {/* 7. Progress */}
-                    <td className="py-3 px-3.5 align-middle">
-                      <div className="space-y-1">
-                        <div className="flex items-center justify-between text-[11px] font-mono">
-                          <span className="font-bold text-[#172033]">{act.actualProgress}%</span>
-                          <span className="text-[#596579]">T: {act.plannedProgress}%</span>
+                      {/* 5. Progress */}
+                      <td className="py-3 px-3.5 align-middle">
+                        <div className="space-y-1">
+                          <div className="flex items-center justify-between text-[11px] font-mono">
+                            <span className="font-bold text-[#172033]">{act.actualProgress}%</span>
+                            <span className="text-[#596579]">Target: {act.plannedProgress}%</span>
+                          </div>
+                          <ProgressBar
+                            actual={act.actualProgress}
+                            planned={act.plannedProgress}
+                            size="sm"
+                            status={act.status as any}
+                            showLabels={false}
+                          />
                         </div>
-                        <ProgressBar
-                          actual={act.actualProgress}
-                          planned={act.plannedProgress}
-                          size="sm"
-                          status={act.status as any}
-                          showLabels={false}
-                        />
-                      </div>
-                    </td>
+                      </td>
 
-                    {/* 8. Last Update */}
-                    <td className="py-3 px-3.5 align-middle whitespace-nowrap font-mono text-[11px] text-[#596579]">
-                      {act.lastUpdate}
-                    </td>
+                      {/* 6. Variance (with contextual Why? explanation) */}
+                      <td className="py-3 px-3.5 align-middle whitespace-nowrap">
+                        {isSlipped ? (
+                          <div className="flex items-center gap-1.5">
+                            <span className="font-mono font-bold text-xs px-2 py-0.5 rounded bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
+                              +{act.delayDays}d slip
+                            </span>
+                            <WhyButton
+                              onClick={() =>
+                                openWhyExplanation(`delay:${act.id}`, act.id)
+                              }
+                              title="Why is this activity delayed?"
+                            />
+                          </div>
+                        ) : isBehindProgress ? (
+                          <div className="flex items-center gap-1.5">
+                            <span className="font-mono font-bold text-xs px-2 py-0.5 rounded bg-[#FEF7EE] text-[#9A5B13] border border-[#ECD1A4]">
+                              {act.actualProgress - act.plannedProgress}% lag
+                            </span>
+                            <WhyButton
+                              onClick={() =>
+                                openWhyExplanation(`variance:${act.id}`, act.id)
+                              }
+                              title="Why is progress lagging planned baseline?"
+                            />
+                          </div>
+                        ) : (
+                          <span className="font-mono text-xs px-2 py-0.5 rounded bg-[#EBF5EF] text-[#2E7D5B] border border-[#B8DCC9]">
+                            On Track
+                          </span>
+                        )}
+                      </td>
 
-                    {/* 9. Status */}
-                    <td className="py-3 px-3.5 align-middle whitespace-nowrap">
-                      {renderStatusBadge(act.status)}
-                    </td>
+                      {/* 7. Status */}
+                      <td className="py-3 px-3.5 align-middle whitespace-nowrap">
+                        <div className="flex items-center gap-1.5">
+                          {renderStatusBadge(act.status)}
+                          {isSlipped && (
+                            <WhyButton
+                              variant="subtle"
+                              onClick={() =>
+                                openWhyExplanation(`delay:${act.id}`, act.id)
+                              }
+                            />
+                          )}
+                        </div>
+                      </td>
 
-                    {/* 10. Actions: Primary Capture Update & Secondary View Activity */}
-                    <td className="py-3 px-3.5 align-middle text-right whitespace-nowrap">
-                      <div className="flex items-center justify-end gap-1.5">
-                        <button
-                          type="button"
-                          onClick={(e) => handleOpenCapture(e, act)}
-                          className="px-2.5 py-1 text-xs font-semibold text-white bg-[#176B87] hover:bg-[#12546A] rounded transition-colors inline-flex items-center gap-1 shadow-2xs"
-                          title="Capture field progress for this activity"
-                        >
-                          <Plus className="w-3.5 h-3.5" />
-                          <span>Capture Update</span>
-                        </button>
+                      {/* 8. Action (Primary: Capture Update | Secondary: Details) */}
+                      <td className="py-3 px-3.5 align-middle text-right whitespace-nowrap">
+                        <div className="flex items-center justify-end gap-1.5">
+                          {act.status !== 'completed' && (
+                            <button
+                              type="button"
+                              onClick={(e) => handleOpenCapture(e, act)}
+                              className="px-2.5 py-1 text-xs font-semibold text-white bg-[#176B87] hover:bg-[#12546A] rounded transition-colors inline-flex items-center gap-1 shadow-2xs"
+                              title="Capture field progress for this activity"
+                            >
+                              <Plus className="w-3.5 h-3.5" />
+                              <span>Capture Update</span>
+                            </button>
+                          )}
 
-                        <button
-                          type="button"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleOpenDrawer(act);
-                          }}
-                          className="p-1 text-[#596579] hover:text-[#172033] hover:bg-[#F0F2F5] border border-[#D9DEE5] rounded transition-colors"
-                          title="View activity details"
-                        >
-                          <Eye className="w-3.5 h-3.5" />
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleOpenDrawer(act);
+                            }}
+                            className="px-2 py-1 text-xs font-medium text-[#596579] hover:text-[#172033] hover:bg-[#F0F2F5] border border-[#D9DEE5] rounded transition-colors inline-flex items-center gap-1"
+                            title="Open Activity Detail Drawer"
+                          >
+                            <Eye className="w-3.5 h-3.5 text-[#8A94A6]" />
+                            <span>Details</span>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>

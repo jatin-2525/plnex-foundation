@@ -61,7 +61,7 @@ export function Sidebar({ collapsed, onToggle, mobileMenuOpen, onCloseMobile }: 
   // Manager Navigation
   const managerNav: SidebarGroup[] = [
     {
-      group: 'WORKSPACE',
+      group: '',
       items: [
         { label: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
       ],
@@ -85,7 +85,7 @@ export function Sidebar({ collapsed, onToggle, mobileMenuOpen, onCloseMobile }: 
       group: 'CONTROL',
       items: [
         { label: 'Progress & Variance', href: '/progress', icon: TrendingUp, badge: '-7%' },
-        { label: 'Delay & Impact', href: '/variance', icon: TrendingDown },
+        { label: 'Delay & Impact', href: '/risks', icon: TrendingDown },
         { label: 'What-if', href: '/what-if', icon: Sliders },
       ],
     },
@@ -113,7 +113,7 @@ export function Sidebar({ collapsed, onToggle, mobileMenuOpen, onCloseMobile }: 
   // Site Engineer Navigation
   const engineerNav: SidebarGroup[] = [
     {
-      group: 'WORKSPACE',
+      group: '',
       items: [
         { label: 'Dashboard', href: '/engineer', icon: HardHat },
         { label: 'My Activities', href: '/activities', icon: ListChecks },
@@ -146,41 +146,48 @@ export function Sidebar({ collapsed, onToggle, mobileMenuOpen, onCloseMobile }: 
     },
   ];
 
-  // Admin Navigation
+  // Admin Navigation (deliberate admin hub with full visibility and system tools)
   const adminNav: SidebarGroup[] = [
     {
-      group: 'ADMIN',
+      group: 'ADMINISTRATION',
       items: [
-        { label: 'Admin Dashboard', href: '/admin', icon: Shield },
+        { label: 'Admin Hub', href: '/admin', icon: Shield },
         { label: 'Users & Roles', href: '/admin/users', icon: Users },
         { label: 'Organizations', href: '/admin/organizations', icon: Building2 },
+        { label: 'Settings', href: '/admin/settings', icon: Settings },
+        { label: 'Foundation & Showcase', href: '/showcase', icon: Layers },
       ],
     },
     {
       group: 'MANAGER VIEW',
       items: [
         { label: 'Manager Dashboard', href: '/dashboard', icon: LayoutDashboard },
+        { label: 'Projects', href: '/projects', icon: FolderKanban },
+        { label: 'Schedule', href: '/schedule', icon: Calendar },
+        { label: 'Schedule Twin', href: '/schedule-twin', icon: Layers },
+        { label: 'Progress & Variance', href: '/progress', icon: TrendingUp },
+        { label: 'Delay & Impact', href: '/risks', icon: TrendingDown },
+        { label: 'What-if', href: '/what-if', icon: Sliders },
+        { label: 'Schedule Health', href: '/health', icon: Activity },
+        { label: 'Reports & Memory', href: '/reports', icon: BookOpen },
       ],
     },
     {
       group: 'ENGINEER VIEW',
       items: [
         { label: 'Engineer Dashboard', href: '/engineer', icon: HardHat },
+        { label: 'My Activities', href: '/activities', icon: ListChecks },
+        { label: 'Field Capture', href: '/field/capture', icon: Camera },
+        { label: 'DPR / Time Agent', href: '/field/dpr', icon: FileText },
       ],
     },
     {
-      group: 'SYSTEM',
+      group: 'SHARED OPERATIONS',
       items: [
-        { label: 'Schedule', href: '/schedule', icon: Calendar },
-        { label: 'Execution', href: '/execution', icon: Cpu },
-        { label: 'Review', href: '/review', icon: ShieldCheck },
-        { label: 'Progress', href: '/progress', icon: TrendingUp },
-        { label: 'Risks', href: '/risks', icon: AlertTriangle },
-        { label: 'Evidence', href: '/evidence', icon: ShieldCheck },
-        { label: 'Health', href: '/health', icon: Activity },
-        { label: 'Reports', href: '/reports', icon: BookOpen },
-        { label: 'Sync', href: '/sync', icon: Wifi },
-        { label: 'Settings', href: '/admin/settings', icon: Settings },
+        { label: 'Execution Intelligence', href: '/execution', icon: Cpu },
+        { label: 'Review Queue', href: '/review', icon: ShieldCheck },
+        { label: 'Evidence & Audit', href: '/evidence', icon: ShieldCheck },
+        { label: 'Offline / Sync', href: '/sync', icon: Wifi },
       ],
     },
   ];
@@ -202,7 +209,7 @@ export function Sidebar({ collapsed, onToggle, mobileMenuOpen, onCloseMobile }: 
       <div className="flex-1 overflow-y-auto py-3 px-2 space-y-4">
         {navGroups.map((group, gIdx) => (
           <div key={gIdx} className="space-y-1">
-            {!collapsed && (
+            {!collapsed && group.group && (
               <h4 className="px-3 text-[10px] font-bold uppercase tracking-wider text-[#8A94A6]">
                 {group.group}
               </h4>
