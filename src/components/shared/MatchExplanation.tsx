@@ -95,6 +95,7 @@ function getFactorIcon(factor: ScoringFactorName) {
       return <MapPin className="w-4 h-4 text-[#0284C7]" />;
     case 'Discipline':
       return <Tag className="w-4 h-4 text-[#7C3AED]" />;
+    case 'Date / Context':
     case 'Context / Date':
       return <Calendar className="w-4 h-4 text-[#D98B32]" />;
     case 'Project / WBS':
@@ -113,6 +114,7 @@ function getFactorAccentColor(factor: ScoringFactorName) {
       return '#0284C7';
     case 'Discipline':
       return '#7C3AED';
+    case 'Date / Context':
     case 'Context / Date':
       return '#D98B32';
     case 'Project / WBS':
@@ -223,7 +225,7 @@ export function MatchExplanation({
     if (confidenceBracket === 'High') {
       return {
         label: '90–100 High Confidence',
-        sublabel: 'Auto-link Eligible',
+        sublabel: 'Pending Human Verification',
         badgeClass: 'bg-[#EDF7F2] text-[#2E7D5B] border-[#B8DCC9]',
         barColor: 'bg-[#2E7D5B]',
         icon: <CheckCircle2 className="w-4 h-4 text-[#2E7D5B]" />,
@@ -437,7 +439,7 @@ export function MatchExplanation({
               <div
                 className="absolute top-0 bottom-0 w-[2px] bg-[#172033]/80 z-10"
                 style={{ left: '90%' }}
-                title="90% Auto-Link High Confidence Gate"
+                title="90% High Confidence Suggestion Gate"
               />
             </div>
 
@@ -445,7 +447,7 @@ export function MatchExplanation({
             <div className="flex justify-between items-center text-[10px] font-mono text-[#8A94A6] pt-0.5">
               <span>0% (Unmatched)</span>
               <span className="pl-6 text-[#D98B32] font-semibold">| 70% Review Gate</span>
-              <span className="text-[#2E7D5B] font-semibold">| 90% Auto-Link Gate</span>
+              <span className="text-[#2E7D5B] font-semibold">| 90% High Suggestion Gate</span>
               <span>100%</span>
             </div>
           </div>
@@ -640,23 +642,18 @@ export function MatchExplanation({
                           (Weight: {item.maxContribution} pts / {item.weightPercent}%)
                         </span>
                         {item.status === 'FULL_MATCH' && (
-                          <span className="text-[9px] font-semibold px-1.5 py-0.2 rounded bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]">
-                            Full Alignment
+                          <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]">
+                            ✓ matched
                           </span>
                         )}
                         {item.status === 'PARTIAL_MATCH' && (
-                          <span className="text-[9px] font-semibold px-1.5 py-0.2 rounded bg-[#FDF6ED] text-[#D98B32] border border-[#F0D4A6]">
-                            Partial Alignment
+                          <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-[#FDF6ED] text-[#D98B32] border border-[#F0D4A6]">
+                            △ partial
                           </span>
                         )}
-                        {item.status === 'NO_MATCH' && (
-                          <span className="text-[9px] font-semibold px-1.5 py-0.2 rounded bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
-                            No Match
-                          </span>
-                        )}
-                        {item.status === 'PENALTY' && (
-                          <span className="text-[9px] font-semibold px-1.5 py-0.2 rounded bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
-                            Constraint Penalty
+                        {(item.status === 'NO_MATCH' || item.status === 'PENALTY') && (
+                          <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
+                            ✕ mismatch
                           </span>
                         )}
                       </div>

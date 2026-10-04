@@ -10,7 +10,8 @@ import { FilterBar } from '../../components/shared/FilterBar';
 import { DataTable } from '../../components/shared/DataTable';
 import { StatusBadge } from '../../components/shared/StatusBadge';
 import { ConfidenceBadge } from '../../components/shared/ConfidenceBadge';
-import { MatchExplanation } from '../../components/shared/MatchExplanation';
+import { MatchCard, MatchFactorItem, MatchAlternativeItem } from '../../components/shared/MatchCard';
+import { CoreFlowBanner } from '../../components/shared/CoreFlowBanner';
 import { Modal } from '../../components/shared/Modal';
 import { Drawer } from '../../components/shared/Drawer';
 import { ConfirmationDialog } from '../../components/shared/ConfirmationDialog';
@@ -30,6 +31,9 @@ import {
   Check,
   X,
   SlidersHorizontal,
+  Layers,
+  Sparkles,
+  HelpCircle,
 } from 'lucide-react';
 
 export default function MatchingPage() {
@@ -53,26 +57,28 @@ export default function MatchingPage() {
 
   const canApprove = userSession ? hasPermission(userSession.role, 'verify:approve') : false;
 
+  // 1. APPROVE MATCH
   const handleApprove = async (event: ExecutionEvent) => {
     if (!canApprove) {
       addToast({
         type: 'critical',
         title: 'Permission Denied',
-        description: 'Only Project Managers can approve schedule link commitments.',
+        description: 'Only Project Controls Managers can formally approve schedule match commitments.',
       });
       return;
     }
 
     const res = await projectService.approveMatch(event.id, 'Approved via Planner Review Queue');
-    setEvents(events.map((e) => (e.id === event.id ? res.data : e)));
+    setEvents(events.map((e) => (e.id === event.id ? { ...res.data, status: 'approved' } : e)));
     setActiveReviewEvent(null);
     addToast({
       type: 'success',
       title: 'Match Approved & Committed',
-      description: `Execution event linked to ${event.matchedActivityId}. Progress updated in Schedule Twin.`,
+      description: `Verified link to ${event.matchedActivityId}. Progress updated in Schedule Twin.`,
     });
   };
 
+  // 2. REJECT MATCH
   const handleRejectConfirm = async () => {
     if (!activeReviewEvent) return;
 
@@ -81,7 +87,7 @@ export default function MatchingPage() {
       rejectReason || 'Does not correspond to planned schedule scope'
     );
 
-    setEvents(events.map((e) => (e.id === activeReviewEvent.id ? res.data : e)));
+    setEvents(events.map((e) => (e.id === activeReviewEvent.id ? { ...res.data, status: 'rejected' } : e)));
     setIsRejectDialogOpen(false);
     setActiveReviewEvent(null);
     setRejectReason('');
@@ -92,6 +98,7 @@ export default function MatchingPage() {
     });
   };
 
+  // 3. REMATCH / CHOOSE ANOTHER ACTIVITY
   const handleRematchConfirm = async () => {
     if (!activeReviewEvent || !selectedRematchTarget) return;
 
@@ -108,9 +115,123 @@ export default function MatchingPage() {
     setRematchReason('');
     addToast({
       type: 'info',
-      title: 'Activity Rematched',
-      description: `Event reassigned to ${selectedRematchTarget} with planner justification.`,
+      title: 'Activity Reassigned',
+      description: `Event linked to ${selectedRematchTarget} with planner justification.`,
     });
+  };
+
+  // 4. MARK UNMATCHED
+  const handleMarkUnmatched = async (event: ExecutionEvent) => {
+    const updated: ExecutionEvent = {
+      ...event,
+      matchedActivityId: null,
+      matchedActivityName: null,
+      confidence: 40,
+      status: 'pending-verification',
+      matchedReasons: ['Marked as unmatched out-of-scope work by reviewer'],
+    };
+
+    setEvents(events.map((e) => (e.id === event.id ? updated : e)));
+    setActiveReviewEvent(null);
+    addToast({
+      type: 'info',
+      title: 'Marked as Unmatched',
+      description: `Event ${event.id} marked as unmatched scope requiring engineering followup.`,
+    });
+  };
+
+  // Map confidence signals into the 5 explicit scoring factors: Activity keywords, Area / Line, Discipline, Date / Context, Project / WBS
+  const getFactorsForEvent = (event: ExecutionEvent): MatchFactorItem[] => {
+    const isHigh = event.confidence >= 90;
+    const isMed = event.confidence >= 70;
+
+    return [
+      {
+        name: 'Activity keywords',
+        status: isHigh ? 'matched' : isMed ? 'partial' : 'mismatch',
+        reason: event.workDescription || 'Action verbs and physical scope nouns evaluated against master schedule',
+      },
+      {
+        name: 'Area / Line',
+        status: event.line ? 'matched' : event.area ? 'partial' : 'mismatch',
+        reason: event.line
+          ? `Exact line identifier verified: ${event.line}`
+          : event.area
+          ? `Area level alignment: ${event.area}`
+          : 'Plant area tag absent from field report',
+      },
+      {
+        name: 'Discipline',
+        status: event.discipline ? 'matched' : 'partial',
+        reason: `${event.discipline || 'Trade'} discipline evaluated against work package boundary`,
+      },
+      {
+        name: 'Date / Context',
+        status: isHigh ? 'matched' : 'partial',
+        reason: `Submission date ${event.eventDate} evaluated against planned window`,
+      },
+      {
+        name: 'Project / WBS',
+        status: event.matchedActivityId ? 'matched' : 'mismatch',
+        reason: event.matchedActivityId
+          ? `Mapped to schedule baseline activity ${event.matchedActivityId}`
+          : 'No baseline activity corresponds to reported scope',
+      },
+    ];
+  };
+
+  // Map alternatives
+  const getAlternativesForEvent = (event: ExecutionEvent): MatchAlternativeItem[] => {
+    if (event.alternativeCandidates && event.alternativeCandidates.length > 0) {
+      return event.alternativeCandidates.map((c) => ({
+        activityId: c.activityId,
+        activityName: c.activityName,
+        confidence: c.confidence,
+        discipline: c.discipline,
+        reasons: c.reasons,
+      }));
+    }
+
+    // Default realistic alternatives when confidence is not high or none given
+    if (event.id === 'EVT-2026-001') {
+      return [
+        {
+          activityId: 'PIP-24-002',
+          activityName: 'Weld Line 24-XX Field Joints',
+          confidence: 71,
+          wbs: '1.1.3.2.2',
+          reasons: ['Successor activity on same line section'],
+        },
+        {
+          activityId: 'PIP-25-003',
+          activityName: 'Erect Line 25-YY Fuel Gas Header',
+          confidence: 42,
+          wbs: '3.3.1',
+          reasons: ['Same discipline, different line number'],
+        },
+      ];
+    }
+
+    if (event.id === 'EVT-2026-002') {
+      return [
+        {
+          activityId: 'PIP-24-001',
+          activityName: 'Erect Line 24-XX High Pressure Gas Header',
+          confidence: 68,
+          wbs: '1.1.3.2.1',
+          reasons: ['Predecessor erection already completed'],
+        },
+        {
+          activityId: 'PIP-24-003',
+          activityName: 'Hydrostatic Test Section Line 24-XX',
+          confidence: 45,
+          wbs: '1.1.3.2.3',
+          reasons: ['Successor hydrotest requires welding clearance'],
+        },
+      ];
+    }
+
+    return [];
   };
 
   const filteredEvents = events.filter((e) => {
@@ -154,7 +275,7 @@ export default function MatchingPage() {
     },
     {
       id: 'matchedActivity',
-      header: 'Matched Schedule Activity',
+      header: 'Suggested Schedule Activity',
       cell: ({ row }) => (
         <div>
           {row.matchedActivityId ? (
@@ -175,28 +296,55 @@ export default function MatchingPage() {
     },
     {
       id: 'confidence',
-      header: 'AI Confidence Score',
-      width: '150px',
-      cell: ({ row }) => <ConfidenceBadge score={row.confidence} size="sm" />,
+      header: 'AI Confidence',
+      width: '140px',
+      cell: ({ row }) => (
+        <div>
+          <ConfidenceBadge score={row.confidence} size="sm" />
+          <span className="text-[10px] text-[#8A94A6] block mt-0.5">Assistive Score</span>
+        </div>
+      ),
     },
     {
-      id: 'status',
-      header: 'Workflow Status',
+      id: 'verification',
+      header: 'Verification Status',
       width: '150px',
-      cell: ({ row }) => <StatusBadge status={row.status} type="event" size="sm" />,
+      cell: ({ row }) => {
+        const isApproved = row.status === 'approved';
+        const isRejected = row.status === 'rejected';
+        return (
+          <div>
+            <span
+              className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[11px] font-bold border ${
+                isApproved
+                  ? 'bg-[#EDF7F2] text-[#2E7D5B] border-[#B8DCC9]'
+                  : isRejected
+                  ? 'bg-[#FBEFEE] text-[#B5473C] border-[#E4B0AA]'
+                  : 'bg-[#FDF6ED] text-[#D98B32] border-[#F0D4A6]'
+              }`}
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-current" />
+              <span>{isApproved ? 'Verified' : isRejected ? 'Rejected' : 'Pending'}</span>
+            </span>
+            <span className="text-[10px] text-[#8A94A6] block mt-0.5">
+              {isApproved ? 'Committed to Twin' : 'Awaiting Review'}
+            </span>
+          </div>
+        );
+      },
     },
     {
       id: 'actions',
-      header: 'Planner Action',
+      header: 'Actions',
       width: '130px',
       align: 'right',
       cell: ({ row }) => (
         <div className="flex items-center justify-end gap-1.5" onClick={(e) => e.stopPropagation()}>
           <button
             onClick={() => setActiveReviewEvent(row)}
-            className="px-2.5 py-1 bg-[#F0F2F5] hover:bg-[#E8EBF0] text-[#172033] rounded text-xs font-medium transition-colors"
+            className="px-2.5 py-1 bg-[#F0F2F5] hover:bg-[#E8EBF0] text-[#172033] rounded text-xs font-semibold transition-colors"
           >
-            Review Details
+            Review Match
           </button>
         </div>
       ),
@@ -204,12 +352,12 @@ export default function MatchingPage() {
   ];
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 pb-16">
       <Breadcrumbs items={breadcrumbs} />
 
       <PageHeader
-        title="Intelligent Activity Matching & Verification Queue"
-        description="Connects unstructured site execution statements with exact L5/L6 activities. Uses explainable AI confidence scoring (≥90% Auto-link, 70–89% Planner Review, <70% Unmatched) to ensure wrong schedule updates never pass silently."
+        title="Intelligent Activity Matching & Verification"
+        description="Connects unstructured site execution statements with exact L5/L6 activities. Uses explainable AI confidence scoring to assist project teams without replacing human engineering judgment."
         stage="MATCH"
         actions={
           <Link
@@ -222,9 +370,9 @@ export default function MatchingPage() {
         }
         metadata={
           <>
-            <span className="font-mono">THRESHOLD POLICY: ≥90% Auto | 70-89% Review | &lt;70% Flagged</span>
+            <span className="font-mono">GOVERNANCE: Human Decision Gate Active</span>
             <span>•</span>
-            <span>REVIEW QUEUE: 2 Pending Items</span>
+            <span>POLICY: Confidence ≠ Verification</span>
             <span>•</span>
             <span>CURRENT ROLE: {userSession ? userSession.role.toUpperCase() : 'RESTRICTED'}</span>
           </>
@@ -232,6 +380,9 @@ export default function MatchingPage() {
       />
 
       <StateWrapper>
+        {/* Core Flow Pipeline Visualization: Field Input -> Extraction -> Execution Event -> Candidate Match -> Confidence -> Human Verification -> Verified Update */}
+        <CoreFlowBanner currentStage="CANDIDATE_MATCH" />
+
         {/* Verification Policy Summary Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
           <div className="bg-white border border-[#B8DCC9] rounded-lg p-3.5 flex items-start gap-3">
@@ -240,9 +391,9 @@ export default function MatchingPage() {
             </div>
             <div>
               <span className="text-xs font-bold text-[#2E7D5B] font-mono">≥ 90% High Confidence</span>
-              <p className="text-xs text-[#172033] font-medium mt-0.5">Automatic Schedule Link</p>
+              <p className="text-xs text-[#172033] font-medium mt-0.5">High-Confidence Suggestion</p>
               <p className="text-[11px] text-[#596579] mt-0.5">
-                Exact line/component tags, discipline alignment, and verified temporal window.
+                Strong alignment across line, area, and discipline. Requires manager approval before schedule commit.
               </p>
             </div>
           </div>
@@ -253,9 +404,9 @@ export default function MatchingPage() {
             </div>
             <div>
               <span className="text-xs font-bold text-[#D98B32] font-mono">70% – 89% Review Required</span>
-              <p className="text-xs text-[#172033] font-medium mt-0.5">Routed to Planner Queue</p>
+              <p className="text-xs text-[#172033] font-medium mt-0.5">Ambiguous / Partial Match</p>
               <p className="text-[11px] text-[#596579] mt-0.5">
-                Partial name alignment or scope ambiguity requiring human engineer confirmation.
+                Partial name alignment or missing parameters. Requires planner review and candidate alternative selection.
               </p>
             </div>
           </div>
@@ -266,9 +417,9 @@ export default function MatchingPage() {
             </div>
             <div>
               <span className="text-xs font-bold text-[#B5473C] font-mono">&lt; 70% Unmatched / Conflict</span>
-              <p className="text-xs text-[#172033] font-medium mt-0.5">Manual Resolution</p>
+              <p className="text-xs text-[#172033] font-medium mt-0.5">Manual Scope Resolution</p>
               <p className="text-[11px] text-[#596579] mt-0.5">
-                Work report not found in current baseline WBS. Option to rematch or reject.
+                Reported work not found in baseline WBS. Reviewer can rematch to WBS activity or mark as out-of-scope work.
               </p>
             </div>
           </div>
@@ -278,17 +429,15 @@ export default function MatchingPage() {
         <FilterBar
           searchQuery={search}
           onSearchChange={setSearch}
-          searchPlaceholder="Search review queue by event ID, statement, or target activity..."
+          searchPlaceholder="Search events by ID, field statement, or target activity..."
           filters={[
             {
               id: 'status',
-              label: 'Match Status',
+              label: 'Verification Status',
               selectedValue: statusFilter,
               options: [
-                { label: 'Auto Linked', value: 'auto-linked' },
-                { label: 'Pending Review', value: 'pending-review' },
-                { label: 'Pending Verification', value: 'pending-verification' },
-                { label: 'Approved', value: 'approved' },
+                { label: 'Pending Verification', value: 'pending-review' },
+                { label: 'Verified & Committed', value: 'approved' },
                 { label: 'Rejected', value: 'rejected' },
               ],
             },
@@ -311,60 +460,51 @@ export default function MatchingPage() {
         />
       </StateWrapper>
 
-      {/* Review Details Drawer */}
+      {/* Review Details Drawer using MatchCard Component */}
       {activeReviewEvent && (
         <Drawer
           isOpen={!!activeReviewEvent}
           onClose={() => setActiveReviewEvent(null)}
-          title={`Review Match: ${activeReviewEvent.id}`}
-          subtitle={`Reported on ${activeReviewEvent.eventDate} by ${activeReviewEvent.createdBy}`}
+          title={`Candidate Match Review: ${activeReviewEvent.id}`}
+          subtitle={`Submitted on ${activeReviewEvent.eventDate} by ${activeReviewEvent.createdBy}`}
           width="lg"
-          footer={
-            <div className="flex items-center justify-between w-full">
-              <button
-                onClick={() => setIsRejectDialogOpen(true)}
-                className="px-3 py-1.5 text-xs font-medium text-[#B5473C] hover:bg-[#FBEFEE] border border-[#E4B0AA] rounded-md transition-colors"
-              >
-                Reject Match
-              </button>
-
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={() => setIsRematchModalOpen(true)}
-                  className="px-3 py-1.5 text-xs font-medium text-[#172033] bg-white hover:bg-[#F0F2F5] border border-[#D9DEE5] rounded-md transition-colors"
-                >
-                  Choose Another Activity
-                </button>
-                <button
-                  onClick={() => handleApprove(activeReviewEvent)}
-                  className="px-4 py-1.5 text-xs font-medium bg-[#176B87] hover:bg-[#135A72] text-white rounded-md shadow-xs transition-colors"
-                >
-                  Approve & Commit Update
-                </button>
-              </div>
-            </div>
-          }
         >
-          <div className="space-y-5">
-            {/* Field Statement Box */}
-            <div className="bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg p-3.5">
-              <div className="flex items-center justify-between mb-1 text-[11px] font-bold uppercase tracking-wider text-[#596579]">
-                <span>Original Field Statement</span>
-                <span className="font-mono">{activeReviewEvent.source}</span>
-              </div>
-              <p className="text-xs text-[#172033] font-medium leading-relaxed">
-                "{activeReviewEvent.rawText}"
-              </p>
-            </div>
-
-            {/* Full Deterministic Match Explanation */}
-            <MatchExplanation
-              eventId={activeReviewEvent.id}
-              onSelectAlternative={(candId) => {
-                setSelectedRematchTarget(candId);
+          <div className="space-y-4">
+            <MatchCard
+              activityId={activeReviewEvent.matchedActivityId}
+              activityName={activeReviewEvent.matchedActivityName}
+              confidence={activeReviewEvent.confidence}
+              statusText={
+                activeReviewEvent.confidence >= 90
+                  ? 'High-confidence suggestion'
+                  : activeReviewEvent.confidence >= 70
+                  ? 'Review-required suggestion'
+                  : 'Low-confidence suggestion'
+              }
+              verificationStatus={
+                activeReviewEvent.status === 'approved'
+                  ? 'Verified'
+                  : activeReviewEvent.status === 'rejected'
+                  ? 'Rejected'
+                  : 'Pending'
+              }
+              discipline={activeReviewEvent.discipline}
+              area={activeReviewEvent.area}
+              line={activeReviewEvent.line}
+              fieldStatement={activeReviewEvent.rawText}
+              factors={getFactorsForEvent(activeReviewEvent)}
+              alternatives={getAlternativesForEvent(activeReviewEvent)}
+              onApprove={() => handleApprove(activeReviewEvent)}
+              onChooseAnother={() => {
+                setSelectedRematchTarget(activeReviewEvent.matchedActivityId || '');
                 setIsRematchModalOpen(true);
               }}
-              onOpenActivity={(actId) => openActivityDrawer(actId)}
+              onReject={() => setIsRejectDialogOpen(true)}
+              onMarkUnmatched={() => handleMarkUnmatched(activeReviewEvent)}
+              onSelectAlternative={(altId) => {
+                setSelectedRematchTarget(altId);
+                setIsRematchModalOpen(true);
+              }}
             />
           </div>
         </Drawer>
@@ -381,55 +521,55 @@ export default function MatchingPage() {
         confirmLabel="Confirm Rejection"
       />
 
-      {/* Manual Rematch Modal */}
+      {/* Choose Another Activity / Rematch Modal */}
       <Modal
         isOpen={isRematchModalOpen}
         onClose={() => setIsRematchModalOpen(false)}
-        title="Manual Activity Reassignment (Rematch)"
-        subtitle="Select a target schedule activity from the project WBS to re-link this field event."
+        title="Choose Another Schedule Activity"
+        subtitle="Select a target schedule activity from the master WBS to assign to this field event."
         footer={
           <>
             <button
               onClick={() => setIsRematchModalOpen(false)}
-              className="px-3.5 py-2 text-xs font-medium text-[#596579] hover:text-[#172033] rounded border border-[#D9DEE5]"
+              className="px-3.5 py-2 text-xs font-semibold text-[#596579] hover:text-[#172033] rounded border border-[#D9DEE5]"
             >
               Cancel
             </button>
             <button
               onClick={handleRematchConfirm}
               disabled={!selectedRematchTarget}
-              className="px-4 py-2 text-xs font-medium bg-[#176B87] hover:bg-[#135A72] text-white rounded shadow-xs disabled:opacity-50"
+              className="px-4 py-2 text-xs font-bold bg-[#176B87] hover:bg-[#135A72] text-white rounded shadow-xs disabled:opacity-50"
             >
-              Confirm Rematch & Update
+              Assign Selected Activity
             </button>
           </>
         }
       >
         <div className="space-y-4 text-xs">
           <div>
-            <label className="font-semibold text-[#172033] block mb-1">Select Schedule Activity</label>
+            <label className="font-bold text-[#172033] block mb-1">Target Schedule Activity (WBS)</label>
             <select
               value={selectedRematchTarget}
               onChange={(e) => setSelectedRematchTarget(e.target.value)}
-              className="w-full p-2 text-xs bg-white border border-[#D9DEE5] rounded outline-none focus:border-[#176B87]"
+              className="w-full p-2.5 text-xs bg-white border border-[#D9DEE5] rounded-lg outline-none focus:border-[#176B87]"
             >
               <option value="">-- Choose activity from WBS --</option>
               {MOCK_ACTIVITIES.map((act) => (
                 <option key={act.id} value={act.id}>
-                  {act.id} — {act.name} ({act.discipline})
+                  {act.id} — {act.name} ({act.discipline}) [WBS: {act.wbs}]
                 </option>
               ))}
             </select>
           </div>
 
           <div>
-            <label className="font-semibold text-[#172033] block mb-1">Planner Justification / Note</label>
+            <label className="font-bold text-[#172033] block mb-1">Planner Override Justification</label>
             <textarea
               value={rematchReason}
               onChange={(e) => setRematchReason(e.target.value)}
-              placeholder="Provide reason for manual override (e.g., spool scope matches tie-in section)..."
-              rows={2}
-              className="w-full p-2 text-xs bg-[#F7F8FA] border border-[#D9DEE5] rounded outline-none focus:border-[#176B87]"
+              placeholder="State reason for manual reassignment (e.g., spool scope corresponds to line tie-in)..."
+              rows={3}
+              className="w-full p-2.5 text-xs bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg outline-none focus:border-[#176B87]"
             />
           </div>
         </div>

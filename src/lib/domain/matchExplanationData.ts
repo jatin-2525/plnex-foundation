@@ -17,6 +17,7 @@ export type ScoringFactorName =
   | 'Activity keywords'
   | 'Area / Line'
   | 'Discipline'
+  | 'Date / Context'
   | 'Context / Date'
   | 'Project / WBS';
 
@@ -116,6 +117,7 @@ export const STANDARD_FACTOR_WEIGHTS: Record<ScoringFactorName, number> = {
   'Activity keywords': 20,
   'Area / Line': 30,
   'Discipline': 25,
+  'Date / Context': 10,
   'Context / Date': 10,
   'Project / WBS': 15,
 };

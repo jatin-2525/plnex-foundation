@@ -17,5 +17,7 @@ export * from './DataTable';
 export * from './StateWrapper';
 export * from './ActivityDetailDrawer';
 export * from './MatchExplanation';
+export * from './MatchCard';
+export * from './CoreFlowBanner';
 export * from './NotificationCenterPanel';
 export * from './GlobalSearchPanel';

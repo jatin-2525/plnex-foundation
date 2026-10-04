@@ -4,14 +4,13 @@ import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
 import { useApp } from '../../context/AppContext';
 import { useToast } from '../../context/ToastContext';
-import { AppShell } from '../../components/shell/AppShell';
 import { Breadcrumbs } from '../../components/shell/Breadcrumbs';
+import { StateWrapper } from '../../components/shared/StateWrapper';
 import { Drawer } from '../../components/shared/Drawer';
 import { Modal } from '../../components/shared/Modal';
 import { ConfirmationDialog } from '../../components/shared/ConfirmationDialog';
-import { ConfidenceBadge } from '../../components/shared/ConfidenceBadge';
-import { MatchExplanation } from '../../components/shared/MatchExplanation';
-import { ProgressBar } from '../../components/shared/ProgressBar';
+import { MatchCard, MatchFactorItem, MatchAlternativeItem } from '../../components/shared/MatchCard';
+import { CoreFlowBanner } from '../../components/shared/CoreFlowBanner';
 import { DisciplineType } from '../../types';
 import { MOCK_ACTIVITIES } from '../../lib/api/mockData';
 import {
@@ -29,7 +28,6 @@ import {
   Sparkles,
   ArrowRight,
   ArrowUpRight,
-  ArrowLeft,
   Search,
   Filter,
   Check,
@@ -47,16 +45,19 @@ import {
   Save,
   Send,
   GitCompare,
+  Archive,
 } from 'lucide-react';
 
-// Summary Tabs required by specification
+// Summary Tabs required by specification + Verified History Archive
 export type ReviewTab =
+  | 'All Action Items'
   | 'High Confidence'
   | 'Manager Review'
   | 'Unmatched'
   | 'Conflicts'
   | 'Duplicates'
-  | 'Stale';
+  | 'Stale'
+  | 'Verified History';
 
 export interface ReviewCandidate {
   activityId: string;
@@ -92,7 +93,7 @@ export interface ReviewEvent {
   }>;
   submittedBy: string;
   date: string;
-  status: ReviewTab;
+  status: 'High Confidence' | 'Manager Review' | 'Unmatched' | 'Conflicts' | 'Duplicates' | 'Stale';
   isApproved?: boolean;
   isRejected?: boolean;
   alternativeCandidates: ReviewCandidate[];
@@ -100,7 +101,7 @@ export interface ReviewEvent {
   rulesEvaluated: Array<{ name: string; status: 'PASSED' | 'WARNING' | 'FAILED'; details: string }>;
 }
 
-// Initial realistic Review Queue events
+// Initial realistic Review Queue events requiring human action
 const INITIAL_REVIEW_EVENTS: ReviewEvent[] = [
   {
     id: 'EVT-2026-001',
@@ -116,7 +117,7 @@ const INITIAL_REVIEW_EVENTS: ReviewEvent[] = [
     shiftTime: '09:00 - 16:30',
     candidateActivityId: 'PIP-24-001',
     candidateActivityName: 'Erect Line 24-XX High Pressure Gas Header',
-    candidateWbs: '3.2.1',
+    candidateWbs: '1.1.3.2.1',
     confidence: 94,
     matchReason: 'Line 24-XX identifier confirmed in report · Piping erection mapped to L5 schedule',
     evidenceCount: 2,
@@ -131,7 +132,7 @@ const INITIAL_REVIEW_EVENTS: ReviewEvent[] = [
       {
         activityId: 'PIP-24-002',
         activityName: 'Weld Line 24-XX Field Joints',
-        wbs: '3.2.2',
+        wbs: '1.1.3.2.2',
         discipline: 'Piping',
         confidence: 71,
         reasons: ['Same line section', 'Successor welding activity'],
@@ -154,7 +155,7 @@ const INITIAL_REVIEW_EVENTS: ReviewEvent[] = [
     rulesEvaluated: [
       { name: 'Quantity Ceiling Enforcement', status: 'PASSED', details: '12 spools <= 12 planned unexecuted spools' },
       { name: 'Mandatory Physical Evidence', status: 'PASSED', details: '2 physical proofs attached (photo & DPR PDF)' },
-      { name: 'Discipline Boundary Check', status: 'PASSED', details: 'Piping discipline conforms to WBS 3.2' },
+      { name: 'Discipline Boundary Check', status: 'PASSED', details: 'Piping discipline conforms to WBS 1.1.3.2' },
       { name: 'Predecessor Dependency Check', status: 'PASSED', details: 'Foundation pedestal confirmed completed' },
     ],
   },
@@ -172,7 +173,7 @@ const INITIAL_REVIEW_EVENTS: ReviewEvent[] = [
     shiftTime: '10:00 - 16:00',
     candidateActivityId: 'PIP-24-002',
     candidateActivityName: 'Weld Line 24-XX Field Joints & NDT Inspection',
-    candidateWbs: '3.2.2',
+    candidateWbs: '1.1.3.2.2',
     confidence: 86,
     matchReason: 'Line 24 identified · Partial quantity reporting requires planner review',
     evidenceCount: 1,
@@ -186,7 +187,7 @@ const INITIAL_REVIEW_EVENTS: ReviewEvent[] = [
       {
         activityId: 'PIP-24-001',
         activityName: 'Erect Line 24-XX High Pressure Gas Header',
-        wbs: '3.2.1',
+        wbs: '1.1.3.2.1',
         discipline: 'Piping',
         confidence: 68,
         reasons: ['Erection already completed'],
@@ -201,7 +202,7 @@ const INITIAL_REVIEW_EVENTS: ReviewEvent[] = [
     rulesEvaluated: [
       { name: 'Quantity Ceiling Enforcement', status: 'PASSED', details: '8 welds <= 24 planned joints' },
       { name: 'NDT Radiographic Hold', status: 'WARNING', details: '4 joints pending evening RT clearance' },
-      { name: 'Discipline Boundary Check', status: 'PASSED', details: 'Piping conforms to WBS 3.2.2' },
+      { name: 'Discipline Boundary Check', status: 'PASSED', details: 'Piping conforms to WBS 1.1.3.2.2' },
     ],
   },
   {
@@ -286,7 +287,7 @@ const INITIAL_REVIEW_EVENTS: ReviewEvent[] = [
     shiftTime: '11:30 - 13:00',
     candidateActivityId: 'PIP-24-003',
     candidateActivityName: 'Hydrostatic Test Section Line 24-XX (150 bar)',
-    candidateWbs: '3.2.3',
+    candidateWbs: '1.1.3.2.3',
     confidence: 62,
     matchReason: 'Predecessor PIP-24-002 incomplete · Weather & missing material stoppage flag',
     evidenceCount: 1,
@@ -359,7 +360,7 @@ const INITIAL_REVIEW_EVENTS: ReviewEvent[] = [
     shiftTime: '09:00 - 16:30',
     candidateActivityId: 'PIP-24-001',
     candidateActivityName: 'Erect Line 24-XX High Pressure Gas Header',
-    candidateWbs: '3.2.1',
+    candidateWbs: '1.1.3.2.1',
     confidence: 94,
     matchReason: 'Duplicate event signature matching EVT-2026-001 · Suppressed to prevent double counting',
     evidenceCount: 1,
@@ -418,7 +419,7 @@ export default function ReviewQueuePage() {
   const { addToast } = useToast();
 
   const [events, setEvents] = useState<ReviewEvent[]>(INITIAL_REVIEW_EVENTS);
-  const [activeTab, setActiveTab] = useState<ReviewTab>('Manager Review');
+  const [activeTab, setActiveTab] = useState<ReviewTab>('All Action Items');
   const [searchQuery, setSearchQuery] = useState('');
 
   // Selected event for Review Drawer
@@ -432,7 +433,7 @@ export default function ReviewQueuePage() {
   const [isEditingCenter, setIsEditingCenter] = useState(false);
 
   // MODAL STATES
-  // 1. Approval Confirmation Dialog (Strict requirement: Approval must require confirmation)
+  // 1. Approval Confirmation Dialog
   const [isApproveConfirmOpen, setIsApproveConfirmOpen] = useState(false);
   const [attestationChecked, setAttestationChecked] = useState(false);
   const [isSubmittingApproval, setIsSubmittingApproval] = useState(false);
@@ -449,38 +450,54 @@ export default function ReviewQueuePage() {
   const [isClarificationModalOpen, setIsClarificationModalOpen] = useState(false);
   const [clarificationQueryText, setClarificationQueryText] = useState('');
 
-  // Tab counts
-  const tabCounts = useMemo(() => {
-    return {
-      'High Confidence': events.filter((e) => e.status === 'High Confidence').length,
-      'Manager Review': events.filter((e) => e.status === 'Manager Review').length,
-      'Unmatched': events.filter((e) => e.status === 'Unmatched').length,
-      'Conflicts': events.filter((e) => e.status === 'Conflicts').length,
-      'Duplicates': events.filter((e) => e.status === 'Duplicates').length,
-      'Stale': events.filter((e) => e.status === 'Stale').length,
-    };
+  // Strict Rule: Active Review Queue ONLY contains unverified items requiring human action!
+  const pendingActionEvents = useMemo(() => {
+    return events.filter((e) => !e.isApproved && !e.isRejected);
   }, [events]);
 
-  // Filtered events
+  const verifiedHistoryEvents = useMemo(() => {
+    return events.filter((e) => e.isApproved || e.isRejected);
+  }, [events]);
+
+  // Tab counts based strictly on items requiring action
+  const tabCounts = useMemo(() => {
+    return {
+      'All Action Items': pendingActionEvents.length,
+      'High Confidence': pendingActionEvents.filter((e) => e.status === 'High Confidence').length,
+      'Manager Review': pendingActionEvents.filter((e) => e.status === 'Manager Review').length,
+      'Unmatched': pendingActionEvents.filter((e) => e.status === 'Unmatched').length,
+      'Conflicts': pendingActionEvents.filter((e) => e.status === 'Conflicts').length,
+      'Duplicates': pendingActionEvents.filter((e) => e.status === 'Duplicates').length,
+      'Stale': pendingActionEvents.filter((e) => e.status === 'Stale').length,
+      'Verified History': verifiedHistoryEvents.length,
+    };
+  }, [pendingActionEvents, verifiedHistoryEvents]);
+
+  // Filtered events based on tab and search
   const filteredEvents = useMemo(() => {
-    return events.filter((e) => {
-      // Tab filter
-      if (e.status !== activeTab) return false;
+    let baseList: ReviewEvent[];
 
-      // Search query
-      if (searchQuery.trim()) {
-        const q = searchQuery.toLowerCase();
-        const matchesId = e.id.toLowerCase().includes(q);
-        const matchesStatement = e.rawFieldStatement.toLowerCase().includes(q);
-        const matchesActivity = (e.candidateActivityName || '').toLowerCase().includes(q) ||
-          (e.candidateActivityId || '').toLowerCase().includes(q);
-        const matchesSubmitter = e.submittedBy.toLowerCase().includes(q);
-        return matchesId || matchesStatement || matchesActivity || matchesSubmitter;
-      }
+    if (activeTab === 'Verified History') {
+      baseList = verifiedHistoryEvents;
+    } else if (activeTab === 'All Action Items') {
+      baseList = pendingActionEvents;
+    } else {
+      baseList = pendingActionEvents.filter((e) => e.status === activeTab);
+    }
 
-      return true;
+    if (!searchQuery.trim()) return baseList;
+
+    const q = searchQuery.toLowerCase();
+    return baseList.filter((e) => {
+      const matchesId = e.id.toLowerCase().includes(q);
+      const matchesStatement = e.rawFieldStatement.toLowerCase().includes(q);
+      const matchesActivity =
+        (e.candidateActivityName || '').toLowerCase().includes(q) ||
+        (e.candidateActivityId || '').toLowerCase().includes(q);
+      const matchesSubmitter = e.submittedBy.toLowerCase().includes(q);
+      return matchesId || matchesStatement || matchesActivity || matchesSubmitter;
     });
-  }, [events, activeTab, searchQuery]);
+  }, [activeTab, pendingActionEvents, verifiedHistoryEvents, searchQuery]);
 
   // Open Drawer and initialize editable center values
   const handleOpenReview = (evt: ReviewEvent) => {
@@ -492,8 +509,11 @@ export default function ReviewQueuePage() {
     setIsEditingCenter(false);
   };
 
-  // 1. APPROVE ACTION (Requires Confirmation Dialog)
-  const handleInitiateApprove = () => {
+  // 1. APPROVE ACTION: Commits to Schedule Twin and moves OUT of the active action queue
+  const handleInitiateApprove = (evt?: ReviewEvent) => {
+    if (evt) {
+      setSelectedEvent(evt);
+    }
     setAttestationChecked(false);
     setIsApproveConfirmOpen(true);
   };
@@ -506,11 +526,11 @@ export default function ReviewQueuePage() {
       setIsSubmittingApproval(false);
       setIsApproveConfirmOpen(false);
 
-      // Mark as approved and update events
+      // Mark as approved and commit to Twin
       setEvents((prev) =>
         prev.map((e) =>
           e.id === selectedEvent.id
-            ? { ...e, isApproved: true, status: 'High Confidence' }
+            ? { ...e, isApproved: true }
             : e
         )
       );
@@ -518,11 +538,11 @@ export default function ReviewQueuePage() {
       addToast({
         type: 'success',
         title: 'Match Approved & Committed to Twin',
-        description: `Verified ${selectedEvent.id} linked to ${selectedEvent.candidateActivityId}. Schedule Twin progress updated.`,
+        description: `Verified ${selectedEvent.id} linked to ${selectedEvent.candidateActivityId}. Removed from active Review Queue.`,
       });
 
       setSelectedEvent(null);
-    }, 450);
+    }, 350);
   };
 
   // 2. REJECT ACTION
@@ -532,7 +552,7 @@ export default function ReviewQueuePage() {
     setEvents((prev) =>
       prev.map((e) =>
         e.id === selectedEvent.id
-          ? { ...e, isRejected: true, status: 'Unmatched', matchReason: `Rejected: ${rejectReasonText || 'Scope mismatch'}` }
+          ? { ...e, isRejected: true, matchReason: `Rejected: ${rejectReasonText || 'Scope mismatch'}` }
           : e
       )
     );
@@ -542,7 +562,7 @@ export default function ReviewQueuePage() {
     addToast({
       type: 'critical',
       title: 'Match Rejected',
-      description: `Event ${selectedEvent.id} unlinked and moved to Unmatched ledger.`,
+      description: `Event ${selectedEvent.id} unlinked and removed from active Review Queue.`,
     });
     setSelectedEvent(null);
   };
@@ -574,7 +594,7 @@ export default function ReviewQueuePage() {
     });
   };
 
-  // 4. EDIT EXTRACTED DATA (Center Column Save)
+  // 4. EDIT EXTRACTED DATA
   const handleSaveCenterEdits = () => {
     if (!selectedEvent) return;
 
@@ -599,11 +619,12 @@ export default function ReviewQueuePage() {
   };
 
   // 5. MARK UNMATCHED
-  const handleMarkUnmatched = () => {
-    if (!selectedEvent) return;
+  const handleMarkUnmatched = (evt?: ReviewEvent) => {
+    const target = evt || selectedEvent;
+    if (!target) return;
 
     const updated: ReviewEvent = {
-      ...selectedEvent,
+      ...target,
       candidateActivityId: null,
       candidateActivityName: null,
       candidateWbs: null,
@@ -612,13 +633,13 @@ export default function ReviewQueuePage() {
       matchReason: 'Marked as unassociated out-of-scope work by Reviewer',
     };
 
-    setEvents((prev) => prev.map((e) => (e.id === selectedEvent.id ? updated : e)));
+    setEvents((prev) => prev.map((e) => (e.id === target.id ? updated : e)));
     addToast({
       type: 'info',
       title: 'Marked as Unmatched',
-      description: `Event ${selectedEvent.id} moved to Unmatched scope ledger.`,
+      description: `Event ${target.id} moved to Unmatched scope ledger.`,
     });
-    setSelectedEvent(null);
+    if (selectedEvent) setSelectedEvent(null);
   };
 
   // 6. REQUEST CLARIFICATION
@@ -636,30 +657,61 @@ export default function ReviewQueuePage() {
     setSelectedEvent(null);
   };
 
-  // Helper for confidence bracket badge
-  const renderConfidenceBracket = (score: number) => {
-    if (score >= 90) {
-      return (
-        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-bold bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]">
-          <CheckCircle2 className="w-3 h-3" />
-          <span>{score}% High</span>
-        </span>
-      );
+  // Factors mapping for MatchCard
+  const getFactorsForEvent = (evt: ReviewEvent): MatchFactorItem[] => {
+    const isHigh = evt.confidence >= 90;
+    const isMed = evt.confidence >= 70;
+
+    return [
+      {
+        name: 'Activity keywords',
+        status: isHigh ? 'matched' : isMed ? 'partial' : 'mismatch',
+        reason:
+          evt.signals.find((s) => s.name.toLowerCase().includes('verb') || s.name.toLowerCase().includes('semantic'))
+            ?.reason || 'Work verbs and component descriptors aligned with WBS activity baseline',
+      },
+      {
+        name: 'Area / Line',
+        status: evt.line ? 'matched' : evt.area ? 'partial' : 'mismatch',
+        reason: evt.line
+          ? `Exact line identifier confirmed: ${evt.line}`
+          : evt.area
+          ? `Area level alignment: ${evt.area}`
+          : 'Plant area tag absent from field submission',
+      },
+      {
+        name: 'Discipline',
+        status: 'matched',
+        reason: `${evt.discipline} discipline conforms strictly to baseline engineering package`,
+      },
+      {
+        name: 'Date / Context',
+        status: isHigh ? 'matched' : isMed ? 'partial' : 'mismatch',
+        reason: `Submission date ${evt.date.split(' ')[0]} checked against scheduled window`,
+      },
+      {
+        name: 'Project / WBS',
+        status: evt.candidateWbs ? 'matched' : 'mismatch',
+        reason: evt.candidateWbs
+          ? `WBS node ${evt.candidateWbs} verified against current master schedule`
+          : 'No baseline activity corresponds to reported scope',
+      },
+    ];
+  };
+
+  // Alternatives mapping for MatchCard
+  const getAlternativesForEvent = (evt: ReviewEvent): MatchAlternativeItem[] => {
+    if (evt.alternativeCandidates && evt.alternativeCandidates.length > 0) {
+      return evt.alternativeCandidates.map((c) => ({
+        activityId: c.activityId,
+        activityName: c.activityName,
+        confidence: c.confidence,
+        wbs: c.wbs,
+        discipline: c.discipline,
+        reasons: c.reasons,
+      }));
     }
-    if (score >= 70) {
-      return (
-        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-bold bg-[#FDF6ED] text-[#D98B32] border border-[#F0D4A6]">
-          <Clock className="w-3 h-3" />
-          <span>{score}% Review Req.</span>
-        </span>
-      );
-    }
-    return (
-      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-bold bg-[#F0F2F5] text-[#596579] border border-[#D9DEE5]">
-        <HelpCircle className="w-3 h-3" />
-        <span>{score}% Unmatched</span>
-      </span>
-    );
+    return [];
   };
 
   const breadcrumbs = [
@@ -668,16 +720,18 @@ export default function ReviewQueuePage() {
   ];
 
   const tabs: ReviewTab[] = [
+    'All Action Items',
     'High Confidence',
     'Manager Review',
     'Unmatched',
     'Conflicts',
     'Duplicates',
     'Stale',
+    'Verified History',
   ];
 
   return (
-    <AppShell>
+    <StateWrapper>
       <div className="space-y-6 pb-24 md:pb-12 max-w-7xl mx-auto">
         {/* Breadcrumb Navigation */}
         <Breadcrumbs items={breadcrumbs} />
@@ -692,12 +746,12 @@ export default function ReviewQueuePage() {
                   Human-in-the-Loop Verification
                 </span>
                 <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-mono font-medium bg-[#F0F2F5] text-[#596579] border border-[#D9DEE5]">
-                  Algorithm: Deterministic Semantic Parser v2.4
+                  Action Queue Only · Zero Silent Conversions
                 </span>
               </div>
               <h1 className="text-2xl font-bold text-[#172033] tracking-tight">Review Queue</h1>
               <p className="text-xs text-[#596579] mt-0.5">
-                Critical governance workflow: audit, calibrate, and formally authorize AI candidate matches before Schedule Twin baseline commit.
+                Contains only field events requiring human decision. Verified events are committed to Schedule Twin and removed from active queue.
               </p>
             </div>
 
@@ -709,40 +763,39 @@ export default function ReviewQueuePage() {
                 href="/matching"
                 className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-[#176B87] hover:text-[#135A72] hover:bg-[#EDF5F8] border border-transparent rounded-lg transition-colors"
               >
-                <span>Pipeline Stage 3</span>
+                <span>Matching Engine</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             </div>
           </div>
 
-          {/* GOVERNANCE POLICY BANNER: Do not silently convert AI suggestions */}
+          {/* GOVERNANCE POLICY BANNER */}
           <div className="pt-4">
             <div className="p-3.5 bg-[#EDF5F8] border border-[#B3CBE0] rounded-xl flex items-start gap-3 text-xs">
               <ShieldCheck className="w-5 h-5 text-[#176B87] shrink-0 mt-0.5" />
               <div className="space-y-0.5">
                 <h4 className="font-bold text-[#172033]">
-                  Schedule Integrity Protocol: Zero Silent AI Conversions
+                  Schedule Integrity Protocol: AI is Not the Final Authority
                 </h4>
                 <p className="text-[#596579] leading-relaxed">
-                  PLnEX deterministic suggestions are assistive and <strong>never silently committed into verified baseline records</strong>. Every schedule variance and progress update requires conscious confirmation by the Project Controls Manager or assigned Site Engineer.
+                  A high confidence suggestion (e.g. 94%) is <strong>never treated as verified</strong>. AI candidate matches are assistive only and require conscious human verification. Once approved, events are committed to Schedule Twin and cleared from this queue.
                 </p>
               </div>
             </div>
           </div>
         </div>
 
-        {/* SUMMARY TABS:
-            - High Confidence
-            - Manager Review
-            - Unmatched
-            - Conflicts
-            - Duplicates
-            - Stale */}
+        {/* CORE FLOW PIPELINE: Field Input -> Extraction -> Execution Event -> Candidate Match -> Confidence -> Human Verification -> Verified Update */}
+        <CoreFlowBanner currentStage="HUMAN_VERIFICATION" />
+
+        {/* SUMMARY TABS */}
         <div className="bg-white border border-[#D9DEE5] rounded-xl overflow-hidden shadow-xs">
           <div className="flex border-b border-[#D9DEE5] bg-[#F7F8FA] overflow-x-auto">
             {tabs.map((tab) => {
               const isActive = activeTab === tab;
               const count = tabCounts[tab];
+              const isHistory = tab === 'Verified History';
+
               return (
                 <button
                   key={tab}
@@ -754,12 +807,17 @@ export default function ReviewQueuePage() {
                       : 'border-transparent text-[#596579] hover:text-[#172033] hover:bg-[#F0F2F5]'
                   }`}
                 >
+                  {isHistory && <Archive className="w-3.5 h-3.5 text-[#8A94A6]" />}
                   <span>{tab}</span>
                   <span
                     className={`px-2 py-0.5 rounded-full text-[10px] font-mono font-bold ${
                       isActive
                         ? 'bg-[#EDF5F8] text-[#176B87]'
-                        : 'bg-[#E8EBF0] text-[#596579]'
+                        : isHistory
+                        ? 'bg-[#F0F2F5] text-[#8A94A6]'
+                        : count > 0
+                        ? 'bg-[#E8EBF0] text-[#172033]'
+                        : 'bg-[#F0F2F5] text-[#8A94A6]'
                     }`}
                   >
                     {count}
@@ -769,8 +827,8 @@ export default function ReviewQueuePage() {
             })}
           </div>
 
-          {/* SEARCH & QUICK FILTERS */}
-          <div className="p-4 border-b border-[#D9DEE5]/60 flex items-center justify-between gap-3 text-xs">
+          {/* SEARCH & ACTIVE QUEUE NOTICE */}
+          <div className="p-4 border-b border-[#D9DEE5]/60 flex items-center justify-between gap-3 text-xs flex-wrap">
             <div className="relative flex-1 max-w-md">
               <Search className="w-4 h-4 text-[#8A94A6] absolute left-3 top-1/2 -translate-y-1/2" />
               <input
@@ -791,192 +849,126 @@ export default function ReviewQueuePage() {
               )}
             </div>
 
-            <div className="text-[11px] text-[#8A94A6] hidden sm:block">
-              Showing <strong>{filteredEvents.length}</strong> items in <strong>{activeTab}</strong>
+            <div className="text-[11px] text-[#596579]">
+              {activeTab === 'Verified History' ? (
+                <span>Showing <strong>{filteredEvents.length}</strong> previously verified & committed events (Archived)</span>
+              ) : (
+                <span>Showing <strong>{filteredEvents.length}</strong> items requiring human decision</span>
+              )}
             </div>
           </div>
 
-          {/* MAIN TABLE:
-              - Event ID
-              - Field Statement
-              - Candidate Activity
-              - Confidence
-              - Match Reason
-              - Evidence
-              - Submitted By
-              - Date
-              - Status
-              - Action */}
-          <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs border-collapse">
-              <thead>
-                <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[11px] font-bold uppercase tracking-wider text-[#596579]">
-                  <th className="p-3.5 whitespace-nowrap">Event ID</th>
-                  <th className="p-3.5 min-w-[220px]">Field Statement</th>
-                  <th className="p-3.5 min-w-[190px]">Candidate Activity</th>
-                  <th className="p-3.5 whitespace-nowrap text-center">Confidence</th>
-                  <th className="p-3.5 min-w-[200px]">Match Reason</th>
-                  <th className="p-3.5 whitespace-nowrap text-center">Evidence</th>
-                  <th className="p-3.5 whitespace-nowrap">Submitted By</th>
-                  <th className="p-3.5 whitespace-nowrap">Date</th>
-                  <th className="p-3.5 whitespace-nowrap">Status</th>
-                  <th className="p-3.5 whitespace-nowrap text-right">Action</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-[#D9DEE5]">
-                {filteredEvents.length === 0 ? (
-                  <tr>
-                    <td colSpan={10} className="p-8 text-center text-[#596579]">
-                      <CheckCircle2 className="w-8 h-8 text-[#2E7D5B] mx-auto mb-2" />
-                      <p className="font-semibold text-sm text-[#172033]">
-                        No items pending in "{activeTab}" tab
-                      </p>
-                      <p className="text-xs text-[#8A94A6] mt-0.5">
-                        Select another tab above to inspect queued execution events.
-                      </p>
-                    </td>
-                  </tr>
-                ) : (
-                  filteredEvents.map((evt) => (
-                    <tr
-                      key={evt.id}
-                      className="hover:bg-[#EDF5F8]/40 transition-colors group"
-                    >
-                      {/* 1. Event ID */}
-                      <td className="p-3.5 whitespace-nowrap font-mono font-bold text-[#176B87]">
-                        {evt.id}
-                      </td>
+          {/* MAIN REVIEW QUEUE EVENT CARDS */}
+          <div className="p-4 space-y-4">
+            {filteredEvents.length === 0 ? (
+              <div className="p-12 text-center text-[#596579] bg-[#FAFAFA] rounded-xl border border-dashed border-[#D9DEE5]">
+                <CheckCircle2 className="w-10 h-10 text-[#2E7D5B] mx-auto mb-2" />
+                <h3 className="font-bold text-sm text-[#172033]">
+                  {activeTab === 'Verified History'
+                    ? 'No verified events in history archive yet'
+                    : `Zero items pending in "${activeTab}" queue`}
+                </h3>
+                <p className="text-xs text-[#8A94A6] mt-1 max-w-md mx-auto">
+                  {activeTab === 'Verified History'
+                    ? 'Approve candidate matches in the queue above to commit them to the Schedule Twin.'
+                    : 'All events in this category have been processed. Review Queue strictly excludes already verified items to keep manager focus on items requiring action.'}
+                </p>
+              </div>
+            ) : (
+              filteredEvents.map((evt) => (
+                <div
+                  key={evt.id}
+                  className="bg-white border border-[#D9DEE5] rounded-xl overflow-hidden shadow-xs hover:border-[#B3CBE0] transition-colors"
+                >
+                  {/* Event Top Meta Bar */}
+                  <div className="px-4 py-2.5 bg-[#F7F8FA] border-b border-[#D9DEE5] flex items-center justify-between flex-wrap gap-2 text-xs">
+                    <div className="flex items-center gap-3">
+                      <span className="font-mono font-bold text-[#176B87]">{evt.id}</span>
+                      <span className="text-[#8A94A6]">•</span>
+                      <span className="font-semibold text-[#172033]">{evt.submittedBy}</span>
+                      <span className="text-[#8A94A6]">•</span>
+                      <span className="text-[#596579] font-mono text-[11px]">{evt.date}</span>
+                    </div>
 
-                      {/* 2. Field Statement */}
-                      <td className="p-3.5 text-[#172033] max-w-[240px]">
-                        <p className="truncate font-medium" title={evt.rawFieldStatement}>
-                          {evt.rawFieldStatement}
-                        </p>
-                        <span className="text-[10px] text-[#8A94A6] font-mono block">
-                          Qty: {evt.extractedQuantity} {evt.unit} · {evt.area}
+                    <div className="flex items-center gap-2">
+                      <span className="text-[10px] uppercase font-mono px-2 py-0.5 rounded bg-white border border-[#D9DEE5] text-[#596579]">
+                        {evt.source}
+                      </span>
+                      {evt.evidenceCount > 0 && (
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-mono bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]">
+                          <Camera className="w-3 h-3" />
+                          <span>{evt.evidenceCount} Proofs</span>
                         </span>
-                      </td>
+                      )}
+                      <button
+                        type="button"
+                        onClick={() => handleOpenReview(evt)}
+                        className="text-xs font-bold text-[#176B87] hover:underline inline-flex items-center gap-1 ml-2"
+                      >
+                        <span>Full Inspection Drawer</span>
+                        <ArrowRight className="w-3 h-3" />
+                      </button>
+                    </div>
+                  </div>
 
-                      {/* 3. Candidate Activity */}
-                      <td className="p-3.5 max-w-[200px]">
-                        {evt.candidateActivityId ? (
-                          <div>
-                            <div className="flex items-center gap-1.5">
-                              <button
-                                type="button"
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  openActivityDrawer(evt.candidateActivityId!);
-                                }}
-                                className="font-mono font-bold text-[#176B87] hover:underline inline-flex items-center gap-1 text-left"
-                                title="Open in Activity Detail Drawer"
-                              >
-                                <span>{evt.candidateActivityId}</span>
-                                <ArrowUpRight className="w-3 h-3 text-[#176B87]" />
-                              </button>
-                              {evt.candidateWbs && (
-                                <span className="text-[10px] font-mono text-[#8A94A6]">
-                                  WBS {evt.candidateWbs}
-                                </span>
-                              )}
-                            </div>
-                            <p className="text-[11px] text-[#596579] truncate" title={evt.candidateActivityName || ''}>
-                              {evt.candidateActivityName}
-                            </p>
-                          </div>
-                        ) : (
-                          <span className="text-xs text-[#8A94A6] italic">
-                            Unassigned (No match)
-                          </span>
-                        )}
-                      </td>
-
-                      {/* 4. Confidence (90-100 High, 70-89 Review Required, <70 Unmatched) */}
-                      <td className="p-3.5 whitespace-nowrap text-center">
-                        {renderConfidenceBracket(evt.confidence)}
-                      </td>
-
-                      {/* 5. Match Reason */}
-                      <td className="p-3.5 text-[#596579] max-w-[220px]">
-                        <p className="text-[11px] leading-relaxed truncate" title={evt.matchReason}>
-                          {evt.matchReason}
-                        </p>
-                      </td>
-
-                      {/* 6. Evidence */}
-                      <td className="p-3.5 whitespace-nowrap text-center">
-                        {evt.evidenceCount > 0 ? (
-                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-mono bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]">
-                            <Camera className="w-3 h-3" />
-                            <span>{evt.evidenceCount}</span>
-                          </span>
-                        ) : (
-                          <span className="text-[11px] text-[#8A94A6]">—</span>
-                        )}
-                      </td>
-
-                      {/* 7. Submitted By */}
-                      <td className="p-3.5 whitespace-nowrap text-[#172033]">
-                        <span className="font-semibold block truncate max-w-[140px]" title={evt.submittedBy}>
-                          {evt.submittedBy}
-                        </span>
-                        <span className="text-[10px] text-[#8A94A6] font-mono">{evt.source}</span>
-                      </td>
-
-                      {/* 8. Date */}
-                      <td className="p-3.5 whitespace-nowrap text-[#8A94A6] font-mono text-[11px]">
-                        {evt.date}
-                      </td>
-
-                      {/* 9. Status */}
-                      <td className="p-3.5 whitespace-nowrap">
-                        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-[11px] font-bold bg-[#F0F2F5] text-[#596579] border border-[#D9DEE5]">
-                          {evt.status}
-                        </span>
-                      </td>
-
-                      {/* 10. Action */}
-                      <td className="p-3.5 whitespace-nowrap text-right">
-                        <button
-                          type="button"
-                          onClick={() => handleOpenReview(evt)}
-                          className="px-3.5 py-1.5 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] active:scale-95 rounded-lg shadow-2xs transition-all inline-flex items-center gap-1.5"
-                        >
-                          <span>Review</span>
-                          <ArrowRight className="w-3 h-3" />
-                        </button>
-                      </td>
-                    </tr>
-                  ))
-                )}
-              </tbody>
-            </table>
+                  {/* Embedded MatchCard Component */}
+                  <MatchCard
+                    activityId={evt.candidateActivityId}
+                    activityName={evt.candidateActivityName}
+                    confidence={evt.confidence}
+                    statusText={
+                      evt.status === 'High Confidence'
+                        ? 'High-confidence suggestion'
+                        : evt.status === 'Manager Review'
+                        ? 'Needs manager verification'
+                        : evt.status === 'Unmatched'
+                        ? 'Unmatched scope'
+                        : `${evt.status} flag`
+                    }
+                    verificationStatus={evt.isApproved ? 'Verified' : evt.isRejected ? 'Rejected' : 'Pending'}
+                    wbs={evt.candidateWbs}
+                    discipline={evt.discipline}
+                    area={evt.area}
+                    line={evt.line}
+                    fieldStatement={evt.rawFieldStatement}
+                    factors={getFactorsForEvent(evt)}
+                    alternatives={getAlternativesForEvent(evt)}
+                    onApprove={() => handleInitiateApprove(evt)}
+                    onChooseAnother={() => {
+                      setSelectedEvent(evt);
+                      setSelectedAlternativeId(evt.candidateActivityId || '');
+                      setIsActivityPickerOpen(true);
+                    }}
+                    onReject={() => {
+                      setSelectedEvent(evt);
+                      setIsRejectModalOpen(true);
+                    }}
+                    onMarkUnmatched={() => handleMarkUnmatched(evt)}
+                    onSelectAlternative={(altId) => {
+                      setSelectedEvent(evt);
+                      handleSwitchActivity(altId);
+                    }}
+                  />
+                </div>
+              ))
+            )}
           </div>
         </div>
 
-        {/* =========================================================================
-            3-COLUMN REVIEW DRAWER:
-            LEFT: Original field submission
-            CENTER: Extracted structured information
-            RIGHT: Suggested activity
-            Show: Why matched, Alternative activities, Confidence, Evidence, Rules, Algorithm version
-            Actions: Approve Match, Reject Match, Choose Another Activity, Edit Extracted Data,
-                     Mark Unmatched, Request Clarification
-            ========================================================================= */}
+        {/* 3-COLUMN REVIEW DRAWER FOR DEEP EVIDENCE INSPECTION */}
         <Drawer
           isOpen={!!selectedEvent}
           onClose={() => setSelectedEvent(null)}
-          title={`Review Match: ${selectedEvent?.id || ''}`}
-          subtitle={`Human-in-the-Loop Attestation · Stage 3 Review`}
+          title={`Detailed Review: ${selectedEvent?.id || ''}`}
+          subtitle={`Human Decision Verification · Schedule Twin Linking`}
           width="xl"
           footer={
             selectedEvent && (
               <div className="flex flex-col sm:flex-row items-center justify-between gap-3 w-full text-xs">
-                {/* Secondary Actions Left */}
                 <div className="flex items-center gap-2 flex-wrap">
                   <button
                     type="button"
-                    onClick={handleMarkUnmatched}
+                    onClick={() => handleMarkUnmatched(selectedEvent)}
                     className="px-3 py-2 font-semibold text-[#596579] hover:text-[#172033] bg-white border border-[#D9DEE5] rounded-lg transition-colors"
                   >
                     Mark Unmatched
@@ -1004,7 +996,6 @@ export default function ReviewQueuePage() {
                   </button>
                 </div>
 
-                {/* Primary Actions Right */}
                 <div className="flex items-center gap-2">
                   <button
                     type="button"
@@ -1013,15 +1004,14 @@ export default function ReviewQueuePage() {
                   >
                     Cancel
                   </button>
-                  {/* APPROVE ACTION: Requires confirmation */}
                   <button
                     type="button"
-                    onClick={handleInitiateApprove}
+                    onClick={() => handleInitiateApprove(selectedEvent)}
                     disabled={!selectedEvent.candidateActivityId}
                     className="px-5 py-2 font-bold text-white bg-[#176B87] hover:bg-[#135A72] disabled:opacity-50 active:scale-95 rounded-lg shadow-sm inline-flex items-center gap-2 transition-all"
                   >
                     <Check className="w-4 h-4 stroke-[3]" />
-                    <span>Approve Match</span>
+                    <span>Approve Match & Commit</span>
                   </button>
                 </div>
               </div>
@@ -1030,524 +1020,334 @@ export default function ReviewQueuePage() {
         >
           {selectedEvent && (
             <div className="space-y-6 text-xs text-[#172033]">
-              {/* ALGORITHM VERSION & CONFIDENCE HEADER STRIP */}
-              <div className="p-3.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-xl flex items-center justify-between flex-wrap gap-2">
-                <div className="flex items-center gap-2">
-                  <span className="font-mono text-[11px] font-bold text-[#596579] bg-white px-2 py-0.5 rounded border border-[#D9DEE5]">
-                    Engine: Deterministic Semantic Parser v2.4
-                  </span>
-                  <span className="text-[11px] text-[#8A94A6]">Build 2026.09 · Schedule Twin Engine</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-[10px] uppercase font-bold text-[#8A94A6]">Overall Confidence:</span>
-                  {renderConfidenceBracket(selectedEvent.confidence)}
-                </div>
-              </div>
+              {/* MatchCard inside drawer */}
+              <MatchCard
+                activityId={selectedEvent.candidateActivityId}
+                activityName={selectedEvent.candidateActivityName}
+                confidence={selectedEvent.confidence}
+                statusText={
+                  selectedEvent.status === 'High Confidence'
+                    ? 'High-confidence suggestion'
+                    : selectedEvent.status === 'Manager Review'
+                    ? 'Needs manager verification'
+                    : selectedEvent.status === 'Unmatched'
+                    ? 'Unmatched scope'
+                    : `${selectedEvent.status} flag`
+                }
+                verificationStatus={selectedEvent.isApproved ? 'Verified' : selectedEvent.isRejected ? 'Rejected' : 'Pending'}
+                wbs={selectedEvent.candidateWbs}
+                discipline={selectedEvent.discipline}
+                area={selectedEvent.area}
+                line={selectedEvent.line}
+                fieldStatement={selectedEvent.rawFieldStatement}
+                factors={getFactorsForEvent(selectedEvent)}
+                alternatives={getAlternativesForEvent(selectedEvent)}
+                onApprove={() => handleInitiateApprove(selectedEvent)}
+                onChooseAnother={() => {
+                  setSelectedAlternativeId(selectedEvent.candidateActivityId || '');
+                  setIsActivityPickerOpen(true);
+                }}
+                onReject={() => setIsRejectModalOpen(true)}
+                onMarkUnmatched={() => handleMarkUnmatched(selectedEvent)}
+                onSelectAlternative={(altId) => handleSwitchActivity(altId)}
+              />
 
-              {/* 3-COLUMN DESKTOP GRID: LEFT, CENTER, RIGHT */}
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
-                {/* =========================================================
-                    COLUMN 1 (LEFT): ORIGINAL FIELD SUBMISSION
-                    ========================================================= */}
-                <div className="p-4 bg-white border border-[#D9DEE5] rounded-xl space-y-3 flex flex-col justify-between">
-                  <div className="space-y-3">
-                    <div className="flex items-center justify-between border-b border-[#D9DEE5]/60 pb-2">
-                      <span className="font-bold text-xs uppercase tracking-wider text-[#176B87] flex items-center gap-1.5">
-                        <FileText className="w-3.5 h-3.5" />
-                        Original Field Submission
-                      </span>
-                      <span className="font-mono text-[10px] font-bold px-1.5 py-0.5 rounded bg-[#F0F2F5] text-[#596579]">
-                        {selectedEvent.source}
-                      </span>
-                    </div>
-
-                    <div className="space-y-1 text-[11px]">
-                      <span className="text-[#8A94A6] uppercase font-bold text-[9px] block">Submitted By</span>
-                      <span className="font-bold text-[#172033] block">{selectedEvent.submittedBy}</span>
-                      <span className="text-[#596579] font-mono block">{selectedEvent.date}</span>
-                    </div>
-
-                    <div className="space-y-1">
-                      <span className="text-[#8A94A6] uppercase font-bold text-[9px] block">Raw Statement</span>
-                      <p className="p-3 bg-[#F7F8FA] border border-[#D9DEE5]/80 rounded-lg text-xs font-medium leading-relaxed italic text-[#172033]">
-                        "{selectedEvent.rawFieldStatement}"
-                      </p>
-                    </div>
-
-                    {/* Evidence Previews */}
-                    <div className="space-y-1.5 pt-1">
-                      <span className="text-[#8A94A6] uppercase font-bold text-[9px] block">
-                        Attached Physical Proofs ({selectedEvent.evidenceCount})
-                      </span>
-                      {selectedEvent.evidenceItems.length === 0 ? (
-                        <p className="text-[11px] text-[#8A94A6] italic">No physical files attached.</p>
-                      ) : (
-                        <div className="space-y-1">
-                          {selectedEvent.evidenceItems.map((ev) => (
-                            <div
-                              key={ev.id}
-                              className="p-2 bg-[#F7F8FA] border border-[#D9DEE5] rounded flex items-center justify-between text-[11px]"
-                            >
-                              <div className="flex items-center gap-1.5 truncate">
-                                {ev.type === 'PHOTO' ? (
-                                  <Camera className="w-3.5 h-3.5 text-[#176B87] shrink-0" />
-                                ) : (
-                                  <FileText className="w-3.5 h-3.5 text-[#596579] shrink-0" />
-                                )}
-                                <span className="font-mono truncate">{ev.title}</span>
-                              </div>
-                              <span className="text-[#8A94A6] text-[10px] shrink-0">{ev.timestamp}</span>
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-
-                  <div className="pt-2 border-t border-[#D9DEE5]/60 text-[10px] text-[#8A94A6]">
-                    GPS Verified · Unit A Gas Processing
-                  </div>
-                </div>
-
-                {/* =========================================================
-                    COLUMN 2 (CENTER): EXTRACTED STRUCTURED INFORMATION
-                    ========================================================= */}
-                <div className="p-4 bg-white border border-[#D9DEE5] rounded-xl space-y-3 flex flex-col justify-between">
-                  <div className="space-y-3">
-                    <div className="flex items-center justify-between border-b border-[#D9DEE5]/60 pb-2">
-                      <span className="font-bold text-xs uppercase tracking-wider text-[#176B87] flex items-center gap-1.5">
-                        <SlidersHorizontal className="w-3.5 h-3.5" />
-                        Extracted Structured Information
-                      </span>
-                      <button
-                        type="button"
-                        onClick={() => setIsEditingCenter(!isEditingCenter)}
-                        className="text-[11px] font-bold text-[#176B87] hover:underline inline-flex items-center gap-1"
-                      >
-                        <Edit3 className="w-3 h-3" />
-                        <span>{isEditingCenter ? 'Cancel Edit' : 'Edit Data'}</span>
-                      </button>
-                    </div>
-
-                    {isEditingCenter ? (
-                      /* EDITING FORM */
-                      <div className="space-y-2 text-xs">
-                        <div>
-                          <label className="text-[10px] font-bold uppercase text-[#8A94A6] block mb-0.5">
-                            Work Type
-                          </label>
-                          <input
-                            type="text"
-                            value={editWorkType}
-                            onChange={(e) => setEditWorkType(e.target.value)}
-                            className="w-full p-2 bg-[#FAFAFA] border border-[#D9DEE5] rounded-lg font-bold text-xs"
-                          />
-                        </div>
-
-                        <div className="grid grid-cols-2 gap-2">
-                          <div>
-                            <label className="text-[10px] font-bold uppercase text-[#8A94A6] block mb-0.5">
-                              Quantity
-                            </label>
-                            <input
-                              type="number"
-                              value={editQuantity}
-                              onChange={(e) => setEditQuantity(parseFloat(e.target.value) || 0)}
-                              className="w-full p-2 bg-[#FAFAFA] border border-[#D9DEE5] rounded-lg font-bold text-xs"
-                            />
-                          </div>
-                          <div>
-                            <label className="text-[10px] font-bold uppercase text-[#8A94A6] block mb-0.5">
-                              Unit
-                            </label>
-                            <input
-                              type="text"
-                              value={editUnit}
-                              onChange={(e) => setEditUnit(e.target.value)}
-                              className="w-full p-2 bg-[#FAFAFA] border border-[#D9DEE5] rounded-lg font-bold text-xs"
-                            />
-                          </div>
-                        </div>
-
-                        <div>
-                          <label className="text-[10px] font-bold uppercase text-[#8A94A6] block mb-0.5">
-                            Area / Line
-                          </label>
-                          <input
-                            type="text"
-                            value={editArea}
-                            onChange={(e) => setEditArea(e.target.value)}
-                            className="w-full p-2 bg-[#FAFAFA] border border-[#D9DEE5] rounded-lg font-bold text-xs"
-                          />
-                        </div>
-
-                        <button
-                          type="button"
-                          onClick={handleSaveCenterEdits}
-                          className="w-full mt-2 py-2 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] rounded-lg inline-flex items-center justify-center gap-1.5"
-                        >
-                          <Save className="w-3.5 h-3.5" />
-                          <span>Save Extracted Values</span>
-                        </button>
-                      </div>
-                    ) : (
-                      /* READ-ONLY DISPLAY */
-                      <div className="space-y-2 text-xs">
-                        <div className="p-2.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg flex justify-between items-center">
-                          <span className="text-[#8A94A6]">Work Type:</span>
-                          <strong className="text-[#172033]">{selectedEvent.workType}</strong>
-                        </div>
-                        <div className="p-2.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg flex justify-between items-center">
-                          <span className="text-[#8A94A6]">Quantity & Unit:</span>
-                          <strong className="text-[#172033] font-mono">
-                            {selectedEvent.extractedQuantity} {selectedEvent.unit}
-                          </strong>
-                        </div>
-                        <div className="p-2.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg flex justify-between items-center">
-                          <span className="text-[#8A94A6]">Area / Line:</span>
-                          <strong className="text-[#172033] truncate max-w-[150px]">
-                            {selectedEvent.area}
-                          </strong>
-                        </div>
-                        <div className="p-2.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg flex justify-between items-center">
-                          <span className="text-[#8A94A6]">Discipline:</span>
-                          <strong className="text-[#172033]">{selectedEvent.discipline}</strong>
-                        </div>
-                        <div className="p-2.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg flex justify-between items-center">
-                          <span className="text-[#8A94A6]">Shift Window:</span>
-                          <strong className="text-[#172033]">{selectedEvent.shiftTime}</strong>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-
-                  <div className="pt-2 border-t border-[#D9DEE5]/60 text-[10px] text-[#2E7D5B] font-semibold flex items-center gap-1">
-                    <CheckCircle2 className="w-3 h-3" />
-                    <span>Entities Normalized</span>
-                  </div>
-                </div>
-
-                {/* =========================================================
-                    COLUMN 3 (RIGHT): SUGGESTED SCHEDULE ACTIVITY
-                    ========================================================= */}
-                <div className="p-4 bg-white border border-[#D9DEE5] rounded-xl space-y-3 flex flex-col justify-between">
-                  <div className="space-y-3">
-                    <div className="flex items-center justify-between border-b border-[#D9DEE5]/60 pb-2">
-                      <span className="font-bold text-xs uppercase tracking-wider text-[#176B87] flex items-center gap-1.5">
-                        <Layers className="w-3.5 h-3.5" />
-                        Suggested Schedule Activity
-                      </span>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setSelectedAlternativeId('');
-                          setIsActivityPickerOpen(true);
-                        }}
-                        className="text-[11px] font-bold text-[#176B87] hover:underline"
-                      >
-                        Choose Another
-                      </button>
-                    </div>
-
-                    {selectedEvent.candidateActivityId ? (
-                      <div className="space-y-2 text-xs">
-                        <div className="p-3 bg-[#EDF5F8] border border-[#B3CBE0] rounded-lg space-y-1">
-                          <div className="flex items-center justify-between">
-                            <span className="font-mono font-bold text-sm text-[#176B87]">
-                              {selectedEvent.candidateActivityId}
-                            </span>
-                            <span className="text-[10px] font-mono text-[#596579] bg-white px-1.5 py-0.5 rounded border border-[#D9DEE5]">
-                              WBS {selectedEvent.candidateWbs}
-                            </span>
-                          </div>
-                          <p className="font-bold text-xs text-[#172033]">
-                            {selectedEvent.candidateActivityName}
-                          </p>
-                          <button
-                            type="button"
-                            onClick={() => openActivityDrawer(selectedEvent.candidateActivityId!)}
-                            className="mt-1 text-xs font-semibold text-[#176B87] hover:underline inline-flex items-center gap-1"
-                          >
-                            <span>Open in Activity Detail Drawer</span>
-                            <ArrowRight className="w-3.5 h-3.5" />
-                          </button>
-                        </div>
-
-                        {/* Progress Twin Preview */}
-                        <div className="p-2.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg space-y-1 text-[11px]">
-                          <span className="text-[10px] uppercase font-bold text-[#8A94A6] block">
-                            Schedule Twin Progress Delta
-                          </span>
-                          <div className="flex items-center justify-between">
-                            <span>Current Actual: <strong>30%</strong></span>
-                            <ArrowRight className="w-3 h-3 text-[#176B87]" />
-                            <span>
-                              After Commit: <strong className="text-[#2E7D5B]">42% (+{selectedEvent.extractedQuantity} {selectedEvent.unit})</strong>
-                            </span>
-                          </div>
-                        </div>
-
-                        <div className="p-2.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg text-[11px] flex justify-between">
-                          <span className="text-[#8A94A6]">Target Finish:</span>
-                          <span className="font-bold text-[#172033]">15 Sep 2026 (Critical Path)</span>
-                        </div>
-                      </div>
-                    ) : (
-                      <div className="p-4 bg-[#FBEFEE] border border-[#E4B0AA] rounded-lg text-xs text-[#B5473C] space-y-2">
-                        <strong>No Activity Associated:</strong>
-                        <p className="text-[11px]">This observation has no baseline target in WBS V3 · Rev 3.2.</p>
-                        <button
-                          type="button"
-                          onClick={() => setIsActivityPickerOpen(true)}
-                          className="px-3 py-1.5 font-bold text-white bg-[#176B87] hover:bg-[#135A72] rounded-lg text-xs inline-flex items-center gap-1"
-                        >
-                          <Plus className="w-3 h-3" />
-                          <span>Assign Schedule Activity</span>
-                        </button>
-                      </div>
-                    )}
-                  </div>
-
-                  <div className="pt-2 border-t border-[#D9DEE5]/60 text-[10px] text-[#8A94A6]">
-                    Schedule Twin Commit Ready
-                  </div>
-                </div>
-              </div>
-
-              {/* =========================================================
-                  EXTENDED DETAILS: WHY MATCHED, ALTERNATIVES, SIGNALS, RULES
-                  ========================================================= */}
-              {/* Full Deterministic Match Explanation */}
-              <div className="pt-2">
-                <MatchExplanation
-                  eventId={selectedEvent.id}
-                  showHeading={true}
-                  onSelectAlternative={handleSwitchActivity}
-                  onOpenActivity={(actId) => openActivityDrawer(actId)}
-                />
-              </div>
-
-              {/* 3. RULES EVALUATION MATRIX */}
-              <div className="p-4 bg-white border border-[#D9DEE5] rounded-xl space-y-2">
-                <h4 className="font-bold text-xs uppercase tracking-wider text-[#596579] flex items-center gap-1.5">
-                  <ShieldCheck className="w-3.5 h-3.5 text-[#176B87]" />
-                  Project Controls Rules Evaluation
-                </h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
-                  {selectedEvent.rulesEvaluated.map((r, idx) => (
-                    <div
-                      key={idx}
-                      className={`p-2.5 rounded-lg border flex items-start gap-2 ${
-                        r.status === 'PASSED'
-                          ? 'bg-[#EDF7F2] border-[#B8DCC9] text-[#2E7D5B]'
-                          : r.status === 'WARNING'
-                          ? 'bg-[#FDF6ED] border-[#F0D4A6] text-[#D98B32]'
-                          : 'bg-[#FBEFEE] border-[#E4B0AA] text-[#B5473C]'
-                      }`}
+              {/* 3-Column Inspection: Raw Field Observation, Editable Parameters, Physical Evidence */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {/* Column 1: Editable Extraction Fields */}
+                <div className="p-4 bg-[#F7F8FA] border border-[#D9DEE5] rounded-xl space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="font-bold text-xs uppercase tracking-wider text-[#596579]">
+                      Extracted Parameters (Editable)
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => setIsEditingCenter(!isEditingCenter)}
+                      className="text-xs font-semibold text-[#176B87] hover:underline inline-flex items-center gap-1"
                     >
-                      {r.status === 'PASSED' ? (
-                        <CheckCircle2 className="w-4 h-4 shrink-0 mt-0.5" />
-                      ) : (
-                        <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5" />
-                      )}
+                      <Edit3 className="w-3.5 h-3.5" />
+                      <span>{isEditingCenter ? 'Discard Edits' : 'Edit Fields'}</span>
+                    </button>
+                  </div>
+
+                  {isEditingCenter ? (
+                    <div className="space-y-3 pt-1">
                       <div>
-                        <span className="font-bold block text-[#172033]">{r.name}</span>
-                        <span className="text-[11px] text-[#596579]">{r.details}</span>
+                        <label className="text-[11px] font-bold text-[#596579] block mb-1">Work Type</label>
+                        <input
+                          type="text"
+                          value={editWorkType}
+                          onChange={(e) => setEditWorkType(e.target.value)}
+                          className="w-full p-2 bg-white border border-[#D9DEE5] rounded text-xs"
+                        />
+                      </div>
+                      <div className="grid grid-cols-2 gap-2">
+                        <div>
+                          <label className="text-[11px] font-bold text-[#596579] block mb-1">Quantity</label>
+                          <input
+                            type="number"
+                            value={editQuantity}
+                            onChange={(e) => setEditQuantity(Number(e.target.value))}
+                            className="w-full p-2 bg-white border border-[#D9DEE5] rounded text-xs font-mono"
+                          />
+                        </div>
+                        <div>
+                          <label className="text-[11px] font-bold text-[#596579] block mb-1">Unit</label>
+                          <input
+                            type="text"
+                            value={editUnit}
+                            onChange={(e) => setEditUnit(e.target.value)}
+                            className="w-full p-2 bg-white border border-[#D9DEE5] rounded text-xs"
+                          />
+                        </div>
+                      </div>
+                      <div>
+                        <label className="text-[11px] font-bold text-[#596579] block mb-1">Area / Location</label>
+                        <input
+                          type="text"
+                          value={editArea}
+                          onChange={(e) => setEditArea(e.target.value)}
+                          className="w-full p-2 bg-white border border-[#D9DEE5] rounded text-xs"
+                        />
+                      </div>
+                      <button
+                        type="button"
+                        onClick={handleSaveCenterEdits}
+                        className="w-full py-2 bg-[#176B87] hover:bg-[#135A72] text-white font-bold rounded shadow-xs"
+                      >
+                        Save Parameter Corrections
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="space-y-2 pt-1 text-xs">
+                      <div className="flex justify-between py-1 border-b border-[#D9DEE5]/60">
+                        <span className="text-[#8A94A6]">Work Type:</span>
+                        <strong className="text-[#172033]">{selectedEvent.workType}</strong>
+                      </div>
+                      <div className="flex justify-between py-1 border-b border-[#D9DEE5]/60">
+                        <span className="text-[#8A94A6]">Quantity / Unit:</span>
+                        <strong className="text-[#172033] font-mono">{selectedEvent.extractedQuantity} {selectedEvent.unit}</strong>
+                      </div>
+                      <div className="flex justify-between py-1 border-b border-[#D9DEE5]/60">
+                        <span className="text-[#8A94A6]">Area:</span>
+                        <strong className="text-[#172033]">{selectedEvent.area}</strong>
+                      </div>
+                      {selectedEvent.line && (
+                        <div className="flex justify-between py-1 border-b border-[#D9DEE5]/60">
+                          <span className="text-[#8A94A6]">Line Code:</span>
+                          <strong className="text-[#172033] font-mono">{selectedEvent.line}</strong>
+                        </div>
+                      )}
+                      <div className="flex justify-between py-1">
+                        <span className="text-[#8A94A6]">Shift Time:</span>
+                        <strong className="text-[#172033] font-mono">{selectedEvent.shiftTime}</strong>
                       </div>
                     </div>
-                  ))}
+                  )}
+                </div>
+
+                {/* Column 2: Physical Evidence & Rules Checked */}
+                <div className="p-4 bg-[#F7F8FA] border border-[#D9DEE5] rounded-xl space-y-3">
+                  <span className="font-bold text-xs uppercase tracking-wider text-[#596579] block">
+                    Physical Evidence & QC Proofs ({selectedEvent.evidenceItems.length})
+                  </span>
+
+                  {selectedEvent.evidenceItems.length === 0 ? (
+                    <div className="p-3 bg-white border border-[#D9DEE5] rounded-lg text-[#8A94A6] italic text-center">
+                      No photographic or document proofs attached to this field log.
+                    </div>
+                  ) : (
+                    <div className="space-y-2">
+                      {selectedEvent.evidenceItems.map((item) => (
+                        <div
+                          key={item.id}
+                          className="p-2.5 bg-white border border-[#D9DEE5] rounded-lg flex items-center justify-between text-xs"
+                        >
+                          <div className="flex items-center gap-2">
+                            {item.type === 'PHOTO' ? (
+                              <Camera className="w-4 h-4 text-[#0284C7]" />
+                            ) : (
+                              <FileText className="w-4 h-4 text-[#176B87]" />
+                            )}
+                            <div>
+                              <span className="font-semibold text-[#172033] block truncate max-w-[200px]">
+                                {item.title}
+                              </span>
+                              <span className="text-[10px] text-[#8A94A6] font-mono">
+                                Time: {item.timestamp}
+                              </span>
+                            </div>
+                          </div>
+                          <span className="text-[10px] uppercase font-mono px-2 py-0.5 rounded bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]">
+                            Attached
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  <div className="pt-2 border-t border-[#D9DEE5]/60 space-y-1.5">
+                    <span className="text-[10px] uppercase font-bold text-[#8A94A6] block">
+                      Deterministic Rules Verified:
+                    </span>
+                    {selectedEvent.rulesEvaluated.map((rule, idx) => (
+                      <div key={idx} className="flex items-start gap-1.5 text-[11px]">
+                        <span className="mt-0.5">
+                          {rule.status === 'PASSED' ? (
+                            <Check className="w-3.5 h-3.5 text-[#2E7D5B]" />
+                          ) : rule.status === 'WARNING' ? (
+                            <AlertTriangle className="w-3.5 h-3.5 text-[#D98B32]" />
+                          ) : (
+                            <X className="w-3.5 h-3.5 text-[#B5473C]" />
+                          )}
+                        </span>
+                        <span className="text-[#596579]">
+                          <strong className="text-[#172033]">{rule.name}:</strong> {rule.details}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
           )}
         </Drawer>
 
-        {/* =========================================================================
-            MODAL 1: FORMAL APPROVAL CONFIRMATION DIALOG
-            Rule: "Approval must require confirmation."
-            Rule: "Do not silently convert AI suggestions into verified records."
-            ========================================================================= */}
-        <Modal
+        {/* 1. APPROVAL CONFIRMATION MODAL */}
+        <ConfirmationDialog
           isOpen={isApproveConfirmOpen}
           onClose={() => setIsApproveConfirmOpen(false)}
-          title="Formal Schedule Link Attestation"
-          subtitle="Project Controls Governance & Baseline Commitment"
-        >
-          {selectedEvent && (
-            <div className="space-y-4 text-xs text-[#172033]">
-              <div className="p-3.5 bg-[#EDF5F8] border border-[#B3CBE0] rounded-xl space-y-2">
-                <div className="flex items-center justify-between">
-                  <span className="font-bold text-sm text-[#176B87]">
-                    Event {selectedEvent.id} → {selectedEvent.candidateActivityId}
-                  </span>
-                  <span className="font-mono text-xs font-bold text-[#2E7D5B]">
-                    {selectedEvent.confidence}% Confidence
-                  </span>
-                </div>
-                <p className="text-[#596579] leading-relaxed">
-                  Approving this match will commit <strong>{selectedEvent.extractedQuantity} {selectedEvent.unit}</strong> to Schedule Activity <strong>{selectedEvent.candidateActivityName}</strong>. This updates actual completion in the Schedule Twin and is written into the immutable audit ledger.
-                </p>
-              </div>
+          onConfirm={handleConfirmApproval}
+          title="Authorize Schedule Twin Commitment"
+          message={
+            selectedEvent
+              ? `You are confirming the match of event ${selectedEvent.id} to scheduled activity ${selectedEvent.candidateActivityId}. This will officially update actual progress in the Schedule Twin and remove this item from the active Review Queue.`
+              : 'Authorize schedule link?'
+          }
+          confirmLabel={isSubmittingApproval ? 'Committing...' : 'Confirm & Commit to Twin'}
+          variant="primary"
+        />
 
-              {/* Digital Attestation Checkbox */}
-              <div className="p-3.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-xl space-y-2">
-                <label className="flex items-start gap-2.5 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={attestationChecked}
-                    onChange={(e) => setAttestationChecked(e.target.checked)}
-                    className="w-4 h-4 text-[#176B87] rounded border-[#D9DEE5] mt-0.5"
-                  />
-                  <div>
-                    <span className="font-bold text-[#172033] block">
-                      Human-in-the-Loop Verification Attestation
-                    </span>
-                    <span className="text-[#596579] text-[11px] leading-relaxed">
-                      I confirm that I have reviewed the original field submission, checked physical evidence, and authorize committing this output to the project schedule baseline.
-                    </span>
-                  </div>
-                </label>
-              </div>
-
-              {/* Modal Actions */}
-              <div className="flex items-center justify-end gap-2 pt-2 border-t border-[#D9DEE5]">
-                <button
-                  type="button"
-                  onClick={() => setIsApproveConfirmOpen(false)}
-                  className="px-4 py-2 font-semibold text-[#596579] hover:text-[#172033] bg-white border border-[#D9DEE5] rounded-lg"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="button"
-                  disabled={!attestationChecked || isSubmittingApproval}
-                  onClick={handleConfirmApproval}
-                  className="px-5 py-2 font-bold text-white bg-[#176B87] hover:bg-[#135A72] disabled:opacity-50 active:scale-95 rounded-lg shadow-sm inline-flex items-center gap-2"
-                >
-                  <Check className="w-4 h-4 stroke-[3]" />
-                  <span>{isSubmittingApproval ? 'Committing to Twin...' : 'Confirm & Commit to Schedule Twin'}</span>
-                </button>
-              </div>
-            </div>
-          )}
-        </Modal>
-
-        {/* =========================================================================
-            MODAL 2: REJECT MATCH MODAL
-            ========================================================================= */}
+        {/* 2. REJECT MODAL */}
         <Modal
           isOpen={isRejectModalOpen}
           onClose={() => setIsRejectModalOpen(false)}
           title="Reject Candidate Match"
-          subtitle="Event will be unlinked and categorized as Unmatched"
-        >
-          <div className="space-y-4 text-xs text-[#172033]">
-            <p className="text-[#596579]">
-              Please document the technical reason for rejecting this match for the audit trail:
-            </p>
-            <textarea
-              rows={3}
-              value={rejectReasonText}
-              onChange={(e) => setRejectReasonText(e.target.value)}
-              placeholder="e.g. Activity belongs to secondary subcontractor package, incorrect line number..."
-              className="w-full p-3 bg-[#FAFAFA] border border-[#D9DEE5] rounded-lg text-xs"
-            />
-            <div className="flex justify-end gap-2 pt-2 border-t border-[#D9DEE5]">
+          subtitle="Document the discrepancy or reason for rejection for the immutable audit trail."
+          footer={
+            <>
               <button
                 type="button"
                 onClick={() => setIsRejectModalOpen(false)}
-                className="px-4 py-2 font-semibold text-[#596579] bg-white border border-[#D9DEE5] rounded-lg"
+                className="px-3.5 py-2 font-semibold text-[#596579] hover:text-[#172033] rounded border border-[#D9DEE5]"
               >
                 Cancel
               </button>
               <button
                 type="button"
                 onClick={handleConfirmReject}
-                className="px-4 py-2 font-bold text-white bg-[#B5473C] hover:bg-[#973930] rounded-lg"
+                className="px-4 py-2 font-bold text-white bg-[#B5473C] hover:bg-[#9E3B31] rounded shadow-xs"
               >
                 Confirm Rejection
               </button>
+            </>
+          }
+        >
+          <div className="space-y-3 text-xs">
+            <label className="font-bold text-[#172033] block">Rejection Justification</label>
+            <textarea
+              value={rejectReasonText}
+              onChange={(e) => setRejectReasonText(e.target.value)}
+              placeholder="State reason (e.g., spool scope corresponds to contractor punchlist rather than main header)..."
+              rows={3}
+              className="w-full p-2.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg outline-none focus:border-[#176B87]"
+            />
+          </div>
+        </Modal>
+
+        {/* 3. CHOOSE ANOTHER ACTIVITY MODAL */}
+        <Modal
+          isOpen={isActivityPickerOpen}
+          onClose={() => setIsActivityPickerOpen(false)}
+          title="Choose Another Schedule Activity"
+          subtitle="Select a baseline activity from the master schedule WBS."
+          footer={
+            <>
+              <button
+                type="button"
+                onClick={() => setIsActivityPickerOpen(false)}
+                className="px-3.5 py-2 font-semibold text-[#596579] hover:text-[#172033] rounded border border-[#D9DEE5]"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={() => handleSwitchActivity(selectedAlternativeId)}
+                disabled={!selectedAlternativeId}
+                className="px-4 py-2 font-bold text-white bg-[#176B87] hover:bg-[#135A72] rounded shadow-xs disabled:opacity-50"
+              >
+                Assign Selected Activity
+              </button>
+            </>
+          }
+        >
+          <div className="space-y-4 text-xs">
+            <div>
+              <label className="font-bold text-[#172033] block mb-1">Target Schedule Activity (WBS)</label>
+              <select
+                value={selectedAlternativeId}
+                onChange={(e) => setSelectedAlternativeId(e.target.value)}
+                className="w-full p-2.5 bg-white border border-[#D9DEE5] rounded-lg outline-none focus:border-[#176B87]"
+              >
+                <option value="">-- Choose activity from WBS --</option>
+                {MOCK_ACTIVITIES.map((act) => (
+                  <option key={act.id} value={act.id}>
+                    {act.id} — {act.name} ({act.discipline}) [WBS: {act.wbs}]
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
         </Modal>
 
-        {/* =========================================================================
-            MODAL 3: CHOOSE ANOTHER ACTIVITY PICKER
-            ========================================================================= */}
-        <Modal
-          isOpen={isActivityPickerOpen}
-          onClose={() => setIsActivityPickerOpen(false)}
-          title="Choose Another Baseline Activity"
-          subtitle="Select from active project WBS activities"
-        >
-          <div className="space-y-3 text-xs text-[#172033] max-h-[60vh] overflow-y-auto">
-            {MOCK_ACTIVITIES.map((act) => (
-              <div
-                key={act.id}
-                onClick={() => handleSwitchActivity(act.id)}
-                className="p-3 border border-[#D9DEE5] hover:border-[#176B87] hover:bg-[#EDF5F8]/40 rounded-xl cursor-pointer transition-colors flex items-center justify-between"
-              >
-                <div>
-                  <div className="flex items-center gap-2">
-                    <span className="font-mono font-bold text-[#176B87]">{act.id}</span>
-                    <span className="text-[10px] font-mono text-[#8A94A6]">WBS {act.wbs}</span>
-                    <span className="text-[10px] font-semibold text-[#596579] bg-[#F0F2F5] px-1.5 py-0.2 rounded">
-                      {act.discipline}
-                    </span>
-                  </div>
-                  <p className="font-bold text-[#172033] mt-0.5">{act.name}</p>
-                </div>
-                <button
-                  type="button"
-                  className="px-2.5 py-1 text-xs font-bold text-[#176B87] hover:bg-white border border-[#B3CBE0] rounded-lg"
-                >
-                  Link
-                </button>
-              </div>
-            ))}
-          </div>
-        </Modal>
-
-        {/* =========================================================================
-            MODAL 4: REQUEST CLARIFICATION MODAL
-            ========================================================================= */}
+        {/* 4. REQUEST CLARIFICATION MODAL */}
         <Modal
           isOpen={isClarificationModalOpen}
           onClose={() => setIsClarificationModalOpen(false)}
           title="Request Field Clarification"
-          subtitle={`Send inquiry to site engineer (${selectedEvent?.submittedBy || ''})`}
-        >
-          <div className="space-y-4 text-xs text-[#172033]">
-            <p className="text-[#596579]">
-              Specify the query or discrepancy that the field supervisor must clarify:
-            </p>
-            <textarea
-              rows={3}
-              value={clarificationQueryText}
-              onChange={(e) => setClarificationQueryText(e.target.value)}
-              placeholder="e.g. Please confirm whether the 12 spools were mounted on Rack B or Rack C, and attach joint sign-off."
-              className="w-full p-3 bg-[#FAFAFA] border border-[#D9DEE5] rounded-lg text-xs"
-            />
-            <div className="flex justify-end gap-2 pt-2 border-t border-[#D9DEE5]">
+          subtitle={`Send clarification inquiry to site team for ${selectedEvent?.id || ''}.`}
+          footer={
+            <>
               <button
                 type="button"
                 onClick={() => setIsClarificationModalOpen(false)}
-                className="px-4 py-2 font-semibold text-[#596579] bg-white border border-[#D9DEE5] rounded-lg"
+                className="px-3.5 py-2 font-semibold text-[#596579] hover:text-[#172033] rounded border border-[#D9DEE5]"
               >
                 Cancel
               </button>
               <button
                 type="button"
                 onClick={handleSendClarification}
-                className="px-4 py-2 font-bold text-white bg-[#D98B32] hover:bg-[#C27A28] rounded-lg inline-flex items-center gap-1.5"
+                className="px-4 py-2 font-bold text-white bg-[#D98B32] hover:bg-[#C27A28] rounded shadow-xs inline-flex items-center gap-1.5"
               >
                 <Send className="w-3.5 h-3.5" />
-                <span>Dispatch Inquiry</span>
+                <span>Dispatch Clarification</span>
               </button>
-            </div>
+            </>
+          }
+        >
+          <div className="space-y-3 text-xs">
+            <label className="font-bold text-[#172033] block">Inquiry Query for Site Engineer</label>
+            <textarea
+              value={clarificationQueryText}
+              onChange={(e) => setClarificationQueryText(e.target.value)}
+              placeholder="e.g. Please clarify if the 12 spools completed include isometric sheet 24-B tie-ins..."
+              rows={3}
+              className="w-full p-2.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg outline-none focus:border-[#176B87]"
+            />
           </div>
         </Modal>
       </div>
-    </AppShell>
+    </StateWrapper>
   );
 }
