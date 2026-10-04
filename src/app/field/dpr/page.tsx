@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useApp } from '../../../context/AppContext';
 import { useToast } from '../../../context/ToastContext';
+import { useOffline } from '../../../context/OfflineContext';
 import { AppShell } from '../../../components/shell/AppShell';
 import { Breadcrumbs } from '../../../components/shell/Breadcrumbs';
 import { ProgressBar } from '../../../components/shared/ProgressBar';
@@ -46,13 +47,14 @@ import {
   CheckSquare,
 } from 'lucide-react';
 
-// Explicit 6 DPR Submission States
+// Explicit DPR Submission States (supporting Offline Mode Saved Locally)
 export type DPRSubmissionState =
   | 'Draft'
   | 'Processing'
   | 'Needs Confirmation'
   | 'Ready to Submit'
   | 'Submitted'
+  | 'Saved locally'
   | 'Failed';
 
 // Step type (1 to 7)
@@ -169,6 +171,7 @@ export default function DPRTimeAgentPage() {
   const router = useRouter();
   const { activeProject } = useApp();
   const { addToast } = useToast();
+  const { isOffline, effectiveStatus, captureDPR } = useOffline();
 
   // Current Step (1 to 7)
   const [currentStep, setCurrentStep] = useState<DPRStep>(1);
@@ -268,7 +271,7 @@ export default function DPRTimeAgentPage() {
     }
   };
 
-  // Submit DPR handler for Step 7
+  // Submit DPR handler for Step 7 (Priority 2 Requirements 3 & 8)
   const handleSubmitDPR = async () => {
     // Check verification rules gate
     const hasUnconfirmedConflict = fieldUpdates.some((u) => u.verificationState === 'Conflict');
@@ -287,17 +290,51 @@ export default function DPRTimeAgentPage() {
     addToast({
       type: 'info',
       title: 'Transmitting DPR',
-      description: 'Hashing daily progress records and updating Schedule Twin...',
+      description: isOffline
+        ? 'Hashing daily progress records and persisting to local IndexedDB...'
+        : 'Hashing daily progress records and updating Schedule Twin...',
     });
 
-    setTimeout(() => {
-      setSubmissionState('Submitted');
-      addToast({
-        type: 'success',
-        title: 'DPR Successfully Submitted',
-        description: `Reference: ${submittedDprCode}. Schedule Twin updated.`,
+    await new Promise((r) => setTimeout(r, 600));
+
+    if (isOffline) {
+      await captureDPR({
+        projectId: selectedProjectId,
+        dprCode: submittedDprCode,
+        date: reportingDate,
+        shift: reportingShift,
+        siteEngineer,
+        contractorName,
+        weatherCondition,
+        fieldUpdates,
       });
-    }, 900);
+
+      setSubmissionState('Saved locally');
+      addToast({
+        type: 'warning',
+        title: 'Saved locally',
+        description: `DPR ${submittedDprCode} queued in IndexedDB. Will receive Server Confirmation upon sync.`,
+      });
+      return;
+    }
+
+    await captureDPR({
+      projectId: selectedProjectId,
+      dprCode: submittedDprCode,
+      date: reportingDate,
+      shift: reportingShift,
+      siteEngineer,
+      contractorName,
+      weatherCondition,
+      fieldUpdates,
+    });
+
+    setSubmissionState('Submitted');
+    addToast({
+      type: 'success',
+      title: 'Server confirmed',
+      description: `Reference: ${submittedDprCode}. Submitted and synchronized with Schedule Twin.`,
+    });
   };
 
   // Helper to update a field update value
@@ -329,6 +366,23 @@ export default function DPRTimeAgentPage() {
         {/* Breadcrumb Navigation */}
         <Breadcrumbs items={breadcrumbs} />
 
+        {/* OFFLINE MODE BANNER (Priority 2 Requirement 3) */}
+        {isOffline && (
+          <div className="p-3.5 rounded-xl bg-[#FEF3C7] border border-[#FDE68A] flex items-center justify-between gap-3 text-xs text-[#92400E]">
+            <div className="flex items-center gap-2.5">
+              <span className="px-2 py-0.5 rounded bg-[#92400E] text-white font-mono font-bold text-[10px] uppercase">
+                OFFLINE MODE
+              </span>
+              <span className="font-semibold">
+                Updates will be synchronized when online mode is restored.
+              </span>
+            </div>
+            <span className="text-[11px] text-[#78350F] hidden sm:inline font-mono">
+              IndexedDB Storage Active
+            </span>
+          </div>
+        )}
+
         {/* PAGE HEADER */}
         <div className="bg-white border border-[#D9DEE5] rounded-xl p-5 md:p-6 shadow-xs">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -338,8 +392,18 @@ export default function DPRTimeAgentPage() {
                   <Sparkles className="w-3.5 h-3.5" />
                   Time Agent Protocol
                 </span>
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-medium bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#2E7D5B] animate-pulse" />
+                {isOffline ? (
+                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-bold bg-[#FEF3C7] text-[#92400E] border border-[#FDE68A]">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#D98B32]" />
+                    Offline Mode
+                  </span>
+                ) : (
+                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-medium bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#2E7D5B] animate-pulse" />
+                    Online
+                  </span>
+                )}
+                <span className="text-[11px] text-[#596579]">
                   Step {currentStep} of 7: {stepsConfig[currentStep - 1].title}
                 </span>
               </div>
@@ -1451,6 +1515,8 @@ export default function DPRTimeAgentPage() {
                 className={`text-xs font-bold px-3 py-1 rounded border inline-flex items-center gap-1.5 ${
                   submissionState === 'Submitted'
                     ? 'bg-[#EDF7F2] text-[#2E7D5B] border-[#B8DCC9]'
+                    : submissionState === 'Saved locally'
+                    ? 'bg-[#FEF3C7] text-[#92400E] border-[#FDE68A]'
                     : submissionState === 'Processing'
                     ? 'bg-[#EDF5F8] text-[#176B87] border-[#B3CBE0] animate-pulse'
                     : submissionState === 'Needs Confirmation'
@@ -1653,6 +1719,42 @@ export default function DPRTimeAgentPage() {
               </div>
             )}
 
+            {/* SUBMISSION STATE RESULT: Saved Locally (Offline Mode) */}
+            {submissionState === 'Saved locally' && (
+              <div className="p-5 bg-[#EDF7F2] border-2 border-[#B8DCC9] rounded-xl text-center space-y-3">
+                <div className="w-12 h-12 rounded-full bg-white border border-[#B8DCC9] text-[#2E7D5B] flex items-center justify-center mx-auto">
+                  <CheckCircle2 className="w-6 h-6" />
+                </div>
+                <div>
+                  <h4 className="text-base font-bold text-[#172033]">
+                    Daily Progress Report Saved Locally (Offline Queue)
+                  </h4>
+                  <p className="text-xs text-[#596579] mt-0.5">
+                    Assigned Reference ID: <strong className="font-mono text-[#172033]">{submittedDprCode}</strong>
+                  </p>
+                  <p className="text-[11px] text-[#2E7D5B] font-medium mt-1">
+                    Saved to local IndexedDB. Updates will receive Server Confirmation once online connectivity is restored.
+                  </p>
+                </div>
+                <div className="flex items-center justify-center gap-3 pt-2">
+                  <Link
+                    href="/sync"
+                    className="px-4 py-2 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] rounded-lg inline-flex items-center gap-1.5 shadow-xs"
+                  >
+                    <RefreshCw className="w-3.5 h-3.5" />
+                    <span>Inspect in Sync Center</span>
+                  </Link>
+
+                  <Link
+                    href="/engineer"
+                    className="px-4 py-2 text-xs font-semibold text-[#596579] hover:text-[#172033] bg-white border border-[#D9DEE5] rounded-lg"
+                  >
+                    Engineer Dashboard
+                  </Link>
+                </div>
+              </div>
+            )}
+
             {submissionState === 'Needs Confirmation' && (
               <div className="p-4 bg-[#FDF6ED] border-2 border-[#F0D4A6] rounded-xl space-y-2 text-xs">
                 <div className="flex items-start gap-2.5">
@@ -1723,7 +1825,7 @@ export default function DPRTimeAgentPage() {
                 <span>Back to Confirmation</span>
               </button>
 
-              {submissionState !== 'Submitted' && (
+              {submissionState !== 'Submitted' && submissionState !== 'Saved locally' && (
                 <button
                   type="button"
                   onClick={handleSubmitDPR}
@@ -1731,7 +1833,13 @@ export default function DPRTimeAgentPage() {
                   className="px-6 py-2.5 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] disabled:opacity-50 rounded-lg inline-flex items-center gap-2 shadow-xs transition-colors"
                 >
                   <Send className="w-4 h-4" />
-                  <span>{submissionState === 'Processing' ? 'Submitting DPR...' : 'Submit DPR to Schedule Twin'}</span>
+                  <span>
+                    {submissionState === 'Processing'
+                      ? 'Submitting DPR...'
+                      : isOffline
+                      ? 'Save DPR Locally to Offline Queue'
+                      : 'Submit DPR to Schedule Twin'}
+                  </span>
                 </button>
               )}
             </div>

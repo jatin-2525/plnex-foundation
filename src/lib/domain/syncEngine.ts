@@ -15,6 +15,14 @@ export type SyncItemStatus =
   | 'Failed'
   | 'Conflict';
 
+export type CanonicalSyncState =
+  | 'LOCAL_DRAFT'
+  | 'QUEUED'
+  | 'UPLOADING'
+  | 'SERVER_CONFIRMED'
+  | 'FAILED'
+  | 'CONFLICT';
+
 export interface SyncPayload {
   activityId?: string;
   activityName?: string;

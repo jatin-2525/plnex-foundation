@@ -4,6 +4,7 @@ import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
 import { useApp } from '../../context/AppContext';
 import { useToast } from '../../context/ToastContext';
+import { useOffline } from '../../context/OfflineContext';
 import { Breadcrumbs } from '../../components/shell/Breadcrumbs';
 import { StateWrapper } from '../../components/shared/StateWrapper';
 import { StatusBadge } from '../../components/shared/StatusBadge';
@@ -75,10 +76,17 @@ export interface DPRRecord {
 export default function EngineerDashboardPage() {
   const { activeProject } = useApp();
   const { addToast } = useToast();
-
-  // Network Connectivity State (Field Offline Support)
-  const [isOnline, setIsOnline] = useState(true);
-  const [isSyncing, setIsSyncing] = useState(false);
+  const {
+    isOffline,
+    effectiveStatus,
+    connectionMode,
+    setConnectionMode,
+    isSyncing,
+    syncQueue,
+    metrics,
+    syncNow,
+    captureFieldUpdate,
+  } = useOffline();
 
   // Field Capture Modal State
   const [isCaptureModalOpen, setIsCaptureModalOpen] = useState(false);
@@ -261,11 +269,12 @@ export default function EngineerDashboardPage() {
 
   // Offline / Sync Metrics
   const syncMetrics = useMemo(() => {
-    const queued = todaySubmissions.filter((s) => !s.isSynced).length;
-    const synced = todaySubmissions.filter((s) => s.isSynced).length;
-    const failed = 0;
-    return { queued, synced, failed };
-  }, [todaySubmissions]);
+    return {
+      queued: metrics.pendingUploads,
+      synced: metrics.syncedToday,
+      failed: metrics.failedCount,
+    };
+  }, [metrics]);
 
   const breadcrumbs = [
     { label: 'Site Execution' },
@@ -284,31 +293,36 @@ export default function EngineerDashboardPage() {
   };
 
   // Sync Action
-  const handleSyncNow = () => {
-    if (!isOnline) {
+  const handleSyncNow = async () => {
+    if (isOffline) {
       addToast({
         type: 'warning',
         title: 'Offline Mode Active',
-        description: 'Cannot sync while network is disconnected. Reconnect to send queued updates.',
+        description: 'Cannot sync while in Offline Mode. Switch connection to Online or Automatic.',
       });
       return;
     }
 
-    setIsSyncing(true);
-    setTimeout(() => {
+    const res = await syncNow();
+    if (res.success) {
       setTodaySubmissions((prev) =>
         prev.map((item) => ({ ...item, isSynced: true }))
       );
-      setIsSyncing(false);
       addToast({
         type: 'success',
-        title: 'Sync Completed',
-        description: 'All offline queued field execution records successfully committed to Schedule Twin.',
+        title: 'Sync Completed: Server Confirmed',
+        description: res.message,
       });
-    }, 1200);
+    } else {
+      addToast({
+        type: 'error',
+        title: 'Sync Failed',
+        description: res.message,
+      });
+    }
   };
 
-  // Submit Fast Field Capture Form
+  // Submit Fast Field Capture Form (Priority 2 Requirements 4 & 8)
   const handleSubmitFastCapture = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!customStatement.trim()) return;
@@ -316,57 +330,89 @@ export default function EngineerDashboardPage() {
     setIsSubmittingCapture(true);
     const nowTime = `Today, ${new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}`;
 
-    setTimeout(() => {
-      const act = todayActivities.find((a) => a.id === selectedActivityForCapture);
+    const act = todayActivities.find((a) => a.id === selectedActivityForCapture);
 
-      const newSubmission: TodaySubmission = {
-        id: `SUB-TODAY-${Date.now().toString().slice(-4)}`,
-        time: nowTime,
-        activityId: selectedActivityForCapture,
-        activityName: act ? act.name : 'Field Activity',
-        statement: customStatement.trim(),
-        quantity: `${quantityValue} ${quantityUnit}`,
-        confidence: 93,
-        status: isOnline ? 'auto-linked' : 'pending-review',
-        isSynced: isOnline,
-      };
+    // Save in IndexedDB through useOffline
+    await captureFieldUpdate({
+      projectId: activeProject.id,
+      activityId: selectedActivityForCapture,
+      activityName: act ? act.name : 'Field Activity',
+      quantity: quantityValue,
+      unit: quantityUnit,
+      date: '2026-09-18',
+      discipline: act?.discipline || 'Piping',
+      areaLine: act?.area || 'Unit A',
+      remarks: customStatement.trim(),
+      verificationState: 'Confirmed',
+    });
 
-      setTodaySubmissions([newSubmission, ...todaySubmissions]);
+    const newSubmission: TodaySubmission = {
+      id: `SUB-TODAY-${Date.now().toString().slice(-4)}`,
+      time: nowTime,
+      activityId: selectedActivityForCapture,
+      activityName: act ? act.name : 'Field Activity',
+      statement: customStatement.trim(),
+      quantity: `${quantityValue} ${quantityUnit}`,
+      confidence: 93,
+      status: !isOffline ? 'approved' : 'pending-review',
+      isSynced: !isOffline,
+    };
 
-      // Update today's activity progress slightly
-      if (act) {
-        setTodayActivities((prev) =>
-          prev.map((item) =>
-            item.id === selectedActivityForCapture
-              ? {
-                  ...item,
-                  lastUpdateText: nowTime,
-                  actualProgress: Math.min(100, item.actualProgress + 10),
-                }
-              : item
-          )
-        );
-      }
+    setTodaySubmissions([newSubmission, ...todaySubmissions]);
 
-      setIsSubmittingCapture(false);
-      setIsCaptureModalOpen(false);
-      setCustomStatement('');
-      setAttachedPhotoName(null);
+    // Update today's activity progress slightly
+    if (act) {
+      setTodayActivities((prev) =>
+        prev.map((item) =>
+          item.id === selectedActivityForCapture
+            ? {
+                ...item,
+                lastUpdateText: nowTime,
+                actualProgress: Math.min(100, item.actualProgress + 10),
+              }
+            : item
+        )
+      );
+    }
 
-      addToast({
-        type: 'success',
-        title: 'Field Update Submitted',
-        description: isOnline
-          ? `Recorded ${quantityValue} ${quantityUnit} on ${selectedActivityForCapture}. Schedule Twin updated.`
-          : `Saved locally. Queued for background sync when connection restores.`,
-      });
-    }, 600);
+    setIsSubmittingCapture(false);
+    setIsCaptureModalOpen(false);
+    setCustomStatement('');
+    setAttachedPhotoName(null);
+
+    addToast({
+      type: isOffline ? 'warning' : 'success',
+      title: isOffline ? 'Saved locally' : 'Server confirmed',
+      description: isOffline
+        ? 'Saved locally in IndexedDB queue. Updates will synchronize when online mode is restored.'
+        : `Recorded ${quantityValue} ${quantityUnit} on ${selectedActivityForCapture}. Schedule Twin updated.`,
+    });
   };
 
   return (
     <StateWrapper>
       <div className="space-y-6">
         <Breadcrumbs items={breadcrumbs} />
+
+        {/* OFFLINE MODE BANNER (Priority 2 Requirement 3) */}
+        {isOffline && (
+          <div className="p-3.5 rounded-xl bg-[#FEF3C7] border border-[#FDE68A] flex items-center justify-between gap-3 text-xs text-[#92400E]">
+            <div className="flex items-center gap-2.5">
+              <span className="px-2 py-0.5 rounded bg-[#92400E] text-white font-mono font-bold text-[10px] uppercase">
+                OFFLINE MODE
+              </span>
+              <span className="font-semibold">
+                Updates will be synchronized when online mode is restored.
+              </span>
+            </div>
+            <Link
+              href="/sync"
+              className="px-2.5 py-1 bg-white border border-[#FDE68A] rounded text-[#92400E] hover:bg-[#FDF6ED] font-mono font-bold text-[11px]"
+            >
+              {metrics.pendingUploads} Queued in IndexedDB
+            </Link>
+          </div>
+        )}
 
         {/* ========================================================= */}
         {/* TOP SECTION: Today's Date, Project, Counts & Primary CTA */}
@@ -409,31 +455,31 @@ export default function EngineerDashboardPage() {
               <button
                 type="button"
                 onClick={() => {
-                  setIsOnline(!isOnline);
+                  setConnectionMode(isOffline ? 'ONLINE' : 'OFFLINE');
                   addToast({
-                    type: isOnline ? 'warning' : 'info',
-                    title: isOnline ? 'Switched to Offline Mode' : 'Connected to Field Network',
-                    description: isOnline
-                      ? 'Field observations will be stored locally in offline queue.'
-                      : 'Network active. Cloud synchronization ready.',
+                    type: isOffline ? 'success' : 'warning',
+                    title: isOffline ? 'Switched to Online Mode' : 'Switched to Offline Mode',
+                    description: isOffline
+                      ? 'Network active. Cloud synchronization ready.'
+                      : 'Field observations will be stored locally in IndexedDB offline queue.',
                   });
                 }}
                 className={`px-3 py-2 text-xs rounded-lg border font-mono font-medium inline-flex items-center gap-1.5 transition-colors ${
-                  isOnline
+                  !isOffline
                     ? 'bg-[#EBF5EF] text-[#2E7D5B] border-[#B8DCC9]'
                     : 'bg-[#FDF5E8] text-[#D98B32] border-[#F0D4A6]'
                 }`}
                 title="Click to toggle offline mode simulation"
               >
-                {isOnline ? (
+                {!isOffline ? (
                   <>
                     <Wifi className="w-3.5 h-3.5" />
-                    <span>ONLINE (4G SITE)</span>
+                    <span>ONLINE ({connectionMode})</span>
                   </>
                 ) : (
                   <>
                     <WifiOff className="w-3.5 h-3.5" />
-                    <span>OFFLINE QUEUE</span>
+                    <span>OFFLINE ({connectionMode})</span>
                   </>
                 )}
               </button>

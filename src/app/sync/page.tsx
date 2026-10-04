@@ -4,6 +4,7 @@ import React, { useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
 import { useApp } from '../../context/AppContext';
 import { useToast } from '../../context/ToastContext';
+import { useOffline } from '../../context/OfflineContext';
 import { AppShell } from '../../components/shell/AppShell';
 import { Breadcrumbs } from '../../components/shell/Breadcrumbs';
 import { Modal } from '../../components/shared/Modal';
@@ -47,22 +48,28 @@ import {
   HardHat,
   Sliders,
   Sparkles,
+  ServerCrash,
 } from 'lucide-react';
 
 export default function OfflineSyncCenterPage() {
-  const { activeProject } = useApp();
+  const { activeProject, userSession } = useApp();
   const { addToast } = useToast();
-
-  // Connection State: ONLINE | OFFLINE | SYNCING
-  const [connectionStatus, setConnectionStatus] = useState<ConnectionStatus>('ONLINE');
-  const [isSyncing, setIsSyncing] = useState<boolean>(false);
-  const [lastSuccessfulSyncTime, setLastSuccessfulSyncTime] = useState<string | null>(
-    '18 Sep 2026, 17:30 IST'
-  );
-  const [lastSyncRelative, setLastSyncRelative] = useState<string>('Reporting Cutoff');
-
-  // Sync Queue State
-  const [queueItems, setQueueItems] = useState<SyncQueueItem[]>(INITIAL_SYNC_QUEUE_ITEMS);
+  const {
+    connectionMode,
+    setConnectionMode,
+    effectiveStatus,
+    isOffline,
+    isSyncing,
+    syncQueue,
+    metrics,
+    lastSuccessfulSyncTime,
+    syncNow,
+    retryFailed,
+    resolveConflict,
+    testMode,
+    setTestMode,
+    triggerTestScenario,
+  } = useOffline();
 
   // Filters State
   const [typeFilter, setTypeFilter] = useState<string>('ALL');
@@ -80,29 +87,11 @@ export default function OfflineSyncCenterPage() {
   );
 
   const [inspectItem, setInspectItem] = useState<SyncQueueItem | null>(null);
-
-  // Sync Summary Calculations
-  const metrics = useMemo(() => {
-    const pendingUploads = queueItems.filter(
-      (i) => i.status === 'Queued' || i.status === 'Local Draft'
-    ).length;
-    const syncingCount = queueItems.filter((i) => i.status === 'Uploading').length;
-    const syncedToday = queueItems.filter((i) => i.status === 'Server Confirmed').length;
-    const failedCount = queueItems.filter((i) => i.status === 'Failed').length;
-    const conflictCount = queueItems.filter((i) => i.status === 'Conflict').length;
-
-    return {
-      pendingUploads,
-      syncingCount,
-      syncedToday: syncedToday + 16, // total confirmed on site today
-      failedCount,
-      conflictCount,
-    };
-  }, [queueItems]);
+  const [testScenarioResult, setTestScenarioResult] = useState<string | null>(null);
 
   // Filtered Queue Items
   const filteredItems = useMemo(() => {
-    return queueItems.filter((item) => {
+    return syncQueue.filter((item) => {
       // Type filter
       if (typeFilter !== 'ALL' && item.type !== typeFilter) {
         return false;
@@ -124,82 +113,44 @@ export default function OfflineSyncCenterPage() {
       }
       return true;
     });
-  }, [queueItems, typeFilter, statusFilter, searchQuery]);
+  }, [syncQueue, typeFilter, statusFilter, searchQuery]);
 
   // Primary Action: SYNC NOW
-  const handleSyncNow = () => {
-    if (connectionStatus === 'OFFLINE') {
+  const handleSyncNow = async () => {
+    if (effectiveStatus === 'OFFLINE') {
       addToast({
         type: 'warning',
         title: 'Device is Currently Offline',
-        description: 'Cannot transmit payloads while offline. Switch connection mode to Online to sync.',
+        description: 'Cannot transmit payloads while offline. Switch connection mode to Online or Automatic to sync.',
       });
       return;
     }
-
-    const queuedCount = queueItems.filter((i) => i.status === 'Queued').length;
-    if (queuedCount === 0) {
-      addToast({
-        type: 'info',
-        title: 'All Queued Payloads Already Transmitted',
-        description: 'Zero items pending sync in the offline queue.',
-      });
-      return;
-    }
-
-    setConnectionStatus('SYNCING');
-    setIsSyncing(true);
-
-    // Step 1: Mark queued items as Uploading
-    setQueueItems((prev) =>
-      prev.map((i) => (i.status === 'Queued' ? { ...i, status: 'Uploading' } : i))
-    );
 
     addToast({
       type: 'info',
       title: 'Payload Transmission Started',
-      description: `Transmitting ${queuedCount} queued field updates to cloud master ledger...`,
+      description: 'Transmitting queued field updates to cloud master ledger...',
     });
 
-    // Step 2: Finalize upload after network roundtrip
-    setTimeout(() => {
-      const nowFormatted = new Date().toLocaleTimeString([], {
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-      });
-      const dateStr = `18 Sep 2026, ${nowFormatted}`;
-
-      setQueueItems((prev) =>
-        prev.map((i) =>
-          i.status === 'Uploading'
-            ? {
-                ...i,
-                status: 'Server Confirmed',
-                lastAttempt: dateStr,
-                error: null,
-              }
-            : i
-        )
-      );
-
-      setLastSuccessfulSyncTime(dateStr);
-      setLastSyncRelative('Just now');
-      setIsSyncing(false);
-      setConnectionStatus('ONLINE');
-
+    const res = await syncNow();
+    if (res.success) {
       addToast({
         type: 'success',
         title: 'Sync Complete: Server Confirmed',
-        description: `${queuedCount} field records written to schedule audit ledger. Master Twin updated.`,
+        description: res.message,
       });
-    }, 1100);
+    } else {
+      addToast({
+        type: 'error',
+        title: 'Sync Incomplete',
+        description: res.message,
+      });
+    }
   };
 
   // Primary Action: RETRY FAILED
-  const handleRetryFailed = () => {
-    const failedItems = queueItems.filter((i) => i.status === 'Failed');
-    if (failedItems.length === 0) {
+  const handleRetryFailed = async () => {
+    if (metrics.failedCount === 0) {
       addToast({
         type: 'info',
         title: 'Zero Failed Items',
@@ -208,30 +159,13 @@ export default function OfflineSyncCenterPage() {
       return;
     }
 
-    setQueueItems((prev) =>
-      prev.map((i) =>
-        i.status === 'Failed'
-          ? {
-              ...i,
-              status: 'Queued',
-              retryCount: 0,
-              error: null,
-            }
-          : i
-      )
-    );
-
     addToast({
       type: 'info',
       title: 'Failed Payloads Re-queued',
-      description: `Reset retry counter for ${failedItems.length} items. Ready for immediate transmission.`,
+      description: `Re-attempting transmission for ${metrics.failedCount} items...`,
     });
 
-    if (connectionStatus === 'ONLINE') {
-      setTimeout(() => {
-        handleSyncNow();
-      }, 200);
-    }
+    await retryFailed();
   };
 
   // Conflict Resolution Action
@@ -244,51 +178,18 @@ export default function OfflineSyncCenterPage() {
     }
   };
 
-  const handleResolveConflict = () => {
+  const handleResolveConflictChoice = async (choice: 'local' | 'server' | 'custom') => {
     if (!conflictItem) return;
 
-    let resolvedQuantity = conflictItem.payload.quantity || 8;
-    let resolvedNotes = conflictItem.payload.notes || '';
-
-    if (conflictResolutionChoice === 'local' && conflictItem.conflictData) {
-      resolvedQuantity = conflictItem.conflictData.localVersion.quantity;
-      resolvedNotes = conflictItem.conflictData.localVersion.notes;
-    } else if (conflictResolutionChoice === 'server' && conflictItem.conflictData) {
-      resolvedQuantity = conflictItem.conflictData.serverVersion.quantity;
-      resolvedNotes = conflictItem.conflictData.serverVersion.notes;
-    } else if (conflictResolutionChoice === 'custom') {
-      resolvedQuantity = customQuantity;
-      resolvedNotes = customNotes;
-    }
-
-    const nowFormatted = new Date().toLocaleTimeString([], {
-      hour: '2-digit',
-      minute: '2-digit',
+    await resolveConflict(conflictItem.id, choice, {
+      quantity: customQuantity,
+      notes: customNotes,
     });
-
-    setQueueItems((prev) =>
-      prev.map((i) =>
-        i.id === conflictItem.id
-          ? {
-              ...i,
-              status: 'Server Confirmed',
-              error: null,
-              title: `${i.title.split('(')[0]} (${resolvedQuantity} welds reconciled)`,
-              payload: {
-                ...i.payload,
-                quantity: resolvedQuantity,
-                notes: resolvedNotes,
-              },
-              lastAttempt: `18 Sep 2026, ${nowFormatted}`,
-            }
-          : i
-      )
-    );
 
     addToast({
       type: 'success',
       title: 'Conflict Reconciled & Confirmed',
-      description: `Reconciled ${conflictItem.id} with ${resolvedQuantity} welds. Server baseline updated.`,
+      description: `Reconciled ${conflictItem.id} using choice "${choice}". Server baseline updated.`,
     });
 
     setConflictItem(null);
@@ -416,16 +317,16 @@ export default function OfflineSyncCenterPage() {
                   Field Resilience Engine
                 </span>
 
-                {/* TOP CONNECTION STATUS BADGE: ONLINE / OFFLINE / SYNCING */}
-                {connectionStatus === 'ONLINE' ? (
+                {/* TOP CONNECTION STATUS BADGE: ONLINE / OFFLINE / SYNCING (Priority 2 Requirement 1) */}
+                {effectiveStatus === 'ONLINE' ? (
                   <span className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full text-[11px] font-black uppercase tracking-wider bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]">
                     <span className="w-2 h-2 rounded-full bg-[#2E7D5B] animate-pulse" />
-                    ONLINE · 4G LTE Field Link (48ms)
+                    ONLINE · Connection Active ({connectionMode.toLowerCase()})
                   </span>
-                ) : connectionStatus === 'OFFLINE' ? (
-                  <span className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full text-[11px] font-black uppercase tracking-wider bg-[#F0F2F5] text-[#596579] border border-[#D9DEE5]">
-                    <WifiOff className="w-3.5 h-3.5 text-[#8A94A6]" />
-                    OFFLINE · Local IndexedDB Cache Active
+                ) : effectiveStatus === 'OFFLINE' ? (
+                  <span className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full text-[11px] font-black uppercase tracking-wider bg-[#FEF3C7] text-[#92400E] border border-[#FDE68A]">
+                    <span className="w-2 h-2 rounded-full bg-[#D98B32]" />
+                    OFFLINE · Local IndexedDB Active ({connectionMode.toLowerCase()})
                   </span>
                 ) : (
                   <span className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full text-[11px] font-black uppercase tracking-wider bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0]">
@@ -443,45 +344,65 @@ export default function OfflineSyncCenterPage() {
               </p>
             </div>
 
-            {/* Connection Mode Simulator Toggle */}
-            <div className="flex items-center gap-2">
-              <span className="text-[10px] uppercase font-bold text-[#8A94A6] hidden sm:inline">
-                Simulate Link:
+            {/* Connection Mode Controls (Priority 2 Requirement 1) */}
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2">
+              <span className="text-[10px] uppercase font-bold text-[#8A94A6]">
+                Connection Mode:
               </span>
               <div className="flex items-center bg-[#F0F2F5] p-1 rounded-lg border border-[#D9DEE5] text-xs">
                 <button
                   type="button"
                   onClick={() => {
-                    setConnectionStatus('ONLINE');
+                    setConnectionMode('AUTOMATIC');
                     addToast({
-                      type: 'success',
-                      title: 'Field Link Active (Online)',
-                      description: 'Cellular connection active. Background sync enabled.',
+                      type: 'info',
+                      title: 'Connection Mode: Automatic',
+                      description: 'Adapting dynamically to browser network connectivity.',
                     });
                   }}
                   className={`px-3 py-1 rounded font-bold transition-all flex items-center gap-1 ${
-                    connectionStatus === 'ONLINE'
-                      ? 'bg-white text-[#2E7D5B] shadow-xs'
+                    connectionMode === 'AUTOMATIC'
+                      ? 'bg-white text-[#176B87] shadow-xs'
                       : 'text-[#596579] hover:text-[#172033]'
                   }`}
                 >
                   <Wifi className="w-3.5 h-3.5" />
+                  <span>Automatic</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setConnectionMode('ONLINE');
+                    addToast({
+                      type: 'success',
+                      title: 'Connection Mode: Online',
+                      description: 'Intentionally operating in Online mode.',
+                    });
+                  }}
+                  className={`px-3 py-1 rounded font-bold transition-all flex items-center gap-1 ${
+                    connectionMode === 'ONLINE'
+                      ? 'bg-white text-[#2E7D5B] shadow-xs'
+                      : 'text-[#596579] hover:text-[#172033]'
+                  }`}
+                >
+                  <UploadCloud className="w-3.5 h-3.5" />
                   <span>Online</span>
                 </button>
 
                 <button
                   type="button"
                   onClick={() => {
-                    setConnectionStatus('OFFLINE');
+                    setConnectionMode('OFFLINE');
                     addToast({
-                      type: 'info',
-                      title: 'Switched to Offline Mode',
-                      description: 'Normal offline operation. All field observations will buffer safely.',
+                      type: 'warning',
+                      title: 'Connection Mode: Offline',
+                      description: 'Intentionally operating in Offline field mode. Queue buffers locally.',
                     });
                   }}
                   className={`px-3 py-1 rounded font-bold transition-all flex items-center gap-1 ${
-                    connectionStatus === 'OFFLINE'
-                      ? 'bg-white text-[#596579] shadow-xs'
+                    connectionMode === 'OFFLINE'
+                      ? 'bg-white text-[#D98B32] shadow-xs'
                       : 'text-[#596579] hover:text-[#172033]'
                   }`}
                 >
@@ -497,13 +418,9 @@ export default function OfflineSyncCenterPage() {
             <div className="flex items-center gap-2">
               <Clock className="w-3.5 h-3.5 text-[#176B87]" />
               <span>Last Successful Server Sync:</span>
-              {lastSuccessfulSyncTime ? (
-                <strong className="text-[#172033]">
-                  {lastSuccessfulSyncTime} ({lastSyncRelative})
-                </strong>
-              ) : (
-                <span className="text-[#8A94A6] italic">Pending Initial Sync</span>
-              )}
+              <strong className="text-[#172033]">
+                {lastSuccessfulSyncTime || '18 Sep 2026, 17:30 IST'}
+              </strong>
             </div>
 
             <div className="flex items-center gap-3">
@@ -547,7 +464,7 @@ export default function OfflineSyncCenterPage() {
             - Conflicts
             ========================================================================= */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
-          {/* 1. Pending Uploads */}
+          {/* 1. Pending */}
           <div
             onClick={() => setStatusFilter(statusFilter === 'Queued' ? 'ALL' : 'Queued')}
             className={`p-4 rounded-xl border bg-white shadow-xs cursor-pointer transition-all ${
@@ -557,7 +474,7 @@ export default function OfflineSyncCenterPage() {
             }`}
           >
             <div className="flex items-center justify-between mb-1">
-              <span className="text-[10px] uppercase font-bold text-[#8A94A6]">Pending Uploads</span>
+              <span className="text-[10px] uppercase font-bold text-[#8A94A6]">Pending</span>
               <Clock className="w-3.5 h-3.5 text-[#9A5B13]" />
             </div>
             <div className="text-2xl font-bold font-mono text-[#9A5B13]">
@@ -566,19 +483,19 @@ export default function OfflineSyncCenterPage() {
             <span className="text-[11px] text-[#596579] mt-0.5 block">Queued in local buffer</span>
           </div>
 
-          {/* 2. Syncing */}
+          {/* 2. Uploading */}
           <div className="p-4 rounded-xl border bg-white shadow-xs">
             <div className="flex items-center justify-between mb-1">
-              <span className="text-[10px] uppercase font-bold text-[#8A94A6]">Syncing</span>
+              <span className="text-[10px] uppercase font-bold text-[#8A94A6]">Uploading</span>
               <RefreshCw className={`w-3.5 h-3.5 text-[#176B87] ${isSyncing ? 'animate-spin' : ''}`} />
             </div>
             <div className="text-2xl font-bold font-mono text-[#176B87]">
-              {isSyncing ? '1 Active' : '0 Idle'}
+              {metrics.syncingCount}
             </div>
             <span className="text-[11px] text-[#596579] mt-0.5 block">Active transmission</span>
           </div>
 
-          {/* 3. Synced Today */}
+          {/* 3. Confirmed */}
           <div
             onClick={() => setStatusFilter(statusFilter === 'Server Confirmed' ? 'ALL' : 'Server Confirmed')}
             className={`p-4 rounded-xl border bg-white shadow-xs cursor-pointer transition-all ${
@@ -588,7 +505,7 @@ export default function OfflineSyncCenterPage() {
             }`}
           >
             <div className="flex items-center justify-between mb-1">
-              <span className="text-[10px] uppercase font-bold text-[#8A94A6]">Synced Today</span>
+              <span className="text-[10px] uppercase font-bold text-[#8A94A6]">Confirmed</span>
               <CheckCircle2 className="w-3.5 h-3.5 text-[#2E7D5B]" />
             </div>
             <div className="text-2xl font-bold font-mono text-[#2E7D5B]">
@@ -640,7 +557,7 @@ export default function OfflineSyncCenterPage() {
             PRIMARY ACTIONS TOOLBAR:
             - Sync Now
             - Retry Failed
-            - Resolve Conflict
+            - Resolve Conflicts
             ========================================================================= */}
         <div className="bg-white border border-[#D9DEE5] rounded-xl p-4 shadow-xs space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
@@ -658,7 +575,7 @@ export default function OfflineSyncCenterPage() {
               <button
                 type="button"
                 onClick={handleSyncNow}
-                disabled={isSyncing || connectionStatus === 'OFFLINE'}
+                disabled={isSyncing || effectiveStatus === 'OFFLINE'}
                 className="px-4 py-2 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-bold rounded-lg shadow-xs transition-colors flex items-center gap-1.5 disabled:opacity-50"
               >
                 <RefreshCw className={`w-3.5 h-3.5 ${isSyncing ? 'animate-spin' : ''}`} />
@@ -676,18 +593,18 @@ export default function OfflineSyncCenterPage() {
                 <span>Retry Failed ({metrics.failedCount})</span>
               </button>
 
-              {/* PRIMARY ACTION 3: RESOLVE CONFLICT */}
+              {/* PRIMARY ACTION 3: RESOLVE CONFLICTS */}
               {metrics.conflictCount > 0 && (
                 <button
                   type="button"
                   onClick={() => {
-                    const firstConflict = queueItems.find((i) => i.status === 'Conflict');
+                    const firstConflict = syncQueue.find((i: SyncQueueItem) => i.status === 'Conflict');
                     if (firstConflict) handleOpenConflictModal(firstConflict);
                   }}
                   className="px-3.5 py-2 bg-[#FBEFEE] hover:bg-[#FBEFEE]/80 text-[#B5473C] border border-[#E4B0AA] text-xs font-bold rounded-lg shadow-xs transition-colors flex items-center gap-1.5"
                 >
                   <AlertTriangle className="w-3.5 h-3.5 text-[#B5473C]" />
-                  <span>Resolve Conflict (1)</span>
+                  <span>Resolve Conflicts ({metrics.conflictCount})</span>
                 </button>
               )}
             </div>
@@ -874,12 +791,8 @@ export default function OfflineSyncCenterPage() {
                           {item.status === 'Failed' && (
                             <button
                               type="button"
-                              onClick={() => {
-                                setQueueItems((prev) =>
-                                  prev.map((i) =>
-                                    i.id === item.id ? { ...i, status: 'Queued', retryCount: 0 } : i
-                                  )
-                                );
+                              onClick={async () => {
+                                await retryFailed();
                                 addToast({
                                   type: 'info',
                                   title: 'Item Re-queued',
@@ -913,6 +826,166 @@ export default function OfflineSyncCenterPage() {
         </div>
 
         {/* =========================================================================
+            ADMIN & DEVELOPER TEST SANDBOX (Priority 2 Requirements 9 & 10)
+            Hidden for standard Site Engineers/Managers unless user is Admin or testMode is explicitly active
+            ========================================================================= */}
+        {(userSession?.role === 'admin' || testMode.isEnabled) && (
+          <div className="bg-white border-2 border-[#176B87]/30 rounded-xl p-5 shadow-xs space-y-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#D9DEE5]/60 pb-3">
+              <div className="flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-lg bg-[#EDF5F8] text-[#176B87] flex items-center justify-center font-bold">
+                  <Sliders className="w-4 h-4" />
+                </div>
+                <div>
+                  <h3 className="font-bold text-sm text-[#172033]">
+                    Admin / Developer Synchronization Test Sandbox
+                  </h3>
+                  <p className="text-xs text-[#596579]">
+                    Simulate network anomalies, forced server rejections, and version divergence (Priority 2 Verification).
+                  </p>
+                </div>
+              </div>
+              <span className="px-2.5 py-1 rounded bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0] text-[10px] font-mono font-bold uppercase">
+                Admin Testing Mode
+              </span>
+            </div>
+
+            {/* Test Simulation Toggles */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+              <label className="p-3 rounded-lg border border-[#D9DEE5] bg-[#F7F8FA] flex items-center justify-between cursor-pointer hover:bg-white transition-colors">
+                <div>
+                  <span className="font-bold text-[#172033] block">Simulate Server Failure on Sync</span>
+                  <span className="text-[11px] text-[#596579]">Returns HTTP 500 remote cluster rejection; items remain Failed.</span>
+                </div>
+                <input
+                  type="checkbox"
+                  checked={testMode.simulateServerFailure}
+                  onChange={(e) =>
+                    setTestMode((prev) => ({
+                      ...prev,
+                      simulateServerFailure: e.target.checked,
+                      simulateConflict: e.target.checked ? false : prev.simulateConflict,
+                    }))
+                  }
+                  className="w-4 h-4 rounded text-[#B5473C]"
+                />
+              </label>
+
+              <label className="p-3 rounded-lg border border-[#D9DEE5] bg-[#F7F8FA] flex items-center justify-between cursor-pointer hover:bg-white transition-colors">
+                <div>
+                  <span className="font-bold text-[#172033] block">Simulate Version Conflict on Sync</span>
+                  <span className="text-[11px] text-[#596579]">Injects diverging QA quantity to trigger Conflict resolution modal.</span>
+                </div>
+                <input
+                  type="checkbox"
+                  checked={testMode.simulateConflict}
+                  onChange={(e) =>
+                    setTestMode((prev) => ({
+                      ...prev,
+                      simulateConflict: e.target.checked,
+                      simulateServerFailure: e.target.checked ? false : prev.simulateServerFailure,
+                    }))
+                  }
+                  className="w-4 h-4 rounded text-[#D98B32]"
+                />
+              </label>
+            </div>
+
+            {/* 6 Automated Acceptance Test Runner Buttons */}
+            <div className="pt-2 border-t border-[#D9DEE5]/60 space-y-2">
+              <span className="text-[10px] uppercase font-bold text-[#8A94A6] tracking-wider block">
+                One-Click Acceptance Tests (Requirement 10 Verification):
+              </span>
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
+                <button
+                  type="button"
+                  onClick={async () => {
+                    const res = await triggerTestScenario('online_capture');
+                    setTestScenarioResult(res);
+                    addToast({ type: 'success', title: 'Scenario 1', description: res });
+                  }}
+                  className="p-2 bg-white border border-[#D9DEE5] rounded-lg hover:border-[#176B87] hover:bg-[#EDF5F8] text-left text-xs transition-colors"
+                >
+                  <span className="font-bold block text-[#172033] text-[11px]">1. Online Capture</span>
+                  <span className="text-[10px] text-[#596579] block truncate">Immediate confirmation</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={async () => {
+                    const res = await triggerTestScenario('offline_capture');
+                    setTestScenarioResult(res);
+                    addToast({ type: 'warning', title: 'Scenario 2', description: res });
+                  }}
+                  className="p-2 bg-white border border-[#D9DEE5] rounded-lg hover:border-[#D98B32] hover:bg-[#FDF6ED] text-left text-xs transition-colors"
+                >
+                  <span className="font-bold block text-[#172033] text-[11px]">2. Offline Capture</span>
+                  <span className="text-[10px] text-[#596579] block truncate">Saves locally</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={async () => {
+                    const res = await triggerTestScenario('offline_multi');
+                    setTestScenarioResult(res);
+                    addToast({ type: 'warning', title: 'Scenario 3', description: res });
+                  }}
+                  className="p-2 bg-white border border-[#D9DEE5] rounded-lg hover:border-[#D98B32] hover:bg-[#FDF6ED] text-left text-xs transition-colors"
+                >
+                  <span className="font-bold block text-[#172033] text-[11px]">3. Multi Offline</span>
+                  <span className="text-[10px] text-[#596579] block truncate">Queues multiple</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={async () => {
+                    const res = await triggerTestScenario('return_online_sync');
+                    setTestScenarioResult(res);
+                    addToast({ type: 'success', title: 'Scenario 4', description: res });
+                  }}
+                  className="p-2 bg-white border border-[#D9DEE5] rounded-lg hover:border-[#2E7D5B] hover:bg-[#EDF7F2] text-left text-xs transition-colors"
+                >
+                  <span className="font-bold block text-[#172033] text-[11px]">4. Return & Sync</span>
+                  <span className="text-[10px] text-[#596579] block truncate">Queue synchronizes</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={async () => {
+                    const res = await triggerTestScenario('server_failure');
+                    setTestScenarioResult(res);
+                    addToast({ type: 'error', title: 'Scenario 5', description: res });
+                  }}
+                  className="p-2 bg-white border border-[#D9DEE5] rounded-lg hover:border-[#B5473C] hover:bg-[#FBEFEE] text-left text-xs transition-colors"
+                >
+                  <span className="font-bold block text-[#172033] text-[11px]">5. Server Failure</span>
+                  <span className="text-[10px] text-[#596579] block truncate">Item remains Failed</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={async () => {
+                    const res = await triggerTestScenario('conflict');
+                    setTestScenarioResult(res);
+                    addToast({ type: 'error', title: 'Scenario 6', description: res });
+                  }}
+                  className="p-2 bg-white border border-[#D9DEE5] rounded-lg hover:border-[#B5473C] hover:bg-[#FBEFEE] text-left text-xs transition-colors"
+                >
+                  <span className="font-bold block text-[#172033] text-[11px]">6. Conflict UI</span>
+                  <span className="text-[10px] text-[#596579] block truncate">Triggers divergence</span>
+                </button>
+              </div>
+
+              {testScenarioResult && (
+                <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg text-xs font-mono text-[#172033]">
+                  <strong>Execution Log:</strong> {testScenarioResult}
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* =========================================================================
             MODAL: CONFLICT RESOLUTION UI
             Requirements:
             - Local Version
@@ -929,23 +1002,37 @@ export default function OfflineSyncCenterPage() {
           maxWidth="2xl"
           footer={
             <div className="flex items-center justify-between w-full text-xs">
-              <span className="text-[#596579] font-mono text-[11px]">
+              <span className="text-[#596579] font-mono text-[11px] hidden sm:inline">
                 Schedule Baseline: V3 · Rev 3.2
               </span>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 flex-wrap justify-end w-full sm:w-auto">
                 <button
                   type="button"
                   onClick={() => setConflictItem(null)}
-                  className="px-4 py-2 font-semibold text-[#596579] hover:text-[#172033]"
+                  className="px-3.5 py-2 font-semibold text-[#596579] hover:text-[#172033] bg-white border border-[#D9DEE5] rounded-lg"
                 >
                   Cancel
                 </button>
                 <button
                   type="button"
-                  onClick={handleResolveConflict}
+                  onClick={() => handleResolveConflictChoice('server')}
+                  className="px-3.5 py-2 font-semibold text-[#172033] bg-white hover:bg-[#F0F2F5] border border-[#D9DEE5] rounded-lg shadow-2xs"
+                >
+                  Keep Server
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleResolveConflictChoice('local')}
+                  className="px-3.5 py-2 font-bold text-[#176B87] bg-[#EDF5F8] hover:bg-[#DCEBF1] border border-[#B3CBE0] rounded-lg shadow-2xs"
+                >
+                  Keep Local
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleResolveConflictChoice('custom')}
                   className="px-4 py-2 bg-[#176B87] hover:bg-[#135A72] text-white font-bold rounded-lg shadow-xs"
                 >
-                  Merge / Resolve Version
+                  Merge
                 </button>
               </div>
             </div>
@@ -962,6 +1049,47 @@ export default function OfflineSyncCenterPage() {
                 <p className="text-[#172033] leading-relaxed">
                   {conflictItem.conflictData.differenceSummary}
                 </p>
+                <p className="text-[11px] text-[#9A5B13] font-medium pt-1 border-t border-[#ECD1A4]/60">
+                  Do not silently overwrite. Review the changed fields below and choose to Keep Local, Keep Server, or Merge.
+                </p>
+              </div>
+
+              {/* CHANGED FIELDS MATRIX (Priority 2 Requirement 7) */}
+              <div className="p-3.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-xl space-y-2">
+                <span className="text-[10px] uppercase font-bold text-[#8A94A6] tracking-wider block">
+                  Changed Fields & Discrepancy Matrix
+                </span>
+                <div className="space-y-1.5 text-xs">
+                  <div className="grid grid-cols-3 gap-2 py-1.5 border-b border-[#D9DEE5]/60 font-mono text-[11px]">
+                    <span className="text-[#596579] font-medium">Quantity</span>
+                    <span className="font-bold text-[#176B87]">
+                      Local: {conflictItem.conflictData.localVersion.quantity} {conflictItem.conflictData.localVersion.unit}
+                    </span>
+                    <span className="font-bold text-[#2E7D5B]">
+                      Server: {conflictItem.conflictData.serverVersion.quantity} {conflictItem.conflictData.serverVersion.unit}
+                    </span>
+                  </div>
+
+                  <div className="grid grid-cols-3 gap-2 py-1.5 border-b border-[#D9DEE5]/60 font-mono text-[11px]">
+                    <span className="text-[#596579] font-medium">Progress %</span>
+                    <span className="font-bold text-[#176B87]">
+                      Local: {conflictItem.conflictData.localVersion.progressPercent}%
+                    </span>
+                    <span className="font-bold text-[#2E7D5B]">
+                      Server: {conflictItem.conflictData.serverVersion.progressPercent}%
+                    </span>
+                  </div>
+
+                  <div className="grid grid-cols-3 gap-2 py-1 text-[11px]">
+                    <span className="text-[#596579] font-medium font-mono">Logged By</span>
+                    <span className="text-[#172033] font-medium truncate">
+                      {conflictItem.conflictData.localVersion.engineer}
+                    </span>
+                    <span className="text-[#172033] font-medium truncate">
+                      {conflictItem.conflictData.serverVersion.engineer}
+                    </span>
+                  </div>
+                </div>
               </div>
 
               {/* SIDE-BY-SIDE: LOCAL VERSION vs SERVER VERSION */}

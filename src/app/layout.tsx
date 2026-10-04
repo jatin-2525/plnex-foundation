@@ -3,6 +3,7 @@ import './globals.css';
 import { AppProvider } from '../context/AppContext';
 import { ToastProvider } from '../context/ToastContext';
 import { NotificationProvider } from '../context/NotificationContext';
+import { OfflineProvider } from '../context/OfflineContext';
 import { AppShell } from '../components/shell/AppShell';
 
 export const metadata: Metadata = {
@@ -19,11 +20,13 @@ export default function RootLayout({
     <html lang="en">
       <body className="bg-[#F7F8FA] text-[#172033] antialiased">
         <AppProvider>
-          <ToastProvider>
-            <NotificationProvider>
-              <AppShell>{children}</AppShell>
-            </NotificationProvider>
-          </ToastProvider>
+          <OfflineProvider>
+            <ToastProvider>
+              <NotificationProvider>
+                <AppShell>{children}</AppShell>
+              </NotificationProvider>
+            </ToastProvider>
+          </OfflineProvider>
         </AppProvider>
       </body>
     </html>

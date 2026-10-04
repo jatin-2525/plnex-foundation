@@ -6,6 +6,7 @@ import { useApp } from '../../context/AppContext';
 import { ProjectSelector } from './ProjectSelector';
 import { NotificationCenter } from './NotificationCenter';
 import { UserMenu } from './UserMenu';
+import { ConnectionStatusControl } from './ConnectionStatusControl';
 import { Search, Menu, Wifi } from 'lucide-react';
 
 export interface TopHeaderProps {
@@ -74,10 +75,13 @@ export function TopHeader({ onMobileToggle }: TopHeaderProps) {
           Sample Project Data
         </span>
 
+        {/* Global Connection Control (Priority 2 Requirement 2) */}
+        <ConnectionStatusControl />
+
         {/* Authoritative Cutoff / Sync Status */}
         <Link
           href="/sync"
-          className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 bg-[#F7F8FA] hover:bg-[#EDF5F8] border border-[#D9DEE5] rounded-md text-xs text-[#596579] font-medium transition-colors"
+          className="hidden md:inline-flex items-center gap-1.5 px-2.5 py-1 bg-[#F7F8FA] hover:bg-[#EDF5F8] border border-[#D9DEE5] rounded-md text-xs text-[#596579] font-medium transition-colors"
           title="Authoritative project reporting cutoff: 18 Sep 2026, 17:30 IST • Click to open Sync Center"
         >
           <span className="w-1.5 h-1.5 rounded-full bg-[#176B87]" />

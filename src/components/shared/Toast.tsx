@@ -29,6 +29,7 @@ function ToastItem({ toast, onDismiss }: { toast: ToastMessage; onDismiss: () =>
       case 'warning':
         return <AlertTriangle className="w-5 h-5 text-[#D98B32] flex-shrink-0" />;
       case 'critical':
+      case 'error':
         return <AlertCircle className="w-5 h-5 text-[#B5473C] flex-shrink-0" />;
       case 'info':
       default:
@@ -43,6 +44,7 @@ function ToastItem({ toast, onDismiss }: { toast: ToastMessage; onDismiss: () =>
       case 'warning':
         return 'border-[#F0D4A6]';
       case 'critical':
+      case 'error':
         return 'border-[#E4B0AA]';
       case 'info':
       default:

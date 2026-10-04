@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { useApp } from '../../../context/AppContext';
 import { useToast } from '../../../context/ToastContext';
+import { useOffline } from '../../../context/OfflineContext';
 import { AppShell } from '../../../components/shell/AppShell';
 import { Breadcrumbs } from '../../../components/shell/Breadcrumbs';
 import { Drawer } from '../../../components/shared/Drawer';
@@ -138,6 +139,8 @@ export default function FieldCapturePage() {
   const router = useRouter();
   const { activeProject } = useApp();
   const { addToast } = useToast();
+  const { isOffline, effectiveStatus, captureFieldUpdate } = useOffline();
+  const [offlineSubmissionSaved, setOfflineSubmissionSaved] = useState(false);
 
   // Header metadata
   const projectCode = activeProject?.code || 'OIL-DUL-01';
@@ -492,35 +495,34 @@ export default function FieldCapturePage() {
   };
 
   // Secondary Action: Save Draft
-  const handleSaveDraft = () => {
+  const handleSaveDraft = async () => {
     setIsSavingDraft(true);
-    setTimeout(() => {
-      const now = new Date();
-      const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-      setDraftSavedAt(`Today, ${timeStr}`);
-      setIsSavingDraft(false);
+    const now = new Date();
+    const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-      if (typeof window !== 'undefined') {
-        try {
-          localStorage.setItem(
-            `plnex_field_draft_${projectCode}`,
-            JSON.stringify({
-              fieldText,
-              executionInfo,
-              savedAt: now.toISOString(),
-            })
-          );
-        } catch {
-          // ignore localStorage error
-        }
-      }
+    // Store structured draft in IndexedDB
+    await captureFieldUpdate({
+      projectId: activeProject?.id || 'PRJ-OIL-2026-01',
+      activityId: 'PIP-24-001',
+      activityName: 'Erect Line 24-XX High Pressure Gas Header',
+      quantity: executionInfo.quantity.value,
+      unit: executionInfo.unit.value,
+      date: executionInfo.date.value,
+      time: executionInfo.time.value,
+      discipline: executionInfo.discipline.value,
+      areaLine: executionInfo.areaLine.value,
+      remarks: executionInfo.remarks.value || fieldText,
+      verificationState: 'Draft',
+    });
 
-      addToast({
-        type: 'success',
-        title: 'Draft Saved Locally',
-        description: `Saved to offline storage at ${timeStr}. Safe to close or resume offline.`,
-      });
-    }, 300);
+    setDraftSavedAt(`Today, ${timeStr}`);
+    setIsSavingDraft(false);
+
+    addToast({
+      type: 'success',
+      title: 'Draft Saved Locally',
+      description: `Saved to IndexedDB storage at ${timeStr}. Safe to close or resume offline.`,
+    });
   };
 
   // Next: Review Extracted Data
@@ -528,14 +530,38 @@ export default function FieldCapturePage() {
     setIsReviewDrawerOpen(true);
   };
 
-  const handleConfirmAndProceedToMatching = () => {
+  const handleConfirmAndProceedToMatching = async () => {
     setIsReviewDrawerOpen(false);
-    addToast({
-      type: 'success',
-      title: 'Execution Data Submitted for Verification',
-      description: 'Navigating to Match & Verify Queue...',
+
+    const res = await captureFieldUpdate({
+      projectId: activeProject?.id || 'PRJ-OIL-2026-01',
+      activityId: 'PIP-24-001',
+      activityName: 'Erect Line 24-XX High Pressure Gas Header',
+      quantity: executionInfo.quantity.value,
+      unit: executionInfo.unit.value,
+      date: executionInfo.date.value,
+      time: executionInfo.time.value,
+      discipline: executionInfo.discipline.value,
+      areaLine: executionInfo.areaLine.value,
+      remarks: executionInfo.remarks.value || fieldText,
+      verificationState: 'Confirmed',
     });
-    router.push('/matching');
+
+    if (isOffline) {
+      setOfflineSubmissionSaved(true);
+      addToast({
+        type: 'warning',
+        title: 'Saved locally',
+        description: 'Offline Mode active. Update queued in IndexedDB. Will become Server Confirmed once online.',
+      });
+    } else {
+      addToast({
+        type: 'success',
+        title: 'Server confirmed',
+        description: 'Execution data successfully submitted and verified against schedule baseline.',
+      });
+      router.push('/matching');
+    }
   };
 
   // Helper styles for Confidence/State badges
@@ -588,6 +614,36 @@ export default function FieldCapturePage() {
         {/* Breadcrumb Navigation */}
         <Breadcrumbs items={breadcrumbItems} />
 
+        {/* OFFLINE MODE BANNER (Priority 2 Requirement 3) */}
+        {isOffline && (
+          <div className="p-3.5 rounded-xl bg-[#FEF3C7] border border-[#FDE68A] flex items-center justify-between gap-3 text-xs text-[#92400E]">
+            <div className="flex items-center gap-2.5">
+              <span className="px-2 py-0.5 rounded bg-[#92400E] text-white font-mono font-bold text-[10px] uppercase">
+                OFFLINE MODE
+              </span>
+              <span className="font-semibold">
+                Updates will be synchronized when online mode is restored.
+              </span>
+            </div>
+            <span className="text-[11px] text-[#78350F] hidden sm:inline font-mono">
+              IndexedDB Storage Active
+            </span>
+          </div>
+        )}
+
+        {/* Offline Submission Confirmation (Priority 2 Requirement 8) */}
+        {offlineSubmissionSaved && (
+          <div className="p-4 bg-[#EDF7F2] border-2 border-[#B8DCC9] rounded-xl flex items-center justify-between gap-3 text-xs">
+            <div className="flex items-center gap-2 text-[#2E7D5B] font-bold">
+              <CheckCircle2 className="w-5 h-5 shrink-0" />
+              <span>Saved locally in offline queue. Will show as Server Confirmed once synchronized.</span>
+            </div>
+            <Link href="/sync" className="px-3 py-1.5 bg-[#176B87] hover:bg-[#135A72] text-white rounded-lg font-bold">
+              View Sync Queue
+            </Link>
+          </div>
+        )}
+
         {/* 1. HEADER: Field Capture, Project, Date, Engineer */}
         <div className="bg-white border border-[#D9DEE5] rounded-xl p-5 md:p-6 shadow-xs">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-[#D9DEE5]/60">
@@ -597,10 +653,17 @@ export default function FieldCapturePage() {
                   <HardHat className="w-3.5 h-3.5" />
                   Field Ingestion
                 </span>
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-medium bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#2E7D5B] animate-pulse" />
-                  Online · Local Cache Ready
-                </span>
+                {isOffline ? (
+                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-bold bg-[#FEF3C7] text-[#92400E] border border-[#FDE68A]">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#D98B32]" />
+                    Offline Mode · Local Storage
+                  </span>
+                ) : (
+                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-medium bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#2E7D5B] animate-pulse" />
+                    Online · Live Transmission
+                  </span>
+                )}
               </div>
               <h1 className="text-2xl font-bold text-[#172033] tracking-tight">Field Capture</h1>
               <p className="text-xs text-[#596579] mt-0.5">
@@ -1460,7 +1523,9 @@ export default function FieldCapturePage() {
                 onClick={handleConfirmAndProceedToMatching}
                 className="px-5 py-2 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] rounded-lg shadow-sm inline-flex items-center gap-2"
               >
-                <span>Proceed to Match & Verify Queue</span>
+                <span>
+                  {isOffline ? 'Save Locally to Offline Queue' : 'Proceed to Match & Verify Queue'}
+                </span>
                 <ArrowRight className="w-4 h-4 stroke-[2.5]" />
               </button>
             </div>
