@@ -386,6 +386,24 @@ export const COMPREHENSIVE_EVIDENCE_ITEMS: EvidenceItem[] = [
 
 export const COMPREHENSIVE_AUDIT_LOGS: AuditEntry[] = [
   {
+    id: 'AUD-PRG-01',
+    timestamp: '2026-09-16 17:30:00',
+    actor: 'User (Debajit Borah)',
+    role: 'engineer',
+    action: 'Progress Modification',
+    actionCategory: 'Progress Modification',
+    objectType: 'SCHEDULE_ACTIVITY',
+    objectId: 'PIP-24-002',
+    objectTitle: 'Weld Line 24-XX Field Joints & NDT Inspection',
+    whatChanged: 'Progress changed: 53 → 65',
+    previousValue: '53%',
+    newValue: '65%',
+    before: '53%',
+    after: '65%',
+    reason: 'Verified execution event',
+    details: 'Verified progress updated from 53% to 65% based on physical completion of 8 field welds confirmed by site evidence EVD-006 and Daily Progress Report DPR-014.',
+  },
+  {
     id: 'AUD-001',
     timestamp: '2026-09-12 10:15:00',
     actor: 'Rajesh Sharma',
@@ -400,6 +418,7 @@ export const COMPREHENSIVE_AUDIT_LOGS: AuditEntry[] = [
     newValue: 'Revision 3.2 (146 activities, Baseline COD: 15 Dec 2026)',
     before: 'V3 · Rev 3.1: 138 Activities',
     after: 'V3 · Rev 3.2: 146 Activities (+8 L5/L6 tie-in activities)',
+    reason: 'Authorized baseline update for monsoon schedule adjustments',
     details: 'Imported baseline incorporates approved monsoon weather buffer and detailed L5 breakdown for Line 24-XX piping interconnect. Zero integrity validation errors.',
   },
   {
@@ -417,6 +436,7 @@ export const COMPREHENSIVE_AUDIT_LOGS: AuditEntry[] = [
     newValue: 'DPR Ingested (12 spools erected, 45 m³ concrete poured)',
     before: 'Status: PENDING_REPORT',
     after: 'Status: INGESTED & PARSED',
+    reason: 'Daily contractual reporting obligation',
     details: 'Debajit Borah submitted DPR signed by Consortium Site Manager. Optical Character Recognition (OCR) and structured entity extraction initiated.',
   },
   {
@@ -434,6 +454,7 @@ export const COMPREHENSIVE_AUDIT_LOGS: AuditEntry[] = [
     newValue: 'Matched to PIP-24-001 (Confidence: 94%)',
     before: 'Activity: NONE (Uncorrelated)',
     after: 'Activity: PIP-24-001 (Confidence: 94% / AUTO_LINK)',
+    reason: 'High-confidence deterministic match rules satisfied (94%)',
     details: 'Exceeded 90% auto-link threshold. Criteria scored: Line 24-XX asset tag (+35%), Piping discipline (+25%), Erection action verb (+20%), Scheduled execution window (+14%).',
   },
   {
@@ -451,6 +472,7 @@ export const COMPREHENSIVE_AUDIT_LOGS: AuditEntry[] = [
     newValue: 'Status: APPROVED & COMMITTED',
     before: 'Status: PENDING_MANAGER_VERIFICATION',
     after: 'Status: VERIFIED & COMMITTED TO SCHEDULE TWIN',
+    reason: 'Manager verification of site photo evidence and crane logs',
     details: 'Cross-checked against uploaded site photo IMG_20260914_Line24_Erect.jpg and crane rigging memo. Authorized progress update propagation.',
   },
   {
@@ -468,6 +490,7 @@ export const COMPREHENSIVE_AUDIT_LOGS: AuditEntry[] = [
     newValue: 'Progress: 100%, Status: Completed, Actual Finish: 14 Sep 2026',
     before: 'Progress: 0% (Planned Finish: 15 Sep 2026)',
     after: 'Progress: 100% (Completed 14 Sep, Ahead: +1 Day)',
+    reason: 'Verified execution event',
     details: 'Recorded 12 of 12 spools erected. Successor activity PIP-24-002 (Weld Line 24-XX Field Joints) unblocked for site execution.',
   },
   {

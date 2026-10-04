@@ -193,6 +193,7 @@ export interface AuditEntry {
   newValue?: string;
   before?: string;
   after?: string;
+  reason?: string;
   details: string;
 }
 
