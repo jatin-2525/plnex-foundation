@@ -1,0 +1,112 @@
+'use client';
+
+import React from 'react';
+import Link from 'next/link';
+import { Breadcrumbs } from '../../../components/shell/Breadcrumbs';
+import { PageHeader } from '../../../components/shared/PageHeader';
+import { Building2, Plus, Shield, MapPin, Briefcase } from 'lucide-react';
+
+export default function AdminOrganizationsPage() {
+  const orgs = [
+    {
+      id: 'ORG-OIL-01',
+      name: 'Oil India Limited (Headquarters & Field Assets)',
+      type: 'Owner Operator (PSU)',
+      locations: 'Duliajan, Naharkatiya, Baghjan, Moran, Guwahati',
+      projects: 6,
+      activeUsers: 24,
+      status: 'Active Operator',
+    },
+    {
+      id: 'ORG-BECC-02',
+      name: 'Brahmaputra Engineering & Construction Consortium',
+      type: 'Primary EPC Contractor',
+      locations: 'Duliajan Gas Processing Unit A',
+      projects: 1,
+      activeUsers: 8,
+      status: 'Contract Active',
+    },
+    {
+      id: 'ORG-LT-03',
+      name: 'Larsen & Toubro Hydrocarbon Ltd.',
+      type: 'EPC Pipeline Contractor',
+      locations: 'Numaligarh-Siliguri Product Pipeline Corridor',
+      projects: 1,
+      activeUsers: 4,
+      status: 'Contract Active',
+    },
+    {
+      id: 'ORG-PM-04',
+      name: 'PetroMech Solutions India Ltd.',
+      type: 'Mechanical Subcontractor',
+      locations: 'Moran Field Modernization',
+      projects: 1,
+      activeUsers: 2,
+      status: 'Subcontractor',
+    },
+  ];
+
+  const breadcrumbs = [
+    { label: 'Administration', href: '/admin' },
+    { label: 'Organizations', current: true },
+  ];
+
+  return (
+    <div className="space-y-6">
+      <Breadcrumbs items={breadcrumbs} />
+
+      <PageHeader
+        title="Organizations & Contracting Consortia"
+        description="Tenant organizations, EPC joint ventures, and contracting partner registries with partitioned project workspace scopes."
+        actions={
+          <button
+            type="button"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#176B87] hover:bg-[#135A72] text-white rounded-md text-xs font-semibold shadow-xs transition-colors"
+          >
+            <Plus className="w-3.5 h-3.5" />
+            Add Organization
+          </button>
+        }
+      />
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {orgs.map((org) => (
+          <div key={org.id} className="bg-white border border-[#D9DEE5] rounded-lg p-5 flex flex-col justify-between">
+            <div>
+              <div className="flex items-center justify-between mb-2">
+                <span className="font-mono text-xs font-bold text-[#176B87] bg-[#EDF5F8] border border-[#B3CBE0] px-2 py-0.5 rounded">
+                  {org.id}
+                </span>
+                <span className="text-[11px] font-semibold text-[#2E7D5B] bg-[#EDF7F2] border border-[#B8DCC9] px-2 py-0.5 rounded">
+                  {org.status}
+                </span>
+              </div>
+              <h3 className="text-sm font-bold text-[#172033]">{org.name}</h3>
+              <p className="text-xs text-[#596579] mt-0.5 font-medium">{org.type}</p>
+
+              <div className="mt-3 space-y-1.5 text-xs text-[#596579]">
+                <div className="flex items-center gap-1.5">
+                  <MapPin className="w-3.5 h-3.5 text-[#8A94A6]" />
+                  <span>{org.locations}</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <Briefcase className="w-3.5 h-3.5 text-[#8A94A6]" />
+                  <span>{org.projects} Linked Projects • {org.activeUsers} Personnel</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-4 pt-3 border-t border-[#E8EBF0] flex items-center justify-end">
+              <button
+                type="button"
+                className="px-2.5 py-1 text-xs text-[#176B87] hover:bg-[#EDF5F8] rounded font-medium transition-colors"
+              >
+                Configure Workspace Access
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}

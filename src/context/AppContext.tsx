@@ -1,16 +1,21 @@
 'use client';
 
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { PortfolioProject, UserRole, UserSession, DataState } from '../types';
 import { MOCK_PROJECTS } from '../lib/api/mockData';
 import { ActivityDrawerTab } from '../lib/domain/activityDetailData';
+import { authService, StoredSession } from '../lib/api/authService';
 
 interface AppContextType {
   activeProject: PortfolioProject;
   setActiveProjectId: (id: string) => void;
   allProjects: PortfolioProject[];
   addProject: (project: PortfolioProject) => void;
-  userSession: UserSession;
+  userSession: UserSession | null;
+  isAuthenticated: boolean;
+  isAuthReady: boolean;
+  login: (email: string, password: string, remember?: boolean) => { success: boolean; session?: StoredSession; error?: string };
+  logout: () => void;
   setUserRole: (role: UserRole) => void;
   // Demo State simulation for testing and verification
   simulatedState: DataState;
@@ -26,27 +31,85 @@ interface AppContextType {
   closeActivityDrawer: () => void;
 }
 
-const defaultUserSession: UserSession = {
-  id: 'USR-OIL-001',
-  name: 'Rajesh Sharma',
-  email: 'rajesh.sharma@oilindia.in',
-  role: 'manager',
-  title: 'Chief Project Controls Manager',
-  organization: 'Oil India Limited — Infrastructure Division',
-  avatar: 'RS',
-};
-
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export function AppProvider({ children }: { children: ReactNode }) {
   const [allProjects, setAllProjects] = useState<PortfolioProject[]>(MOCK_PROJECTS);
   const [activeProjectId, setActiveProjectId] = useState<string>(MOCK_PROJECTS[0].id);
-  const [userSession, setUserSession] = useState<UserSession>(defaultUserSession);
+  const [userSession, setUserSession] = useState<UserSession | null>(null);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [isAuthReady, setIsAuthReady] = useState<boolean>(false);
   const [simulatedState, setSimulatedState] = useState<DataState>('success');
   const [globalSearchOpen, setGlobalSearchOpen] = useState(false);
   const [notificationOpen, setNotificationOpen] = useState(false);
   const [activityDrawerActivityId, setActivityDrawerActivityId] = useState<string | null>(null);
   const [activityDrawerTab, setActivityDrawerTab] = useState<ActivityDrawerTab>('overview');
+
+  // Check stored session on mount
+  useEffect(() => {
+    const session = authService.getCurrentSession();
+    if (session && session.user) {
+      setUserSession(session.user);
+      setIsAuthenticated(true);
+    } else {
+      setUserSession(null);
+      setIsAuthenticated(false);
+    }
+    setIsAuthReady(true);
+  }, []);
+
+  const handleLogin = (email: string, password: string, remember: boolean = true) => {
+    const res = authService.login(email, password, remember);
+    if (res.success && res.session) {
+      setUserSession(res.session.user);
+      setIsAuthenticated(true);
+    }
+    return res;
+  };
+
+  const handleLogout = () => {
+    authService.logout();
+    setUserSession(null);
+    setIsAuthenticated(false);
+  };
+
+  const handleSetUserRole = (role: UserRole) => {
+    let name = 'Rajesh Sharma';
+    let title = 'Chief Project Controls Manager';
+    let avatar = 'RS';
+
+    if (role === 'engineer') {
+      name = 'Debajit Borah';
+      title = 'Lead Site Execution Engineer';
+      avatar = 'DB';
+    } else if (role === 'admin') {
+      name = 'Jatin Kumar';
+      title = 'Enterprise Infrastructure Systems Lead';
+      avatar = 'JK';
+    }
+
+    const updatedUser: UserSession = userSession
+      ? {
+          ...userSession,
+          role,
+          name,
+          title,
+          avatar,
+        }
+      : {
+          id: `USR-${role.toUpperCase()}-001`,
+          name,
+          email: `${role}@oilindia.in`,
+          role,
+          title,
+          organization: 'Oil India Limited',
+          avatar,
+        };
+
+    authService.createSession(updatedUser, true);
+    setUserSession(updatedUser);
+    setIsAuthenticated(true);
+  };
 
   const openActivityDrawer = (id: string, initialTab: ActivityDrawerTab = 'overview') => {
     setActivityDrawerActivityId(id);
@@ -63,34 +126,6 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
   const activeProject = allProjects.find((p) => p.id === activeProjectId) || allProjects[0];
 
-  const handleSetUserRole = (role: UserRole) => {
-    let name = 'Rajesh Sharma';
-    let title = 'Chief Project Controls Manager';
-    let avatar = 'RS';
-
-    if (role === 'engineer') {
-      name = 'Debajit Borah';
-      title = 'Lead Site Execution Engineer';
-      avatar = 'DB';
-    } else if (role === 'admin') {
-      name = 'System Administrator';
-      title = 'Infrastructure Systems Lead';
-      avatar = 'SA';
-    } else if (role === 'viewer') {
-      name = 'Audit Observer';
-      title = 'Project Oversight Committee';
-      avatar = 'AO';
-    }
-
-    setUserSession({
-      ...userSession,
-      role,
-      name,
-      title,
-      avatar,
-    });
-  };
-
   return (
     <AppContext.Provider
       value={{
@@ -99,6 +134,10 @@ export function AppProvider({ children }: { children: ReactNode }) {
         allProjects,
         addProject,
         userSession,
+        isAuthenticated,
+        isAuthReady,
+        login: handleLogin,
+        logout: handleLogout,
         setUserRole: handleSetUserRole,
         simulatedState,
         setSimulatedState,

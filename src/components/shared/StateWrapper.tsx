@@ -79,7 +79,7 @@ export function StateWrapper({
     return (
       <PermissionDenied
         requiredPermission={requiredPermission || 'plan:write'}
-        role={userSession.role}
+        role={userSession?.role || 'engineer'}
         message="Your role cannot modify schedule baselines or approve match overrides."
         onGoBack={() => setSimulatedState('success')}
       />

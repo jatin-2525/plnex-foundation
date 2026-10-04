@@ -6,19 +6,18 @@ import { useApp } from '../../context/AppContext';
 import { ProjectSelector } from './ProjectSelector';
 import { NotificationCenter } from './NotificationCenter';
 import { UserMenu } from './UserMenu';
-import { Search, Menu, SlidersHorizontal, Wifi } from 'lucide-react';
-import { DataState } from '../../types';
+import { Search, Menu, Wifi } from 'lucide-react';
 
 export interface TopHeaderProps {
   onMobileToggle: () => void;
 }
 
 export function TopHeader({ onMobileToggle }: TopHeaderProps) {
-  const { setGlobalSearchOpen, simulatedState, setSimulatedState } = useApp();
+  const { setGlobalSearchOpen, activeProject } = useApp();
 
   return (
     <header className="fixed top-0 left-0 right-0 h-14 bg-white border-b border-[#D9DEE5] z-40 px-3 sm:px-4 flex items-center justify-between gap-3">
-      {/* Left: Mobile hamburger + Brand logo */}
+      {/* Left: Mobile hamburger + Brand logo + Project Selector */}
       <div className="flex items-center gap-3">
         <button
           onClick={onMobileToggle}
@@ -28,7 +27,7 @@ export function TopHeader({ onMobileToggle }: TopHeaderProps) {
           <Menu className="w-5 h-5" />
         </button>
 
-        <div className="flex items-center gap-2.5">
+        <Link href="/" className="flex items-center gap-2.5">
           <div className="w-7 h-7 rounded bg-[#176B87] text-white flex items-center justify-center font-black text-sm tracking-tighter">
             PX
           </div>
@@ -40,7 +39,7 @@ export function TopHeader({ onMobileToggle }: TopHeaderProps) {
               PLANNING-TO-EXECUTION BRIDGE
             </span>
           </div>
-        </div>
+        </Link>
 
         <div className="h-5 w-px bg-[#D9DEE5] hidden sm:block mx-1" />
 
@@ -53,7 +52,7 @@ export function TopHeader({ onMobileToggle }: TopHeaderProps) {
       <div className="flex-1 max-w-md hidden md:block">
         <button
           onClick={() => setGlobalSearchOpen(true)}
-          className="w-full flex items-center justify-between px-3 py-1.5 bg-[#F7F8FA] hover:bg-[#F0F2F5] border border-[#D9DEE5] rounded-lg text-xs text-[#596579] transition-colors"
+          className="w-full flex items-center justify-between px-3 py-1.5 bg-[#F7F8FA] hover:bg-[#F0F2F5] border border-[#D9DEE5] rounded-lg text-xs text-[#596579] transition-colors cursor-pointer"
         >
           <div className="flex items-center gap-2">
             <Search className="w-3.5 h-3.5 text-[#8A94A6]" />
@@ -65,42 +64,24 @@ export function TopHeader({ onMobileToggle }: TopHeaderProps) {
         </button>
       </div>
 
-      {/* Right: State Simulator selector + Notifications + User Profile */}
+      {/* Right: Connection Status + Notifications + User Profile */}
       <div className="flex items-center gap-2 sm:gap-3">
-        {/* State simulator picker for evaluation */}
-        <div className="hidden lg:flex items-center gap-1.5 px-2 py-1 bg-[#F0F2F5] border border-[#D9DEE5] rounded-md text-xs">
-          <SlidersHorizontal className="w-3 h-3 text-[#596579]" />
-          <span className="text-[11px] font-semibold text-[#596579]">State:</span>
-          <select
-            value={simulatedState}
-            onChange={(e) => setSimulatedState(e.target.value as DataState)}
-            className="bg-transparent text-[11px] font-mono text-[#172033] outline-none cursor-pointer"
-            title="Switch UI state to test Loading, Empty, Error, Permission Denied, or Processing"
-          >
-            <option value="success">Success (Default)</option>
-            <option value="loading">Loading State</option>
-            <option value="empty">Empty State</option>
-            <option value="error">Error State</option>
-            <option value="processing">Processing State</option>
-            <option value="permission-denied">Permission Denied</option>
-          </select>
-        </div>
-
-        {/* Offline / Sync Center Direct Link */}
+        {/* Clear Connection Status */}
         <Link
           href="/sync"
-          className="hidden md:inline-flex items-center gap-1.5 px-2.5 py-1 bg-[#F0FDF4] hover:bg-[#DCFCE7] border border-[#BBF7D0] rounded-md text-xs text-[#15803D] font-medium transition-colors"
-          title="PLnEX Offline / Sync Center - View sync queue & network status"
+          className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 bg-[#F0FDF4] hover:bg-[#DCFCE7] border border-[#BBF7D0] rounded-md text-xs text-[#15803D] font-medium transition-colors"
+          title="Field Connection Status: Online • Click to open Sync Center"
         >
           <span className="w-2 h-2 rounded-full bg-[#16A34A] animate-pulse" />
-          <Wifi className="w-3.5 h-3.5 text-[#16A34A]" />
-          <span className="text-[11px] font-mono font-semibold">SYNC</span>
+          <span className="text-[11px] font-medium text-[#15803D]">Online</span>
         </Link>
 
+        {/* Notifications Center */}
         <NotificationCenter />
 
         <div className="h-5 w-px bg-[#D9DEE5]" />
 
+        {/* User Info & Menu */}
         <UserMenu />
       </div>
     </header>

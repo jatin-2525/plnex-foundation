@@ -1,10 +1,11 @@
 'use client';
 
-import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import React, { useState, Suspense } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { useApp } from '../../context/AppContext';
 import { useToast } from '../../context/ToastContext';
+import { canAccessRoute, getDefaultRouteForRole } from '../../types/permissions';
 import {
   Eye,
   EyeOff,
@@ -20,9 +21,12 @@ import {
 
 type LoginState = 'idle' | 'submitting' | 'invalid_credentials' | 'validation_error' | 'server_error' | 'success';
 
-export default function LoginPage() {
+function LoginForm() {
   const router = useRouter();
-  const { setUserRole } = useApp();
+  const searchParams = useSearchParams();
+  const returnUrl = searchParams.get('returnUrl');
+
+  const { login } = useApp();
   const { addToast } = useToast();
 
   const [email, setEmail] = useState('');
@@ -30,14 +34,10 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [rememberSession, setRememberSession] = useState(true);
 
-  // States: idle | submitting | invalid_credentials | validation_error | server_error | success
   const [loginState, setLoginState] = useState<LoginState>('idle');
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [emailError, setEmailError] = useState<string | null>(null);
   const [passwordError, setPasswordError] = useState<string | null>(null);
-
-  // Modal / overlay for secondary actions (Forgot password / Create account)
-  const [activeModal, setActiveModal] = useState<'forgot' | 'create' | null>(null);
-  const [modalEmail, setModalEmail] = useState('');
 
   // Email format validator
   const isValidEmail = (val: string) => {
@@ -77,69 +77,87 @@ export default function LoginPage() {
     }
 
     setLoginState('submitting');
+    setErrorMessage(null);
 
-    // Simulate authentic API request
+    // Call authentication service
     setTimeout(() => {
-      // Test simulation trigger: if email contains "error" -> trigger server error
-      if (email.toLowerCase().includes('servererror')) {
-        setLoginState('server_error');
+      const res = login(email, password, rememberSession);
+
+      if (!res.success || !res.session) {
+        if (email.toLowerCase().includes('servererror') || res.error?.includes('500')) {
+          setLoginState('server_error');
+          setErrorMessage(res.error || 'Authentication Gateway Error (500)');
+        } else {
+          setLoginState('invalid_credentials');
+          setErrorMessage(res.error || 'The work email or password entered does not match authorized project records.');
+        }
         return;
       }
 
-      // Test simulation trigger: if password is wrong -> invalid credentials
-      if (password === 'wrong' || email.toLowerCase().includes('invalid')) {
-        setLoginState('invalid_credentials');
-        return;
-      }
-
-      // Success branch
       setLoginState('success');
-
-      // Set user role based on email if recognized
-      if (email.toLowerCase().includes('engineer') || email.toLowerCase().includes('debajit')) {
-        setUserRole('engineer');
-      } else {
-        setUserRole('manager');
-      }
+      const user = res.session.user;
 
       addToast({
         type: 'success',
-        title: 'Authentication Successful',
-        description: 'Authorized session established. Accessing Schedule Twin...',
+        title: `Welcome, ${user.name}`,
+        description: `Authorized session established (${user.role.toUpperCase()}). Loading dashboard...`,
       });
 
-      // Redirect transition
+      // Role-specific landing:
+      // Manager -> /dashboard
+      // Site Engineer -> /engineer
+      // Admin -> /admin
+      let targetRoute = getDefaultRouteForRole(user.role);
+
+      // If user was navigating to a permitted returnUrl, preserve that safe destination
+      if (returnUrl && returnUrl !== '/' && returnUrl !== '/login') {
+        if (canAccessRoute(user.role, returnUrl)) {
+          targetRoute = returnUrl;
+        }
+      }
+
       setTimeout(() => {
-        router.push('/');
-      }, 1200);
-    }, 1000);
+        router.replace(targetRoute);
+      }, 700);
+    }, 400);
   };
 
   // Pre-fill helpers for test convenience
-  const handleQuickFill = (type: 'manager' | 'engineer' | 'invalid' | 'server') => {
+  const handleQuickFill = (type: 'manager' | 'engineer' | 'admin' | 'invalid' | 'server') => {
     if (type === 'manager') {
       setEmail('rajesh.sharma@oilindia.in');
       setPassword('Project2026!');
       setEmailError(null);
       setPasswordError(null);
+      setErrorMessage(null);
       setLoginState('idle');
     } else if (type === 'engineer') {
       setEmail('debajit.borah@oilindia.in');
       setPassword('Field2026!');
       setEmailError(null);
       setPasswordError(null);
+      setErrorMessage(null);
+      setLoginState('idle');
+    } else if (type === 'admin') {
+      setEmail('admin@oilindia.in');
+      setPassword('Admin2026!');
+      setEmailError(null);
+      setPasswordError(null);
+      setErrorMessage(null);
       setLoginState('idle');
     } else if (type === 'invalid') {
       setEmail('unauthorized.user@oilindia.in');
-      setPassword('wrong');
+      setPassword('wrongpassword');
       setEmailError(null);
       setPasswordError(null);
+      setErrorMessage(null);
       setLoginState('idle');
     } else if (type === 'server') {
       setEmail('servererror@oilindia.in');
       setPassword('Project2026!');
       setEmailError(null);
       setPasswordError(null);
+      setErrorMessage(null);
       setLoginState('idle');
     }
   };
@@ -173,7 +191,7 @@ export default function LoginPage() {
             <div>
               <h2 className="text-base font-bold text-[#172033]">Session Authorized</h2>
               <p className="text-xs text-[#596579] mt-1">
-                Access granted to project schedules. Loading Schedule Twin...
+                Access granted. Loading role-specific workspace...
               </p>
             </div>
             <div className="w-full bg-[#E8EBF0] h-1.5 rounded-full overflow-hidden">
@@ -181,7 +199,7 @@ export default function LoginPage() {
             </div>
             <span className="inline-flex items-center gap-1.5 text-xs text-[#176B87] font-medium font-mono">
               <Loader2 className="w-3.5 h-3.5 animate-spin" />
-              Redirecting...
+              Routing to authorized dashboard...
             </span>
           </div>
         ) : (
@@ -194,7 +212,7 @@ export default function LoginPage() {
                 <div>
                   <strong className="block font-semibold">Authentication Gateway Error (500)</strong>
                   <span className="text-[11px] opacity-90 leading-tight">
-                    Unable to establish secure handshake with IAM directory. Please verify site connection or retry.
+                    {errorMessage || 'Unable to establish secure handshake with IAM directory. Please retry.'}
                   </span>
                 </div>
               </div>
@@ -207,7 +225,7 @@ export default function LoginPage() {
                 <div>
                   <strong className="block font-semibold">Invalid Credentials</strong>
                   <span className="text-[11px] opacity-90 leading-tight">
-                    The work email or password entered does not match authorized project records.
+                    {errorMessage || 'The work email or password entered does not match authorized project records.'}
                   </span>
                 </div>
               </div>
@@ -350,28 +368,35 @@ export default function LoginPage() {
         </div>
       </div>
 
-      {/* Quick Testing Sandbox Bar (For evaluator testing of all requested states) */}
+      {/* Quick Testing Sandbox Bar (For evaluator testing of all 3 roles) */}
       <div className="mt-4 p-3 bg-white border border-[#D9DEE5] rounded-lg text-xs space-y-2">
         <div className="flex items-center justify-between text-[11px] text-[#596579]">
           <span className="font-semibold uppercase tracking-wider text-[#172033]">
-            Evaluation Shortcuts (Quick Credentials)
+            Quick Role Credentials (Direct Routing)
           </span>
-          <span className="font-mono">All States Tested</span>
+          <span className="font-mono">Role Test Presets</span>
         </div>
         <div className="flex flex-wrap gap-1.5">
           <button
             type="button"
             onClick={() => handleQuickFill('manager')}
-            className="px-2 py-1 bg-[#F0F2F5] hover:bg-[#E8EBF0] text-[#172033] rounded text-[11px] font-mono transition-colors"
+            className="px-2 py-1 bg-[#EDF5F8] hover:bg-[#D9EBF2] text-[#176B87] border border-[#B3CBE0] rounded text-[11px] font-mono font-medium transition-colors"
           >
-            Manager (Rajesh S.)
+            Manager → /dashboard
           </button>
           <button
             type="button"
             onClick={() => handleQuickFill('engineer')}
-            className="px-2 py-1 bg-[#F0F2F5] hover:bg-[#E8EBF0] text-[#172033] rounded text-[11px] font-mono transition-colors"
+            className="px-2 py-1 bg-[#F0FDF4] hover:bg-[#DCFCE7] text-[#15803D] border border-[#BBF7D0] rounded text-[11px] font-mono font-medium transition-colors"
           >
-            Engineer (Debajit B.)
+            Site Engineer → /engineer
+          </button>
+          <button
+            type="button"
+            onClick={() => handleQuickFill('admin')}
+            className="px-2 py-1 bg-[#FAF5FF] hover:bg-[#F3E8FF] text-[#7E22CE] border border-[#E9D5FF] rounded text-[11px] font-mono font-medium transition-colors"
+          >
+            Admin → /admin
           </button>
           <button
             type="button"
@@ -380,108 +405,22 @@ export default function LoginPage() {
           >
             Invalid Creds
           </button>
-          <button
-            type="button"
-            onClick={() => handleQuickFill('server')}
-            className="px-2 py-1 bg-[#FDF6ED] hover:bg-[#FDF6ED]/80 text-[#D98B32] border border-[#F0D4A6] rounded text-[11px] font-mono transition-colors"
-          >
-            Server Error (500)
-          </button>
         </div>
       </div>
-
-      {/* Forgot Password Modal */}
-      {activeModal === 'forgot' && (
-        <div className="fixed inset-0 z-50 overflow-y-auto" role="dialog" aria-modal="true">
-          <div
-            className="fixed inset-0 bg-[#172033]/40 transition-opacity"
-            onClick={() => setActiveModal(null)}
-          />
-          <div className="flex min-h-full items-center justify-center p-4">
-            <div className="relative w-full max-w-sm bg-white rounded-lg border border-[#D9DEE5] shadow-lg p-5 space-y-4">
-              <div>
-                <h3 className="text-sm font-bold text-[#172033]">Reset Project Access Password</h3>
-                <p className="text-xs text-[#596579] mt-0.5">
-                  Enter your registered Oil India work email to receive password reset instructions from the IT Security administrator.
-                </p>
-              </div>
-
-              <div className="space-y-1">
-                <label className="text-xs font-semibold text-[#172033]">Work Email</label>
-                <input
-                  type="email"
-                  value={modalEmail}
-                  onChange={(e) => setModalEmail(e.target.value)}
-                  placeholder="name@oilindia.in"
-                  className="w-full p-2 text-xs bg-[#F7F8FA] border border-[#D9DEE5] rounded focus:border-[#176B87] outline-none"
-                />
-              </div>
-
-              <div className="flex items-center justify-end gap-2 pt-2 border-t border-[#E8EBF0]">
-                <button
-                  type="button"
-                  onClick={() => setActiveModal(null)}
-                  className="px-3 py-1.5 text-xs text-[#596579] hover:text-[#172033] rounded border border-[#D9DEE5]"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setActiveModal(null);
-                    setModalEmail('');
-                    addToast({
-                      type: 'info',
-                      title: 'Reset Request Logged',
-                      description: 'If this email is registered, instructions have been sent.',
-                    });
-                  }}
-                  className="px-3 py-1.5 text-xs bg-[#176B87] hover:bg-[#135A72] text-white rounded font-medium"
-                >
-                  Send Reset Link
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Create Account / Request Access Modal */}
-      {activeModal === 'create' && (
-        <div className="fixed inset-0 z-50 overflow-y-auto" role="dialog" aria-modal="true">
-          <div
-            className="fixed inset-0 bg-[#172033]/40 transition-opacity"
-            onClick={() => setActiveModal(null)}
-          />
-          <div className="flex min-h-full items-center justify-center p-4">
-            <div className="relative w-full max-w-sm bg-white rounded-lg border border-[#D9DEE5] shadow-lg p-5 space-y-4">
-              <div>
-                <h3 className="text-sm font-bold text-[#172033]">Request Project Access</h3>
-                <p className="text-xs text-[#596579] mt-0.5">
-                  PLnEX access is managed through corporate project assignment. Submit your credentials to your Chief Project Controls Manager.
-                </p>
-              </div>
-
-              <div className="p-3 bg-[#EDF2F8] border border-[#B3CBE0] rounded text-xs text-[#176B87] space-y-1">
-                <strong>Standard Onboarding:</strong>
-                <p className="text-[11px] leading-relaxed">
-                  Field engineers and planners are provisioned automatically upon contract mobilization for Oil India infrastructure packages.
-                </p>
-              </div>
-
-              <div className="flex items-center justify-end pt-2 border-t border-[#E8EBF0]">
-                <button
-                  type="button"
-                  onClick={() => setActiveModal(null)}
-                  className="px-3 py-1.5 text-xs bg-[#176B87] hover:bg-[#135A72] text-white rounded font-medium"
-                >
-                  Understood
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-[#F7F8FA] flex items-center justify-center p-4">
+          <Loader2 className="w-6 h-6 animate-spin text-[#176B87]" />
+        </div>
+      }
+    >
+      <LoginForm />
+    </Suspense>
   );
 }

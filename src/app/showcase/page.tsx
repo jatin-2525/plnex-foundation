@@ -144,7 +144,7 @@ export default function ShowcasePage() {
                   key={r.id}
                   onClick={() => setUserRole(r.id as any)}
                   className={`px-2.5 py-1 rounded text-xs transition-colors ${
-                    userSession.role === r.id
+                    userSession?.role === r.id
                       ? 'bg-[#176B87] text-white font-bold'
                       : 'bg-[#F0F2F5] text-[#596579] hover:bg-[#E8EBF0]'
                   }`}

@@ -14,7 +14,6 @@ import {
   Layers,
   ChevronLeft,
   ChevronRight,
-  Sparkles,
   FolderKanban,
   HardHat,
   ListChecks,
@@ -24,9 +23,15 @@ import {
   Activity,
   BookOpen,
   Wifi,
+  Camera,
+  FileText,
+  Shield,
+  Users,
+  Building2,
+  Settings,
 } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
-import { hasPermission } from '../../types/permissions';
+import { UserRole } from '../../types';
 
 export interface SidebarProps {
   collapsed: boolean;
@@ -39,8 +44,6 @@ interface SidebarNavItem {
   label: string;
   href: string;
   icon: React.ComponentType<{ className?: string }>;
-  stage?: string;
-  permission?: any;
   badge?: string | number;
 }
 
@@ -53,151 +56,137 @@ export function Sidebar({ collapsed, onToggle, mobileMenuOpen, onCloseMobile }: 
   const pathname = usePathname();
   const { userSession } = useApp();
 
-  const navItems: SidebarGroup[] = [
+  const role: UserRole = userSession?.role || 'manager';
+
+  // Manager Navigation
+  const managerNav: SidebarGroup[] = [
     {
-      group: 'OVERVIEW',
+      group: 'WORKSPACE',
       items: [
-        {
-          label: 'Projects Portfolio',
-          href: '/projects',
-          icon: FolderKanban,
-          stage: 'PORTFOLIO',
-        },
-        {
-          label: 'Manager Dashboard',
-          href: '/dashboard',
-          icon: LayoutDashboard,
-          stage: 'ACTION',
-          permission: 'variance:read' as const,
-          badge: 2,
-        },
-        {
-          label: 'Engineer Dashboard',
-          href: '/engineer',
-          icon: HardHat,
-          stage: 'FIELD EXECUTION',
-          badge: 'Site',
-        },
-        {
-          label: 'My Activities',
-          href: '/activities',
-          icon: ListChecks,
-          stage: 'ASSIGNED TASKS',
-          permission: 'field:write' as const,
-        },
-        {
-          label: 'Schedule Twin',
-          href: '/schedule-twin',
-          icon: Layers,
-          stage: 'UPDATE & VARIANCE',
-          permission: 'variance:read' as const,
-        },
+        { label: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
       ],
     },
     {
-      group: 'CORE PIPELINE (PLAN → ACTION)',
+      group: 'PROJECT',
       items: [
-        {
-          label: '1. Master Schedule',
-          href: '/schedule',
-          icon: Calendar,
-          stage: 'PLAN',
-          permission: 'plan:read' as const,
-        },
-        {
-          label: '2. Field Ingestion',
-          href: '/field',
-          icon: ClipboardList,
-          stage: 'FIELD & EXTRACT',
-          permission: 'field:read' as const,
-        },
-        {
-          label: 'Execution Intel',
-          href: '/execution',
-          icon: Cpu,
-          stage: 'INTEL & LINKING',
-          badge: 'Live',
-        },
-        {
-          label: '3. Match & Verify',
-          href: '/matching',
-          icon: GitCompare,
-          stage: 'MATCH & VERIFY',
-          badge: 2,
-          permission: 'match:read' as const,
-        },
-        {
-          label: 'Review Queue',
-          href: '/review',
-          icon: ShieldCheck,
-          stage: 'GOVERNANCE',
-          badge: 6,
-        },
-        {
-          label: 'Progress & Variance',
-          href: '/progress',
-          icon: TrendingUp,
-          stage: 'S-CURVE & TRACK',
-          badge: '-7%',
-        },
-        {
-          label: 'Risks & Dependencies',
-          href: '/risks',
-          icon: AlertTriangle,
-          stage: 'CPM RISK & SLIP',
-          badge: 3,
-        },
-        {
-          label: '4. Delay & Impact',
-          href: '/variance',
-          icon: TrendingDown,
-          stage: 'IMPACT & ACTION',
-          permission: 'impact:read' as const,
-        },
-        {
-          label: 'What-if Simulator',
-          href: '/what-if',
-          icon: Sliders,
-          stage: 'SANDBOX SIM',
-          badge: 'Sim',
-        },
+        { label: 'Projects', href: '/projects', icon: FolderKanban },
+        { label: 'Schedule', href: '/schedule', icon: Calendar },
+        { label: 'Schedule Twin', href: '/schedule-twin', icon: Layers },
       ],
     },
     {
-      group: 'CONTROLS & COMPLIANCE',
+      group: 'EXECUTION',
       items: [
-        {
-          label: 'Evidence & Audit',
-          href: '/evidence',
-          icon: ShieldCheck,
-          permission: 'evidence:read' as const,
-        },
-        {
-          label: 'Schedule Health',
-          href: '/health',
-          icon: Activity,
-          badge: 5,
-        },
-        {
-          label: 'Offline / Sync Center',
-          href: '/sync',
-          icon: Wifi,
-          badge: 'Sync',
-        },
-        {
-          label: 'Reports & Memory',
-          href: '/reports',
-          icon: BookOpen,
-        },
-        {
-          label: 'Foundation Showcase',
-          href: '/showcase',
-          icon: Layers,
-          badge: 'Design System',
-        },
+        { label: 'Execution Intelligence', href: '/execution', icon: Cpu },
+        { label: 'Review Queue', href: '/review', icon: ShieldCheck, badge: 6 },
+      ],
+    },
+    {
+      group: 'CONTROL',
+      items: [
+        { label: 'Progress & Variance', href: '/progress', icon: TrendingUp, badge: '-7%' },
+        { label: 'Delay & Impact', href: '/variance', icon: TrendingDown },
+        { label: 'What-if', href: '/what-if', icon: Sliders },
+      ],
+    },
+    {
+      group: 'TRUST',
+      items: [
+        { label: 'Evidence & Audit', href: '/evidence', icon: ShieldCheck },
+        { label: 'Schedule Health', href: '/health', icon: Activity, badge: 5 },
+      ],
+    },
+    {
+      group: 'KNOWLEDGE',
+      items: [
+        { label: 'Reports & Memory', href: '/reports', icon: BookOpen },
+      ],
+    },
+    {
+      group: 'SYSTEM',
+      items: [
+        { label: 'Offline / Sync', href: '/sync', icon: Wifi },
       ],
     },
   ];
+
+  // Site Engineer Navigation
+  const engineerNav: SidebarGroup[] = [
+    {
+      group: 'WORKSPACE',
+      items: [
+        { label: 'Dashboard', href: '/engineer', icon: HardHat },
+        { label: 'My Activities', href: '/activities', icon: ListChecks },
+      ],
+    },
+    {
+      group: 'FIELD',
+      items: [
+        { label: 'Field Capture', href: '/field/capture', icon: Camera },
+        { label: 'DPR / Time Agent', href: '/field/dpr', icon: FileText },
+      ],
+    },
+    {
+      group: 'EXECUTION',
+      items: [
+        { label: 'Execution Intelligence', href: '/execution', icon: Cpu },
+      ],
+    },
+    {
+      group: 'TRUST',
+      items: [
+        { label: 'Evidence', href: '/evidence', icon: ShieldCheck },
+      ],
+    },
+    {
+      group: 'SYSTEM',
+      items: [
+        { label: 'Offline / Sync', href: '/sync', icon: Wifi },
+      ],
+    },
+  ];
+
+  // Admin Navigation
+  const adminNav: SidebarGroup[] = [
+    {
+      group: 'ADMIN',
+      items: [
+        { label: 'Admin Dashboard', href: '/admin', icon: Shield },
+        { label: 'Users & Roles', href: '/admin/users', icon: Users },
+        { label: 'Organizations', href: '/admin/organizations', icon: Building2 },
+      ],
+    },
+    {
+      group: 'MANAGER VIEW',
+      items: [
+        { label: 'Manager Dashboard', href: '/dashboard', icon: LayoutDashboard },
+      ],
+    },
+    {
+      group: 'ENGINEER VIEW',
+      items: [
+        { label: 'Engineer Dashboard', href: '/engineer', icon: HardHat },
+      ],
+    },
+    {
+      group: 'SYSTEM',
+      items: [
+        { label: 'Schedule', href: '/schedule', icon: Calendar },
+        { label: 'Execution', href: '/execution', icon: Cpu },
+        { label: 'Review', href: '/review', icon: ShieldCheck },
+        { label: 'Progress', href: '/progress', icon: TrendingUp },
+        { label: 'Risks', href: '/risks', icon: AlertTriangle },
+        { label: 'Evidence', href: '/evidence', icon: ShieldCheck },
+        { label: 'Health', href: '/health', icon: Activity },
+        { label: 'Reports', href: '/reports', icon: BookOpen },
+        { label: 'Sync', href: '/sync', icon: Wifi },
+        { label: 'Settings', href: '/admin/settings', icon: Settings },
+      ],
+    },
+  ];
+
+  const navGroups: SidebarGroup[] =
+    role === 'admin' ? adminNav : role === 'engineer' ? engineerNav : managerNav;
 
   return (
     <aside
@@ -211,7 +200,7 @@ export function Sidebar({ collapsed, onToggle, mobileMenuOpen, onCloseMobile }: 
     >
       {/* Workflow Navigation */}
       <div className="flex-1 overflow-y-auto py-3 px-2 space-y-4">
-        {navItems.map((group, gIdx) => (
+        {navGroups.map((group, gIdx) => (
           <div key={gIdx} className="space-y-1">
             {!collapsed && (
               <h4 className="px-3 text-[10px] font-bold uppercase tracking-wider text-[#8A94A6]">
@@ -220,9 +209,6 @@ export function Sidebar({ collapsed, onToggle, mobileMenuOpen, onCloseMobile }: 
             )}
             {group.items.map((item) => {
               const isActive = pathname === item.href;
-              const isAllowed = item.permission
-                ? hasPermission(userSession.role, item.permission)
-                : true;
 
               return (
                 <Link
@@ -232,9 +218,7 @@ export function Sidebar({ collapsed, onToggle, mobileMenuOpen, onCloseMobile }: 
                   className={`flex items-center gap-3 px-3 py-2 rounded-md text-xs font-medium transition-colors relative group ${
                     isActive
                       ? 'bg-[#EDF5F8] text-[#176B87] font-semibold'
-                      : isAllowed
-                      ? 'text-[#596579] hover:bg-[#F0F2F5] hover:text-[#172033]'
-                      : 'text-[#B0B8C9] hover:bg-[#FBEFEE] hover:text-[#B5473C]'
+                      : 'text-[#596579] hover:bg-[#F0F2F5] hover:text-[#172033]'
                   }`}
                   title={collapsed ? item.label : undefined}
                 >
@@ -245,7 +229,7 @@ export function Sidebar({ collapsed, onToggle, mobileMenuOpen, onCloseMobile }: 
 
                   <item.icon
                     className={`w-4 h-4 flex-shrink-0 ${
-                      isActive ? 'text-[#176B87]' : isAllowed ? 'text-[#596579]' : 'text-[#B0B8C9]'
+                      isActive ? 'text-[#176B87]' : 'text-[#596579]'
                     }`}
                   />
 
@@ -276,7 +260,7 @@ export function Sidebar({ collapsed, onToggle, mobileMenuOpen, onCloseMobile }: 
       <div className="p-2 border-t border-[#D9DEE5] bg-[#F7F8FA] flex items-center justify-between">
         {!collapsed && (
           <div className="px-2 text-[10px] text-[#8A94A6] font-mono">
-            <span>PLnEX v1.0 • OIL</span>
+            <span>PLnEX • {role.toUpperCase()}</span>
           </div>
         )}
         <button

@@ -51,7 +51,7 @@ export default function MatchingPage() {
     { label: 'Match Engine & Review Queue', current: true },
   ];
 
-  const canApprove = hasPermission(userSession.role, 'verify:approve');
+  const canApprove = userSession ? hasPermission(userSession.role, 'verify:approve') : false;
 
   const handleApprove = async (event: ExecutionEvent) => {
     if (!canApprove) {
@@ -226,7 +226,7 @@ export default function MatchingPage() {
             <span>•</span>
             <span>REVIEW QUEUE: 2 Pending Items</span>
             <span>•</span>
-            <span>CURRENT ROLE: {userSession.role.toUpperCase()}</span>
+            <span>CURRENT ROLE: {userSession ? userSession.role.toUpperCase() : 'RESTRICTED'}</span>
           </>
         }
       />

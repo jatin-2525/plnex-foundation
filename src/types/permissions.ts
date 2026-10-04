@@ -121,3 +121,112 @@ export function hasAnyPermission(role: UserRole, permissions: Permission[]): boo
 export function hasAllPermissions(role: UserRole, permissions: Permission[]): boolean {
   return permissions.every((p) => hasPermission(role, p));
 }
+
+export function getDefaultRouteForRole(role: UserRole): string {
+  switch (role) {
+    case 'manager':
+      return '/dashboard';
+    case 'engineer':
+      return '/engineer';
+    case 'admin':
+      return '/admin';
+    default:
+      return '/login';
+  }
+}
+
+export function getResourceName(pathname: string): string {
+  if (pathname === '/dashboard') return 'Manager Dashboard';
+  if (pathname === '/engineer') return 'Engineer Dashboard';
+  if (pathname === '/activities') return 'My Activities';
+  if (pathname.startsWith('/admin')) return 'Admin Dashboard & Governance';
+  if (pathname === '/what-if') return 'What-if Simulator';
+  if (pathname === '/review') return 'Review Queue';
+  if (pathname === '/health') return 'Schedule Health & Data Quality';
+  if (pathname === '/reports') return 'Reports & Project Memory';
+  if (pathname === '/schedule') return 'Master Schedule';
+  if (pathname === '/schedule-twin') return 'Schedule Twin';
+  if (pathname.startsWith('/projects')) return 'Projects Portfolio';
+  if (pathname === '/progress') return 'Progress & Variance';
+  if (pathname === '/risks') return 'Risks & Dependencies';
+  if (pathname === '/variance') return 'Delay & Impact';
+  if (pathname.startsWith('/field')) return 'Field Operations & DPR';
+  if (pathname === '/evidence') return 'Evidence & Audit';
+  if (pathname === '/execution') return 'Execution Intelligence';
+  if (pathname === '/sync') return 'Offline / Sync Center';
+  return pathname;
+}
+
+export function canAccessRoute(role: UserRole, pathname: string): boolean {
+  // Public routes
+  if (
+    pathname === '/login' ||
+    pathname === '/register' ||
+    pathname === '/forgot-password' ||
+    pathname === '/reset-password' ||
+    pathname === '/access-denied'
+  ) {
+    return true;
+  }
+
+  // Admin has access to all routes
+  if (role === 'admin') {
+    return true;
+  }
+
+  // Manager permissions
+  if (role === 'manager') {
+    // Explicitly denied routes for Manager
+    if (
+      pathname === '/engineer' ||
+      pathname === '/activities' ||
+      pathname === '/field/capture' ||
+      pathname === '/field/dpr' ||
+      pathname.startsWith('/admin')
+    ) {
+      return false;
+    }
+    // Allowed routes for Manager
+    if (
+      pathname === '/dashboard' ||
+      pathname.startsWith('/projects') ||
+      pathname === '/schedule' ||
+      pathname === '/schedule-twin' ||
+      pathname === '/execution' ||
+      pathname === '/review' ||
+      pathname === '/progress' ||
+      pathname === '/risks' ||
+      pathname === '/what-if' ||
+      pathname === '/variance' ||
+      pathname === '/evidence' ||
+      pathname === '/health' ||
+      pathname === '/reports' ||
+      pathname === '/sync' ||
+      pathname === '/field'
+    ) {
+      return true;
+    }
+    return false;
+  }
+
+  // Site Engineer permissions
+  if (role === 'engineer') {
+    // Allowed routes for Engineer
+    if (
+      pathname === '/engineer' ||
+      pathname === '/activities' ||
+      pathname === '/field' ||
+      pathname === '/field/capture' ||
+      pathname === '/field/dpr' ||
+      pathname === '/execution' ||
+      pathname === '/evidence' ||
+      pathname === '/sync'
+    ) {
+      return true;
+    }
+    // Explicitly denied for Engineer: Manager dashboard, review queue, what-if, projects, schedule, etc.
+    return false;
+  }
+
+  return false;
+}

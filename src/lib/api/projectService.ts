@@ -22,6 +22,9 @@ import {
 } from './mockData';
 import { parseFieldText, evaluateScheduleMatch } from '../domain/matchingEngine';
 import { simulateWhatIfDelay, WhatIfSimulationResult } from '../domain/varianceEngine';
+import { authService } from './authService';
+import { hasPermission, Permission } from '../../types/permissions';
+import { UserSession, UserRole } from '../../types';
 
 class ProjectApiService {
   private projects: PortfolioProject[] = [...MOCK_PROJECTS];
@@ -29,6 +32,25 @@ class ProjectApiService {
   private events: ExecutionEvent[] = [...MOCK_EXECUTION_EVENTS];
   private evidence: EvidenceItem[] = [...MOCK_EVIDENCE_ITEMS];
   private auditLogs: AuditEntry[] = [...MOCK_AUDIT_LOGS];
+
+  /**
+   * Enforces backend authorization: verifies authenticated user, organization, role, and permission.
+   */
+  private verifyAuthorization(options?: { permission?: Permission; allowedRoles?: UserRole[] }): UserSession | null {
+    if (typeof window === 'undefined') return null;
+    const session = authService.getCurrentSession();
+    if (!session || !session.user) {
+      throw new Error('401 Unauthorized: Valid authenticated session required to execute this operation.');
+    }
+    const user = session.user;
+    if (options?.allowedRoles && !options.allowedRoles.includes(user.role) && user.role !== 'admin') {
+      throw new Error(`403 Forbidden: Current role "${user.role}" is not authorized for this operation.`);
+    }
+    if (options?.permission && !hasPermission(user.role, options.permission) && user.role !== 'admin') {
+      throw new Error(`403 Forbidden: Missing required privilege "${options.permission}".`);
+    }
+    return user;
+  }
 
   async getProjects(): Promise<ApiResponse<PortfolioProject[]>> {
     return {
@@ -47,6 +69,7 @@ class ProjectApiService {
   }
 
   async createProject(projectData: Partial<PortfolioProject>): Promise<ApiResponse<PortfolioProject>> {
+    this.verifyAuthorization({ permission: 'project:manage', allowedRoles: ['manager', 'admin'] });
     const newProject: PortfolioProject = {
       id: projectData.id || `PRJ-OIL-2026-${String(this.projects.length + 1).padStart(2, '0')}`,
       code: projectData.code || `OIL-NEW-${String(this.projects.length + 1).padStart(2, '0')}`,
@@ -182,6 +205,7 @@ class ProjectApiService {
     rawText: string,
     source: 'DPR_PDF' | 'EXCEL_SHEET' | 'SITE_DIARY' | 'FIELD_QUICK_FORM' | 'VOICE_AGENT' = 'FIELD_QUICK_FORM'
   ): Promise<ApiResponse<ExecutionEvent>> {
+    const user = this.verifyAuthorization({ permission: 'field:write', allowedRoles: ['engineer', 'admin'] });
     const extracted = parseFieldText(rawText);
     const analysis = evaluateScheduleMatch(extracted, rawText, this.activities);
 
@@ -216,7 +240,7 @@ class ProjectApiService {
       matchedReasons: analysis.reasons,
       alternativeCandidates: analysis.candidates,
       status: analysis.category === 'AUTO_LINK' ? 'auto-linked' : analysis.category === 'MANAGER_REVIEW' ? 'pending-review' : 'pending-verification',
-      createdBy: 'Site Engineer (Active Field Session)',
+      createdBy: user ? `${user.name} (${user.role.toUpperCase()})` : 'Site Engineer (Active Field Session)',
       createdAt: new Date().toISOString(),
       evidenceIds: [],
     };
@@ -227,8 +251,8 @@ class ProjectApiService {
     this.auditLogs.unshift({
       id: `AUD-${Date.now().toString().slice(-4)}`,
       timestamp: new Date().toISOString().replace('T', ' ').slice(0, 19),
-      actor: 'PLnEX Intelligent Extraction Engine',
-      role: 'SYSTEM',
+      actor: user?.name || 'PLnEX Intelligent Extraction Engine',
+      role: (user?.role || 'SYSTEM') as UserRole | 'SYSTEM',
       action: 'INGEST_AND_MATCH',
       objectType: 'EXECUTION_EVENT',
       objectId: newEvent.id,
@@ -244,12 +268,13 @@ class ProjectApiService {
   }
 
   async approveMatch(eventId: string, managerNotes?: string): Promise<ApiResponse<ExecutionEvent>> {
+    const user = this.verifyAuthorization({ permission: 'verify:approve', allowedRoles: ['manager', 'admin'] });
     const event = this.events.find((e) => e.id === eventId);
     if (!event) throw new Error(`Event not found: ${eventId}`);
 
     event.status = 'approved';
     event.reviewedAt = new Date().toISOString();
-    event.reviewedBy = 'Rajesh Sharma (Project Manager)';
+    event.reviewedBy = user ? `${user.name} (${user.title})` : 'Rajesh Sharma (Project Manager)';
     event.managerNotes = managerNotes;
 
     // Synchronize to activity actuals
@@ -347,6 +372,7 @@ class ProjectApiService {
   }
 
   simulateWhatIf(activityId: string, addedDays: number): ApiResponse<WhatIfSimulationResult> {
+    this.verifyAuthorization({ permission: 'variance:simulate', allowedRoles: ['manager', 'admin'] });
     const res = simulateWhatIfDelay(activityId, addedDays, this.activities);
     return {
       data: res,
