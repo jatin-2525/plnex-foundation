@@ -166,35 +166,51 @@ export const SIMULATION_ACTIVITIES: SimulatorActivity[] = [
   },
   {
     id: 'CIV-11-001',
-    name: 'Foundation Block A - Compressor Pedestal',
+    name: 'Foundation Block A',
     wbs: '2.1.1',
     discipline: 'Civil',
     area: 'Unit A - Compressor House',
-    plannedStart: '2026-09-05',
-    plannedFinish: '2026-09-14',
-    totalFloat: 4,
-    freeFloat: 2,
-    isCritical: false,
+    plannedStart: '2026-10-01',
+    plannedFinish: '2026-10-15',
+    totalFloat: 0,
+    freeFloat: 0,
+    isCritical: true,
     predecessors: [],
-    successors: ['MEC-08-003'],
+    successors: ['STR-02-004'],
     assignedEngineer: 'S. Ramanathan',
     description: 'Reinforced concrete foundation pedestal for 3.5MW compressor package.',
   },
   {
-    id: 'MEC-08-003',
-    name: 'Align Centrifugal Gas Compressor Skid A',
+    id: 'STR-02-004',
+    name: 'Column Installation',
+    wbs: '2.2.1',
+    discipline: 'Civil',
+    area: 'Unit A - Compressor House',
+    plannedStart: '2026-10-16',
+    plannedFinish: '2026-10-25',
+    totalFloat: 0,
+    freeFloat: 0,
+    isCritical: true,
+    predecessors: ['CIV-11-001'],
+    successors: ['MEC-03-010'],
+    assignedEngineer: 'S. Ramanathan',
+    description: 'Structural steel column erection on foundation block A pedestals.',
+  },
+  {
+    id: 'MEC-03-010',
+    name: 'Equipment Installation',
     wbs: '4.1.2',
     discipline: 'Mechanical',
     area: 'Unit A - Compressor House',
-    plannedStart: '2026-09-16',
-    plannedFinish: '2026-09-22',
-    totalFloat: 4,
-    freeFloat: 1,
-    isCritical: false,
-    predecessors: ['CIV-11-001'],
+    plannedStart: '2026-10-26',
+    plannedFinish: '2026-11-10',
+    totalFloat: 0,
+    freeFloat: 0,
+    isCritical: true,
+    predecessors: ['STR-02-004'],
     successors: ['ELE-11-032'],
     assignedEngineer: 'Debajit Borah',
-    description: 'Precision laser alignment of motor and compressor shafts on foundation block A.',
+    description: 'Centrifugal compressor casing and skid equipment positioning and anchor bolting.',
   },
   {
     id: 'ELE-11-032',
@@ -207,7 +223,7 @@ export const SIMULATION_ACTIVITIES: SimulatorActivity[] = [
     totalFloat: 3,
     freeFloat: 3,
     isCritical: false,
-    predecessors: ['MEC-08-003'],
+    predecessors: ['MEC-03-010'],
     successors: ['INS-04-015'],
     assignedEngineer: 'K. Narayanan',
     description: 'Hot-dip galvanized ladder cable trays along structural steel gallery.',
@@ -267,6 +283,16 @@ export const SIMULATION_ACTIVITIES: SimulatorActivity[] = [
 export const DEFAULT_SAVED_SCENARIOS: SimulationScenario[] = [
   {
     id: 'SCN-2026-001',
+    name: 'Foundation Block A Curing Hold (+4d)',
+    sourceActivityId: 'CIV-11-001',
+    delayDays: 4,
+    createdAt: '2026-09-18 10:00',
+    createdBy: 'Rajesh Sharma (Project Controls Lead)',
+    description: 'Simulates 4-day curing hold on Foundation Block A (15 Oct to 19 Oct) affecting downstream Column Installation and Equipment Installation.',
+    tags: ['Civil', 'Foundation', 'Equipment'],
+  },
+  {
+    id: 'SCN-2026-002',
     name: 'Monsoon Heavy Rain Slip on HP Gas Header',
     sourceActivityId: 'PIP-24-001',
     delayDays: 7,
@@ -274,16 +300,6 @@ export const DEFAULT_SAVED_SCENARIOS: SimulationScenario[] = [
     createdBy: 'Debajit Borah (Lead Site Engineer)',
     description: 'Tests 7-day torrential rain suspension on pipe erection and evaluates downstream COD exposure.',
     tags: ['Weather', 'Critical Path', 'Piping'],
-  },
-  {
-    id: 'SCN-2026-002',
-    name: 'Crane Mobilization Stall on Compressor Pedestal',
-    sourceActivityId: 'CIV-11-001',
-    delayDays: 3,
-    createdAt: '2026-09-16 11:15',
-    createdBy: 'Rajesh Sharma (Project Manager)',
-    description: 'Tests whether a 3-day crane hydraulic repair consumes float without slipping critical milestones.',
-    tags: ['Equipment', 'Civil', 'Float Absorption'],
   },
   {
     id: 'SCN-2026-003',
@@ -316,6 +332,18 @@ export function formatFriendlyDate(dateStr: string): string {
     day: '2-digit',
     month: 'short',
     year: 'numeric',
+  });
+}
+
+/**
+ * Format short date (e.g. "15 Oct")
+ */
+export function formatShortDate(dateStr: string): string {
+  if (!dateStr) return 'N/A';
+  const d = new Date(dateStr);
+  return d.toLocaleDateString('en-GB', {
+    day: '2-digit',
+    month: 'short',
   });
 }
 
