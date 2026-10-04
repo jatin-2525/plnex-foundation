@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { useState, useMemo, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
@@ -27,6 +27,7 @@ import {
   MOCK_EVIDENCE_ITEMS,
   MOCK_HEALTH_SCORE,
 } from '../../../lib/api/mockData';
+import { CANONICAL_SCHEDULE_VERSION_LABEL } from '../../../lib/domain/canonicalModels';
 import {
   FolderKanban,
   Calendar,
@@ -829,7 +830,7 @@ export default function ProjectOverviewPage() {
                 <StatusBadge status={project.status} size="sm" />
                 <span className="text-xs text-[#596579] hidden sm:inline">ΓÇó</span>
                 <span className="text-xs font-mono font-medium text-[#172033] bg-[#F7F8FA] px-2 py-0.5 rounded border border-[#D9DEE5]">
-                  Baseline: {project.scheduleVersion || 'Rev 3.2 (P6 XML)'}
+                  Baseline: {project.scheduleVersion || CANONICAL_SCHEDULE_VERSION_LABEL}
                 </span>
               </div>
 
@@ -1090,7 +1091,7 @@ export default function ProjectOverviewPage() {
             <div className="flex items-center gap-3">
               <span className="font-mono text-[11px]">Depth: 6 Levels Ingested</span>
               <span>ΓÇó</span>
-              <span>Target Baseline: Primavera P6 XML Rev 3.2</span>
+              <span>Target Baseline: {CANONICAL_SCHEDULE_VERSION_LABEL} (Primavera P6 XML)</span>
             </div>
             <button
               type="button"
@@ -1293,7 +1294,7 @@ export default function ProjectOverviewPage() {
               {/* Primary Driving Delay Chain */}
               <div className="p-3.5 bg-[#FDF0EE] border border-[#E4B0AA] rounded-lg space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="font-mono font-bold text-[#B5473C]">PIP-24-002: Line 24-XX Field Joints</span>
+                  <span className="font-mono font-bold text-[#B5473C]">PIP-24-002: Weld Line 24-XX Field Joints & NDT Clearance</span>
                   <span className="text-xs font-mono font-bold text-[#B5473C] bg-white px-2 py-0.5 rounded border border-[#E4B0AA]">
                     +2 Days Critical Slip
                   </span>
@@ -1583,7 +1584,7 @@ export default function ProjectOverviewPage() {
             <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded space-y-1">
               <div className="flex justify-between">
                 <span>Baseline File:</span>
-                <strong className="font-mono text-[#172033]">{project.scheduleVersion || 'Rev 3.2 (P6 XML)'}</strong>
+                <strong className="font-mono text-[#172033]">{project.scheduleVersion || CANONICAL_SCHEDULE_VERSION_LABEL}</strong>
               </div>
               <div className="flex justify-between">
                 <span>Physical Completion:</span>

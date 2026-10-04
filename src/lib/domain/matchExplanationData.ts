@@ -154,7 +154,7 @@ export const MOCK_MATCH_EXPLANATIONS: Record<string, MatchExplanationModel> = {
     suggestedActivity: {
       id: 'PIP-24-001',
       name: 'Erect Line 24-XX High Pressure Gas Header',
-      wbs: '3.2.1',
+      wbs: '1.1.3.2.1',
       discipline: 'Piping',
       area: 'Unit A - Gas Processing',
       line: 'Line 24-XX',
@@ -227,8 +227,8 @@ export const MOCK_MATCH_EXPLANATIONS: Record<string, MatchExplanationModel> = {
     alternativeCandidates: [
       {
         activityId: 'PIP-24-002',
-        activityName: 'Weld Line 24-XX Field Joints',
-        wbs: '3.2.2',
+        activityName: 'Weld Line 24-XX Field Joints & NDT Clearance',
+        wbs: '1.1.3.2.2',
         discipline: 'Piping',
         area: 'Unit A - Gas Processing',
         confidence: 71,
@@ -274,16 +274,16 @@ export const MOCK_MATCH_EXPLANATIONS: Record<string, MatchExplanationModel> = {
       'Line 24 spool welding completed 8 joints today. 4 joints pending radiographic clearance.',
     suggestedActivity: {
       id: 'PIP-24-002',
-      name: 'Weld Line 24-XX Field Joints & NDT Inspection',
-      wbs: '3.2.2',
+      name: 'Weld Line 24-XX Field Joints & NDT Clearance',
+      wbs: '1.1.3.2.2',
       discipline: 'Piping',
       area: 'Unit A - Gas Processing',
       line: 'Line 24-XX',
-      plannedStart: '2026-09-14',
-      plannedFinish: '2026-09-18',
-      status: 'in-progress',
-      plannedQuantity: 24,
-      unit: 'welds',
+      plannedStart: '2026-09-16',
+      plannedFinish: '2026-09-20',
+      status: 'delayed',
+      plannedQuantity: 12,
+      unit: 'joints',
     },
     confidence: 86,
     confidenceBracket: 'Review Required',
@@ -342,14 +342,14 @@ export const MOCK_MATCH_EXPLANATIONS: Record<string, MatchExplanationModel> = {
           'Conforms to WBS 3.2.2. Score reduced by 7 pts because 4 joints carry a radiographic testing hold, requiring manager review confirmation.',
         status: 'PARTIAL_MATCH',
         extractedToken: '8 welds completed, 4 pending RT',
-        targetBaselineToken: 'WBS 3.2.2 (Total: 24 joints)',
+        targetBaselineToken: 'WBS 1.1.3.2.2 (Total: 12 joints)',
       },
     ],
     alternativeCandidates: [
       {
         activityId: 'PIP-24-001',
         activityName: 'Erect Line 24-XX High Pressure Gas Header',
-        wbs: '3.2.1',
+        wbs: '1.1.3.2.1',
         discipline: 'Piping',
         area: 'Unit A - Gas Processing',
         confidence: 68,
@@ -384,7 +384,7 @@ export const MOCK_MATCH_EXPLANATIONS: Record<string, MatchExplanationModel> = {
     suggestedActivity: {
       id: 'ELE-11-032',
       name: 'Cable Tray Installation - Substation to Compressor Bay',
-      wbs: '5.1.1',
+      wbs: '1.1.4.1.2',
       discipline: 'Electrical',
       area: 'Unit A Overhead Gallery',
       line: 'Overhead Gallery',
@@ -545,17 +545,17 @@ export const MOCK_MATCH_EXPLANATIONS: Record<string, MatchExplanationModel> = {
         maxContribution: 15,
         weightPercent: 15,
         reason:
-          'Zero points: Master schedule WBS Rev 3.2 contains no offsite drain line work package for Unit B. Possible unapproved scope addition.',
+          'Zero points: Master schedule WBS V3 · Rev 3.2 contains no offsite drain line work package for Unit B. Possible unapproved scope addition.',
         status: 'NO_MATCH',
         extractedToken: 'Unit B Offsites Drain',
-        targetBaselineToken: 'WBS Hierarchy Gap (Rev 3.2)',
+        targetBaselineToken: 'WBS Hierarchy Gap (V3 · Rev 3.2)',
       },
     ],
     alternativeCandidates: [
       {
         activityId: 'PIP-24-001',
         activityName: 'Erect Line 24-XX High Pressure Gas Header',
-        wbs: '3.2.1',
+        wbs: '1.1.3.2.1',
         discipline: 'Piping',
         area: 'Unit A - Gas Processing',
         confidence: 34,
@@ -567,7 +567,7 @@ export const MOCK_MATCH_EXPLANATIONS: Record<string, MatchExplanationModel> = {
       {
         activityId: 'CIV-11-001',
         activityName: 'Foundation Block A - Compressor Pedestal',
-        wbs: '2.1.1',
+        wbs: '1.1.1.1.1',
         discipline: 'Civil',
         area: 'Unit A - Compressor Bay',
         confidence: 28,
@@ -602,7 +602,7 @@ export const MOCK_MATCH_EXPLANATIONS: Record<string, MatchExplanationModel> = {
     suggestedActivity: {
       id: 'PIP-24-003',
       name: 'Hydrostatic Test Section Line 24-XX (150 bar)',
-      wbs: '3.2.3',
+      wbs: '1.1.3.2.3',
       discipline: 'Piping',
       area: 'Unit A - Test Manifold',
       line: 'Line 24-XX',
@@ -675,8 +675,8 @@ export const MOCK_MATCH_EXPLANATIONS: Record<string, MatchExplanationModel> = {
     alternativeCandidates: [
       {
         activityId: 'PIP-24-002',
-        activityName: 'Weld Line 24-XX Field Joints & NDT Inspection',
-        wbs: '3.2.2',
+        activityName: 'Weld Line 24-XX Field Joints & NDT Clearance',
+        wbs: '1.1.3.2.2',
         discipline: 'Piping',
         area: 'Unit A - Gas Processing',
         confidence: 45,
@@ -711,7 +711,7 @@ export const MOCK_MATCH_EXPLANATIONS: Record<string, MatchExplanationModel> = {
     suggestedActivity: {
       id: 'CIV-11-001',
       name: 'Foundation Block A - Compressor Pedestal',
-      wbs: '2.1.1',
+      wbs: '1.1.1.1.1',
       discipline: 'Civil',
       area: 'Unit A - Compressor Bay',
       line: 'Bay 1',
@@ -884,7 +884,7 @@ export function getMatchExplanationForEvent(
     suggestedActivity: {
       id: 'PIP-24-001',
       name: 'Erect Line 24-XX High Pressure Gas Header',
-      wbs: '3.2.1',
+      wbs: '1.1.3.2.1',
       discipline: 'Piping',
       area: 'Unit A - Gas Processing',
       line: 'Line 24-XX',
@@ -901,8 +901,8 @@ export function getMatchExplanationForEvent(
     alternativeCandidates: [
       {
         activityId: 'PIP-24-002',
-        activityName: 'Weld Line 24-XX Field Joints',
-        wbs: '3.2.2',
+        activityName: 'Weld Line 24-XX Field Joints & NDT Clearance',
+        wbs: '1.1.3.2.2',
         discipline: 'Piping',
         confidence: 71,
         matchCategory: 'MANAGER_REVIEW',

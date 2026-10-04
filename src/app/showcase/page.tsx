@@ -22,6 +22,7 @@ import { FilterBar } from '../../components/shared/FilterBar';
 import { MatchExplanation } from '../../components/shared/MatchExplanation';
 import { NotificationCenterPanel } from '../../components/shared/NotificationCenterPanel';
 import { GlobalSearchPanel } from '../../components/shared/GlobalSearchPanel';
+import { CanonicalStateBadge } from '../../components/shared/CanonicalStateBadge';
 import { colors } from '../../tokens/colors';
 import { typography } from '../../tokens/typography';
 import { spacing } from '../../tokens/spacing';
@@ -232,6 +233,25 @@ export default function ShowcasePage() {
               <VarianceBadge daysDelay={1} />
               <VarianceBadge daysDelay={3} />
               <VarianceBadge daysDelay={7} />
+            </div>
+          </div>
+
+          <div>
+            <h4 className="font-semibold text-[#596579] mb-2">
+              Canonical PLnEX Data States (Shared Single Source of Truth):
+            </h4>
+            <div className="flex flex-wrap gap-2">
+              <CanonicalStateBadge state="DRAFT" />
+              <CanonicalStateBadge state="PROCESSING" />
+              <CanonicalStateBadge state="PENDING_REVIEW" />
+              <CanonicalStateBadge state="VERIFIED" />
+              <CanonicalStateBadge state="UNMATCHED" />
+              <CanonicalStateBadge state="CONFLICT" />
+              <CanonicalStateBadge state="DUPLICATE" />
+              <CanonicalStateBadge state="STALE" />
+              <CanonicalStateBadge state="FAILED" />
+              <CanonicalStateBadge state="SYNC_PENDING" />
+              <CanonicalStateBadge state="SERVER_CONFIRMED" />
             </div>
           </div>
         </div>

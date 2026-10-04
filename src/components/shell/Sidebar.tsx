@@ -260,7 +260,7 @@ export function Sidebar({ collapsed, onToggle, mobileMenuOpen, onCloseMobile }: 
       <div className="p-2 border-t border-[#D9DEE5] bg-[#F7F8FA] flex items-center justify-between">
         {!collapsed && (
           <div className="px-2 text-[10px] text-[#8A94A6] font-mono">
-            <span>PLnEX • {role.toUpperCase()}</span>
+            <span>PLnEX • {role.toUpperCase()} • V3 · Rev 3.2</span>
           </div>
         )}
         <button

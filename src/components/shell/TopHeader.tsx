@@ -64,16 +64,24 @@ export function TopHeader({ onMobileToggle }: TopHeaderProps) {
         </button>
       </div>
 
-      {/* Right: Connection Status + Notifications + User Profile */}
+      {/* Right: Sample Indicator + Cutoff Status + Notifications + User Profile */}
       <div className="flex items-center gap-2 sm:gap-3">
-        {/* Clear Connection Status */}
+        {/* Sample Project Indicator */}
+        <span
+          className="hidden xl:inline-flex items-center gap-1 px-2.5 py-1 rounded bg-[#FEF3C7] text-[#92400E] border border-[#FDE68A] text-[10px] font-mono font-bold uppercase tracking-wider"
+          title="This application is displaying sample project data for the Oil India Duliajan asset."
+        >
+          Sample Project Data
+        </span>
+
+        {/* Authoritative Cutoff / Sync Status */}
         <Link
           href="/sync"
-          className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 bg-[#F0FDF4] hover:bg-[#DCFCE7] border border-[#BBF7D0] rounded-md text-xs text-[#15803D] font-medium transition-colors"
-          title="Field Connection Status: Online • Click to open Sync Center"
+          className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 bg-[#F7F8FA] hover:bg-[#EDF5F8] border border-[#D9DEE5] rounded-md text-xs text-[#596579] font-medium transition-colors"
+          title="Authoritative project reporting cutoff: 18 Sep 2026, 17:30 IST • Click to open Sync Center"
         >
-          <span className="w-2 h-2 rounded-full bg-[#16A34A] animate-pulse" />
-          <span className="text-[11px] font-medium text-[#15803D]">Online</span>
+          <span className="w-1.5 h-1.5 rounded-full bg-[#176B87]" />
+          <span className="text-[11px] font-mono text-[#172033]">18 Sep 2026, 17:30 IST</span>
         </Link>
 
         {/* Notifications Center */}

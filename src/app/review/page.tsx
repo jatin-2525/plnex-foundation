@@ -703,7 +703,7 @@ export default function ReviewQueuePage() {
 
             <div className="flex items-center gap-2 flex-wrap">
               <span className="text-xs px-2.5 py-1 rounded bg-[#F7F8FA] border border-[#D9DEE5] text-[#596579] font-mono">
-                {activeProject?.code || 'OIL-DUL-01'} · Rev 3.2
+                {activeProject?.code || 'OIL-DUL-01'} · V3 · Rev 3.2
               </span>
               <Link
                 href="/matching"
@@ -1295,7 +1295,7 @@ export default function ReviewQueuePage() {
                     ) : (
                       <div className="p-4 bg-[#FBEFEE] border border-[#E4B0AA] rounded-lg text-xs text-[#B5473C] space-y-2">
                         <strong>No Activity Associated:</strong>
-                        <p className="text-[11px]">This observation has no baseline target in WBS Rev 3.2.</p>
+                        <p className="text-[11px]">This observation has no baseline target in WBS V3 · Rev 3.2.</p>
                         <button
                           type="button"
                           onClick={() => setIsActivityPickerOpen(true)}

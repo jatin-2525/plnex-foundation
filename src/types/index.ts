@@ -12,6 +12,7 @@ export interface UserSession {
 
 export type WBSLevel = 'L1' | 'L2' | 'L3' | 'L4' | 'L5' | 'L6';
 
+import { ActivityStatus } from '../tokens/status';
 export * from '../tokens/status';
 
 export type DisciplineType =
@@ -23,24 +24,30 @@ export type DisciplineType =
 
 export interface ScheduleActivity {
   id: string; // e.g., "PIP-24-001"
+  activityId?: string; // canonical alias
   projectId: string;
   name: string; // "Erect Line 24-XX"
-  wbs: string; // "3.2.1"
+  activityName?: string; // canonical alias
+  wbs: string; // "1.1.3.2.1"
   wbsLevel: WBSLevel;
+  activityCode?: string;
+  p6ActivityId?: string;
   discipline: DisciplineType;
   area: string; // "Unit A - Gas Processing"
   line?: string; // "Line 24-XX"
+  scheduleVersion?: string;
   plannedStart: string;
   plannedFinish: string;
   actualStart?: string;
   actualFinish?: string;
   plannedProgress: number; // 0-100%
   actualProgress: number; // 0-100%
+  verifiedActualProgress?: number; // authoritative canonical progress
   plannedQuantity: number;
   actualQuantity: number;
   unit: string;
   variance: number; // actualProgress - plannedProgress
-  status: 'on-track' | 'at-risk' | 'delayed' | 'completed' | 'pending' | 'not-started';
+  status: ActivityStatus;
   delayDays: number;
   predecessors: string[];
   successors: string[];
@@ -49,6 +56,7 @@ export interface ScheduleActivity {
   evidenceIds: string[];
   executionEventIds: string[];
   description?: string;
+  progressHistory?: any[];
 }
 
 export type MatchConfidenceCategory = 'AUTO_LINK' | 'MANAGER_REVIEW' | 'UNMATCHED';
@@ -254,3 +262,5 @@ export * from './api';
 export * from './navigation';
 export * from './permissions';
 export * from './table';
+export * from '../lib/domain/canonicalModels';
+export * from '../lib/domain/dateUtils';

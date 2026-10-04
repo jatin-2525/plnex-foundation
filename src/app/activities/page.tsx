@@ -108,7 +108,7 @@ const INITIAL_ASSIGNED_ACTIVITIES: AssignedActivity[] = [
   {
     id: 'MEC-08-003',
     name: 'Align Centrifugal Gas Compressor Skid A',
-    wbs: '1.1.4.1.2',
+    wbs: '1.1.2.4.1',
     wbsLevel: 'L5',
     discipline: 'Mechanical',
     area: 'Compressor House Bay',
@@ -129,7 +129,7 @@ const INITIAL_ASSIGNED_ACTIVITIES: AssignedActivity[] = [
   {
     id: 'ELE-11-032',
     name: 'Cable Tray Installation - Substation to Bay',
-    wbs: '1.1.5.1.1',
+    wbs: '1.1.4.1.2',
     wbsLevel: 'L5',
     discipline: 'Electrical',
     area: 'Overhead Gallery Bay 1-4',

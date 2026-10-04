@@ -582,7 +582,7 @@ export default function DPRTimeAgentPage() {
                       {activeProject?.code || 'OIL-DUL-01'}
                     </span>
                     <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-[#EDF5F8] text-[#176B87]">
-                      Active Schedule Rev 3.2
+                      Active Schedule V3 · Rev 3.2
                     </span>
                   </div>
                   <p className="font-medium text-[#596579]">
@@ -1695,7 +1695,7 @@ export default function DPRTimeAgentPage() {
                       Submission Failed (Network Timeout / Schedule Lock)
                     </h4>
                     <p className="text-[#596579] mt-0.5">
-                      The schedule repository could not acquire a write lock on Rev 3.2. Local draft has been preserved.
+                      The schedule repository could not acquire a write lock on V3 · Rev 3.2. Local draft has been preserved.
                     </p>
                     <div className="pt-2 flex items-center gap-2">
                       <button

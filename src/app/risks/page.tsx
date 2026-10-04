@@ -683,7 +683,7 @@ export default function RisksDependencyImpactPage() {
                   Deterministic Delay Propagation
                 </span>
                 <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-mono font-bold bg-[#F0F2F5] text-[#596579] border border-[#D9DEE5]">
-                  CPM Network Model Rev 3.2
+                  CPM Network Model V3 · Rev 3.2
                 </span>
               </div>
               <h1 className="text-2xl font-bold text-[#172033] tracking-tight">

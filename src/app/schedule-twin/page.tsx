@@ -24,6 +24,7 @@ import {
   MOCK_EXECUTION_EVENTS,
   MOCK_EVIDENCE_ITEMS,
 } from '../../lib/api/mockData';
+import { CANONICAL_SCHEDULE_VERSION_LABEL } from '../../lib/domain/canonicalModels';
 import {
   Layers,
   Calendar,
@@ -533,7 +534,7 @@ export default function ScheduleTwinPage() {
 
             <div className="flex items-center gap-2 text-xs flex-wrap">
               <span className="font-mono text-[#596579] bg-[#F7F8FA] px-2.5 py-1 rounded border border-[#D9DEE5]">
-                BASELINE: Rev 3.2 (P6 XML)
+                BASELINE: {CANONICAL_SCHEDULE_VERSION_LABEL}
               </span>
               <span className="font-mono text-[#172033] bg-[#F7F8FA] px-2.5 py-1 rounded border border-[#D9DEE5]">
                 PROJECT: {activeProject.code}

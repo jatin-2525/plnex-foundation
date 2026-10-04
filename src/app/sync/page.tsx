@@ -57,9 +57,9 @@ export default function OfflineSyncCenterPage() {
   const [connectionStatus, setConnectionStatus] = useState<ConnectionStatus>('ONLINE');
   const [isSyncing, setIsSyncing] = useState<boolean>(false);
   const [lastSuccessfulSyncTime, setLastSuccessfulSyncTime] = useState<string | null>(
-    '18 Sep 2026, 13:45:10'
+    '18 Sep 2026, 17:30 IST'
   );
-  const [lastSyncRelative, setLastSyncRelative] = useState<string>('30 minutes ago');
+  const [lastSyncRelative, setLastSyncRelative] = useState<string>('Reporting Cutoff');
 
   // Sync Queue State
   const [queueItems, setQueueItems] = useState<SyncQueueItem[]>(INITIAL_SYNC_QUEUE_ITEMS);
@@ -439,7 +439,7 @@ export default function OfflineSyncCenterPage() {
                 Offline / Sync Center
               </h1>
               <p className="text-xs text-[#596579] mt-0.5 max-w-3xl">
-                Transparent and resilient synchronization queue for remote pipeline corridors. Work continues uninterrupted without cellular coverage—all site observations are safely buffered with zero data loss.
+                Transparent and resilient synchronization queue for remote pipeline corridors. Work continues uninterrupted without cellular coverage—all site observations are buffered locally in an offline-first transactional queue with automatic conflict detection.
               </p>
             </div>
 
@@ -509,7 +509,7 @@ export default function OfflineSyncCenterPage() {
             <div className="flex items-center gap-3">
               <span>Device Storage: <strong>IndexedDB (14.2 MB used)</strong></span>
               <span>•</span>
-              <span className="text-[#2E7D5B] font-bold">Zero Data Loss Architecture</span>
+              <span className="text-[#176B87] font-bold">Offline-First Transactional Queue</span>
             </div>
           </div>
         </div>
@@ -930,7 +930,7 @@ export default function OfflineSyncCenterPage() {
           footer={
             <div className="flex items-center justify-between w-full text-xs">
               <span className="text-[#596579] font-mono text-[11px]">
-                Schedule Baseline: Rev 3.2
+                Schedule Baseline: V3 · Rev 3.2
               </span>
               <div className="flex items-center gap-2">
                 <button

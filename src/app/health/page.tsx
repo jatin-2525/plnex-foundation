@@ -295,7 +295,7 @@ export default function ScheduleHealthPage() {
               <Folder className="w-3.5 h-3.5 text-[#176B87]" />
               <span>Project:</span>
               <strong className="text-[#172033]">{activeProject?.code || 'OIL-DUL-01'}</strong>
-              <span>· Baseline: Rev 3.2 (P6 XML)</span>
+              <span>· Baseline: V3 · Rev 3.2</span>
             </div>
             <div>
               <span>Evaluated: 146 activities · 12 field events · Reference Date: 18 Sep 2026</span>

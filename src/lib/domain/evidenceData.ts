@@ -398,8 +398,8 @@ export const COMPREHENSIVE_AUDIT_LOGS: AuditEntry[] = [
     whatChanged: 'Schedule baseline imported and validated from Primavera P6 XML',
     previousValue: 'Revision 3.1 (138 activities, Baseline COD: 15 Dec 2026)',
     newValue: 'Revision 3.2 (146 activities, Baseline COD: 15 Dec 2026)',
-    before: 'Rev 3.1: 138 Activities',
-    after: 'Rev 3.2: 146 Activities (+8 L5/L6 tie-in activities)',
+    before: 'V3 · Rev 3.1: 138 Activities',
+    after: 'V3 · Rev 3.2: 146 Activities (+8 L5/L6 tie-in activities)',
     details: 'Imported baseline incorporates approved monsoon weather buffer and detailed L5 breakdown for Line 24-XX piping interconnect. Zero integrity validation errors.',
   },
   {
@@ -502,7 +502,7 @@ export const COMPREHENSIVE_AUDIT_LOGS: AuditEntry[] = [
     newValue: 'REJECTED: Marked as Non-Schedule Extra Works',
     before: 'Status: PENDING_VERIFICATION (47% match)',
     after: 'Status: REJECTED & MARKED UNMATCHED',
-    details: 'Unit B drain line is temporary drainage civil work executed under day-work contractor ledger, not part of master P6 schedule Rev 3.2. Excluded from schedule progress.',
+    details: 'Unit B drain line is temporary drainage civil work executed under day-work contractor ledger, not part of master P6 schedule V3 · Rev 3.2. Excluded from schedule progress.',
   },
   {
     id: 'AUD-008',

@@ -20,6 +20,8 @@ import {
   MOCK_EVIDENCE_ITEMS,
 } from '../../lib/api/mockData';
 import { ExecutionEvent } from '../../types';
+import { CANONICAL_SCHEDULE_VERSION_LABEL } from '../../lib/domain/canonicalModels';
+import { formatProjectDate, formatProjectTime, PROJECT_REPORT_DATE } from '../../lib/domain/dateUtils';
 import {
   AlertTriangle,
   AlertCircle,
@@ -112,18 +114,18 @@ export default function ManagerDashboardPage() {
           </div>
           <span className="text-[#8A94A6] hidden sm:inline">•</span>
           <span className="text-xs text-[#596579]">
-            Baseline Version: <strong className="text-[#172033] font-mono">Rev 3.2 (P6 XML)</strong>
+            Baseline Version: <strong className="text-[#172033] font-mono">{CANONICAL_SCHEDULE_VERSION_LABEL}</strong>
           </span>
           <span className="text-[#8A94A6] hidden sm:inline">•</span>
           <span className="text-xs text-[#596579]">
-            Reporting Date: <strong className="text-[#172033] font-mono">18 Sep 2026</strong>
+            Reporting Date: <strong className="text-[#172033] font-mono">{formatProjectDate(PROJECT_REPORT_DATE, true)}</strong>
           </span>
         </div>
 
         <div className="flex items-center gap-3 text-xs flex-wrap">
           <div className="flex items-center gap-1.5 text-[#596579]">
             <Clock className="w-3.5 h-3.5 text-[#2E7D5B]" />
-            <span>Last Sync: <strong className="text-[#172033] font-mono">Today, 17:30 UTC</strong></span>
+            <span>Last Sync: <strong className="text-[#172033] font-mono">{formatProjectTime(PROJECT_REPORT_DATE, true)}</strong></span>
           </div>
           <StatusBadge status="at-risk" size="sm" />
         </div>

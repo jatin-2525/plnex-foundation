@@ -15,6 +15,7 @@ import {
   ReportBuilderConfig,
   HistoricalMemoryRecord,
 } from '../../lib/domain/reportsAndMemory';
+import { CANONICAL_SCHEDULE_VERSION_LABEL } from '../../lib/domain/canonicalModels';
 import { DisciplineType } from '../../types';
 import {
   FileText,
@@ -65,7 +66,7 @@ export default function ReportsAndMemoryPage() {
   const [builderProject, setBuilderProject] = useState<string>('PRJ-OIL-2026-01');
   const [startDate, setStartDate] = useState<string>('2026-09-01');
   const [endDate, setEndDate] = useState<string>('2026-09-18');
-  const [scheduleVersion, setScheduleVersion] = useState<string>('Rev 3.2 (P6 XML)');
+  const [scheduleVersion, setScheduleVersion] = useState<string>(CANONICAL_SCHEDULE_VERSION_LABEL);
   const [builderArea, setBuilderArea] = useState<string>('ALL');
   const [builderDiscipline, setBuilderDiscipline] = useState<string>('ALL');
   const [builderStatus, setBuilderStatus] = useState<string>('ALL');
@@ -233,7 +234,7 @@ export default function ReportsAndMemoryPage() {
             <div className="flex items-center gap-2 text-xs font-mono text-[#596579] bg-[#F7F8FA] border border-[#D9DEE5] p-2 rounded-lg">
               <span className="text-[#8A94A6]">Active:</span>
               <strong className="text-[#172033]">{activeProject?.code || 'OIL-DUL-01'}</strong>
-              <span>· Baseline: Rev 3.2</span>
+              <span>· Baseline: {CANONICAL_SCHEDULE_VERSION_LABEL}</span>
             </div>
           </div>
 
@@ -440,9 +441,10 @@ export default function ReportsAndMemoryPage() {
                       onChange={(e) => setScheduleVersion(e.target.value)}
                       className="w-full px-3 py-2 bg-white border border-[#D9DEE5] rounded-lg text-[#172033] font-mono outline-none focus:border-[#176B87]"
                     >
-                      <option value="Rev 3.2 (P6 XML)">Rev 3.2 (P6 XML) - Current Baseline</option>
-                      <option value="Rev 3.1 (P6 XML)">Rev 3.1 (P6 XML) - Previous Baseline</option>
-                      <option value="Rev 2.0 (MS Project)">Rev 2.0 (MS Project) - Initial</option>
+                      <option value="V3 · Rev 3.2">V3 · Rev 3.2 (Primavera P6 XML) - Current Baseline</option>
+                      <option value="V3 · Rev 3.1">V3 · Rev 3.1 (Primavera P6 XML) - Superseded Baseline</option>
+                      <option value="V2 · Rev 2.0">V2 · Rev 2.0 (Primavera P6 XML) - Approved Baseline</option>
+                      <option value="V1 · Rev 1.0">V1 · Rev 1.0 (Primavera P6 XML) - Tender Baseline</option>
                     </select>
                   </div>
 
@@ -863,7 +865,7 @@ export default function ReportsAndMemoryPage() {
             <div className="flex items-center justify-between w-full text-xs">
               <div className="flex items-center gap-2 text-[#596579] font-mono">
                 <Lock className="w-3.5 h-3.5 text-[#2E7D5B]" />
-                <span>Format Certified: Rev 3.2 Non-EVM Compliance</span>
+                <span>Format Certified: V3 · Rev 3.2 Non-EVM Compliance</span>
               </div>
               <div className="flex items-center gap-2">
                 <button
@@ -957,7 +959,7 @@ export default function ReportsAndMemoryPage() {
                   </tr>
                   <tr>
                     <td className="p-2.5 font-mono font-bold text-[#176B87]">PIP-24-002</td>
-                    <td className="p-2.5 font-medium text-[#172033]">Weld Line 24-XX Field Joints & NDT</td>
+                    <td className="p-2.5 font-medium text-[#172033]">Weld Line 24-XX Field Joints & NDT Clearance</td>
                     <td className="p-2.5 text-[#596579]">Piping</td>
                     <td className="p-2.5 font-mono text-[#596579]">18 Sep 2026</td>
                     <td className="p-2.5 font-mono font-bold text-[#B5473C]">20 Sep 2026</td>

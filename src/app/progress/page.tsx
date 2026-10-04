@@ -9,6 +9,8 @@ import { Breadcrumbs } from '../../components/shell/Breadcrumbs';
 import { Drawer } from '../../components/shared/Drawer';
 import { ProgressBar } from '../../components/shared/ProgressBar';
 import { DisciplineType } from '../../types';
+import { CANONICAL_SCHEDULE_VERSION_LABEL } from '../../lib/domain/canonicalModels';
+import { formatProjectDateTime, PROJECT_REPORT_DATE } from '../../lib/domain/dateUtils';
 import {
   TrendingUp,
   TrendingDown,
@@ -101,7 +103,7 @@ const MOCK_PROGRESS_ACTIVITIES: ProgressActivityRow[] = [
   {
     id: 'PIP-24-001',
     name: 'Erect Line 24-XX High Pressure Gas Header',
-    wbs: '3.2.1',
+    wbs: '1.1.3.2.1',
     wbsLevel: 'L5',
     discipline: 'Piping',
     area: 'Unit A - Gas Processing',
@@ -142,19 +144,19 @@ const MOCK_PROGRESS_ACTIVITIES: ProgressActivityRow[] = [
   },
   {
     id: 'PIP-24-002',
-    name: 'Weld Line 24-XX Field Joints & NDT Inspection',
-    wbs: '3.2.2',
+    name: 'Weld Line 24-XX Field Joints & NDT Clearance',
+    wbs: '1.1.3.2.2',
     wbsLevel: 'L5',
     discipline: 'Piping',
     area: 'Unit A - Gas Processing',
-    plannedPercent: 100,
-    actualPercent: 65,
-    variancePercent: -35,
+    plannedPercent: 85,
+    actualPercent: 70,
+    variancePercent: -15,
     varianceSemantic: 'Negative',
-    plannedFinish: '18 Sep 2026',
-    forecastFinish: '21 Sep 2026',
+    plannedFinish: '20 Sep 2026',
+    forecastFinish: '22 Sep 2026',
     status: 'Behind',
-    lastVerifiedUpdate: '18 Sep 2026: 4 circumferential butt welds verified (Debajit Borah)',
+    lastVerifiedUpdate: '18 Sep 2026, 17:30 IST: 70% verified (65% as of 16 Sep) · Debajit Borah',
     assignedEngineer: 'Debajit Borah',
     isCritical: true,
     delayReasons: [
@@ -166,25 +168,25 @@ const MOCK_PROGRESS_ACTIVITIES: ProgressActivityRow[] = [
     history: [
       {
         id: 'H-03',
-        date: '18 Sep 2026, 16:30',
-        progressPercent: 65,
-        deltaPercent: 15,
-        quantityExecuted: 4,
-        unit: 'welds',
+        date: '18 Sep 2026, 17:30',
+        progressPercent: 70,
+        deltaPercent: 5,
+        quantityExecuted: 8.4,
+        unit: 'joints',
         verifiedBy: 'Debajit Borah',
-        statement: '4 butt welds completed on J-04 to J-07. RT crew alerted for evening inspection.',
-        evidenceId: 'EVD-003',
-        evidenceTitle: 'IMG_20260918_WELD_BUTT_J04.jpg',
+        statement: '70% verified as of 18 Sep 2026. Joint J-05 completed. 8 open joints pending RT.',
+        evidenceId: 'EVD-004',
+        evidenceTitle: 'IMG_20260918_WELD_BUTT_J05.jpg',
       },
       {
         id: 'H-04',
-        date: '16 Sep 2026, 17:00',
-        progressPercent: 50,
-        deltaPercent: 30,
-        quantityExecuted: 8,
-        unit: 'welds',
+        date: '16 Sep 2026, 17:30',
+        progressPercent: 65,
+        deltaPercent: 65,
+        quantityExecuted: 4,
+        unit: 'joints',
         verifiedBy: 'Debajit Borah',
-        statement: 'Line 24 spool welding 8 joints completed. Weld inspection memo logged.',
+        statement: '65% as of 16 Sep 2026. 4 butt welds completed on J-01 through J-04. Weld inspection memo logged.',
         evidenceId: 'EVD-004',
         evidenceTitle: 'WELD_LOG_SHEET_SHIFT_A.pdf',
       },
@@ -193,8 +195,8 @@ const MOCK_PROGRESS_ACTIVITIES: ProgressActivityRow[] = [
         date: '14 Sep 2026, 08:30',
         progressPercent: 20,
         deltaPercent: 20,
-        quantityExecuted: 4,
-        unit: 'welds',
+        quantityExecuted: 2,
+        unit: 'joints',
         verifiedBy: 'Debajit Borah',
         statement: 'Fit-up and tack welding initiated on Line 24 root joints.',
       },
@@ -203,7 +205,7 @@ const MOCK_PROGRESS_ACTIVITIES: ProgressActivityRow[] = [
   {
     id: 'CIV-11-001',
     name: 'Foundation Block A - Compressor Pedestal',
-    wbs: '2.1.1',
+    wbs: '1.1.1.1.1',
     wbsLevel: 'L5',
     discipline: 'Civil',
     area: 'Unit A - Compressor Station',
@@ -245,7 +247,7 @@ const MOCK_PROGRESS_ACTIVITIES: ProgressActivityRow[] = [
   {
     id: 'MEC-08-003',
     name: 'Skid Alignment & Grouting for Compressor C-101',
-    wbs: '5.3.1',
+    wbs: '1.1.2.4.1',
     wbsLevel: 'L5',
     discipline: 'Mechanical',
     area: 'Unit A - Compressor Bay',
@@ -275,7 +277,7 @@ const MOCK_PROGRESS_ACTIVITIES: ProgressActivityRow[] = [
   {
     id: 'ELE-11-032',
     name: 'Cable Tray Installation - Substation to Compressor Bay',
-    wbs: '5.1.1',
+    wbs: '1.1.4.1.2',
     wbsLevel: 'L5',
     discipline: 'Electrical',
     area: 'Unit A - Overhead Gallery',
@@ -346,7 +348,7 @@ const MOCK_PROGRESS_ACTIVITIES: ProgressActivityRow[] = [
   {
     id: 'PIP-24-003',
     name: 'Hydrostatic Test Section Line 24-XX (150 bar)',
-    wbs: '3.2.3',
+    wbs: '1.1.3.2.3',
     wbsLevel: 'L5',
     discipline: 'Piping',
     area: 'Unit A - Test Manifold',
@@ -450,8 +452,8 @@ export default function ProgressVariancePage() {
   // Header Context
   const projectCode = activeProject?.code || 'OIL-DUL-01';
   const projectName = activeProject?.name || 'Duliajan Gas Processing & Pipeline Interconnect';
-  const scheduleVersion = 'Rev 3.2 (P6 XML Baseline)';
-  const reportingDate = '18 Sep 2026';
+  const scheduleVersion = CANONICAL_SCHEDULE_VERSION_LABEL;
+  const reportingDate = formatProjectDateTime(PROJECT_REPORT_DATE, { includeTime: true, includeTimezone: true });
 
   // Top summary metrics calculation
   const summaryMetrics = useMemo(() => {

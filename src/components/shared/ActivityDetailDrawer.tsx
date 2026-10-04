@@ -361,7 +361,7 @@ export function ActivityDetailDrawer({
                     </div>
                     <div>
                       <span className="text-[#8A94A6] block text-[10px] uppercase font-bold">Active Schedule Baseline</span>
-                      <span className="font-mono text-[#596579]">Rev 3.2 (Primavera P6 XML)</span>
+                      <span className="font-mono text-[#596579]">V3 · Rev 3.2 (Primavera P6 XML)</span>
                     </div>
                   </div>
                 </div>
@@ -516,12 +516,17 @@ export function ActivityDetailDrawer({
                       </span>
                       <div className="flex items-baseline gap-3 mt-1">
                         <span className="text-2xl font-black text-[#172033] font-mono">
-                          {activity.actualProgress}%
+                          {activity.verifiedActualProgress !== undefined ? activity.verifiedActualProgress : activity.actualProgress}%
                         </span>
                         <span className="text-xs text-[#596579] font-mono">
                           Planned Target: <strong>{activity.plannedProgress}%</strong>
                         </span>
                       </div>
+                      {activity.progressHistory && activity.progressHistory.length > 1 && (
+                        <p className="text-[11px] text-[#596579] font-mono mt-1">
+                          Authoritative: <strong>{activity.progressHistory[activity.progressHistory.length - 1].progress}% as of {activity.progressHistory[activity.progressHistory.length - 1].formattedAsOf}</strong> ({activity.progressHistory[activity.progressHistory.length - 2].progress}% as of {activity.progressHistory[activity.progressHistory.length - 2].formattedAsOf})
+                        </p>
+                      )}
                     </div>
 
                     <div className="flex items-center gap-2">
@@ -566,7 +571,7 @@ export function ActivityDetailDrawer({
                           P6 Planned Baseline
                         </span>
                         <span className="px-1.5 py-0.5 rounded bg-[#F0F2F5] text-[10px] font-mono text-[#596579]">
-                          Rev 3.2
+                          V3 · Rev 3.2
                         </span>
                       </div>
 

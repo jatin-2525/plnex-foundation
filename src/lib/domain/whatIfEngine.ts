@@ -556,7 +556,7 @@ export function executeWhatIfSimulation(
     mitigations.push(`Lock in subcontractor incentive agreements for sustaining accelerated double-shift productivity.`);
   } else {
     headline = 'Neutral Baseline Scenario: No variance applied';
-    downstreamNarrative = 'Parameters match baseline schedule Rev 3.2. All downstream activities remain at planned baseline dates.';
+    downstreamNarrative = 'Parameters match baseline schedule V3 · Rev 3.2. All downstream activities remain at planned baseline dates.';
     criticalAssessment = 'Critical path remains stable.';
     floatNote = 'No float consumed.';
   }

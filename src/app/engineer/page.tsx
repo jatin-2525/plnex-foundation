@@ -16,6 +16,7 @@ import {
   MOCK_ACTIVITIES,
   MOCK_EXECUTION_EVENTS,
 } from '../../lib/api/mockData';
+import { formatProjectDate, PROJECT_REPORT_DATE } from '../../lib/domain/dateUtils';
 import {
   HardHat,
   Calendar,
@@ -379,7 +380,7 @@ export default function EngineerDashboardPage() {
                   SITE EXECUTION
                 </span>
                 <span className="text-xs font-mono font-medium text-[#172033] bg-[#F7F8FA] px-2.5 py-0.5 rounded border border-[#D9DEE5]">
-                  Thursday, 18 Sep 2026
+                  {formatProjectDate(PROJECT_REPORT_DATE, true)}
                 </span>
                 <span className="text-xs text-[#596579]">Shift: Day Shift (07:00 – 19:00 IST)</span>
               </div>
@@ -414,7 +415,7 @@ export default function EngineerDashboardPage() {
                     title: isOnline ? 'Switched to Offline Mode' : 'Connected to Field Network',
                     description: isOnline
                       ? 'Field observations will be stored locally in offline queue.'
-                      : 'Network active. Live cloud verification enabled.',
+                      : 'Network active. Cloud synchronization ready.',
                   });
                 }}
                 className={`px-3 py-2 text-xs rounded-lg border font-mono font-medium inline-flex items-center gap-1.5 transition-colors ${
@@ -657,7 +658,7 @@ export default function EngineerDashboardPage() {
 
             <div className="pt-3 mt-4 border-t border-[#E8EBF0] flex items-center justify-between text-xs">
               <span className="text-[11px] text-[#596579]">
-                Live NLP parameter extraction and schedule twin linking
+                Field observation parameter extraction and schedule twin linking
               </span>
               <button
                 type="button"

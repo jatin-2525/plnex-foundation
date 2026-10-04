@@ -407,7 +407,7 @@ export default function EvidenceAndAuditPage() {
             <div className="text-xs text-[#596579] font-mono flex items-center gap-2">
               <span>Active Project:</span>
               <span className="font-bold text-[#172033]">
-                {activeProject?.code || 'OIL-DUL-01'} (P6 Rev 3.2)
+                {activeProject?.code || 'OIL-DUL-01'} (V3 · Rev 3.2)
               </span>
             </div>
           </div>

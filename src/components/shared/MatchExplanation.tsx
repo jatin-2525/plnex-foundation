@@ -386,7 +386,7 @@ export function MatchExplanation({
                 <span>No Baseline Activity Identified</span>
               </div>
               <p className="text-[11px] text-[#7A271A]">
-                The score of <strong>{confidence}%</strong> falls below the 70% automated threshold. No direct WBS activity corresponds to this field submission in current schedule Rev 3.2.
+                The score of <strong>{confidence}%</strong> falls below the 70% automated threshold. No direct WBS activity corresponds to this field submission in current schedule V3 · Rev 3.2.
               </p>
             </div>
           )}

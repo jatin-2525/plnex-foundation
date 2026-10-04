@@ -291,11 +291,11 @@ export default function WhatIfSimulatorPage() {
   const handleReset = () => {
     setSelectedActivityId('PIP-24-001');
     setDelayDays(0);
-    setScenarioName('Baseline Schedule Rev 3.2 (No Delay)');
+    setScenarioName('Baseline Schedule V3 · Rev 3.2 (No Delay)');
     setScenarioDescription('Baseline schedule state with 0 days variance applied.');
     setSimulateError(false);
     setErrorMessage('');
-    const res = executeWhatIfSimulation('Baseline Schedule Rev 3.2', 'PIP-24-001', 0);
+    const res = executeWhatIfSimulation('Baseline Schedule V3 · Rev 3.2', 'PIP-24-001', 0);
     setSimulationResult(res);
     addToast({
       type: 'info',
@@ -396,7 +396,7 @@ export default function WhatIfSimulatorPage() {
                 <span className="font-semibold text-[#172033]">
                   Isolated Non-Destructive Sandbox:
                 </span>{' '}
-                Results generated here are strictly experimental simulations. They will never alter or overwrite the actual master schedule baseline (Rev 3.2 P6 XML).
+                Results generated here are strictly experimental simulations. They will never alter or overwrite the actual master schedule baseline (V3 · Rev 3.2 Primavera P6 XML).
               </div>
             </div>
 
@@ -877,7 +877,7 @@ export default function WhatIfSimulatorPage() {
                       {formatFriendlyDate(simulationResult.currentProjectFinish)}
                     </div>
                     <span className="text-xs text-[#596579] mt-1 block">
-                      Target Commercial Operation Date (Rev 3.2)
+                      Target Commercial Operation Date (V3 · Rev 3.2)
                     </span>
                   </div>
 
@@ -1380,7 +1380,7 @@ export default function WhatIfSimulatorPage() {
                   <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[10px] uppercase font-bold text-[#8A94A6]">
                     <th className="py-3 px-4">Metric / Dimension</th>
                     <th className="py-3 px-4 bg-[#EDF7F2]/40 text-[#2E7D5B]">
-                      Baseline (Rev 3.2)
+                      Baseline (V3 · Rev 3.2)
                     </th>
                     <th className="py-3 px-4 bg-[#EDF5F8]/60 text-[#176B87]">
                       Active Simulation
