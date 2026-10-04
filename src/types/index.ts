@@ -57,6 +57,7 @@ export interface ScheduleActivity {
   executionEventIds: string[];
   description?: string;
   progressHistory?: any[];
+  parentId?: string;
 }
 
 export type MatchConfidenceCategory = 'AUTO_LINK' | 'MANAGER_REVIEW' | 'UNMATCHED';

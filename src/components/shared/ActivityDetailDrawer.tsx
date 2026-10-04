@@ -282,6 +282,38 @@ export function ActivityDetailDrawer({
                 </>
               )}
             </div>
+
+            {/* Advanced Schedule Metadata Strip (Moved from Default Table) */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-1.5 pt-2 border-t border-[#E8EBF0] text-[11px] font-mono">
+              <div className="px-2 py-1 bg-[#F7F8FA] rounded border border-[#D9DEE5]">
+                <span className="text-[9px] text-[#8A94A6] uppercase font-bold block">WBS</span>
+                <span className="text-[#172033] font-semibold truncate block">{activity.wbs}</span>
+              </div>
+              <div className="px-2 py-1 bg-[#F7F8FA] rounded border border-[#D9DEE5]">
+                <span className="text-[9px] text-[#8A94A6] uppercase font-bold block">Actual Start</span>
+                <span className="text-[#172033] font-semibold truncate block">{activity.actualStart || 'Pending'}</span>
+              </div>
+              <div className="px-2 py-1 bg-[#F7F8FA] rounded border border-[#D9DEE5]">
+                <span className="text-[9px] text-[#8A94A6] uppercase font-bold block">Actual Finish</span>
+                <span className="text-[#172033] font-semibold truncate block">{activity.actualFinish || 'In Progress'}</span>
+              </div>
+              <div className="px-2 py-1 bg-[#F7F8FA] rounded border border-[#D9DEE5]">
+                <span className="text-[9px] text-[#8A94A6] uppercase font-bold block">Dependencies</span>
+                <span className="text-[#176B87] font-semibold truncate block">{detailedPredecessors.length + detailedSuccessors.length} links</span>
+              </div>
+              <div className="px-2 py-1 bg-[#F7F8FA] rounded border border-[#D9DEE5]">
+                <span className="text-[9px] text-[#8A94A6] uppercase font-bold block">Evidence</span>
+                <span className="text-[#2E7D5B] font-semibold truncate block">{linkedEvidenceItems.length} items</span>
+              </div>
+              <div className="px-2 py-1 bg-[#F7F8FA] rounded border border-[#D9DEE5]">
+                <span className="text-[9px] text-[#8A94A6] uppercase font-bold block">Execution Events</span>
+                <span className="text-[#176B87] font-semibold truncate block">{linkedExecutionEvents.length} events</span>
+              </div>
+              <div className="px-2 py-1 bg-[#F7F8FA] rounded border border-[#D9DEE5]">
+                <span className="text-[9px] text-[#8A94A6] uppercase font-bold block">History</span>
+                <span className="text-[#596579] font-semibold truncate block">{auditHistory.length} logs</span>
+              </div>
+            </div>
           </div>
 
           {/* =========================================================================
