@@ -4,9 +4,10 @@ import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
 import { useApp } from '../../context/AppContext';
 import { useToast } from '../../context/ToastContext';
-import { AppShell } from '../../components/shell/AppShell';
 import { Breadcrumbs } from '../../components/shell/Breadcrumbs';
+import { StateWrapper } from '../../components/shared/StateWrapper';
 import { Drawer } from '../../components/shared/Drawer';
+import { Modal } from '../../components/shared/Modal';
 import { ProgressBar } from '../../components/shared/ProgressBar';
 import { DisciplineType } from '../../types';
 import { CANONICAL_SCHEDULE_VERSION_LABEL } from '../../lib/domain/canonicalModels';
@@ -18,6 +19,7 @@ import {
   Clock,
   AlertTriangle,
   Calendar,
+  History as HistoryIcon,
   ArrowRight,
   Search,
   Filter,
@@ -28,6 +30,7 @@ import {
   Check,
   X,
   ChevronRight,
+  ChevronDown,
   Info,
   ExternalLink,
   ShieldCheck,
@@ -35,6 +38,10 @@ import {
   HardHat,
   SlidersHorizontal,
   RotateCcw,
+  Sparkles,
+  User,
+  Hash,
+  Lock,
 } from 'lucide-react';
 
 // Semantics per requirement: Positive, Neutral, Negative
@@ -42,17 +49,18 @@ export type VarianceSemantic = 'Positive' | 'Neutral' | 'Negative';
 
 export type ActivityProgressStatus = 'Ahead' | 'On Track' | 'Behind' | 'Completed';
 
-export interface ProgressHistoryEntry {
+export interface ProgressHistoryStep {
   id: string;
-  date: string;
-  progressPercent: number;
+  previousPercent: number;
+  newPercent: number;
   deltaPercent: number;
-  quantityExecuted: number;
-  unit: string;
+  executionEventId: string;
+  evidenceId: string;
+  evidenceTitle: string;
   verifiedBy: string;
+  timestamp: string;
   statement: string;
-  evidenceId?: string;
-  evidenceTitle?: string;
+  auditHash: string;
 }
 
 export interface ProgressActivityRow {
@@ -72,18 +80,18 @@ export interface ProgressActivityRow {
   lastVerifiedUpdate: string;
   assignedEngineer: string;
   isCritical: boolean;
-  history: ProgressHistoryEntry[];
+  history: ProgressHistoryStep[];
   delayReasons?: string[];
   downstreamImpact?: string;
 }
 
 // Time series data points for the Main Chart: Planned vs Actual over time
 export interface TimeSeriesPoint {
-  period: string; // e.g. "15 May", "15 Jun"
+  period: string;
   dateLabel: string;
-  planned: number; // 0-100
-  actual: number | null; // null for future forecast
-  forecast: number; // 0-100
+  planned: number;
+  actual: number | null;
+  forecast: number;
   isDataDate?: boolean;
   notes?: string;
 }
@@ -120,25 +128,29 @@ const MOCK_PROGRESS_ACTIVITIES: ProgressActivityRow[] = [
     history: [
       {
         id: 'H-01',
-        date: '14 Sep 2026, 17:15',
-        progressPercent: 100,
+        previousPercent: 30,
+        newPercent: 100,
         deltaPercent: 70,
-        quantityExecuted: 12,
-        unit: 'spools',
-        verifiedBy: 'Debajit Borah',
-        statement: 'Spool erection completed on Line 24. 12 spools erected with crane support.',
+        executionEventId: 'EVT-2026-001',
         evidenceId: 'EVD-001',
         evidenceTitle: 'IMG_20260914_Line24_Erect.jpg',
+        verifiedBy: 'Debajit Borah (Lead Site Engineer)',
+        timestamp: '14 Sep 2026, 17:15 IST',
+        statement: 'Spool erection completed on Line 24. 12 spools erected today with crane support.',
+        auditHash: '0x8f3c7d1e4a9b2c3d',
       },
       {
         id: 'H-02',
-        date: '10 Sep 2026, 09:00',
-        progressPercent: 30,
+        previousPercent: 0,
+        newPercent: 30,
         deltaPercent: 30,
-        quantityExecuted: 4,
-        unit: 'spools',
-        verifiedBy: 'Debajit Borah',
+        executionEventId: 'EVT-2026-000',
+        evidenceId: 'EVD-000',
+        evidenceTitle: 'STAGING_MANIFEST_RACK_B.pdf',
+        verifiedBy: 'Debajit Borah (Lead Site Engineer)',
+        timestamp: '10 Sep 2026, 09:00 IST',
         statement: 'Crane rigged at Piperack Section B. 4 initial spools staged and hoisted.',
+        auditHash: '0x2a1b3c4d5e6f7a8b',
       },
     ],
   },
@@ -168,37 +180,42 @@ const MOCK_PROGRESS_ACTIVITIES: ProgressActivityRow[] = [
     history: [
       {
         id: 'H-03',
-        date: '18 Sep 2026, 17:30',
-        progressPercent: 70,
+        previousPercent: 65,
+        newPercent: 70,
         deltaPercent: 5,
-        quantityExecuted: 8.4,
-        unit: 'joints',
-        verifiedBy: 'Debajit Borah',
-        statement: '70% verified as of 18 Sep 2026. Joint J-05 completed. 8 open joints pending RT.',
+        executionEventId: 'EVT-2026-002',
         evidenceId: 'EVD-004',
         evidenceTitle: 'IMG_20260918_WELD_BUTT_J05.jpg',
+        verifiedBy: 'Debajit Borah (Lead Site Engineer)',
+        timestamp: '18 Sep 2026, 17:30 IST',
+        statement: '70% verified as of 18 Sep 2026. Joint J-05 completed. 8 open joints pending RT clearance.',
+        auditHash: '0x5c8e9f2a1b3d4e6a',
       },
       {
         id: 'H-04',
-        date: '16 Sep 2026, 17:30',
-        progressPercent: 65,
-        deltaPercent: 65,
-        quantityExecuted: 4,
-        unit: 'joints',
-        verifiedBy: 'Debajit Borah',
-        statement: '65% as of 16 Sep 2026. 4 butt welds completed on J-01 through J-04. Weld inspection memo logged.',
-        evidenceId: 'EVD-004',
+        previousPercent: 20,
+        newPercent: 65,
+        deltaPercent: 45,
+        executionEventId: 'EVT-2026-002',
+        evidenceId: 'EVD-003',
         evidenceTitle: 'WELD_LOG_SHEET_SHIFT_A.pdf',
+        verifiedBy: 'Debajit Borah (Lead Site Engineer)',
+        timestamp: '16 Sep 2026, 17:30 IST (65% as of 16 Sep)',
+        statement: '65% as of 16 Sep 2026. 4 butt welds completed on J-01 through J-04. Weld inspection memo logged.',
+        auditHash: '0x3d4e5f6a7b8c9d0e',
       },
       {
         id: 'H-05',
-        date: '14 Sep 2026, 08:30',
-        progressPercent: 20,
+        previousPercent: 0,
+        newPercent: 20,
         deltaPercent: 20,
-        quantityExecuted: 2,
-        unit: 'joints',
-        verifiedBy: 'Debajit Borah',
+        executionEventId: 'EVT-2026-001',
+        evidenceId: 'EVD-002',
+        evidenceTitle: 'FIT_UP_INSPECTION_NOTE.pdf',
+        verifiedBy: 'Debajit Borah (Lead Site Engineer)',
+        timestamp: '14 Sep 2026, 08:30 IST',
         statement: 'Fit-up and tack welding initiated on Line 24 root joints.',
+        auditHash: '0x1a2b3c4d5e6f7a8b',
       },
     ],
   },
@@ -222,25 +239,29 @@ const MOCK_PROGRESS_ACTIVITIES: ProgressActivityRow[] = [
     history: [
       {
         id: 'H-06',
-        date: '14 Sep 2026, 14:00',
-        progressPercent: 100,
+        previousPercent: 50,
+        newPercent: 100,
         deltaPercent: 50,
-        quantityExecuted: 45,
-        unit: 'm³ concrete',
-        verifiedBy: 'Debajit Borah',
-        statement: 'Foundation Block A reinforced concrete pour completed with RMC transit mixers.',
+        executionEventId: 'EVT-2026-006',
         evidenceId: 'EVD-005',
         evidenceTitle: 'CONCRETE_BATCH_TICKET_RMC_45M3.pdf',
+        verifiedBy: 'Debajit Borah (Lead Site Engineer)',
+        timestamp: '14 Sep 2026, 14:00 IST',
+        statement: 'Foundation Block A reinforced concrete pour completed with RMC transit mixers.',
+        auditHash: '0x9a8b7c6d5e4f3a2b',
       },
       {
         id: 'H-07',
-        date: '08 Sep 2026, 17:00',
-        progressPercent: 50,
+        previousPercent: 0,
+        newPercent: 50,
         deltaPercent: 50,
-        quantityExecuted: 1,
-        unit: 'rebar cage',
-        verifiedBy: 'Debajit Borah',
+        executionEventId: 'EVT-2026-000',
+        evidenceId: 'EVD-000',
+        evidenceTitle: 'REBAR_INSPECTION_SIGN_OFF.pdf',
+        verifiedBy: 'Debajit Borah (Lead Site Engineer)',
+        timestamp: '08 Sep 2026, 17:00 IST',
         statement: 'Rebar reinforcement tying and foundation anchor bolt templates positioned.',
+        auditHash: '0x4b3a2c1d0e9f8a7b',
       },
     ],
   },
@@ -264,13 +285,16 @@ const MOCK_PROGRESS_ACTIVITIES: ProgressActivityRow[] = [
     history: [
       {
         id: 'H-08',
-        date: '17 Sep 2026, 15:30',
-        progressPercent: 25,
+        previousPercent: 0,
+        newPercent: 25,
         deltaPercent: 25,
-        quantityExecuted: 1,
-        unit: 'alignment check',
-        verifiedBy: 'Debajit Borah',
+        executionEventId: 'EVT-2026-009',
+        evidenceId: 'EVD-008',
+        evidenceTitle: 'LASER_ALIGNMENT_TICKET_C101.pdf',
+        verifiedBy: 'Debajit Borah (Lead Site Engineer)',
+        timestamp: '17 Sep 2026, 15:30 IST',
         statement: 'Laser alignment tooling set up on pedestal. Shimming commenced early.',
+        auditHash: '0x7e8f9a0b1c2d3e4f',
       },
     ],
   },
@@ -295,23 +319,29 @@ const MOCK_PROGRESS_ACTIVITIES: ProgressActivityRow[] = [
     history: [
       {
         id: 'H-09',
-        date: '17 Sep 2026, 16:00',
-        progressPercent: 40,
+        previousPercent: 20,
+        newPercent: 40,
         deltaPercent: 20,
-        quantityExecuted: 45,
-        unit: 'meters',
+        executionEventId: 'EVT-2026-003',
+        evidenceId: 'EVD-009',
+        evidenceTitle: 'VOICE_TRANSCRIPT_LOG_VA_032.txt',
         verifiedBy: 'Supervisor Voice Note',
+        timestamp: '17 Sep 2026, 16:00 IST',
         statement: 'Cable ladder tray installation done from sub to comp bay about 45 meters.',
+        auditHash: '0x2c3d4e5f6a7b8c9d',
       },
       {
         id: 'H-10',
-        date: '15 Sep 2026, 11:00',
-        progressPercent: 20,
+        previousPercent: 0,
+        newPercent: 20,
         deltaPercent: 20,
-        quantityExecuted: 60,
-        unit: 'meters',
-        verifiedBy: 'Debajit Borah',
+        executionEventId: 'EVT-2026-000',
+        evidenceId: 'EVD-000',
+        evidenceTitle: 'BRACKET_MOUNTING_DIARY.pdf',
+        verifiedBy: 'Debajit Borah (Lead Site Engineer)',
+        timestamp: '15 Sep 2026, 11:00 IST',
         statement: 'Overhead cantilever bracket installation along gallery column line 4.',
+        auditHash: '0x5a6b7c8d9e0f1a2b',
       },
     ],
   },
@@ -335,13 +365,16 @@ const MOCK_PROGRESS_ACTIVITIES: ProgressActivityRow[] = [
     history: [
       {
         id: 'H-11',
-        date: '18 Sep 2026, 15:00',
-        progressPercent: 70,
+        previousPercent: 35,
+        newPercent: 70,
         deltaPercent: 35,
-        quantityExecuted: 350,
-        unit: 'meters',
-        verifiedBy: 'Debajit Borah',
+        executionEventId: 'EVT-2026-010',
+        evidenceId: 'EVD-010',
+        evidenceTitle: 'CABLE_PULL_TENSION_CHART.pdf',
+        verifiedBy: 'Debajit Borah (Lead Site Engineer)',
+        timestamp: '18 Sep 2026, 15:00 IST',
         statement: '350 meters HT power cable pulled smoothly with motorized winch.',
+        auditHash: '0x8b9c0d1e2f3a4b5c',
       },
     ],
   },
@@ -371,15 +404,16 @@ const MOCK_PROGRESS_ACTIVITIES: ProgressActivityRow[] = [
     history: [
       {
         id: 'H-12',
-        date: '18 Sep 2026, 13:15',
-        progressPercent: 0,
+        previousPercent: 0,
+        newPercent: 0,
         deltaPercent: 0,
-        quantityExecuted: 0,
-        unit: 'sections',
-        verifiedBy: 'Debajit Borah',
-        statement: 'Hydrostatic test prep paused at 11:30. Stoppage notice issued.',
+        executionEventId: 'EVT-2026-005',
         evidenceId: 'EVD-007',
         evidenceTitle: 'DELAY_NOTICE_WEATHER_STATION.pdf',
+        verifiedBy: 'Debajit Borah (Lead Site Engineer)',
+        timestamp: '18 Sep 2026, 13:15 IST',
+        statement: 'Hydrostatic test prep paused at 11:30. Stoppage notice issued.',
+        auditHash: '0x4f5a6b7c8d9e0f1a',
       },
     ],
   },
@@ -422,20 +456,23 @@ const MOCK_PROGRESS_ACTIVITIES: ProgressActivityRow[] = [
     history: [
       {
         id: 'H-13',
-        date: '16 Sep 2026, 16:00',
-        progressPercent: 45,
+        previousPercent: 0,
+        newPercent: 45,
         deltaPercent: 45,
-        quantityExecuted: 1,
-        unit: 'vessel',
-        verifiedBy: 'Debajit Borah',
+        executionEventId: 'EVT-2026-008',
+        evidenceId: 'EVD-011',
+        evidenceTitle: 'VESSEL_RIGGING_SIGN_OFF.pdf',
+        verifiedBy: 'Debajit Borah (Lead Site Engineer)',
+        timestamp: '16 Sep 2026, 16:00 IST',
         statement: 'Flare knock-out drum vessel positioning completed on foundation pads.',
+        auditHash: '0x1c2d3e4f5a6b7c8d',
       },
     ],
   },
 ];
 
 export default function ProgressVariancePage() {
-  const { activeProject, openActivityDrawer } = useApp();
+  const { activeProject, userSession, openActivityDrawer } = useApp();
   const { addToast } = useToast();
 
   const [activities, setActivities] = useState<ProgressActivityRow[]>(MOCK_PROGRESS_ACTIVITIES);
@@ -448,6 +485,13 @@ export default function ProgressVariancePage() {
 
   // Selected time point on chart
   const [selectedChartPoint, setSelectedChartPoint] = useState<TimeSeriesPoint>(TIME_SERIES_DATA[4]); // 18 Sep Data Date
+
+  // Calibrate Progress Modal State (Strict Rule: No Arbitrary Editing without 5 Audited Fields)
+  const [isCalibrateModalOpen, setIsCalibrateModalOpen] = useState(false);
+  const [newProgressInput, setNewProgressInput] = useState<number>(75);
+  const [editReason, setEditReason] = useState<string>('');
+  const [editSource, setEditSource] = useState<string>('DPR-014 / Field Walkdown Memo');
+  const [editAuditHash, setEditAuditHash] = useState<string>('AUD-PRG-8F3C-20260918');
 
   // Header Context
   const projectCode = activeProject?.code || 'OIL-DUL-01';
@@ -478,15 +522,12 @@ export default function ProgressVariancePage() {
   // Filtered Activities
   const filteredActivities = useMemo(() => {
     return activities.filter((act) => {
-      // Semantic filter (Positive, Neutral, Negative)
       if (selectedSemanticFilter !== 'ALL' && act.varianceSemantic !== selectedSemanticFilter) {
         return false;
       }
-      // Status filter
       if (selectedStatusFilter !== 'ALL' && act.status !== selectedStatusFilter) {
         return false;
       }
-      // Search
       if (searchQuery.trim()) {
         const q = searchQuery.toLowerCase();
         const matchesId = act.id.toLowerCase().includes(q);
@@ -496,7 +537,6 @@ export default function ProgressVariancePage() {
         const matchesDiscipline = act.discipline.toLowerCase().includes(q);
         return matchesId || matchesName || matchesWbs || matchesArea || matchesDiscipline;
       }
-
       return true;
     });
   }, [activities, selectedSemanticFilter, selectedStatusFilter, searchQuery]);
@@ -532,20 +572,83 @@ export default function ProgressVariancePage() {
     }
   };
 
+  // Open Activity Drawer
+  const handleSelectActivity = (act: ProgressActivityRow) => {
+    setSelectedActivity(act);
+    setNewProgressInput(act.actualPercent);
+    setEditReason('');
+    setEditSource('DPR-014 / Daily Progress Report');
+    setEditAuditHash(`AUD-PRG-${act.id}-${Date.now().toString(16).toUpperCase()}`);
+  };
+
+  // Commit Audited Progress Update (Requires reason, source, user, timestamp, audit record)
+  const handleCommitAuditedProgress = () => {
+    if (!selectedActivity) return;
+
+    if (!editReason.trim() || !editSource.trim()) {
+      addToast({
+        type: 'critical',
+        title: 'Validation Blocked',
+        description: 'Progress edits without an audited reason and evidence source reference are prohibited.',
+      });
+      return;
+    }
+
+    const prevPct = selectedActivity.actualPercent;
+    const newPct = Number(newProgressInput);
+    const delta = newPct - prevPct;
+
+    const newStep: ProgressHistoryStep = {
+      id: `H-${Date.now().toString().slice(-4)}`,
+      previousPercent: prevPct,
+      newPercent: newPct,
+      deltaPercent: delta,
+      executionEventId: `EVT-VER-${Date.now().toString().slice(-4)}`,
+      evidenceId: editSource.includes('DPR') ? 'EVD-DPR-014' : 'EVD-QC-MEMO',
+      evidenceTitle: editSource,
+      verifiedBy: userSession?.name || 'Debajit Borah (Site Engineer)',
+      timestamp: formatProjectDateTime(new Date().toISOString(), { includeTime: true, includeTimezone: true }),
+      statement: editReason,
+      auditHash: editAuditHash,
+    };
+
+    const newVariance = newPct - selectedActivity.plannedPercent;
+    const newSemantic: VarianceSemantic = newVariance > 0 ? 'Positive' : newVariance < 0 ? 'Negative' : 'Neutral';
+    const newStatus: ActivityProgressStatus = newPct >= 100 ? 'Completed' : newVariance > 0 ? 'Ahead' : newVariance < 0 ? 'Behind' : 'On Track';
+
+    const updatedActivity: ProgressActivityRow = {
+      ...selectedActivity,
+      actualPercent: newPct,
+      variancePercent: newVariance,
+      varianceSemantic: newSemantic,
+      status: newStatus,
+      lastVerifiedUpdate: `${formatProjectDateTime(new Date().toISOString(), { includeTime: true })}: ${newPct}% verified (${editReason}) · ${userSession?.name || 'Debajit Borah'}`,
+      history: [newStep, ...selectedActivity.history],
+    };
+
+    setActivities(activities.map((a) => (a.id === selectedActivity.id ? updatedActivity : a)));
+    setSelectedActivity(updatedActivity);
+    setIsCalibrateModalOpen(false);
+
+    addToast({
+      type: 'success',
+      title: 'Audited Progress Committed',
+      description: `Verified progress updated from ${prevPct}% to ${newPct}% with complete audit trail.`,
+    });
+  };
+
   const breadcrumbs = [
     { label: 'Schedule Execution' },
     { label: 'Progress & Variance', current: true },
   ];
 
   return (
-    <AppShell>
+    <StateWrapper>
       <div className="space-y-6 pb-24 md:pb-12 max-w-7xl mx-auto">
         {/* Breadcrumb Navigation */}
         <Breadcrumbs items={breadcrumbs} />
 
-        {/* =========================================================================
-            HEADER: Progress & Variance, Project, Schedule Version, Reporting Date
-            ========================================================================= */}
+        {/* HEADER CONTEXT */}
         <div className="bg-white border border-[#D9DEE5] rounded-xl p-5 md:p-6 shadow-xs">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-[#D9DEE5]/60">
             <div>
@@ -559,32 +662,32 @@ export default function ProgressVariancePage() {
                   Physical S-Curve Tracking
                 </span>
                 <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-[#F0F2F5] text-[#596579] border border-[#D9DEE5]">
-                  Pure Physical Progress · Non-EVM
+                  Every Verified Value Traceable to Execution
                 </span>
               </div>
               <h1 className="text-2xl font-bold text-[#172033] tracking-tight">
                 Progress & Variance
               </h1>
               <p className="text-xs text-[#596579] mt-0.5">
-                Physical progress tracking and time variance analytics. Zero financial formulas (SPI/CPI/EV/PV excluded).
+                Every verified progress value must be traceable to an underlying execution update, physical evidence, and engineer attestation.
               </p>
             </div>
 
-            {/* Quick Actions */}
+            {/* Quick Navigation Actions */}
             <div className="flex items-center gap-2 flex-wrap">
               <Link
                 href="/risks"
                 className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-[#B5473C] bg-[#FBEFEE] border border-[#E4B0AA] hover:bg-[#FBEFEE]/80 rounded-lg transition-colors"
               >
                 <AlertTriangle className="w-3.5 h-3.5" />
-                <span>Dependency Risks</span>
+                <span>Delay & Impact</span>
               </Link>
               <Link
-                href="/schedule"
+                href="/review"
                 className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-[#172033] bg-white border border-[#D9DEE5] hover:bg-[#F0F2F5] rounded-lg transition-colors"
               >
-                <Calendar className="w-3.5 h-3.5 text-[#596579]" />
-                <span>Master Schedule</span>
+                <ShieldCheck className="w-3.5 h-3.5 text-[#176B87]" />
+                <span>Review Queue</span>
               </Link>
               <Link
                 href="/schedule-twin"
@@ -596,9 +699,8 @@ export default function ProgressVariancePage() {
             </div>
           </div>
 
-          {/* EXPLICIT HEADER INFO MATRIX: Project / Schedule Version / Reporting Date */}
+          {/* Explicit Header Info Matrix */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-4 text-xs">
-            {/* Project */}
             <div className="flex items-center gap-3 p-3 rounded-lg bg-[#F7F8FA] border border-[#D9DEE5]/80">
               <div className="w-8 h-8 rounded-lg bg-white border border-[#D9DEE5] flex items-center justify-center text-[#176B87] shrink-0 font-bold">
                 <Folder className="w-4 h-4" />
@@ -616,7 +718,6 @@ export default function ProgressVariancePage() {
               </div>
             </div>
 
-            {/* Schedule Version */}
             <div className="flex items-center gap-3 p-3 rounded-lg bg-[#F7F8FA] border border-[#D9DEE5]/80">
               <div className="w-8 h-8 rounded-lg bg-white border border-[#D9DEE5] flex items-center justify-center text-[#176B87] shrink-0 font-bold">
                 <Calendar className="w-4 h-4" />
@@ -634,7 +735,6 @@ export default function ProgressVariancePage() {
               </div>
             </div>
 
-            {/* Reporting Date */}
             <div className="flex items-center gap-3 p-3 rounded-lg bg-[#F7F8FA] border border-[#D9DEE5]/80">
               <div className="w-8 h-8 rounded-lg bg-white border border-[#D9DEE5] flex items-center justify-center text-[#176B87] shrink-0 font-bold">
                 <Clock className="w-4 h-4" />
@@ -647,7 +747,7 @@ export default function ProgressVariancePage() {
                   {reportingDate}
                 </span>
                 <span className="text-[11px] text-[#596579] block">
-                  Cutoff: 17:30 IST · Shift A Ingested
+                  Cutoff: 17:30 IST · Verified Progress Ingested
                 </span>
               </div>
             </div>
@@ -655,143 +755,127 @@ export default function ProgressVariancePage() {
         </div>
 
         {/* =========================================================================
-            TOP SUMMARY:
-            - Planned Progress
-            - Actual Progress
-            - Variance
-            - Activities Ahead
-            - Activities On Track
-            - Activities Behind
+            TOP SECTION:
+            1. Planned Progress
+            2. Actual Verified Progress
+            3. Variance
             ========================================================================= */}
-        <div className="grid grid-cols-2 sm:grid-cols-6 gap-3">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {/* 1. Planned Progress */}
-          <div className="bg-white border border-[#D9DEE5] rounded-xl p-3.5 shadow-2xs">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-[#8A94A6] block">
+          <div className="bg-white border border-[#D9DEE5] rounded-xl p-5 shadow-xs">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#8A94A6] block">
               Planned Progress
             </span>
-            <div className="flex items-baseline gap-1 mt-1">
-              <span className="text-2xl font-bold text-[#172033] font-mono">
+            <div className="flex items-baseline gap-2 mt-2">
+              <span className="text-3xl font-extrabold text-[#172033] font-mono">
                 {summaryMetrics.plannedProgress.toFixed(1)}%
               </span>
+              <span className="text-xs text-[#596579] font-medium">Target Baseline</span>
             </div>
-            <span className="text-[11px] text-[#596579] mt-1 block">
-              Baseline target
-            </span>
+            <p className="text-xs text-[#596579] mt-2">
+              Expected cumulative physical progress as of {reportingDate.split(' ')[0]}.
+            </p>
           </div>
 
-          {/* 2. Actual Progress */}
-          <div className="bg-white border border-[#D9DEE5] rounded-xl p-3.5 shadow-2xs">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-[#8A94A6] block">
-              Actual Progress
+          {/* 2. Actual Verified Progress */}
+          <div className="bg-white border border-[#B8DCC9] rounded-xl p-5 shadow-xs">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#2E7D5B] block">
+              Actual Verified Progress
             </span>
-            <div className="flex items-baseline gap-1 mt-1">
-              <span className="text-2xl font-bold text-[#176B87] font-mono">
+            <div className="flex items-baseline gap-2 mt-2">
+              <span className="text-3xl font-extrabold text-[#176B87] font-mono">
                 {summaryMetrics.actualProgress.toFixed(1)}%
               </span>
+              <span className="text-xs text-[#2E7D5B] font-bold">100% Traceable</span>
             </div>
-            <span className="text-[11px] text-[#2E7D5B] mt-1 block font-medium">
-              Verified field outputs
-            </span>
+            <p className="text-xs text-[#596579] mt-2">
+              Physically verified field output substantiated by engineering inspection records.
+            </p>
           </div>
 
           {/* 3. Variance */}
-          <div className="bg-white border border-[#D9DEE5] rounded-xl p-3.5 shadow-2xs">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-[#8A94A6] block">
-              Physical Variance
+          <div className="bg-white border border-[#E4B0AA] rounded-xl p-5 shadow-xs">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#B5473C] block">
+              Variance
             </span>
-            <div className="flex items-baseline gap-1 mt-1">
-              <span className="text-2xl font-bold text-[#B5473C] font-mono">
+            <div className="flex items-baseline gap-2 mt-2">
+              <span className="text-3xl font-extrabold text-[#B5473C] font-mono">
                 {summaryMetrics.variance.toFixed(1)}%
               </span>
+              <span className="text-xs font-bold px-2 py-0.5 rounded bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
+                Negative (- Behind)
+              </span>
             </div>
-            <span className="text-[11px] text-[#B5473C] mt-1 block font-medium">
-              Behind by 7.0%
-            </span>
+            <p className="text-xs text-[#596579] mt-2">
+              Physical lag driven by Line 24 field butt welding and monsoon stoppages.
+            </p>
           </div>
+        </div>
 
-          {/* 4. Activities Ahead (Positive) */}
+        {/* Secondary Category Filters */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           <button
             type="button"
-            onClick={() => {
-              setSelectedSemanticFilter(selectedSemanticFilter === 'Positive' ? 'ALL' : 'Positive');
-            }}
+            onClick={() => setSelectedSemanticFilter(selectedSemanticFilter === 'Positive' ? 'ALL' : 'Positive')}
             className={`p-3.5 rounded-xl border text-left transition-all ${
               selectedSemanticFilter === 'Positive'
                 ? 'bg-[#EDF7F2] border-[#2E7D5B] shadow-2xs'
                 : 'bg-white border-[#D9DEE5] hover:bg-[#F7F8FA]'
             }`}
           >
-            <span className="text-[10px] font-bold uppercase tracking-wider text-[#8A94A6] block">
-              Activities Ahead
+            <span className="text-[11px] font-bold uppercase tracking-wider text-[#8A94A6] block">
+              Ahead of Schedule
             </span>
-            <div className="flex items-baseline gap-1 mt-1">
-              <span className="text-2xl font-bold text-[#2E7D5B] font-mono">
+            <div className="flex items-baseline gap-1.5 mt-1">
+              <span className="text-xl font-bold text-[#2E7D5B] font-mono">
                 {summaryMetrics.activitiesAhead}
               </span>
-              <span className="text-[11px] text-[#596579]">tasks</span>
+              <span className="text-xs text-[#596579]">activities (+ Variance)</span>
             </div>
-            <span className="text-[11px] text-[#2E7D5B] mt-1 block font-medium">
-              Positive (+ Variance)
-            </span>
           </button>
 
-          {/* 5. Activities On Track (Neutral) */}
           <button
             type="button"
-            onClick={() => {
-              setSelectedSemanticFilter(selectedSemanticFilter === 'Neutral' ? 'ALL' : 'Neutral');
-            }}
+            onClick={() => setSelectedSemanticFilter(selectedSemanticFilter === 'Neutral' ? 'ALL' : 'Neutral')}
             className={`p-3.5 rounded-xl border text-left transition-all ${
               selectedSemanticFilter === 'Neutral'
                 ? 'bg-[#EDF5F8] border-[#176B87] shadow-2xs'
                 : 'bg-white border-[#D9DEE5] hover:bg-[#F7F8FA]'
             }`}
           >
-            <span className="text-[10px] font-bold uppercase tracking-wider text-[#8A94A6] block">
-              Activities On Track
+            <span className="text-[11px] font-bold uppercase tracking-wider text-[#8A94A6] block">
+              On Track
             </span>
-            <div className="flex items-baseline gap-1 mt-1">
-              <span className="text-2xl font-bold text-[#172033] font-mono">
+            <div className="flex items-baseline gap-1.5 mt-1">
+              <span className="text-xl font-bold text-[#172033] font-mono">
                 {summaryMetrics.activitiesOnTrack}
               </span>
-              <span className="text-[11px] text-[#596579]">tasks</span>
+              <span className="text-xs text-[#596579]">activities (0.0% Variance)</span>
             </div>
-            <span className="text-[11px] text-[#596579] mt-1 block font-medium">
-              Neutral (0.0% Variance)
-            </span>
           </button>
 
-          {/* 6. Activities Behind (Negative) */}
           <button
             type="button"
-            onClick={() => {
-              setSelectedSemanticFilter(selectedSemanticFilter === 'Negative' ? 'ALL' : 'Negative');
-            }}
+            onClick={() => setSelectedSemanticFilter(selectedSemanticFilter === 'Negative' ? 'ALL' : 'Negative')}
             className={`p-3.5 rounded-xl border text-left transition-all ${
               selectedSemanticFilter === 'Negative'
                 ? 'bg-[#FBEFEE] border-[#B5473C] shadow-2xs'
                 : 'bg-white border-[#D9DEE5] hover:bg-[#F7F8FA]'
             }`}
           >
-            <span className="text-[10px] font-bold uppercase tracking-wider text-[#8A94A6] block">
-              Activities Behind
+            <span className="text-[11px] font-bold uppercase tracking-wider text-[#8A94A6] block">
+              Behind Schedule
             </span>
-            <div className="flex items-baseline gap-1 mt-1">
-              <span className="text-2xl font-bold text-[#B5473C] font-mono">
+            <div className="flex items-baseline gap-1.5 mt-1">
+              <span className="text-xl font-bold text-[#B5473C] font-mono">
                 {summaryMetrics.activitiesBehind}
               </span>
-              <span className="text-[11px] text-[#596579]">tasks</span>
+              <span className="text-xs text-[#596579]">activities (- Variance)</span>
             </div>
-            <span className="text-[11px] text-[#B5473C] mt-1 block font-medium">
-              Negative (- Variance)
-            </span>
           </button>
         </div>
 
-        {/* =========================================================================
-            MAIN CHART: Planned vs Actual over time (Physical Progress S-Curve)
-            Pure schedule physical progress — zero financial EVM formulas
-            ========================================================================= */}
+        {/* S-CURVE VISUALIZATION */}
         <div className="bg-white border border-[#D9DEE5] rounded-xl p-5 md:p-6 shadow-xs space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#D9DEE5]/60 pb-3">
             <div>
@@ -808,7 +892,6 @@ export default function ProgressVariancePage() {
               </p>
             </div>
 
-            {/* Chart Legend */}
             <div className="flex items-center gap-4 text-xs flex-wrap">
               <div className="flex items-center gap-1.5">
                 <span className="w-3 h-0.5 bg-[#596579] inline-block" />
@@ -828,11 +911,9 @@ export default function ProgressVariancePage() {
             </div>
           </div>
 
-          {/* SVG S-CURVE VISUALIZATION */}
           <div className="relative pt-2">
             <div className="w-full h-64 sm:h-72">
               <svg viewBox="0 0 800 260" className="w-full h-full overflow-visible" preserveAspectRatio="none">
-                {/* Horizontal Grid lines (0%, 25%, 50%, 75%, 100%) */}
                 {[0, 25, 50, 75, 100].map((val) => {
                   const y = 220 - (val / 100) * 200;
                   return (
@@ -845,14 +926,12 @@ export default function ProgressVariancePage() {
                   );
                 })}
 
-                {/* Vertical Data Date Line (18 Sep 2026) */}
                 <line x1="467" y1="20" x2="467" y2="220" stroke="#176B87" strokeWidth="1.5" strokeDasharray="4 2" />
                 <rect x="420" y="8" width="94" height="18" rx="4" fill="#EDF5F8" stroke="#B3CBE0" strokeWidth="1" />
                 <text x="467" y="20" textAnchor="middle" fontSize="9" fontWeight="bold" fill="#176B87">
                   Data Date (18 Sep)
                 </text>
 
-                {/* 1. PLANNED CURVE: Blue/Slate Baseline Line */}
                 <path
                   d="M 50 196 L 154 164 L 258 130 L 362 90 L 467 60 L 571 36 L 675 24 L 780 20"
                   fill="none"
@@ -861,7 +940,6 @@ export default function ProgressVariancePage() {
                   strokeDasharray="4 4"
                 />
 
-                {/* 2. FORECAST PROJECTION: Amber Line after Data Date */}
                 <path
                   d="M 467 74 L 571 44 L 675 30 L 780 20"
                   fill="none"
@@ -870,7 +948,6 @@ export default function ProgressVariancePage() {
                   strokeDasharray="3 3"
                 />
 
-                {/* 3. ACTUAL VERIFIED CURVE: Green Solid Line up to Data Date */}
                 <path
                   d="M 50 196 L 154 160 L 258 124 L 362 92 L 467 74"
                   fill="none"
@@ -879,14 +956,12 @@ export default function ProgressVariancePage() {
                   strokeLinecap="round"
                 />
 
-                {/* Fill area beneath actual */}
                 <path
                   d="M 50 196 L 154 160 L 258 124 L 362 92 L 467 74 L 467 220 L 50 220 Z"
                   fill="#EDF7F2"
                   opacity="0.35"
                 />
 
-                {/* Data Points */}
                 {TIME_SERIES_DATA.map((pt, idx) => {
                   const x = 50 + idx * 104.28;
                   const yPlanned = 220 - (pt.planned / 100) * 200;
@@ -895,15 +970,10 @@ export default function ProgressVariancePage() {
 
                   return (
                     <g key={pt.period} className="cursor-pointer" onClick={() => setSelectedChartPoint(pt)}>
-                      {/* X-axis label */}
                       <text x={x} y="240" textAnchor="middle" fontSize="10" fill={pt.isDataDate ? '#176B87' : '#596579'} fontWeight={pt.isDataDate ? 'bold' : 'normal'}>
                         {pt.period}
                       </text>
-
-                      {/* Planned node */}
                       <circle cx={x} cy={yPlanned} r="3.5" fill="#FFFFFF" stroke="#8A94A6" strokeWidth="2" />
-
-                      {/* Actual node */}
                       {yActual !== null && (
                         <circle
                           cx={x}
@@ -920,7 +990,6 @@ export default function ProgressVariancePage() {
               </svg>
             </div>
 
-            {/* Selected Period Snapshot Banner */}
             <div className="mt-3 p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
               <div className="flex items-center gap-2">
                 <span className="font-bold text-[#172033]">
@@ -953,19 +1022,10 @@ export default function ProgressVariancePage() {
         </div>
 
         {/* =========================================================================
-            MAIN TABLE:
-            - Activity ID
-            - Activity
-            - Planned %
-            - Actual %
-            - Variance (Positive, Neutral, Negative semantics)
-            - Planned Finish
-            - Forecast Finish
-            - Status
-            - Last Verified Update
+            ACTIVITY TABLE:
+            Activity | Planned % | Verified Actual % | Variance | Forecast Finish | Status | Last Verified Update
             ========================================================================= */}
         <div className="bg-white border border-[#D9DEE5] rounded-xl overflow-hidden shadow-xs space-y-0">
-          {/* Table Header & Controls */}
           <div className="p-4 border-b border-[#D9DEE5]/60 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
             <div className="relative flex-1 max-w-md">
               <Search className="w-4 h-4 text-[#8A94A6] absolute left-3 top-1/2 -translate-y-1/2" />
@@ -988,9 +1048,8 @@ export default function ProgressVariancePage() {
             </div>
 
             <div className="flex items-center gap-2 flex-wrap">
-              {/* Variance Semantic Filter */}
               <div className="flex items-center gap-1.5">
-                <span className="text-[#8A94A6] font-medium text-[11px]">Variance Semantics:</span>
+                <span className="text-[#8A94A6] font-medium text-[11px]">Semantics:</span>
                 <select
                   value={selectedSemanticFilter}
                   onChange={(e) => setSelectedSemanticFilter(e.target.value as any)}
@@ -1003,7 +1062,6 @@ export default function ProgressVariancePage() {
                 </select>
               </div>
 
-              {/* Status Filter */}
               <div className="flex items-center gap-1.5">
                 <span className="text-[#8A94A6] font-medium text-[11px]">Status:</span>
                 <select
@@ -1021,39 +1079,26 @@ export default function ProgressVariancePage() {
             </div>
           </div>
 
-          {/* TABLE CONTAINER */}
+          {/* TABLE CONTAINER WITH MANDATED 7 COLUMNS */}
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs border-collapse">
               <thead>
                 <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[11px] font-bold uppercase tracking-wider text-[#596579]">
-                  <th className="p-3.5 whitespace-nowrap">Activity ID</th>
-                  <th className="p-3.5 min-w-[220px]">Activity</th>
+                  <th className="p-3.5 min-w-[240px]">Activity</th>
                   <th className="p-3.5 whitespace-nowrap text-right">Planned %</th>
-                  <th className="p-3.5 whitespace-nowrap text-right">Actual %</th>
+                  <th className="p-3.5 whitespace-nowrap text-right">Verified Actual %</th>
                   <th className="p-3.5 whitespace-nowrap text-center">Variance</th>
-                  <th className="p-3.5 whitespace-nowrap">Planned Finish</th>
                   <th className="p-3.5 whitespace-nowrap">Forecast Finish</th>
                   <th className="p-3.5 whitespace-nowrap">Status</th>
-                  <th className="p-3.5 min-w-[240px]">Last Verified Update</th>
+                  <th className="p-3.5 min-w-[260px]">Last Verified Update</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-[#D9DEE5]">
                 {filteredActivities.length === 0 ? (
                   <tr>
-                    <td colSpan={9} className="p-8 text-center text-[#596579]">
+                    <td colSpan={7} className="p-8 text-center text-[#596579]">
                       <Info className="w-8 h-8 text-[#8A94A6] mx-auto mb-2" />
                       <p className="font-semibold text-sm text-[#172033]">No activities match your filters</p>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setSelectedSemanticFilter('ALL');
-                          setSelectedStatusFilter('ALL');
-                          setSearchQuery('');
-                        }}
-                        className="mt-2 text-xs font-semibold text-[#176B87] hover:underline"
-                      >
-                        Reset Filters
-                      </button>
                     </td>
                   </tr>
                 ) : (
@@ -1063,27 +1108,22 @@ export default function ProgressVariancePage() {
                     return (
                       <tr
                         key={act.id}
-                        onClick={() => {
-                          setSelectedActivity(act);
-                          openActivityDrawer(act.id, 'plan-vs-actual');
-                        }}
+                        onClick={() => handleSelectActivity(act)}
                         className="hover:bg-[#EDF5F8]/50 transition-colors cursor-pointer group"
                       >
-                        {/* 1. Activity ID */}
-                        <td className="p-3.5 whitespace-nowrap font-mono font-bold text-[#176B87] group-hover:underline">
-                          <div className="flex items-center gap-1.5">
-                            <span>{act.id}</span>
+                        {/* 1. Activity (ID, Name, WBS, Area) */}
+                        <td className="p-3.5">
+                          <div className="flex items-center gap-2">
+                            <span className="font-mono font-bold text-[#176B87] group-hover:underline">
+                              {act.id}
+                            </span>
                             {act.isCritical && (
                               <span className="text-[9px] font-bold px-1.5 py-0.2 rounded bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
                                 CP
                               </span>
                             )}
                           </div>
-                        </td>
-
-                        {/* 2. Activity Name & WBS */}
-                        <td className="p-3.5">
-                          <div className="font-bold text-[#172033]">{act.name}</div>
+                          <div className="font-bold text-[#172033] mt-0.5">{act.name}</div>
                           <div className="text-[11px] text-[#596579] flex items-center gap-2 mt-0.5">
                             <span className="font-mono text-[#8A94A6]">WBS {act.wbs}</span>
                             <span>•</span>
@@ -1093,17 +1133,17 @@ export default function ProgressVariancePage() {
                           </div>
                         </td>
 
-                        {/* 3. Planned % */}
+                        {/* 2. Planned % */}
                         <td className="p-3.5 whitespace-nowrap text-right font-mono font-semibold text-[#596579]">
                           {act.plannedPercent}%
                         </td>
 
-                        {/* 4. Actual % */}
+                        {/* 3. Verified Actual % */}
                         <td className="p-3.5 whitespace-nowrap text-right font-mono font-bold text-[#172033]">
                           {act.actualPercent}%
                         </td>
 
-                        {/* 5. Variance (Semantics: Positive, Neutral, Negative) */}
+                        {/* 4. Variance */}
                         <td className="p-3.5 whitespace-nowrap text-center">
                           <span
                             className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-[11px] font-mono font-bold border ${varStyle.bg} ${varStyle.border} ${varStyle.text}`}
@@ -1115,17 +1155,12 @@ export default function ProgressVariancePage() {
                           </span>
                         </td>
 
-                        {/* 6. Planned Finish */}
-                        <td className="p-3.5 whitespace-nowrap font-mono text-[11px] text-[#596579]">
-                          {act.plannedFinish}
-                        </td>
-
-                        {/* 7. Forecast Finish */}
+                        {/* 5. Forecast Finish */}
                         <td className="p-3.5 whitespace-nowrap font-mono text-[11px] text-[#172033] font-bold">
                           {act.forecastFinish}
                         </td>
 
-                        {/* 8. Status */}
+                        {/* 6. Status */}
                         <td className="p-3.5 whitespace-nowrap">
                           <span
                             className={`px-2 py-0.5 rounded text-[10px] font-bold ${
@@ -1142,7 +1177,7 @@ export default function ProgressVariancePage() {
                           </span>
                         </td>
 
-                        {/* 9. Last Verified Update */}
+                        {/* 7. Last Verified Update */}
                         <td className="p-3.5 text-[#596579]">
                           <p className="truncate text-[11px] max-w-[280px]" title={act.lastVerifiedUpdate}>
                             {act.lastVerifiedUpdate}
@@ -1156,18 +1191,429 @@ export default function ProgressVariancePage() {
             </table>
           </div>
 
-          {/* Table Footer */}
           <div className="p-3.5 bg-[#F7F8FA] border-t border-[#D9DEE5] flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-[#596579]">
             <span>
               Showing <strong>{filteredActivities.length}</strong> of <strong>{activities.length}</strong> schedule activities
             </span>
             <span className="text-[11px] text-[#8A94A6]">
-              Click any activity to inspect progress history in the Activity Detail Drawer
+              Click any activity row to view complete execution lineage and verification history
             </span>
           </div>
         </div>
 
+        {/* =========================================================================
+            PROGRESS DETAIL DRAWER:
+            Previous Progress ↓ Execution Event ↓ Evidence ↓ Verification ↓ New Progress
+            History Progression: 53% → 65% → 72% with dates and source evidence
+            Important: Prohibit arbitrary edits without reason, source, user, timestamp, audit record
+            ========================================================================= */}
+        <Drawer
+          isOpen={!!selectedActivity}
+          onClose={() => setSelectedActivity(null)}
+          title={`Progress Lineage: ${selectedActivity?.id || ''}`}
+          subtitle={`Verified Physical Execution Audit · ${selectedActivity?.name || ''}`}
+          width="xl"
+          footer={
+            selectedActivity && (
+              <div className="flex items-center justify-between w-full text-xs">
+                <button
+                  type="button"
+                  onClick={() => setSelectedActivity(null)}
+                  className="px-4 py-2 font-semibold text-[#596579] hover:text-[#172033] bg-white border border-[#D9DEE5] rounded-lg"
+                >
+                  Close
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setIsCalibrateModalOpen(true)}
+                  className="px-4 py-2 font-bold text-white bg-[#176B87] hover:bg-[#135A72] rounded-lg shadow-xs inline-flex items-center gap-1.5 transition-colors"
+                >
+                  <ShieldCheck className="w-4 h-4" />
+                  <span>Record Audited Progress Update</span>
+                </button>
+              </div>
+            )
+          }
+        >
+          {selectedActivity && (
+            <div className="space-y-6 text-xs text-[#172033]">
+              {/* Top Activity Card */}
+              <div className="p-4 bg-[#F7F8FA] border border-[#D9DEE5] rounded-xl space-y-3">
+                <div className="flex items-center justify-between flex-wrap gap-2">
+                  <div className="flex items-center gap-2">
+                    <span className="font-mono text-base font-extrabold text-[#176B87]">
+                      {selectedActivity.id}
+                    </span>
+                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-white text-[#176B87] font-semibold border border-[#B3CBE0]">
+                      WBS {selectedActivity.wbs}
+                    </span>
+                    <span className="text-[10px] px-2 py-0.5 rounded bg-white text-[#596579] font-medium border border-[#D9DEE5]">
+                      {selectedActivity.discipline}
+                    </span>
+                  </div>
+                  <span className="text-xs font-mono font-bold text-[#596579]">
+                    Engineer: {selectedActivity.assignedEngineer}
+                  </span>
+                </div>
+
+                <h3 className="text-sm font-bold text-[#172033]">
+                  {selectedActivity.name}
+                </h3>
+
+                {/* Progress Bar & Status */}
+                <div className="space-y-1.5 pt-1">
+                  <div className="flex justify-between items-center text-xs">
+                    <span>
+                      Verified Actual: <strong className="font-mono text-[#2E7D5B]">{selectedActivity.actualPercent}%</strong>
+                    </span>
+                    <span>
+                      Planned Target: <strong className="font-mono text-[#596579]">{selectedActivity.plannedPercent}%</strong>
+                    </span>
+                  </div>
+                  <ProgressBar
+                    actual={selectedActivity.actualPercent}
+                    planned={selectedActivity.plannedPercent}
+                  />
+                </div>
+              </div>
+
+              {/* =====================================================================
+                  MANDATED TRACEABILITY CHAIN:
+                  Previous Progress ↓ Execution Event ↓ Evidence ↓ Verification ↓ New Progress
+                  ===================================================================== */}
+              <div className="p-5 bg-white border border-[#D9DEE5] rounded-xl space-y-4 shadow-xs">
+                <div className="flex items-center justify-between border-b border-[#D9DEE5]/60 pb-2">
+                  <div className="flex items-center gap-2">
+                    <ShieldCheck className="w-4 h-4 text-[#176B87]" />
+                    <h4 className="font-bold text-xs uppercase tracking-wider text-[#172033]">
+                      Verified Progress Execution Lineage
+                    </h4>
+                  </div>
+                  <span className="text-[10px] font-mono text-[#8A94A6]">
+                    Mandatory 5-Stage Audit Chain
+                  </span>
+                </div>
+
+                {selectedActivity.history.length > 0 ? (
+                  (() => {
+                    const latest = selectedActivity.history[0];
+                    return (
+                      <div className="space-y-3 pt-1">
+                        {/* 1. Previous Progress */}
+                        <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg flex items-center justify-between">
+                          <div className="flex items-center gap-2">
+                            <span className="w-6 h-6 rounded-full bg-white border border-[#D9DEE5] flex items-center justify-center font-mono font-bold text-xs text-[#596579]">
+                              1
+                            </span>
+                            <span className="font-bold text-xs text-[#596579]">Previous Progress:</span>
+                          </div>
+                          <span className="font-mono text-base font-extrabold text-[#596579]">
+                            {latest.previousPercent}%
+                          </span>
+                        </div>
+
+                        <div className="flex justify-center text-[#8A94A6]">
+                          <ChevronDown className="w-4 h-4" />
+                        </div>
+
+                        {/* 2. Execution Event */}
+                        <div className="p-3 bg-[#EDF5F8] border border-[#B3CBE0] rounded-lg flex items-center justify-between">
+                          <div className="flex items-center gap-2">
+                            <span className="w-6 h-6 rounded-full bg-[#176B87] text-white flex items-center justify-center font-mono font-bold text-xs">
+                              2
+                            </span>
+                            <div>
+                              <span className="font-bold text-xs text-[#176B87] block">Execution Event:</span>
+                              <span className="text-[11px] text-[#596579] italic truncate max-w-[280px] block">
+                                &ldquo;{latest.statement}&rdquo;
+                              </span>
+                            </div>
+                          </div>
+                          <span className="font-mono text-xs font-bold px-2 py-1 bg-white text-[#176B87] border border-[#B3CBE0] rounded">
+                            {latest.executionEventId}
+                          </span>
+                        </div>
+
+                        <div className="flex justify-center text-[#8A94A6]">
+                          <ChevronDown className="w-4 h-4" />
+                        </div>
+
+                        {/* 3. Evidence */}
+                        <div className="p-3 bg-[#EDF7F2] border border-[#B8DCC9] rounded-lg flex items-center justify-between">
+                          <div className="flex items-center gap-2">
+                            <span className="w-6 h-6 rounded-full bg-[#2E7D5B] text-white flex items-center justify-center font-mono font-bold text-xs">
+                              3
+                            </span>
+                            <div>
+                              <span className="font-bold text-xs text-[#2E7D5B] block">Evidence Proof:</span>
+                              <span className="text-[11px] text-[#596579] block">
+                                {latest.evidenceTitle}
+                              </span>
+                            </div>
+                          </div>
+                          <span className="font-mono text-xs font-bold px-2 py-1 bg-white text-[#2E7D5B] border border-[#B8DCC9] rounded">
+                            {latest.evidenceId}
+                          </span>
+                        </div>
+
+                        <div className="flex justify-center text-[#8A94A6]">
+                          <ChevronDown className="w-4 h-4" />
+                        </div>
+
+                        {/* 4. Verification */}
+                        <div className="p-3 bg-[#FDF6ED] border border-[#F0D4A6] rounded-lg flex items-center justify-between">
+                          <div className="flex items-center gap-2">
+                            <span className="w-6 h-6 rounded-full bg-[#D98B32] text-white flex items-center justify-center font-mono font-bold text-xs">
+                              4
+                            </span>
+                            <div>
+                              <span className="font-bold text-xs text-[#D98B32] block">Verified By:</span>
+                              <span className="text-[11px] text-[#596579] block">
+                                {latest.verifiedBy}
+                              </span>
+                            </div>
+                          </div>
+                          <span className="font-mono text-[11px] text-[#596579] bg-white px-2 py-1 rounded border border-[#F0D4A6]">
+                            {latest.timestamp}
+                          </span>
+                        </div>
+
+                        <div className="flex justify-center text-[#8A94A6]">
+                          <ChevronDown className="w-4 h-4" />
+                        </div>
+
+                        {/* 5. New Progress */}
+                        <div className="p-3 bg-[#EDF7F2] border border-[#2E7D5B] rounded-lg flex items-center justify-between ring-1 ring-[#2E7D5B]/30">
+                          <div className="flex items-center gap-2">
+                            <span className="w-6 h-6 rounded-full bg-[#2E7D5B] text-white flex items-center justify-center font-mono font-bold text-xs">
+                              5
+                            </span>
+                            <div>
+                              <span className="font-bold text-xs text-[#2E7D5B] block">New Verified Progress:</span>
+                              <span className="text-[10px] text-[#596579]">
+                                Delta: +{latest.deltaPercent}% committed to Schedule Twin
+                              </span>
+                            </div>
+                          </div>
+                          <span className="font-mono text-xl font-black text-[#2E7D5B]">
+                            {latest.newPercent}%
+                          </span>
+                        </div>
+                      </div>
+                    );
+                  })()
+                ) : (
+                  <div className="p-4 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg text-center text-[#8A94A6] italic">
+                    No verified progress increments logged yet. Activity is in pre-execution stage.
+                  </div>
+                )}
+              </div>
+
+              {/* =====================================================================
+                  MANDATED PROGRESS HISTORY:
+                  Show: 53% → 65% → 72% with dates and source evidence
+                  ===================================================================== */}
+              <div className="p-5 bg-white border border-[#D9DEE5] rounded-xl space-y-4 shadow-xs">
+                <div className="flex items-center justify-between border-b border-[#D9DEE5]/60 pb-2">
+                  <div className="flex items-center gap-2">
+                    <HistoryIcon className="w-4 h-4 text-[#176B87]" />
+                    <h4 className="font-bold text-xs uppercase tracking-wider text-[#172033]">
+                      Progress History Progression
+                    </h4>
+                  </div>
+                  <span className="text-[10px] font-mono text-[#8A94A6]">
+                    Sequential Verified Updates
+                  </span>
+                </div>
+
+                {/* Horizontal Step Progression Indicator: e.g. 20% → 65% → 70% */}
+                {selectedActivity.history.length > 0 && (
+                  <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg overflow-x-auto">
+                    <div className="flex items-center gap-2 min-w-max">
+                      <span className="text-[10px] font-bold uppercase text-[#8A94A6] mr-1">
+                        Progression:
+                      </span>
+                      {selectedActivity.history
+                        .slice()
+                        .reverse()
+                        .map((step, idx, arr) => (
+                          <React.Fragment key={step.id}>
+                            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-white border border-[#D9DEE5] font-mono text-xs">
+                              <span className="font-bold text-[#172033]">{step.newPercent}%</span>
+                              <span className="text-[10px] text-[#8A94A6]">({step.timestamp.split(',')[0]})</span>
+                            </div>
+                            {idx < arr.length - 1 && (
+                              <ArrowRight className="w-3.5 h-3.5 text-[#176B87] shrink-0" />
+                            )}
+                          </React.Fragment>
+                        ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Chronological Step List with Dates and Source Evidence */}
+                <div className="space-y-3 pt-1">
+                  {selectedActivity.history.map((step) => (
+                    <div
+                      key={step.id}
+                      className="p-3.5 bg-[#FAFAFA] border border-[#D9DEE5] rounded-xl space-y-2 text-xs hover:border-[#B3CBE0] transition-colors"
+                    >
+                      <div className="flex items-center justify-between flex-wrap gap-2">
+                        <div className="flex items-center gap-2">
+                          <span className="font-mono font-bold text-xs px-2 py-0.5 rounded bg-white border border-[#D9DEE5] text-[#176B87]">
+                            {step.previousPercent}% → {step.newPercent}%
+                          </span>
+                          <span className="text-[11px] font-bold text-[#2E7D5B]">
+                            (+{step.deltaPercent}%)
+                          </span>
+                        </div>
+                        <span className="font-mono text-[11px] text-[#596579]">
+                          {step.timestamp}
+                        </span>
+                      </div>
+
+                      <p className="text-[11px] text-[#172033] font-medium leading-relaxed">
+                        {step.statement}
+                      </p>
+
+                      <div className="pt-2 border-t border-[#D9DEE5]/60 flex items-center justify-between flex-wrap gap-2 text-[10px] text-[#596579] font-mono">
+                        <div className="flex items-center gap-3">
+                          <span>Event: <strong>{step.executionEventId}</strong></span>
+                          <span>Evidence: <strong>{step.evidenceTitle}</strong> ({step.evidenceId})</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-[#8A94A6]">
+                          <span>By: {step.verifiedBy}</span>
+                          <span>·</span>
+                          <span title={`Audit Hash: ${step.auditHash}`}>Hash: {step.auditHash}</span>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+        </Drawer>
+
+        {/* =========================================================================
+            CALIBRATE PROGRESS MODAL:
+            Strictly requires: reason, source, user, timestamp, audit record
+            Do not allow arbitrary progress editing without these 5 fields
+            ========================================================================= */}
+        <Modal
+          isOpen={isCalibrateModalOpen}
+          onClose={() => setIsCalibrateModalOpen(false)}
+          title="Record Audited Progress Update"
+          subtitle="Strict Governance: Arbitrary progress edits without an audited reason and physical evidence reference are prohibited."
+          footer={
+            <>
+              <button
+                type="button"
+                onClick={() => setIsCalibrateModalOpen(false)}
+                className="px-4 py-2 font-semibold text-[#596579] hover:text-[#172033] rounded border border-[#D9DEE5] text-xs"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={handleCommitAuditedProgress}
+                disabled={!editReason.trim() || !editSource.trim()}
+                className="px-4 py-2 font-bold text-white bg-[#176B87] hover:bg-[#135A72] rounded shadow-xs disabled:opacity-40 text-xs inline-flex items-center gap-1.5"
+              >
+                <ShieldCheck className="w-4 h-4" />
+                <span>Commit Verified Progress</span>
+              </button>
+            </>
+          }
+        >
+          <div className="space-y-4 text-xs">
+            {/* Target Verified Progress */}
+            <div>
+              <label className="font-bold text-[#172033] block mb-1">
+                New Verified Progress (%):
+              </label>
+              <div className="flex items-center gap-3">
+                <input
+                  type="number"
+                  min="0"
+                  max="100"
+                  value={newProgressInput}
+                  onChange={(e) => setNewProgressInput(Number(e.target.value))}
+                  className="w-32 p-2 bg-white border border-[#D9DEE5] rounded-lg font-mono font-bold text-sm text-[#172033] outline-none focus:border-[#176B87]"
+                />
+                <span className="text-xs text-[#596579]">
+                  Previous was <strong>{selectedActivity?.actualPercent}%</strong> (Delta: {newProgressInput - (selectedActivity?.actualPercent || 0)}%)
+                </span>
+              </div>
+            </div>
+
+            {/* 1. Reason (Mandatory) */}
+            <div>
+              <label className="font-bold text-[#172033] block mb-1">
+                1. Verification Reason / Justification <span className="text-[#B5473C]">* (Mandatory)</span>
+              </label>
+              <textarea
+                value={editReason}
+                onChange={(e) => setEditReason(e.target.value)}
+                placeholder="State technical justification (e.g., Physical walkdown and inspection verified completion of 8 welded spools on rack section B)..."
+                rows={3}
+                className="w-full p-2.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg outline-none focus:border-[#176B87] text-xs"
+              />
+            </div>
+
+            {/* 2. Source Evidence (Mandatory) */}
+            <div>
+              <label className="font-bold text-[#172033] block mb-1">
+                2. Source Evidence Reference <span className="text-[#B5473C]">* (Mandatory)</span>
+              </label>
+              <input
+                type="text"
+                value={editSource}
+                onChange={(e) => setEditSource(e.target.value)}
+                placeholder="e.g. DPR-014, WELD_LOG_SHEET_SHIFT_A.pdf, Site Diary Log"
+                className="w-full p-2 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg outline-none focus:border-[#176B87] text-xs"
+              />
+            </div>
+
+            {/* 3. User & 4. Timestamp (Pre-filled & Audited) */}
+            <div className="grid grid-cols-2 gap-3 pt-1">
+              <div>
+                <label className="font-bold text-[#8A94A6] block mb-1">3. Authenticated User</label>
+                <div className="p-2 bg-[#F0F2F5] rounded border border-[#D9DEE5] text-[#596579] font-mono text-[11px] flex items-center gap-1.5">
+                  <User className="w-3.5 h-3.5" />
+                  <span>{userSession?.name || 'Debajit Borah'}</span>
+                </div>
+              </div>
+
+              <div>
+                <label className="font-bold text-[#8A94A6] block mb-1">4. Verification Timestamp</label>
+                <div className="p-2 bg-[#F0F2F5] rounded border border-[#D9DEE5] text-[#596579] font-mono text-[11px] flex items-center gap-1.5">
+                  <Clock className="w-3.5 h-3.5" />
+                  <span>{reportingDate}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* 5. Audit Record Hash */}
+            <div>
+              <label className="font-bold text-[#8A94A6] block mb-1">5. Immutable Audit Hash</label>
+              <div className="p-2 bg-[#F0F2F5] rounded border border-[#D9DEE5] text-[#596579] font-mono text-[11px] flex items-center gap-1.5">
+                <Hash className="w-3.5 h-3.5" />
+                <span>{editAuditHash}</span>
+              </div>
+            </div>
+
+            {/* Warning when required fields are missing */}
+            {(!editReason.trim() || !editSource.trim()) && (
+              <div className="p-2.5 bg-[#FDF6ED] border border-[#F0D4A6] rounded-lg text-[11px] text-[#D98B32] flex items-center gap-2">
+                <Lock className="w-4 h-4 shrink-0" />
+                <span>Arbitrary edits are blocked: Reason and Source Evidence must be specified.</span>
+              </div>
+            )}
+          </div>
+        </Modal>
       </div>
-    </AppShell>
+    </StateWrapper>
   );
 }
