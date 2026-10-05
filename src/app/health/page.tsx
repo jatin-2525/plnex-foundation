@@ -2,19 +2,18 @@
 
 import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useApp } from '../../context/AppContext';
 import { useToast } from '../../context/ToastContext';
-import { AppShell } from '../../components/shell/AppShell';
+import { StateWrapper } from '../../components/shared/StateWrapper';
 import { Breadcrumbs } from '../../components/shell/Breadcrumbs';
 import { Modal } from '../../components/shared/Modal';
 import { Drawer } from '../../components/shared/Drawer';
 import {
   INITIAL_HEALTH_ISSUES,
-  SCHEDULE_STRUCTURE_RULES,
-  EXECUTION_DATA_RULES,
+  SCHEDULE_HEALTH_RULES,
+  EXECUTION_DATA_QUALITY_RULES,
   HealthIssue,
-  HealthCategory,
-  HealthRule,
   HealthSeverity,
   IssueStatus,
 } from '../../lib/domain/healthEngine';
@@ -40,42 +39,48 @@ import {
   Eye,
   Wrench,
   HelpCircle,
-  Folder,
   Lock,
   GitBranch,
   RefreshCw,
-  Download,
-  MessageSquare,
-  Sparkles,
 } from 'lucide-react';
 
 export default function ScheduleHealthPage() {
+  const router = useRouter();
   const { activeProject } = useApp();
   const { addToast } = useToast();
+
+  // Primary Tabs: 'Schedule Health' vs 'Execution Data Quality'
+  const [activeTab, setActiveTab] = useState<'Schedule Health' | 'Execution Data Quality'>('Schedule Health');
 
   // Issues State
   const [issues, setIssues] = useState<HealthIssue[]>(INITIAL_HEALTH_ISSUES);
   const [isScanning, setIsScanning] = useState<boolean>(false);
 
   // Filters State
-  const [categoryFilter, setCategoryFilter] = useState<'ALL' | HealthCategory>('ALL');
+  const [selectedRuleFilter, setSelectedRuleFilter] = useState<string>('ALL');
   const [severityFilter, setSeverityFilter] = useState<'ALL' | HealthSeverity>('ALL');
   const [statusFilter, setStatusFilter] = useState<'ALL' | IssueStatus>('ALL');
-  const [ruleFilter, setRuleFilter] = useState<string>('ALL');
   const [searchQuery, setSearchQuery] = useState<string>('');
 
   // Active Modals & Drawers
   const [selectedIssueForDetail, setSelectedIssueForDetail] = useState<HealthIssue | null>(null);
   const [fixingIssue, setFixingIssue] = useState<HealthIssue | null>(null);
-  const [ignoringIssue, setIgnoringIssue] = useState<HealthIssue | null>(null);
-  const [ignoreReason, setIgnoreReason] = useState<string>('');
   const [fixedValue, setFixedValue] = useState<string>('');
 
-  // Filtered Issues
+  // Active rules depending on tab
+  const currentRules = useMemo(() => {
+    return activeTab === 'Schedule Health' ? SCHEDULE_HEALTH_RULES : EXECUTION_DATA_QUALITY_RULES;
+  }, [activeTab]);
+
+  // Filtered Issues for Current Tab
   const filteredIssues = useMemo(() => {
     return issues.filter((iss) => {
-      // Category filter
-      if (categoryFilter !== 'ALL' && iss.category !== categoryFilter) {
+      // Must match active tab
+      if (iss.category !== activeTab) {
+        return false;
+      }
+      // Rule filter
+      if (selectedRuleFilter !== 'ALL' && iss.rule !== selectedRuleFilter) {
         return false;
       }
       // Severity filter
@@ -84,10 +89,6 @@ export default function ScheduleHealthPage() {
       }
       // Status filter
       if (statusFilter !== 'ALL' && iss.status !== statusFilter) {
-        return false;
-      }
-      // Rule filter
-      if (ruleFilter !== 'ALL' && iss.rule !== ruleFilter) {
         return false;
       }
       // Search query
@@ -103,45 +104,49 @@ export default function ScheduleHealthPage() {
       }
       return true;
     });
-  }, [issues, categoryFilter, severityFilter, statusFilter, ruleFilter, searchQuery]);
+  }, [issues, activeTab, selectedRuleFilter, severityFilter, statusFilter, searchQuery]);
 
-  // Top Summary Metric Calculations
+  // Metrics
   const metrics = useMemo(() => {
-    const criticalCount = issues.filter((i) => i.severity === 'Critical' && i.status === 'Open').length;
-    const attentionCount = issues.filter((i) => i.severity === 'Needs Attention' && i.status === 'Open').length;
-    const resolvedCount = issues.filter((i) => i.status === 'Resolved').length;
-    const ignoredCount = issues.filter((i) => i.status === 'Ignored').length;
+    const tabIssues = issues.filter((i) => i.category === activeTab);
+    const criticalCount = tabIssues.filter((i) => i.severity === 'Critical' && i.status === 'Open').length;
+    const attentionCount = tabIssues.filter((i) => i.severity === 'Needs Attention' && i.status === 'Open').length;
+    const resolvedCount = tabIssues.filter((i) => i.status === 'Resolved').length;
 
     return {
-      healthyRate: 82.4, // Project data quality score %
+      total: tabIssues.length,
       criticalCount,
       attentionCount,
       resolvedCount,
-      ignoredCount,
-      totalOpen: criticalCount + attentionCount,
+      openCount: criticalCount + attentionCount,
     };
-  }, [issues]);
+  }, [issues, activeTab]);
 
   // Run Health Scan Simulation
   const handleRunHealthScan = () => {
     setIsScanning(true);
     addToast({
       type: 'info',
-      title: 'Health Audit Initiated',
-      description: 'Evaluating CPM forward/backward passes, WBS hierarchy, and execution reports.',
+      title: 'Integrity Audit Initiated',
+      description: `Evaluating ${activeTab} across active project records...`,
     });
 
     setTimeout(() => {
       setIsScanning(false);
       addToast({
         type: 'success',
-        title: 'Schedule Health Audit Complete',
-        description: `Evaluated 146 activities & 12 field events. Detected ${metrics.criticalCount} critical blockers.`,
+        title: `${activeTab} Audit Complete`,
+        description: `Evaluated schedule network. Detected ${metrics.openCount} open items requiring resolution.`,
       });
     }, 800);
   };
 
-  // Action: Fix Data
+  // Action 1: View
+  const handleViewIssue = (issue: HealthIssue) => {
+    setSelectedIssueForDetail(issue);
+  };
+
+  // Action 2: Fix
   const handleOpenFixModal = (issue: HealthIssue) => {
     setFixingIssue(issue);
     setFixedValue(issue.fixPayload?.suggestedValue || '');
@@ -151,413 +156,283 @@ export default function ScheduleHealthPage() {
     if (!fixingIssue) return;
 
     setIssues((prev) =>
-      prev.map((i) =>
-        i.id === fixingIssue.id
-          ? {
-              ...i,
-              status: 'Resolved',
-              resolvedAt: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-            }
-          : i
-      )
+      prev.map((iss) => {
+        if (iss.id === fixingIssue.id) {
+          return {
+            ...iss,
+            status: 'Resolved',
+            resolvedAt: new Date().toISOString(),
+          };
+        }
+        return iss;
+      })
     );
 
     addToast({
       type: 'success',
-      title: 'Data Quality Fix Applied',
-      description: `Resolved ${fixingIssue.id}: ${fixingIssue.fixPayload?.fieldToFix} updated to "${fixedValue}".`,
+      title: `Issue ${fixingIssue.id} Fixed`,
+      description: `Updated ${fixingIssue.fixPayload?.fieldToFix || 'value'} to "${fixedValue}". Network updated.`,
     });
 
     setFixingIssue(null);
   };
 
-  // Action: Ignore with Reason
-  const handleOpenIgnoreModal = (issue: HealthIssue) => {
-    setIgnoringIssue(issue);
-    setIgnoreReason('');
+  // Action 3: Review
+  const handleReviewIssue = (issue: HealthIssue) => {
+    if (issue.category === 'Execution Data Quality') {
+      router.push(`/review?eventId=${encodeURIComponent(issue.objectId)}`);
+      addToast({
+        type: 'info',
+        title: 'Navigating to Review Queue',
+        description: `Opened human verification queue for ${issue.objectId}.`,
+      });
+    } else {
+      setSelectedIssueForDetail(issue);
+      addToast({
+        type: 'info',
+        title: 'Schedule Item Inspection',
+        description: `Reviewing CPM constraints and dependency links for ${issue.objectId}.`,
+      });
+    }
   };
 
-  const handleApplyIgnore = () => {
-    if (!ignoringIssue) return;
-    if (!ignoreReason.trim()) {
-      addToast({
-        type: 'warning',
-        title: 'Engineering Justification Required',
-        description: 'You must provide a technical reason to suppress or ignore this health check.',
-      });
-      return;
-    }
-
+  // Action 4: Resolve
+  const handleResolveIssue = (issue: HealthIssue) => {
     setIssues((prev) =>
-      prev.map((i) =>
-        i.id === ignoringIssue.id
-          ? {
-              ...i,
-              status: 'Ignored',
-              ignoredReason: ignoreReason,
-            }
-          : i
-      )
+      prev.map((iss) => {
+        if (iss.id === issue.id) {
+          return {
+            ...iss,
+            status: 'Resolved',
+            resolvedAt: new Date().toISOString(),
+          };
+        }
+        return iss;
+      })
     );
 
     addToast({
-      type: 'info',
-      title: 'Health Issue Suppressed',
-      description: `Issue ${ignoringIssue.id} marked as Ignored with documented engineering justification.`,
+      type: 'success',
+      title: `Issue ${issue.id} Marked Resolved`,
+      description: `Issue verified and marked closed in health audit ledger.`,
     });
-
-    setIgnoringIssue(null);
   };
 
-  // Action: Reset Filters
   const handleResetFilters = () => {
-    setCategoryFilter('ALL');
+    setSelectedRuleFilter('ALL');
     setSeverityFilter('ALL');
     setStatusFilter('ALL');
-    setRuleFilter('ALL');
     setSearchQuery('');
   };
 
-  const breadcrumbs = [
-    { label: 'Controls & Compliance' },
-    { label: 'Schedule Health & Data Quality', current: true },
-  ];
-
   return (
-    <AppShell>
-      <div className="space-y-6 pb-24 md:pb-12 max-w-7xl mx-auto">
-        {/* Breadcrumb Navigation */}
-        <Breadcrumbs items={breadcrumbs} />
+    <StateWrapper>
+      <div className="space-y-6">
+        <Breadcrumbs
+          items={[
+            { label: 'Trust & Governance' },
+            { label: 'Schedule Health & Data Quality', current: true },
+          ]}
+        />
 
         {/* =========================================================================
-            HEADER: Schedule Health & Data Quality
-            Purpose: Find structural problems in project schedule and execution data
+            HEADER: SCHEDULE HEALTH & DATA QUALITY
             ========================================================================= */}
-        <div className="bg-white border border-[#D9DEE5] rounded-xl p-5 md:p-6 shadow-xs">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-[#D9DEE5]/60">
+        <div className="bg-white border border-[#D9DEE5] rounded-xl p-5 shadow-xs space-y-4">
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
             <div>
               <div className="flex items-center gap-2 mb-1.5 flex-wrap">
                 <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-[11px] font-bold tracking-wider uppercase bg-[#176B87]/10 text-[#176B87]">
                   <Activity className="w-3.5 h-3.5" />
-                  Quality & Health Governance
+                  Audit Engine
                 </span>
-
-                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-[11px] font-mono font-bold bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]">
+                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-[11px] font-medium bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]">
                   <CheckCircle2 className="w-3 h-3 text-[#2E7D5B]" />
-                  CPM Network Integrity Scanner
+                  Continuous Quality Guard
                 </span>
-
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-mono bg-[#F0F2F5] text-[#596579] border border-[#D9DEE5]">
-                  Pure Project Data Quality · No Server Telemetry
+                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-[11px] text-[#596579] bg-[#F7F8FA] border border-[#D9DEE5]">
+                  {activeProject?.code || 'OIL-DUL-01'} · V3 · Rev 3.2
                 </span>
               </div>
 
               <h1 className="text-2xl font-bold text-[#172033] tracking-tight">
-                Schedule Health & Data Quality
+                Schedule Health &amp; Execution Data Quality
               </h1>
               <p className="text-xs text-[#596579] mt-0.5 max-w-3xl">
-                Pinpoint structural flaws in Primavera P6 schedule networks and execution reports before logic errors distort critical path projections and project forecasts.
+                Continuous automated audit of baseline CPM network integrity, WBS hierarchy rules, and daily execution data ingestion hygiene.
               </p>
             </div>
 
-            {/* Quick Actions */}
-            <div className="flex items-center gap-2 flex-wrap">
+            {/* Actions: Scan Trigger */}
+            <div className="flex items-center gap-3">
               <button
                 type="button"
                 onClick={handleRunHealthScan}
                 disabled={isScanning}
-                className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] disabled:opacity-50 rounded-lg shadow-xs transition-colors"
+                className="px-4 py-2 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-bold rounded-lg shadow-xs transition-colors flex items-center gap-2 disabled:opacity-50"
               >
                 <RefreshCw className={`w-3.5 h-3.5 ${isScanning ? 'animate-spin' : ''}`} />
-                <span>{isScanning ? 'Running Scan...' : 'Run Health Scan'}</span>
+                <span>{isScanning ? 'Running Audit...' : 'Re-scan Project Health'}</span>
+              </button>
+            </div>
+          </div>
+
+          {/* =========================================================================
+              PRIMARY TABS: Schedule Health vs Execution Data Quality
+              ========================================================================= */}
+          <div className="flex items-center justify-between pt-3 border-t border-[#D9DEE5]/60 flex-wrap gap-3">
+            <div className="flex items-center bg-[#F0F2F5] p-1 rounded-xl border border-[#D9DEE5]">
+              <button
+                type="button"
+                onClick={() => {
+                  setActiveTab('Schedule Health');
+                  setSelectedRuleFilter('ALL');
+                }}
+                className={`flex items-center gap-2 px-5 py-2 text-xs font-bold rounded-lg transition-all ${
+                  activeTab === 'Schedule Health'
+                    ? 'bg-white text-[#176B87] shadow-xs'
+                    : 'text-[#596579] hover:text-[#172033]'
+                }`}
+              >
+                <Calendar className="w-4 h-4" />
+                <span>Schedule Health</span>
+                <span
+                  className={`px-2 py-0.2 rounded-full text-[10px] font-mono ${
+                    activeTab === 'Schedule Health'
+                      ? 'bg-[#EDF5F8] text-[#176B87]'
+                      : 'bg-[#E8EBF0] text-[#596579]'
+                  }`}
+                >
+                  {issues.filter((i) => i.category === 'Schedule Health').length}
+                </span>
               </button>
 
               <button
                 type="button"
                 onClick={() => {
-                  addToast({
-                    type: 'success',
-                    title: 'Audit Report Exported',
-                    description: 'Schedule Data Quality Diagnostic report exported to CSV/PDF.',
-                  });
+                  setActiveTab('Execution Data Quality');
+                  setSelectedRuleFilter('ALL');
                 }}
-                className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-[#172033] bg-white border border-[#D9DEE5] hover:bg-[#F0F2F5] rounded-lg transition-colors"
+                className={`flex items-center gap-2 px-5 py-2 text-xs font-bold rounded-lg transition-all ${
+                  activeTab === 'Execution Data Quality'
+                    ? 'bg-white text-[#176B87] shadow-xs'
+                    : 'text-[#596579] hover:text-[#172033]'
+                }`}
               >
-                <Download className="w-3.5 h-3.5 text-[#596579]" />
-                <span>Export Report</span>
+                <FileText className="w-4 h-4" />
+                <span>Execution Data Quality</span>
+                <span
+                  className={`px-2 py-0.2 rounded-full text-[10px] font-mono ${
+                    activeTab === 'Execution Data Quality'
+                      ? 'bg-[#EDF5F8] text-[#176B87]'
+                      : 'bg-[#E8EBF0] text-[#596579]'
+                  }`}
+                >
+                  {issues.filter((i) => i.category === 'Execution Data Quality').length}
+                </span>
               </button>
             </div>
-          </div>
 
-          {/* PROJECT INFO BADGE */}
-          <div className="pt-3 flex items-center justify-between text-xs text-[#596579] font-mono flex-wrap gap-2">
-            <div className="flex items-center gap-2">
-              <Folder className="w-3.5 h-3.5 text-[#176B87]" />
-              <span>Project:</span>
-              <strong className="text-[#172033]">{activeProject?.code || 'OIL-DUL-01'}</strong>
-              <span>· Baseline: V3 · Rev 3.2</span>
-            </div>
-            <div>
-              <span>Evaluated: 146 activities · 12 field events · Reference Date: 18 Sep 2026</span>
-            </div>
-          </div>
-        </div>
-
-        {/* =========================================================================
-            TOP SUMMARY CARDS:
-            - Healthy
-            - Needs Attention
-            - Critical
-            ========================================================================= */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {/* 1. HEALTHY */}
-          <div
-            onClick={() => setSeverityFilter(severityFilter === 'Healthy' ? 'ALL' : 'Healthy')}
-            className={`p-5 rounded-xl border bg-white shadow-xs cursor-pointer transition-all ${
-              severityFilter === 'Healthy'
-                ? 'ring-2 ring-[#2E7D5B] border-[#2E7D5B]'
-                : 'hover:border-[#B8DCC9]'
-            }`}
-          >
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-[10px] uppercase font-bold text-[#2E7D5B] tracking-wider flex items-center gap-1.5">
-                <CheckCircle2 className="w-4 h-4 text-[#2E7D5B]" />
-                Healthy Status
-              </span>
-              <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]">
-                {metrics.healthyRate}% Compliant
-              </span>
-            </div>
-            <div className="text-2xl font-bold font-mono text-[#172033] mb-1">
-              136 / 146 Activities
-            </div>
-            <p className="text-xs text-[#596579] leading-relaxed">
-              Zero duplicate IDs, clean activity coding, and valid durations across 93% of the schedule network.
-            </p>
-          </div>
-
-          {/* 2. NEEDS ATTENTION */}
-          <div
-            onClick={() => setSeverityFilter(severityFilter === 'Needs Attention' ? 'ALL' : 'Needs Attention')}
-            className={`p-5 rounded-xl border bg-white shadow-xs cursor-pointer transition-all ${
-              severityFilter === 'Needs Attention'
-                ? 'ring-2 ring-[#9A5B13] border-[#9A5B13]'
-                : 'hover:border-[#ECD1A4]'
-            }`}
-          >
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-[10px] uppercase font-bold text-[#9A5B13] tracking-wider flex items-center gap-1.5">
-                <AlertCircle className="w-4 h-4 text-[#9A5B13]" />
-                Needs Attention
-              </span>
-              <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-[#FEF7EE] text-[#9A5B13] border border-[#ECD1A4]">
-                {metrics.attentionCount} Warnings
-              </span>
-            </div>
-            <div className="text-2xl font-bold font-mono text-[#9A5B13] mb-1">
-              {metrics.attentionCount} Non-Fatal Issues
-            </div>
-            <p className="text-xs text-[#596579] leading-relaxed">
-              Stale field updates (&gt;48h), missing measurement units, open-ended finishes, and WBS level depth mismatches.
-            </p>
-          </div>
-
-          {/* 3. CRITICAL */}
-          <div
-            onClick={() => setSeverityFilter(severityFilter === 'Critical' ? 'ALL' : 'Critical')}
-            className={`p-5 rounded-xl border bg-white shadow-xs cursor-pointer transition-all ${
-              severityFilter === 'Critical'
-                ? 'ring-2 ring-[#B5473C] border-[#B5473C]'
-                : 'hover:border-[#E4B0AA]'
-            }`}
-          >
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-[10px] uppercase font-bold text-[#B5473C] tracking-wider flex items-center gap-1.5">
-                <AlertTriangle className="w-4 h-4 text-[#B5473C]" />
-                Critical Blockers
-              </span>
-              <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
-                {metrics.criticalCount} Blockers
-              </span>
-            </div>
-            <div className="text-2xl font-bold font-mono text-[#B5473C] mb-1">
-              {metrics.criticalCount} Integrity Violations
-            </div>
-            <p className="text-xs text-[#596579] leading-relaxed">
-              Inverted schedule dates, missing WBS parent codes, dangling open-starts, and duplicate field submissions.
-            </p>
-          </div>
-        </div>
-
-        {/* =========================================================================
-            HEALTH CATEGORIES DIAGNOSTIC GRID
-            1. Schedule Structure (7 rules)
-            2. Execution Data (5 rules)
-            ========================================================================= */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* CATEGORY 1: SCHEDULE STRUCTURE */}
-          <div className="bg-white border border-[#D9DEE5] rounded-xl p-5 shadow-xs space-y-4">
-            <div className="flex items-center justify-between pb-3 border-b border-[#D9DEE5]">
-              <div className="flex items-center gap-2">
-                <Layers className="w-4 h-4 text-[#176B87]" />
-                <h3 className="text-sm font-bold text-[#172033] uppercase tracking-wider">
-                  Schedule Structure Integrity
-                </h3>
+            {/* Quick Metrics */}
+            <div className="flex items-center gap-3 text-xs font-mono">
+              <div className="px-3 py-1.5 rounded-lg bg-[#FBEFEE] border border-[#E4B0AA] text-[#B5473C] font-bold">
+                {metrics.criticalCount} Critical
               </div>
-              <span className="text-[11px] font-mono text-[#596579]">
-                7 Rule Checks
-              </span>
-            </div>
-
-            <div className="space-y-2">
-              {SCHEDULE_STRUCTURE_RULES.map((chk) => {
-                const ruleIssues = issues.filter(
-                  (i) => i.rule === chk.rule && i.status === 'Open'
-                );
-                const hasCritical = ruleIssues.some((i) => i.severity === 'Critical');
-                const hasWarning = ruleIssues.some((i) => i.severity === 'Needs Attention');
-
-                return (
-                  <div
-                    key={chk.rule}
-                    onClick={() => {
-                      setCategoryFilter('Schedule Structure');
-                      setRuleFilter(ruleFilter === chk.rule ? 'ALL' : chk.rule);
-                    }}
-                    className={`p-3 rounded-lg border text-xs flex items-center justify-between gap-3 cursor-pointer transition-all ${
-                      ruleFilter === chk.rule
-                        ? 'border-[#176B87] bg-[#EDF5F8]'
-                        : hasCritical
-                        ? 'bg-[#FBEFEE]/30 border-[#E4B0AA] hover:bg-[#FBEFEE]/60'
-                        : hasWarning
-                        ? 'bg-[#FEF7EE]/30 border-[#ECD1A4] hover:bg-[#FEF7EE]/60'
-                        : 'bg-[#F7F8FA] border-[#D9DEE5] hover:bg-white'
-                    }`}
-                  >
-                    <div className="space-y-0.5 min-w-0">
-                      <div className="flex items-center gap-2">
-                        <span className="font-bold text-[#172033]">{chk.name}</span>
-                        <span className="text-[10px] font-mono text-[#8A94A6]">({chk.rule})</span>
-                      </div>
-                      <p className="text-[11px] text-[#596579] line-clamp-1">{chk.description}</p>
-                    </div>
-
-                    <div className="shrink-0">
-                      {hasCritical ? (
-                        <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
-                          {ruleIssues.length} Critical
-                        </span>
-                      ) : hasWarning ? (
-                        <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-[#FEF7EE] text-[#9A5B13] border border-[#ECD1A4]">
-                          {ruleIssues.length} Warning
-                        </span>
-                      ) : (
-                        <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]">
-                          Passed
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* CATEGORY 2: EXECUTION DATA */}
-          <div className="bg-white border border-[#D9DEE5] rounded-xl p-5 shadow-xs space-y-4">
-            <div className="flex items-center justify-between pb-3 border-b border-[#D9DEE5]">
-              <div className="flex items-center gap-2">
-                <FileText className="w-4 h-4 text-[#176B87]" />
-                <h3 className="text-sm font-bold text-[#172033] uppercase tracking-wider">
-                  Execution Data Quality
-                </h3>
+              <div className="px-3 py-1.5 rounded-lg bg-[#FEF7EE] border border-[#ECD1A4] text-[#9A5B13] font-bold">
+                {metrics.attentionCount} Warning
               </div>
-              <span className="text-[11px] font-mono text-[#596579]">
-                5 Rule Checks
-              </span>
-            </div>
-
-            <div className="space-y-2">
-              {EXECUTION_DATA_RULES.map((chk) => {
-                const ruleIssues = issues.filter(
-                  (i) => i.rule === chk.rule && i.status === 'Open'
-                );
-                const hasCritical = ruleIssues.some((i) => i.severity === 'Critical');
-                const hasWarning = ruleIssues.some((i) => i.severity === 'Needs Attention');
-
-                return (
-                  <div
-                    key={chk.rule}
-                    onClick={() => {
-                      setCategoryFilter('Execution Data');
-                      setRuleFilter(ruleFilter === chk.rule ? 'ALL' : chk.rule);
-                    }}
-                    className={`p-3 rounded-lg border text-xs flex items-center justify-between gap-3 cursor-pointer transition-all ${
-                      ruleFilter === chk.rule
-                        ? 'border-[#176B87] bg-[#EDF5F8]'
-                        : hasCritical
-                        ? 'bg-[#FBEFEE]/30 border-[#E4B0AA] hover:bg-[#FBEFEE]/60'
-                        : hasWarning
-                        ? 'bg-[#FEF7EE]/30 border-[#ECD1A4] hover:bg-[#FEF7EE]/60'
-                        : 'bg-[#F7F8FA] border-[#D9DEE5] hover:bg-white'
-                    }`}
-                  >
-                    <div className="space-y-0.5 min-w-0">
-                      <div className="flex items-center gap-2">
-                        <span className="font-bold text-[#172033]">{chk.name}</span>
-                        <span className="text-[10px] font-mono text-[#8A94A6]">({chk.rule})</span>
-                      </div>
-                      <p className="text-[11px] text-[#596579] line-clamp-1">{chk.description}</p>
-                    </div>
-
-                    <div className="shrink-0">
-                      {hasCritical ? (
-                        <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
-                          {ruleIssues.length} Critical
-                        </span>
-                      ) : hasWarning ? (
-                        <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-[#FEF7EE] text-[#9A5B13] border border-[#ECD1A4]">
-                          {ruleIssues.length} Warning
-                        </span>
-                      ) : (
-                        <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]">
-                          Passed
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                );
-              })}
+              <div className="px-3 py-1.5 rounded-lg bg-[#EDF7F2] border border-[#B8DCC9] text-[#2E7D5B] font-bold">
+                {metrics.resolvedCount} Resolved
+              </div>
             </div>
           </div>
         </div>
 
         {/* =========================================================================
-            FILTERS & SEARCH BAR
+            CHECK PILLS / CATEGORIES STRIP
+            Schedule Health (6): Missing Activity IDs, Duplicate IDs, Invalid Dates, Missing Dependencies, Invalid Hierarchy, Missing WBS
+            Execution Data Quality (6): Unmatched Events, Duplicate Events, Missing Values, Conflicting Reports, Low Confidence, Stale Events
             ========================================================================= */}
         <div className="bg-white border border-[#D9DEE5] rounded-xl p-4 shadow-xs space-y-3">
-          <div className="flex items-center justify-between flex-wrap gap-3">
+          <div className="flex items-center justify-between pb-2 border-b border-[#D9DEE5]/60 flex-wrap gap-2">
+            <span className="text-xs font-bold text-[#172033] uppercase tracking-wider">
+              {activeTab} Rule Audits (6 Checks Configured):
+            </span>
+            <span className="text-[11px] text-[#596579]">
+              Click any rule to filter the Issue Table
+            </span>
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
+            {currentRules.map((ruleItem) => {
+              const ruleIssues = issues.filter(
+                (i) => i.category === activeTab && i.rule === ruleItem.rule && i.status === 'Open'
+              );
+              const isSelected = selectedRuleFilter === ruleItem.rule;
+              const hasCritical = ruleIssues.some((i) => i.severity === 'Critical');
+
+              return (
+                <button
+                  key={ruleItem.rule}
+                  type="button"
+                  onClick={() =>
+                    setSelectedRuleFilter(isSelected ? 'ALL' : ruleItem.rule)
+                  }
+                  className={`p-2.5 rounded-lg border text-left transition-all ${
+                    isSelected
+                      ? 'border-[#176B87] bg-[#EDF5F8] ring-1 ring-[#176B87]'
+                      : 'border-[#D9DEE5] bg-[#F7F8FA] hover:bg-white hover:border-[#176B87]/40'
+                  }`}
+                >
+                  <div className="flex items-center justify-between mb-1">
+                    <span
+                      className={`text-[9px] font-mono px-1.5 py-0.2 rounded font-bold uppercase ${
+                        ruleIssues.length === 0
+                          ? 'bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]'
+                          : hasCritical
+                          ? 'bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]'
+                          : 'bg-[#FEF7EE] text-[#9A5B13] border border-[#ECD1A4]'
+                      }`}
+                    >
+                      {ruleIssues.length === 0 ? 'Passed' : `${ruleIssues.length} Open`}
+                    </span>
+                  </div>
+                  <div className="text-xs font-bold text-[#172033] truncate" title={ruleItem.name}>
+                    {ruleItem.name}
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* =========================================================================
+            SEARCH & SECONDARY FILTER BAR
+            ========================================================================= */}
+        <div className="bg-white border border-[#D9DEE5] rounded-xl p-3.5 shadow-xs space-y-3">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+            <div className="relative flex-1 max-w-md">
+              <Search className="w-3.5 h-3.5 text-[#8A94A6] absolute left-3 top-2.5" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search issues by rule, object ID, or description..."
+                className="w-full pl-8 pr-3 py-1.5 text-xs bg-white border border-[#D9DEE5] rounded-lg text-[#172033] outline-none focus:border-[#176B87]"
+              />
+            </div>
+
             <div className="flex items-center gap-2 flex-wrap text-xs">
-              {/* Category Filter */}
-              <div className="flex items-center bg-[#F0F2F5] p-1 rounded-lg border border-[#D9DEE5]">
-                {(['ALL', 'Schedule Structure', 'Execution Data'] as const).map((cat) => (
-                  <button
-                    key={cat}
-                    type="button"
-                    onClick={() => {
-                      setCategoryFilter(cat);
-                      setRuleFilter('ALL');
-                    }}
-                    className={`px-3 py-1 rounded font-medium transition-colors ${
-                      categoryFilter === cat
-                        ? 'bg-white text-[#176B87] font-bold shadow-xs'
-                        : 'text-[#596579] hover:text-[#172033]'
-                    }`}
-                  >
-                    {cat === 'ALL' ? 'All Categories' : cat}
-                  </button>
-                ))}
-              </div>
+              {/* Severity Filter */}
+              <select
+                value={severityFilter}
+                onChange={(e) => setSeverityFilter(e.target.value as any)}
+                className="px-2.5 py-1.5 bg-white border border-[#D9DEE5] rounded-lg text-xs font-medium text-[#172033] outline-none"
+              >
+                <option value="ALL">All Severities</option>
+                <option value="Critical">Critical</option>
+                <option value="Needs Attention">Needs Attention</option>
+              </select>
 
               {/* Status Filter */}
               <select
@@ -566,114 +441,66 @@ export default function ScheduleHealthPage() {
                 className="px-2.5 py-1.5 bg-white border border-[#D9DEE5] rounded-lg text-xs font-medium text-[#172033] outline-none"
               >
                 <option value="ALL">All Statuses</option>
-                <option value="Open">Open Issues</option>
+                <option value="Open">Open</option>
                 <option value="Resolved">Resolved</option>
-                <option value="Ignored">Ignored with Reason</option>
+                <option value="In Review">In Review</option>
               </select>
 
-              {/* Severity Filter */}
-              <select
-                value={severityFilter}
-                onChange={(e) => setSeverityFilter(e.target.value as any)}
-                className="px-2.5 py-1.5 bg-white border border-[#D9DEE5] rounded-lg text-xs font-medium text-[#172033] outline-none"
-              >
-                <option value="ALL">All Severities</option>
-                <option value="Critical">Critical Only</option>
-                <option value="Needs Attention">Needs Attention Only</option>
-              </select>
-
-              {ruleFilter !== 'ALL' && (
-                <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-[#EDF5F8] text-[#176B87] font-mono text-[11px] border border-[#B3CBE0]">
-                  <span>Rule: {ruleFilter}</span>
-                  <button onClick={() => setRuleFilter('ALL')} className="hover:text-black">
-                    <X className="w-3 h-3" />
-                  </button>
-                </span>
+              {(selectedRuleFilter !== 'ALL' || severityFilter !== 'ALL' || statusFilter !== 'ALL' || searchQuery) && (
+                <button
+                  type="button"
+                  onClick={handleResetFilters}
+                  className="px-2.5 py-1 text-xs text-[#B5473C] hover:bg-[#FDF0EE] border border-[#E4B0AA] rounded-lg transition-colors flex items-center gap-1"
+                >
+                  <RotateCcw className="w-3 h-3" />
+                  <span>Reset</span>
+                </button>
               )}
             </div>
-
-            {/* Clear Filters */}
-            <button
-              type="button"
-              onClick={handleResetFilters}
-              className="text-xs text-[#596579] hover:text-[#172033] flex items-center gap-1 font-medium transition-colors"
-            >
-              <RotateCcw className="w-3.5 h-3.5" />
-              <span>Reset</span>
-            </button>
-          </div>
-
-          {/* Search Box */}
-          <div className="pt-2 border-t border-[#D9DEE5]/60 flex items-center justify-between gap-3">
-            <div className="relative flex-1 max-w-md">
-              <Search className="w-3.5 h-3.5 text-[#8A94A6] absolute left-3 top-2.5" />
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search issues by ID, object, rule, or description..."
-                className="w-full pl-8 pr-3 py-1.5 text-xs bg-white border border-[#D9DEE5] rounded-lg text-[#172033] outline-none focus:border-[#176B87]"
-              />
-            </div>
-            <span className="text-xs font-mono text-[#596579]">
-              Showing <strong className="text-[#172033]">{filteredIssues.length}</strong> issues
-            </span>
           </div>
         </div>
 
         {/* =========================================================================
-            MAIN ISSUE TABLE
-            Columns:
-            - Issue ID
-            - Category
-            - Severity
-            - Object
-            - Description
-            - Detected
-            - Status
-            - Action
+            CANONICAL ISSUE TABLE
+            Columns (Exact 7):
+            Issue | Severity | Object | Description | Detected | Status | Action
+            Actions (Exact 4):
+            View | Fix | Review | Resolve
             ========================================================================= */}
         <div className="bg-white border border-[#D9DEE5] rounded-xl shadow-xs overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse text-xs">
               <thead>
                 <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[10px] uppercase font-bold text-[#8A94A6] tracking-wider">
-                  <th className="py-3 px-4">Issue ID</th>
-                  <th className="py-3 px-4">Category & Rule</th>
-                  <th className="py-3 px-4">Severity</th>
-                  <th className="py-3 px-4">Target Object</th>
-                  <th className="py-3 px-4">Problem Description & Impact</th>
-                  <th className="py-3 px-4">Detected</th>
-                  <th className="py-3 px-4">Status</th>
-                  <th className="py-3 px-4 text-right">Actions</th>
+                  <th className="py-3 px-4 whitespace-nowrap">Issue</th>
+                  <th className="py-3 px-3 whitespace-nowrap">Severity</th>
+                  <th className="py-3 px-4 whitespace-nowrap">Object</th>
+                  <th className="py-3 px-4 min-w-[280px]">Description</th>
+                  <th className="py-3 px-3 whitespace-nowrap">Detected</th>
+                  <th className="py-3 px-3 whitespace-nowrap">Status</th>
+                  <th className="py-3 px-4 whitespace-nowrap text-right">Action</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-[#E8EBF0]">
                 {filteredIssues.map((issue) => (
                   <tr
                     key={issue.id}
-                    onClick={() => setSelectedIssueForDetail(issue)}
-                    className="hover:bg-[#F0F2F5]/60 transition-colors cursor-pointer group"
+                    className="hover:bg-[#F9FAFC] transition-colors group"
                   >
-                    {/* Issue ID */}
-                    <td className="py-3.5 px-4 font-mono font-bold text-[#176B87]">
-                      <span className="px-2 py-0.5 rounded bg-[#EDF5F8] border border-[#B3CBE0]">
-                        {issue.id}
-                      </span>
-                    </td>
-
-                    {/* Category & Rule */}
-                    <td className="py-3.5 px-4">
-                      <div>
-                        <span className="font-semibold text-[#172033] block">{issue.category}</span>
-                        <span className="inline-block mt-0.5 px-1.5 py-0.2 rounded text-[10px] font-mono text-[#596579] bg-[#F0F2F5] border border-[#D9DEE5]">
+                    {/* 1. Issue (Rule + Issue ID) */}
+                    <td className="py-3.5 px-4 align-top whitespace-nowrap">
+                      <div className="space-y-0.5">
+                        <span className="font-bold text-[#172033] block">
                           {issue.rule}
+                        </span>
+                        <span className="font-mono text-[10px] text-[#176B87] bg-[#EDF5F8] px-1.5 py-0.2 rounded border border-[#B3CBE0] inline-block">
+                          {issue.id}
                         </span>
                       </div>
                     </td>
 
-                    {/* Severity */}
-                    <td className="py-3.5 px-4">
+                    {/* 2. Severity */}
+                    <td className="py-3.5 px-3 align-top whitespace-nowrap">
                       {issue.severity === 'Critical' ? (
                         <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
                           <AlertTriangle className="w-3 h-3" />
@@ -687,104 +514,99 @@ export default function ScheduleHealthPage() {
                       )}
                     </td>
 
-                    {/* Object */}
-                    <td className="py-3.5 px-4 max-w-[200px]">
-                      <div className="flex items-center gap-1.5">
-                        <span className="font-mono font-bold text-[#176B87]">{issue.objectId}</span>
-                        <span className="text-[10px] font-mono uppercase bg-[#F0F2F5] px-1 py-0.2 rounded text-[#596579]">
-                          {issue.objectType === 'SCHEDULE_ACTIVITY' ? 'Activity' : 'Field Event'}
+                    {/* 3. Object */}
+                    <td className="py-3.5 px-4 align-top max-w-[200px]">
+                      <div>
+                        <span className="font-mono font-bold text-[#176B87] block truncate">
+                          {issue.objectId}
                         </span>
-                      </div>
-                      <div className="font-medium text-[#172033] text-[11px] truncate mt-0.5">
-                        {issue.objectName}
+                        <span className="text-[11px] text-[#596579] line-clamp-1">
+                          {issue.objectName}
+                        </span>
                       </div>
                     </td>
 
-                    {/* Description */}
-                    <td className="py-3.5 px-4 max-w-xs">
-                      <p className="font-medium text-[#172033] text-[11px] line-clamp-2">
+                    {/* 4. Description */}
+                    <td className="py-3.5 px-4 align-top">
+                      <p className="text-xs text-[#172033] leading-relaxed">
                         {issue.description}
                       </p>
-                      <p className="text-[10px] text-[#8A94A6] mt-0.5 line-clamp-1 italic">
-                        {issue.impactExplanation}
+                      <p className="text-[11px] text-[#596579] mt-0.5 italic">
+                        Impact: {issue.impactExplanation}
                       </p>
                     </td>
 
-                    {/* Detected */}
-                    <td className="py-3.5 px-4 font-mono text-[#596579] whitespace-nowrap">
-                      {issue.detectedAt}
+                    {/* 5. Detected */}
+                    <td className="py-3.5 px-3 align-top whitespace-nowrap font-mono text-[11px] text-[#596579]">
+                      {issue.detected || issue.detectedAt}
                     </td>
 
-                    {/* Status */}
-                    <td className="py-3.5 px-4">
-                      {issue.status === 'Resolved' ? (
-                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]">
-                          <Check className="w-3 h-3" />
-                          Resolved
-                        </span>
-                      ) : issue.status === 'Ignored' ? (
-                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-[#F0F2F5] text-[#596579] border border-[#D9DEE5]">
-                          Ignored
-                        </span>
-                      ) : (
-                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-[#FEF7EE] text-[#9A5B13] border border-[#ECD1A4]">
-                          Open
-                        </span>
-                      )}
-                    </td>
-
-                    {/* Actions */}
-                    <td className="py-3.5 px-4 text-right">
-                      <div
-                        className="flex items-center justify-end gap-1.5"
-                        onClick={(e) => e.stopPropagation()}
+                    {/* 6. Status */}
+                    <td className="py-3.5 px-3 align-top whitespace-nowrap">
+                      <span
+                        className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold uppercase ${
+                          issue.status === 'Resolved'
+                            ? 'bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]'
+                            : issue.status === 'Open'
+                            ? 'bg-[#FEF7EE] text-[#9A5B13] border border-[#ECD1A4]'
+                            : 'bg-[#F0F2F5] text-[#596579] border border-[#D9DEE5]'
+                        }`}
                       >
-                        {/* Fix Data Action */}
-                        {issue.fixPayload && issue.status === 'Open' && (
+                        {issue.status}
+                      </span>
+                    </td>
+
+                    {/* 7. Action: View | Fix | Review | Resolve */}
+                    <td className="py-3.5 px-4 align-top text-right whitespace-nowrap">
+                      <div className="inline-flex items-center gap-1">
+                        {/* Action: View */}
+                        <button
+                          type="button"
+                          onClick={() => handleViewIssue(issue)}
+                          className="px-2 py-1 text-[11px] font-bold text-[#596579] hover:text-[#172033] hover:bg-[#F0F2F5] border border-[#D9DEE5] rounded transition-colors"
+                          title="View complete issue details"
+                        >
+                          View
+                        </button>
+
+                        {/* Action: Fix */}
+                        {issue.fixPayload && issue.status !== 'Resolved' && (
                           <button
                             type="button"
                             onClick={() => handleOpenFixModal(issue)}
-                            className="px-2.5 py-1 rounded bg-[#176B87] hover:bg-[#135A72] text-white text-[11px] font-bold shadow-xs transition-colors flex items-center gap-1"
-                            title="Apply quick structural fix"
+                            className="px-2 py-1 text-[11px] font-bold text-[#176B87] hover:bg-[#EDF5F8] border border-[#B3CBE0] rounded transition-colors"
+                            title="Apply suggested data repair"
                           >
-                            <Wrench className="w-3 h-3" />
-                            <span>Fix Data</span>
+                            Fix
                           </button>
                         )}
 
-                        {/* Review Action */}
-                        {issue.suggestedAction === 'Review' && issue.status === 'Open' && (
-                          <Link
-                            href="/review"
-                            className="px-2.5 py-1 rounded bg-[#176B87] hover:bg-[#135A72] text-white text-[11px] font-bold shadow-xs transition-colors flex items-center gap-1"
-                            title="Open in Review Queue"
-                          >
-                            <Eye className="w-3 h-3" />
-                            <span>Review</span>
-                          </Link>
-                        )}
-
-                        {/* View Activity Action */}
-                        {issue.objectType === 'SCHEDULE_ACTIVITY' && (
-                          <Link
-                            href="/schedule-twin"
-                            className="p-1 rounded border border-[#D9DEE5] hover:bg-[#F0F2F5] text-[#596579] transition-colors"
-                            title="View Activity in Schedule Twin"
-                          >
-                            <ExternalLink className="w-3.5 h-3.5" />
-                          </Link>
-                        )}
-
-                        {/* Ignore with Reason Action */}
-                        {issue.status === 'Open' && (
+                        {/* Action: Review */}
+                        {issue.status !== 'Resolved' && (
                           <button
                             type="button"
-                            onClick={() => handleOpenIgnoreModal(issue)}
-                            className="p-1 rounded border border-[#D9DEE5] hover:bg-[#FBEFEE] text-[#596579] hover:text-[#B5473C] transition-colors"
-                            title="Ignore with Reason"
+                            onClick={() => handleReviewIssue(issue)}
+                            className="px-2 py-1 text-[11px] font-bold text-[#9A5B13] hover:bg-[#FEF7EE] border border-[#ECD1A4] rounded transition-colors"
+                            title="Inspect in review queue"
                           >
-                            <X className="w-3.5 h-3.5" />
+                            Review
                           </button>
+                        )}
+
+                        {/* Action: Resolve */}
+                        {issue.status !== 'Resolved' ? (
+                          <button
+                            type="button"
+                            onClick={() => handleResolveIssue(issue)}
+                            className="px-2 py-1 text-[11px] font-bold text-[#2E7D5B] hover:bg-[#EDF7F2] border border-[#B8DCC9] rounded transition-colors"
+                            title="Mark issue resolved"
+                          >
+                            Resolve
+                          </button>
+                        ) : (
+                          <span className="text-[10px] text-[#2E7D5B] font-mono font-bold px-1.5 py-0.5">
+                            ✓ Done
+                          </span>
                         )}
                       </div>
                     </td>
@@ -793,245 +615,130 @@ export default function ScheduleHealthPage() {
               </tbody>
             </table>
           </div>
+
+          <div className="px-4 py-3 bg-[#F7F8FA] border-t border-[#D9DEE5] flex items-center justify-between text-xs text-[#596579]">
+            <span>Category: <strong className="text-[#172033]">{activeTab}</strong></span>
+            <span>Total Shown: <strong className="font-mono text-[#172033]">{filteredIssues.length}</strong></span>
+          </div>
         </div>
 
         {/* =========================================================================
-            MODAL: FIX DATA
-            Quick Remediation Dialog for structural schedule / execution flaws
+            DRAWER: ISSUE DETAILS INSPECTION (View Action)
+            ========================================================================= */}
+        <Drawer
+          isOpen={Boolean(selectedIssueForDetail)}
+          onClose={() => setSelectedIssueForDetail(null)}
+          title={`Health Issue Details: ${selectedIssueForDetail?.id || ''}`}
+          subtitle={`${selectedIssueForDetail?.category || ''} · ${selectedIssueForDetail?.rule || ''}`}
+          width="lg"
+        >
+          {selectedIssueForDetail && (
+            <div className="space-y-5 text-xs p-1">
+              <div className="p-3.5 bg-[#F7F8FA] rounded-xl border border-[#D9DEE5] space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-bold uppercase text-[#8A94A6]">Affected Object</span>
+                  <span className="px-2 py-0.5 rounded font-mono text-[10px] font-bold bg-[#EDF5F8] text-[#176B87]">
+                    {selectedIssueForDetail.objectType}
+                  </span>
+                </div>
+                <div className="font-mono font-bold text-sm text-[#172033]">
+                  {selectedIssueForDetail.objectId}
+                </div>
+                <div className="text-xs text-[#596579]">
+                  {selectedIssueForDetail.objectName}
+                </div>
+              </div>
+
+              <div className="space-y-1">
+                <span className="text-[10px] font-bold uppercase text-[#8A94A6]">Problem Description</span>
+                <p className="text-xs text-[#172033] leading-relaxed p-3 bg-white border border-[#D9DEE5] rounded-xl">
+                  {selectedIssueForDetail.description}
+                </p>
+              </div>
+
+              <div className="space-y-1">
+                <span className="text-[10px] font-bold uppercase text-[#8A94A6]">Project CPM / EVM Impact</span>
+                <p className="text-xs text-[#B5473C] leading-relaxed p-3 bg-[#FDF0EE] border border-[#E4B0AA] rounded-xl">
+                  {selectedIssueForDetail.impactExplanation}
+                </p>
+              </div>
+
+              {selectedIssueForDetail.fixPayload && (
+                <div className="space-y-2 p-3.5 bg-[#EDF7F2] border border-[#B8DCC9] rounded-xl">
+                  <span className="text-[10px] font-bold uppercase text-[#2E7D5B] block">
+                    Suggested Remediation
+                  </span>
+                  <div className="text-xs space-y-1">
+                    <div>Field: <strong className="font-mono">{selectedIssueForDetail.fixPayload.fieldToFix}</strong></div>
+                    <div>Current: <span className="font-mono text-[#B5473C]">{selectedIssueForDetail.fixPayload.currentValue}</span></div>
+                    <div>Suggested: <span className="font-mono text-[#2E7D5B] font-bold">{selectedIssueForDetail.fixPayload.suggestedValue}</span></div>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      handleOpenFixModal(selectedIssueForDetail);
+                      setSelectedIssueForDetail(null);
+                    }}
+                    className="mt-2 px-3 py-1.5 text-xs font-bold text-white bg-[#2E7D5B] hover:bg-[#25664A] rounded-lg shadow-xs"
+                  >
+                    Open Fix Tool &rarr;
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
+        </Drawer>
+
+        {/* =========================================================================
+            MODAL: FIX DATA (Fix Action)
             ========================================================================= */}
         <Modal
-          isOpen={!!fixingIssue}
+          isOpen={Boolean(fixingIssue)}
           onClose={() => setFixingIssue(null)}
           title={`Remediate Data Issue: ${fixingIssue?.id || ''}`}
-          subtitle={`Object: ${fixingIssue?.objectId} (${fixingIssue?.objectName})`}
-          maxWidth="md"
+          subtitle={`Rule: ${fixingIssue?.rule || ''} · Target: ${fixingIssue?.objectId || ''}`}
+          maxWidth="lg"
           footer={
-            <div className="flex items-center justify-end gap-2 w-full text-xs">
+            <div className="flex items-center justify-end gap-2 w-full">
               <button
                 type="button"
                 onClick={() => setFixingIssue(null)}
-                className="px-4 py-2 font-semibold text-[#596579] hover:text-[#172033]"
+                className="px-3 py-1.5 text-xs text-[#596579] hover:text-[#172033]"
               >
                 Cancel
               </button>
               <button
                 type="button"
                 onClick={handleApplyFix}
-                className="px-4 py-2 bg-[#176B87] hover:bg-[#135A72] text-white font-bold rounded-lg shadow-xs"
+                className="px-4 py-2 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] rounded-lg shadow-xs"
               >
-                Apply Correction & Resolve
+                Apply &amp; Resolve Issue
               </button>
             </div>
           }
         >
           {fixingIssue && (
             <div className="space-y-4 text-xs">
-              <div className="p-3 rounded-lg bg-[#F7F8FA] border border-[#D9DEE5] space-y-1">
-                <span className="text-[10px] uppercase font-bold text-[#8A94A6] block">
-                  Structural Diagnosis
-                </span>
-                <p className="text-[#172033] font-medium leading-relaxed">
-                  {fixingIssue.description}
-                </p>
-              </div>
+              <p className="text-[#596579]">
+                Updating <strong>{fixingIssue.fixPayload?.fieldToFix}</strong> on object{' '}
+                <strong className="font-mono">{fixingIssue.objectId}</strong>.
+              </p>
 
-              {/* Before vs After Correction Fields */}
-              <div className="space-y-2">
-                <div className="p-3 rounded-lg bg-[#FBEFEE]/60 border border-[#E4B0AA] space-y-1">
-                  <span className="text-[10px] uppercase font-bold text-[#B5473C] block">
-                    Current Faulty Value ({fixingIssue.fixPayload?.fieldToFix})
-                  </span>
-                  <div className="font-mono text-xs text-[#172033] font-bold">
-                    {fixingIssue.fixPayload?.currentValue}
-                  </div>
-                </div>
-
-                <div className="space-y-1">
-                  <label className="text-[10px] uppercase font-bold text-[#176B87] block">
-                    Corrected Value to Write into Project Data *
-                  </label>
-                  <input
-                    type="text"
-                    value={fixedValue}
-                    onChange={(e) => setFixedValue(e.target.value)}
-                    className="w-full px-3 py-2 bg-white border border-[#176B87] rounded-lg font-mono text-xs text-[#172033] font-bold outline-none ring-1 ring-[#176B87]"
-                  />
-                  <span className="text-[10px] text-[#8A94A6]">
-                    Suggested value: {fixingIssue.fixPayload?.suggestedValue}
-                  </span>
-                </div>
-              </div>
-
-              <div className="p-2.5 rounded bg-[#EDF5F8] border border-[#B3CBE0] text-[11px] text-[#596579] flex items-start gap-2">
-                <Lock className="w-3.5 h-3.5 text-[#176B87] shrink-0 mt-0.5" />
-                <span>
-                  Remediation will update schedule working model and recalculate downstream Critical Path relationships.
-                </span>
-              </div>
-            </div>
-          )}
-        </Modal>
-
-        {/* =========================================================================
-            MODAL: IGNORE WITH REASON
-            Mandatory justification required to suppress health check
-            ========================================================================= */}
-        <Modal
-          isOpen={!!ignoringIssue}
-          onClose={() => setIgnoringIssue(null)}
-          title={`Ignore Health Check: ${ignoringIssue?.id || ''}`}
-          subtitle={`Object: ${ignoringIssue?.objectId} (${ignoringIssue?.objectName})`}
-          maxWidth="md"
-          footer={
-            <div className="flex items-center justify-end gap-2 w-full text-xs">
-              <button
-                type="button"
-                onClick={() => setIgnoringIssue(null)}
-                className="px-4 py-2 font-semibold text-[#596579] hover:text-[#172033]"
-              >
-                Cancel
-              </button>
-              <button
-                type="button"
-                onClick={handleApplyIgnore}
-                className="px-4 py-2 bg-[#B5473C] hover:bg-[#9B3C32] text-white font-bold rounded-lg shadow-xs"
-              >
-                Confirm & Ignore Check
-              </button>
-            </div>
-          }
-        >
-          {ignoringIssue && (
-            <div className="space-y-4 text-xs">
-              <div className="p-3 rounded-lg bg-[#FEF7EE] border border-[#ECD1A4] text-[#9A5B13] leading-relaxed">
-                <strong>Attention:</strong> Suppressing this health check will mark it as &ldquo;Ignored&rdquo; in executive audit logs. A technical justification is required for compliance audits.
-              </div>
-
-              <div className="space-y-1.5">
-                <label className="font-bold text-[#172033] block">
-                  Mandatory Engineering Justification *
+              <div>
+                <label className="block text-[11px] font-bold text-[#172033] mb-1">
+                  New Value:
                 </label>
-                <textarea
-                  rows={3}
-                  value={ignoreReason}
-                  onChange={(e) => setIgnoreReason(e.target.value)}
-                  placeholder="e.g. Activity represents temporary contractor works outside EPC scope as authorized in meeting #14..."
-                  className="w-full px-3 py-2 bg-white border border-[#D9DEE5] rounded-lg text-xs text-[#172033] outline-none focus:border-[#176B87] resize-none"
+                <input
+                  type="text"
+                  value={fixedValue}
+                  onChange={(e) => setFixedValue(e.target.value)}
+                  className="w-full px-3 py-2 text-xs bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg font-mono outline-none focus:border-[#176B87]"
                 />
               </div>
             </div>
           )}
         </Modal>
-
-        {/* =========================================================================
-            DRAWER: ISSUE DETAIL INSPECTION
-            ========================================================================= */}
-        <Drawer
-          isOpen={!!selectedIssueForDetail}
-          onClose={() => setSelectedIssueForDetail(null)}
-          title={`Issue Diagnostic: ${selectedIssueForDetail?.id || ''}`}
-          subtitle={selectedIssueForDetail?.objectName}
-          width="md"
-        >
-          {selectedIssueForDetail && (
-            <div className="space-y-5 text-xs p-1">
-              <div className="p-3.5 rounded-lg bg-[#F7F8FA] border border-[#D9DEE5] space-y-2">
-                <div className="flex items-center justify-between">
-                  <span className="font-mono font-bold text-[#176B87]">
-                    {selectedIssueForDetail.id}
-                  </span>
-                  <span
-                    className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase ${
-                      selectedIssueForDetail.severity === 'Critical'
-                        ? 'bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]'
-                        : 'bg-[#FEF7EE] text-[#9A5B13] border border-[#ECD1A4]'
-                    }`}
-                  >
-                    {selectedIssueForDetail.severity}
-                  </span>
-                </div>
-                <h4 className="font-bold text-sm text-[#172033]">
-                  {selectedIssueForDetail.objectName}
-                </h4>
-                <div className="flex items-center gap-2 text-[11px] text-[#596579]">
-                  <span className="font-mono font-bold text-[#176B87]">
-                    {selectedIssueForDetail.objectId}
-                  </span>
-                  <span>•</span>
-                  <span>{selectedIssueForDetail.category}</span>
-                  <span>•</span>
-                  <span className="font-mono">Rule: {selectedIssueForDetail.rule}</span>
-                </div>
-              </div>
-
-              {/* Problem Description */}
-              <div className="p-3 rounded-lg bg-white border border-[#D9DEE5] space-y-1.5">
-                <span className="text-[10px] uppercase font-bold text-[#8A94A6] tracking-wider block">
-                  Problem Description
-                </span>
-                <p className="text-[#172033] leading-relaxed text-xs">
-                  {selectedIssueForDetail.description}
-                </p>
-              </div>
-
-              {/* Schedule / CPM Impact */}
-              <div className="p-3 rounded-lg bg-[#FBEFEE]/40 border border-[#E4B0AA] space-y-1.5">
-                <span className="text-[10px] uppercase font-bold text-[#B5473C] tracking-wider block">
-                  Downstream CPM / Quality Impact
-                </span>
-                <p className="text-[#172033] leading-relaxed text-xs">
-                  {selectedIssueForDetail.impactExplanation}
-                </p>
-              </div>
-
-              {/* Actions Available */}
-              <div className="space-y-2 pt-2 border-t border-[#D9DEE5]">
-                <span className="text-[10px] uppercase font-bold text-[#8A94A6] tracking-wider block">
-                  Remediation Actions
-                </span>
-                <div className="flex items-center gap-2 flex-wrap">
-                  {selectedIssueForDetail.fixPayload && selectedIssueForDetail.status === 'Open' && (
-                    <button
-                      type="button"
-                      onClick={() => {
-                        handleOpenFixModal(selectedIssueForDetail);
-                        setSelectedIssueForDetail(null);
-                      }}
-                      className="flex-1 py-2 px-3 bg-[#176B87] hover:bg-[#135A72] text-white font-bold rounded-lg text-xs flex items-center justify-center gap-1.5 shadow-xs"
-                    >
-                      <Wrench className="w-3.5 h-3.5" />
-                      <span>Fix Data</span>
-                    </button>
-                  )}
-
-                  {selectedIssueForDetail.objectType === 'SCHEDULE_ACTIVITY' && (
-                    <Link
-                      href="/schedule-twin"
-                      className="flex-1 py-2 px-3 bg-white border border-[#D9DEE5] hover:bg-[#F0F2F5] text-[#172033] font-bold rounded-lg text-xs flex items-center justify-center gap-1.5"
-                    >
-                      <ExternalLink className="w-3.5 h-3.5" />
-                      <span>View Activity</span>
-                    </Link>
-                  )}
-
-                  {selectedIssueForDetail.status === 'Open' && (
-                    <button
-                      type="button"
-                      onClick={() => {
-                        handleOpenIgnoreModal(selectedIssueForDetail);
-                        setSelectedIssueForDetail(null);
-                      }}
-                      className="py-2 px-3 bg-white border border-[#D9DEE5] hover:bg-[#FBEFEE] text-[#596579] hover:text-[#B5473C] font-semibold rounded-lg text-xs"
-                    >
-                      Ignore with Reason
-                    </button>
-                  )}
-                </div>
-              </div>
-            </div>
-          )}
-        </Drawer>
       </div>
-    </AppShell>
+    </StateWrapper>
   );
 }
