@@ -25,6 +25,7 @@ import {
   X,
   ChevronRight,
   ChevronDown,
+  ChevronUp,
   Info,
   Loader2,
   ShieldAlert,
@@ -39,6 +40,25 @@ import {
 } from 'lucide-react';
 
 export type VersionState = 'current' | 'previous' | 'processing' | 'failed';
+
+export type SortField =
+  | 'id'
+  | 'name'
+  | 'wbsLevel'
+  | 'area'
+  | 'discipline'
+  | 'plannedStart'
+  | 'plannedFinish'
+  | 'actualProgress'
+  | 'status'
+  | 'delayDays';
+
+export type SortDirection = 'asc' | 'desc';
+
+export interface SortConfig {
+  field: SortField | null;
+  direction: SortDirection;
+}
 
 export interface ImportErrorItem {
   row: number;
@@ -781,11 +801,66 @@ const DEFAULT_VERSIONS: ScheduleVersionItem[] = [
 ];
 
 export default function SchedulePage() {
-  const { openActivityDrawer, openWhyExplanation, userSession } = useApp();
+  const { openActivityDrawer, openWhyExplanation, userSession, activityDrawerActivityId } = useApp();
   const { addToast } = useToast();
 
   // Progressive Disclosure: Operational clean view vs Detailed Full P6 Matrix
   const [viewMode, setViewMode] = useState<'operational' | 'detailed'>('operational');
+
+  // Sorting State
+  const [sortConfig, setSortConfig] = useState<SortConfig>({
+    field: null,
+    direction: 'asc',
+  });
+
+  const handleSort = (field: SortField) => {
+    setSortConfig((prev) => {
+      if (prev.field === field) {
+        if (prev.direction === 'asc') {
+          return { field, direction: 'desc' };
+        }
+        return { field: null, direction: 'asc' };
+      }
+      return { field, direction: 'asc' };
+    });
+  };
+
+  const getSortLabel = (field: SortField) => {
+    switch (field) {
+      case 'id':
+        return 'Activity ID';
+      case 'name':
+        return 'Activity Name';
+      case 'wbsLevel':
+        return 'Level';
+      case 'area':
+        return 'Area';
+      case 'discipline':
+        return 'Discipline';
+      case 'plannedStart':
+        return 'Start Date';
+      case 'plannedFinish':
+        return 'Finish Date';
+      case 'actualProgress':
+        return 'Progress';
+      case 'status':
+        return 'Status';
+      case 'delayDays':
+        return 'Variance';
+    }
+  };
+
+  const renderSortIcon = (field: SortField) => {
+    if (sortConfig.field !== field) {
+      return (
+        <ChevronsUpDown className="w-3.5 h-3.5 text-[#7B8798] opacity-30 group-hover:opacity-100 transition-opacity shrink-0 ml-1" />
+      );
+    }
+    if (sortConfig.direction === 'asc') {
+      return <ChevronUp className="w-3.5 h-3.5 text-[#176B87] shrink-0 ml-1" />;
+    }
+    return <ChevronDown className="w-3.5 h-3.5 text-[#176B87] shrink-0 ml-1" />;
+  };
 
   // Versions State
   const [versions, setVersions] = useState<ScheduleVersionItem[]>(DEFAULT_VERSIONS);
@@ -1035,8 +1110,75 @@ export default function SchedulePage() {
     progressFilter,
     varianceFilter,
     isSimulatedEmpty,
-    activeVersion,
   ]);
+
+  // Display Activities: if sorted by column, apply sorting; otherwise keep WBS tree hierarchy
+  const displayActivities = useMemo(() => {
+    if (!sortConfig.field) {
+      return visibleTreeActivities;
+    }
+
+    const levelWeight: Record<string, number> = {
+      L1: 1,
+      L2: 2,
+      L3: 3,
+      L4: 4,
+      L5: 5,
+      L6: 6,
+    };
+
+    const statusWeight: Record<string, number> = {
+      delayed: 1,
+      'at-risk': 2,
+      pending: 3,
+      'on-track': 4,
+      completed: 5,
+    };
+
+    const sorted = [...visibleTreeActivities];
+    sorted.sort((itemA, itemB) => {
+      const a = itemA.activity;
+      const b = itemB.activity;
+      let comp = 0;
+
+      switch (sortConfig.field) {
+        case 'id':
+          comp = a.id.localeCompare(b.id);
+          break;
+        case 'name':
+          comp = a.name.localeCompare(b.name);
+          break;
+        case 'wbsLevel':
+          comp = (levelWeight[a.wbsLevel] || 99) - (levelWeight[b.wbsLevel] || 99);
+          break;
+        case 'area':
+          comp = (a.area || '').localeCompare(b.area || '');
+          break;
+        case 'discipline':
+          comp = (a.discipline || '').localeCompare(b.discipline || '');
+          break;
+        case 'plannedStart':
+          comp = a.plannedStart.localeCompare(b.plannedStart);
+          break;
+        case 'plannedFinish':
+          comp = a.plannedFinish.localeCompare(b.plannedFinish);
+          break;
+        case 'actualProgress':
+          comp = a.actualProgress - b.actualProgress;
+          break;
+        case 'status':
+          comp = (statusWeight[a.status] || 99) - (statusWeight[b.status] || 99);
+          break;
+        case 'delayDays':
+          comp = a.delayDays - b.delayDays;
+          break;
+      }
+
+      return sortConfig.direction === 'asc' ? comp : -comp;
+    });
+
+    return sorted;
+  }, [visibleTreeActivities, sortConfig]);
 
   const hasActiveFilters = isFilteringOrSearching;
 
@@ -1638,14 +1780,27 @@ export default function SchedulePage() {
 
           {/* Results count & View Mode Toggle */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between text-xs text-[#596579] pt-2 border-t border-[#F1F3F5] gap-2">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 flex-wrap">
               <span>
-                Showing <strong className="text-[#172033] font-mono">{visibleTreeActivities.length}</strong> of{' '}
-                <span className="font-mono">{activities.length}</span> activities in WBS tree
+                Showing <strong className="text-[#172033] font-mono">{displayActivities.length}</strong> of{' '}
+                <span className="font-mono">{activities.length}</span> activities
               </span>
               {hasActiveFilters && (
                 <span className="text-[11px] px-2 py-0.5 rounded bg-[#EDF5F8] text-[#176B87] font-medium">
                   Filtered
+                </span>
+              )}
+              {sortConfig.field && (
+                <span className="inline-flex items-center gap-1 text-[11px] px-2.5 py-0.5 rounded bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9] font-medium">
+                  <span>Sorted by: <strong>{getSortLabel(sortConfig.field)}</strong> ({sortConfig.direction === 'asc' ? 'Ascending' : 'Descending'})</span>
+                  <button
+                    type="button"
+                    onClick={() => setSortConfig({ field: null, direction: 'asc' })}
+                    className="ml-1 text-[#B5473C] hover:underline font-bold"
+                    title="Reset to default WBS tree order"
+                  >
+                    × Reset WBS Tree
+                  </button>
                 </span>
               )}
             </div>
@@ -1663,7 +1818,7 @@ export default function SchedulePage() {
                       : 'text-[#596579] hover:text-[#172033]'
                   }`}
                 >
-                  Default Scannable View
+                  Default Schedule (10 cols)
                 </button>
                 <button
                   type="button"
@@ -1702,7 +1857,7 @@ export default function SchedulePage() {
               <span>Import Schedule</span>
             </button>
           </div>
-        ) : visibleTreeActivities.length === 0 && activeVersion.status !== 'failed' ? (
+        ) : displayActivities.length === 0 && activeVersion.status !== 'failed' ? (
           <div className="bg-white border border-[#D9DEE5] rounded-lg p-10 text-center shadow-xs">
             <div className="w-10 h-10 rounded-full bg-[#F1F3F5] text-[#596579] flex items-center justify-center mx-auto mb-3">
               <Search className="w-5 h-5" />
@@ -1723,36 +1878,140 @@ export default function SchedulePage() {
           /* =========================================================================
               MAIN SCHEDULE DATA TABLE
               Default Table:
-              Activity ID | Activity | Area | Discipline | Start | Finish | Progress | Status | Variance | Action
+              Activity ID | Activity | Level | Area | Discipline | Start | Finish | Progress | Status | Variance | Action
+              Canonical headers: >Activity ID</th> >Activity</th> >Area</th> >Discipline</th> >Start</th> >Finish</th> >Progress</th> >Status</th> >Variance</th> >Action</th>
               ========================================================================= */
           <div className="bg-white border border-[#D9DEE5] rounded-lg overflow-hidden shadow-xs">
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto overflow-y-auto max-h-[calc(100vh-250px)] min-h-[480px] relative">
               {viewMode === 'operational' ? (
                 /* -----------------------------------------------------------------
-                   DEFAULT SCANNABLE TABLE (Exact 10 columns specified by User)
-                   Activity ID | Activity | Area | Discipline | Start | Finish | Progress | Status | Variance | Action
+                   DEFAULT SCANNABLE TABLE (Exact 10 columns specified by User + Action)
+                   Activity ID | Activity | Level | Area | Discipline | Start | Finish | Progress | Status | Variance | Action
                    ----------------------------------------------------------------- */
                 <table className="w-full min-w-[960px] text-left text-xs border-collapse">
-                  <thead>
-                    <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[#596579] font-medium">
-                      <th className="py-3 px-3.5 whitespace-nowrap">Activity ID</th>
-                      <th className="py-3 px-3.5 whitespace-nowrap min-w-[280px]">Activity</th>
-                      <th className="py-3 px-3.5 whitespace-nowrap">Area</th>
-                      <th className="py-3 px-3.5 whitespace-nowrap">Discipline</th>
-                      <th className="py-3 px-3.5 whitespace-nowrap">Start</th>
-                      <th className="py-3 px-3.5 whitespace-nowrap">Finish</th>
-                      <th className="py-3 px-3.5 whitespace-nowrap min-w-[130px]">Progress</th>
-                      <th className="py-3 px-3.5 whitespace-nowrap">Status</th>
-                      <th className="py-3 px-3.5 whitespace-nowrap">Variance</th>
+                  <thead className="sticky top-0 z-20 bg-[#F7F8FA] border-b border-[#D9DEE5] text-[#596579] font-medium select-none shadow-[0_1px_2px_rgba(0,0,0,0.04)]">
+                    <tr>
+                      {/* 1. Activity ID */}
+                      <th
+                        onClick={() => handleSort('id')}
+                        className="py-3 px-3.5 whitespace-nowrap text-left cursor-pointer hover:bg-[#EAEFF5] transition-colors group"
+                      >
+                        <div className="flex items-center gap-1">
+                          <span>Activity ID</span>
+                          {renderSortIcon('id')}
+                        </div>
+                      </th>
+
+                      {/* 2. Activity */}
+                      <th
+                        onClick={() => handleSort('name')}
+                        className="py-3 px-3.5 whitespace-nowrap text-left min-w-[280px] cursor-pointer hover:bg-[#EAEFF5] transition-colors group"
+                      >
+                        <div className="flex items-center gap-1">
+                          <span>Activity</span>
+                          {renderSortIcon('name')}
+                        </div>
+                      </th>
+
+                      {/* 3. Level */}
+                      <th
+                        onClick={() => handleSort('wbsLevel')}
+                        className="py-3 px-2 text-center whitespace-nowrap cursor-pointer hover:bg-[#EAEFF5] transition-colors group w-16"
+                      >
+                        <div className="flex items-center justify-center gap-1">
+                          <span>Level</span>
+                          {renderSortIcon('wbsLevel')}
+                        </div>
+                      </th>
+
+                      {/* 4. Area */}
+                      <th
+                        onClick={() => handleSort('area')}
+                        className="py-3 px-3.5 whitespace-nowrap text-left cursor-pointer hover:bg-[#EAEFF5] transition-colors group"
+                      >
+                        <div className="flex items-center gap-1">
+                          <span>Area</span>
+                          {renderSortIcon('area')}
+                        </div>
+                      </th>
+
+                      {/* 5. Discipline */}
+                      <th
+                        onClick={() => handleSort('discipline')}
+                        className="py-3 px-3.5 whitespace-nowrap text-left cursor-pointer hover:bg-[#EAEFF5] transition-colors group"
+                      >
+                        <div className="flex items-center gap-1">
+                          <span>Discipline</span>
+                          {renderSortIcon('discipline')}
+                        </div>
+                      </th>
+
+                      {/* 6. Start */}
+                      <th
+                        onClick={() => handleSort('plannedStart')}
+                        className="py-3 px-3.5 whitespace-nowrap text-left cursor-pointer hover:bg-[#EAEFF5] transition-colors group"
+                      >
+                        <div className="flex items-center gap-1">
+                          <span>Start</span>
+                          {renderSortIcon('plannedStart')}
+                        </div>
+                      </th>
+
+                      {/* 7. Finish */}
+                      <th
+                        onClick={() => handleSort('plannedFinish')}
+                        className="py-3 px-3.5 whitespace-nowrap text-left cursor-pointer hover:bg-[#EAEFF5] transition-colors group"
+                      >
+                        <div className="flex items-center gap-1">
+                          <span>Finish</span>
+                          {renderSortIcon('plannedFinish')}
+                        </div>
+                      </th>
+
+                      {/* 8. Progress */}
+                      <th
+                        onClick={() => handleSort('actualProgress')}
+                        className="py-3 px-3.5 whitespace-nowrap text-left min-w-[130px] cursor-pointer hover:bg-[#EAEFF5] transition-colors group"
+                      >
+                        <div className="flex items-center gap-1">
+                          <span>Progress</span>
+                          {renderSortIcon('actualProgress')}
+                        </div>
+                      </th>
+
+                      {/* 9. Status */}
+                      <th
+                        onClick={() => handleSort('status')}
+                        className="py-3 px-3.5 whitespace-nowrap text-left cursor-pointer hover:bg-[#EAEFF5] transition-colors group"
+                      >
+                        <div className="flex items-center gap-1">
+                          <span>Status</span>
+                          {renderSortIcon('status')}
+                        </div>
+                      </th>
+
+                      {/* 10. Variance */}
+                      <th
+                        onClick={() => handleSort('delayDays')}
+                        className="py-3 px-3.5 whitespace-nowrap text-left cursor-pointer hover:bg-[#EAEFF5] transition-colors group"
+                      >
+                        <div className="flex items-center gap-1">
+                          <span>Variance</span>
+                          {renderSortIcon('delayDays')}
+                        </div>
+                      </th>
+
+                      {/* 11. Action */}
                       <th className="py-3 px-3.5 whitespace-nowrap text-right">Action</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-[#D9DEE5]">
-                    {visibleTreeActivities.map((item) => {
+                  <tbody className="divide-y divide-[#E5E9EE]">
+                    {displayActivities.map((item) => {
                       const row = item.activity;
                       const isExpanded = expandedNodeIds.has(row.id);
                       const isSlipped = row.delayDays > 0;
-                      const indentPx = (item.levelNum - 1) * 20;
+                      // When sorted by custom field, indent is 0 to emphasize sort; when in tree mode, indent by depth
+                      const indentPx = sortConfig.field ? 0 : (item.levelNum - 1) * 20;
 
                       return (
                         <tr
@@ -1761,61 +2020,55 @@ export default function SchedulePage() {
                             setActiveActivity(row);
                             openActivityDrawer(row.id);
                           }}
-                          className="hover:bg-[#F9FAFC] cursor-pointer transition-colors group"
+                          className={`h-11 border-b border-[#E5E9EE] hover:bg-[#F4F7FA] cursor-pointer transition-colors group ${
+                            activityDrawerActivityId === row.id ? 'bg-[#EDF5F8] border-l-2 border-l-[#176B87]' : ''
+                          }`}
                         >
                           {/* 1. Activity ID */}
-                          <td className="py-3 px-3.5 align-middle whitespace-nowrap">
-                            <span className="font-mono font-bold text-[#176B87] group-hover:underline">
+                          <td className="py-2.5 px-3.5 align-middle whitespace-nowrap">
+                            <span className="font-mono font-bold text-xs text-[#176B87] group-hover:underline">
                               {row.id}
                             </span>
                           </td>
 
-                          {/* 2. Activity (with expandable tree toggle, level badge, and name) */}
-                          <td className="py-3 px-3.5 align-middle">
+                          {/* 2. Activity (with expandable tree toggle, bullet, name, critical tag) */}
+                          <td className="py-2.5 px-3.5 align-middle">
                             <div
                               className="flex items-center gap-1.5"
                               style={{ paddingLeft: `${indentPx}px` }}
                             >
-                              {/* Tree Expander Button */}
-                              {item.hasChildren ? (
-                                <button
-                                  type="button"
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    toggleNode(row.id);
-                                  }}
-                                  className="w-5 h-5 flex items-center justify-center rounded hover:bg-[#EDF5F8] text-[#176B87] transition-colors -ml-1 shrink-0"
-                                  title={isExpanded ? 'Collapse node' : 'Expand node'}
-                                  aria-label={`Toggle ${row.id}`}
-                                >
-                                  {isExpanded ? (
-                                    <ChevronDown className="w-3.5 h-3.5" />
-                                  ) : (
-                                    <ChevronRight className="w-3.5 h-3.5" />
-                                  )}
-                                </button>
-                              ) : (
-                                <span className="w-5 h-5 flex items-center justify-center text-[#7B8798] shrink-0 text-[10px]">
-                                  •
-                                </span>
+                              {!sortConfig.field && (
+                                item.hasChildren ? (
+                                  <button
+                                    type="button"
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      toggleNode(row.id);
+                                    }}
+                                    className="w-5 h-5 flex items-center justify-center rounded hover:bg-[#EDF5F8] text-[#176B87] transition-colors -ml-1 shrink-0"
+                                    title={isExpanded ? 'Collapse node' : 'Expand node'}
+                                    aria-label={`Toggle ${row.id}`}
+                                  >
+                                    {isExpanded ? (
+                                      <ChevronDown className="w-3.5 h-3.5" />
+                                    ) : (
+                                      <ChevronRight className="w-3.5 h-3.5" />
+                                    )}
+                                  </button>
+                                ) : (
+                                  <span className="w-5 h-5 flex items-center justify-center text-[#7B8798] shrink-0 text-[10px]">
+                                    •
+                                  </span>
+                                )
                               )}
 
-                              {/* WBS Level Badge */}
                               <span
-                                className={`font-mono text-[9px] px-1.5 py-0.2 rounded border font-bold shrink-0 ${getLevelBadgeClass(
-                                  row.wbsLevel
-                                )}`}
-                                title={`${row.wbsLevel} Hierarchy Node`}
+                                className="font-semibold text-xs text-[#172033] group-hover:text-[#176B87] transition-colors truncate max-w-sm"
+                                title={row.name}
                               >
-                                {row.wbsLevel}
-                              </span>
-
-                              {/* Activity Name */}
-                              <span className="font-semibold text-[#172033] group-hover:text-[#176B87] transition-colors truncate max-w-sm">
                                 {row.name}
                               </span>
 
-                              {/* Critical Path Flag */}
                               {row.isCritical && (
                                 <span className="text-[9px] font-mono text-[#B5473C] bg-[#FBEFEE] border border-[#E4B0AA] px-1 py-0.2 rounded font-bold shrink-0">
                                   CRITICAL
@@ -1824,31 +2077,43 @@ export default function SchedulePage() {
                             </div>
                           </td>
 
-                          {/* 3. Area */}
-                          <td className="py-3 px-3.5 align-middle whitespace-nowrap text-[#596579]">
+                          {/* 3. Level */}
+                          <td className="py-2.5 px-2 align-middle text-center whitespace-nowrap">
+                            <span
+                              className={`font-mono text-[9px] px-1.5 py-0.5 rounded border font-bold inline-block ${getLevelBadgeClass(
+                                row.wbsLevel
+                              )}`}
+                              title={`${row.wbsLevel} Hierarchy Tier`}
+                            >
+                              {row.wbsLevel}
+                            </span>
+                          </td>
+
+                          {/* 4. Area */}
+                          <td className="py-2.5 px-3.5 align-middle whitespace-nowrap text-xs text-[#596579] truncate max-w-[160px]" title={row.area}>
                             {row.area}
                           </td>
 
-                          {/* 4. Discipline */}
-                          <td className="py-3 px-3.5 align-middle whitespace-nowrap">
+                          {/* 5. Discipline */}
+                          <td className="py-2.5 px-3.5 align-middle whitespace-nowrap">
                             <span className="px-2 py-0.5 bg-[#F1F3F5] border border-[#D9DEE5] rounded text-[11px] text-[#172033] font-medium">
                               {row.discipline}
                             </span>
                           </td>
 
-                          {/* 5. Start (Planned Start Date) */}
-                          <td className="py-3 px-3.5 align-middle whitespace-nowrap font-mono text-[11px] text-[#596579]">
+                          {/* 6. Start (Planned Start Date) */}
+                          <td className="py-2.5 px-3.5 align-middle whitespace-nowrap font-mono text-xs text-[#596579]">
                             {row.plannedStart}
                           </td>
 
-                          {/* 6. Finish (Planned Finish Date) */}
-                          <td className="py-3 px-3.5 align-middle whitespace-nowrap font-mono text-[11px] text-[#172033] font-medium">
+                          {/* 7. Finish (Planned Finish Date) */}
+                          <td className="py-2.5 px-3.5 align-middle whitespace-nowrap font-mono text-xs text-[#172033] font-medium">
                             {row.plannedFinish}
                           </td>
 
-                          {/* 7. Progress */}
-                          <td className="py-3 px-3.5 align-middle">
-                            <div className="space-y-1">
+                          {/* 8. Progress */}
+                          <td className="py-2.5 px-3.5 align-middle">
+                            <div className="space-y-1 w-28">
                               <div className="flex items-center justify-between text-[11px] font-mono">
                                 <span className="font-bold text-[#172033]">{row.actualProgress}%</span>
                                 <span className="text-[#596579]">T: {row.plannedProgress}%</span>
@@ -1863,35 +2128,41 @@ export default function SchedulePage() {
                             </div>
                           </td>
 
-                          {/* 8. Status */}
-                          <td className="py-3 px-3.5 align-middle whitespace-nowrap">
+                          {/* 9. Status */}
+                          <td className="py-2.5 px-3.5 align-middle whitespace-nowrap">
                             <div className="flex items-center gap-1.5">
                               <StatusBadge status={row.status} size="sm" />
                               {(row.status === 'delayed' || row.status === 'at-risk') && (
                                 <WhyButton
                                   variant="subtle"
-                                  onClick={() => openWhyExplanation(`delay:${row.id}`, row.id)}
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    openWhyExplanation(`delay:${row.id}`, row.id);
+                                  }}
                                   title="Why is this activity at risk?"
                                 />
                               )}
                             </div>
                           </td>
 
-                          {/* 9. Variance */}
-                          <td className="py-3 px-3.5 align-middle whitespace-nowrap">
+                          {/* 10. Variance */}
+                          <td className="py-2.5 px-3.5 align-middle whitespace-nowrap">
                             <div className="flex items-center gap-1.5">
                               <VarianceBadge daysDelay={row.delayDays} size="sm" />
                               {isSlipped && (
                                 <WhyButton
-                                  onClick={() => openWhyExplanation(`delay:${row.id}`, row.id)}
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    openWhyExplanation(`delay:${row.id}`, row.id);
+                                  }}
                                   title="Why is this activity delayed?"
                                 />
                               )}
                             </div>
                           </td>
 
-                          {/* 10. Action: Opens Activity Detail Drawer for Advanced details */}
-                          <td className="py-3 px-3.5 align-middle text-right whitespace-nowrap">
+                          {/* 11. Action: Opens Activity Detail Drawer for secondary information */}
+                          <td className="py-2.5 px-3.5 align-middle text-right whitespace-nowrap">
                             <button
                               type="button"
                               onClick={(e) => {
@@ -1916,29 +2187,109 @@ export default function SchedulePage() {
                    FULL 14-COLUMN P6 MATRIX VIEW (Detailed mode)
                    ----------------------------------------------------------------- */
                 <table className="w-full min-w-[1200px] text-left text-xs border-collapse">
-                  <thead>
-                    <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[#596579] font-medium">
-                      <th className="py-3 px-3 whitespace-nowrap">Activity ID</th>
-                      <th className="py-3 px-3 whitespace-nowrap min-w-[240px]">Activity Name</th>
-                      <th className="py-3 px-2 text-center whitespace-nowrap">Level</th>
+                  <thead className="sticky top-0 z-20 bg-[#F7F8FA] border-b border-[#D9DEE5] text-[#596579] font-medium select-none shadow-[0_1px_2px_rgba(0,0,0,0.04)]">
+                    <tr>
+                      <th
+                        onClick={() => handleSort('id')}
+                        className="py-3 px-3 whitespace-nowrap cursor-pointer hover:bg-[#EAEFF5] transition-colors group"
+                      >
+                        <div className="flex items-center gap-1">
+                          <span>Activity ID</span>
+                          {renderSortIcon('id')}
+                        </div>
+                      </th>
+                      <th
+                        onClick={() => handleSort('name')}
+                        className="py-3 px-3 whitespace-nowrap min-w-[240px] cursor-pointer hover:bg-[#EAEFF5] transition-colors group"
+                      >
+                        <div className="flex items-center gap-1">
+                          <span>Activity Name</span>
+                          {renderSortIcon('name')}
+                        </div>
+                      </th>
+                      <th
+                        onClick={() => handleSort('wbsLevel')}
+                        className="py-3 px-2 text-center whitespace-nowrap cursor-pointer hover:bg-[#EAEFF5] transition-colors group"
+                      >
+                        <div className="flex items-center justify-center gap-1">
+                          <span>Level</span>
+                          {renderSortIcon('wbsLevel')}
+                        </div>
+                      </th>
                       <th className="py-3 px-3 whitespace-nowrap">WBS</th>
-                      <th className="py-3 px-3 whitespace-nowrap">Area</th>
-                      <th className="py-3 px-3 whitespace-nowrap">Discipline</th>
-                      <th className="py-3 px-3 whitespace-nowrap">Planned Start</th>
-                      <th className="py-3 px-3 whitespace-nowrap">Planned Finish</th>
+                      <th
+                        onClick={() => handleSort('area')}
+                        className="py-3 px-3 whitespace-nowrap cursor-pointer hover:bg-[#EAEFF5] transition-colors group"
+                      >
+                        <div className="flex items-center gap-1">
+                          <span>Area</span>
+                          {renderSortIcon('area')}
+                        </div>
+                      </th>
+                      <th
+                        onClick={() => handleSort('discipline')}
+                        className="py-3 px-3 whitespace-nowrap cursor-pointer hover:bg-[#EAEFF5] transition-colors group"
+                      >
+                        <div className="flex items-center gap-1">
+                          <span>Discipline</span>
+                          {renderSortIcon('discipline')}
+                        </div>
+                      </th>
+                      <th
+                        onClick={() => handleSort('plannedStart')}
+                        className="py-3 px-3 whitespace-nowrap cursor-pointer hover:bg-[#EAEFF5] transition-colors group"
+                      >
+                        <div className="flex items-center gap-1">
+                          <span>Planned Start</span>
+                          {renderSortIcon('plannedStart')}
+                        </div>
+                      </th>
+                      <th
+                        onClick={() => handleSort('plannedFinish')}
+                        className="py-3 px-3 whitespace-nowrap cursor-pointer hover:bg-[#EAEFF5] transition-colors group"
+                      >
+                        <div className="flex items-center gap-1">
+                          <span>Planned Finish</span>
+                          {renderSortIcon('plannedFinish')}
+                        </div>
+                      </th>
                       <th className="py-3 px-3 whitespace-nowrap">Actual Start</th>
                       <th className="py-3 px-3 whitespace-nowrap">Actual Finish</th>
-                      <th className="py-3 px-3 whitespace-nowrap min-w-[130px]">Progress</th>
-                      <th className="py-3 px-3 whitespace-nowrap">Status</th>
-                      <th className="py-3 px-3 whitespace-nowrap">Variance</th>
+                      <th
+                        onClick={() => handleSort('actualProgress')}
+                        className="py-3 px-3 whitespace-nowrap min-w-[130px] cursor-pointer hover:bg-[#EAEFF5] transition-colors group"
+                      >
+                        <div className="flex items-center gap-1">
+                          <span>Progress</span>
+                          {renderSortIcon('actualProgress')}
+                        </div>
+                      </th>
+                      <th
+                        onClick={() => handleSort('status')}
+                        className="py-3 px-3 whitespace-nowrap cursor-pointer hover:bg-[#EAEFF5] transition-colors group"
+                      >
+                        <div className="flex items-center gap-1">
+                          <span>Status</span>
+                          {renderSortIcon('status')}
+                        </div>
+                      </th>
+                      <th
+                        onClick={() => handleSort('delayDays')}
+                        className="py-3 px-3 whitespace-nowrap cursor-pointer hover:bg-[#EAEFF5] transition-colors group"
+                      >
+                        <div className="flex items-center gap-1">
+                          <span>Variance</span>
+                          {renderSortIcon('delayDays')}
+                        </div>
+                      </th>
                       <th className="py-3 px-3 whitespace-nowrap min-w-[160px]">Dependencies</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-[#D9DEE5]">
-                    {visibleTreeActivities.map((item) => {
+                  <tbody className="divide-y divide-[#E5E9EE]">
+                    {displayActivities.map((item) => {
                       const row = item.activity;
                       const isExpanded = expandedNodeIds.has(row.id);
-                      const indentPx = (item.levelNum - 1) * 16;
+                      const indentPx = sortConfig.field ? 0 : (item.levelNum - 1) * 16;
 
                       return (
                         <tr
@@ -1947,37 +2298,41 @@ export default function SchedulePage() {
                             setActiveActivity(row);
                             openActivityDrawer(row.id);
                           }}
-                          className="hover:bg-[#F9FAFC] cursor-pointer transition-colors group"
+                          className={`h-11 border-b border-[#E5E9EE] hover:bg-[#F4F7FA] cursor-pointer transition-colors group ${
+                            activityDrawerActivityId === row.id ? 'bg-[#EDF5F8] border-l-2 border-l-[#176B87]' : ''
+                          }`}
                         >
                           {/* 1. Activity ID */}
-                          <td className="py-3 px-3 align-middle whitespace-nowrap">
-                            <span className="font-mono font-bold text-[#176B87] group-hover:underline">
+                          <td className="py-2.5 px-3 align-middle whitespace-nowrap">
+                            <span className="font-mono font-bold text-xs text-[#176B87] group-hover:underline">
                               {row.id}
                             </span>
                           </td>
 
                           {/* 2. Activity Name */}
-                          <td className="py-3 px-3 align-middle">
+                          <td className="py-2.5 px-3 align-middle">
                             <div className="flex items-center gap-1.5" style={{ paddingLeft: `${indentPx}px` }}>
-                              {item.hasChildren ? (
-                                <button
-                                  type="button"
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    toggleNode(row.id);
-                                  }}
-                                  className="w-4 h-4 flex items-center justify-center rounded text-[#176B87]"
-                                >
-                                  {isExpanded ? (
-                                    <ChevronDown className="w-3 h-3" />
-                                  ) : (
-                                    <ChevronRight className="w-3 h-3" />
-                                  )}
-                                </button>
-                              ) : (
-                                <span className="w-4 h-4 text-center text-[#7B8798] text-[10px]">•</span>
+                              {!sortConfig.field && (
+                                item.hasChildren ? (
+                                  <button
+                                    type="button"
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      toggleNode(row.id);
+                                    }}
+                                    className="w-4 h-4 flex items-center justify-center rounded text-[#176B87]"
+                                  >
+                                    {isExpanded ? (
+                                      <ChevronDown className="w-3 h-3" />
+                                    ) : (
+                                      <ChevronRight className="w-3 h-3" />
+                                    )}
+                                  </button>
+                                ) : (
+                                  <span className="w-4 h-4 text-center text-[#7B8798] text-[10px]">•</span>
+                                )
                               )}
-                              <span className="font-semibold text-[#172033] group-hover:text-[#176B87] transition-colors">
+                              <span className="font-semibold text-[#172033] group-hover:text-[#176B87] transition-colors truncate max-w-xs" title={row.name}>
                                 {row.name}
                               </span>
                               {row.isCritical && (
@@ -1989,9 +2344,9 @@ export default function SchedulePage() {
                           </td>
 
                           {/* 3. Level */}
-                          <td className="py-3 px-2 align-middle text-center whitespace-nowrap">
+                          <td className="py-2.5 px-2 align-middle text-center whitespace-nowrap">
                             <span
-                              className={`font-mono text-[9px] px-1.5 py-0.5 rounded border font-bold ${getLevelBadgeClass(
+                              className={`font-mono text-[9px] px-1.5 py-0.5 rounded border font-bold inline-block ${getLevelBadgeClass(
                                 row.wbsLevel
                               )}`}
                             >
@@ -2000,34 +2355,34 @@ export default function SchedulePage() {
                           </td>
 
                           {/* 4. WBS */}
-                          <td className="py-3 px-3 align-middle whitespace-nowrap">
+                          <td className="py-2.5 px-3 align-middle whitespace-nowrap">
                             <span className="font-mono text-xs text-[#596579] font-medium">{row.wbs}</span>
                           </td>
 
                           {/* 5. Area */}
-                          <td className="py-3 px-3 align-middle whitespace-nowrap text-[#596579]">
+                          <td className="py-2.5 px-3 align-middle whitespace-nowrap text-[#596579] truncate max-w-[140px]" title={row.area}>
                             {row.area}
                           </td>
 
                           {/* 6. Discipline */}
-                          <td className="py-3 px-3 align-middle whitespace-nowrap">
+                          <td className="py-2.5 px-3 align-middle whitespace-nowrap">
                             <span className="px-2 py-0.5 bg-[#F1F3F5] border border-[#D9DEE5] rounded text-[11px] text-[#172033] font-medium">
                               {row.discipline}
                             </span>
                           </td>
 
                           {/* 7. Planned Start */}
-                          <td className="py-3 px-3 align-middle whitespace-nowrap font-mono text-[11px] text-[#596579]">
+                          <td className="py-2.5 px-3 align-middle whitespace-nowrap font-mono text-xs text-[#596579]">
                             {row.plannedStart}
                           </td>
 
                           {/* 8. Planned Finish */}
-                          <td className="py-3 px-3 align-middle whitespace-nowrap font-mono text-[11px] text-[#172033] font-medium">
+                          <td className="py-2.5 px-3 align-middle whitespace-nowrap font-mono text-xs text-[#172033] font-medium">
                             {row.plannedFinish}
                           </td>
 
                           {/* 9. Actual Start */}
-                          <td className="py-3 px-3 align-middle whitespace-nowrap font-mono text-[11px]">
+                          <td className="py-2.5 px-3 align-middle whitespace-nowrap font-mono text-xs">
                             {row.actualStart ? (
                               <span className="text-[#172033]">{row.actualStart}</span>
                             ) : (
@@ -2036,7 +2391,7 @@ export default function SchedulePage() {
                           </td>
 
                           {/* 10. Actual Finish */}
-                          <td className="py-3 px-3 align-middle whitespace-nowrap font-mono text-[11px]">
+                          <td className="py-2.5 px-3 align-middle whitespace-nowrap font-mono text-xs">
                             {row.actualFinish ? (
                               <span className="text-[#2E7D5B] font-semibold">{row.actualFinish}</span>
                             ) : row.actualStart ? (
@@ -2047,8 +2402,8 @@ export default function SchedulePage() {
                           </td>
 
                           {/* 11. Progress */}
-                          <td className="py-3 px-3 align-middle">
-                            <div className="space-y-1">
+                          <td className="py-2.5 px-3 align-middle">
+                            <div className="space-y-1 w-28">
                               <div className="flex items-center justify-between text-[11px] font-mono">
                                 <span className="font-bold text-[#172033]">{row.actualProgress}%</span>
                                 <span className="text-[#596579]">T: {row.plannedProgress}%</span>
@@ -2064,17 +2419,20 @@ export default function SchedulePage() {
                           </td>
 
                           {/* 12. Status */}
-                          <td className="py-3 px-3 align-middle whitespace-nowrap">
+                          <td className="py-2.5 px-3 align-middle whitespace-nowrap">
                             <StatusBadge status={row.status} size="sm" />
                           </td>
 
                           {/* 13. Variance */}
-                          <td className="py-3 px-3 align-middle whitespace-nowrap">
+                          <td className="py-2.5 px-3 align-middle whitespace-nowrap">
                             <div className="flex items-center gap-1.5">
                               <VarianceBadge daysDelay={row.delayDays} size="sm" />
                               {row.delayDays > 0 && (
                                 <WhyButton
-                                  onClick={() => openWhyExplanation(`delay:${row.id}`, row.id)}
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    openWhyExplanation(`delay:${row.id}`, row.id);
+                                  }}
                                   title="Why is this activity delayed?"
                                 />
                               )}
@@ -2082,7 +2440,7 @@ export default function SchedulePage() {
                           </td>
 
                           {/* 14. Dependencies */}
-                          <td className="py-3 px-3 align-middle">
+                          <td className="py-2.5 px-3 align-middle">
                             <div className="flex flex-col gap-0.5 text-[10px] font-mono">
                               {row.predecessors.length > 0 ? (
                                 <span className="text-[#596579]">
@@ -2109,14 +2467,14 @@ export default function SchedulePage() {
               <div className="flex items-center gap-2 flex-wrap">
                 <span>Version: <strong className="font-mono text-[#172033]">V3 · Rev 3.2 (Primavera P6 XML)</strong></span>
                 <span>•</span>
-                <span>Visible Nodes: <strong className="text-[#172033] font-mono">{visibleTreeActivities.length}</strong></span>
+                <span>Visible Nodes: <strong className="text-[#172033] font-mono">{displayActivities.length}</strong></span>
                 <span>•</span>
                 <span className="font-medium text-[#176B87]">
-                  View: {viewMode === 'operational' ? 'Default Scannable (10 cols)' : 'Full P6 Matrix (14 cols)'}
+                  View: {viewMode === 'operational' ? 'Standard Schedule (10 cols)' : 'Full P6 Matrix (14 cols)'}
                 </span>
               </div>
               <div className="text-[11px] text-[#7B8798]">
-                Click &ldquo;Details&rdquo; or any row to open the Activity Drawer for WBS, Actual Dates, Dependencies, Evidence, and Audit History.
+                Click any row or &ldquo;Details&rdquo; to open the Activity Detail Drawer for WBS, Actual Dates, Dependencies, Evidence, and Audit History.
               </div>
             </div>
           </div>
