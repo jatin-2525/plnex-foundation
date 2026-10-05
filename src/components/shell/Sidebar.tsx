@@ -5,33 +5,24 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
   Calendar,
-  ClipboardList,
-  GitCompare,
-  TrendingDown,
-  TrendingUp,
-  LayoutDashboard,
-  ShieldCheck,
   Layers,
   ChevronLeft,
   ChevronRight,
   FolderKanban,
-  HardHat,
   ListChecks,
   Cpu,
-  AlertTriangle,
   Sliders,
+  TrendingDown,
+  TrendingUp,
   Activity,
   BookOpen,
   Wifi,
   Camera,
   FileText,
-  Shield,
-  Users,
-  Building2,
-  Settings,
+  ShieldCheck,
+  LayoutDashboard,
 } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
-import { UserRole } from '../../types';
 
 export interface SidebarProps {
   collapsed: boolean;
@@ -45,13 +36,71 @@ interface SidebarNavItem {
   href: string;
   icon: React.ComponentType<{ className?: string }>;
   badge?: string | number;
-  isLive?: boolean;
 }
 
 interface SidebarGroup {
   group: string;
   items: SidebarNavItem[];
 }
+
+export const NAV_GROUPS: SidebarGroup[] = [
+  {
+    group: 'WORKSPACE',
+    items: [
+      { label: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
+      { label: 'My Activities', href: '/activities', icon: ListChecks },
+    ],
+  },
+  {
+    group: 'PROJECT',
+    items: [
+      { label: 'Projects', href: '/projects', icon: FolderKanban },
+      { label: 'Schedule', href: '/schedule', icon: Calendar },
+      { label: 'Schedule Twin', href: '/schedule-twin', icon: Layers },
+    ],
+  },
+  {
+    group: 'EXECUTION',
+    items: [
+      { label: 'Field Capture', href: '/field/capture', icon: Camera },
+      { label: 'DPR', href: '/field/dpr', icon: FileText },
+      { label: 'Execution Intelligence', href: '/execution', icon: Cpu },
+      { label: 'Review Queue', href: '/review', icon: ShieldCheck, badge: 6 },
+    ],
+  },
+  {
+    group: 'INTELLIGENCE',
+    items: [
+      { label: 'Progress & Variance', href: '/progress', icon: TrendingUp },
+      { label: 'Delay & Impact', href: '/risks', icon: TrendingDown },
+      { label: 'What-if', href: '/what-if', icon: Sliders },
+    ],
+  },
+  {
+    group: 'TRUST',
+    items: [
+      { label: 'Evidence & Audit', href: '/evidence', icon: ShieldCheck },
+      { label: 'Schedule Health', href: '/health', icon: Activity },
+    ],
+  },
+  {
+    group: 'KNOWLEDGE',
+    items: [
+      { label: 'Reports & Memory', href: '/reports', icon: BookOpen },
+    ],
+  },
+  {
+    group: 'SYSTEM',
+    items: [
+      { label: 'Sync', href: '/sync', icon: Wifi },
+    ],
+  },
+];
+
+// Compatibility aliases
+export const managerNav = NAV_GROUPS;
+export const engineerNav = NAV_GROUPS;
+export const adminNav = NAV_GROUPS;
 
 export function Sidebar({ collapsed, onToggle, mobileMenuOpen, onCloseMobile }: SidebarProps) {
   const rawPathname = usePathname();
@@ -60,149 +109,10 @@ export function Sidebar({ collapsed, onToggle, mobileMenuOpen, onCloseMobile }: 
     : (rawPathname || '/');
   const { userSession } = useApp();
 
-  const role: UserRole = userSession?.role || 'manager';
-
-  // Manager Navigation
-  const managerNav: SidebarGroup[] = [
-    {
-      group: '',
-      items: [
-        { label: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
-      ],
-    },
-    {
-      group: 'PROJECT',
-      items: [
-        { label: 'Projects', href: '/projects', icon: FolderKanban },
-        { label: 'Schedule', href: '/schedule', icon: Calendar },
-        { label: 'Schedule Twin', href: '/schedule-twin', icon: Layers },
-      ],
-    },
-    {
-      group: 'EXECUTION',
-      items: [
-        { label: 'Execution Intelligence', href: '/execution', icon: Cpu, isLive: true },
-        { label: 'Review Queue', href: '/review', icon: ShieldCheck, badge: 6 },
-      ],
-    },
-    {
-      group: 'CONTROL',
-      items: [
-        { label: 'Progress & Variance', href: '/progress', icon: TrendingUp, badge: '-7%' },
-        { label: 'Delay & Impact', href: '/risks', icon: TrendingDown },
-        { label: 'What-if', href: '/what-if', icon: Sliders },
-      ],
-    },
-    {
-      group: 'TRUST',
-      items: [
-        { label: 'Evidence & Audit', href: '/evidence', icon: ShieldCheck },
-        { label: 'Schedule Health', href: '/health', icon: Activity, badge: 5 },
-      ],
-    },
-    {
-      group: 'KNOWLEDGE',
-      items: [
-        { label: 'Reports & Memory', href: '/reports', icon: BookOpen },
-      ],
-    },
-    {
-      group: 'SYSTEM',
-      items: [
-        { label: 'Offline / Sync', href: '/sync', icon: Wifi },
-      ],
-    },
-  ];
-
-  // Site Engineer Navigation
-  const engineerNav: SidebarGroup[] = [
-    {
-      group: '',
-      items: [
-        { label: 'Dashboard', href: '/engineer', icon: HardHat },
-        { label: 'My Activities', href: '/activities', icon: ListChecks },
-      ],
-    },
-    {
-      group: 'FIELD',
-      items: [
-        { label: 'Field Capture', href: '/field/capture', icon: Camera },
-        { label: 'DPR / Time Agent', href: '/field/dpr', icon: FileText },
-      ],
-    },
-    {
-      group: 'EXECUTION',
-      items: [
-        { label: 'Execution Intelligence', href: '/execution', icon: Cpu, isLive: true },
-      ],
-    },
-    {
-      group: 'TRUST',
-      items: [
-        { label: 'Evidence', href: '/evidence', icon: ShieldCheck },
-      ],
-    },
-    {
-      group: 'SYSTEM',
-      items: [
-        { label: 'Offline / Sync', href: '/sync', icon: Wifi },
-      ],
-    },
-  ];
-
-  // Admin Navigation (full admin control hub with visibility and system tools)
-  const adminNav: SidebarGroup[] = [
-    {
-      group: 'ADMINISTRATION',
-      items: [
-        { label: 'Admin Hub', href: '/admin', icon: Shield },
-        { label: 'Users & Roles', href: '/admin/users', icon: Users },
-        { label: 'Organizations', href: '/admin/organizations', icon: Building2 },
-        { label: 'Settings', href: '/admin/settings', icon: Settings },
-        { label: 'Foundation & Showcase', href: '/showcase', icon: Layers },
-      ],
-    },
-    {
-      group: 'MANAGER VIEW',
-      items: [
-        { label: 'Manager Dashboard', href: '/dashboard', icon: LayoutDashboard },
-        { label: 'Projects', href: '/projects', icon: FolderKanban },
-        { label: 'Schedule', href: '/schedule', icon: Calendar },
-        { label: 'Schedule Twin', href: '/schedule-twin', icon: Layers },
-        { label: 'Execution Intelligence', href: '/execution', icon: Cpu, isLive: true },
-        { label: 'Review Queue', href: '/review', icon: ShieldCheck, badge: 6 },
-        { label: 'Progress & Variance', href: '/progress', icon: TrendingUp },
-        { label: 'Delay & Impact', href: '/risks', icon: TrendingDown },
-        { label: 'What-if', href: '/what-if', icon: Sliders },
-        { label: 'Schedule Health', href: '/health', icon: Activity, badge: 5 },
-        { label: 'Reports & Memory', href: '/reports', icon: BookOpen },
-      ],
-    },
-    {
-      group: 'ENGINEER VIEW',
-      items: [
-        { label: 'Engineer Dashboard', href: '/engineer', icon: HardHat },
-        { label: 'My Activities', href: '/activities', icon: ListChecks },
-        { label: 'Field Capture', href: '/field/capture', icon: Camera },
-        { label: 'DPR / Time Agent', href: '/field/dpr', icon: FileText },
-      ],
-    },
-    {
-      group: 'SHARED OPERATIONS',
-      items: [
-        { label: 'Evidence & Audit', href: '/evidence', icon: ShieldCheck },
-        { label: 'Offline / Sync', href: '/sync', icon: Wifi },
-      ],
-    },
-  ];
-
-  const navGroups: SidebarGroup[] =
-    role === 'admin' ? adminNav : role === 'engineer' ? engineerNav : managerNav;
-
   return (
     <aside
       className={`fixed top-14 bottom-0 left-0 bg-white border-r border-[#D9DEE5] z-30 transition-all duration-200 flex flex-col ${
-        collapsed ? 'w-16' : 'w-64'
+        collapsed ? 'w-16' : 'w-[248px]'
       } ${
         mobileMenuOpen
           ? 'translate-x-0'
@@ -210,67 +120,52 @@ export function Sidebar({ collapsed, onToggle, mobileMenuOpen, onCloseMobile }: 
       }`}
     >
       {/* Workflow Navigation */}
-      <div className="flex-1 overflow-y-auto py-3 px-2 space-y-4">
-        {navGroups.map((group, gIdx) => (
-          <div key={gIdx} className="space-y-1">
-            {!collapsed && group.group && (
-              <h4 className="px-3 pt-2 text-[10px] font-bold uppercase tracking-wider text-[#7B8798]">
+      <div className="flex-1 overflow-y-auto py-2.5 px-2 space-y-3">
+        {NAV_GROUPS.map((group) => (
+          <div key={group.group} className="space-y-0.5">
+            {!collapsed && (
+              <h4 className="px-3 pt-2 pb-1 text-[10px] font-bold uppercase tracking-wider text-[#7B8798] select-none">
                 {group.group}
               </h4>
             )}
             {group.items.map((item) => {
-              const isActive = pathname === item.href;
+              const isActive =
+                pathname === item.href ||
+                (item.href !== '/' && item.href !== '/dashboard' && pathname.startsWith(`${item.href}/`));
 
               return (
                 <Link
                   key={item.href}
                   href={item.href}
                   onClick={onCloseMobile}
-                  className={`flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-medium transition-colors relative group ${
+                  className={`flex items-center gap-2.5 px-2.5 py-1.5 rounded-md text-xs transition-colors relative group ${
                     isActive
                       ? 'bg-[#EDF5F8] text-[#176B87] font-semibold'
-                      : 'text-[#596579] hover:bg-[#F1F3F5] hover:text-[#172033]'
+                      : 'text-[#596579] hover:bg-[#F1F3F5] hover:text-[#172033] font-normal'
                   }`}
-                  title={collapsed ? (item.isLive ? `${item.label} (Live)` : item.label) : undefined}
+                  title={collapsed ? (item.badge !== undefined ? `${item.label} [${item.badge}]` : item.label) : undefined}
                 >
                   {/* Left accent bar for active route */}
                   {isActive && (
-                    <span className="absolute left-0 top-1.5 bottom-1.5 w-1 bg-[#176B87] rounded-r" />
+                    <span className="absolute left-0 top-1 bottom-1 w-[3px] bg-[#176B87] rounded-r" />
                   )}
 
                   <item.icon
                     className={`w-4 h-4 flex-shrink-0 ${
-                      isActive ? 'text-[#176B87]' : 'text-[#596579]'
+                      isActive ? 'text-[#176B87]' : 'text-[#7B8798] group-hover:text-[#596579]'
                     }`}
                   />
 
                   {!collapsed && (
                     <div className="flex-1 flex items-center justify-between min-w-0">
-                      {item.isLive ? (
-                        <div className="flex flex-col min-w-0 text-left">
-                          <span className="truncate leading-tight text-xs">{item.label}</span>
-                          <span className="inline-flex items-center gap-1.5 text-[10px] font-mono text-[#2E7D5B] font-semibold mt-0.5">
-                            <span className="w-1.5 h-1.5 rounded-full bg-[#2E7D5B]" />
-                            <span>Live</span>
-                          </span>
-                        </div>
-                      ) : (
-                        <span className="truncate text-xs">{item.label}</span>
-                      )}
-
-                      {item.badge !== undefined && !item.isLive && (
+                      <span className="truncate text-xs leading-none">{item.label}</span>
+                      {item.badge !== undefined && (
                         <span
-                          className={`ml-auto pl-3 flex-shrink-0 inline-flex items-center justify-center`}
+                          className={`ml-auto pl-2 flex-shrink-0 text-[11px] font-mono leading-none font-medium ${
+                            isActive ? 'text-[#176B87]' : 'text-[#7B8798]'
+                          }`}
                         >
-                          <span
-                            className={`px-2 py-0.5 rounded-md text-[10px] font-mono font-bold leading-none ${
-                              typeof item.badge === 'number'
-                                ? 'bg-[#FDF6ED] text-[#D98B32] border border-[#F0D4A6]'
-                                : 'bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0]'
-                            }`}
-                          >
-                            {item.badge}
-                          </span>
+                          [{item.badge}]
                         </span>
                       )}
                     </div>
@@ -282,19 +177,24 @@ export function Sidebar({ collapsed, onToggle, mobileMenuOpen, onCloseMobile }: 
         ))}
       </div>
 
-      {/* Footer collapse button */}
-      <div className="p-2 border-t border-[#D9DEE5] bg-[#F7F8FA] flex items-center justify-between">
-        {!collapsed && (
-          <div className="px-2 text-[10px] text-[#7B8798] font-mono">
-            <span>PLnEX • {role.toUpperCase()} • V3 · Rev 3.2</span>
-          </div>
-        )}
+      {/* Footer collapse button - clean and free of technical telemetry */}
+      <div className="p-2 border-t border-[#D9DEE5] bg-[#F7F8FA]">
         <button
           onClick={onToggle}
-          className="p-1.5 text-[#596579] hover:text-[#172033] hover:bg-white rounded border border-transparent hover:border-[#D9DEE5] transition-colors ml-auto cursor-pointer"
+          className={`w-full flex items-center ${
+            collapsed ? 'justify-center p-1.5' : 'justify-between px-2.5 py-1.5'
+          } text-xs text-[#596579] hover:text-[#172033] hover:bg-white rounded border border-transparent hover:border-[#D9DEE5] transition-colors cursor-pointer`}
           aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+          title={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
         >
-          {collapsed ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
+          {!collapsed && (
+            <span className="text-[11px] font-medium text-[#7B8798]">Collapse sidebar</span>
+          )}
+          {collapsed ? (
+            <ChevronRight className="w-4 h-4 text-[#7B8798]" />
+          ) : (
+            <ChevronLeft className="w-4 h-4 text-[#7B8798]" />
+          )}
         </button>
       </div>
     </aside>

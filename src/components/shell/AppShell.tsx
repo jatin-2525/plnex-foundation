@@ -197,7 +197,7 @@ export function AppShell({ children }: AppShellProps) {
         {/* Content Area */}
         <main
           className={`flex-1 transition-all duration-200 p-4 md:p-6 max-w-[1440px] w-full mx-auto ${
-            sidebarCollapsed ? 'md:ml-16' : 'md:ml-64'
+            sidebarCollapsed ? 'md:ml-16' : 'md:ml-[248px]'
           }`}
         >
           {children}

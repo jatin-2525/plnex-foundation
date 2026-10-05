@@ -183,9 +183,6 @@ export function canAccessRoute(role: UserRole, rawPathname: string): boolean {
     // Explicitly denied routes for Manager
     if (
       pathname === '/engineer' ||
-      pathname === '/activities' ||
-      pathname === '/field/capture' ||
-      pathname === '/field/dpr' ||
       pathname.startsWith('/admin')
     ) {
       return false;
@@ -193,6 +190,8 @@ export function canAccessRoute(role: UserRole, rawPathname: string): boolean {
     // Allowed routes for Manager
     if (
       pathname === '/dashboard' ||
+      pathname === '/activities' ||
+      pathname.startsWith('/field') ||
       pathname.startsWith('/projects') ||
       pathname === '/schedule' ||
       pathname === '/schedule-twin' ||
@@ -205,8 +204,7 @@ export function canAccessRoute(role: UserRole, rawPathname: string): boolean {
       pathname === '/evidence' ||
       pathname === '/health' ||
       pathname === '/reports' ||
-      pathname === '/sync' ||
-      pathname === '/field'
+      pathname === '/sync'
     ) {
       return true;
     }
@@ -215,20 +213,32 @@ export function canAccessRoute(role: UserRole, rawPathname: string): boolean {
 
   // Site Engineer permissions
   if (role === 'engineer') {
+    // Explicitly denied routes for Engineer
+    if (pathname.startsWith('/admin')) {
+      return false;
+    }
     // Allowed routes for Engineer
     if (
       pathname === '/engineer' ||
+      pathname === '/dashboard' ||
       pathname === '/activities' ||
-      pathname === '/field' ||
-      pathname === '/field/capture' ||
-      pathname === '/field/dpr' ||
+      pathname.startsWith('/field') ||
+      pathname.startsWith('/projects') ||
+      pathname === '/schedule' ||
+      pathname === '/schedule-twin' ||
       pathname === '/execution' ||
+      pathname === '/review' ||
+      pathname === '/progress' ||
+      pathname === '/risks' ||
+      pathname === '/what-if' ||
+      pathname === '/variance' ||
       pathname === '/evidence' ||
+      pathname === '/health' ||
+      pathname === '/reports' ||
       pathname === '/sync'
     ) {
       return true;
     }
-    // Explicitly denied for Engineer: Manager dashboard, review queue, what-if, projects, schedule, etc.
     return false;
   }
 

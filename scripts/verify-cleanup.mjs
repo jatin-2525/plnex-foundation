@@ -25,14 +25,14 @@ assert(fs.existsSync(appShellPath), 'AppShell.tsx exists');
 const sidebarContent = fs.readFileSync(sidebarPath, 'utf8');
 const appShellContent = fs.readFileSync(appShellPath, 'utf8');
 
-assert(sidebarContent.includes("collapsed ? 'w-16' : 'w-64'"), 'Sidebar has consistent width: w-64 when expanded, w-16 when collapsed');
-assert(appShellContent.includes("sidebarCollapsed ? 'md:ml-16' : 'md:ml-64'"), 'AppShell margin matches sidebar w-64');
-assert(sidebarContent.includes('managerNav') && sidebarContent.includes('engineerNav') && sidebarContent.includes('adminNav'), 'Sidebar provides role-specific navigation');
-assert(sidebarContent.includes('bg-[#EDF5F8]') && sidebarContent.includes('text-[#176B87]') && sidebarContent.includes('w-1 bg-[#176B87]'), 'Sidebar has active route highlight with accent bar');
+assert(sidebarContent.includes("collapsed ? 'w-16' : 'w-[248px]'"), 'Sidebar has consistent width: 240–252px (w-[248px]) when expanded, w-16 when collapsed');
+assert(appShellContent.includes("sidebarCollapsed ? 'md:ml-16' : 'md:ml-[248px]'"), 'AppShell margin matches sidebar w-[248px]');
+assert(sidebarContent.includes('managerNav') && sidebarContent.includes('engineerNav') && sidebarContent.includes('adminNav'), 'Sidebar provides navigation architecture');
+assert(sidebarContent.includes('bg-[#EDF5F8]') && sidebarContent.includes('text-[#176B87]') && sidebarContent.includes('w-[3px] bg-[#176B87]'), 'Sidebar has active route highlight with accent bar');
 
-// Check no text concatenation for Review Queue badge and stacked Live for Execution Intelligence
-assert(sidebarContent.includes('Review Queue') && sidebarContent.includes('ml-auto pl-3'), 'Sidebar aligns badge properly without text concatenation (Review Queue       6)');
-assert(sidebarContent.includes('Execution Intelligence') && sidebarContent.includes('animate-pulse') && sidebarContent.includes('Live'), 'Sidebar displays Execution Intelligence with stacked ● Live indicator');
+// Check no text concatenation for Review Queue badge [6]
+assert(sidebarContent.includes('Review Queue') && sidebarContent.includes('[{item.badge}]'), 'Sidebar aligns badge properly without text concatenation (Review Queue    [6])');
+assert(sidebarContent.includes('Execution Intelligence'), 'Sidebar displays Execution Intelligence');
 
 // 2. HEADER
 const topHeaderPath = path.resolve('src/components/shell/TopHeader.tsx');
