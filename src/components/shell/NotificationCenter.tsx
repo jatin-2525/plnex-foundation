@@ -212,18 +212,18 @@ export function NotificationCenter() {
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className={`relative p-2 rounded-lg transition-colors flex items-center justify-center ${
+        className={`relative p-2 rounded-md transition-colors flex items-center justify-center cursor-pointer ${
           isOpen
             ? 'bg-[#EDF5F8] text-[#176B87]'
             : 'text-[#596579] hover:text-[#172033] hover:bg-[#F1F3F5]'
         }`}
         aria-label="View PLnEX Project Notifications"
         aria-expanded={isOpen}
-        title="PLnEX Notification Center — Real-time project controls feed"
+        title="Notifications"
       >
-        <Bell className="w-5 h-5" />
+        <Bell className="w-4 h-4" />
         {unreadCount > 0 && (
-          <span className="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] px-1 bg-[#B5473C] text-white rounded-full text-[10px] font-bold font-mono flex items-center justify-center ring-2 ring-white animate-in zoom-in-75">
+          <span className="absolute -top-0.5 -right-0.5 min-w-[16px] h-[16px] px-1 bg-[#B5473C] text-white rounded-full text-[9px] font-bold font-mono flex items-center justify-center ring-2 ring-white">
             {unreadCount}
           </span>
         )}
@@ -234,7 +234,7 @@ export function NotificationCenter() {
           ------------------------------------------------------------------- */}
       {isOpen && (
         <div
-          className="absolute right-0 mt-2 w-[92vw] sm:w-[480px] md:w-[520px] max-w-[540px] bg-white border border-[#D9DEE5] rounded-lg shadow-lg z-50 overflow-hidden animate-in fade-in-50 zoom-in-95 duration-150 flex flex-col max-h-[85vh]"
+          className="absolute right-0 mt-2 w-[92vw] sm:w-[480px] md:w-[520px] max-w-[540px] bg-white border border-[#D9DEE5] rounded-lg shadow-lg z-50 overflow-hidden flex flex-col max-h-[85vh]"
           role="dialog"
           aria-label="Notification Center"
         >

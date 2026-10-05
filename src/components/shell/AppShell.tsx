@@ -156,7 +156,17 @@ export function AppShell({ children }: AppShellProps) {
   return (
     <div className="min-h-screen bg-[#F7F8FA] text-[#172033] flex flex-col font-sans">
       {/* Top Header */}
-      <TopHeader onMobileToggle={() => setMobileMenuOpen(!mobileMenuOpen)} />
+      <TopHeader
+        onToggleSidebar={() => {
+          if (typeof window !== 'undefined' && window.innerWidth < 768) {
+            setMobileMenuOpen(!mobileMenuOpen);
+          } else {
+            setSidebarCollapsed(!sidebarCollapsed);
+          }
+        }}
+        onMobileToggle={() => setMobileMenuOpen(!mobileMenuOpen)}
+        onDesktopToggle={() => setSidebarCollapsed(!sidebarCollapsed)}
+      />
 
       {/* Global Search ⌘K Dialog */}
       <GlobalSearch />

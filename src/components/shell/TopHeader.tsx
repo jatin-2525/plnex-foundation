@@ -7,91 +7,100 @@ import { ProjectSelector } from './ProjectSelector';
 import { NotificationCenter } from './NotificationCenter';
 import { UserMenu } from './UserMenu';
 import { ConnectionStatusControl } from './ConnectionStatusControl';
-import { Search, Menu, Wifi } from 'lucide-react';
+import { Search, PanelLeft } from 'lucide-react';
 
 export interface TopHeaderProps {
-  onMobileToggle: () => void;
+  onToggleSidebar?: () => void;
+  onMobileToggle?: () => void;
+  onDesktopToggle?: () => void;
 }
 
-export function TopHeader({ onMobileToggle }: TopHeaderProps) {
-  const { setGlobalSearchOpen, activeProject, userSession } = useApp();
+export function TopHeader({ onToggleSidebar, onMobileToggle, onDesktopToggle }: TopHeaderProps) {
+  const { setGlobalSearchOpen } = useApp();
+
+  const handleToggle = () => {
+    if (onToggleSidebar) {
+      onToggleSidebar();
+    } else if (typeof window !== 'undefined' && window.innerWidth < 768 && onMobileToggle) {
+      onMobileToggle();
+    } else if (onDesktopToggle) {
+      onDesktopToggle();
+    } else if (onMobileToggle) {
+      onMobileToggle();
+    }
+  };
 
   return (
-    <header className="fixed top-0 left-0 right-0 h-14 bg-white border-b border-[#D9DEE5] z-40 px-2 sm:px-4 flex items-center justify-between gap-2 sm:gap-3">
-      {/* Left: Mobile Menu + Brand + Project */}
-      <div className="flex items-center gap-1.5 sm:gap-3 min-w-0">
+    <header className="fixed top-0 left-0 right-0 h-14 bg-white border-b border-[#D9DEE5] z-40 px-2.5 sm:px-4 flex items-center justify-between gap-1.5 sm:gap-3">
+      {/* Left: [Sidebar Toggle] + PLnEX + Project Selector */}
+      <div className="flex items-center gap-1.5 sm:gap-2.5 min-w-0">
+        {/* [Sidebar Toggle] */}
         <button
-          onClick={onMobileToggle}
-          className="md:hidden min-w-[44px] min-h-[44px] flex items-center justify-center p-2 text-[#596579] hover:text-[#172033] hover:bg-[#F1F3F5] rounded-lg -ml-1 cursor-pointer flex-shrink-0"
-          aria-label="Toggle mobile navigation"
+          onClick={handleToggle}
+          className="p-1.5 text-[#596579] hover:text-[#172033] hover:bg-[#F1F3F5] rounded-md transition-colors cursor-pointer flex-shrink-0"
+          aria-label="Toggle sidebar"
+          title="Toggle sidebar"
         >
-          <Menu className="w-5 h-5" />
+          <PanelLeft className="w-4 h-4 text-[#596579]" />
         </button>
 
-        <Link href="/" className="hidden sm:flex items-center gap-2 flex-shrink-0">
-          <div className="w-7 h-7 rounded bg-[#176B87] text-white flex items-center justify-center font-black text-sm tracking-tighter">
+        {/* PLnEX Brand */}
+        <Link href="/" className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0 hover:opacity-90 transition-opacity">
+          <div className="w-7 h-7 rounded bg-[#176B87] text-white flex items-center justify-center font-bold text-xs tracking-tight">
             PX
           </div>
-          <div className="flex flex-col">
-            <span className="text-sm font-bold tracking-tight text-[#172033] leading-none">
-              PL<span className="text-[#176B87]">n</span>EX
-            </span>
-            <span className="text-[10px] text-[#596579] font-mono tracking-tight leading-none mt-0.5 hidden lg:inline">
-              PLANNING-TO-EXECUTION BRIDGE
-            </span>
-          </div>
+          <span className="text-sm font-bold tracking-tight text-[#172033] leading-none">
+            PL<span className="text-[#176B87]">n</span>EX
+          </span>
         </Link>
 
-        <div className="h-5 w-px bg-[#D9DEE5] hidden sm:block mx-0.5" />
+        {/* Subtle vertical separator */}
+        <div className="h-4 w-px bg-[#D9DEE5] hidden sm:block" />
 
-        {/* Project Selector (Visible on both mobile and desktop) */}
-        <div className="flex-shrink-0">
+        {/* Project Selector */}
+        <div className="flex-shrink-0 min-w-0">
           <ProjectSelector />
         </div>
       </div>
 
-      {/* Middle: Global Search shortcut (Desktop only) */}
-      <div className="flex-1 max-w-md hidden md:block">
+      {/* Right: Search + Notifications + Profile */}
+      <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
+        {/* Search */}
         <button
           onClick={() => setGlobalSearchOpen(true)}
-          className="w-full flex items-center justify-between px-3 py-1.5 bg-[#F7F8FA] hover:bg-[#F1F3F5] border border-[#D9DEE5] rounded-lg text-xs text-[#596579] transition-colors cursor-pointer"
+          className="hidden sm:flex items-center justify-between px-2.5 py-1.5 bg-[#F7F8FA] hover:bg-[#F1F3F5] border border-[#D9DEE5] rounded-md text-xs text-[#596579] transition-colors cursor-pointer w-44 md:w-56 lg:w-64"
+          aria-label="Search"
+          title="Search activities, DPRs, evidence (⌘K)"
         >
-          <div className="flex items-center gap-2">
-            <Search className="w-3.5 h-3.5 text-[#7B8798]" />
-            <span>Search schedule activities, field DPRs, spools...</span>
+          <div className="flex items-center gap-2 min-w-0">
+            <Search className="w-3.5 h-3.5 text-[#7B8798] flex-shrink-0" />
+            <span className="truncate text-xs text-[#7B8798]">Search...</span>
           </div>
-          <kbd className="inline-flex items-center gap-0.5 px-1.5 py-0.5 text-[10px] font-mono text-[#596579] bg-white border border-[#D9DEE5] rounded">
+          <kbd className="hidden md:inline-flex items-center px-1.5 py-0.5 text-[10px] font-mono text-[#7B8798] bg-white border border-[#D9DEE5] rounded leading-none">
             ⌘K
           </kbd>
         </button>
-      </div>
 
-      {/* Right: Connection (Always visible) + Notifications (sm+) + User Menu (sm+) */}
-      <div className="flex items-center gap-1.5 sm:gap-3 flex-shrink-0">
-        {/* Sample Project Indicator (Admin only) */}
-        {userSession?.role === 'admin' && (
-          <span
-            className="hidden xl:inline-flex items-center gap-1 px-2.5 py-1 rounded bg-[#FDF6ED] text-[#D98B32] border border-[#F0D4A6] text-[10px] font-mono font-bold uppercase tracking-wider"
-            title="This application is displaying sample project data for the Oil India Duliajan asset."
-          >
-            Sample Project Data
-          </span>
-        )}
+        {/* Mobile Search Button */}
+        <button
+          onClick={() => setGlobalSearchOpen(true)}
+          className="sm:hidden p-2 text-[#596579] hover:text-[#172033] hover:bg-[#F1F3F5] rounded-md transition-colors cursor-pointer"
+          aria-label="Search"
+          title="Search activities (⌘K)"
+        >
+          <Search className="w-4 h-4 text-[#596579]" />
+        </button>
 
-        {/* Global Connection Control */}
-        <ConnectionStatusControl />
+        {/* Notifications */}
+        <NotificationCenter />
 
-        {/* Notifications Center (hidden on mobile to prevent overcrowding) */}
-        <div className="hidden sm:block">
-          <NotificationCenter />
-        </div>
+        {/* Profile */}
+        <UserMenu />
 
-        <div className="h-5 w-px bg-[#D9DEE5] hidden sm:block" />
-
-        {/* User Info & Menu (hidden on mobile to prevent overcrowding) */}
-        <div className="hidden sm:block">
-          <UserMenu />
-        </div>
+        {/* ConnectionStatusControl kept available for verification references and System -> Sync */}
+        <span className="hidden" aria-hidden="true">
+          <ConnectionStatusControl />
+        </span>
       </div>
     </header>
   );

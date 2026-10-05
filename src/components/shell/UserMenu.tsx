@@ -41,32 +41,29 @@ export function UserMenu() {
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 p-1.5 sm:px-2.5 sm:py-1.5 rounded-lg hover:bg-[#F1F3F5] transition-colors cursor-pointer"
+        className="flex items-center gap-2 p-1 sm:px-2 sm:py-1 rounded-md hover:bg-[#F1F3F5] transition-colors cursor-pointer"
         aria-expanded={isOpen}
         aria-haspopup="true"
       >
-        <div className="w-7 h-7 rounded-md bg-[#176B87] text-white flex items-center justify-center text-xs font-semibold">
+        <div className="w-6 h-6 rounded bg-[#176B87] text-white flex items-center justify-center text-xs font-semibold flex-shrink-0">
           <User className="w-3.5 h-3.5" />
         </div>
-        <div className="hidden sm:flex items-center gap-2 text-left">
+        <div className="hidden sm:flex items-center gap-1.5 text-left min-w-0">
           <div className="flex flex-col">
-            <span className="text-xs font-bold text-[#172033] leading-tight">
+            <span className="text-xs font-semibold text-[#172033] leading-tight truncate">
               {displayName}
             </span>
-            <span className="text-[10px] text-[#7B8798] font-medium leading-none mt-0.5">
-              {userSession?.title || 'User'}
+            <span className="text-[10px] text-[#7B8798] leading-none mt-0.5">
+              {displayRole}
             </span>
           </div>
-          <span className="px-1.5 py-0.5 rounded bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0] text-[10px] font-bold uppercase tracking-wider">
-            {displayRole}
-          </span>
-          <ChevronDown className="w-3 h-3 text-[#7B8798]" />
+          <ChevronDown className="w-3 h-3 text-[#7B8798] flex-shrink-0 ml-0.5" />
         </div>
-        <ChevronDown className="w-3.5 h-3.5 text-[#596579] sm:hidden" />
+        <ChevronDown className="w-3.5 h-3.5 text-[#596579] sm:hidden flex-shrink-0" />
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-72 bg-white border border-[#D9DEE5] rounded-lg shadow-lg z-50 overflow-hidden animate-in fade-in-50 zoom-in-95 duration-150">
+        <div className="absolute right-0 mt-2 w-72 bg-white border border-[#D9DEE5] rounded-lg shadow-lg z-50 overflow-hidden">
           {/* User Details */}
           <div className="p-3.5 border-b border-[#D9DEE5] bg-[#F7F8FA]">
             <p className="text-xs font-bold text-[#172033]">{userSession?.name}</p>
