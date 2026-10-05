@@ -54,7 +54,10 @@ interface SidebarGroup {
 }
 
 export function Sidebar({ collapsed, onToggle, mobileMenuOpen, onCloseMobile }: SidebarProps) {
-  const pathname = usePathname();
+  const rawPathname = usePathname();
+  const pathname = (rawPathname && rawPathname.length > 1 && rawPathname.endsWith('/'))
+    ? rawPathname.slice(0, -1)
+    : (rawPathname || '/');
   const { userSession } = useApp();
 
   const role: UserRole = userSession?.role || 'manager';

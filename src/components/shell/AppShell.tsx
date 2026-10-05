@@ -16,7 +16,10 @@ export interface AppShellProps {
   children: ReactNode;
 }
 export function AppShell({ children }: AppShellProps) {
-  const pathname = usePathname();
+  const rawPathname = usePathname();
+  const pathname = (rawPathname && rawPathname.length > 1 && rawPathname.endsWith('/'))
+    ? rawPathname.slice(0, -1)
+    : (rawPathname || '/');
   const router = useRouter();
   const {
     isAuthenticated,

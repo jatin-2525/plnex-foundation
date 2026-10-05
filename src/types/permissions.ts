@@ -157,7 +157,11 @@ export function getResourceName(pathname: string): string {
   return pathname;
 }
 
-export function canAccessRoute(role: UserRole, pathname: string): boolean {
+export function canAccessRoute(role: UserRole, rawPathname: string): boolean {
+  const pathname = (rawPathname && rawPathname.length > 1 && rawPathname.endsWith('/'))
+    ? rawPathname.slice(0, -1)
+    : (rawPathname || '/');
+
   // Public routes
   if (
     pathname === '/login' ||
