@@ -460,7 +460,7 @@ export default function FieldCapturePage() {
                   Date: <strong className="text-[#172033] font-mono">{formatProjectDate(PROJECT_REPORT_DATE, true)}</strong>
                 </span>
               </div>
-              <h1 className="text-base sm:text-lg font-black text-[#172033] tracking-tight">
+              <h1 className="text-[28px] sm:text-3xl font-bold text-[#172033] tracking-tight">
                 {activeProject.name}
               </h1>
             </div>

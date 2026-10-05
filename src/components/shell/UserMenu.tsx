@@ -48,14 +48,19 @@ export function UserMenu() {
         <div className="w-7 h-7 rounded-md bg-[#176B87] text-white flex items-center justify-center text-xs font-semibold">
           <User className="w-3.5 h-3.5" />
         </div>
-        <div className="hidden sm:flex flex-col text-left">
-          <span className="text-xs font-semibold text-[#172033] leading-none">
-            {displayName}
+        <div className="hidden sm:flex items-center gap-2 text-left">
+          <div className="flex flex-col">
+            <span className="text-xs font-bold text-[#172033] leading-tight">
+              {displayName}
+            </span>
+            <span className="text-[10px] text-[#8A94A6] font-medium leading-none mt-0.5">
+              {userSession?.title || 'User'}
+            </span>
+          </div>
+          <span className="px-1.5 py-0.5 rounded bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0] text-[10px] font-bold uppercase tracking-wider">
+            {displayRole}
           </span>
-          <span className="text-[11px] text-[#596579] font-medium leading-none mt-1 flex items-center gap-0.5">
-            <span>{displayRole}</span>
-            <ChevronDown className="w-3 h-3 text-[#8A94A6]" />
-          </span>
+          <ChevronDown className="w-3 h-3 text-[#8A94A6]" />
         </div>
         <ChevronDown className="w-3.5 h-3.5 text-[#596579] sm:hidden" />
       </button>

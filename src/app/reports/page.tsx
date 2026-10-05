@@ -206,10 +206,10 @@ export default function ReportsAndMemoryPage() {
                 </span>
               </div>
 
-              <h1 className="text-2xl font-bold text-[#172033] tracking-tight">
+              <h1 className="text-[28px] sm:text-3xl font-bold text-[#172033] tracking-tight">
                 Reports &amp; Project Memory
               </h1>
-              <p className="text-xs text-[#596579] mt-0.5 max-w-3xl">
+              <p className="text-sm text-[#596579] mt-1 max-w-3xl">
                 Statutory baseline progress reporting and empirical engineering memory repository. Every record is grounded in verified physical evidence.
               </p>
             </div>

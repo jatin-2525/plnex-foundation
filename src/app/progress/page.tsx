@@ -665,10 +665,10 @@ export default function ProgressVariancePage() {
                   Every Verified Value Traceable to Execution
                 </span>
               </div>
-              <h1 className="text-2xl font-bold text-[#172033] tracking-tight">
+              <h1 className="text-[28px] sm:text-3xl font-bold text-[#172033] tracking-tight">
                 Progress & Variance
               </h1>
-              <p className="text-xs text-[#596579] mt-0.5">
+              <p className="text-sm text-[#596579] mt-1">
                 Every verified progress value must be traceable to an underlying execution update, physical evidence, and engineer attestation.
               </p>
             </div>

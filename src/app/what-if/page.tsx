@@ -322,10 +322,10 @@ export default function WhatIfSimulatorPage() {
                 </span>
               </div>
 
-              <h1 className="text-2xl font-bold text-[#172033] tracking-tight">
+              <h1 className="text-[28px] sm:text-3xl font-bold text-[#172033] tracking-tight">
                 What-if Simulator
               </h1>
-              <p className="text-xs text-[#596579] mt-0.5 max-w-3xl">
+              <p className="text-sm text-[#596579] mt-1 max-w-3xl">
                 Test hypothetical schedule variations and downstream Critical Path impacts without modifying actual project progress, risks, or schedule records.
               </p>
             </div>

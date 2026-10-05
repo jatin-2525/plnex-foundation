@@ -53,10 +53,11 @@ export function StateWrapper({
   if (effectiveState === 'error') {
     return (
       <ErrorState
-        title="Schedule Service Unavailable"
-        message="Failed to synchronize with Primavera P6 XML schedule bridge."
+        title="Unable to load schedule."
+        message="Failed to synchronize with Primavera P6 schedule bridge. Check connection and retry."
         code="ERR_P6_SYNC_FAILURE"
         onRetry={onRetry || (() => setSimulatedState('success'))}
+        retryLabel="Retry"
       />
     );
   }

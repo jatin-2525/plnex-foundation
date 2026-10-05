@@ -297,10 +297,10 @@ export default function EvidenceAndAuditPage() {
                 </span>
               </div>
 
-              <h1 className="text-2xl font-bold text-[#172033] tracking-tight">
+              <h1 className="text-[28px] sm:text-3xl font-bold text-[#172033] tracking-tight">
                 Evidence & Audit
               </h1>
-              <p className="text-xs text-[#596579] mt-0.5 max-w-3xl">
+              <p className="text-sm text-[#596579] mt-1 max-w-3xl">
                 Make every important project update traceable to verified field proof, ensuring human verification and auditability across all progress reports.
               </p>
             </div>

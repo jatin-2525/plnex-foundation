@@ -19,18 +19,22 @@ export function LoadingState({
   if (type === 'spinner') {
     return (
       <div
-        className={`flex flex-col items-center justify-center p-12 text-center bg-white border border-[#D9DEE5] rounded-lg ${className}`}
+        className={`flex flex-col items-center justify-center p-12 text-center bg-white border border-[#D9DEE5] rounded-xl shadow-xs ${className}`}
+        role="status"
+        aria-live="polite"
       >
-        <Loader2 className="w-7 h-7 text-[#176B87] animate-spin mb-3" />
-        <p className="text-sm font-medium text-[#172033]">{message}</p>
-        <span className="text-xs text-[#596579] mt-1 font-mono">Synchronizing with L1–L6 WBS database...</span>
+        <Loader2 className="w-8 h-8 text-[#176B87] animate-spin mb-3" />
+        <p className="text-sm sm:text-base font-semibold text-[#172033]">{message}</p>
+        <span className="text-xs text-[#8A94A6] mt-1 font-mono">Synchronizing with L1–L6 WBS database...</span>
       </div>
     );
   }
 
   return (
     <div
-      className={`bg-white border border-[#D9DEE5] rounded-lg p-6 space-y-4 animate-pulse ${className}`}
+      className={`bg-white border border-[#D9DEE5] rounded-xl p-6 space-y-4 animate-pulse shadow-xs ${className}`}
+      role="status"
+      aria-live="polite"
     >
       <div className="flex items-center justify-between pb-3 border-b border-[#E8EBF0]">
         <div className="h-5 bg-[#F0F2F5] rounded w-1/4"></div>
@@ -46,8 +50,12 @@ export function LoadingState({
           </div>
         ))}
       </div>
-      <div className="pt-2 flex justify-end">
-        <span className="text-xs text-[#8A94A6] font-mono">{message}</span>
+      <div className="pt-2 flex items-center justify-between text-xs text-[#8A94A6] font-mono">
+        <span className="flex items-center gap-2">
+          <Loader2 className="w-3.5 h-3.5 animate-spin text-[#176B87]" />
+          <span>Active schedule processing</span>
+        </span>
+        <span>{message}</span>
       </div>
     </div>
   );

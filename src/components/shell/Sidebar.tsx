@@ -45,6 +45,7 @@ interface SidebarNavItem {
   href: string;
   icon: React.ComponentType<{ className?: string }>;
   badge?: string | number;
+  isLive?: boolean;
 }
 
 interface SidebarGroup {
@@ -77,7 +78,7 @@ export function Sidebar({ collapsed, onToggle, mobileMenuOpen, onCloseMobile }: 
     {
       group: 'EXECUTION',
       items: [
-        { label: 'Execution Intelligence', href: '/execution', icon: Cpu },
+        { label: 'Execution Intelligence', href: '/execution', icon: Cpu, isLive: true },
         { label: 'Review Queue', href: '/review', icon: ShieldCheck, badge: 6 },
       ],
     },
@@ -129,7 +130,7 @@ export function Sidebar({ collapsed, onToggle, mobileMenuOpen, onCloseMobile }: 
     {
       group: 'EXECUTION',
       items: [
-        { label: 'Execution Intelligence', href: '/execution', icon: Cpu },
+        { label: 'Execution Intelligence', href: '/execution', icon: Cpu, isLive: true },
       ],
     },
     {
@@ -146,7 +147,7 @@ export function Sidebar({ collapsed, onToggle, mobileMenuOpen, onCloseMobile }: 
     },
   ];
 
-  // Admin Navigation (deliberate admin hub with full visibility and system tools)
+  // Admin Navigation (full admin control hub with visibility and system tools)
   const adminNav: SidebarGroup[] = [
     {
       group: 'ADMINISTRATION',
@@ -165,10 +166,12 @@ export function Sidebar({ collapsed, onToggle, mobileMenuOpen, onCloseMobile }: 
         { label: 'Projects', href: '/projects', icon: FolderKanban },
         { label: 'Schedule', href: '/schedule', icon: Calendar },
         { label: 'Schedule Twin', href: '/schedule-twin', icon: Layers },
+        { label: 'Execution Intelligence', href: '/execution', icon: Cpu, isLive: true },
+        { label: 'Review Queue', href: '/review', icon: ShieldCheck, badge: 6 },
         { label: 'Progress & Variance', href: '/progress', icon: TrendingUp },
         { label: 'Delay & Impact', href: '/risks', icon: TrendingDown },
         { label: 'What-if', href: '/what-if', icon: Sliders },
-        { label: 'Schedule Health', href: '/health', icon: Activity },
+        { label: 'Schedule Health', href: '/health', icon: Activity, badge: 5 },
         { label: 'Reports & Memory', href: '/reports', icon: BookOpen },
       ],
     },
@@ -184,8 +187,6 @@ export function Sidebar({ collapsed, onToggle, mobileMenuOpen, onCloseMobile }: 
     {
       group: 'SHARED OPERATIONS',
       items: [
-        { label: 'Execution Intelligence', href: '/execution', icon: Cpu },
-        { label: 'Review Queue', href: '/review', icon: ShieldCheck },
         { label: 'Evidence & Audit', href: '/evidence', icon: ShieldCheck },
         { label: 'Offline / Sync', href: '/sync', icon: Wifi },
       ],
@@ -198,7 +199,7 @@ export function Sidebar({ collapsed, onToggle, mobileMenuOpen, onCloseMobile }: 
   return (
     <aside
       className={`fixed top-14 bottom-0 left-0 bg-white border-r border-[#D9DEE5] z-30 transition-all duration-200 flex flex-col ${
-        collapsed ? 'w-16' : 'w-60'
+        collapsed ? 'w-16' : 'w-64'
       } ${
         mobileMenuOpen
           ? 'translate-x-0'
@@ -210,7 +211,7 @@ export function Sidebar({ collapsed, onToggle, mobileMenuOpen, onCloseMobile }: 
         {navGroups.map((group, gIdx) => (
           <div key={gIdx} className="space-y-1">
             {!collapsed && group.group && (
-              <h4 className="px-3 text-[10px] font-bold uppercase tracking-wider text-[#8A94A6]">
+              <h4 className="px-3 pt-2 text-[10px] font-bold uppercase tracking-wider text-[#8A94A6]">
                 {group.group}
               </h4>
             )}
@@ -222,14 +223,14 @@ export function Sidebar({ collapsed, onToggle, mobileMenuOpen, onCloseMobile }: 
                   key={item.href}
                   href={item.href}
                   onClick={onCloseMobile}
-                  className={`flex items-center gap-3 px-3 py-2 rounded-md text-xs font-medium transition-colors relative group ${
+                  className={`flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-medium transition-colors relative group ${
                     isActive
                       ? 'bg-[#EDF5F8] text-[#176B87] font-semibold'
                       : 'text-[#596579] hover:bg-[#F0F2F5] hover:text-[#172033]'
                   }`}
-                  title={collapsed ? item.label : undefined}
+                  title={collapsed ? (item.isLive ? `${item.label} (Live)` : item.label) : undefined}
                 >
-                  {/* Left accent bar for active */}
+                  {/* Left accent bar for active route */}
                   {isActive && (
                     <span className="absolute left-0 top-1.5 bottom-1.5 w-1 bg-[#176B87] rounded-r" />
                   )}
@@ -242,16 +243,31 @@ export function Sidebar({ collapsed, onToggle, mobileMenuOpen, onCloseMobile }: 
 
                   {!collapsed && (
                     <div className="flex-1 flex items-center justify-between min-w-0">
-                      <span className="truncate">{item.label}</span>
-                      {item.badge !== undefined && (
+                      {item.isLive ? (
+                        <div className="flex flex-col min-w-0 text-left">
+                          <span className="truncate leading-tight text-xs">{item.label}</span>
+                          <span className="inline-flex items-center gap-1.5 text-[10px] font-mono text-[#2E7D5B] font-semibold mt-0.5">
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#2E7D5B] animate-pulse" />
+                            <span>Live</span>
+                          </span>
+                        </div>
+                      ) : (
+                        <span className="truncate text-xs">{item.label}</span>
+                      )}
+
+                      {item.badge !== undefined && !item.isLive && (
                         <span
-                          className={`ml-1.5 px-1.5 py-0.2 rounded text-[10px] font-mono font-bold ${
-                            typeof item.badge === 'number'
-                              ? 'bg-[#FDF6ED] text-[#D98B32] border border-[#F0D4A6]'
-                              : 'bg-[#EDF2F8] text-[#176B87] border border-[#B3CBE0]'
-                          }`}
+                          className={`ml-auto pl-3 flex-shrink-0 inline-flex items-center justify-center`}
                         >
-                          {item.badge}
+                          <span
+                            className={`px-2 py-0.5 rounded-full text-[10px] font-mono font-bold leading-none ${
+                              typeof item.badge === 'number'
+                                ? 'bg-[#FDF6ED] text-[#D98B32] border border-[#F0D4A6]'
+                                : 'bg-[#EDF2F8] text-[#176B87] border border-[#B3CBE0]'
+                            }`}
+                          >
+                            {item.badge}
+                          </span>
                         </span>
                       )}
                     </div>
@@ -272,7 +288,7 @@ export function Sidebar({ collapsed, onToggle, mobileMenuOpen, onCloseMobile }: 
         )}
         <button
           onClick={onToggle}
-          className="p-1.5 text-[#596579] hover:text-[#172033] hover:bg-white rounded border border-transparent hover:border-[#D9DEE5] transition-colors ml-auto"
+          className="p-1.5 text-[#596579] hover:text-[#172033] hover:bg-white rounded border border-transparent hover:border-[#D9DEE5] transition-colors ml-auto cursor-pointer"
           aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
         >
           {collapsed ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}

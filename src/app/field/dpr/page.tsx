@@ -407,10 +407,10 @@ export default function DPRTimeAgentPage() {
                   Step {currentStep} of 7: {stepsConfig[currentStep - 1].title}
                 </span>
               </div>
-              <h1 className="text-2xl font-bold text-[#172033] tracking-tight">
+              <h1 className="text-[28px] sm:text-3xl font-bold text-[#172033] tracking-tight">
                 Daily Project Report (DPR) / Time Agent
               </h1>
-              <p className="text-xs text-[#596579] mt-0.5">
+              <p className="text-sm text-[#596579] mt-1">
                 Guided engineer reporting workflow: observe, extract, verify, and synchronize daily site execution into the Schedule Twin.
               </p>
             </div>

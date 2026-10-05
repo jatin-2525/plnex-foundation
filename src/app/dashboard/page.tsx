@@ -139,10 +139,10 @@ export default function ManagerDashboardPage() {
                   Reporting Date: <strong className="text-[#172033] font-mono">{formatProjectDate(PROJECT_REPORT_DATE, true)}</strong>
                 </span>
               </div>
-              <h1 className="text-lg sm:text-xl font-black text-[#172033] tracking-tight">
+              <h1 className="text-[28px] sm:text-3xl font-bold text-[#172033] tracking-tight">
                 {activeProject.name}
               </h1>
-              <p className="text-xs text-[#596579]">
+              <p className="text-sm text-[#596579]">
                 Manager Project Controls & Execution Decision Surface • Organization: <strong>Oil India Limited</strong>
               </p>
             </div>
@@ -187,7 +187,7 @@ export default function ManagerDashboardPage() {
             <div>
               <div className="flex items-center gap-2">
                 <AlertOctagon className="w-5 h-5 text-[#B5473C]" />
-                <h2 id="attention-heading" className="text-sm sm:text-base font-black uppercase tracking-wider text-[#172033]">
+                <h2 id="attention-heading" className="text-lg sm:text-xl font-bold uppercase tracking-wide text-[#172033]">
                   WHAT NEEDS MY ATTENTION NOW?
                 </h2>
                 <span className="px-2 py-0.5 rounded-full bg-[#B5473C] text-white text-[10px] font-mono font-bold">
@@ -396,7 +396,7 @@ export default function ManagerDashboardPage() {
               <span className="text-[10px] font-mono font-bold uppercase text-[#8A94A6] tracking-wider">
                 Progress Basis & Variance
               </span>
-              <h2 id="kpi-heading" className="text-sm font-bold text-[#172033]">
+              <h2 id="kpi-heading" className="text-lg sm:text-xl font-bold text-[#172033]">
                 Planned vs Actual Performance
               </h2>
             </div>
@@ -563,7 +563,7 @@ export default function ManagerDashboardPage() {
           <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#E8EBF0] gap-2">
             <div>
               <div className="flex items-center gap-2">
-                <h2 id="review-heading" className="text-sm font-bold uppercase tracking-wider text-[#172033]">
+                <h2 id="review-heading" className="text-lg sm:text-xl font-bold uppercase tracking-wide text-[#172033]">
                   Review Required Queue
                 </h2>
                 <span className="px-2 py-0.5 rounded-full bg-[#FEF7EE] text-[#9A5B13] border border-[#ECD1A4] text-xs font-mono font-bold">
@@ -693,7 +693,7 @@ export default function ManagerDashboardPage() {
         <section id="delay-impact" aria-labelledby="delay-heading" className="bg-white border border-[#D9DEE5] rounded-xl p-5 shadow-xs space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#E8EBF0] gap-2">
             <div>
-              <h2 id="delay-heading" className="text-sm font-bold uppercase tracking-wider text-[#172033]">
+              <h2 id="delay-heading" className="text-lg sm:text-xl font-bold uppercase tracking-wide text-[#172033]">
                 Delay & Dependency Impact
               </h2>
               <p className="text-xs text-[#596579] mt-0.5">
@@ -848,7 +848,7 @@ export default function ManagerDashboardPage() {
         <section aria-labelledby="execution-heading" className="bg-white border border-[#D9DEE5] rounded-xl p-5 shadow-xs space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#E8EBF0] gap-2">
             <div>
-              <h2 id="execution-heading" className="text-sm font-bold uppercase tracking-wider text-[#172033]">
+              <h2 id="execution-heading" className="text-lg sm:text-xl font-bold uppercase tracking-wide text-[#172033]">
                 Recent Execution Events
               </h2>
               <p className="text-xs text-[#596579] mt-0.5">

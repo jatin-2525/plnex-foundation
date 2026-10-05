@@ -615,10 +615,10 @@ export default function DelayDependencyImpactPage() {
                   Active Schedule V3 · Rev 3.2
                 </span>
               </div>
-              <h1 className="text-2xl font-bold text-[#172033] tracking-tight">
+              <h1 className="text-[28px] sm:text-3xl font-bold text-[#172033] tracking-tight">
                 Delay & Dependency Impact
               </h1>
-              <p className="text-xs text-[#596579] mt-0.5">
+              <p className="text-sm text-[#596579] mt-1">
                 Trace source activity delays, root causes, evidence, and downstream dependency impacts across the project schedule.
               </p>
             </div>

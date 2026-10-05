@@ -749,8 +749,8 @@ export default function ReviewQueuePage() {
                   Action Queue Only · Zero Silent Conversions
                 </span>
               </div>
-              <h1 className="text-2xl font-bold text-[#172033] tracking-tight">Review Queue</h1>
-              <p className="text-xs text-[#596579] mt-0.5">
+              <h1 className="text-[28px] sm:text-3xl font-bold text-[#172033] tracking-tight">Review Queue</h1>
+              <p className="text-sm text-[#596579] mt-1">
                 Contains only field events requiring human decision. Verified events are committed to Schedule Twin and removed from active queue.
               </p>
             </div>
@@ -862,16 +862,16 @@ export default function ReviewQueuePage() {
           <div className="p-4 space-y-4">
             {filteredEvents.length === 0 ? (
               <div className="p-12 text-center text-[#596579] bg-[#FAFAFA] rounded-xl border border-dashed border-[#D9DEE5]">
-                <CheckCircle2 className="w-10 h-10 text-[#2E7D5B] mx-auto mb-2" />
-                <h3 className="font-bold text-sm text-[#172033]">
+                <CheckCircle2 className="w-10 h-10 text-[#2E7D5B] mx-auto mb-3" />
+                <h3 className="font-bold text-lg text-[#172033]">
                   {activeTab === 'Verified History'
                     ? 'No verified events in history archive yet'
-                    : `Zero items pending in "${activeTab}" queue`}
+                    : 'No review items'}
                 </h3>
-                <p className="text-xs text-[#8A94A6] mt-1 max-w-md mx-auto">
+                <p className="text-sm text-[#596579] mt-1 max-w-md mx-auto">
                   {activeTab === 'Verified History'
                     ? 'Approve candidate matches in the queue above to commit them to the Schedule Twin.'
-                    : 'All events in this category have been processed. Review Queue strictly excludes already verified items to keep manager focus on items requiring action.'}
+                    : 'Nothing requires your attention right now. All events have been processed and verified.'}
                 </p>
               </div>
             ) : (

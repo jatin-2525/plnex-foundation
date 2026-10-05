@@ -21,3 +21,4 @@ export * from './MatchCard';
 export * from './CoreFlowBanner';
 export * from './NotificationCenterPanel';
 export * from './GlobalSearchPanel';
+export * from './Button';

@@ -392,7 +392,7 @@ export default function EngineerDashboardPage() {
               </div>
 
               {/* Project & Date */}
-              <h1 className="text-base sm:text-lg font-black text-[#172033] tracking-tight">
+              <h1 className="text-[28px] sm:text-3xl font-bold text-[#172033] tracking-tight">
                 {activeProject.name}
               </h1>
 
@@ -483,7 +483,7 @@ export default function EngineerDashboardPage() {
         <section aria-labelledby="my-activities-heading" className="bg-white border border-[#D9DEE5] rounded-xl p-4 sm:p-5 shadow-xs space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#E8EBF0] gap-2">
             <div>
-              <h2 id="my-activities-heading" className="text-sm font-bold uppercase tracking-wider text-[#172033]">
+              <h2 id="my-activities-heading" className="text-lg sm:text-xl font-bold uppercase tracking-wide text-[#172033]">
                 My Activities
               </h2>
               <p className="text-xs text-[#596579] mt-0.5">
@@ -628,7 +628,7 @@ export default function EngineerDashboardPage() {
         <section aria-labelledby="field-updates-heading" className="bg-white border border-[#D9DEE5] rounded-xl p-4 sm:p-5 shadow-xs space-y-4">
           <div className="flex items-center justify-between pb-3 border-b border-[#E8EBF0]">
             <div>
-              <h2 id="field-updates-heading" className="text-sm font-bold uppercase tracking-wider text-[#172033]">
+              <h2 id="field-updates-heading" className="text-lg sm:text-xl font-bold uppercase tracking-wide text-[#172033]">
                 Field Updates
               </h2>
               <p className="text-xs text-[#596579] mt-0.5">
@@ -696,7 +696,7 @@ export default function EngineerDashboardPage() {
             <div>
               <div className="flex items-center gap-2">
                 <UploadCloud className="w-4 h-4 text-[#176B87]" />
-                <h2 id="sync-heading" className="text-sm font-bold uppercase tracking-wider text-[#172033]">
+                <h2 id="sync-heading" className="text-lg sm:text-xl font-bold uppercase tracking-wide text-[#172033]">
                   Sync
                 </h2>
               </div>

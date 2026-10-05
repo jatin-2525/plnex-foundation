@@ -1247,8 +1247,8 @@ export default function SchedulePage() {
                 </span>
               </div>
 
-              <h1 className="text-2xl font-bold text-[#172033] tracking-tight">Schedule</h1>
-              <p className="text-xs text-[#596579] mt-0.5 max-w-3xl">
+              <h1 className="text-[28px] sm:text-3xl font-bold text-[#172033] tracking-tight">Schedule</h1>
+              <p className="text-sm text-[#596579] mt-1 max-w-3xl">
                 Master L1–L6 WBS hierarchy, baseline version lineage, and Primavera P6 synchronization. Easy to scan by default; use the Activity Drawer for deep technical complexity.
               </p>
             </div>

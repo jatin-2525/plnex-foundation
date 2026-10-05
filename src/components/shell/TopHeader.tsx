@@ -80,16 +80,6 @@ export function TopHeader({ onMobileToggle }: TopHeaderProps) {
         {/* Global Connection Control (Priority 2 Requirement 2) */}
         <ConnectionStatusControl />
 
-        {/* Authoritative Cutoff / Sync Status */}
-        <Link
-          href="/sync"
-          className="hidden md:inline-flex items-center gap-1.5 px-2.5 py-1 bg-[#F7F8FA] hover:bg-[#EDF5F8] border border-[#D9DEE5] rounded-md text-xs text-[#596579] font-medium transition-colors"
-          title="Authoritative project reporting cutoff: 18 Sep 2026, 17:30 IST • Click to open Sync Center"
-        >
-          <span className="w-1.5 h-1.5 rounded-full bg-[#176B87]" />
-          <span className="text-[11px] font-mono text-[#172033]">18 Sep 2026, 17:30 IST</span>
-        </Link>
-
         {/* Notifications Center */}
         <NotificationCenter />
 

@@ -255,10 +255,10 @@ export default function ScheduleHealthPage() {
                 </span>
               </div>
 
-              <h1 className="text-2xl font-bold text-[#172033] tracking-tight">
+              <h1 className="text-[28px] sm:text-3xl font-bold text-[#172033] tracking-tight">
                 Schedule Health &amp; Execution Data Quality
               </h1>
-              <p className="text-xs text-[#596579] mt-0.5 max-w-3xl">
+              <p className="text-sm text-[#596579] mt-1 max-w-3xl">
                 Continuous automated audit of baseline CPM network integrity, WBS hierarchy rules, and daily execution data ingestion hygiene.
               </p>
             </div>
