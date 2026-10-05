@@ -10,6 +10,7 @@ import { Drawer } from '../../components/shared/Drawer';
 import { Modal } from '../../components/shared/Modal';
 import { ConfirmationDialog } from '../../components/shared/ConfirmationDialog';
 import { MatchCard, MatchFactorItem, MatchAlternativeItem } from '../../components/shared/MatchCard';
+import { ConfidenceBadge } from '../../components/shared/ConfidenceBadge';
 import { CoreFlowBanner } from '../../components/shared/CoreFlowBanner';
 import { DisciplineType } from '../../types';
 import { MOCK_ACTIVITIES } from '../../lib/api/mockData';
@@ -450,6 +451,18 @@ export default function ReviewQueuePage() {
   const [isClarificationModalOpen, setIsClarificationModalOpen] = useState(false);
   const [clarificationQueryText, setClarificationQueryText] = useState('');
 
+  // High-Throughput Batch Operations State
+  const [selectedItemIds, setSelectedItemIds] = useState<string[]>([]);
+
+  // In-place Evidence Preview Modal State
+  const [previewEvidence, setPreviewEvidence] = useState<{
+    item: { id: string; title: string; type: 'PHOTO' | 'DOCUMENT' | 'INSPECTION_NOTE'; timestamp: string };
+    event: ReviewEvent;
+  } | null>(null);
+
+  // View Mode: 'hybrid' (Compact Review-Card/Table Hybrid) | 'cards' (Expanded MatchCards)
+  const [viewMode, setViewMode] = useState<'hybrid' | 'cards'>('hybrid');
+
   // Strict Rule: Active Review Queue ONLY contains unverified items requiring human action!
   const pendingActionEvents = useMemo(() => {
     return events.filter((e) => !e.isApproved && !e.isRejected);
@@ -568,13 +581,14 @@ export default function ReviewQueuePage() {
   };
 
   // 3. CHOOSE ANOTHER ACTIVITY
-  const handleSwitchActivity = (actId: string) => {
-    if (!selectedEvent) return;
+  const handleSwitchActivity = (actId: string, targetEvent?: ReviewEvent) => {
+    const current = targetEvent || selectedEvent;
+    if (!current) return;
     const target = MOCK_ACTIVITIES.find((a) => a.id === actId);
     if (!target) return;
 
     const updated: ReviewEvent = {
-      ...selectedEvent,
+      ...current,
       candidateActivityId: target.id,
       candidateActivityName: target.name,
       candidateWbs: target.wbs,
@@ -583,14 +597,69 @@ export default function ReviewQueuePage() {
       status: 'Manager Review',
     };
 
-    setEvents((prev) => prev.map((e) => (e.id === selectedEvent.id ? updated : e)));
-    setSelectedEvent(updated);
+    setEvents((prev) => prev.map((e) => (e.id === current.id ? updated : e)));
+    if (selectedEvent && selectedEvent.id === current.id) {
+      setSelectedEvent(updated);
+    }
     setIsActivityPickerOpen(false);
 
     addToast({
       type: 'info',
       title: 'Activity Re-Assigned',
       description: `Assigned candidate ${target.id}: ${target.name}`,
+    });
+  };
+
+  // 3B. HIGH-THROUGHPUT OPERATIONAL ACTIONS (Accept Single & Batch)
+  const handleAcceptSingle = (evt: ReviewEvent) => {
+    if (!evt.candidateActivityId) return;
+
+    setEvents((prev) =>
+      prev.map((e) =>
+        e.id === evt.id
+          ? { ...e, isApproved: true }
+          : e
+      )
+    );
+    setSelectedItemIds((prev) => prev.filter((id) => id !== evt.id));
+
+    addToast({
+      type: 'success',
+      title: 'Match Accepted & Committed to Twin',
+      description: `Verified ${evt.id} linked to ${evt.candidateActivityId}. Removed from active Review Queue.`,
+    });
+  };
+
+  const handleToggleSelectAll = () => {
+    if (selectedItemIds.length === filteredEvents.length) {
+      setSelectedItemIds([]);
+    } else {
+      setSelectedItemIds(filteredEvents.map((e) => e.id));
+    }
+  };
+
+  const handleToggleSelectItem = (id: string) => {
+    setSelectedItemIds((prev) =>
+      prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]
+    );
+  };
+
+  const handleBatchAccept = (idsToAccept?: string[]) => {
+    const targetIds = idsToAccept || selectedItemIds;
+    if (targetIds.length === 0) return;
+
+    setEvents((prev) =>
+      prev.map((e) =>
+        targetIds.includes(e.id) ? { ...e, isApproved: true } : e
+      )
+    );
+
+    setSelectedItemIds((prev) => prev.filter((id) => !targetIds.includes(id)));
+
+    addToast({
+      type: 'success',
+      title: `Batch Verified: ${targetIds.length} Events Committed`,
+      description: `Committed ${targetIds.length} verified events to Schedule Twin. Removed from active Review Queue.`,
     });
   };
 
@@ -858,7 +927,91 @@ export default function ReviewQueuePage() {
             </div>
           </div>
 
-          {/* MAIN REVIEW QUEUE EVENT CARDS */}
+          {/* OPERATIONAL BATCH & TRIAGE TOOLBAR */}
+          <div className="p-3 bg-[#F7F8FA] border-b border-[#D9DEE5] flex items-center justify-between gap-3 text-xs flex-wrap">
+            <div className="flex items-center gap-3">
+              {activeTab !== 'Verified History' && filteredEvents.length > 0 && (
+                <label className="flex items-center gap-2 font-semibold text-[#172033] cursor-pointer select-none">
+                  <input
+                    type="checkbox"
+                    checked={selectedItemIds.length > 0 && selectedItemIds.length === filteredEvents.length}
+                    onChange={handleToggleSelectAll}
+                    className="w-4 h-4 rounded border-[#D9DEE5] text-[#176B87] focus:ring-[#176B87] cursor-pointer"
+                  />
+                  <span>Select All Visible ({filteredEvents.length})</span>
+                </label>
+              )}
+
+              {selectedItemIds.length > 0 ? (
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => handleBatchAccept()}
+                    className="px-3 py-1.5 bg-[#2E7D5B] hover:bg-[#25684C] text-white font-bold rounded shadow-xs inline-flex items-center gap-1.5 transition-colors cursor-pointer"
+                  >
+                    <Check className="w-3.5 h-3.5 stroke-[2.5]" />
+                    <span>Accept Selected ({selectedItemIds.length})</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setSelectedItemIds([])}
+                    className="px-2.5 py-1.5 bg-white text-[#596579] hover:text-[#172033] border border-[#D9DEE5] rounded font-medium transition-colors cursor-pointer"
+                  >
+                    Deselect All
+                  </button>
+                </div>
+              ) : (
+                activeTab !== 'Verified History' && tabCounts['High Confidence'] > 0 && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const highConfIds = pendingActionEvents
+                        .filter((e) => e.status === 'High Confidence')
+                        .map((e) => e.id);
+                      handleBatchAccept(highConfIds);
+                    }}
+                    className="px-3 py-1.5 bg-[#EDF7F2] hover:bg-[#E0F2E9] text-[#2E7D5B] border border-[#B8DCC9] font-bold rounded inline-flex items-center gap-1.5 transition-colors cursor-pointer"
+                    title="Fast-track all 90%+ confidence items to Schedule Twin"
+                  >
+                    <CheckCircle2 className="w-3.5 h-3.5" />
+                    <span>Accept All High Confidence ({tabCounts['High Confidence']})</span>
+                  </button>
+                )
+              )}
+            </div>
+
+            <div className="flex items-center gap-2">
+              <span className="text-[11px] text-[#596579] font-mono">
+                Queue View:
+              </span>
+              <div className="inline-flex rounded-md border border-[#D9DEE5] bg-white p-0.5">
+                <button
+                  type="button"
+                  onClick={() => setViewMode('hybrid')}
+                  className={`px-2.5 py-1 text-xs font-semibold rounded transition-colors ${
+                    viewMode === 'hybrid'
+                      ? 'bg-[#176B87] text-white shadow-xs'
+                      : 'text-[#596579] hover:text-[#172033]'
+                  }`}
+                >
+                  Hybrid Table
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setViewMode('cards')}
+                  className={`px-2.5 py-1 text-xs font-semibold rounded transition-colors ${
+                    viewMode === 'cards'
+                      ? 'bg-[#176B87] text-white shadow-xs'
+                      : 'text-[#596579] hover:text-[#172033]'
+                  }`}
+                >
+                  Expanded Cards
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* MAIN REVIEW QUEUE EVENT ITEMS */}
           <div className="p-4 space-y-4">
             {filteredEvents.length === 0 ? (
               <div className="p-12 text-center text-[#596579] bg-[#FAFAFA] rounded-lg border border-dashed border-[#D9DEE5]">
@@ -874,7 +1027,7 @@ export default function ReviewQueuePage() {
                     : 'Nothing requires your attention right now. All events have been processed and verified.'}
                 </p>
               </div>
-            ) : (
+            ) : viewMode === 'cards' ? (
               filteredEvents.map((evt) => (
                 <div
                   key={evt.id}
@@ -895,10 +1048,14 @@ export default function ReviewQueuePage() {
                         {evt.source}
                       </span>
                       {evt.evidenceCount > 0 && (
-                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-mono bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]">
+                        <button
+                          type="button"
+                          onClick={() => evt.evidenceItems[0] && setPreviewEvidence({ item: evt.evidenceItems[0], event: evt })}
+                          className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-mono bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9] hover:bg-[#DDF0E5] transition-colors cursor-pointer"
+                        >
                           <Camera className="w-3 h-3" />
                           <span>{evt.evidenceCount} Proofs</span>
-                        </span>
+                        </button>
                       )}
                       <button
                         type="button"
@@ -943,10 +1100,372 @@ export default function ReviewQueuePage() {
                     }}
                     onMarkUnmatched={() => handleMarkUnmatched(evt)}
                     onSelectAlternative={(altId) => {
-                      setSelectedEvent(evt);
-                      handleSwitchActivity(altId);
+                      handleSwitchActivity(altId, evt);
                     }}
                   />
+                </div>
+              ))
+            ) : (
+              /* OPERATIONAL REVIEW-CARD / TABLE HYBRID */
+              filteredEvents.map((evt) => (
+                <div
+                  key={evt.id}
+                  className={`bg-white border rounded-lg overflow-hidden transition-all shadow-xs ${
+                    selectedItemIds.includes(evt.id)
+                      ? 'border-[#176B87] ring-1 ring-[#176B87]/30'
+                      : 'border-[#D9DEE5] hover:border-[#B3CBE0]'
+                  }`}
+                >
+                  {/* Event Top Meta Bar */}
+                  <div className="px-4 py-2.5 bg-[#F7F8FA] border-b border-[#D9DEE5] flex items-center justify-between flex-wrap gap-2 text-xs">
+                    <div className="flex items-center gap-2.5 flex-wrap">
+                      {activeTab !== 'Verified History' && (
+                        <input
+                          type="checkbox"
+                          checked={selectedItemIds.includes(evt.id)}
+                          onChange={() => handleToggleSelectItem(evt.id)}
+                          className="w-4 h-4 rounded border-[#D9DEE5] text-[#176B87] focus:ring-[#176B87] cursor-pointer"
+                          title={`Select ${evt.id}`}
+                        />
+                      )}
+                      <span className="font-mono font-bold text-xs px-2 py-0.5 rounded bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0]">
+                        {evt.id}
+                      </span>
+                      <span className="font-semibold text-[#172033]">{evt.submittedBy}</span>
+                      <span className="text-[#7B8798]">•</span>
+                      <span className="text-[10px] uppercase font-mono px-2 py-0.5 rounded bg-white border border-[#D9DEE5] text-[#596579]">
+                        {evt.source}
+                      </span>
+                      <span className="text-[#7B8798]">•</span>
+                      <span className="text-[#596579] font-mono text-[11px]">{evt.date}</span>
+                      <span className="text-[#7B8798] hidden sm:inline">•</span>
+                      <span className="text-[#596579] font-mono text-[11px] hidden sm:inline">Shift: {evt.shiftTime}</span>
+                    </div>
+
+                    <div className="flex items-center gap-2.5 flex-wrap">
+                      {/* Standardized Confidence Badge (Rule: Never show percentage alone) */}
+                      <ConfidenceBadge score={evt.confidence} size="sm" />
+
+                      {/* Status Badge */}
+                      {evt.isApproved ? (
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]">
+                          <CheckCircle2 className="w-3 h-3" />
+                          <span>Verified</span>
+                        </span>
+                      ) : evt.isRejected ? (
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
+                          <X className="w-3 h-3" />
+                          <span>Rejected</span>
+                        </span>
+                      ) : (
+                        <span
+                          className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-medium border ${
+                            evt.status === 'High Confidence'
+                              ? 'bg-[#EDF7F2] text-[#2E7D5B] border-[#B8DCC9]'
+                              : evt.status === 'Manager Review'
+                              ? 'bg-[#FDF6ED] text-[#D98B32] border-[#F0D4A6]'
+                              : evt.status === 'Conflicts' || evt.status === 'Duplicates'
+                              ? 'bg-[#FDF6ED] text-[#B5473C] border-[#E4B0AA]'
+                              : 'bg-[#F1F3F5] text-[#596579] border-[#D9DEE5]'
+                          }`}
+                        >
+                          <Clock className="w-3 h-3" />
+                          <span>{evt.status}</span>
+                        </span>
+                      )}
+
+                      {/* Full Inspection Drawer trigger */}
+                      <button
+                        type="button"
+                        onClick={() => handleOpenReview(evt)}
+                        className="text-xs font-bold text-[#176B87] hover:underline inline-flex items-center gap-1 ml-1 cursor-pointer"
+                        title="Open full 3-column inspection drawer"
+                      >
+                        <span>Drawer</span>
+                        <ArrowRight className="w-3 h-3" />
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* 4-Column Hybrid Table/Card Body answering the 6 questions */}
+                  <div className="grid grid-cols-1 lg:grid-cols-12 divide-y lg:divide-y-0 lg:divide-x divide-[#D9DEE5] text-xs">
+                    {/* COL 1: 1. WHAT HAPPENED? & WHAT EVIDENCE EXISTS? (5 cols) */}
+                    <div className="lg:col-span-5 p-4 space-y-3">
+                      <div className="flex items-center justify-between">
+                        <span className="text-[10px] font-bold uppercase tracking-wider text-[#7B8798] flex items-center gap-1">
+                          <Info className="w-3 h-3 text-[#176B87]" />
+                          <span>1. What Happened?</span>
+                        </span>
+                        <span className="font-mono font-bold text-[11px] px-2 py-0.5 rounded bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0]">
+                          {evt.extractedQuantity} {evt.unit}
+                        </span>
+                      </div>
+
+                      {/* Raw Field Observation Statement */}
+                      <blockquote className="text-xs text-[#172033] bg-[#F7F8FA] p-2.5 rounded border border-[#E5E9EF] leading-relaxed italic">
+                        "{evt.rawFieldStatement}"
+                      </blockquote>
+
+                      {/* Extracted Scope Attributes */}
+                      <div className="flex flex-wrap gap-1.5 items-center text-[11px]">
+                        <span className="px-2 py-0.5 rounded bg-[#EDF5F8] text-[#176B87] font-semibold">
+                          {evt.discipline}
+                        </span>
+                        <span className="px-2 py-0.5 rounded bg-[#F1F3F5] text-[#596579]">
+                          {evt.area}
+                        </span>
+                        {evt.line && (
+                          <span className="px-2 py-0.5 rounded bg-[#F1F3F5] text-[#596579] font-mono">
+                            {evt.line}
+                          </span>
+                        )}
+                        <span className="px-2 py-0.5 rounded bg-white border border-[#D9DEE5] text-[#596579] font-medium">
+                          Type: {evt.workType}
+                        </span>
+                      </div>
+
+                      {/* What Evidence Exists? */}
+                      <div className="pt-2 border-t border-[#D9DEE5]/60 space-y-1.5">
+                        <div className="flex items-center justify-between text-[10px] font-bold uppercase tracking-wider text-[#7B8798]">
+                          <span>What Evidence Exists?</span>
+                          <span>{evt.evidenceItems.length} File{evt.evidenceItems.length === 1 ? '' : 's'}</span>
+                        </div>
+
+                        {evt.evidenceItems.length === 0 ? (
+                          <div className="p-2 bg-[#FDF6ED] border border-[#F0D4A6] rounded text-[#A66D24] text-[11px] flex items-center gap-1.5">
+                            <AlertTriangle className="w-3.5 h-3.5 shrink-0" />
+                            <span>No physical evidence attached to this field log</span>
+                          </div>
+                        ) : (
+                          <div className="flex flex-wrap gap-1.5">
+                            {evt.evidenceItems.map((item) => (
+                              <button
+                                key={item.id}
+                                type="button"
+                                onClick={() => setPreviewEvidence({ item, event: evt })}
+                                className="inline-flex items-center gap-1.5 px-2 py-1 bg-white hover:bg-[#EDF5F8] border border-[#D9DEE5] hover:border-[#176B87] rounded text-[11px] font-medium text-[#172033] transition-colors group cursor-pointer"
+                                title={`Click to view ${item.title} in-place preview`}
+                              >
+                                {item.type === 'PHOTO' ? (
+                                  <Camera className="w-3.5 h-3.5 text-[#0284C7]" />
+                                ) : (
+                                  <FileText className="w-3.5 h-3.5 text-[#176B87]" />
+                                )}
+                                <span className="font-mono text-[10px] truncate max-w-[140px] group-hover:text-[#176B87]">
+                                  {item.title}
+                                </span>
+                                <span className="text-[9px] text-[#7B8798] font-mono">({item.timestamp})</span>
+                              </button>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* COL 2: 2. SUGGESTED ACTIVITY & ALTERNATIVE MATCHES (3 cols) */}
+                    <div className="lg:col-span-3 p-4 space-y-3">
+                      <div className="text-[10px] font-bold uppercase tracking-wider text-[#7B8798]">
+                        2. Suggested Activity
+                      </div>
+
+                      {evt.candidateActivityId ? (
+                        <div className="p-2.5 bg-white border border-[#D9DEE5] rounded space-y-1">
+                          <div className="flex items-center justify-between">
+                            <span className="font-mono font-bold text-xs text-[#176B87]">
+                              {evt.candidateActivityId}
+                            </span>
+                            {evt.candidateWbs && (
+                              <span className="text-[10px] font-mono text-[#7B8798] bg-[#F1F3F5] px-1.5 py-0.5 rounded">
+                                WBS {evt.candidateWbs}
+                              </span>
+                            )}
+                          </div>
+                          <div className="font-semibold text-xs text-[#172033] leading-snug">
+                            {evt.candidateActivityName}
+                          </div>
+                          <div className="text-[10px] text-[#596579]">
+                            Discipline: <span className="font-medium">{evt.discipline}</span>
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="p-3 bg-[#FBEFEE] border border-[#E4B0AA] rounded text-[#B5473C] text-xs font-semibold">
+                          No schedule activity matched (Unmatched)
+                        </div>
+                      )}
+
+                      {/* Alternative Matches */}
+                      <div className="pt-2 border-t border-[#D9DEE5]/60 space-y-1.5">
+                        <div className="text-[10px] font-bold uppercase tracking-wider text-[#7B8798]">
+                          Alternative Matches ({evt.alternativeCandidates.length})
+                        </div>
+
+                        {evt.alternativeCandidates.length === 0 ? (
+                          <div className="text-[11px] text-[#7B8798] italic py-1">
+                            No alternative candidates available
+                          </div>
+                        ) : (
+                          <div className="space-y-1.5">
+                            {evt.alternativeCandidates.map((alt) => (
+                              <div
+                                key={alt.activityId}
+                                className="p-1.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded text-[11px] flex items-center justify-between gap-1.5 hover:bg-[#F1F3F5] transition-colors"
+                              >
+                                <div className="min-w-0 flex-1">
+                                  <div className="flex items-center gap-1.5">
+                                    <span className="font-mono font-semibold text-[#172033]">{alt.activityId}</span>
+                                    <span className="text-[10px] font-mono font-bold text-[#D98B32]">{alt.confidence}%</span>
+                                  </div>
+                                  <div className="text-[10px] text-[#596579] truncate">
+                                    {alt.reasons[0] || alt.activityName}
+                                  </div>
+                                </div>
+                                <button
+                                  type="button"
+                                  onClick={() => {
+                                    handleSwitchActivity(alt.activityId, evt);
+                                  }}
+                                  className="px-2 py-1 text-[10px] font-bold text-[#176B87] hover:text-white hover:bg-[#176B87] border border-[#B3CBE0] rounded whitespace-nowrap transition-colors cursor-pointer"
+                                  title={`Switch match to ${alt.activityId}`}
+                                >
+                                  Switch
+                                </button>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* COL 3: 3. HOW CONFIDENT IS THE MATCH? & WHY WAS IT SUGGESTED? (2 cols) */}
+                    <div className="lg:col-span-2 p-4 space-y-2.5">
+                      <div className="text-[10px] font-bold uppercase tracking-wider text-[#7B8798]">
+                        3. Confidence & Why?
+                      </div>
+
+                      <div className="p-2 bg-[#F7F8FA] border border-[#D9DEE5] rounded space-y-1">
+                        <div className="flex items-center justify-between">
+                          <span className="text-[10px] font-bold text-[#596579]">Confidence:</span>
+                          <span className="font-mono font-bold text-xs text-[#172033]">{evt.confidence}%</span>
+                        </div>
+                        <div className="text-[11px] font-semibold text-[#172033]">
+                          {evt.confidence >= 90
+                            ? 'High Confidence'
+                            : evt.confidence >= 70
+                            ? 'Review Required'
+                            : 'Unmatched'}
+                        </div>
+                      </div>
+
+                      {/* Deterministic Signals Checklist */}
+                      <div className="space-y-1 text-[11px] pt-1">
+                        <div className="text-[10px] font-bold uppercase tracking-wider text-[#7B8798]">
+                          Why was it suggested?
+                        </div>
+                        <div className="flex items-center gap-1.5 text-[#2E7D5B] font-medium">
+                          <Check className="w-3.5 h-3.5 stroke-[2.5]" />
+                          <span>Activity match</span>
+                        </div>
+                        <div className="flex items-center gap-1.5 text-[#2E7D5B] font-medium">
+                          <Check className="w-3.5 h-3.5 stroke-[2.5]" />
+                          <span>Area match</span>
+                        </div>
+                        <div className="flex items-center gap-1.5 text-[#2E7D5B] font-medium">
+                          <Check className="w-3.5 h-3.5 stroke-[2.5]" />
+                          <span>Discipline match</span>
+                        </div>
+                        <div className={`flex items-center gap-1.5 font-medium ${evt.confidence >= 70 ? 'text-[#2E7D5B]' : 'text-[#D98B32]'}`}>
+                          {evt.confidence >= 70 ? (
+                            <Check className="w-3.5 h-3.5 stroke-[2.5]" />
+                          ) : (
+                            <AlertTriangle className="w-3.5 h-3.5" />
+                          )}
+                          <span>Context match</span>
+                        </div>
+                      </div>
+
+                      {/* Match Reason Text */}
+                      <div className="text-[10px] text-[#596579] bg-white p-2 rounded border border-[#E5E9EF] leading-relaxed">
+                        <strong className="text-[#172033] block mb-0.5">Match Reason:</strong>
+                        {evt.matchReason}
+                      </div>
+                    </div>
+
+                    {/* COL 4: 4. WHAT SHOULD I DO? (PRIMARY ACTIONS) (2 cols) */}
+                    <div className="lg:col-span-2 p-4 flex flex-col justify-between bg-[#FAFAFB] space-y-3">
+                      <div>
+                        <div className="text-[10px] font-bold uppercase tracking-wider text-[#7B8798] mb-2">
+                          4. What Should I Do?
+                        </div>
+
+                        {activeTab === 'Verified History' ? (
+                          <div className="p-3 bg-[#EDF7F2] border border-[#B8DCC9] rounded text-center text-xs">
+                            <CheckCircle2 className="w-5 h-5 text-[#2E7D5B] mx-auto mb-1" />
+                            <div className="font-bold text-[#2E7D5B]">Decision Committed</div>
+                            <div className="text-[10px] text-[#596579] mt-0.5">
+                              {evt.isApproved ? 'Approved & Linked to Twin' : 'Rejected by Reviewer'}
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="space-y-2">
+                            {/* Primary Action 1: Accept */}
+                            <button
+                              type="button"
+                              onClick={() => handleAcceptSingle(evt)}
+                              disabled={!evt.candidateActivityId}
+                              title={
+                                evt.candidateActivityId
+                                  ? 'Verify match and commit to Schedule Twin'
+                                  : 'Cannot accept without assigned schedule activity'
+                              }
+                              className="w-full py-2 px-3 bg-[#2E7D5B] hover:bg-[#25684C] disabled:opacity-40 disabled:cursor-not-allowed text-white font-bold text-xs rounded shadow-xs inline-flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                            >
+                              <Check className="w-4 h-4 stroke-[2.5]" />
+                              <span>Accept</span>
+                            </button>
+
+                            {/* Primary Action 2: Change Match */}
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setSelectedEvent(evt);
+                                setSelectedAlternativeId(evt.candidateActivityId || '');
+                                setIsActivityPickerOpen(true);
+                              }}
+                              className="w-full py-2 px-3 bg-white hover:bg-[#EDF5F8] text-[#176B87] hover:text-[#135A72] border border-[#B3CBE0] font-semibold text-xs rounded inline-flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                            >
+                              <Edit3 className="w-3.5 h-3.5" />
+                              <span>Change Match</span>
+                            </button>
+
+                            {/* Primary Action 3: Reject */}
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setSelectedEvent(evt);
+                                setIsRejectModalOpen(true);
+                              }}
+                              className="w-full py-1.5 px-3 bg-white hover:bg-[#FBEFEE] text-[#B5473C] hover:text-[#9E3B31] border border-[#E4B0AA] font-semibold text-xs rounded inline-flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                            >
+                              <X className="w-3.5 h-3.5 stroke-[2]" />
+                              <span>Reject</span>
+                            </button>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Deep Inspection Drawer trigger */}
+                      <div className="pt-2 border-t border-[#D9DEE5]/60 text-center">
+                        <button
+                          type="button"
+                          onClick={() => handleOpenReview(evt)}
+                          className="text-[11px] font-semibold text-[#176B87] hover:underline inline-flex items-center gap-1 cursor-pointer"
+                        >
+                          <span>Full Inspection Drawer</span>
+                          <ArrowRight className="w-3 h-3" />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               ))
             )}
@@ -1342,6 +1861,99 @@ export default function ReviewQueuePage() {
               className="w-full p-2.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg outline-none focus:border-[#176B87]"
             />
           </div>
+        </Modal>
+
+        {/* 5. IN-PLACE EVIDENCE PREVIEW MODAL */}
+        <Modal
+          isOpen={!!previewEvidence}
+          onClose={() => setPreviewEvidence(null)}
+          title={`Evidence Verification: ${previewEvidence?.item.title || ''}`}
+          subtitle={`Attached to ${previewEvidence?.event.id || ''} · ${previewEvidence?.event.discipline} Discipline`}
+          footer={
+            <div className="flex items-center justify-between w-full text-xs">
+              <span className="text-[11px] text-[#596579] font-mono">
+                SHA-256: 7f8a3c...e901 · Timestamped & Geotagged (OIL Duliajan)
+              </span>
+              <button
+                type="button"
+                onClick={() => setPreviewEvidence(null)}
+                className="px-4 py-2 font-bold text-white bg-[#176B87] hover:bg-[#135A72] rounded shadow-xs cursor-pointer"
+              >
+                Close Preview
+              </button>
+            </div>
+          }
+        >
+          {previewEvidence && (
+            <div className="space-y-4 text-xs">
+              {/* Evidence Meta Card */}
+              <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg grid grid-cols-2 sm:grid-cols-4 gap-3 text-[11px]">
+                <div>
+                  <span className="text-[#7B8798] block">File Type</span>
+                  <strong className="text-[#172033] font-mono">{previewEvidence.item.type}</strong>
+                </div>
+                <div>
+                  <span className="text-[#7B8798] block">Capture Timestamp</span>
+                  <strong className="text-[#172033] font-mono">{previewEvidence.item.timestamp} IST</strong>
+                </div>
+                <div>
+                  <span className="text-[#7B8798] block">Submitter</span>
+                  <strong className="text-[#172033] truncate block">{previewEvidence.event.submittedBy}</strong>
+                </div>
+                <div>
+                  <span className="text-[#7B8798] block">Integrity Status</span>
+                  <span className="text-[#2E7D5B] font-bold">✓ Tamper-proof Hash</span>
+                </div>
+              </div>
+
+              {/* Simulated Visual Preview Box */}
+              <div className="border border-[#D9DEE5] rounded-lg overflow-hidden bg-slate-900 text-slate-100 min-h-[220px] flex flex-col justify-between p-4">
+                <div className="flex items-center justify-between text-[11px] text-slate-400 font-mono">
+                  <span>{previewEvidence.item.title}</span>
+                  <span className="px-2 py-0.5 rounded bg-slate-800 text-teal-300 border border-slate-700">
+                    Field Capture Device #04
+                  </span>
+                </div>
+
+                {previewEvidence.item.type === 'PHOTO' ? (
+                  <div className="my-6 text-center space-y-2">
+                    <Camera className="w-12 h-12 text-teal-400 mx-auto opacity-80" />
+                    <div className="font-mono text-sm text-slate-200">
+                      Photographic Proof: {previewEvidence.event.area}
+                    </div>
+                    <p className="text-xs text-slate-400 max-w-md mx-auto">
+                      Visual verification of {previewEvidence.event.extractedQuantity} {previewEvidence.event.unit} ({previewEvidence.event.workType}) at {previewEvidence.event.line || previewEvidence.event.area}.
+                    </p>
+                  </div>
+                ) : (
+                  <div className="my-6 text-center space-y-2">
+                    <FileText className="w-12 h-12 text-sky-400 mx-auto opacity-80" />
+                    <div className="font-mono text-sm text-slate-200">
+                      Engineering Quality Record: {previewEvidence.item.title}
+                    </div>
+                    <p className="text-xs text-slate-400 max-w-md mx-auto">
+                      Official inspection sheet logged by {previewEvidence.event.submittedBy}. Conforms to ISO 9001 quality audit requirements.
+                    </p>
+                  </div>
+                )}
+
+                <div className="pt-2 border-t border-slate-800 flex items-center justify-between text-[10px] text-slate-400 font-mono">
+                  <span>GPS: 27°29'20.8"N 95°20'31.6"E (Duliajan Oilfield)</span>
+                  <span>Verified Non-Staged</span>
+                </div>
+              </div>
+
+              {/* Linked Event Statement */}
+              <div className="p-2.5 bg-[#EDF5F8] border border-[#B3CBE0] rounded-lg">
+                <div className="text-[10px] uppercase font-bold text-[#176B87] mb-1">
+                  Referenced Field Report:
+                </div>
+                <p className="text-xs text-[#172033] italic">
+                  "{previewEvidence.event.rawFieldStatement}"
+                </p>
+              </div>
+            </div>
+          )}
         </Modal>
       </div>
     </StateWrapper>
