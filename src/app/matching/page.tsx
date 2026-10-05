@@ -476,10 +476,10 @@ export default function MatchingPage() {
               confidence={activeReviewEvent.confidence}
               statusText={
                 activeReviewEvent.confidence >= 90
-                  ? 'High-confidence suggestion'
+                  ? 'High Confidence'
                   : activeReviewEvent.confidence >= 70
-                  ? 'Review-required suggestion'
-                  : 'Low-confidence suggestion'
+                  ? 'Review Required'
+                  : 'Unmatched'
               }
               verificationStatus={
                 activeReviewEvent.status === 'approved'

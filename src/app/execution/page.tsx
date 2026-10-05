@@ -1161,6 +1161,80 @@ export default function ExecutionIntelligencePage() {
                           </button>
                         </div>
 
+                        {/* High Confidence (>=90%): Canonical 4 Dimensions */}
+                        {evt.confidence >= 90 && (
+                          <div className="bg-[#F7FBF9] border border-[#D1EADC] rounded-lg p-3 space-y-2">
+                            <div className="flex items-center justify-between">
+                              <span className="font-bold text-xs text-[#172033] uppercase tracking-wider">
+                                Why?
+                              </span>
+                              <span className="text-[11px] text-[#2E7D5B] font-medium">
+                                4 of 4 dimensions verified
+                              </span>
+                            </div>
+                            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 text-xs text-[#172033]">
+                              <li className="flex items-center gap-2">
+                                <span className="w-4 h-4 rounded-full bg-[#EDF7F2] text-[#2E7D5B] flex items-center justify-center shrink-0">
+                                  <Check className="w-3 h-3 stroke-[3]" />
+                                </span>
+                                <span className="font-medium">Activity match</span>
+                              </li>
+                              <li className="flex items-center gap-2">
+                                <span className="w-4 h-4 rounded-full bg-[#EDF7F2] text-[#2E7D5B] flex items-center justify-center shrink-0">
+                                  <Check className="w-3 h-3 stroke-[3]" />
+                                </span>
+                                <span className="font-medium">Area match</span>
+                              </li>
+                              <li className="flex items-center gap-2">
+                                <span className="w-4 h-4 rounded-full bg-[#EDF7F2] text-[#2E7D5B] flex items-center justify-center shrink-0">
+                                  <Check className="w-3 h-3 stroke-[3]" />
+                                </span>
+                                <span className="font-medium">Discipline match</span>
+                              </li>
+                              <li className="flex items-center gap-2">
+                                <span className="w-4 h-4 rounded-full bg-[#EDF7F2] text-[#2E7D5B] flex items-center justify-center shrink-0">
+                                  <Check className="w-3 h-3 stroke-[3]" />
+                                </span>
+                                <span className="font-medium">Context match</span>
+                              </li>
+                            </ul>
+                          </div>
+                        )}
+
+                        {/* Medium Confidence (70-89%): Show Alternative Activities */}
+                        {evt.confidence >= 70 && evt.confidence < 90 && (
+                          <div className="bg-[#FDF6ED] border border-[#F0D4A6] rounded-lg p-3 text-xs space-y-2">
+                            <div className="flex items-center justify-between">
+                              <span className="font-bold text-xs text-[#D98B32] uppercase tracking-wider">
+                                Alternative Activities
+                              </span>
+                              <span className="text-[11px] text-[#7B8798]">Candidate activities for planner review</span>
+                            </div>
+                            <div className="space-y-1.5">
+                              <div className="p-2 bg-white rounded border border-[#D9DEE5] flex items-center justify-between gap-2">
+                                <div>
+                                  <span className="font-mono font-bold text-[#176B87]">PIP-24-002</span>
+                                  <div className="text-[11px] text-[#596579]">Line 24 Tie-In Weld Inspection</div>
+                                </div>
+                                <ConfidenceBadge score={68} size="sm" />
+                              </div>
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Low Confidence (<70%): Explain that no sufficiently strong match exists */}
+                        {evt.confidence < 70 && (
+                          <div className="bg-[#FBEFEE] border border-[#E4B0AA] rounded-lg p-3 text-xs text-[#B5473C] space-y-1">
+                            <div className="flex items-center gap-1.5 font-bold">
+                              <AlertCircle className="w-4 h-4 shrink-0 text-[#B5473C]" />
+                              <span>No sufficiently strong match exists</span>
+                            </div>
+                            <p className="text-[11px] text-[#7A271A]">
+                              The match confidence of {evt.confidence}% falls below the 70% threshold required for automated schedule association. No direct schedule activity could be reliably correlated. Manual WBS assignment is required.
+                            </p>
+                          </div>
+                        )}
+
                         {/* Plain English Engineering Reasons */}
                         <ul className="space-y-1.5 bg-white p-3 rounded-lg border border-[#D9DEE5] text-xs text-[#172033]">
                           {evt.reasons.map((r, i) => (

@@ -917,13 +917,11 @@ export default function ReviewQueuePage() {
                     activityName={evt.candidateActivityName}
                     confidence={evt.confidence}
                     statusText={
-                      evt.status === 'High Confidence'
-                        ? 'High-confidence suggestion'
-                        : evt.status === 'Manager Review'
-                        ? 'Needs manager verification'
-                        : evt.status === 'Unmatched'
-                        ? 'Unmatched scope'
-                        : `${evt.status} flag`
+                      evt.status === 'High Confidence' || evt.confidence >= 90
+                        ? 'High Confidence'
+                        : evt.confidence >= 70
+                        ? 'Review Required'
+                        : 'Unmatched'
                     }
                     verificationStatus={evt.isApproved ? 'Verified' : evt.isRejected ? 'Rejected' : 'Pending'}
                     wbs={evt.candidateWbs}
@@ -1026,13 +1024,11 @@ export default function ReviewQueuePage() {
                 activityName={selectedEvent.candidateActivityName}
                 confidence={selectedEvent.confidence}
                 statusText={
-                  selectedEvent.status === 'High Confidence'
-                    ? 'High-confidence suggestion'
-                    : selectedEvent.status === 'Manager Review'
-                    ? 'Needs manager verification'
-                    : selectedEvent.status === 'Unmatched'
-                    ? 'Unmatched scope'
-                    : `${selectedEvent.status} flag`
+                  selectedEvent.status === 'High Confidence' || selectedEvent.confidence >= 90
+                    ? 'High Confidence'
+                    : selectedEvent.confidence >= 70
+                    ? 'Review Required'
+                    : 'Unmatched'
                 }
                 verificationStatus={selectedEvent.isApproved ? 'Verified' : selectedEvent.isRejected ? 'Rejected' : 'Pending'}
                 wbs={selectedEvent.candidateWbs}

@@ -9,6 +9,7 @@ import { Breadcrumbs } from '../../components/shell/Breadcrumbs';
 import { Modal } from '../../components/shared/Modal';
 import { Drawer } from '../../components/shared/Drawer';
 import { SCurveChart } from '../../components/shared/SCurveChart';
+import { ConfidenceBadge } from '../../components/shared/ConfidenceBadge';
 import {
   REPORT_TEMPLATES,
   HISTORICAL_MEMORY_RECORDS,
@@ -908,7 +909,10 @@ export default function ReportsAndMemoryPage() {
               <div className="p-3 bg-white border border-[#D9DEE5] rounded-lg text-[11px] text-[#596579] space-y-1">
                 <div>Verified By: <strong className="text-[#172033]">{selectedMemoryRecord.verifiedBy}</strong></div>
                 <div>Timestamp: <span className="font-mono">{selectedMemoryRecord.verifiedAt}</span></div>
-                <div>Confidence Score: <strong className="font-mono text-[#176B87]">{selectedMemoryRecord.confidenceScore}%</strong></div>
+                <div className="flex items-center gap-2">
+                  <span>Confidence Score:</span>
+                  <ConfidenceBadge score={selectedMemoryRecord.confidenceScore} size="sm" />
+                </div>
               </div>
             </div>
           )}

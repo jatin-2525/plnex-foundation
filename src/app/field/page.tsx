@@ -76,7 +76,7 @@ export default function FieldPage() {
       addToast({
         type: 'success',
         title: 'Field Update Extracted & Linked',
-        description: `Matched to ${res.data.matchedActivityId || 'Queue'} with ${res.data.confidence}% confidence.`,
+        description: `Matched to ${res.data.matchedActivityId || 'Queue'} with ${res.data.confidence}% (${res.data.confidence >= 90 ? 'High Confidence' : res.data.confidence >= 70 ? 'Review Required' : 'Unmatched'}).`,
       });
     } finally {
       setIsSubmitting(false);

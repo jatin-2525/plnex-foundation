@@ -1,5 +1,6 @@
 export * from './StatusBadge';
 export * from './ConfidenceBadge';
+export * from './ConfidenceBlock';
 export * from './VarianceBadge';
 export * from './ProgressBar';
 export * from './EmptyState';

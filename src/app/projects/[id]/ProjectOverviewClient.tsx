@@ -546,7 +546,7 @@ export default function ProjectOverviewPage() {
         addToast({
           type: res.data.matchCategory === 'AUTO_LINK' ? 'success' : 'warning',
           title: 'Field Execution Event Recorded',
-          description: `Extracted ${res.data.workDescription.slice(0, 45)}... [Confidence: ${res.data.confidence}%]`,
+          description: `Extracted ${res.data.workDescription.slice(0, 45)}... [Confidence: ${res.data.confidence}% · ${res.data.confidence >= 90 ? 'High Confidence' : res.data.confidence >= 70 ? 'Review Required' : 'Unmatched'}]`,
         });
         setFieldReportText('');
         setIsFieldModalOpen(false);

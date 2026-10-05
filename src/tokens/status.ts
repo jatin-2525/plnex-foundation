@@ -179,25 +179,19 @@ export function getMatchConfidenceConfig(confidence: MatchConfidence): StatusBad
       };
     case 'medium':
       return {
-        label: 'Planner Review',
+        label: 'Review Required',
         color: colors.status.warning,
         bgColor: colors.status.warningBg,
         borderColor: colors.status.warningBorder,
       };
     case 'low':
-      return {
-        label: 'Low Match',
-        color: colors.status.critical,
-        bgColor: colors.status.criticalBg,
-        borderColor: colors.status.criticalBorder,
-      };
     case 'unmatched':
     default:
       return {
         label: 'Unmatched',
-        color: colors.text.secondary,
-        bgColor: colors.bg.surfaceSunken,
-        borderColor: colors.border.default,
+        color: colors.status.critical,
+        bgColor: colors.status.criticalBg,
+        borderColor: colors.status.criticalBorder,
       };
   }
 }
@@ -205,7 +199,6 @@ export function getMatchConfidenceConfig(confidence: MatchConfidence): StatusBad
 export function getConfidenceLevel(score: number): MatchConfidence {
   if (score >= 90) return 'high';
   if (score >= 70) return 'medium';
-  if (score > 0) return 'low';
   return 'unmatched';
 }
 

@@ -7,6 +7,7 @@ import { Breadcrumbs } from '../../components/shell/Breadcrumbs';
 import { PageHeader } from '../../components/shared/PageHeader';
 import { StatusBadge } from '../../components/shared/StatusBadge';
 import { ConfidenceBadge } from '../../components/shared/ConfidenceBadge';
+import { ConfidenceBlock } from '../../components/shared/ConfidenceBlock';
 import { VarianceBadge } from '../../components/shared/VarianceBadge';
 import { ProgressBar } from '../../components/shared/ProgressBar';
 import { EmptyState } from '../../components/shared/EmptyState';
@@ -227,14 +228,50 @@ export default function ShowcasePage() {
 
           <div>
             <h4 className="font-semibold text-[#596579] mb-2">
-              Explainable AI Confidence Thresholds (≥90% Auto-Link, 70-89% Review, &lt;70% Unmatched):
+              Explainable AI Confidence Thresholds (≥90% High Confidence, 70-89% Review Required, &lt;70% Unmatched):
             </h4>
             <div className="flex flex-wrap gap-2">
               <ConfidenceBadge score={94} />
               <ConfidenceBadge score={86} />
-              <ConfidenceBadge score={74} />
-              <ConfidenceBadge score={47} />
+              <ConfidenceBadge score={71} />
+              <ConfidenceBadge score={42} />
               <ConfidenceBadge score={0} />
+            </div>
+          </div>
+
+          <div className="space-y-3">
+            <h4 className="font-semibold text-[#596579]">
+              Standardized Confidence Visualizer (Simple text + small indicator + explanation):
+            </h4>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div>
+                <span className="text-xs font-bold text-[#7B8798] uppercase block mb-1">State 1: High Confidence</span>
+                <ConfidenceBlock score={94} />
+              </div>
+              <div>
+                <span className="text-xs font-bold text-[#7B8798] uppercase block mb-1">State 2: Medium Confidence</span>
+                <ConfidenceBlock
+                  score={71}
+                  alternatives={[
+                    {
+                      activityId: 'PIP-24-002',
+                      activityName: 'Line 24 Tie-In Weld Inspection',
+                      confidence: 68,
+                      reasons: ['Area matches Line 24'],
+                    },
+                    {
+                      activityId: 'PIP-25-001',
+                      activityName: 'Erect Line 25 Flare Header Spools',
+                      confidence: 45,
+                      reasons: ['Alternate piping package'],
+                    },
+                  ]}
+                />
+              </div>
+              <div>
+                <span className="text-xs font-bold text-[#7B8798] uppercase block mb-1">State 3: Low Confidence</span>
+                <ConfidenceBlock score={42} />
+              </div>
             </div>
           </div>
 

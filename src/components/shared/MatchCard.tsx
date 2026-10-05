@@ -23,6 +23,7 @@ import {
   Calendar,
   FolderGit2,
 } from 'lucide-react';
+import { ConfidenceBadge } from './ConfidenceBadge';
 
 export type ScoringFactorStatus = 'matched' | 'partial' | 'mismatch';
 
@@ -249,14 +250,21 @@ export function MatchCard({
                   </h3>
                 </div>
 
-                {/* Example format: PIP-24-001 | 94% | High-confidence suggestion */}
+                {/* Example format: PIP-24-001 | 94% | High Confidence */}
                 <div className="text-right sm:shrink-0 space-y-1">
-                  <div className="flex items-baseline justify-start sm:justify-end gap-1.5">
+                  <div className="flex items-center justify-start sm:justify-end gap-2">
+                    <span
+                      className={`w-2 h-2 rounded-full shrink-0 ${
+                        isConfidenceHigh
+                          ? 'bg-[#2E7D5B]'
+                          : confidence >= 70
+                          ? 'bg-[#D98B32]'
+                          : 'bg-[#B5473C]'
+                      }`}
+                      aria-hidden="true"
+                    />
                     <span className="text-2xl font-black font-mono text-[#172033]">
                       {confidence}%
-                    </span>
-                    <span className="text-xs font-semibold text-[#596579]">
-                      Confidence
                     </span>
                   </div>
                   <span
@@ -273,8 +281,15 @@ export function MatchCard({
                     ) : (
                       <AlertTriangle className="w-3.5 h-3.5" />
                     )}
-                    <span>{derivedStatusText}</span>
+                    <span>
+                      {isConfidenceHigh
+                        ? 'High Confidence'
+                        : confidence >= 70
+                        ? 'Review Required'
+                        : 'Unmatched'}
+                    </span>
                   </span>
+                  <span className="sr-only">{derivedStatusText}</span>
                 </div>
               </div>
 
@@ -295,13 +310,15 @@ export function MatchCard({
               )}
             </div>
           ) : (
-            <div className="p-3 bg-[#FBEFEE] border border-[#E4B0AA] rounded-lg text-xs space-y-1 text-[#B5473C]">
+            <div className="p-3 bg-[#FBEFEE] border border-[#E4B0AA] rounded-lg text-xs space-y-1.5 text-[#B5473C]">
               <div className="flex items-center gap-1.5 font-bold">
-                <XCircle className="w-4 h-4" />
-                <span>No Candidate Match Identified</span>
+                <XCircle className="w-4 h-4 shrink-0" />
+                <span>No sufficiently strong match exists</span>
               </div>
-              <p className="text-[11px] text-[#7A271A]">
-                The score of <strong>{confidence}%</strong> falls below automated baseline correlation. Work does not directly map to a scheduled activity.
+              <p className="text-[11px] text-[#7A271A] flex items-center gap-1.5 flex-wrap">
+                <span>The score of</span>
+                <ConfidenceBadge score={confidence} size="sm" />
+                <span>falls below automated baseline correlation. No sufficiently strong match exists. Manual review or WBS assignment required.</span>
               </p>
             </div>
           )}
@@ -318,9 +335,9 @@ export function MatchCard({
               <span className="text-[10px] uppercase font-bold text-[#7B8798] tracking-wider block">
                 Confidence:
               </span>
-              <span className="font-mono text-base font-bold text-[#172033]">
-                {confidence}%
-              </span>
+              <div className="mt-0.5">
+                <ConfidenceBadge score={confidence} size="sm" />
+              </div>
             </div>
 
             <div className="h-8 w-[1px] bg-[#D9DEE5] hidden sm:block" />
@@ -389,7 +406,46 @@ export function MatchCard({
         </div>
 
         {showWhyDetails && (
-          <div className="space-y-2 pt-1">
+          <div className="space-y-3 pt-1">
+            {/* Canonical 4 dimensions for High Confidence */}
+            {isConfidenceHigh && (
+              <div className="p-3 bg-[#F7FBF9] border border-[#D1EADC] rounded-lg space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold text-[#172033] uppercase tracking-wider">
+                    Why?
+                  </span>
+                  <span className="text-[11px] text-[#2E7D5B] font-medium">
+                    Verified Match Dimensions
+                  </span>
+                </div>
+                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 text-xs">
+                  <li className="flex items-center gap-2 text-[#172033]">
+                    <span className="w-4 h-4 rounded-full bg-[#EDF7F2] text-[#2E7D5B] flex items-center justify-center shrink-0">
+                      <Check className="w-3 h-3 stroke-[3]" />
+                    </span>
+                    <span className="font-medium">Activity match</span>
+                  </li>
+                  <li className="flex items-center gap-2 text-[#172033]">
+                    <span className="w-4 h-4 rounded-full bg-[#EDF7F2] text-[#2E7D5B] flex items-center justify-center shrink-0">
+                      <Check className="w-3 h-3 stroke-[3]" />
+                    </span>
+                    <span className="font-medium">Area match</span>
+                  </li>
+                  <li className="flex items-center gap-2 text-[#172033]">
+                    <span className="w-4 h-4 rounded-full bg-[#EDF7F2] text-[#2E7D5B] flex items-center justify-center shrink-0">
+                      <Check className="w-3 h-3 stroke-[3]" />
+                    </span>
+                    <span className="font-medium">Discipline match</span>
+                  </li>
+                  <li className="flex items-center gap-2 text-[#172033]">
+                    <span className="w-4 h-4 rounded-full bg-[#EDF7F2] text-[#2E7D5B] flex items-center justify-center shrink-0">
+                      <Check className="w-3 h-3 stroke-[3]" />
+                    </span>
+                    <span className="font-medium">Context match</span>
+                  </li>
+                </ul>
+              </div>
+            )}
             {effectiveFactors.map((factor, idx) => (
               <div
                 key={idx}
@@ -473,9 +529,7 @@ export function MatchCard({
                   </div>
 
                   <div className="flex items-center gap-2 shrink-0">
-                    <span className="font-mono font-bold text-xs px-2 py-0.5 rounded bg-white border border-[#D9DEE5] text-[#172033]">
-                      {alt.confidence}%
-                    </span>
+                    <ConfidenceBadge score={alt.confidence} size="sm" />
                     {onSelectAlternative && (
                       <button
                         type="button"

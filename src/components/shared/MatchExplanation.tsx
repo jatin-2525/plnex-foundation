@@ -32,6 +32,7 @@ import {
   Check,
 } from 'lucide-react';
 import { ConfidenceBadge } from './ConfidenceBadge';
+import { ConfidenceBlock } from './ConfidenceBlock';
 import {
   MatchExplanationModel,
   ScoringFactorItem,
@@ -387,71 +388,28 @@ export function MatchExplanation({
                 <AlertCircle className="w-4 h-4" />
                 <span>No Baseline Activity Identified</span>
               </div>
-              <p className="text-[11px] text-[#7A271A]">
-                The score of <strong>{confidence}%</strong> falls below the 70% automated threshold. No direct WBS activity corresponds to this field submission in current schedule V3 · Rev 3.2.
+              <p className="text-[11px] text-[#7A271A] flex items-center gap-1.5 flex-wrap">
+                <span>The score of</span>
+                <ConfidenceBadge score={confidence} size="sm" />
+                <span>falls below the 70% automated threshold. No direct WBS activity corresponds to this field submission in current schedule baseline.</span>
               </p>
             </div>
           )}
         </div>
 
-        {/* Confidence Bracket & Gauge Bar */}
-        <div className="p-3.5 bg-white border border-[#D9DEE5] rounded-lg space-y-2.5">
-          <div className="flex items-center justify-between flex-wrap gap-2">
-            <div className="flex items-center gap-2">
-              <span className="text-[10px] uppercase tracking-wider font-bold text-[#7B8798]">
-                Confidence Score:
-              </span>
-              <div className="flex items-baseline gap-1.5">
-                <span className="text-2xl font-bold font-mono text-[#172033]">
-                  {confidence}%
-                </span>
-                <span
-                  className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold border ${bracketConfig.badgeClass}`}
-                >
-                  {bracketConfig.icon}
-                  <span>{bracketConfig.label}</span>
-                </span>
-              </div>
-            </div>
-
-            <div className="text-[11px] text-[#596579] font-medium">
-              {bracketConfig.sublabel}
-            </div>
-          </div>
-
-          {/* Visual Confidence Gauge with 70% and 90% threshold markers */}
-          <div className="space-y-1 pt-1">
-            <div className="relative w-full h-3 bg-[#F1F3F5] rounded-md overflow-hidden border border-[#D9DEE5]">
-              {/* Colored score fill */}
-              <div
-                className={`h-full rounded-md transition-all duration-500 ${bracketConfig.barColor}`}
-                style={{ width: `${Math.min(100, Math.max(0, confidence))}%` }}
-              />
-
-              {/* Threshold Marker 70% */}
-              <div
-                className="absolute top-0 bottom-0 w-[2px] bg-[#172033]/60 z-10"
-                style={{ left: '70%' }}
-                title="70% Review Required Gate"
-              />
-
-              {/* Threshold Marker 90% */}
-              <div
-                className="absolute top-0 bottom-0 w-[2px] bg-[#172033]/80 z-10"
-                style={{ left: '90%' }}
-                title="90% High Confidence Suggestion Gate"
-              />
-            </div>
-
-            {/* Threshold Labels */}
-            <div className="flex justify-between items-center text-[10px] font-mono text-[#7B8798] pt-0.5">
-              <span>0% (Unmatched)</span>
-              <span className="pl-6 text-[#D98B32] font-semibold">| 70% Review Gate</span>
-              <span className="text-[#2E7D5B] font-semibold">| 90% High Suggestion Gate</span>
-              <span>100%</span>
-            </div>
-          </div>
-        </div>
+        {/* Standardized Confidence Visualization (Simple text + small indicator + explanation) */}
+        <ConfidenceBlock
+          score={confidence}
+          alternatives={alternativeCandidates.map((c) => ({
+            activityId: c.activityId,
+            activityName: c.activityName,
+            confidence: c.confidence,
+            wbs: c.wbs,
+            reasons: c.reasons,
+          }))}
+          onSelectAlternative={onSelectAlternative}
+          unmatchedExplanation={`No sufficiently strong match exists. The confidence score of ${confidence}% falls below the 70% threshold required for automated schedule association. No direct WBS activity corresponds to this field submission in current schedule V3 · Rev 3.2. Manual WBS assignment is required.`}
+        />
 
         {/* Raw Field Observation Snippet if available */}
         {rawFieldStatement && (
@@ -563,7 +521,7 @@ export function MatchExplanation({
               </span>
             </div>
             <div className="p-2.5 bg-white border border-[#D9DEE5] rounded-lg font-mono text-[11px] text-[#172033] overflow-x-auto flex items-center gap-1.5">
-              <span className="font-bold text-[#176B87]">{confidence}%</span>
+              <ConfidenceBadge score={confidence} size="sm" />
               <span>=</span>
               {scoringFactors.map((f, idx) => (
                 <React.Fragment key={idx}>
