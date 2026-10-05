@@ -866,7 +866,7 @@ export default function ProgressVariancePage() {
                 className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-[#B5473C] bg-[#FBEFEE] border border-[#E4B0AA] hover:bg-[#FBEFEE]/80 rounded-lg transition-colors"
               >
                 <AlertTriangle className="w-3.5 h-3.5" />
-                <span>Delay & Impact</span>
+                <span>Delay & Dependency Impact</span>
               </Link>
               <Link
                 href="/review"

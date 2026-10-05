@@ -72,7 +72,7 @@ export const NAV_GROUPS: SidebarGroup[] = [
     group: 'INTELLIGENCE',
     items: [
       { label: 'Progress & Variance', href: '/progress', icon: TrendingUp },
-      { label: 'Delay & Impact', href: '/risks', icon: TrendingDown },
+      { label: 'Delay & Dependency Impact', href: '/risks', icon: TrendingDown },
       { label: 'What-if', href: '/what-if', icon: Sliders },
     ],
   },

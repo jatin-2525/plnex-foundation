@@ -148,7 +148,7 @@ export function getResourceName(pathname: string): string {
   if (pathname === '/schedule-twin') return 'Schedule Twin';
   if (pathname.startsWith('/projects')) return 'Projects Portfolio';
   if (pathname === '/progress') return 'Progress & Variance';
-  if (pathname === '/risks') return 'Risks & Dependencies';
+  if (pathname === '/risks') return 'Delay & Dependency Impact';
   if (pathname === '/variance') return 'Delay & Impact';
   if (pathname.startsWith('/field')) return 'Field Operations & DPR';
   if (pathname === '/evidence') return 'Evidence & Audit';
