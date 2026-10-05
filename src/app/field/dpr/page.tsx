@@ -399,7 +399,7 @@ export default function DPRTimeAgentPage() {
                   </span>
                 ) : (
                   <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-medium bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#2E7D5B] animate-pulse" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#2E7D5B]" />
                     Online
                   </span>
                 )}
@@ -1520,7 +1520,7 @@ export default function DPRTimeAgentPage() {
                     : submissionState === 'Saved locally'
                     ? 'bg-[#FEF3C7] text-[#92400E] border-[#FDE68A]'
                     : submissionState === 'Processing'
-                    ? 'bg-[#EDF5F8] text-[#176B87] border-[#B3CBE0] animate-pulse'
+                    ? 'bg-[#EDF5F8] text-[#176B87] border-[#B3CBE0]'
                     : submissionState === 'Needs Confirmation'
                     ? 'bg-[#FDF6ED] text-[#D98B32] border-[#F0D4A6]'
                     : submissionState === 'Failed'

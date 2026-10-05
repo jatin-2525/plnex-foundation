@@ -250,7 +250,7 @@ export function Sidebar({ collapsed, onToggle, mobileMenuOpen, onCloseMobile }: 
                         <div className="flex flex-col min-w-0 text-left">
                           <span className="truncate leading-tight text-xs">{item.label}</span>
                           <span className="inline-flex items-center gap-1.5 text-[10px] font-mono text-[#2E7D5B] font-semibold mt-0.5">
-                            <span className="w-1.5 h-1.5 rounded-full bg-[#2E7D5B] animate-pulse" />
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#2E7D5B]" />
                             <span>Live</span>
                           </span>
                         </div>

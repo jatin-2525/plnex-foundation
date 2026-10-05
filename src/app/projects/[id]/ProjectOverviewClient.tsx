@@ -11,6 +11,7 @@ import { StatusBadge } from '../../../components/shared/StatusBadge';
 import { ConfidenceBadge } from '../../../components/shared/ConfidenceBadge';
 import { VarianceBadge } from '../../../components/shared/VarianceBadge';
 import { ProgressBar } from '../../../components/shared/ProgressBar';
+import { SCurveChart } from '../../../components/shared/SCurveChart';
 import { Modal } from '../../../components/shared/Modal';
 import { projectService } from '../../../lib/api/projectService';
 import {
@@ -734,7 +735,7 @@ export default function ProjectOverviewPage() {
               </button>
             ) : (
               <span className="w-5 h-5 flex items-center justify-center text-[#8A94A6] text-[10px] flex-shrink-0">
-                ΓÇó
+                &bull;
               </span>
             )}
 
@@ -828,7 +829,7 @@ export default function ProjectOverviewPage() {
                   {project.code}
                 </span>
                 <StatusBadge status={project.status} size="sm" />
-                <span className="text-xs text-[#596579] hidden sm:inline">ΓÇó</span>
+                <span className="text-xs text-[#596579] hidden sm:inline">&bull;</span>
                 <span className="text-xs font-mono font-medium text-[#172033] bg-[#F7F8FA] px-2 py-0.5 rounded border border-[#D9DEE5]">
                   Baseline: {project.scheduleVersion || CANONICAL_SCHEDULE_VERSION_LABEL}
                 </span>
@@ -843,11 +844,11 @@ export default function ProjectOverviewPage() {
                   <Building2 className="w-3.5 h-3.5 text-[#8A94A6]" />
                   <strong className="text-[#172033]">{project.organization}</strong>
                 </span>
-                <span>ΓÇó</span>
+                <span>&bull;</span>
                 <span>Location: {project.location}</span>
-                <span>ΓÇó</span>
+                <span>&bull;</span>
                 <span>Contractor: {project.contractor}</span>
-                <span>ΓÇó</span>
+                <span>&bull;</span>
                 <span className="flex items-center gap-1 font-mono text-[#176B87]">
                   <Clock className="w-3.5 h-3.5" />
                   Reporting Period: 18 Sep 2026 (Bi-Weekly Cutoff)
@@ -1021,6 +1022,13 @@ export default function ProjectOverviewPage() {
           </Link>
         </div>
 
+        {/* SECTION: PROJECT S-CURVE (Executive Trajectory) */}
+        <SCurveChart
+          variant="compact"
+          title="Project S-Curve — Cumulative Execution Trajectory"
+          subtitle="Baseline Rev 3.2 vs Actual Verified Progress (Data Date: 18 Sep 2026)"
+        />
+
         {/* SECTION: PROJECT HIERARCHY (L1 -> L2 -> L3 -> L4 -> L5 -> L6 Drill-Down) */}
         <div className="bg-white border border-[#D9DEE5] rounded-lg overflow-hidden">
           <div className="p-4 border-b border-[#D9DEE5] flex flex-col md:flex-row md:items-center justify-between gap-3 bg-[#F7F8FA]">
@@ -1032,7 +1040,7 @@ export default function ProjectOverviewPage() {
                 </h3>
               </div>
               <p className="text-xs text-[#596579] mt-0.5">
-                Full structured breakdown: <strong className="text-[#172033]">L1 Project</strong> ΓåÆ <strong className="text-[#172033]">L2 Area</strong> ΓåÆ <strong className="text-[#172033]">L3 Discipline</strong> ΓåÆ <strong className="text-[#172033]">L4 Work Package</strong> ΓåÆ <strong className="text-[#172033]">L5 Activity</strong> ΓåÆ <strong className="text-[#172033]">L6 Sub-Activity</strong>.
+                Full structured breakdown: <strong className="text-[#172033]">L1 Project</strong> &rarr; <strong className="text-[#172033]">L2 Area</strong> &rarr; <strong className="text-[#172033]">L3 Discipline</strong> &rarr; <strong className="text-[#172033]">L4 Work Package</strong> &rarr; <strong className="text-[#172033]">L5 Activity</strong> &rarr; <strong className="text-[#172033]">L6 Sub-Activity</strong>.
               </p>
             </div>
 
@@ -1090,7 +1098,7 @@ export default function ProjectOverviewPage() {
           <div className="p-3 bg-[#F7F8FA] border-t border-[#D9DEE5] flex items-center justify-between text-xs text-[#596579]">
             <div className="flex items-center gap-3">
               <span className="font-mono text-[11px]">Depth: 6 Levels Ingested</span>
-              <span>ΓÇó</span>
+              <span>&bull;</span>
               <span>Target Baseline: {CANONICAL_SCHEDULE_VERSION_LABEL} (Primavera P6 XML)</span>
             </div>
             <button
@@ -1230,7 +1238,7 @@ export default function ProjectOverviewPage() {
                         <span>WBS: <strong className="text-[#172033]">{item.activityId || 'Unlinked'}</strong></span>
                         {item.gpsCoords && (
                           <>
-                            <span>ΓÇó</span>
+                            <span>&bull;</span>
                             <span className="flex items-center gap-0.5 text-[10px]">
                               <MapPin className="w-3 h-3 text-[#2E7D5B]" />
                               {item.gpsCoords.split(',')[0]}

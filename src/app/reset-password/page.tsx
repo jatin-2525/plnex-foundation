@@ -210,7 +210,7 @@ function ResetPasswordForm() {
               </p>
             </div>
             <div className="w-full bg-[#E8EBF0] h-1.5 rounded-full overflow-hidden">
-              <div className="h-full bg-[#2E7D5B] rounded-full animate-pulse w-full" />
+              <div className="h-full bg-[#2E7D5B] rounded-full w-full" />
             </div>
             <span className="inline-flex items-center gap-1.5 text-xs text-[#176B87] font-medium font-mono">
               <Loader2 className="w-3.5 h-3.5 animate-spin" />

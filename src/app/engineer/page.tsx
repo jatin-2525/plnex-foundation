@@ -384,7 +384,7 @@ export default function EngineerDashboardPage() {
                 >
                   <span
                     className={`w-2 h-2 rounded-full ${
-                      effectiveStatus === 'OFFLINE' ? 'bg-[#DC2626]' : 'bg-[#16A34A] animate-pulse'
+                      effectiveStatus === 'OFFLINE' ? 'bg-[#DC2626]' : 'bg-[#16A34A]'
                     }`}
                   />
                   <span>{effectiveStatus === 'OFFLINE' ? 'Offline' : 'Online'}</span>

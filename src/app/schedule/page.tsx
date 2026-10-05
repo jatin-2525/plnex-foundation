@@ -1199,7 +1199,7 @@ export default function SchedulePage() {
       case 'previous':
         return 'bg-[#F0F2F5] text-[#596579] border-[#D9DEE5]';
       case 'processing':
-        return 'bg-[#EDF5F8] text-[#176B87] border-[#C5DCE6] animate-pulse';
+        return 'bg-[#EDF5F8] text-[#176B87] border-[#C5DCE6]';
       case 'failed':
         return 'bg-[#FDF0EE] text-[#B5473C] border-[#E4B0AA]';
     }
@@ -2261,7 +2261,7 @@ export default function SchedulePage() {
                 <Loader2 className="w-8 h-8 text-[#176B87] animate-spin mx-auto" />
                 <h4 className="text-sm font-bold text-[#172033]">Uploading {selectedFile}...</h4>
                 <div className="w-64 mx-auto bg-[#E8EBF0] rounded-full h-2 overflow-hidden">
-                  <div className="bg-[#176B87] h-2 rounded-full w-2/3 animate-pulse" />
+                  <div className="bg-[#176B87] h-2 rounded-full w-2/3" />
                 </div>
                 <p className="text-[11px] text-[#596579]">Streaming schedule XML payload to baseline ingestion service...</p>
               </div>
@@ -2270,7 +2270,7 @@ export default function SchedulePage() {
             {/* STAGE 3: PROCESSING */}
             {importStep === 3 && (
               <div className="p-8 text-center space-y-3">
-                <Layers className="w-8 h-8 text-[#3B6EA8] animate-bounce mx-auto" />
+                <Loader2 className="w-8 h-8 text-[#176B87] animate-spin mx-auto" />
                 <h4 className="text-sm font-bold text-[#172033]">Processing WBS Hierarchy &amp; Logic Links</h4>
                 <p className="text-[11px] text-[#596579]">
                   Parsing L1–L6 WBS tree, inspecting predecessor networks, and reading activity calendars...
@@ -2281,7 +2281,7 @@ export default function SchedulePage() {
             {/* STAGE 4: VALIDATION */}
             {importStep === 4 && (
               <div className="p-8 text-center space-y-3">
-                <ShieldCheck className="w-8 h-8 text-[#176B87] animate-pulse mx-auto" />
+                <Loader2 className="w-8 h-8 text-[#176B87] animate-spin mx-auto" />
                 <h4 className="text-sm font-bold text-[#172033]">Validating Pre-Commit Schedule Integrity</h4>
                 <p className="text-[11px] text-[#596579]">
                   Checking date chronological sequences, circular logic loops, and WBS parent resolution...

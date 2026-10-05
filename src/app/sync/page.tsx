@@ -282,7 +282,7 @@ export default function OfflineSyncCenterPage() {
         );
       case 'Conflict':
         return (
-          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA] animate-pulse">
+          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
             <AlertTriangle className="w-3 h-3" />
             Conflict
           </span>
@@ -320,7 +320,7 @@ export default function OfflineSyncCenterPage() {
                 {/* TOP CONNECTION STATUS BADGE: ONLINE / OFFLINE / SYNCING (Priority 2 Requirement 1) */}
                 {effectiveStatus === 'ONLINE' ? (
                   <span className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full text-[11px] font-black uppercase tracking-wider bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]">
-                    <span className="w-2 h-2 rounded-full bg-[#2E7D5B] animate-pulse" />
+                    <span className="w-2 h-2 rounded-full bg-[#2E7D5B]" />
                     ONLINE · Connection Active ({connectionMode.toLowerCase()})
                   </span>
                 ) : effectiveStatus === 'OFFLINE' ? (

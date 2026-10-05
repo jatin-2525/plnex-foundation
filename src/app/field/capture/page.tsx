@@ -531,7 +531,7 @@ export default function FieldCapturePage() {
                   onClick={toggleVoiceRecording}
                   className={`min-h-[44px] h-11 px-3.5 text-xs sm:text-sm font-semibold rounded-xl border transition-all inline-flex items-center justify-center gap-2 cursor-pointer ${
                     isRecordingVoice
-                      ? 'bg-[#FBEFEE] text-[#B5473C] border-[#E4B0AA] animate-pulse col-span-2 sm:col-span-1'
+                      ? 'bg-[#FBEFEE] text-[#B5473C] border-[#B5473C] font-bold col-span-2 sm:col-span-1'
                       : 'bg-white text-[#172033] border-[#D9DEE5] hover:bg-[#F0F2F5]'
                   }`}
                 >

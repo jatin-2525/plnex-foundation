@@ -11,6 +11,7 @@ import { StatusBadge } from '../../components/shared/StatusBadge';
 import { ConfidenceBadge } from '../../components/shared/ConfidenceBadge';
 import { VarianceBadge } from '../../components/shared/VarianceBadge';
 import { ProgressBar } from '../../components/shared/ProgressBar';
+import { SCurveChart } from '../../components/shared/SCurveChart';
 import { Modal } from '../../components/shared/Modal';
 import { ConfirmationDialog } from '../../components/shared/ConfirmationDialog';
 import { WhyButton } from '../../components/shared/WhyButton';
@@ -159,7 +160,7 @@ export default function ManagerDashboardPage() {
               >
                 <span
                   className={`w-2 h-2 rounded-full ${
-                    effectiveStatus === 'OFFLINE' ? 'bg-[#DC2626]' : 'bg-[#16A34A] animate-pulse'
+                    effectiveStatus === 'OFFLINE' ? 'bg-[#DC2626]' : 'bg-[#16A34A]'
                   }`}
                 />
                 <span className="font-mono uppercase tracking-wider text-[11px]">
@@ -477,27 +478,13 @@ export default function ManagerDashboardPage() {
             </div>
           </div>
 
-          {/* ONE CLEAR VISUALIZATION (No decorative charts) */}
+          {/* ONE CLEAR VISUALIZATION: Project S-Curve (Static, Professional, Level 1-3) */}
           <div className="space-y-4 pt-2">
-            <div className="p-4 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg space-y-2">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between text-xs font-mono gap-1">
-                <span className="text-[#172033] font-bold">
-                  Verified Actual: <strong className="text-[#176B87]">{activeProject.overallProgress}%</strong>
-                </span>
-                <span className="text-[#596579]">
-                  P6 Baseline Target: <strong className="text-[#172033]">{activeProject.plannedProgress}%</strong>
-                </span>
-                <span className="text-[#B5473C] font-bold">
-                  Schedule Variance Gap: {activeProject.variance}% (+2 Days Delay)
-                </span>
-              </div>
-              <ProgressBar
-                actual={activeProject.overallProgress}
-                planned={activeProject.plannedProgress}
-                size="lg"
-                status="delayed"
-              />
-            </div>
+            <SCurveChart
+              variant="full"
+              title="Project S-Curve — Baseline vs. Actual Earned vs. Forecast"
+              subtitle="Primavera P6 Baseline Rev 3.2 Physical Earned Progress (Data Date: 18 Sep 2026)"
+            />
 
             {/* Discipline Breakdown Bars */}
             <div className="space-y-2.5">

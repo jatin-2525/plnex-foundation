@@ -9,6 +9,7 @@ import { StateWrapper } from '../../components/shared/StateWrapper';
 import { Drawer } from '../../components/shared/Drawer';
 import { Modal } from '../../components/shared/Modal';
 import { ProgressBar } from '../../components/shared/ProgressBar';
+import { SCurveChart } from '../../components/shared/SCurveChart';
 import { DisciplineType } from '../../types';
 import { CANONICAL_SCHEDULE_VERSION_LABEL } from '../../lib/domain/canonicalModels';
 import { formatProjectDateTime, PROJECT_REPORT_DATE } from '../../lib/domain/dateUtils';
@@ -658,7 +659,7 @@ export default function ProgressVariancePage() {
                   Schedule Execution
                 </span>
                 <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-medium bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#2E7D5B] animate-pulse" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#2E7D5B]" />
                   Physical S-Curve Tracking
                 </span>
                 <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-[#F0F2F5] text-[#596579] border border-[#D9DEE5]">
@@ -875,151 +876,12 @@ export default function ProgressVariancePage() {
           </button>
         </div>
 
-        {/* S-CURVE VISUALIZATION */}
-        <div className="bg-white border border-[#D9DEE5] rounded-xl p-5 md:p-6 shadow-xs space-y-4">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#D9DEE5]/60 pb-3">
-            <div>
-              <div className="flex items-center gap-2">
-                <h2 className="text-base font-bold text-[#172033]">
-                  Physical Progress Tracking: Planned vs Actual Over Time
-                </h2>
-                <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0]">
-                  S-Curve Trajectory
-                </span>
-              </div>
-              <p className="text-xs text-[#596579] mt-0.5">
-                Compares cumulative scheduled baseline progress against verified site execution up to {reportingDate}.
-              </p>
-            </div>
-
-            <div className="flex items-center gap-4 text-xs flex-wrap">
-              <div className="flex items-center gap-1.5">
-                <span className="w-3 h-0.5 bg-[#596579] inline-block" />
-                <span className="w-2 h-2 rounded-full bg-[#596579] inline-block" />
-                <span className="text-[#596579] font-medium">Planned Baseline</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <span className="w-3 h-1 bg-[#2E7D5B] inline-block" />
-                <span className="w-2.5 h-2.5 rounded-full bg-[#2E7D5B] inline-block" />
-                <span className="text-[#2E7D5B] font-bold">Actual Verified</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <span className="w-3 h-0.5 bg-[#D98B32] border-t border-dashed border-[#D98B32] inline-block" />
-                <span className="w-2 h-2 rounded-full bg-[#D98B32] inline-block" />
-                <span className="text-[#D98B32] font-medium">Forecast Path</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="relative pt-2">
-            <div className="w-full h-64 sm:h-72">
-              <svg viewBox="0 0 800 260" className="w-full h-full overflow-visible" preserveAspectRatio="none">
-                {[0, 25, 50, 75, 100].map((val) => {
-                  const y = 220 - (val / 100) * 200;
-                  return (
-                    <g key={val}>
-                      <line x1="50" y1={y} x2="780" y2={y} stroke="#E8EBF0" strokeWidth="1" strokeDasharray="3 3" />
-                      <text x="42" y={y + 4} textAnchor="end" fontSize="10" fill="#8A94A6" fontFamily="monospace">
-                        {val}%
-                      </text>
-                    </g>
-                  );
-                })}
-
-                <line x1="467" y1="20" x2="467" y2="220" stroke="#176B87" strokeWidth="1.5" strokeDasharray="4 2" />
-                <rect x="420" y="8" width="94" height="18" rx="4" fill="#EDF5F8" stroke="#B3CBE0" strokeWidth="1" />
-                <text x="467" y="20" textAnchor="middle" fontSize="9" fontWeight="bold" fill="#176B87">
-                  Data Date (18 Sep)
-                </text>
-
-                <path
-                  d="M 50 196 L 154 164 L 258 130 L 362 90 L 467 60 L 571 36 L 675 24 L 780 20"
-                  fill="none"
-                  stroke="#8A94A6"
-                  strokeWidth="2"
-                  strokeDasharray="4 4"
-                />
-
-                <path
-                  d="M 467 74 L 571 44 L 675 30 L 780 20"
-                  fill="none"
-                  stroke="#D98B32"
-                  strokeWidth="2.5"
-                  strokeDasharray="3 3"
-                />
-
-                <path
-                  d="M 50 196 L 154 160 L 258 124 L 362 92 L 467 74"
-                  fill="none"
-                  stroke="#2E7D5B"
-                  strokeWidth="3.5"
-                  strokeLinecap="round"
-                />
-
-                <path
-                  d="M 50 196 L 154 160 L 258 124 L 362 92 L 467 74 L 467 220 L 50 220 Z"
-                  fill="#EDF7F2"
-                  opacity="0.35"
-                />
-
-                {TIME_SERIES_DATA.map((pt, idx) => {
-                  const x = 50 + idx * 104.28;
-                  const yPlanned = 220 - (pt.planned / 100) * 200;
-                  const yActual = pt.actual !== null ? 220 - (pt.actual / 100) * 200 : null;
-                  const isSelected = selectedChartPoint.period === pt.period;
-
-                  return (
-                    <g key={pt.period} className="cursor-pointer" onClick={() => setSelectedChartPoint(pt)}>
-                      <text x={x} y="240" textAnchor="middle" fontSize="10" fill={pt.isDataDate ? '#176B87' : '#596579'} fontWeight={pt.isDataDate ? 'bold' : 'normal'}>
-                        {pt.period}
-                      </text>
-                      <circle cx={x} cy={yPlanned} r="3.5" fill="#FFFFFF" stroke="#8A94A6" strokeWidth="2" />
-                      {yActual !== null && (
-                        <circle
-                          cx={x}
-                          cy={yActual}
-                          r={isSelected ? '6' : '4.5'}
-                          fill={isSelected ? '#176B87' : '#2E7D5B'}
-                          stroke="#FFFFFF"
-                          strokeWidth="2"
-                        />
-                      )}
-                    </g>
-                  );
-                })}
-              </svg>
-            </div>
-
-            <div className="mt-3 p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
-              <div className="flex items-center gap-2">
-                <span className="font-bold text-[#172033]">
-                  Selected Period: <strong className="text-[#176B87] font-mono">{selectedChartPoint.dateLabel}</strong>
-                </span>
-                <span className="text-[#8A94A6]">·</span>
-                <span className="text-[#596579]">{selectedChartPoint.notes}</span>
-              </div>
-              <div className="flex items-center gap-3 font-mono">
-                <span>Planned: <strong>{selectedChartPoint.planned}%</strong></span>
-                {selectedChartPoint.actual !== null ? (
-                  <>
-                    <span>Actual: <strong className="text-[#2E7D5B]">{selectedChartPoint.actual}%</strong></span>
-                    <span
-                      className={`font-bold px-2 py-0.5 rounded text-[11px] ${
-                        selectedChartPoint.actual - selectedChartPoint.planned < 0
-                          ? 'bg-[#FBEFEE] text-[#B5473C]'
-                          : 'bg-[#EDF7F2] text-[#2E7D5B]'
-                      }`}
-                    >
-                      Variance: {(selectedChartPoint.actual - selectedChartPoint.planned).toFixed(1)}%
-                    </span>
-                  </>
-                ) : (
-                  <span>Forecast: <strong className="text-[#D98B32]">{selectedChartPoint.forecast}%</strong></span>
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
+        {/* S-CURVE VISUALIZATION (Unified Professional SCurveChart) */}
+        <SCurveChart
+          variant="full"
+          title="Physical Progress Tracking: Planned vs Actual Over Time"
+          subtitle={`Compares cumulative scheduled baseline progress against verified site execution up to ${reportingDate}.`}
+        />
 
         {/* =========================================================================
             ACTIVITY TABLE:

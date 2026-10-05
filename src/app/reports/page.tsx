@@ -8,6 +8,7 @@ import { StateWrapper } from '../../components/shared/StateWrapper';
 import { Breadcrumbs } from '../../components/shell/Breadcrumbs';
 import { Modal } from '../../components/shared/Modal';
 import { Drawer } from '../../components/shared/Drawer';
+import { SCurveChart } from '../../components/shared/SCurveChart';
 import {
   REPORT_TEMPLATES,
   HISTORICAL_MEMORY_RECORDS,
@@ -495,6 +496,15 @@ export default function ReportsAndMemoryPage() {
                 </div>
               </div>
             </div>
+
+            {/* Live Progress S-Curve Preview for Progress Summary Template */}
+            <div className="mt-4">
+              <SCurveChart
+                variant="compact"
+                title="Progress Summary Dossier — Cumulative Physical S-Curve"
+                subtitle="Baseline target vs actual site execution trajectory for statutory reporting"
+              />
+            </div>
           </div>
         )}
 
@@ -821,6 +831,13 @@ export default function ReportsAndMemoryPage() {
                 <span className="text-xl font-bold font-mono text-[#2E7D5B]">100% Traceable</span>
               </div>
             </div>
+
+            {/* S-Curve in Modal Preview */}
+            <SCurveChart
+              variant="compact"
+              title="Physical Progress S-Curve (CPM Baseline vs Verified Actual)"
+              subtitle="Statutory Cutoff: 18 Sep 2026"
+            />
           </div>
         </Modal>
 
