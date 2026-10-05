@@ -963,7 +963,7 @@ export default function WhatIfSimulatorPage() {
                   </div>
 
                   <div className="overflow-x-auto">
-                    <table className="w-full text-left border-collapse text-xs">
+                    <table className="w-full min-w-[750px] text-left border-collapse text-xs">
                       <thead>
                         <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[10px] uppercase font-bold text-[#8A94A6] tracking-wider">
                           <th className="py-3 px-4">Activity</th>
@@ -1328,7 +1328,7 @@ export default function WhatIfSimulatorPage() {
         >
           <div className="space-y-4 text-xs">
             <div className="overflow-x-auto">
-              <table className="w-full text-left border-collapse text-xs">
+              <table className="w-full min-w-[650px] text-left border-collapse text-xs">
                 <thead>
                   <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[10px] uppercase font-bold text-[#8A94A6]">
                     <th className="py-3 px-4">Metric / Dimension</th>

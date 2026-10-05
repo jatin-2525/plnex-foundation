@@ -689,7 +689,7 @@ export default function MyActivitiesPage() {
         {/* ========================================================= */}
         <div className="hidden md:block bg-white border border-[#D9DEE5] rounded-lg overflow-hidden">
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs border-collapse">
+            <table className="w-full min-w-[760px] text-left text-xs border-collapse">
               <thead>
                 <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[#596579] font-medium">
                   <th className="py-3 px-3.5 whitespace-nowrap">Activity ID</th>
@@ -909,7 +909,7 @@ export default function MyActivitiesPage() {
                     e.stopPropagation();
                     handleOpenDrawer(act);
                   }}
-                  className="px-3 py-1.5 text-xs font-medium text-[#596579] border border-[#D9DEE5] rounded flex-1 text-center"
+                  className="min-h-[44px] px-3 py-2 text-xs font-medium text-[#596579] hover:bg-[#F0F2F5] active:bg-[#E8EBF0] border border-[#D9DEE5] rounded-lg flex-1 text-center transition-colors cursor-pointer"
                 >
                   View Activity
                 </button>
@@ -917,7 +917,7 @@ export default function MyActivitiesPage() {
                 <button
                   type="button"
                   onClick={(e) => handleOpenCapture(e, act)}
-                  className="px-4 py-1.5 text-xs font-bold text-white bg-[#176B87] hover:bg-[#12546A] rounded flex-1 inline-flex items-center justify-center gap-1.5 shadow-xs"
+                  className="min-h-[44px] px-4 py-2 text-xs font-bold text-white bg-[#176B87] hover:bg-[#12546A] active:bg-[#12546A] rounded-lg flex-1 inline-flex items-center justify-center gap-1.5 shadow-xs transition-colors cursor-pointer"
                 >
                   <Plus className="w-3.5 h-3.5" />
                   <span>Capture Update</span>

@@ -573,7 +573,7 @@ export default function ProjectsPage() {
           /* Projects Portfolio Data Table */
           <div className="bg-white border border-[#D9DEE5] rounded-lg overflow-hidden">
             <div className="overflow-x-auto">
-              <table className="w-full text-left text-xs border-collapse">
+              <table className="w-full min-w-[980px] text-left text-xs border-collapse">
                 <thead>
                   <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[#596579] font-medium">
                     <th className="py-3 px-3.5 whitespace-nowrap">Project ID</th>

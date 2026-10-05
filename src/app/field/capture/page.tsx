@@ -522,23 +522,23 @@ export default function FieldCapturePage() {
               </div>
             </div>
 
-            {/* Actions: Record Voice, Add Photo, Add Document, Field Note */}
+            {/* Actions: Record Voice, Photo, Document, Field Note (44px touch target) */}
             <div className="pt-2 border-t border-[#E8EBF0] space-y-3">
-              <div className="flex flex-wrap items-center gap-2">
+              <div className="grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-2.5">
                 {/* 1. Record Voice */}
                 <button
                   type="button"
                   onClick={toggleVoiceRecording}
-                  className={`px-3.5 py-2 text-xs font-semibold rounded-lg border transition-all inline-flex items-center gap-2 ${
+                  className={`min-h-[44px] h-11 px-3.5 text-xs sm:text-sm font-semibold rounded-xl border transition-all inline-flex items-center justify-center gap-2 cursor-pointer ${
                     isRecordingVoice
-                      ? 'bg-[#FBEFEE] text-[#B5473C] border-[#E4B0AA] animate-pulse'
+                      ? 'bg-[#FBEFEE] text-[#B5473C] border-[#E4B0AA] animate-pulse col-span-2 sm:col-span-1'
                       : 'bg-white text-[#172033] border-[#D9DEE5] hover:bg-[#F0F2F5]'
                   }`}
                 >
                   {isRecordingVoice ? (
                     <>
                       <MicOff className="w-4 h-4 text-[#B5473C]" />
-                      <span>Recording ({voiceSeconds}s) • Tap to Stop</span>
+                      <span>Recording ({voiceSeconds}s) • Stop</span>
                     </>
                   ) : (
                     <>
@@ -559,10 +559,10 @@ export default function FieldCapturePage() {
                       description: 'Geotagged site image attached directly.',
                     });
                   }}
-                  className="px-3.5 py-2 text-xs font-semibold text-[#172033] bg-white border border-[#D9DEE5] hover:bg-[#F0F2F5] rounded-lg transition-colors inline-flex items-center gap-2"
+                  className="min-h-[44px] h-11 px-3.5 text-xs sm:text-sm font-semibold text-[#172033] bg-white border border-[#D9DEE5] hover:bg-[#F0F2F5] rounded-xl transition-colors inline-flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <Camera className="w-4 h-4 text-[#176B87]" />
-                  <span>{attachedPhoto ? 'Photo Attached' : 'Add Photo'}</span>
+                  <span>{attachedPhoto ? 'Photo Attached' : 'Photo'}</span>
                 </button>
 
                 {/* 3. Add Document */}
@@ -576,20 +576,20 @@ export default function FieldCapturePage() {
                       description: 'Shift inspection report attached directly.',
                     });
                   }}
-                  className="px-3.5 py-2 text-xs font-semibold text-[#172033] bg-white border border-[#D9DEE5] hover:bg-[#F0F2F5] rounded-lg transition-colors inline-flex items-center gap-2"
+                  className="min-h-[44px] h-11 px-3.5 text-xs sm:text-sm font-semibold text-[#172033] bg-white border border-[#D9DEE5] hover:bg-[#F0F2F5] rounded-xl transition-colors inline-flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <Paperclip className="w-4 h-4 text-[#176B87]" />
-                  <span>{attachedDoc ? 'Document Attached' : 'Add Document'}</span>
+                  <span>{attachedDoc ? 'Document Attached' : 'Document'}</span>
                 </button>
 
                 {/* 4. Add Field Note */}
                 <button
                   type="button"
                   onClick={() => setIsAddingNote(!isAddingNote)}
-                  className="px-3.5 py-2 text-xs font-semibold text-[#172033] bg-white border border-[#D9DEE5] hover:bg-[#F0F2F5] rounded-lg transition-colors inline-flex items-center gap-2"
+                  className="min-h-[44px] h-11 px-3.5 text-xs sm:text-sm font-semibold text-[#172033] bg-white border border-[#D9DEE5] hover:bg-[#F0F2F5] rounded-xl transition-colors inline-flex items-center justify-center gap-2 cursor-pointer col-span-2 sm:col-span-1"
                 >
                   <FileText className="w-4 h-4 text-[#176B87]" />
-                  <span>{fieldNote ? 'Field Note Attached' : 'Add Field Note'}</span>
+                  <span>{fieldNote ? 'Field Note Attached' : 'Add Note'}</span>
                 </button>
               </div>
 
@@ -648,7 +648,7 @@ export default function FieldCapturePage() {
               <button
                 type="button"
                 onClick={handleExtractAndContinue}
-                className="w-full py-3.5 px-6 text-sm sm:text-base font-bold text-white bg-[#176B87] hover:bg-[#12546A] active:scale-99 rounded-xl shadow-sm transition-all inline-flex items-center justify-center gap-2"
+                className="w-full min-h-[48px] py-3.5 px-6 text-sm sm:text-base font-bold text-white bg-[#176B87] hover:bg-[#12546A] active:scale-99 rounded-xl shadow-sm transition-all inline-flex items-center justify-center gap-2 cursor-pointer"
               >
                 <span>Extract &amp; Continue</span>
                 <ArrowRight className="w-5 h-5 stroke-[2.5]" />
@@ -994,7 +994,7 @@ export default function FieldCapturePage() {
                 <button
                   type="button"
                   onClick={() => setStep('primary')}
-                  className="px-4 py-2.5 text-xs font-bold text-[#596579] hover:text-[#172033] bg-[#F7F8FA] hover:bg-[#F0F2F5] border border-[#D9DEE5] rounded-xl transition-colors inline-flex items-center justify-center gap-1.5"
+                  className="min-h-[44px] px-4 py-2.5 text-xs font-bold text-[#596579] hover:text-[#172033] bg-[#F7F8FA] hover:bg-[#F0F2F5] border border-[#D9DEE5] rounded-xl transition-colors inline-flex items-center justify-center gap-1.5 cursor-pointer"
                 >
                   <ArrowLeft className="w-4 h-4" />
                   <span>Back to Edit</span>
@@ -1004,7 +1004,7 @@ export default function FieldCapturePage() {
                   type="button"
                   onClick={handleConfirm}
                   disabled={isSubmitting}
-                  className="flex-1 sm:flex-initial px-6 py-3 text-sm sm:text-base font-bold text-white bg-[#176B87] hover:bg-[#12546A] active:scale-99 rounded-xl shadow-sm transition-all inline-flex items-center justify-center gap-2 disabled:opacity-50"
+                  className="flex-1 sm:flex-initial min-h-[48px] px-6 py-3 text-sm sm:text-base font-bold text-white bg-[#176B87] hover:bg-[#12546A] active:scale-99 rounded-xl shadow-sm transition-all inline-flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer"
                 >
                   {isSubmitting ? (
                     <>
@@ -1060,7 +1060,7 @@ export default function FieldCapturePage() {
                   setFieldNote('');
                   setStep('primary');
                 }}
-                className="w-full sm:w-auto px-5 py-2.5 text-xs font-bold text-[#172033] bg-white hover:bg-[#F0F2F5] border border-[#D9DEE5] rounded-xl transition-colors inline-flex items-center justify-center gap-1.5"
+                className="w-full sm:w-auto min-h-[44px] px-5 py-2.5 text-xs font-bold text-[#172033] bg-white hover:bg-[#F0F2F5] active:bg-[#E8EBF0] border border-[#D9DEE5] rounded-xl transition-colors inline-flex items-center justify-center gap-1.5 cursor-pointer"
               >
                 <Plus className="w-4 h-4" />
                 <span>Record Another Event</span>
@@ -1068,7 +1068,7 @@ export default function FieldCapturePage() {
 
               <Link
                 href="/engineer"
-                className="w-full sm:w-auto px-5 py-2.5 text-xs font-bold text-white bg-[#176B87] hover:bg-[#12546A] rounded-xl transition-colors inline-flex items-center justify-center gap-1.5"
+                className="w-full sm:w-auto min-h-[44px] px-5 py-2.5 text-xs font-bold text-white bg-[#176B87] hover:bg-[#12546A] active:bg-[#12546A] rounded-xl transition-colors inline-flex items-center justify-center gap-1.5 cursor-pointer"
               >
                 <span>Back to Engineer Dashboard</span>
                 <ArrowRight className="w-4 h-4" />
@@ -1083,7 +1083,7 @@ export default function FieldCapturePage() {
             <button
               type="button"
               onClick={handleExtractAndContinue}
-              className="w-full py-3.5 px-4 text-sm font-bold text-white bg-[#176B87] active:bg-[#12546A] rounded-xl shadow-sm flex items-center justify-center gap-2"
+              className="w-full min-h-[48px] py-3.5 px-4 text-sm font-bold text-white bg-[#176B87] active:bg-[#12546A] rounded-xl shadow-sm flex items-center justify-center gap-2 cursor-pointer"
             >
               <span>Extract &amp; Continue</span>
               <ArrowRight className="w-4 h-4 stroke-[2.5]" />

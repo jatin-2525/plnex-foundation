@@ -32,18 +32,18 @@ export function ProjectSelector() {
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2.5 px-3 py-1.5 bg-[#F0F2F5] hover:bg-[#E8EBF0] border border-[#D9DEE5] rounded-lg text-left transition-colors max-w-[280px] sm:max-w-[340px]"
+        className="flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3 py-1.5 bg-[#F0F2F5] hover:bg-[#E8EBF0] border border-[#D9DEE5] rounded-lg text-left transition-colors max-w-[130px] sm:max-w-[340px] cursor-pointer"
         aria-expanded={isOpen}
         aria-haspopup="true"
       >
-        <FolderGit2 className="w-4 h-4 text-[#176B87] flex-shrink-0" />
+        <FolderGit2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#176B87] flex-shrink-0" />
         <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-1.5">
-            <span className="font-mono text-xs font-bold text-[#172033]">{activeProject.code}</span>
-            <span className="text-[10px] text-[#596579] truncate">• {activeProject.name}</span>
+          <div className="flex items-center gap-1 sm:gap-1.5">
+            <span className="font-mono text-xs font-bold text-[#172033] truncate">{activeProject.code}</span>
+            <span className="text-[10px] text-[#596579] truncate hidden sm:inline">• {activeProject.name}</span>
           </div>
         </div>
-        <ChevronDown className="w-3.5 h-3.5 text-[#596579] flex-shrink-0" />
+        <ChevronDown className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#596579] flex-shrink-0" />
       </button>
 
       {isOpen && (

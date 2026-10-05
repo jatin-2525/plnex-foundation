@@ -4,7 +4,7 @@ import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
 import { useApp } from '../../context/AppContext';
 import { useToast } from '../../context/ToastContext';
-import { AppShell } from '../../components/shell/AppShell';
+import { StateWrapper } from '../../components/shared/StateWrapper';
 import { Breadcrumbs } from '../../components/shell/Breadcrumbs';
 import { Drawer } from '../../components/shared/Drawer';
 import { ProgressBar } from '../../components/shared/ProgressBar';
@@ -566,7 +566,7 @@ export default function ExecutionIntelligencePage() {
   ];
 
   return (
-    <AppShell>
+    <StateWrapper>
       <div className="space-y-6 pb-24 md:pb-12 max-w-7xl mx-auto">
         {/* Breadcrumb Navigation */}
         <Breadcrumbs items={breadcrumbs} />
@@ -943,7 +943,7 @@ export default function ExecutionIntelligencePage() {
             - Created At */}
         <div className="bg-white border border-[#D9DEE5] rounded-xl overflow-hidden shadow-xs">
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs border-collapse">
+            <table className="w-full min-w-[850px] text-left text-xs border-collapse">
               <thead>
                 <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[11px] font-bold uppercase tracking-wider text-[#596579]">
                   <th className="p-3.5 whitespace-nowrap">Event ID</th>
@@ -1347,6 +1347,6 @@ export default function ExecutionIntelligencePage() {
           )}
         </Drawer>
       </div>
-    </AppShell>
+    </StateWrapper>
   );
 }

@@ -51,24 +51,25 @@ export function Drawer({
     <div className="fixed inset-0 z-50 overflow-hidden" role="dialog" aria-modal="true">
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-[#172033]/40 transition-opacity animate-in fade-in duration-200"
+        className="fixed inset-0 bg-[#172033]/50 transition-opacity animate-in fade-in duration-200"
         onClick={onClose}
         aria-hidden="true"
       />
 
-      <div className="fixed inset-y-0 right-0 max-w-full flex pl-10">
+      {/* Container: Fullscreen sheet on mobile, slide-over drawer on tablet/desktop */}
+      <div className="fixed inset-0 sm:inset-y-0 sm:right-0 sm:left-auto max-w-full flex sm:pl-10 z-10">
         <div
-          className={`w-screen ${widthClass} bg-white border-l border-[#D9DEE5] shadow-lg flex flex-col transform transition-transform animate-in slide-in-from-right duration-200`}
+          className={`w-full sm:w-screen sm:${widthClass} h-full bg-white sm:border-l border-[#D9DEE5] shadow-2xl flex flex-col transform transition-transform animate-in slide-in-from-bottom sm:slide-in-from-right duration-200`}
         >
           {/* Header */}
-          <div className="flex items-start justify-between px-6 py-4 border-b border-[#D9DEE5] bg-white">
-            <div>
-              <h2 className="text-base font-semibold text-[#172033]">{title}</h2>
-              {subtitle && <p className="text-xs text-[#596579] mt-0.5">{subtitle}</p>}
+          <div className="flex items-start justify-between px-4 sm:px-6 py-3.5 sm:py-4 border-b border-[#D9DEE5] bg-white flex-shrink-0">
+            <div className="min-w-0 pr-2">
+              <h2 className="text-base sm:text-lg font-bold text-[#172033] truncate">{title}</h2>
+              {subtitle && <p className="text-xs text-[#596579] mt-0.5 truncate">{subtitle}</p>}
             </div>
             <button
               onClick={onClose}
-              className="text-[#596579] hover:text-[#172033] p-1 rounded-md hover:bg-[#F0F2F5] transition-colors -mr-1"
+              className="min-w-[44px] min-h-[44px] flex items-center justify-center p-2 text-[#596579] hover:text-[#172033] hover:bg-[#F0F2F5] rounded-lg transition-colors -mr-1 flex-shrink-0 cursor-pointer"
               aria-label="Close drawer"
             >
               <X className="w-5 h-5" />
@@ -76,13 +77,13 @@ export function Drawer({
           </div>
 
           {/* Body */}
-          <div className="flex-1 px-6 py-5 overflow-y-auto text-[#172033] text-sm">
+          <div className="flex-1 px-4 sm:px-6 py-4 sm:py-5 overflow-y-auto text-[#172033] text-xs sm:text-sm">
             {children}
           </div>
 
           {/* Footer */}
           {footer && (
-            <div className="flex items-center justify-end gap-3 px-6 py-3.5 border-t border-[#D9DEE5] bg-[#F7F8FA]">
+            <div className="flex items-center justify-end gap-2 sm:gap-3 px-4 sm:px-6 py-3 sm:py-3.5 border-t border-[#D9DEE5] bg-[#F7F8FA] flex-shrink-0">
               {footer}
             </div>
           )}

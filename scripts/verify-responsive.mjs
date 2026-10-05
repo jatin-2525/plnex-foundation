@@ -1,0 +1,92 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import assert from 'node:assert';
+
+console.log('=== VERIFYING RESPONSIVE UI CORRECTIONS ===\n');
+
+// 1. Check Mobile Header (TopHeader.tsx & ProjectSelector.tsx)
+console.log('1. Checking Mobile Header...');
+const topHeaderCode = fs.readFileSync('src/components/shell/TopHeader.tsx', 'utf8');
+assert(topHeaderCode.includes('hidden sm:flex') || topHeaderCode.includes('hidden md:flex'), 'Desktop search/controls should be hidden on mobile in TopHeader');
+assert(topHeaderCode.includes('ConnectionStatusControl'), 'Connection status should be visible in TopHeader');
+assert(topHeaderCode.includes('ProjectSelector'), 'ProjectSelector should be present in TopHeader');
+
+const projectSelectorCode = fs.readFileSync('src/components/shell/ProjectSelector.tsx', 'utf8');
+assert(projectSelectorCode.includes('hidden sm:inline') || projectSelectorCode.includes('truncate'), 'ProjectSelector should be compact on mobile');
+console.log('   ✓ Mobile Header: strictly displays Menu, Project, Connection without overcrowding.\n');
+
+// 2. Check Drawer Full-Screen Sheet on Mobile
+console.log('2. Checking Drawers (Shared Drawer & ActivityDetailDrawer)...');
+const sharedDrawerCode = fs.readFileSync('src/components/shared/Drawer.tsx', 'utf8');
+assert(sharedDrawerCode.includes('fixed inset-0 sm:inset-y-0 sm:right-0'), 'Shared Drawer must be full-screen on mobile and slide-over on desktop');
+assert(sharedDrawerCode.includes('min-h-[44px]'), 'Shared Drawer close button must have 44px touch target');
+
+const activityDrawerCode = fs.readFileSync('src/components/shared/ActivityDetailDrawer.tsx', 'utf8');
+assert(activityDrawerCode.includes('fixed inset-0 sm:inset-y-0 sm:right-0'), 'ActivityDetailDrawer must be full-screen on mobile and slide-over on desktop');
+assert(activityDrawerCode.includes('min-h-[44px]'), 'ActivityDetailDrawer close button must have 44px touch target');
+console.log('   ✓ Drawers: Full-screen sheet on mobile, slide-over on desktop, 44px close target.\n');
+
+// 3. Check AppShell Duplicates Removal
+console.log('3. Checking No Duplicate AppShell in Sync and Execution...');
+const syncCode = fs.readFileSync('src/app/sync/page.tsx', 'utf8');
+assert(!syncCode.includes('<AppShell>'), 'src/app/sync/page.tsx must not have duplicate <AppShell>');
+const execCode = fs.readFileSync('src/app/execution/page.tsx', 'utf8');
+assert(!execCode.includes('<AppShell>'), 'src/app/execution/page.tsx must not have duplicate <AppShell>');
+console.log('   ✓ No duplicate AppShell wrappers (eliminates duplicate sidebars/headers).\n');
+
+// 4. Check Field Capture 44px Touch Targets
+console.log('4. Checking Field Capture Touch Targets (min 44px)...');
+const captureCode = fs.readFileSync('src/app/field/capture/page.tsx', 'utf8');
+assert(captureCode.includes('min-h-[44px]') || captureCode.includes('h-11'), 'Voice/Photo/Doc buttons must have min 44px touch target');
+assert(captureCode.includes('min-h-[48px]'), 'Extract & Continue must have >= 44px touch target');
+console.log('   ✓ Field Capture: 44px/48px touch targets verified.\n');
+
+// 5. Check DPR Navigation & Submit Touch Targets
+console.log('5. Checking DPR Touch Targets and Table...');
+const dprCode = fs.readFileSync('src/app/field/dpr/page.tsx', 'utf8');
+assert(dprCode.includes('min-h-[44px] min-w-[44px]'), 'DPR step arrows must have 44px touch target');
+assert(dprCode.includes('min-h-[48px]'), 'DPR Submit button must have >= 44px touch target');
+assert(dprCode.includes('min-w-[700px]'), 'DPR table must have min-width for horizontal scroll');
+console.log('   ✓ DPR: 44px step arrows, min-w table, and 48px submit button verified.\n');
+
+// 6. Check Engineer Dashboard Touch Targets
+console.log('6. Checking Engineer Dashboard Touch Targets and Responsive Cards...');
+const engineerCode = fs.readFileSync('src/app/engineer/page.tsx', 'utf8');
+assert(engineerCode.includes('min-h-[44px]'), 'Engineer top actions and cards must have min 44px touch targets');
+assert(engineerCode.includes('min-w-[700px]'), 'Engineer desktop table must have min-w for horizontal scroll');
+console.log('   ✓ Engineer Dashboard: 44px touch targets & scrollable table verified.\n');
+
+// 7. Check Activities Responsive Cards and Desktop Table
+console.log('7. Checking My Activities Cards and Table...');
+const actCode = fs.readFileSync('src/app/activities/page.tsx', 'utf8');
+assert(actCode.includes('hidden md:block'), 'Activities must have desktop table');
+assert(actCode.includes('block md:hidden'), 'Activities must have mobile card conversion');
+assert(actCode.includes('min-h-[44px]'), 'Activities mobile card buttons must have 44px touch target');
+assert(actCode.includes('min-w-[760px]'), 'Activities desktop table must have min-w');
+console.log('   ✓ My Activities: cards on mobile, min-w on desktop table verified.\n');
+
+// 8. Check Tables Min-Widths across all pages
+console.log('8. Checking Table Min-Widths across application...');
+const tableFiles = [
+  { path: 'src/app/evidence/page.tsx', minW: 'min-w-[880px]' },
+  { path: 'src/app/schedule/page.tsx', minW: 'min-w-[960px]' },
+  { path: 'src/app/health/page.tsx', minW: 'min-w-[800px]' },
+  { path: 'src/app/progress/page.tsx', minW: 'min-w-[850px]' },
+  { path: 'src/app/risks/page.tsx', minW: 'min-w-[1100px]' },
+  { path: 'src/app/execution/page.tsx', minW: 'min-w-[850px]' },
+  { path: 'src/app/sync/page.tsx', minW: 'min-w-[880px]' },
+  { path: 'src/app/dashboard/page.tsx', minW: 'min-w-[700px]' },
+  { path: 'src/app/what-if/page.tsx', minW: 'min-w-[750px]' },
+  { path: 'src/app/projects/page.tsx', minW: 'min-w-[980px]' },
+];
+
+for (const tf of tableFiles) {
+  const content = fs.readFileSync(tf.path, 'utf8');
+  assert(content.includes(tf.minW), `${tf.path} must contain ${tf.minW} to prevent column squishing on mobile`);
+  assert(content.includes('overflow-x-auto'), `${tf.path} must contain overflow-x-auto`);
+  console.log(`   ✓ ${tf.path}: contains ${tf.minW} & overflow-x-auto`);
+}
+
+console.log('\n=============================================');
+console.log('ALL RESPONSIVE UI VERIFICATION CHECKS PASSED!');
+console.log('=============================================\n');

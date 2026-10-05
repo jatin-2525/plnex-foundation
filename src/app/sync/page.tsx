@@ -5,8 +5,8 @@ import Link from 'next/link';
 import { useApp } from '../../context/AppContext';
 import { useToast } from '../../context/ToastContext';
 import { useOffline } from '../../context/OfflineContext';
-import { AppShell } from '../../components/shell/AppShell';
 import { Breadcrumbs } from '../../components/shell/Breadcrumbs';
+import { StateWrapper } from '../../components/shared/StateWrapper';
 import { Modal } from '../../components/shared/Modal';
 import { Drawer } from '../../components/shared/Drawer';
 import {
@@ -298,7 +298,7 @@ export default function OfflineSyncCenterPage() {
   ];
 
   return (
-    <AppShell>
+    <StateWrapper>
       <div className="space-y-6 pb-24 md:pb-12 max-w-7xl mx-auto">
         {/* Breadcrumb Navigation */}
         <Breadcrumbs items={breadcrumbs} />
@@ -683,7 +683,7 @@ export default function OfflineSyncCenterPage() {
             ========================================================================= */}
         <div className="bg-white border border-[#D9DEE5] rounded-xl shadow-xs overflow-hidden">
           <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse text-xs">
+            <table className="w-full min-w-[880px] text-left border-collapse text-xs">
               <thead>
                 <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[10px] uppercase font-bold text-[#8A94A6] tracking-wider">
                   <th className="py-3 px-4">Sync Item ID</th>
@@ -1386,6 +1386,6 @@ export default function OfflineSyncCenterPage() {
           )}
         </Drawer>
       </div>
-    </AppShell>
+    </StateWrapper>
   );
 }

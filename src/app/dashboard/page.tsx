@@ -590,7 +590,7 @@ export default function ManagerDashboardPage() {
             </div>
           ) : (
             <div className="overflow-x-auto border border-[#D9DEE5] rounded-lg">
-              <table className="w-full text-left border-collapse text-xs">
+              <table className="w-full min-w-[700px] text-left border-collapse text-xs">
                 <thead>
                   <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[#596579] font-medium">
                     <th className="py-3 px-3.5 whitespace-nowrap min-w-[220px]">Event</th>

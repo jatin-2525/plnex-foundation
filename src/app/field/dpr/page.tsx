@@ -505,22 +505,24 @@ export default function DPRTimeAgentPage() {
                   </span>
                 </div>
               </div>
-              <div className="flex items-center gap-1">
+              <div className="flex items-center gap-1.5">
                 <button
                   type="button"
                   disabled={currentStep === 1}
                   onClick={() => setCurrentStep((prev) => Math.max(1, prev - 1) as DPRStep)}
-                  className="p-1.5 rounded border border-[#D9DEE5] bg-white text-[#172033] disabled:opacity-40"
+                  className="min-h-[44px] min-w-[44px] p-2 rounded-lg border border-[#D9DEE5] bg-white text-[#172033] hover:bg-[#F0F2F5] active:bg-[#E8EBF0] disabled:opacity-40 flex items-center justify-center transition-colors cursor-pointer"
+                  aria-label="Previous step"
                 >
-                  <ArrowLeft className="w-4 h-4" />
+                  <ArrowLeft className="w-5 h-5" />
                 </button>
                 <button
                   type="button"
                   disabled={currentStep === 7}
                   onClick={() => setCurrentStep((prev) => Math.min(7, prev + 1) as DPRStep)}
-                  className="p-1.5 rounded border border-[#D9DEE5] bg-white text-[#172033] disabled:opacity-40"
+                  className="min-h-[44px] min-w-[44px] p-2 rounded-lg border border-[#D9DEE5] bg-white text-[#172033] hover:bg-[#F0F2F5] active:bg-[#E8EBF0] disabled:opacity-40 flex items-center justify-center transition-colors cursor-pointer"
+                  aria-label="Next step"
                 >
-                  <ArrowRight className="w-4 h-4" />
+                  <ArrowRight className="w-5 h-5" />
                 </button>
               </div>
             </div>
@@ -725,7 +727,7 @@ export default function DPRTimeAgentPage() {
               <button
                 type="button"
                 onClick={() => setCurrentStep(2)}
-                className="px-6 py-2.5 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] rounded-lg inline-flex items-center gap-2 shadow-xs transition-colors"
+                className="w-full sm:w-auto min-h-[44px] px-6 py-2.5 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] active:bg-[#135A72] rounded-lg inline-flex items-center justify-center gap-2 shadow-xs transition-colors cursor-pointer"
               >
                 <span>Continue to Today's Activities</span>
                 <ArrowRight className="w-4 h-4" />
@@ -877,11 +879,11 @@ export default function DPRTimeAgentPage() {
             </div>
 
             {/* Step 2 Actions */}
-            <div className="pt-4 border-t border-[#D9DEE5] flex items-center justify-between">
+            <div className="pt-4 border-t border-[#D9DEE5] flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-2.5 sm:gap-0">
               <button
                 type="button"
                 onClick={() => setCurrentStep(1)}
-                className="px-4 py-2 text-xs font-semibold text-[#596579] hover:text-[#172033] bg-white border border-[#D9DEE5] rounded-lg inline-flex items-center gap-1.5"
+                className="min-h-[44px] px-4 py-2.5 text-xs font-semibold text-[#596579] hover:text-[#172033] bg-white border border-[#D9DEE5] rounded-lg inline-flex items-center justify-center gap-1.5 cursor-pointer"
               >
                 <ArrowLeft className="w-4 h-4" />
                 <span>Back</span>
@@ -889,7 +891,7 @@ export default function DPRTimeAgentPage() {
               <button
                 type="button"
                 onClick={() => setCurrentStep(3)}
-                className="px-6 py-2.5 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] rounded-lg inline-flex items-center gap-2 shadow-xs transition-colors"
+                className="min-h-[44px] px-6 py-2.5 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] active:bg-[#135A72] rounded-lg inline-flex items-center justify-center gap-2 shadow-xs transition-colors cursor-pointer"
               >
                 <span>Continue to Field Updates</span>
                 <ArrowRight className="w-4 h-4" />
@@ -1124,11 +1126,11 @@ export default function DPRTimeAgentPage() {
             </div>
 
             {/* Step 3 Actions */}
-            <div className="pt-4 border-t border-[#D9DEE5] flex items-center justify-between">
+            <div className="pt-4 border-t border-[#D9DEE5] flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-2.5 sm:gap-0">
               <button
                 type="button"
                 onClick={() => setCurrentStep(2)}
-                className="px-4 py-2 text-xs font-semibold text-[#596579] hover:text-[#172033] bg-white border border-[#D9DEE5] rounded-lg inline-flex items-center gap-1.5"
+                className="min-h-[44px] px-4 py-2.5 text-xs font-semibold text-[#596579] hover:text-[#172033] bg-white border border-[#D9DEE5] rounded-lg inline-flex items-center justify-center gap-1.5 cursor-pointer"
               >
                 <ArrowLeft className="w-4 h-4" />
                 <span>Back</span>
@@ -1136,7 +1138,7 @@ export default function DPRTimeAgentPage() {
               <button
                 type="button"
                 onClick={() => setCurrentStep(4)}
-                className="px-6 py-2.5 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] rounded-lg inline-flex items-center gap-2 shadow-xs transition-colors"
+                className="min-h-[44px] px-6 py-2.5 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] active:bg-[#135A72] rounded-lg inline-flex items-center justify-center gap-2 shadow-xs transition-colors cursor-pointer"
               >
                 <span>Continue to Time Agent Extraction</span>
                 <ArrowRight className="w-4 h-4" />
@@ -1231,11 +1233,11 @@ export default function DPRTimeAgentPage() {
             </div>
 
             {/* Step 4 Actions */}
-            <div className="pt-4 border-t border-[#D9DEE5] flex items-center justify-between">
+            <div className="pt-4 border-t border-[#D9DEE5] flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-2.5 sm:gap-0">
               <button
                 type="button"
                 onClick={() => setCurrentStep(3)}
-                className="px-4 py-2 text-xs font-semibold text-[#596579] hover:text-[#172033] bg-white border border-[#D9DEE5] rounded-lg inline-flex items-center gap-1.5"
+                className="min-h-[44px] px-4 py-2.5 text-xs font-semibold text-[#596579] hover:text-[#172033] bg-white border border-[#D9DEE5] rounded-lg inline-flex items-center justify-center gap-1.5 cursor-pointer"
               >
                 <ArrowLeft className="w-4 h-4" />
                 <span>Back</span>
@@ -1243,7 +1245,7 @@ export default function DPRTimeAgentPage() {
               <button
                 type="button"
                 onClick={() => setCurrentStep(5)}
-                className="px-6 py-2.5 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] rounded-lg inline-flex items-center gap-2 shadow-xs transition-colors"
+                className="min-h-[44px] px-6 py-2.5 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] active:bg-[#135A72] rounded-lg inline-flex items-center justify-center gap-2 shadow-xs transition-colors cursor-pointer"
               >
                 <span>Continue to Review Extracted Data</span>
                 <ArrowRight className="w-4 h-4" />
@@ -1273,7 +1275,7 @@ export default function DPRTimeAgentPage() {
 
             {/* Extracted Data Table */}
             <div className="border border-[#D9DEE5] rounded-xl overflow-x-auto">
-              <table className="w-full text-left text-xs border-collapse">
+              <table className="w-full min-w-[700px] text-left text-xs border-collapse">
                 <thead>
                   <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[11px] font-bold uppercase tracking-wider text-[#596579]">
                     <th className="p-3">Activity</th>
@@ -1332,11 +1334,11 @@ export default function DPRTimeAgentPage() {
             </div>
 
             {/* Step 5 Actions */}
-            <div className="pt-4 border-t border-[#D9DEE5] flex items-center justify-between">
+            <div className="pt-4 border-t border-[#D9DEE5] flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-2.5 sm:gap-0">
               <button
                 type="button"
                 onClick={() => setCurrentStep(4)}
-                className="px-4 py-2 text-xs font-semibold text-[#596579] hover:text-[#172033] bg-white border border-[#D9DEE5] rounded-lg inline-flex items-center gap-1.5"
+                className="min-h-[44px] px-4 py-2.5 text-xs font-semibold text-[#596579] hover:text-[#172033] bg-white border border-[#D9DEE5] rounded-lg inline-flex items-center justify-center gap-1.5 cursor-pointer"
               >
                 <ArrowLeft className="w-4 h-4" />
                 <span>Back</span>
@@ -1344,7 +1346,7 @@ export default function DPRTimeAgentPage() {
               <button
                 type="button"
                 onClick={() => setCurrentStep(6)}
-                className="px-6 py-2.5 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] rounded-lg inline-flex items-center gap-2 shadow-xs transition-colors"
+                className="min-h-[44px] px-6 py-2.5 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] active:bg-[#135A72] rounded-lg inline-flex items-center justify-center gap-2 shadow-xs transition-colors cursor-pointer"
               >
                 <span>Continue to Confirmation & Governance</span>
                 <ArrowRight className="w-4 h-4" />
@@ -1465,11 +1467,11 @@ export default function DPRTimeAgentPage() {
             </div>
 
             {/* Step 6 Actions */}
-            <div className="pt-4 border-t border-[#D9DEE5] flex items-center justify-between">
+            <div className="pt-4 border-t border-[#D9DEE5] flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-2.5 sm:gap-0">
               <button
                 type="button"
                 onClick={() => setCurrentStep(5)}
-                className="px-4 py-2 text-xs font-semibold text-[#596579] hover:text-[#172033] bg-white border border-[#D9DEE5] rounded-lg inline-flex items-center gap-1.5"
+                className="min-h-[44px] px-4 py-2.5 text-xs font-semibold text-[#596579] hover:text-[#172033] bg-white border border-[#D9DEE5] rounded-lg inline-flex items-center justify-center gap-1.5 cursor-pointer"
               >
                 <ArrowLeft className="w-4 h-4" />
                 <span>Back</span>
@@ -1478,7 +1480,7 @@ export default function DPRTimeAgentPage() {
                 type="button"
                 disabled={!engineerSignoffConfirmed}
                 onClick={() => setCurrentStep(7)}
-                className="px-6 py-2.5 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] disabled:opacity-50 rounded-lg inline-flex items-center gap-2 shadow-xs transition-colors"
+                className="min-h-[44px] px-6 py-2.5 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] active:bg-[#135A72] disabled:opacity-50 rounded-lg inline-flex items-center justify-center gap-2 shadow-xs transition-colors cursor-pointer"
               >
                 <span>Proceed to DPR Submission</span>
                 <ArrowRight className="w-4 h-4" />
@@ -1815,11 +1817,11 @@ export default function DPRTimeAgentPage() {
             )}
 
             {/* Step 7 Main Action Bar */}
-            <div className="pt-4 border-t border-[#D9DEE5] flex items-center justify-between">
+            <div className="pt-4 border-t border-[#D9DEE5] flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-3">
               <button
                 type="button"
                 onClick={() => setCurrentStep(6)}
-                className="px-4 py-2 text-xs font-semibold text-[#596579] hover:text-[#172033] bg-white border border-[#D9DEE5] rounded-lg inline-flex items-center gap-1.5"
+                className="min-h-[44px] px-4 py-2.5 text-xs font-semibold text-[#596579] hover:text-[#172033] bg-white border border-[#D9DEE5] rounded-lg inline-flex items-center justify-center gap-1.5 cursor-pointer"
               >
                 <ArrowLeft className="w-4 h-4" />
                 <span>Back to Confirmation</span>
@@ -1830,7 +1832,7 @@ export default function DPRTimeAgentPage() {
                   type="button"
                   onClick={handleSubmitDPR}
                   disabled={submissionState === 'Processing'}
-                  className="px-6 py-2.5 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] disabled:opacity-50 rounded-lg inline-flex items-center gap-2 shadow-xs transition-colors"
+                  className="min-h-[48px] px-6 py-2.5 text-xs sm:text-sm font-bold text-white bg-[#176B87] hover:bg-[#135A72] active:bg-[#135A72] disabled:opacity-50 rounded-lg inline-flex items-center justify-center gap-2 shadow-xs transition-colors cursor-pointer"
                 >
                   <Send className="w-4 h-4" />
                   <span>

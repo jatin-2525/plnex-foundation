@@ -416,7 +416,7 @@ export default function EngineerDashboardPage() {
                   setSelectedActivityForCapture('PIP-24-002');
                   setIsCaptureModalOpen(true);
                 }}
-                className="flex-1 sm:flex-initial px-4 py-2.5 text-xs sm:text-sm font-bold text-white bg-[#176B87] hover:bg-[#12546A] active:scale-98 rounded-lg shadow-xs transition-all inline-flex items-center justify-center gap-1.5"
+                className="flex-1 sm:flex-initial min-h-[44px] px-4 py-2.5 text-xs sm:text-sm font-bold text-white bg-[#176B87] hover:bg-[#12546A] active:scale-98 rounded-lg shadow-xs transition-all inline-flex items-center justify-center gap-1.5 cursor-pointer"
               >
                 <Plus className="w-4 h-4 stroke-[2.5]" />
                 <span>+ CAPTURE FIELD UPDATE</span>
@@ -425,7 +425,7 @@ export default function EngineerDashboardPage() {
               {/* Secondary: OPEN DPR */}
               <Link
                 href="/field/dpr"
-                className="flex-1 sm:flex-initial px-4 py-2.5 text-xs sm:text-sm font-bold text-[#172033] bg-white hover:bg-[#F0F2F5] active:scale-98 border border-[#D9DEE5] rounded-lg transition-all inline-flex items-center justify-center gap-1.5"
+                className="flex-1 sm:flex-initial min-h-[44px] px-4 py-2.5 text-xs sm:text-sm font-bold text-[#172033] bg-white hover:bg-[#F0F2F5] active:scale-98 border border-[#D9DEE5] rounded-lg transition-all inline-flex items-center justify-center gap-1.5 cursor-pointer"
               >
                 <FileText className="w-4 h-4 text-[#596579]" />
                 <span>OPEN DPR</span>
@@ -498,7 +498,7 @@ export default function EngineerDashboardPage() {
           {/* DESKTOP TABLE VIEW */}
           <div className="hidden md:block border border-[#D9DEE5] rounded-lg overflow-hidden">
             <div className="overflow-x-auto">
-              <table className="w-full text-left text-xs border-collapse">
+              <table className="w-full min-w-[700px] text-left text-xs border-collapse">
                 <thead>
                   <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[#596579] font-medium">
                     <th className="py-3 px-3.5 whitespace-nowrap min-w-[220px]">Activity</th>
@@ -610,7 +610,7 @@ export default function EngineerDashboardPage() {
                   <button
                     type="button"
                     onClick={() => handleOpenCaptureForActivity(act.id)}
-                    className="px-3 py-1.5 text-xs font-bold text-white bg-[#176B87] active:bg-[#12546A] rounded transition-colors inline-flex items-center gap-1 shadow-xs"
+                    className="min-h-[44px] px-3.5 py-2 text-xs font-bold text-white bg-[#176B87] hover:bg-[#12546A] active:bg-[#12546A] rounded-lg transition-colors inline-flex items-center gap-1.5 shadow-xs cursor-pointer"
                   >
                     <Plus className="w-3.5 h-3.5" />
                     <span>Capture Update</span>
@@ -768,14 +768,14 @@ export default function EngineerDashboardPage() {
               setSelectedActivityForCapture('PIP-24-002');
               setIsCaptureModalOpen(true);
             }}
-            className="flex-1 py-3 px-4 text-xs font-bold text-white bg-[#176B87] active:bg-[#12546A] rounded-lg shadow-sm flex items-center justify-center gap-1.5"
+            className="flex-1 min-h-[44px] py-3 px-4 text-xs font-bold text-white bg-[#176B87] active:bg-[#12546A] rounded-lg shadow-sm flex items-center justify-center gap-1.5 cursor-pointer"
           >
             <Plus className="w-4 h-4 stroke-[2.5]" />
             <span>+ CAPTURE UPDATE</span>
           </button>
           <Link
             href="/field/dpr"
-            className="py-3 px-4 text-xs font-bold text-[#172033] bg-[#F7F8FA] border border-[#D9DEE5] active:bg-[#E8EBF0] rounded-lg flex items-center justify-center gap-1"
+            className="min-h-[44px] py-3 px-4 text-xs font-bold text-[#172033] bg-[#F7F8FA] border border-[#D9DEE5] active:bg-[#E8EBF0] rounded-lg flex items-center justify-center gap-1 cursor-pointer"
           >
             <FileText className="w-4 h-4 text-[#596579]" />
             <span>DPR</span>

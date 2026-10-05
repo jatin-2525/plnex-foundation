@@ -17,18 +17,18 @@ export function TopHeader({ onMobileToggle }: TopHeaderProps) {
   const { setGlobalSearchOpen, activeProject, userSession } = useApp();
 
   return (
-    <header className="fixed top-0 left-0 right-0 h-14 bg-white border-b border-[#D9DEE5] z-40 px-3 sm:px-4 flex items-center justify-between gap-3">
-      {/* Left: Mobile hamburger + Brand logo + Project Selector */}
-      <div className="flex items-center gap-3">
+    <header className="fixed top-0 left-0 right-0 h-14 bg-white border-b border-[#D9DEE5] z-40 px-2 sm:px-4 flex items-center justify-between gap-2 sm:gap-3">
+      {/* Left: Mobile Menu + Brand + Project */}
+      <div className="flex items-center gap-1.5 sm:gap-3 min-w-0">
         <button
           onClick={onMobileToggle}
-          className="md:hidden p-1.5 text-[#596579] hover:text-[#172033] hover:bg-[#F0F2F5] rounded-md"
+          className="md:hidden min-w-[44px] min-h-[44px] flex items-center justify-center p-2 text-[#596579] hover:text-[#172033] hover:bg-[#F0F2F5] rounded-lg -ml-1 cursor-pointer flex-shrink-0"
           aria-label="Toggle mobile navigation"
         >
           <Menu className="w-5 h-5" />
         </button>
 
-        <Link href="/" className="flex items-center gap-2.5">
+        <Link href="/" className="hidden sm:flex items-center gap-2 flex-shrink-0">
           <div className="w-7 h-7 rounded bg-[#176B87] text-white flex items-center justify-center font-black text-sm tracking-tighter">
             PX
           </div>
@@ -36,20 +36,21 @@ export function TopHeader({ onMobileToggle }: TopHeaderProps) {
             <span className="text-sm font-bold tracking-tight text-[#172033] leading-none">
               PL<span className="text-[#176B87]">n</span>EX
             </span>
-            <span className="text-[10px] text-[#596579] font-mono tracking-tight leading-none mt-0.5 hidden sm:inline">
+            <span className="text-[10px] text-[#596579] font-mono tracking-tight leading-none mt-0.5 hidden lg:inline">
               PLANNING-TO-EXECUTION BRIDGE
             </span>
           </div>
         </Link>
 
-        <div className="h-5 w-px bg-[#D9DEE5] hidden sm:block mx-1" />
+        <div className="h-5 w-px bg-[#D9DEE5] hidden sm:block mx-0.5" />
 
-        <div className="hidden sm:block">
+        {/* Project Selector (Visible on both mobile and desktop) */}
+        <div className="flex-shrink-0">
           <ProjectSelector />
         </div>
       </div>
 
-      {/* Middle: Global Search shortcut */}
+      {/* Middle: Global Search shortcut (Desktop only) */}
       <div className="flex-1 max-w-md hidden md:block">
         <button
           onClick={() => setGlobalSearchOpen(true)}
@@ -65,9 +66,9 @@ export function TopHeader({ onMobileToggle }: TopHeaderProps) {
         </button>
       </div>
 
-      {/* Right: Sample Indicator + Cutoff Status + Notifications + User Profile */}
-      <div className="flex items-center gap-2 sm:gap-3">
-        {/* Sample Project Indicator (Visible only to Admin to keep normal user navigation clean) */}
+      {/* Right: Connection (Always visible) + Notifications (sm+) + User Menu (sm+) */}
+      <div className="flex items-center gap-1.5 sm:gap-3 flex-shrink-0">
+        {/* Sample Project Indicator (Admin only) */}
         {userSession?.role === 'admin' && (
           <span
             className="hidden xl:inline-flex items-center gap-1 px-2.5 py-1 rounded bg-[#FEF3C7] text-[#92400E] border border-[#FDE68A] text-[10px] font-mono font-bold uppercase tracking-wider"
@@ -77,16 +78,20 @@ export function TopHeader({ onMobileToggle }: TopHeaderProps) {
           </span>
         )}
 
-        {/* Global Connection Control (Priority 2 Requirement 2) */}
+        {/* Global Connection Control */}
         <ConnectionStatusControl />
 
-        {/* Notifications Center */}
-        <NotificationCenter />
+        {/* Notifications Center (hidden on mobile to prevent overcrowding) */}
+        <div className="hidden sm:block">
+          <NotificationCenter />
+        </div>
 
-        <div className="h-5 w-px bg-[#D9DEE5]" />
+        <div className="h-5 w-px bg-[#D9DEE5] hidden sm:block" />
 
-        {/* User Info & Menu */}
-        <UserMenu />
+        {/* User Info & Menu (hidden on mobile to prevent overcrowding) */}
+        <div className="hidden sm:block">
+          <UserMenu />
+        </div>
       </div>
     </header>
   );

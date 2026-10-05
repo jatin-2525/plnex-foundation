@@ -216,8 +216,9 @@ export function ActivityDetailDrawer({
         aria-hidden="true"
       />
 
-      <div className="fixed inset-y-0 right-0 max-w-full flex pl-6 sm:pl-10">
-        <div className="w-screen max-w-3xl bg-white border-l border-[#D9DEE5] shadow-2xl flex flex-col transform transition-transform animate-in slide-in-from-right duration-200">
+      {/* Container: Fullscreen sheet on mobile, slide-over drawer on tablet/desktop */}
+      <div className="fixed inset-0 sm:inset-y-0 sm:right-0 sm:left-auto max-w-full flex sm:pl-10 z-10">
+        <div className="w-full sm:w-screen sm:max-w-3xl h-full bg-white sm:border-l border-[#D9DEE5] shadow-2xl flex flex-col transform transition-transform animate-in slide-in-from-bottom sm:slide-in-from-right duration-200">
           
           {/* =========================================================================
               HEADER:
@@ -225,7 +226,7 @@ export function ActivityDetailDrawer({
               - Activity Name
               - Status
               ========================================================================= */}
-          <div className="px-6 py-4 border-b border-[#D9DEE5] bg-white flex flex-col gap-2">
+          <div className="px-4 sm:px-6 py-3.5 sm:py-4 border-b border-[#D9DEE5] bg-white flex flex-col gap-2 flex-shrink-0">
             <div className="flex items-start justify-between gap-4">
               <div className="space-y-1 min-w-0">
                 <div className="flex items-center gap-2 flex-wrap">
@@ -263,7 +264,7 @@ export function ActivityDetailDrawer({
               <button
                 type="button"
                 onClick={handleClose}
-                className="text-[#596579] hover:text-[#172033] p-1.5 rounded-lg hover:bg-[#F0F2F5] transition-colors -mr-1 flex-shrink-0"
+                className="min-w-[44px] min-h-[44px] flex items-center justify-center p-2 text-[#596579] hover:text-[#172033] hover:bg-[#F0F2F5] rounded-lg transition-colors -mr-1 flex-shrink-0 cursor-pointer"
                 aria-label="Close activity detail drawer"
               >
                 <X className="w-5 h-5" />

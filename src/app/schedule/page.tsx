@@ -1409,8 +1409,8 @@ export default function SchedulePage() {
             </div>
 
             {/* Error Report Table with Row, Column, Problem, Correction */}
-            <div className="bg-white border border-[#E4B0AA] rounded-lg overflow-hidden">
-              <table className="w-full text-left text-xs border-collapse">
+            <div className="bg-white border border-[#E4B0AA] rounded-lg overflow-x-auto">
+              <table className="w-full min-w-[500px] text-left text-xs border-collapse">
                 <thead>
                   <tr className="bg-[#FAF2F1] border-b border-[#E4B0AA] text-[#B5473C] font-semibold">
                     <th className="py-2.5 px-3 whitespace-nowrap">Row</th>
@@ -1732,7 +1732,7 @@ export default function SchedulePage() {
                    DEFAULT SCANNABLE TABLE (Exact 10 columns specified by User)
                    Activity ID | Activity | Area | Discipline | Start | Finish | Progress | Status | Variance | Action
                    ----------------------------------------------------------------- */
-                <table className="w-full text-left text-xs border-collapse">
+                <table className="w-full min-w-[960px] text-left text-xs border-collapse">
                   <thead>
                     <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[#596579] font-medium">
                       <th className="py-3 px-3.5 whitespace-nowrap">Activity ID</th>
@@ -1915,7 +1915,7 @@ export default function SchedulePage() {
                 /* -----------------------------------------------------------------
                    FULL 14-COLUMN P6 MATRIX VIEW (Detailed mode)
                    ----------------------------------------------------------------- */
-                <table className="w-full text-left text-xs border-collapse">
+                <table className="w-full min-w-[1200px] text-left text-xs border-collapse">
                   <thead>
                     <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[#596579] font-medium">
                       <th className="py-3 px-3 whitespace-nowrap">Activity ID</th>
@@ -2303,8 +2303,8 @@ export default function SchedulePage() {
                 </div>
 
                 {/* Canonical Error Report Table */}
-                <div className="border border-[#E4B0AA] rounded-xl overflow-hidden bg-white shadow-xs">
-                  <table className="w-full text-left text-xs border-collapse">
+                <div className="border border-[#E4B0AA] rounded-xl overflow-x-auto bg-white shadow-xs">
+                  <table className="w-full min-w-[500px] text-left text-xs border-collapse">
                     <thead>
                       <tr className="bg-[#FAF2F1] border-b border-[#E4B0AA] text-[#B5473C] font-semibold">
                         <th className="py-2.5 px-3 whitespace-nowrap">Row</th>
