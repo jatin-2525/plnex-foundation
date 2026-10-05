@@ -43,6 +43,8 @@ import {
   User,
   Hash,
   Lock,
+  Target,
+  MapPin,
 } from 'lucide-react';
 
 // Semantics per requirement: Positive, Neutral, Negative
@@ -106,6 +108,189 @@ const TIME_SERIES_DATA: TimeSeriesPoint[] = [
   { period: 'Oct 2026', dateLabel: '31 Oct 2026', planned: 92, actual: null, forecast: 88, notes: 'Forecast recovery with double shift RT inspection' },
   { period: 'Nov 2026', dateLabel: '30 Nov 2026', planned: 98, actual: null, forecast: 95, notes: 'Pre-commissioning hydrotests' },
   { period: 'Dec 2026', dateLabel: '15 Dec 2026', planned: 100, actual: null, forecast: 100, notes: 'Target commercial completion' },
+];
+
+// Data Models for Detailed Project-Control Analytics
+export interface DisciplineProgressItem {
+  discipline: DisciplineType;
+  planned: number;
+  actual: number;
+  variance: number;
+  weight: number; // % of total scope
+  activitiesCount: number;
+  status: 'Ahead' | 'On Track' | 'Behind';
+  criticalLagDriver: string;
+}
+
+export const DISCIPLINE_PROGRESS_DATA: DisciplineProgressItem[] = [
+  {
+    discipline: 'Piping',
+    planned: 82.0,
+    actual: 68.0,
+    variance: -14.0,
+    weight: 35,
+    activitiesCount: 64,
+    status: 'Behind',
+    criticalLagDriver: 'Line 24 field butt welding hold (4 joints pending RT) & weather delay on test manifold prep.',
+  },
+  {
+    discipline: 'Civil',
+    planned: 94.0,
+    actual: 97.0,
+    variance: 3.0,
+    weight: 25,
+    activitiesCount: 42,
+    status: 'Ahead',
+    criticalLagDriver: 'Compressor foundation pedestal (Block A) 45 m³ pour completed 6 hrs ahead of schedule.',
+  },
+  {
+    discipline: 'Electrical',
+    planned: 70.0,
+    actual: 65.0,
+    variance: -5.0,
+    weight: 15,
+    activitiesCount: 28,
+    status: 'Behind',
+    criticalLagDriver: '350m cable pull on TR-04 complete; overhead gallery bracket delivery delayed by 2 days.',
+  },
+  {
+    discipline: 'Mechanical',
+    planned: 75.0,
+    actual: 78.0,
+    variance: 3.0,
+    weight: 15,
+    activitiesCount: 30,
+    status: 'Ahead',
+    criticalLagDriver: 'Compressor C-101 laser alignment running ahead; Flare KO drum vessel positioned on pads.',
+  },
+  {
+    discipline: 'Instrumentation',
+    planned: 45.0,
+    actual: 40.0,
+    variance: -5.0,
+    weight: 10,
+    activitiesCount: 20,
+    status: 'Behind',
+    criticalLagDriver: 'Transmitter bracket installation held awaiting Line 24 hydrostatic test clearance sign-off.',
+  },
+];
+
+export interface AreaProgressItem {
+  area: string;
+  code: string;
+  planned: number;
+  actual: number;
+  variance: number;
+  weight: number;
+  isCriticalPath: boolean;
+  totalFloatDays: number;
+  status: 'Ahead' | 'On Track' | 'Behind';
+  summary: string;
+}
+
+export const AREA_PROGRESS_DATA: AreaProgressItem[] = [
+  {
+    area: 'Unit A - Gas Processing',
+    code: 'AREA-01',
+    planned: 84.0,
+    actual: 72.0,
+    variance: -12.0,
+    weight: 45,
+    isCriticalPath: true,
+    totalFloatDays: 0,
+    status: 'Behind',
+    summary: 'Directly on project critical path. Drives 85% of net project schedule lag due to Line 24 piping.',
+  },
+  {
+    area: 'Unit A - Compressor Station',
+    code: 'AREA-02',
+    planned: 92.0,
+    actual: 95.0,
+    variance: 3.0,
+    weight: 25,
+    isCriticalPath: false,
+    totalFloatDays: 8,
+    status: 'Ahead',
+    summary: 'Civil pedestal complete; mechanical alignment running smoothly with 8 days buffer float.',
+  },
+  {
+    area: 'Unit B - Offsites & Utilities',
+    code: 'AREA-03',
+    planned: 65.0,
+    actual: 60.0,
+    variance: -5.0,
+    weight: 15,
+    isCriticalPath: false,
+    totalFloatDays: 14,
+    status: 'Behind',
+    summary: 'Drainage piping completed; pipe support grouting ongoing. Ample float absorbs delay.',
+  },
+  {
+    area: 'Unit 02 - Flare System',
+    code: 'AREA-04',
+    planned: 70.0,
+    actual: 68.0,
+    variance: -2.0,
+    weight: 15,
+    isCriticalPath: false,
+    totalFloatDays: 20,
+    status: 'Behind',
+    summary: 'Flare KO drum vessel erected on foundation pads; anchor bolts aligned. Float absorbs delay.',
+  },
+];
+
+export interface VarianceRootCauseItem {
+  id: string;
+  category: string;
+  factor: string;
+  varianceContribution: number;
+  floatImpactDays: number;
+  criticality: 'Critical Path' | 'Secondary Float' | 'Positive Gain';
+  activityRef: string;
+  mitigationPlan: string;
+}
+
+export const VARIANCE_ROOT_CAUSES: VarianceRootCauseItem[] = [
+  {
+    id: 'VRC-01',
+    category: 'Quality & NDT',
+    factor: 'Radiographic Testing Clearance Hold on Line 24 Field Welds',
+    varianceContribution: -4.0,
+    floatImpactDays: -3,
+    criticality: 'Critical Path',
+    activityRef: 'PIP-24-002 (Weld Line 24 Field Joints)',
+    mitigationPlan: 'Mobilize dedicated evening shift RT inspection team on 20 Sep to clear 4 joints.',
+  },
+  {
+    id: 'VRC-02',
+    category: 'Procurement & Stores',
+    factor: 'Stores Inspection Delay on 150 Bar High-Pressure Blind Flanges',
+    varianceContribution: -3.0,
+    floatImpactDays: -2,
+    criticality: 'Critical Path',
+    activityRef: 'PIP-24-003 (Hydrostatic Test Line 24)',
+    mitigationPlan: 'Expedited QC store release note issued under priority concession authorization.',
+  },
+  {
+    id: 'VRC-03',
+    category: 'Environmental',
+    factor: 'Monsoon Rain Squall Stoppage on Hydrotest Manifold Setup',
+    varianceContribution: -2.0,
+    floatImpactDays: -1,
+    criticality: 'Secondary Float',
+    activityRef: 'PIP-24-003 (Hydrostatic Test Line 24)',
+    mitigationPlan: 'Waterproof habitat and all-weather canopy erected over the test manifold station.',
+  },
+  {
+    id: 'VRC-04',
+    category: 'Civil Productivity',
+    factor: 'Continuous Transit Mixer RMC Pour on Compressor Pedestal',
+    varianceContribution: 2.0,
+    floatImpactDays: 2,
+    criticality: 'Positive Gain',
+    activityRef: 'CIV-11-001 (Foundation Block A)',
+    mitigationPlan: 'Early handover to mechanical contractors for preliminary laser alignment tooling setup.',
+  },
 ];
 
 const MOCK_PROGRESS_ACTIVITIES: ProgressActivityRow[] = [
@@ -761,133 +946,508 @@ export default function ProgressVariancePage() {
             2. Actual Verified Progress
             3. Variance
             ========================================================================= */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {/* 1. Planned Progress */}
-          <div className="bg-white border border-[#D9DEE5] rounded-lg p-5 shadow-xs">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#7B8798] block">
-              Planned Progress
-            </span>
-            <div className="flex items-baseline gap-2 mt-2">
-              <span className="text-3xl font-extrabold text-[#172033] font-mono">
-                {summaryMetrics.plannedProgress.toFixed(1)}%
+        {/* =========================================================================
+            2. SUMMARY METRICS
+            Planned Progress | Actual Verified Progress | Variance | Forecast at Completion
+            ========================================================================= */}
+        <div className="space-y-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {/* 1. Planned Progress */}
+            <div className="bg-white border border-[#D9DEE5] rounded-lg p-5 shadow-xs">
+              <span className="text-xs font-bold uppercase tracking-wider text-[#7B8798] block">
+                Planned Progress
               </span>
-              <span className="text-xs text-[#596579] font-medium">Target Baseline</span>
+              <div className="flex items-baseline gap-2 mt-2">
+                <span className="text-3xl font-extrabold text-[#172033] font-mono">
+                  {summaryMetrics.plannedProgress.toFixed(1)}%
+                </span>
+                <span className="text-xs text-[#596579] font-medium">CPM Baseline</span>
+              </div>
+              <p className="text-xs text-[#596579] mt-2">
+                Cumulative baseline target as of {reportingDate.split(' ')[0]} (Data Date).
+              </p>
             </div>
-            <p className="text-xs text-[#596579] mt-2">
-              Expected cumulative physical progress as of {reportingDate.split(' ')[0]}.
-            </p>
+
+            {/* 2. Actual Verified Progress */}
+            <div className="bg-white border border-[#B8DCC9] rounded-lg p-5 shadow-xs">
+              <span className="text-xs font-bold uppercase tracking-wider text-[#2E7D5B] block">
+                Actual Verified Progress
+              </span>
+              <div className="flex items-baseline gap-2 mt-2">
+                <span className="text-3xl font-extrabold text-[#176B87] font-mono">
+                  {summaryMetrics.actualProgress.toFixed(1)}%
+                </span>
+                <span className="text-xs text-[#2E7D5B] font-bold">100% Traceable</span>
+              </div>
+              <p className="text-xs text-[#596579] mt-2">
+                Physically verified field output substantiated by engineering inspection records.
+              </p>
+            </div>
+
+            {/* 3. Variance */}
+            <div className="bg-white border border-[#E4B0AA] rounded-lg p-5 shadow-xs">
+              <span className="text-xs font-bold uppercase tracking-wider text-[#B5473C] block">
+                Variance
+              </span>
+              <div className="flex items-baseline gap-2 mt-2">
+                <span className="text-3xl font-extrabold text-[#B5473C] font-mono">
+                  {summaryMetrics.variance.toFixed(1)}%
+                </span>
+                <span className="text-xs font-bold px-2 py-0.5 rounded bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
+                  Negative (- Behind)
+                </span>
+              </div>
+              <p className="text-xs text-[#596579] mt-2">
+                Physical lag driven by Line 24 field butt welding and monsoon stoppages.
+              </p>
+            </div>
+
+            {/* 4. Forecast at Completion */}
+            <div className="bg-white border border-[#F0D4A6] rounded-lg p-5 shadow-xs">
+              <span className="text-xs font-bold uppercase tracking-wider text-[#D98B32] block">
+                Forecast at Completion
+              </span>
+              <div className="flex items-baseline gap-2 mt-2">
+                <span className="text-3xl font-extrabold text-[#D98B32] font-mono">
+                  100.0%
+                </span>
+                <span className="text-xs text-[#D98B32] font-bold">+4 Days Slip</span>
+              </div>
+              <p className="text-xs text-[#596579] mt-2">
+                Target completion shifted to 15 Dec 2026 (contractual baseline 11 Dec 2026).
+              </p>
+            </div>
           </div>
 
-          {/* 2. Actual Verified Progress */}
-          <div className="bg-white border border-[#B8DCC9] rounded-lg p-5 shadow-xs">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#2E7D5B] block">
-              Actual Verified Progress
-            </span>
-            <div className="flex items-baseline gap-2 mt-2">
-              <span className="text-3xl font-extrabold text-[#176B87] font-mono">
-                {summaryMetrics.actualProgress.toFixed(1)}%
-              </span>
-              <span className="text-xs text-[#2E7D5B] font-bold">100% Traceable</span>
-            </div>
-            <p className="text-xs text-[#596579] mt-2">
-              Physically verified field output substantiated by engineering inspection records.
-            </p>
-          </div>
-
-          {/* 3. Variance */}
-          <div className="bg-white border border-[#E4B0AA] rounded-lg p-5 shadow-xs">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#B5473C] block">
-              Variance
-            </span>
-            <div className="flex items-baseline gap-2 mt-2">
-              <span className="text-3xl font-extrabold text-[#B5473C] font-mono">
-                {summaryMetrics.variance.toFixed(1)}%
-              </span>
-              <span className="text-xs font-bold px-2 py-0.5 rounded bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
-                Negative (- Behind)
-              </span>
-            </div>
-            <p className="text-xs text-[#596579] mt-2">
-              Physical lag driven by Line 24 field butt welding and monsoon stoppages.
-            </p>
+          {/* Summary Metrics Interpretation */}
+          <div className="p-3 bg-[#F7F8FA] border-l-4 border-[#176B87] rounded-r-lg text-xs text-[#172033] leading-relaxed">
+            <strong className="text-[#176B87]">Summary Performance Interpretation: </strong>
+            Cumulative verified physical progress is currently <strong>7.0 percentage points behind baseline (-7.0% variance)</strong>. The project critical path has consumed 4 days of total float, shifting projected commercial completion to 15 Dec 2026 unless recovery shifts on Line 24 are mobilized.
           </div>
         </div>
-
-        {/* Secondary Category Filters */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-          <button
-            type="button"
-            onClick={() => setSelectedSemanticFilter(selectedSemanticFilter === 'Positive' ? 'ALL' : 'Positive')}
-            className={`p-3.5 rounded-lg border text-left transition-all ${
-              selectedSemanticFilter === 'Positive'
-                ? 'bg-[#EDF7F2] border-[#2E7D5B] shadow-2xs'
-                : 'bg-white border-[#D9DEE5] hover:bg-[#F7F8FA]'
-            }`}
-          >
-            <span className="text-[11px] font-bold uppercase tracking-wider text-[#7B8798] block">
-              Ahead of Schedule
-            </span>
-            <div className="flex items-baseline gap-1.5 mt-1">
-              <span className="text-xl font-bold text-[#2E7D5B] font-mono">
-                {summaryMetrics.activitiesAhead}
-              </span>
-              <span className="text-xs text-[#596579]">activities (+ Variance)</span>
-            </div>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => setSelectedSemanticFilter(selectedSemanticFilter === 'Neutral' ? 'ALL' : 'Neutral')}
-            className={`p-3.5 rounded-lg border text-left transition-all ${
-              selectedSemanticFilter === 'Neutral'
-                ? 'bg-[#EDF5F8] border-[#176B87] shadow-2xs'
-                : 'bg-white border-[#D9DEE5] hover:bg-[#F7F8FA]'
-            }`}
-          >
-            <span className="text-[11px] font-bold uppercase tracking-wider text-[#7B8798] block">
-              On Track
-            </span>
-            <div className="flex items-baseline gap-1.5 mt-1">
-              <span className="text-xl font-bold text-[#172033] font-mono">
-                {summaryMetrics.activitiesOnTrack}
-              </span>
-              <span className="text-xs text-[#596579]">activities (0.0% Variance)</span>
-            </div>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => setSelectedSemanticFilter(selectedSemanticFilter === 'Negative' ? 'ALL' : 'Negative')}
-            className={`p-3.5 rounded-lg border text-left transition-all ${
-              selectedSemanticFilter === 'Negative'
-                ? 'bg-[#FBEFEE] border-[#B5473C] shadow-2xs'
-                : 'bg-white border-[#D9DEE5] hover:bg-[#F7F8FA]'
-            }`}
-          >
-            <span className="text-[11px] font-bold uppercase tracking-wider text-[#7B8798] block">
-              Behind Schedule
-            </span>
-            <div className="flex items-baseline gap-1.5 mt-1">
-              <span className="text-xl font-bold text-[#B5473C] font-mono">
-                {summaryMetrics.activitiesBehind}
-              </span>
-              <span className="text-xs text-[#596579]">activities (- Variance)</span>
-            </div>
-          </button>
-        </div>
-
-        {/* S-CURVE VISUALIZATION (Unified Professional SCurveChart) */}
-        <SCurveChart
-          variant="full"
-          title="Physical Progress Tracking: Planned vs Actual Over Time"
-          subtitle={`Compares cumulative scheduled baseline progress against verified site execution up to ${reportingDate}.`}
-        />
 
         {/* =========================================================================
-            ACTIVITY TABLE:
+            3. MANDATORY S-CURVE
+            Planned Progress | Actual Verified Progress | Forecast Progress | Variance
+            ========================================================================= */}
+        <div className="space-y-2">
+          <div className="px-3 py-1.5 bg-[#EDF5F8] border border-[#B3CBE0] rounded-lg flex items-center justify-between text-xs text-[#176B87] font-medium flex-wrap gap-2">
+            <span>Project Question: Is cumulative physical progress tracking the approved CPM baseline over time?</span>
+            <span className="font-mono text-[11px] font-bold">Planned vs. Actual vs. Forecast Trajectory</span>
+          </div>
+          <SCurveChart
+            variant="full"
+            title="Project S-Curve — Planned vs. Actual vs. Forecast"
+            subtitle={`Compares cumulative scheduled baseline progress against verified site execution up to ${reportingDate}.`}
+          />
+        </div>
+
+        {/* =========================================================================
+            4. PROGRESS BY DISCIPLINE
+            Project Question: Which engineering discipline is driving project variance?
+            ========================================================================= */}
+        <div className="bg-white border border-[#D9DEE5] rounded-lg p-5 shadow-xs space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#D9DEE5]/60 pb-3">
+            <div>
+              <div className="flex items-center gap-2">
+                <HardHat className="w-4 h-4 text-[#176B87]" />
+                <h3 className="text-base font-bold text-[#172033] tracking-tight">Progress by Discipline</h3>
+              </div>
+              <p className="text-xs text-[#596579] mt-0.5">
+                Physical progress breakdown across engineering scopes compared against baseline weightage.
+              </p>
+            </div>
+            <div className="px-2.5 py-1 rounded bg-[#EDF5F8] border border-[#B3CBE0] text-[11px] font-mono text-[#176B87] font-semibold self-start sm:self-auto">
+              Project Question: Which engineering discipline is driving project variance?
+            </div>
+          </div>
+
+          {/* Discipline Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5">
+            {DISCIPLINE_PROGRESS_DATA.map((d) => {
+              const isBehind = d.variance < 0;
+              const isAhead = d.variance > 0;
+              return (
+                <div
+                  key={d.discipline}
+                  className={`p-3.5 rounded-lg border transition-all ${
+                    isBehind
+                      ? 'bg-[#FCFDFD] border-[#E4B0AA]/80'
+                      : isAhead
+                      ? 'bg-[#FCFDFD] border-[#B8DCC9]/80'
+                      : 'bg-[#FCFDFD] border-[#D9DEE5]'
+                  }`}
+                >
+                  <div className="flex items-center justify-between gap-2">
+                    <div className="flex items-center gap-2">
+                      <span className="font-bold text-xs text-[#172033]">{d.discipline}</span>
+                      <span className="text-[10px] font-mono text-[#7B8798] bg-[#F1F3F5] px-1.5 py-0.2 rounded border border-[#D9DEE5]">
+                        {d.weight}% Scope
+                      </span>
+                    </div>
+                    <span
+                      className={`text-[10px] font-mono font-bold px-1.5 py-0.5 rounded border ${
+                        isBehind
+                          ? 'bg-[#FBEFEE] text-[#B5473C] border-[#E4B0AA]'
+                          : isAhead
+                          ? 'bg-[#EDF7F2] text-[#2E7D5B] border-[#B8DCC9]'
+                          : 'bg-[#F1F3F5] text-[#596579] border-[#D9DEE5]'
+                      }`}
+                    >
+                      {isAhead ? `+${d.variance.toFixed(1)}%` : `${d.variance.toFixed(1)}%`}
+                    </span>
+                  </div>
+
+                  {/* Planned vs Actual Metrics */}
+                  <div className="grid grid-cols-2 gap-2 mt-2.5 text-[11px] font-mono">
+                    <div className="p-1.5 bg-[#F7F8FA] rounded border border-[#E5E9EF]">
+                      <span className="text-[#7B8798] block text-[10px] font-sans">Planned Target</span>
+                      <span className="font-bold text-[#176B87]">{d.planned.toFixed(1)}%</span>
+                    </div>
+                    <div className="p-1.5 bg-[#F7F8FA] rounded border border-[#E5E9EF]">
+                      <span className="text-[#7B8798] block text-[10px] font-sans">Verified Actual</span>
+                      <span className={`font-bold ${isBehind ? 'text-[#B5473C]' : 'text-[#2E7D5B]'}`}>
+                        {d.actual.toFixed(1)}%
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Visual Dual Progress Bar */}
+                  <div className="mt-2.5 space-y-1">
+                    <div className="relative w-full h-2.5 bg-[#E5E9EF] rounded-full overflow-hidden">
+                      <div
+                        className={`h-full transition-all ${isBehind ? 'bg-[#D98B32]' : 'bg-[#2E7D5B]'}`}
+                        style={{ width: `${d.actual}%` }}
+                        title={`Actual: ${d.actual}%`}
+                      />
+                      <div
+                        className="absolute top-0 bottom-0 w-0.5 bg-[#172033] z-10"
+                        style={{ left: `${d.planned}%` }}
+                        title={`Planned Target: ${d.planned}%`}
+                      />
+                    </div>
+                    <div className="flex justify-between text-[9px] text-[#7B8798] font-mono">
+                      <span>0%</span>
+                      <span className="text-[#172033] font-semibold">Planned Marker: {d.planned}%</span>
+                      <span>100%</span>
+                    </div>
+                  </div>
+
+                  {/* Critical Driver */}
+                  <div className="mt-2 pt-2 border-t border-[#D9DEE5]/60 text-[10px] text-[#596579] leading-snug">
+                    <strong className="text-[#172033] font-medium">Driver: </strong>
+                    {d.criticalLagDriver}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Concise Engineering Interpretation */}
+          <div className="p-3 bg-[#F7F8FA] border-l-4 border-[#176B87] rounded-r-lg text-xs text-[#172033] leading-relaxed">
+            <strong className="text-[#176B87]">Discipline Analytics Interpretation: </strong>
+            Piping is the primary schedule lag driver with a <strong>-14.0% variance</strong> (weighted 35% of overall project scope) due to unresolved Line 24 field butt welds and monsoon stoppages. Civil (+3.0%) and Mechanical (+3.0%) are running ahead of baseline, preventing foundation delays from impacting the pre-commissioning critical path.
+          </div>
+        </div>
+
+        {/* =========================================================================
+            5. PROGRESS BY AREA
+            Project Question: Which physical plant battery limit has progress bottlenecks?
+            ========================================================================= */}
+        <div className="bg-white border border-[#D9DEE5] rounded-lg p-5 shadow-xs space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#D9DEE5]/60 pb-3">
+            <div>
+              <div className="flex items-center gap-2">
+                <MapPin className="w-4 h-4 text-[#176B87]" />
+                <h3 className="text-base font-bold text-[#172033] tracking-tight">Progress by Area</h3>
+              </div>
+              <p className="text-xs text-[#596579] mt-0.5">
+                Geographical battery limit performance tracking with critical path and total float mapping.
+              </p>
+            </div>
+            <div className="px-2.5 py-1 rounded bg-[#EDF5F8] border border-[#B3CBE0] text-[11px] font-mono text-[#176B87] font-semibold self-start sm:self-auto">
+              Project Question: Which physical plant battery limit has progress bottlenecks?
+            </div>
+          </div>
+
+          {/* Area Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3.5">
+            {AREA_PROGRESS_DATA.map((area) => {
+              const isBehind = area.variance < 0;
+              const isAhead = area.variance > 0;
+              return (
+                <div
+                  key={area.code}
+                  className={`p-3.5 rounded-lg border flex flex-col justify-between transition-all ${
+                    area.isCriticalPath && isBehind
+                      ? 'bg-[#FFFDFD] border-[#E4B0AA] ring-1 ring-[#E4B0AA]/40'
+                      : 'bg-[#FCFDFD] border-[#D9DEE5]'
+                  }`}
+                >
+                  <div>
+                    <div className="flex items-center justify-between gap-1 mb-1">
+                      <span className="font-mono text-[10px] text-[#7B8798]">{area.code}</span>
+                      {area.isCriticalPath ? (
+                        <span className="text-[9px] font-bold px-1.5 py-0.2 rounded bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
+                          Critical Path
+                        </span>
+                      ) : (
+                        <span className="text-[9px] font-mono font-medium px-1.5 py-0.2 rounded bg-[#F1F3F5] text-[#596579]">
+                          Float: {area.totalFloatDays}d
+                        </span>
+                      )}
+                    </div>
+
+                    <h4 className="font-bold text-xs text-[#172033] leading-snug">{area.area}</h4>
+
+                    {/* Metrics */}
+                    <div className="grid grid-cols-3 gap-1 mt-2.5 text-[10px] font-mono text-center">
+                      <div className="p-1 bg-[#F7F8FA] rounded border border-[#E5E9EF]">
+                        <span className="text-[#7B8798] block text-[9px] font-sans">Planned</span>
+                        <span className="font-bold text-[#176B87]">{area.planned.toFixed(0)}%</span>
+                      </div>
+                      <div className="p-1 bg-[#F7F8FA] rounded border border-[#E5E9EF]">
+                        <span className="text-[#7B8798] block text-[9px] font-sans">Actual</span>
+                        <span className={`font-bold ${isBehind ? 'text-[#B5473C]' : 'text-[#2E7D5B]'}`}>
+                          {area.actual.toFixed(0)}%
+                        </span>
+                      </div>
+                      <div
+                        className={`p-1 rounded border ${
+                          isBehind
+                            ? 'bg-[#FBEFEE] text-[#B5473C] border-[#E4B0AA]'
+                            : isAhead
+                            ? 'bg-[#EDF7F2] text-[#2E7D5B] border-[#B8DCC9]'
+                            : 'bg-[#F1F3F5] text-[#596579] border-[#D9DEE5]'
+                        }`}
+                      >
+                        <span className="text-[#7B8798] block text-[9px] font-sans">Var</span>
+                        <span className="font-bold">
+                          {isAhead ? `+${area.variance.toFixed(0)}%` : `${area.variance.toFixed(0)}%`}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Progress bar */}
+                    <div className="mt-2.5 relative w-full h-2 bg-[#E5E9EF] rounded-full overflow-hidden">
+                      <div
+                        className={`h-full ${isBehind ? 'bg-[#D98B32]' : 'bg-[#2E7D5B]'}`}
+                        style={{ width: `${area.actual}%` }}
+                      />
+                      <div
+                        className="absolute top-0 bottom-0 w-0.5 bg-[#172033]"
+                        style={{ left: `${area.planned}%` }}
+                      />
+                    </div>
+                  </div>
+
+                  <p className="mt-3 pt-2 border-t border-[#D9DEE5]/60 text-[10px] text-[#596579] leading-relaxed">
+                    {area.summary}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Concise Engineering Interpretation */}
+          <div className="p-3 bg-[#F7F8FA] border-l-4 border-[#176B87] rounded-r-lg text-xs text-[#172033] leading-relaxed">
+            <strong className="text-[#176B87]">Area Analytics Interpretation: </strong>
+            <strong>Unit A - Gas Processing</strong> contains 85% of total schedule slippage and is the sole battery limit on the zero-float critical path. By contrast, Unit A Compressor Station is ahead (+3.0%), and offsite drainage/flare packages carry healthy float buffers (14 to 20 days) that insulate the milestone completion date.
+          </div>
+        </div>
+
+        {/* =========================================================================
+            6. VARIANCE ANALYSIS & ROOT CAUSES
+            Project Question: What are the root causes and schedule impacts of current variances?
+            ========================================================================= */}
+        <div className="bg-white border border-[#D9DEE5] rounded-lg p-5 shadow-xs space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#D9DEE5]/60 pb-3">
+            <div>
+              <div className="flex items-center gap-2">
+                <Target className="w-4 h-4 text-[#176B87]" />
+                <h3 className="text-base font-bold text-[#172033] tracking-tight">Variance Analysis & Root Causes</h3>
+              </div>
+              <p className="text-xs text-[#596579] mt-0.5">
+                Rigorous causal analysis linking variance drivers to CPM critical path float consumption and recovery actions.
+              </p>
+            </div>
+            <div className="px-2.5 py-1 rounded bg-[#EDF5F8] border border-[#B3CBE0] text-[11px] font-mono text-[#176B87] font-semibold self-start sm:self-auto">
+              Project Question: What are the root causes and schedule impacts of current variances?
+            </div>
+          </div>
+
+          {/* 3-Part Analysis Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+            {/* Part 1: Causal Factors Ledger */}
+            <div className="lg:col-span-2 space-y-2.5">
+              <span className="text-[11px] font-bold uppercase tracking-wider text-[#7B8798] block">
+                Primary Variance Drivers & Mitigation Protocols
+              </span>
+              <div className="space-y-2">
+                {VARIANCE_ROOT_CAUSES.map((rc) => (
+                  <div
+                    key={rc.id}
+                    className="p-3 rounded-lg border border-[#D9DEE5] bg-[#F7F8FA] hover:bg-white transition-colors text-xs space-y-1.5"
+                  >
+                    <div className="flex items-center justify-between flex-wrap gap-1">
+                      <div className="flex items-center gap-2">
+                        <span className="font-mono text-[10px] text-[#7B8798]">{rc.id}</span>
+                        <span className="font-bold text-[#172033]">{rc.category}</span>
+                        <span className="text-[#7B8798]">•</span>
+                        <span className="font-mono text-[11px] text-[#176B87]">{rc.activityRef}</span>
+                      </div>
+                      <div className="flex items-center gap-1.5 font-mono text-[11px]">
+                        <span
+                          className={`px-1.5 py-0.2 rounded font-bold ${
+                            rc.varianceContribution < 0
+                              ? 'bg-[#FBEFEE] text-[#B5473C]'
+                              : 'bg-[#EDF7F2] text-[#2E7D5B]'
+                          }`}
+                        >
+                          {rc.varianceContribution < 0 ? `${rc.varianceContribution}%` : `+${rc.varianceContribution}%`} var
+                        </span>
+                        <span className="text-[#596579]">
+                          ({rc.floatImpactDays < 0 ? `${rc.floatImpactDays}d float` : `+${rc.floatImpactDays}d float`})
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="text-[11px] text-[#172033] font-medium leading-snug">
+                      {rc.factor}
+                    </div>
+
+                    <div className="p-2 bg-white rounded border border-[#E5E9EF] text-[11px] text-[#596579]">
+                      <strong className="text-[#2E7D5B]">Mitigation Plan: </strong>
+                      {rc.mitigationPlan}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Part 2: Critical Path Impact Callout Box */}
+            <div className="space-y-3">
+              <span className="text-[11px] font-bold uppercase tracking-wider text-[#7B8798] block">
+                Critical Path Float Consumption
+              </span>
+
+              <div className="p-4 rounded-lg bg-[#FBEFEE]/60 border border-[#E4B0AA] space-y-3 text-xs">
+                <div className="flex items-center gap-2 text-[#B5473C] font-bold">
+                  <AlertTriangle className="w-4 h-4 shrink-0" />
+                  <span>Path 1 Float Consumed: 4 Days</span>
+                </div>
+
+                <div className="text-[11px] text-[#596579] space-y-1">
+                  <p>
+                    The critical chain sequence <code>CIV-11-001 → PIP-24-001 → PIP-24-002 → PIP-24-003</code> has exhausted all baseline float.
+                  </p>
+                  <p>
+                    Forecast commercial completion is currently <strong>15 Dec 2026</strong> (+4 days slip vs. 11 Dec 2026 contract baseline).
+                  </p>
+                </div>
+
+                <div className="pt-2 border-t border-[#E4B0AA]/60 text-[11px]">
+                  <span className="font-bold text-[#172033] block mb-1">Approved Recovery Intervention:</span>
+                  <ul className="list-disc pl-4 space-y-0.5 text-[#596579]">
+                    <li>20 Sep: Mobilize 2nd shift RT inspection team</li>
+                    <li>22 Sep: Pre-clear 150 bar blind flanges from stores</li>
+                    <li>01 Oct: Recover 4 days float before hydrotesting</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Concise Engineering Interpretation */}
+          <div className="p-3 bg-[#F7F8FA] border-l-4 border-[#176B87] rounded-r-lg text-xs text-[#172033] leading-relaxed">
+            <strong className="text-[#176B87]">Variance Analysis Interpretation: </strong>
+            The -7.0% net variance is attributable to 3 localized operational bottlenecks on Line 24 rather than chronic site labor shortages. Executing the approved 2-shift NDT clearance and expediting stores material release will recover the 4 days of consumed critical path float by Milestone M4 (Hydrotesting).
+          </div>
+        </div>
+
+        {/* =========================================================================
+            7. TOP VARIANCES & SCHEDULE ACTIVITIES LEDGER
+            Project Question: Which specific activities deviate most from baseline, and how is each verified?
             Activity | Planned % | Verified Actual % | Variance | Forecast Finish | Status | Last Verified Update
             ========================================================================= */}
         <div className="bg-white border border-[#D9DEE5] rounded-lg overflow-hidden shadow-xs space-y-0">
+          <div className="p-4 border-b border-[#D9DEE5]/60 flex flex-col md:flex-row md:items-center justify-between gap-3">
+            <div>
+              <div className="flex items-center gap-2">
+                <Layers className="w-4 h-4 text-[#176B87]" />
+                <h3 className="text-base font-bold text-[#172033] tracking-tight">Top Variances & Schedule Activities</h3>
+              </div>
+              <p className="text-xs text-[#596579] mt-0.5">
+                Activity-level variance ledger with 100% execution event traceability and verified history audit trails.
+              </p>
+            </div>
+            <div className="px-2.5 py-1 rounded bg-[#EDF5F8] border border-[#B3CBE0] text-[11px] font-mono text-[#176B87] font-semibold self-start md:self-auto">
+              Project Question: Which specific activities deviate most from baseline, and how is each verified?
+            </div>
+          </div>
+
+          {/* Activity Category Filter Pills */}
+          <div className="p-4 bg-[#F7F8FA] border-b border-[#D9DEE5]/60 grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <button
+              type="button"
+              onClick={() => setSelectedSemanticFilter(selectedSemanticFilter === 'Positive' ? 'ALL' : 'Positive')}
+              className={`p-3 rounded-lg border text-left transition-all ${
+                selectedSemanticFilter === 'Positive'
+                  ? 'bg-[#EDF7F2] border-[#2E7D5B] shadow-2xs'
+                  : 'bg-white border-[#D9DEE5] hover:bg-[#F7F8FA]'
+              }`}
+            >
+              <span className="text-[10px] font-bold uppercase tracking-wider text-[#7B8798] block">
+                Ahead of Schedule
+              </span>
+              <div className="flex items-baseline gap-1.5 mt-0.5">
+                <span className="text-lg font-bold text-[#2E7D5B] font-mono">
+                  {summaryMetrics.activitiesAhead}
+                </span>
+                <span className="text-[11px] text-[#596579]">activities (+ Variance)</span>
+              </div>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setSelectedSemanticFilter(selectedSemanticFilter === 'Neutral' ? 'ALL' : 'Neutral')}
+              className={`p-3 rounded-lg border text-left transition-all ${
+                selectedSemanticFilter === 'Neutral'
+                  ? 'bg-[#EDF5F8] border-[#176B87] shadow-2xs'
+                  : 'bg-white border-[#D9DEE5] hover:bg-[#F7F8FA]'
+              }`}
+            >
+              <span className="text-[10px] font-bold uppercase tracking-wider text-[#7B8798] block">
+                On Track
+              </span>
+              <div className="flex items-baseline gap-1.5 mt-0.5">
+                <span className="text-lg font-bold text-[#172033] font-mono">
+                  {summaryMetrics.activitiesOnTrack}
+                </span>
+                <span className="text-[11px] text-[#596579]">activities (0.0% Variance)</span>
+              </div>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setSelectedSemanticFilter(selectedSemanticFilter === 'Negative' ? 'ALL' : 'Negative')}
+              className={`p-3 rounded-lg border text-left transition-all ${
+                selectedSemanticFilter === 'Negative'
+                  ? 'bg-[#FBEFEE] border-[#B5473C] shadow-2xs'
+                  : 'bg-white border-[#D9DEE5] hover:bg-[#F7F8FA]'
+              }`}
+            >
+              <span className="text-[10px] font-bold uppercase tracking-wider text-[#7B8798] block">
+                Behind Schedule
+              </span>
+              <div className="flex items-baseline gap-1.5 mt-0.5">
+                <span className="text-lg font-bold text-[#B5473C] font-mono">
+                  {summaryMetrics.activitiesBehind}
+                </span>
+                <span className="text-[11px] text-[#596579]">activities (- Variance)</span>
+              </div>
+            </button>
+          </div>
           <div className="p-4 border-b border-[#D9DEE5]/60 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
             <div className="relative flex-1 max-w-md">
               <Search className="w-4 h-4 text-[#7B8798] absolute left-3 top-1/2 -translate-y-1/2" />
