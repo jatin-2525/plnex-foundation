@@ -111,3 +111,15 @@ export function getSCurveSummary(data: TimeSeriesPoint[] = PROJECT_S_CURVE_DATA)
     isBehindSchedule: variance < 0,
   };
 }
+
+export function getSCurveInterpretation(summary: SCurveSummary): string {
+  const diff = Math.abs(summary.varianceAtDataDate);
+  if (summary.varianceAtDataDate < 0) {
+    return `Actual progress is ${diff.toFixed(1)} percentage points behind planned progress.`;
+  }
+  if (summary.varianceAtDataDate > 0) {
+    return `Actual progress is ${diff.toFixed(1)} percentage points ahead of planned progress.`;
+  }
+  return 'Actual progress is tracking exactly on planned progress.';
+}
+
