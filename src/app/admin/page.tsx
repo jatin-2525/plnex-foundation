@@ -63,7 +63,7 @@ export default function AdminDashboardPage() {
           <div className="flex items-center gap-2">
             <Link
               href="/admin/users"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white hover:bg-[#F0F2F5] text-[#172033] border border-[#D9DEE5] rounded-md text-xs font-semibold transition-colors"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white hover:bg-[#F1F3F5] text-[#172033] border border-[#D9DEE5] rounded-md text-xs font-semibold transition-colors"
             >
               <Users className="w-3.5 h-3.5 text-[#596579]" />
               Users & Roles
@@ -90,7 +90,7 @@ export default function AdminDashboardPage() {
 
       {/* Explicit Role View Switching Section (Mandated by Objective) */}
       <div className="bg-white border border-[#D9DEE5] rounded-lg p-5">
-        <div className="flex items-center justify-between pb-3 border-b border-[#E8EBF0] mb-4">
+        <div className="flex items-center justify-between pb-3 border-b border-[#D9DEE5] mb-4">
           <div>
             <h2 className="text-sm font-bold text-[#172033] flex items-center gap-2">
               <Shield className="w-4 h-4 text-[#176B87]" />
@@ -121,7 +121,7 @@ export default function AdminDashboardPage() {
                 Full control over Master Schedules, Schedule Twin, Review Queue approvals, S-Curves, What-if Simulations, Reports, and Schedule Health.
               </p>
             </div>
-            <div className="mt-4 pt-3 border-t border-[#E8EBF0] flex items-center justify-between">
+            <div className="mt-4 pt-3 border-t border-[#D9DEE5] flex items-center justify-between">
               <span className="text-[11px] font-mono text-[#596579]">Destination: /dashboard</span>
               <Link
                 href="/dashboard"
@@ -133,10 +133,10 @@ export default function AdminDashboardPage() {
           </div>
 
           {/* Engineer View Switcher */}
-          <div className="border border-[#D9DEE5] rounded-lg p-4 bg-[#F7F8FA] hover:border-[#15803D] transition-colors flex flex-col justify-between">
+          <div className="border border-[#D9DEE5] rounded-lg p-4 bg-[#F7F8FA] hover:border-[#2E7D5B] transition-colors flex flex-col justify-between">
             <div>
               <div className="flex items-center justify-between mb-2">
-                <span className="inline-flex items-center gap-1.5 text-xs font-bold font-mono text-[#15803D] bg-white border border-[#BBF7D0] px-2 py-0.5 rounded">
+                <span className="inline-flex items-center gap-1.5 text-xs font-bold font-mono text-[#2E7D5B] bg-white border border-[#B8DCC9] px-2 py-0.5 rounded">
                   <HardHat className="w-3.5 h-3.5" />
                   FIELD EXECUTION WORKSPACE
                 </span>
@@ -147,11 +147,11 @@ export default function AdminDashboardPage() {
                 Field-focused interface for site logging, DPR / Time Agent submission, voice transcripts, photo evidence upload, and offline field sync.
               </p>
             </div>
-            <div className="mt-4 pt-3 border-t border-[#E8EBF0] flex items-center justify-between">
+            <div className="mt-4 pt-3 border-t border-[#D9DEE5] flex items-center justify-between">
               <span className="text-[11px] font-mono text-[#596579]">Destination: /engineer</span>
               <Link
                 href="/engineer"
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#15803D] hover:bg-[#166534] text-white rounded text-xs font-semibold shadow-xs transition-colors"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#2E7D5B] hover:bg-[#25664A] text-white rounded text-xs font-semibold shadow-xs transition-colors"
               >
                 Launch Engineer View <ArrowRight className="w-3.5 h-3.5" />
               </Link>
@@ -207,7 +207,7 @@ export default function AdminDashboardPage() {
             <Server className="w-4 h-4 text-[#176B87]" />
             Administration Subsystems
           </h3>
-          <div className="divide-y divide-[#E8EBF0]">
+          <div className="divide-y divide-[#D9DEE5]">
             <Link
               href="/admin/users"
               className="py-3 flex items-center justify-between hover:bg-[#F7F8FA] px-2 rounded transition-colors"
@@ -216,7 +216,7 @@ export default function AdminDashboardPage() {
                 <strong className="text-xs font-semibold text-[#172033] block">Users & Role Directory</strong>
                 <span className="text-[11px] text-[#596579]">Manage credentials, RBAC permissions, and site engineers</span>
               </div>
-              <ArrowRight className="w-4 h-4 text-[#8A94A6]" />
+              <ArrowRight className="w-4 h-4 text-[#7B8798]" />
             </Link>
 
             <Link
@@ -227,7 +227,7 @@ export default function AdminDashboardPage() {
                 <strong className="text-xs font-semibold text-[#172033] block">Organizations & Joint Ventures</strong>
                 <span className="text-[11px] text-[#596579]">Manage contracting consortia and field divisions</span>
               </div>
-              <ArrowRight className="w-4 h-4 text-[#8A94A6]" />
+              <ArrowRight className="w-4 h-4 text-[#7B8798]" />
             </Link>
 
             <Link
@@ -238,7 +238,7 @@ export default function AdminDashboardPage() {
                 <strong className="text-xs font-semibold text-[#172033] block">Security & System Policies</strong>
                 <span className="text-[11px] text-[#596579]">Token lifetime, baseline modification safeguards, audit logs</span>
               </div>
-              <ArrowRight className="w-4 h-4 text-[#8A94A6]" />
+              <ArrowRight className="w-4 h-4 text-[#7B8798]" />
             </Link>
           </div>
         </div>

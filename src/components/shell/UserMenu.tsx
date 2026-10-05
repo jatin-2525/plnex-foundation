@@ -41,7 +41,7 @@ export function UserMenu() {
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 p-1.5 sm:px-2.5 sm:py-1.5 rounded-lg hover:bg-[#F0F2F5] transition-colors cursor-pointer"
+        className="flex items-center gap-2 p-1.5 sm:px-2.5 sm:py-1.5 rounded-lg hover:bg-[#F1F3F5] transition-colors cursor-pointer"
         aria-expanded={isOpen}
         aria-haspopup="true"
       >
@@ -53,14 +53,14 @@ export function UserMenu() {
             <span className="text-xs font-bold text-[#172033] leading-tight">
               {displayName}
             </span>
-            <span className="text-[10px] text-[#8A94A6] font-medium leading-none mt-0.5">
+            <span className="text-[10px] text-[#7B8798] font-medium leading-none mt-0.5">
               {userSession?.title || 'User'}
             </span>
           </div>
           <span className="px-1.5 py-0.5 rounded bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0] text-[10px] font-bold uppercase tracking-wider">
             {displayRole}
           </span>
-          <ChevronDown className="w-3 h-3 text-[#8A94A6]" />
+          <ChevronDown className="w-3 h-3 text-[#7B8798]" />
         </div>
         <ChevronDown className="w-3.5 h-3.5 text-[#596579] sm:hidden" />
       </button>
@@ -74,14 +74,14 @@ export function UserMenu() {
             <p className="text-[11px] text-[#176B87] font-medium mt-1">
               {userSession?.title} • {displayRole}
             </p>
-            <p className="text-[10px] text-[#8A94A6] mt-0.5">{userSession?.organization}</p>
+            <p className="text-[10px] text-[#7B8798] mt-0.5">{userSession?.organization}</p>
           </div>
 
           {/* Admin Explicit Role View Switcher */}
           {userSession?.role === 'admin' && (
             <div className="p-2 border-b border-[#D9DEE5]">
-              <div className="px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-[#8A94A6] flex items-center gap-1.5">
-                <Shield className="w-3 h-3 text-[#7E22CE]" />
+              <div className="px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-[#7B8798] flex items-center gap-1.5">
+                <Shield className="w-3 h-3 text-[#176B87]" />
                 <span>Admin View Switcher</span>
               </div>
               <div className="mt-1 space-y-0.5">
@@ -90,7 +90,7 @@ export function UserMenu() {
                     setIsOpen(false);
                     router.push('/dashboard');
                   }}
-                  className="w-full text-left p-1.5 rounded flex items-center gap-2 hover:bg-[#F0F2F5] text-xs text-[#172033]"
+                  className="w-full text-left p-1.5 rounded flex items-center gap-2 hover:bg-[#F1F3F5] text-xs text-[#172033]"
                 >
                   <LayoutDashboard className="w-3.5 h-3.5 text-[#176B87]" />
                   <span>Switch to Manager View</span>
@@ -100,9 +100,9 @@ export function UserMenu() {
                     setIsOpen(false);
                     router.push('/engineer');
                   }}
-                  className="w-full text-left p-1.5 rounded flex items-center gap-2 hover:bg-[#F0F2F5] text-xs text-[#172033]"
+                  className="w-full text-left p-1.5 rounded flex items-center gap-2 hover:bg-[#F1F3F5] text-xs text-[#172033]"
                 >
-                  <HardHat className="w-3.5 h-3.5 text-[#15803D]" />
+                  <HardHat className="w-3.5 h-3.5 text-[#2E7D5B]" />
                   <span>Switch to Engineer View</span>
                 </button>
                 <button
@@ -110,9 +110,9 @@ export function UserMenu() {
                     setIsOpen(false);
                     router.push('/admin');
                   }}
-                  className="w-full text-left p-1.5 rounded flex items-center gap-2 hover:bg-[#F0F2F5] text-xs text-[#7E22CE]"
+                  className="w-full text-left p-1.5 rounded flex items-center gap-2 hover:bg-[#F1F3F5] text-xs text-[#176B87]"
                 >
-                  <Shield className="w-3.5 h-3.5 text-[#7E22CE]" />
+                  <Shield className="w-3.5 h-3.5 text-[#176B87]" />
                   <span>Admin Governance Hub</span>
                 </button>
               </div>

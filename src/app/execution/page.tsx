@@ -530,7 +530,7 @@ export default function ExecutionIntelligencePage() {
         };
       case 'Unmatched':
         return {
-          bg: 'bg-[#F0F2F5]',
+          bg: 'bg-[#F1F3F5]',
           border: 'border-[#D9DEE5]',
           text: 'text-[#596579]',
           icon: HelpCircle,
@@ -544,17 +544,17 @@ export default function ExecutionIntelligencePage() {
         };
       case 'Duplicate':
         return {
-          bg: 'bg-[#F5F3FF]',
-          border: 'border-[#DDD6FE]',
-          text: 'text-[#7C3AED]',
+          bg: 'bg-[#FDF6ED]',
+          border: 'border-[#F0D4A6]',
+          text: 'text-[#D98B32]',
           icon: Copy,
         };
       case 'Stale':
       default:
         return {
-          bg: 'bg-[#F8FAFC]',
-          border: 'border-[#E2E8F0]',
-          text: 'text-[#64748B]',
+          bg: 'bg-[#F1F3F5]',
+          border: 'border-[#D9DEE5]',
+          text: 'text-[#7B8798]',
           icon: History,
         };
     }
@@ -572,7 +572,7 @@ export default function ExecutionIntelligencePage() {
         <Breadcrumbs items={breadcrumbs} />
 
         {/* PAGE HEADER */}
-        <div className="bg-white border border-[#D9DEE5] rounded-xl p-5 md:p-6 shadow-xs">
+        <div className="bg-white border border-[#D9DEE5] rounded-lg p-5 md:p-6 shadow-xs">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-[#D9DEE5]/60">
             <div>
               <div className="flex items-center gap-2 mb-1">
@@ -597,7 +597,7 @@ export default function ExecutionIntelligencePage() {
             <div className="flex items-center gap-2 flex-wrap">
               <Link
                 href="/field/capture"
-                className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-[#172033] bg-white border border-[#D9DEE5] hover:bg-[#F0F2F5] rounded-lg transition-colors"
+                className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-[#172033] bg-white border border-[#D9DEE5] hover:bg-[#F1F3F5] rounded-lg transition-colors"
               >
                 <Sparkles className="w-3.5 h-3.5 text-[#176B87]" />
                 <span>Field Capture</span>
@@ -616,14 +616,14 @@ export default function ExecutionIntelligencePage() {
               The page must clearly show:
               Field input → Structured event → Candidate activity → Verification */}
           <div className="pt-4">
-            <div className="text-[10px] font-bold uppercase tracking-wider text-[#8A94A6] mb-2 flex items-center gap-1.5">
+            <div className="text-[10px] font-bold uppercase tracking-wider text-[#7B8798] mb-2 flex items-center gap-1.5">
               <Activity className="w-3.5 h-3.5 text-[#176B87]" />
               End-to-End Execution Transformation Pipeline
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-4 gap-3 text-xs">
               {/* STAGE 1: Field Input */}
-              <div className="p-3.5 rounded-xl border border-[#D9DEE5] bg-[#F7F8FA] space-y-2 relative">
+              <div className="p-3.5 rounded-lg border border-[#D9DEE5] bg-[#F7F8FA] space-y-2 relative">
                 <div className="flex items-center justify-between">
                   <span className="font-bold text-[#172033] flex items-center gap-1.5">
                     <span className="w-5 h-5 rounded-full bg-[#176B87] text-white text-[10px] font-bold flex items-center justify-center">
@@ -638,16 +638,16 @@ export default function ExecutionIntelligencePage() {
                 <p className="text-[11px] text-[#596579] leading-relaxed">
                   Supervisor diaries, audio notes, DPR tables, and inspection notes captured on site.
                 </p>
-                <div className="font-mono text-[10px] text-[#8A94A6] bg-white p-2 rounded border border-[#D9DEE5] truncate">
+                <div className="font-mono text-[10px] text-[#7B8798] bg-white p-2 rounded border border-[#D9DEE5] truncate">
                   "12 spools installed on Line 24. Work 09:00 to 16:30..."
                 </div>
                 <div className="hidden md:block absolute -right-2.5 top-1/2 -translate-y-1/2 z-10">
-                  <ChevronRight className="w-5 h-5 text-[#8A94A6]" />
+                  <ChevronRight className="w-5 h-5 text-[#7B8798]" />
                 </div>
               </div>
 
               {/* STAGE 2: Structured Event */}
-              <div className="p-3.5 rounded-xl border border-[#D9DEE5] bg-[#F7F8FA] space-y-2 relative">
+              <div className="p-3.5 rounded-lg border border-[#D9DEE5] bg-[#F7F8FA] space-y-2 relative">
                 <div className="flex items-center justify-between">
                   <span className="font-bold text-[#172033] flex items-center gap-1.5">
                     <span className="w-5 h-5 rounded-full bg-[#176B87] text-white text-[10px] font-bold flex items-center justify-center">
@@ -668,12 +668,12 @@ export default function ExecutionIntelligencePage() {
                   <span>Piping</span>
                 </div>
                 <div className="hidden md:block absolute -right-2.5 top-1/2 -translate-y-1/2 z-10">
-                  <ChevronRight className="w-5 h-5 text-[#8A94A6]" />
+                  <ChevronRight className="w-5 h-5 text-[#7B8798]" />
                 </div>
               </div>
 
               {/* STAGE 3: Candidate Activity */}
-              <div className="p-3.5 rounded-xl border border-[#D9DEE5] bg-[#F7F8FA] space-y-2 relative">
+              <div className="p-3.5 rounded-lg border border-[#D9DEE5] bg-[#F7F8FA] space-y-2 relative">
                 <div className="flex items-center justify-between">
                   <span className="font-bold text-[#172033] flex items-center gap-1.5">
                     <span className="w-5 h-5 rounded-full bg-[#176B87] text-white text-[10px] font-bold flex items-center justify-center">
@@ -692,12 +692,12 @@ export default function ExecutionIntelligencePage() {
                   PIP-24-001 (WBS 3.2.1) · 94% Match
                 </div>
                 <div className="hidden md:block absolute -right-2.5 top-1/2 -translate-y-1/2 z-10">
-                  <ChevronRight className="w-5 h-5 text-[#8A94A6]" />
+                  <ChevronRight className="w-5 h-5 text-[#7B8798]" />
                 </div>
               </div>
 
               {/* STAGE 4: Verification */}
-              <div className="p-3.5 rounded-xl border border-[#D9DEE5] bg-[#F7F8FA] space-y-2">
+              <div className="p-3.5 rounded-lg border border-[#D9DEE5] bg-[#F7F8FA] space-y-2">
                 <div className="flex items-center justify-between">
                   <span className="font-bold text-[#172033] flex items-center gap-1.5">
                     <span className="w-5 h-5 rounded-full bg-[#2E7D5B] text-white text-[10px] font-bold flex items-center justify-center">
@@ -732,13 +732,13 @@ export default function ExecutionIntelligencePage() {
           <button
             type="button"
             onClick={() => setSelectedStatusFilter('ALL')}
-            className={`p-4 rounded-xl border text-left transition-all ${
+            className={`p-4 rounded-lg border text-left transition-all ${
               selectedStatusFilter === 'ALL'
                 ? 'bg-[#EDF5F8] border-[#176B87] shadow-2xs'
                 : 'bg-white border-[#D9DEE5] hover:bg-[#F7F8FA]'
             }`}
           >
-            <span className="text-[10px] font-bold uppercase tracking-wider text-[#8A94A6] block">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-[#7B8798] block">
               Total Execution Events
             </span>
             <div className="flex items-baseline gap-1.5 mt-1">
@@ -756,13 +756,13 @@ export default function ExecutionIntelligencePage() {
           <button
             type="button"
             onClick={() => setSelectedStatusFilter('Matched')}
-            className={`p-4 rounded-xl border text-left transition-all ${
+            className={`p-4 rounded-lg border text-left transition-all ${
               selectedStatusFilter === 'Matched'
                 ? 'bg-[#EDF7F2] border-[#2E7D5B] shadow-2xs'
                 : 'bg-white border-[#D9DEE5] hover:bg-[#F7F8FA]'
             }`}
           >
-            <span className="text-[10px] font-bold uppercase tracking-wider text-[#8A94A6] block">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-[#7B8798] block">
               Matched (Auto-Linked)
             </span>
             <div className="flex items-baseline gap-1.5 mt-1">
@@ -780,13 +780,13 @@ export default function ExecutionIntelligencePage() {
           <button
             type="button"
             onClick={() => setSelectedStatusFilter('Needs Review')}
-            className={`p-4 rounded-xl border text-left transition-all ${
+            className={`p-4 rounded-lg border text-left transition-all ${
               selectedStatusFilter === 'Needs Review'
                 ? 'bg-[#FDF6ED] border-[#D98B32] shadow-2xs'
                 : 'bg-white border-[#D9DEE5] hover:bg-[#F7F8FA]'
             }`}
           >
-            <span className="text-[10px] font-bold uppercase tracking-wider text-[#8A94A6] block">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-[#7B8798] block">
               Needs Review
             </span>
             <div className="flex items-baseline gap-1.5 mt-1">
@@ -804,13 +804,13 @@ export default function ExecutionIntelligencePage() {
           <button
             type="button"
             onClick={() => setSelectedStatusFilter('Unmatched')}
-            className={`p-4 rounded-xl border text-left transition-all ${
+            className={`p-4 rounded-lg border text-left transition-all ${
               selectedStatusFilter === 'Unmatched'
-                ? 'bg-[#F0F2F5] border-[#596579] shadow-2xs'
+                ? 'bg-[#F1F3F5] border-[#596579] shadow-2xs'
                 : 'bg-white border-[#D9DEE5] hover:bg-[#F7F8FA]'
             }`}
           >
-            <span className="text-[10px] font-bold uppercase tracking-wider text-[#8A94A6] block">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-[#7B8798] block">
               Unmatched Events
             </span>
             <div className="flex items-baseline gap-1.5 mt-1">
@@ -828,13 +828,13 @@ export default function ExecutionIntelligencePage() {
           <button
             type="button"
             onClick={() => setSelectedStatusFilter('Conflict')}
-            className={`p-4 rounded-xl border text-left transition-all col-span-2 sm:col-span-1 ${
+            className={`p-4 rounded-lg border text-left transition-all col-span-2 sm:col-span-1 ${
               selectedStatusFilter === 'Conflict'
                 ? 'bg-[#FBEFEE] border-[#B5473C] shadow-2xs'
                 : 'bg-white border-[#D9DEE5] hover:bg-[#F7F8FA]'
             }`}
           >
-            <span className="text-[10px] font-bold uppercase tracking-wider text-[#8A94A6] block">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-[#7B8798] block">
               Conflicts & Holds
             </span>
             <div className="flex items-baseline gap-1.5 mt-1">
@@ -850,10 +850,10 @@ export default function ExecutionIntelligencePage() {
         </div>
 
         {/* CONTROLS & FILTER BAR */}
-        <div className="bg-white border border-[#D9DEE5] rounded-xl p-4 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-3 text-xs">
+        <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-3 text-xs">
           <div className="flex items-center gap-2 flex-1">
             <div className="relative flex-1 max-w-md">
-              <Search className="w-4 h-4 text-[#8A94A6] absolute left-3 top-1/2 -translate-y-1/2" />
+              <Search className="w-4 h-4 text-[#7B8798] absolute left-3 top-1/2 -translate-y-1/2" />
               <input
                 type="text"
                 value={searchQuery}
@@ -865,7 +865,7 @@ export default function ExecutionIntelligencePage() {
                 <button
                   type="button"
                   onClick={() => setSearchQuery('')}
-                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[#8A94A6] hover:text-[#172033]"
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[#7B8798] hover:text-[#172033]"
                 >
                   <X className="w-3.5 h-3.5" />
                 </button>
@@ -876,7 +876,7 @@ export default function ExecutionIntelligencePage() {
           <div className="flex items-center gap-2 flex-wrap">
             {/* Status Filter */}
             <div className="flex items-center gap-1.5">
-              <span className="text-[#8A94A6] font-medium text-[11px]">Status:</span>
+              <span className="text-[#7B8798] font-medium text-[11px]">Status:</span>
               <select
                 value={selectedStatusFilter}
                 onChange={(e) => setSelectedStatusFilter(e.target.value)}
@@ -894,7 +894,7 @@ export default function ExecutionIntelligencePage() {
 
             {/* Source Filter */}
             <div className="flex items-center gap-1.5">
-              <span className="text-[#8A94A6] font-medium text-[11px]">Source:</span>
+              <span className="text-[#7B8798] font-medium text-[11px]">Source:</span>
               <select
                 value={selectedSourceFilter}
                 onChange={(e) => setSelectedSourceFilter(e.target.value)}
@@ -911,7 +911,7 @@ export default function ExecutionIntelligencePage() {
 
             {/* Discipline Filter */}
             <div className="flex items-center gap-1.5">
-              <span className="text-[#8A94A6] font-medium text-[11px]">Discipline:</span>
+              <span className="text-[#7B8798] font-medium text-[11px]">Discipline:</span>
               <select
                 value={selectedDisciplineFilter}
                 onChange={(e) => setSelectedDisciplineFilter(e.target.value)}
@@ -941,7 +941,7 @@ export default function ExecutionIntelligencePage() {
             - Evidence
             - Status
             - Created At */}
-        <div className="bg-white border border-[#D9DEE5] rounded-xl overflow-hidden shadow-xs">
+        <div className="bg-white border border-[#D9DEE5] rounded-lg overflow-hidden shadow-xs">
           <div className="overflow-x-auto">
             <table className="w-full min-w-[850px] text-left text-xs border-collapse">
               <thead>
@@ -959,9 +959,9 @@ export default function ExecutionIntelligencePage() {
                 {filteredEvents.length === 0 ? (
                   <tr>
                     <td colSpan={7} className="p-8 text-center text-[#596579]">
-                      <HelpCircle className="w-8 h-8 text-[#8A94A6] mx-auto mb-2" />
+                      <HelpCircle className="w-8 h-8 text-[#7B8798] mx-auto mb-2" />
                       <p className="font-semibold text-sm text-[#172033]">No execution events match your filters</p>
-                      <p className="text-xs text-[#8A94A6] mt-0.5">Try resetting search query or status filters.</p>
+                      <p className="text-xs text-[#7B8798] mt-0.5">Try resetting search query or status filters.</p>
                       <button
                         type="button"
                         onClick={() => {
@@ -997,7 +997,7 @@ export default function ExecutionIntelligencePage() {
                           <p className="font-medium line-clamp-2" title={evt.rawFieldStatement}>
                             {evt.rawFieldStatement}
                           </p>
-                          <span className="text-[10px] text-[#8A94A6] font-mono mt-0.5 inline-block">
+                          <span className="text-[10px] text-[#7B8798] font-mono mt-0.5 inline-block">
                             Source: {evt.source} • {evt.discipline}
                           </span>
                         </td>
@@ -1023,7 +1023,7 @@ export default function ExecutionIntelligencePage() {
                               </p>
                             </div>
                           ) : (
-                            <span className="text-xs text-[#8A94A6] italic">
+                            <span className="text-xs text-[#7B8798] italic">
                               Unassigned (No match)
                             </span>
                           )}
@@ -1067,7 +1067,7 @@ export default function ExecutionIntelligencePage() {
                                   e.stopPropagation();
                                   setSelectedEventForDrawer(evt);
                                 }}
-                                className="px-2.5 py-1 text-xs font-semibold text-white bg-[#176B87] hover:bg-[#12546A] rounded transition-colors inline-flex items-center gap-1 shadow-2xs"
+                                className="px-2.5 py-1 text-xs font-semibold text-white bg-[#176B87] hover:bg-[#135A72] rounded transition-colors inline-flex items-center gap-1 shadow-2xs"
                                 title="Review match and confirm activity assignment"
                               >
                                 <span>Review Match</span>
@@ -1079,10 +1079,10 @@ export default function ExecutionIntelligencePage() {
                                   e.stopPropagation();
                                   setSelectedEventForDrawer(evt);
                                 }}
-                                className="px-2 py-1 text-xs font-medium text-[#596579] hover:text-[#172033] hover:bg-[#F0F2F5] border border-[#D9DEE5] rounded transition-colors inline-flex items-center gap-1"
+                                className="px-2 py-1 text-xs font-medium text-[#596579] hover:text-[#172033] hover:bg-[#F1F3F5] border border-[#D9DEE5] rounded transition-colors inline-flex items-center gap-1"
                                 title="Inspect extraction breakdown and evidence"
                               >
-                                <Eye className="w-3.5 h-3.5 text-[#8A94A6]" />
+                                <Eye className="w-3.5 h-3.5 text-[#7B8798]" />
                                 <span>Inspect</span>
                               </button>
                             )}
@@ -1102,7 +1102,7 @@ export default function ExecutionIntelligencePage() {
               Showing <strong>{filteredEvents.length}</strong> of <strong>{events.length}</strong> execution events
             </span>
             <div className="flex items-center gap-2">
-              <span className="text-[11px] text-[#8A94A6]">Click any row to open the Event Detail Drawer</span>
+              <span className="text-[11px] text-[#7B8798]">Click any row to open the Event Detail Drawer</span>
             </div>
           </div>
         </div>
@@ -1147,7 +1147,7 @@ export default function ExecutionIntelligencePage() {
           {selectedEventForDrawer && (
             <div className="space-y-6 text-xs text-[#172033]">
               {/* STATUS & CONFIDENCE BANNER */}
-              <div className="p-4 rounded-xl border border-[#D9DEE5] bg-[#F7F8FA] flex items-center justify-between flex-wrap gap-2">
+              <div className="p-4 rounded-lg border border-[#D9DEE5] bg-[#F7F8FA] flex items-center justify-between flex-wrap gap-2">
                 <div className="flex items-center gap-2">
                   {(() => {
                     const sb = getStatusBadge(selectedEventForDrawer.status);
@@ -1164,7 +1164,7 @@ export default function ExecutionIntelligencePage() {
                 </div>
 
                 <div className="flex items-center gap-2">
-                  <span className="text-[#8A94A6] uppercase font-bold text-[10px]">Confidence:</span>
+                  <span className="text-[#7B8798] uppercase font-bold text-[10px]">Confidence:</span>
                   <ConfidenceBadge score={selectedEventForDrawer.confidence} size="md" />
                 </div>
               </div>
@@ -1175,8 +1175,8 @@ export default function ExecutionIntelligencePage() {
                   <FileText className="w-3.5 h-3.5 text-[#176B87]" />
                   Original Field Input
                 </h4>
-                <div className="p-3.5 bg-white border border-[#D9DEE5] rounded-xl space-y-2">
-                  <div className="flex items-center justify-between text-[11px] text-[#8A94A6]">
+                <div className="p-3.5 bg-white border border-[#D9DEE5] rounded-lg space-y-2">
+                  <div className="flex items-center justify-between text-[11px] text-[#7B8798]">
                     <span>Source: <strong className="text-[#172033] font-mono">{selectedEventForDrawer.source}</strong></span>
                     <span>Captured: <strong className="text-[#172033] font-mono">{selectedEventForDrawer.createdAt}</strong></span>
                   </div>
@@ -1194,21 +1194,21 @@ export default function ExecutionIntelligencePage() {
                 </h4>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
                   <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg">
-                    <span className="text-[10px] uppercase font-bold text-[#8A94A6] block">Work Type</span>
+                    <span className="text-[10px] uppercase font-bold text-[#7B8798] block">Work Type</span>
                     <span className="font-bold text-[#172033]">{selectedEventForDrawer.workType}</span>
                   </div>
                   <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg">
-                    <span className="text-[10px] uppercase font-bold text-[#8A94A6] block">Quantity & Unit</span>
+                    <span className="text-[10px] uppercase font-bold text-[#7B8798] block">Quantity & Unit</span>
                     <span className="font-bold text-[#172033] font-mono">
                       {selectedEventForDrawer.extractedQuantity} {selectedEventForDrawer.unit}
                     </span>
                   </div>
                   <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg">
-                    <span className="text-[10px] uppercase font-bold text-[#8A94A6] block">Area / Line</span>
+                    <span className="text-[10px] uppercase font-bold text-[#7B8798] block">Area / Line</span>
                     <span className="font-bold text-[#172033] truncate block">{selectedEventForDrawer.area}</span>
                   </div>
                   <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg">
-                    <span className="text-[10px] uppercase font-bold text-[#8A94A6] block">Discipline</span>
+                    <span className="text-[10px] uppercase font-bold text-[#7B8798] block">Discipline</span>
                     <span className="font-bold text-[#172033]">{selectedEventForDrawer.discipline}</span>
                   </div>
                 </div>
@@ -1220,7 +1220,7 @@ export default function ExecutionIntelligencePage() {
                   <Layers className="w-3.5 h-3.5 text-[#176B87]" />
                   Associated Candidate Schedule Activity
                 </h4>
-                <div className="p-4 bg-white border border-[#D9DEE5] rounded-xl space-y-3">
+                <div className="p-4 bg-white border border-[#D9DEE5] rounded-lg space-y-3">
                   {selectedEventForDrawer.candidateActivityId ? (
                     <>
                       <div className="flex items-center justify-between">
@@ -1228,7 +1228,7 @@ export default function ExecutionIntelligencePage() {
                           <span className="font-mono font-bold text-sm text-[#176B87]">
                             {selectedEventForDrawer.candidateActivityId}
                           </span>
-                          <span className="text-[11px] font-mono text-[#8A94A6]">
+                          <span className="text-[11px] font-mono text-[#7B8798]">
                             WBS {selectedEventForDrawer.candidateWbs}
                           </span>
                         </div>
@@ -1271,7 +1271,7 @@ export default function ExecutionIntelligencePage() {
                   Attached Physical Evidence ({selectedEventForDrawer.evidenceItems.length})
                 </h4>
                 {selectedEventForDrawer.evidenceItems.length === 0 ? (
-                  <p className="text-xs text-[#8A94A6] italic p-3 bg-[#F7F8FA] rounded-lg border border-[#D9DEE5]">
+                  <p className="text-xs text-[#7B8798] italic p-3 bg-[#F7F8FA] rounded-lg border border-[#D9DEE5]">
                     No photo or document attachments linked to this execution event.
                   </p>
                 ) : (
@@ -1289,7 +1289,7 @@ export default function ExecutionIntelligencePage() {
                           )}
                           <span className="font-mono font-medium truncate">{ev.title}</span>
                         </div>
-                        <span className="text-[10px] text-[#8A94A6] shrink-0">{ev.timestamp}</span>
+                        <span className="text-[10px] text-[#7B8798] shrink-0">{ev.timestamp}</span>
                       </div>
                     ))}
                   </div>
@@ -1302,17 +1302,17 @@ export default function ExecutionIntelligencePage() {
                   <History className="w-3.5 h-3.5 text-[#176B87]" />
                   Transformation & Processing History
                 </h4>
-                <div className="border border-[#D9DEE5] rounded-xl overflow-hidden divide-y divide-[#D9DEE5] bg-white">
+                <div className="border border-[#D9DEE5] rounded-lg overflow-hidden divide-y divide-[#D9DEE5] bg-white">
                   {selectedEventForDrawer.processingHistory.map((h, idx) => (
                     <div key={idx} className="p-3 text-xs flex items-start gap-3">
                       <div className="w-2 h-2 rounded-full bg-[#176B87] mt-1.5 shrink-0" />
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center justify-between">
                           <span className="font-bold text-[#172033]">{h.step}</span>
-                          <span className="font-mono text-[10px] text-[#8A94A6]">{h.timestamp}</span>
+                          <span className="font-mono text-[10px] text-[#7B8798]">{h.timestamp}</span>
                         </div>
                         <p className="text-[11px] text-[#596579] mt-0.5">{h.details}</p>
-                        <span className="text-[10px] text-[#8A94A6] block mt-0.5">By {h.actor}</span>
+                        <span className="text-[10px] text-[#7B8798] block mt-0.5">By {h.actor}</span>
                       </div>
                     </div>
                   ))}
@@ -1325,7 +1325,7 @@ export default function ExecutionIntelligencePage() {
                   <ShieldCheck className="w-3.5 h-3.5 text-[#176B87]" />
                   Verification Status & Sign-off
                 </h4>
-                <div className="p-3.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-xl space-y-2">
+                <div className="p-3.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg space-y-2">
                   <div className="flex items-center justify-between">
                     <span className="font-bold text-xs text-[#172033]">
                       Status: {selectedEventForDrawer.verificationStatus.state}

@@ -26,9 +26,9 @@ export function EmptyState({
 }: EmptyStateProps) {
   return (
     <div
-      className={`flex flex-col items-center justify-center p-8 md:p-12 text-center bg-white border border-[#D9DEE5] rounded-xl shadow-xs ${className}`}
+      className={`flex flex-col items-center justify-center p-8 md:p-12 text-center bg-white border border-[#D9DEE5] rounded-lg shadow-xs ${className}`}
     >
-      <div className="w-12 h-12 rounded-xl bg-[#F0F2F5] border border-[#D9DEE5] flex items-center justify-center text-[#176B87] mb-4 flex-shrink-0">
+      <div className="w-12 h-12 rounded-lg bg-[#F1F3F5] border border-[#D9DEE5] flex items-center justify-center text-[#176B87] mb-4 flex-shrink-0">
         <Icon className="w-6 h-6" />
       </div>
       <h3 className="text-lg sm:text-xl font-bold text-[#172033] mb-1.5 tracking-tight">{title}</h3>

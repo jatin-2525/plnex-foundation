@@ -430,7 +430,7 @@ export default function ScheduleTwinPage() {
           className={`flex items-center justify-between py-2 px-2.5 rounded-md cursor-pointer text-xs transition-colors mb-0.5 select-none ${
             isSelected
               ? 'bg-[#176B87] text-white font-semibold shadow-xs'
-              : 'hover:bg-[#E8EBF0] text-[#172033]'
+              : 'hover:bg-[#D9DEE5] text-[#172033]'
           }`}
           style={{ paddingLeft: `${Math.max(8, depth * 14 + 8)}px` }}
         >
@@ -453,7 +453,7 @@ export default function ScheduleTwinPage() {
                 )}
               </button>
             ) : (
-              <span className={`w-4 text-center text-[10px] ${isSelected ? 'text-white/70' : 'text-[#8A94A6]'}`}>
+              <span className={`w-4 text-center text-[10px] ${isSelected ? 'text-white/70' : 'text-[#7B8798]'}`}>
                 •
               </span>
             )}
@@ -462,7 +462,7 @@ export default function ScheduleTwinPage() {
               className={`font-mono text-[9px] px-1 py-0.2 rounded font-bold flex-shrink-0 ${
                 isSelected
                   ? 'bg-white/20 text-white'
-                  : 'bg-[#F0F2F5] text-[#596579] border border-[#D9DEE5]'
+                  : 'bg-[#F1F3F5] text-[#596579] border border-[#D9DEE5]'
               }`}
             >
               {node.level}
@@ -518,7 +518,7 @@ export default function ScheduleTwinPage() {
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
             <div>
               <div className="flex items-center gap-2 mb-1">
-                <div className="w-7 h-7 rounded bg-[#E8F1F5] flex items-center justify-center text-[#176B87]">
+                <div className="w-7 h-7 rounded bg-[#EDF5F8] flex items-center justify-center text-[#176B87]">
                   <Layers className="w-4 h-4" />
                 </div>
                 <div>
@@ -542,7 +542,7 @@ export default function ScheduleTwinPage() {
               <button
                 type="button"
                 onClick={() => openActivityDrawer(selectedActivity.id)}
-                className="px-3 py-1 bg-[#176B87] hover:bg-[#12546A] text-white rounded font-medium inline-flex items-center gap-1 transition-colors shadow-xs"
+                className="px-3 py-1 bg-[#176B87] hover:bg-[#135A72] text-white rounded font-medium inline-flex items-center gap-1 transition-colors shadow-xs"
               >
                 <Maximize2 className="w-3.5 h-3.5" />
                 <span>Open Detail Drawer</span>
@@ -552,7 +552,7 @@ export default function ScheduleTwinPage() {
 
           {/* VISUAL LINKING WORKFLOW PIPELINE RIBBON */}
           {/* Plan → Execution → Evidence → Verification → Actual Update */}
-          <div className="mt-4 pt-3 border-t border-[#E8EBF0]">
+          <div className="mt-4 pt-3 border-t border-[#D9DEE5]">
             <div className="flex items-center justify-between text-xs font-semibold mb-2">
               <span className="text-[11px] text-[#596579] uppercase tracking-wider">
                 Planning-to-Execution Linking Pipeline
@@ -564,7 +564,7 @@ export default function ScheduleTwinPage() {
 
             <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
               {/* Stage 1: Plan */}
-              <div className="p-2.5 rounded bg-[#E8F1F5] border border-[#C5DCE6] flex flex-col justify-between">
+              <div className="p-2.5 rounded bg-[#EDF5F8] border border-[#C5DCE6] flex flex-col justify-between">
                 <div className="flex items-center justify-between text-[11px]">
                   <span className="font-bold text-[#176B87] font-mono">1. PLAN</span>
                   <CheckCircle2 className="w-3.5 h-3.5 text-[#176B87]" />
@@ -582,7 +582,7 @@ export default function ScheduleTwinPage() {
                   {linkedEvents.length > 0 ? (
                     <CheckCircle2 className="w-3.5 h-3.5 text-[#2E7D5B]" />
                   ) : (
-                    <Clock className="w-3.5 h-3.5 text-[#8A94A6]" />
+                    <Clock className="w-3.5 h-3.5 text-[#7B8798]" />
                   )}
                 </div>
                 <div className="mt-1 font-mono text-[11px] text-[#172033]">
@@ -598,7 +598,7 @@ export default function ScheduleTwinPage() {
                   {linkedEvidence.length > 0 ? (
                     <CheckCircle2 className="w-3.5 h-3.5 text-[#2E7D5B]" />
                   ) : (
-                    <Clock className="w-3.5 h-3.5 text-[#8A94A6]" />
+                    <Clock className="w-3.5 h-3.5 text-[#7B8798]" />
                   )}
                 </div>
                 <div className="mt-1 font-mono text-[11px] text-[#172033]">
@@ -642,7 +642,7 @@ export default function ScheduleTwinPage() {
           {/* LEFT: L1–L6 SCHEDULE HIERARCHY (col-span-3) */}
           {/* ========================================================= */}
           <div className="lg:col-span-3 bg-white border border-[#D9DEE5] rounded-lg p-3.5 space-y-3">
-            <div className="flex items-center justify-between pb-2 border-b border-[#E8EBF0]">
+            <div className="flex items-center justify-between pb-2 border-b border-[#D9DEE5]">
               <div className="flex items-center gap-1.5">
                 <Calendar className="w-4 h-4 text-[#176B87]" />
                 <h3 className="text-xs font-bold uppercase tracking-wider text-[#172033]">
@@ -655,7 +655,7 @@ export default function ScheduleTwinPage() {
             {/* Tree Search & Level Filter */}
             <div className="space-y-1.5">
               <div className="relative">
-                <Search className="w-3.5 h-3.5 text-[#8A94A6] absolute left-2.5 top-1/2 -translate-y-1/2" />
+                <Search className="w-3.5 h-3.5 text-[#7B8798] absolute left-2.5 top-1/2 -translate-y-1/2" />
                 <input
                   type="text"
                   placeholder="Filter WBS or activity..."
@@ -693,7 +693,7 @@ export default function ScheduleTwinPage() {
               {renderLeftTreeNode(hierarchyTree)}
             </div>
 
-            <div className="pt-2 border-t border-[#E8EBF0] text-[11px] text-[#596579] flex items-center justify-between">
+            <div className="pt-2 border-t border-[#D9DEE5] text-[11px] text-[#596579] flex items-center justify-between">
               <span>WBS Navigator</span>
               <Link
                 href="/schedule"
@@ -713,10 +713,10 @@ export default function ScheduleTwinPage() {
             <div>
               <div className="flex items-center justify-between gap-2 mb-2">
                 <div className="flex items-center gap-2">
-                  <span className="font-mono text-sm font-bold text-[#176B87] bg-[#E8F1F5] px-2 py-0.5 rounded border border-[#C5DCE6]">
+                  <span className="font-mono text-sm font-bold text-[#176B87] bg-[#EDF5F8] px-2 py-0.5 rounded border border-[#C5DCE6]">
                     {selectedActivity.id}
                   </span>
-                  <span className="font-mono text-xs text-[#596579] bg-[#F0F2F5] px-2 py-0.5 rounded border border-[#D9DEE5]">
+                  <span className="font-mono text-xs text-[#596579] bg-[#F1F3F5] px-2 py-0.5 rounded border border-[#D9DEE5]">
                     WBS {selectedActivity.wbs} ({selectedActivity.wbsLevel})
                   </span>
                 </div>
@@ -740,7 +740,7 @@ export default function ScheduleTwinPage() {
                 {selectedActivity.isCritical && (
                   <>
                     <span>•</span>
-                    <span className="text-[10px] font-mono text-[#B5473C] font-bold bg-[#FDF0EE] px-1.5 py-0.2 rounded border border-[#E4B0AA]">
+                    <span className="text-[10px] font-mono text-[#B5473C] font-bold bg-[#FBEFEE] px-1.5 py-0.2 rounded border border-[#E4B0AA]">
                       CRITICAL PATH (0d float)
                     </span>
                   </>
@@ -762,7 +762,7 @@ export default function ScheduleTwinPage() {
                     P6 Baseline Planned
                   </span>
                   <div className="font-mono font-medium text-[#172033]">
-                    {selectedActivity.plannedStart} <span className="text-[#8A94A6]">→</span> {selectedActivity.plannedFinish}
+                    {selectedActivity.plannedStart} <span className="text-[#7B8798]">→</span> {selectedActivity.plannedFinish}
                   </div>
                   <div className="text-[11px] text-[#596579] font-mono">
                     Target: {selectedActivity.plannedQuantity} {selectedActivity.unit}
@@ -775,7 +775,7 @@ export default function ScheduleTwinPage() {
                     Field Actual (Verified)
                   </span>
                   <div className="font-mono font-medium text-[#172033]">
-                    {selectedActivity.actualStart || 'Not Started'} <span className="text-[#8A94A6]">→</span>{' '}
+                    {selectedActivity.actualStart || 'Not Started'} <span className="text-[#7B8798]">→</span>{' '}
                     <span className={selectedActivity.delayDays > 0 ? 'text-[#B5473C]' : 'text-[#2E7D5B]'}>
                       {selectedActivity.actualFinish || 'In Progress'}
                     </span>
@@ -807,7 +807,7 @@ export default function ScheduleTwinPage() {
 
             {/* DEPENDENCY PANEL (Predecessors, Successors, Downstream Impact) */}
             <div className="border border-[#D9DEE5] rounded-lg p-4 space-y-3">
-              <div className="flex items-center justify-between pb-2 border-b border-[#E8EBF0]">
+              <div className="flex items-center justify-between pb-2 border-b border-[#D9DEE5]">
                 <div className="flex items-center gap-1.5">
                   <TrendingDown className="w-4 h-4 text-[#B5473C]" />
                   <h4 className="text-xs font-bold uppercase tracking-wider text-[#172033]">
@@ -828,15 +828,15 @@ export default function ScheduleTwinPage() {
                           key={p}
                           type="button"
                           onClick={() => setSelectedActivityId(p)}
-                          className="px-2.5 py-1 rounded bg-[#F7F8FA] hover:bg-[#E8F1F5] border border-[#D9DEE5] font-mono text-[11px] text-[#172033] inline-flex items-center gap-1 transition-colors"
+                          className="px-2.5 py-1 rounded bg-[#F7F8FA] hover:bg-[#EDF5F8] border border-[#D9DEE5] font-mono text-[11px] text-[#172033] inline-flex items-center gap-1 transition-colors"
                         >
                           <span className="font-bold text-[#176B87]">{p}</span>
-                          <span className="text-[#8A94A6]">[FS + 0d]</span>
+                          <span className="text-[#7B8798]">[FS + 0d]</span>
                         </button>
                       ))}
                     </div>
                   ) : (
-                    <span className="text-[#8A94A6] italic text-[11px]">No driving predecessors</span>
+                    <span className="text-[#7B8798] italic text-[11px]">No driving predecessors</span>
                   )}
                 </div>
 
@@ -850,21 +850,21 @@ export default function ScheduleTwinPage() {
                           key={s}
                           type="button"
                           onClick={() => setSelectedActivityId(s)}
-                          className="px-2.5 py-1 rounded bg-[#F7F8FA] hover:bg-[#E8F1F5] border border-[#D9DEE5] font-mono text-[11px] text-[#172033] inline-flex items-center gap-1 transition-colors"
+                          className="px-2.5 py-1 rounded bg-[#F7F8FA] hover:bg-[#EDF5F8] border border-[#D9DEE5] font-mono text-[11px] text-[#172033] inline-flex items-center gap-1 transition-colors"
                         >
                           <span className="font-bold text-[#176B87]">{s}</span>
-                          <span className="text-[#8A94A6]">[Downstream]</span>
+                          <span className="text-[#7B8798]">[Downstream]</span>
                         </button>
                       ))}
                     </div>
                   ) : (
-                    <span className="text-[#8A94A6] italic text-[11px]">No direct successors</span>
+                    <span className="text-[#7B8798] italic text-[11px]">No direct successors</span>
                   )}
                 </div>
 
                 {/* Downstream Impact Alert */}
                 {selectedActivity.delayDays > 0 && (
-                  <div className="p-2.5 bg-[#FDF0EE] border border-[#E4B0AA] rounded text-[11px] text-[#172033] mt-2 space-y-1">
+                  <div className="p-2.5 bg-[#FBEFEE] border border-[#E4B0AA] rounded text-[11px] text-[#172033] mt-2 space-y-1">
                     <strong className="text-[#B5473C] block font-semibold">
                       Critical Path Float Erosion Warning:
                     </strong>
@@ -899,20 +899,20 @@ export default function ScheduleTwinPage() {
           <div className="lg:col-span-4 space-y-5">
             {/* 1. EXECUTION PANEL: Linked Execution Events */}
             <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 space-y-3">
-              <div className="flex items-center justify-between pb-2 border-b border-[#E8EBF0]">
+              <div className="flex items-center justify-between pb-2 border-b border-[#D9DEE5]">
                 <div className="flex items-center gap-1.5">
                   <ClipboardList className="w-4 h-4 text-[#176B87]" />
                   <h3 className="text-xs font-bold uppercase tracking-wider text-[#172033]">
                     Linked Execution Events
                   </h3>
                 </div>
-                <span className="text-[10px] font-mono text-[#596579] bg-[#F0F2F5] px-1.5 py-0.2 rounded">
+                <span className="text-[10px] font-mono text-[#596579] bg-[#F1F3F5] px-1.5 py-0.2 rounded">
                   {linkedEvents.length} Matched
                 </span>
               </div>
 
               {linkedEvents.length === 0 ? (
-                <div className="p-4 bg-[#F7F8FA] border border-[#E8EBF0] rounded text-center text-xs text-[#596579]">
+                <div className="p-4 bg-[#F7F8FA] border border-[#D9DEE5] rounded text-center text-xs text-[#596579]">
                   No site execution events linked yet for {selectedActivity.id}.
                 </div>
               ) : (
@@ -925,14 +925,14 @@ export default function ScheduleTwinPage() {
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-1.5">
                           <span className="font-mono font-bold text-[#176B87]">{evt.id}</span>
-                          <span className="font-mono text-[10px] px-1 py-0.2 rounded bg-[#F0F2F5] text-[#596579]">
+                          <span className="font-mono text-[10px] px-1 py-0.2 rounded bg-[#F1F3F5] text-[#596579]">
                             {evt.source}
                           </span>
                         </div>
-                        <span className="font-mono text-[10px] text-[#8A94A6]">{evt.eventDate}</span>
+                        <span className="font-mono text-[10px] text-[#7B8798]">{evt.eventDate}</span>
                       </div>
 
-                      <p className="p-2 bg-[#F7F8FA] border border-[#E8EBF0] rounded text-[11px] text-[#172033] italic">
+                      <p className="p-2 bg-[#F7F8FA] border border-[#D9DEE5] rounded text-[11px] text-[#172033] italic">
                         &quot;{evt.rawText}&quot;
                       </p>
 
@@ -948,20 +948,20 @@ export default function ScheduleTwinPage() {
 
             {/* 2. EVIDENCE PANEL: Linked Evidence Vault */}
             <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 space-y-3">
-              <div className="flex items-center justify-between pb-2 border-b border-[#E8EBF0]">
+              <div className="flex items-center justify-between pb-2 border-b border-[#D9DEE5]">
                 <div className="flex items-center gap-1.5">
                   <FileText className="w-4 h-4 text-[#176B87]" />
                   <h3 className="text-xs font-bold uppercase tracking-wider text-[#172033]">
                     Linked QA/QC Evidence
                   </h3>
                 </div>
-                <span className="text-[10px] font-mono text-[#596579] bg-[#F0F2F5] px-1.5 py-0.2 rounded">
+                <span className="text-[10px] font-mono text-[#596579] bg-[#F1F3F5] px-1.5 py-0.2 rounded">
                   {linkedEvidence.length} Files
                 </span>
               </div>
 
               {linkedEvidence.length === 0 ? (
-                <div className="p-4 bg-[#F7F8FA] border border-[#E8EBF0] rounded text-center text-xs text-[#596579]">
+                <div className="p-4 bg-[#F7F8FA] border border-[#D9DEE5] rounded text-center text-xs text-[#596579]">
                   No verification evidence files currently linked to this activity.
                 </div>
               ) : (
@@ -982,7 +982,7 @@ export default function ScheduleTwinPage() {
                             {item.title}
                           </span>
                         </div>
-                        <span className="text-[10px] font-mono text-[#8A94A6]">{item.fileSize}</span>
+                        <span className="text-[10px] font-mono text-[#7B8798]">{item.fileSize}</span>
                       </div>
 
                       <div className="flex items-center justify-between text-[11px] text-[#596579]">
@@ -1012,14 +1012,14 @@ export default function ScheduleTwinPage() {
 
             {/* 3. VERIFICATION PANEL: Confidence, Reason, Review State, Reviewer */}
             <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 space-y-3">
-              <div className="flex items-center justify-between pb-2 border-b border-[#E8EBF0]">
+              <div className="flex items-center justify-between pb-2 border-b border-[#D9DEE5]">
                 <div className="flex items-center gap-1.5">
                   <ShieldCheck className="w-4 h-4 text-[#2E7D5B]" />
                   <h3 className="text-xs font-bold uppercase tracking-wider text-[#172033]">
                     Verification &amp; Audit Trail
                   </h3>
                 </div>
-                <span className="text-[10px] font-mono text-[#2E7D5B] bg-[#EBF5EF] px-1.5 py-0.2 rounded font-bold">
+                <span className="text-[10px] font-mono text-[#2E7D5B] bg-[#EDF7F2] px-1.5 py-0.2 rounded font-bold">
                   VALIDATED
                 </span>
               </div>
@@ -1030,14 +1030,14 @@ export default function ScheduleTwinPage() {
                   <ConfidenceBadge score={verificationDetails.confidence} size="sm" />
                 </div>
 
-                <div className="pt-1.5 border-t border-[#E8EBF0]">
+                <div className="pt-1.5 border-t border-[#D9DEE5]">
                   <span className="text-[#596579] block mb-0.5">Semantic Match Justification:</span>
-                  <p className="text-[#172033] font-medium text-[11px] bg-white p-2 rounded border border-[#E8EBF0]">
+                  <p className="text-[#172033] font-medium text-[11px] bg-white p-2 rounded border border-[#D9DEE5]">
                     {verificationDetails.matchReason}
                   </p>
                 </div>
 
-                <div className="flex justify-between pt-1 border-t border-[#E8EBF0]">
+                <div className="flex justify-between pt-1 border-t border-[#D9DEE5]">
                   <span className="text-[#596579]">Review State:</span>
                   <strong className="text-[#172033]">{verificationDetails.reviewState}</strong>
                 </div>
@@ -1047,7 +1047,7 @@ export default function ScheduleTwinPage() {
                   <strong className="text-[#176B87]">{verificationDetails.reviewer}</strong>
                 </div>
 
-                <div className="flex justify-between font-mono text-[10px] text-[#8A94A6]">
+                <div className="flex justify-between font-mono text-[10px] text-[#7B8798]">
                   <span>Verification Timestamp:</span>
                   <span>{verificationDetails.verifiedAt}</span>
                 </div>
@@ -1068,7 +1068,7 @@ export default function ScheduleTwinPage() {
               <button
                 type="button"
                 onClick={() => setSelectedEvidenceForModal(null)}
-                className="px-3 py-1.5 text-xs text-[#172033] bg-[#F7F8FA] hover:bg-[#E8EBF0] border border-[#D9DEE5] rounded"
+                className="px-3 py-1.5 text-xs text-[#172033] bg-[#F7F8FA] hover:bg-[#D9DEE5] border border-[#D9DEE5] rounded"
               >
                 Close
               </button>

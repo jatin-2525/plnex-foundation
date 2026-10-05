@@ -126,7 +126,7 @@ function ResetPasswordForm() {
       {/* Centered Authentication Panel */}
       <div className="bg-white border border-[#D9DEE5] rounded-lg shadow-sm overflow-hidden">
         {/* Header with PLnEX branding */}
-        <div className="px-6 pt-7 pb-5 text-center border-b border-[#E8EBF0] bg-white">
+        <div className="px-6 pt-7 pb-5 text-center border-b border-[#D9DEE5] bg-white">
           <div className="inline-flex items-center justify-center w-10 h-10 rounded-md bg-[#176B87] text-white font-black text-lg tracking-tighter mb-3 shadow-xs">
             PX
           </div>
@@ -209,7 +209,7 @@ function ResetPasswordForm() {
                 Your new security password has been updated in the Oil India central directory.
               </p>
             </div>
-            <div className="w-full bg-[#E8EBF0] h-1.5 rounded-full overflow-hidden">
+            <div className="w-full bg-[#D9DEE5] h-1.5 rounded-full overflow-hidden">
               <div className="h-full bg-[#2E7D5B] rounded-full w-full" />
             </div>
             <span className="inline-flex items-center gap-1.5 text-xs text-[#176B87] font-medium font-mono">
@@ -244,7 +244,7 @@ function ResetPasswordForm() {
                 New Password <span className="text-[#B5473C]">*</span>
               </label>
               <div className="relative">
-                <Lock className="w-4 h-4 text-[#8A94A6] absolute left-3 top-1/2 -translate-y-1/2" />
+                <Lock className="w-4 h-4 text-[#7B8798] absolute left-3 top-1/2 -translate-y-1/2" />
                 <input
                   id="new-password"
                   type={showPassword ? 'text' : 'password'}
@@ -256,7 +256,7 @@ function ResetPasswordForm() {
                   disabled={pageState === 'submitting'}
                   placeholder="Minimum 8 characters"
                   autoComplete="new-password"
-                  className={`w-full pl-9 pr-9 py-2 text-xs bg-[#F7F8FA] border rounded-md text-[#172033] placeholder-[#8A94A6] focus:bg-white outline-none transition-colors ${
+                  className={`w-full pl-9 pr-9 py-2 text-xs bg-[#F7F8FA] border rounded-md text-[#172033] placeholder-[#7B8798] focus:bg-white outline-none transition-colors ${
                     passwordError
                       ? 'border-[#B5473C] bg-[#FBEFEE]/30'
                       : 'border-[#D9DEE5] focus:border-[#176B87]'
@@ -265,7 +265,7 @@ function ResetPasswordForm() {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[#8A94A6] hover:text-[#172033] p-1 rounded transition-colors"
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[#7B8798] hover:text-[#172033] p-1 rounded transition-colors"
                   aria-label={showPassword ? 'Hide password' : 'Show password'}
                 >
                   {showPassword ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
@@ -285,7 +285,7 @@ function ResetPasswordForm() {
                 Confirm Password <span className="text-[#B5473C]">*</span>
               </label>
               <div className="relative">
-                <Lock className="w-4 h-4 text-[#8A94A6] absolute left-3 top-1/2 -translate-y-1/2" />
+                <Lock className="w-4 h-4 text-[#7B8798] absolute left-3 top-1/2 -translate-y-1/2" />
                 <input
                   id="confirm-password"
                   type={showConfirmPassword ? 'text' : 'password'}
@@ -297,7 +297,7 @@ function ResetPasswordForm() {
                   disabled={pageState === 'submitting'}
                   placeholder="Re-enter new password"
                   autoComplete="new-password"
-                  className={`w-full pl-9 pr-9 py-2 text-xs bg-[#F7F8FA] border rounded-md text-[#172033] placeholder-[#8A94A6] focus:bg-white outline-none transition-colors ${
+                  className={`w-full pl-9 pr-9 py-2 text-xs bg-[#F7F8FA] border rounded-md text-[#172033] placeholder-[#7B8798] focus:bg-white outline-none transition-colors ${
                     confirmPasswordError
                       ? 'border-[#B5473C] bg-[#FBEFEE]/30'
                       : confirmPassword && passwordsMatch
@@ -308,7 +308,7 @@ function ResetPasswordForm() {
                 <button
                   type="button"
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[#8A94A6] hover:text-[#172033] p-1 rounded transition-colors"
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[#7B8798] hover:text-[#172033] p-1 rounded transition-colors"
                   aria-label={showConfirmPassword ? 'Hide confirm password' : 'Show confirm password'}
                 >
                   {showConfirmPassword ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
@@ -332,19 +332,19 @@ function ResetPasswordForm() {
             <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-md text-[11px] space-y-1.5">
               <span className="font-semibold text-[#172033] block">Password Security Requirements:</span>
               <div className="grid grid-cols-2 gap-1.5 font-mono">
-                <div className={`flex items-center gap-1.5 ${passwordCriteria.minLength ? 'text-[#2E7D5B]' : 'text-[#8A94A6]'}`}>
+                <div className={`flex items-center gap-1.5 ${passwordCriteria.minLength ? 'text-[#2E7D5B]' : 'text-[#7B8798]'}`}>
                   {passwordCriteria.minLength ? <Check className="w-3.5 h-3.5 text-[#2E7D5B]" /> : <span className="w-3.5 h-3.5 flex items-center justify-center">•</span>}
                   <span>At least 8 characters</span>
                 </div>
-                <div className={`flex items-center gap-1.5 ${passwordCriteria.hasNumber ? 'text-[#2E7D5B]' : 'text-[#8A94A6]'}`}>
+                <div className={`flex items-center gap-1.5 ${passwordCriteria.hasNumber ? 'text-[#2E7D5B]' : 'text-[#7B8798]'}`}>
                   {passwordCriteria.hasNumber ? <Check className="w-3.5 h-3.5 text-[#2E7D5B]" /> : <span className="w-3.5 h-3.5 flex items-center justify-center">•</span>}
                   <span>At least 1 number (0–9)</span>
                 </div>
-                <div className={`flex items-center gap-1.5 ${passwordCriteria.hasUpper ? 'text-[#2E7D5B]' : 'text-[#8A94A6]'}`}>
+                <div className={`flex items-center gap-1.5 ${passwordCriteria.hasUpper ? 'text-[#2E7D5B]' : 'text-[#7B8798]'}`}>
                   {passwordCriteria.hasUpper ? <Check className="w-3.5 h-3.5 text-[#2E7D5B]" /> : <span className="w-3.5 h-3.5 flex items-center justify-center">•</span>}
                   <span>Uppercase letter (A–Z)</span>
                 </div>
-                <div className={`flex items-center gap-1.5 ${passwordCriteria.hasSpecial ? 'text-[#2E7D5B]' : 'text-[#8A94A6]'}`}>
+                <div className={`flex items-center gap-1.5 ${passwordCriteria.hasSpecial ? 'text-[#2E7D5B]' : 'text-[#7B8798]'}`}>
                   {passwordCriteria.hasSpecial ? <Check className="w-3.5 h-3.5 text-[#2E7D5B]" /> : <span className="w-3.5 h-3.5 flex items-center justify-center">•</span>}
                   <span>Special character (!@#$)</span>
                 </div>
@@ -371,7 +371,7 @@ function ResetPasswordForm() {
             </button>
 
             {/* Back to Sign In Link */}
-            <div className="pt-3 border-t border-[#E8EBF0] flex items-center justify-center text-xs text-[#596579]">
+            <div className="pt-3 border-t border-[#D9DEE5] flex items-center justify-center text-xs text-[#596579]">
               <Link href="/login" className="font-semibold text-[#176B87] hover:underline">
                 Return to Sign In
               </Link>
@@ -398,7 +398,7 @@ function ResetPasswordForm() {
           <button
             type="button"
             onClick={() => handleQuickFill('valid')}
-            className="px-2 py-1 bg-[#F0F2F5] hover:bg-[#E8EBF0] text-[#172033] rounded text-[11px] font-mono transition-colors"
+            className="px-2 py-1 bg-[#F1F3F5] hover:bg-[#D9DEE5] text-[#172033] rounded text-[11px] font-mono transition-colors"
           >
             Pre-fill Passwords
           </button>

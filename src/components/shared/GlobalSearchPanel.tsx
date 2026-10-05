@@ -45,7 +45,7 @@ function getEntityTypeIcon(type: SearchResultType) {
     case 'Risk':
       return <AlertTriangle className="w-3.5 h-3.5 text-[#B5473C]" />;
     case 'Report':
-      return <FileBarChart className="w-3.5 h-3.5 text-[#7C3AED]" />;
+      return <FileBarChart className="w-3.5 h-3.5 text-[#3B6EA8]" />;
     default:
       return <Search className="w-3.5 h-3.5 text-[#596579]" />;
   }
@@ -54,11 +54,11 @@ function getEntityTypeIcon(type: SearchResultType) {
 function getEntityTypeBadge(type: SearchResultType) {
   switch (type) {
     case 'Project':
-      return 'bg-[#EDF5F8] text-[#0284C7] border-[#B3CBE0]';
+      return 'bg-[#EDF5F8] text-[#176B87] border-[#B3CBE0]';
     case 'Activity':
       return 'bg-[#EDF5F8] text-[#176B87] border-[#B3CBE0]';
     case 'Execution Event':
-      return 'bg-[#EDF2F8] text-[#3B6EA8] border-[#CAD5E2]';
+      return 'bg-[#EDF5F8] text-[#3B6EA8] border-[#B3CBE0]';
     case 'Evidence':
       return 'bg-[#EDF7F2] text-[#2E7D5B] border-[#B8DCC9]';
     case 'Review Item':
@@ -66,9 +66,9 @@ function getEntityTypeBadge(type: SearchResultType) {
     case 'Risk':
       return 'bg-[#FBEFEE] text-[#B5473C] border-[#E4B0AA]';
     case 'Report':
-      return 'bg-[#F3EFF8] text-[#7C3AED] border-[#D4C7E8]';
+      return 'bg-[#EDF5F8] text-[#3B6EA8] border-[#B3CBE0]';
     default:
-      return 'bg-[#F0F2F5] text-[#596579] border-[#D9DEE5]';
+      return 'bg-[#F1F3F5] text-[#596579] border-[#D9DEE5]';
   }
 }
 
@@ -102,7 +102,7 @@ function getStatusBadgeClass(status: string) {
   ) {
     return 'bg-[#FBEFEE] text-[#B5473C] border-[#E4B0AA]';
   }
-  return 'bg-[#F0F2F5] text-[#596579] border-[#D9DEE5]';
+  return 'bg-[#F1F3F5] text-[#596579] border-[#D9DEE5]';
 }
 
 export interface GlobalSearchPanelProps {
@@ -192,14 +192,14 @@ export function GlobalSearchPanel({
 
   return (
     <div
-      className={`bg-white border border-[#D9DEE5] rounded-xl overflow-hidden shadow-sm flex flex-col ${className}`}
+      className={`bg-white border border-[#D9DEE5] rounded-lg overflow-hidden shadow-xs flex flex-col ${className}`}
       data-testid="plnex-global-search-panel"
     >
       {/* 1. Header Bar */}
       {showHeading && (
-        <div className="p-4 border-b border-[#D9DEE5] bg-gradient-to-r from-white to-[#F7F8FA] flex items-center justify-between gap-3">
+        <div className="p-4 border-b border-[#D9DEE5] bg-[#F7F8FA] flex items-center justify-between gap-3">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-[#EDF5F8] border border-[#B3CBE0] flex items-center justify-center text-[#176B87]">
+            <div className="w-8 h-8 rounded bg-[#EDF5F8] border border-[#B3CBE0] flex items-center justify-center text-[#176B87]">
               <Search className="w-4 h-4" />
             </div>
             <div>
@@ -211,7 +211,7 @@ export function GlobalSearchPanel({
               </p>
             </div>
           </div>
-          <kbd className="hidden sm:inline-flex items-center gap-1 px-2 py-1 text-[11px] font-mono text-[#596579] bg-[#F0F2F5] border border-[#D9DEE5] rounded">
+          <kbd className="hidden sm:inline-flex items-center gap-1 px-2 py-1 text-[11px] font-mono text-[#596579] bg-[#F1F3F5] border border-[#D9DEE5] rounded">
             ⌘K / Ctrl+K
           </kbd>
         </div>
@@ -220,19 +220,19 @@ export function GlobalSearchPanel({
       {/* 2. Input Box */}
       <div className="p-3.5 bg-white border-b border-[#D9DEE5] space-y-2.5">
         <div className="relative">
-          <Search className="w-4 h-4 text-[#8A94A6] absolute left-3 top-2.5" />
+          <Search className="w-4 h-4 text-[#7B8798] absolute left-3 top-2.5" />
           <input
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search activities (PIP-24-001), line numbers, DPRs, risks, evidence certificates..."
-            className="w-full pl-9 pr-8 py-2 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg text-xs text-[#172033] placeholder-[#8A94A6] focus:outline-none focus:border-[#176B87] focus:bg-white"
+            className="w-full pl-9 pr-8 py-2 bg-[#F7F8FA] border border-[#D9DEE5] rounded-md text-xs text-[#172033] placeholder-[#7B8798] focus:outline-none focus:border-[#176B87] focus:bg-white"
           />
           {query && (
             <button
               type="button"
               onClick={() => setQuery('')}
-              className="absolute right-2.5 top-2.5 text-[#8A94A6] hover:text-[#172033]"
+              className="absolute right-2.5 top-2.5 text-[#7B8798] hover:text-[#172033]"
             >
               <X className="w-4 h-4" />
             </button>
@@ -248,10 +248,10 @@ export function GlobalSearchPanel({
                 key={cat.id}
                 type="button"
                 onClick={() => setActiveCategory(cat.id)}
-                className={`px-2.5 py-1 rounded-full text-[11px] font-medium whitespace-nowrap transition-colors border ${
+                className={`px-2.5 py-1 rounded-md text-[11px] font-medium whitespace-nowrap transition-colors border ${
                   isSelected
                     ? 'bg-[#176B87] text-white border-[#176B87]'
-                    : 'bg-[#F7F8FA] border-[#D9DEE5] text-[#596579] hover:bg-white'
+                    : 'bg-[#F7F8FA] border-[#D9DEE5] text-[#596579] hover:bg-[#F1F3F5]'
                 }`}
               >
                 {cat.label}
@@ -262,7 +262,7 @@ export function GlobalSearchPanel({
       </div>
 
       {/* 3. Results Container */}
-      <div className="p-3 divide-y divide-[#F0F2F5] max-h-[500px] overflow-y-auto">
+      <div className="p-3 divide-y divide-[#F1F3F5] max-h-[500px] overflow-y-auto">
         {hasError && (
           <div className="p-6 text-center space-y-2">
             <AlertCircle className="w-6 h-6 text-[#B5473C] mx-auto" />
@@ -280,7 +280,7 @@ export function GlobalSearchPanel({
 
         {!isLoading && !hasError && query && results.length === 0 && (
           <div className="p-6 text-center space-y-2">
-            <Search className="w-6 h-6 text-[#8A94A6] mx-auto" />
+            <Search className="w-6 h-6 text-[#7B8798] mx-auto" />
             <p className="text-xs font-bold text-[#172033]">
               No Results for &ldquo;{query}&rdquo;
             </p>
@@ -298,7 +298,7 @@ export function GlobalSearchPanel({
                 <button
                   type="button"
                   onClick={() => setRecentSearches([])}
-                  className="text-[10px] text-[#8A94A6] hover:text-[#B5473C]"
+                  className="text-[10px] text-[#7B8798] hover:text-[#B5473C]"
                 >
                   Clear
                 </button>
@@ -319,10 +319,10 @@ export function GlobalSearchPanel({
                   className="p-2 rounded-lg hover:bg-[#F7F8FA] flex items-center justify-between text-xs cursor-pointer"
                 >
                   <div className="flex items-center gap-2">
-                    <Clock className="w-3.5 h-3.5 text-[#8A94A6]" />
+                    <Clock className="w-3.5 h-3.5 text-[#7B8798]" />
                     <span className="font-semibold text-[#172033]">{rec.query}</span>
                   </div>
-                  <span className="text-[10px] font-mono text-[#8A94A6]">{rec.relativeTime}</span>
+                  <span className="text-[10px] font-mono text-[#7B8798]">{rec.relativeTime}</span>
                 </div>
               ))}
             </div>

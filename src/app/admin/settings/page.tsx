@@ -41,7 +41,7 @@ export default function AdminSettingsPage() {
       <form onSubmit={handleSave} className="space-y-4 max-w-3xl">
         {/* Session Security */}
         <div className="bg-white border border-[#D9DEE5] rounded-lg p-5 space-y-4">
-          <div className="flex items-center gap-2 pb-2 border-b border-[#E8EBF0]">
+          <div className="flex items-center gap-2 pb-2 border-b border-[#D9DEE5]">
             <Clock className="w-4 h-4 text-[#176B87]" />
             <h3 className="text-xs font-bold uppercase tracking-wider text-[#172033]">
               Authentication & Session Lifetime
@@ -87,7 +87,7 @@ export default function AdminSettingsPage() {
 
         {/* Schedule Baseline Protection */}
         <div className="bg-white border border-[#D9DEE5] rounded-lg p-5 space-y-4">
-          <div className="flex items-center gap-2 pb-2 border-b border-[#E8EBF0]">
+          <div className="flex items-center gap-2 pb-2 border-b border-[#D9DEE5]">
             <Lock className="w-4 h-4 text-[#2E7D5B]" />
             <h3 className="text-xs font-bold uppercase tracking-wider text-[#172033]">
               Primavera P6 & Schedule Governance

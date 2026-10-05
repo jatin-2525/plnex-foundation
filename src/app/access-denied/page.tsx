@@ -55,7 +55,7 @@ function AccessDeniedContent() {
       {/* Main Centered Permission Card */}
       <div className="bg-white border border-[#D9DEE5] rounded-lg shadow-sm overflow-hidden">
         {/* Top Header with Brand */}
-        <div className="px-6 py-4 border-b border-[#E8EBF0] bg-white flex items-center justify-between">
+        <div className="px-6 py-4 border-b border-[#D9DEE5] bg-white flex items-center justify-between">
           <div className="flex items-center gap-2.5">
             <div className="w-7 h-7 rounded bg-[#176B87] text-white flex items-center justify-center font-bold text-xs font-mono">
               PX
@@ -92,14 +92,14 @@ function AccessDeniedContent() {
 
           {/* Current Role & Requested Resource Box */}
           <div className="bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg p-5 space-y-3.5 text-xs">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#E8EBF0] gap-1.5">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D9DEE5] gap-1.5">
               <span className="text-[#596579] font-medium">Current Role:</span>
               <span className="font-semibold text-[#172033] bg-white border border-[#D9DEE5] px-2.5 py-1 rounded font-mono text-xs">
                 {roleDisplayName(userSession?.role)}
               </span>
             </div>
 
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#E8EBF0] gap-1.5">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D9DEE5] gap-1.5">
               <span className="text-[#596579] font-medium">Requested Resource:</span>
               <span className="font-semibold text-[#B5473C] bg-white border border-[#E4B0AA] px-2.5 py-1 rounded font-mono text-xs break-all">
                 {requestedResource}
@@ -118,11 +118,11 @@ function AccessDeniedContent() {
           </p>
 
           {/* Actions */}
-          <div className="pt-4 border-t border-[#E8EBF0] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="pt-4 border-t border-[#D9DEE5] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <button
               type="button"
               onClick={() => router.back()}
-              className="inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-white hover:bg-[#F0F2F5] text-[#172033] border border-[#D9DEE5] text-xs font-semibold rounded-md transition-colors"
+              className="inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-white hover:bg-[#F1F3F5] text-[#172033] border border-[#D9DEE5] text-xs font-semibold rounded-md transition-colors"
             >
               <ArrowLeft className="w-3.5 h-3.5 text-[#596579]" />
               <span>Go Back</span>

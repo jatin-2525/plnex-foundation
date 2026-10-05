@@ -216,15 +216,15 @@ export default function EvidenceAndAuditPage() {
       case 'DPR':
         return { icon: FileCheck, label: 'DPR', bg: 'bg-[#EDF5F8]', border: 'border-[#B3CBE0]', text: 'text-[#176B87]' };
       case 'Photo':
-        return { icon: ImageIcon, label: 'Photo', bg: 'bg-[#F2EDF8]', border: 'border-[#D4C3EC]', text: 'text-[#6D42A6]' };
+        return { icon: ImageIcon, label: 'Photo', bg: 'bg-[#EDF5F8]', border: 'border-[#B3CBE0]', text: 'text-[#3B6EA8]' };
       case 'Document':
-        return { icon: FileText, label: 'Document', bg: 'bg-[#F0F2F5]', border: 'border-[#D9DEE5]', text: 'text-[#172033]' };
+        return { icon: FileText, label: 'Document', bg: 'bg-[#F1F3F5]', border: 'border-[#D9DEE5]', text: 'text-[#172033]' };
       case 'Spreadsheet':
         return { icon: FileSpreadsheet, label: 'Spreadsheet', bg: 'bg-[#EDF7F2]', border: 'border-[#B8DCC9]', text: 'text-[#2E7D5B]' };
       case 'Field Note':
-        return { icon: StickyNote, label: 'Field Note', bg: 'bg-[#FEF7EE]', border: 'border-[#ECD1A4]', text: 'text-[#9A5B13]' };
+        return { icon: StickyNote, label: 'Field Note', bg: 'bg-[#FDF6ED]', border: 'border-[#F0D4A6]', text: 'text-[#D98B32]' };
       default:
-        return { icon: HelpCircle, label: 'Other', bg: 'bg-[#F0F2F5]', border: 'border-[#D9DEE5]', text: 'text-[#596579]' };
+        return { icon: HelpCircle, label: 'Other', bg: 'bg-[#F1F3F5]', border: 'border-[#D9DEE5]', text: 'text-[#596579]' };
     }
   };
 
@@ -240,7 +240,7 @@ export default function EvidenceAndAuditPage() {
         );
       case 'Pending QC':
         return (
-          <span className="inline-flex items-center gap-1 text-[11px] font-bold text-[#9A5B13] bg-[#FEF7EE] border border-[#ECD1A4] px-2 py-0.5 rounded-full">
+          <span className="inline-flex items-center gap-1 text-[11px] font-bold text-[#D98B32] bg-[#FDF6ED] border border-[#F0D4A6] px-2 py-0.5 rounded-full">
             <Clock className="w-3 h-3" />
             Pending QC
           </span>
@@ -254,7 +254,7 @@ export default function EvidenceAndAuditPage() {
         );
       default:
         return (
-          <span className="inline-flex items-center gap-1 text-[11px] font-medium text-[#596579] bg-[#F0F2F5] border border-[#D9DEE5] px-2 py-0.5 rounded-full">
+          <span className="inline-flex items-center gap-1 text-[11px] font-medium text-[#596579] bg-[#F1F3F5] border border-[#D9DEE5] px-2 py-0.5 rounded-full">
             Unreviewed
           </span>
         );
@@ -278,7 +278,7 @@ export default function EvidenceAndAuditPage() {
             Final Rule: Evidence should answer: "Why should I trust this update?"
             Technical details (SHA-256, immutable ledger) moved to Audit Integrity section.
             ========================================================================= */}
-        <div className="bg-white border border-[#D9DEE5] rounded-xl p-5 md:p-6 shadow-xs">
+        <div className="bg-white border border-[#D9DEE5] rounded-lg p-5 md:p-6 shadow-xs">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-[#D9DEE5]/60">
             <div>
               <div className="flex items-center gap-2 mb-1.5 flex-wrap">
@@ -308,11 +308,11 @@ export default function EvidenceAndAuditPage() {
             {/* Core Metrics */}
             <div className="flex items-center gap-3">
               <div className="px-3.5 py-2 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg text-xs">
-                <span className="text-[10px] text-[#8A94A6] uppercase font-bold block">Evidence Coverage</span>
+                <span className="text-[10px] text-[#7B8798] uppercase font-bold block">Evidence Coverage</span>
                 <span className="font-mono font-bold text-[#176B87] text-sm">91.4% Verified</span>
               </div>
               <div className="px-3.5 py-2 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg text-xs">
-                <span className="text-[10px] text-[#8A94A6] uppercase font-bold block">Audit Records</span>
+                <span className="text-[10px] text-[#7B8798] uppercase font-bold block">Audit Records</span>
                 <span className="font-mono font-bold text-[#2E7D5B] text-sm">{COMPREHENSIVE_AUDIT_LOGS.length} Logged</span>
               </div>
             </div>
@@ -320,7 +320,7 @@ export default function EvidenceAndAuditPage() {
 
           {/* FINAL RULE BANNER: "Why should I trust this update?" */}
           <div className="pt-4">
-            <div className="p-3.5 bg-[#EDF5F8] border border-[#B3CBE0] rounded-xl flex items-start gap-3 text-xs">
+            <div className="p-3.5 bg-[#EDF5F8] border border-[#B3CBE0] rounded-lg flex items-start gap-3 text-xs">
               <Shield className="w-5 h-5 text-[#176B87] shrink-0 mt-0.5" />
               <div className="space-y-0.5">
                 <h4 className="font-bold text-[#176B87] uppercase tracking-wider text-[11px]">
@@ -335,7 +335,7 @@ export default function EvidenceAndAuditPage() {
 
           {/* PRIMARY NAVIGATION TABS: Evidence vs Audit Trail */}
           <div className="flex items-center justify-between pt-4 flex-wrap gap-3">
-            <div className="flex items-center bg-[#F0F2F5] p-1 rounded-xl border border-[#D9DEE5]">
+            <div className="flex items-center bg-[#F1F3F5] p-1 rounded-lg border border-[#D9DEE5]">
               <button
                 type="button"
                 onClick={() => setActiveTab('evidence')}
@@ -351,7 +351,7 @@ export default function EvidenceAndAuditPage() {
                   className={`px-2 py-0.2 rounded-full text-[10px] font-mono ${
                     activeTab === 'evidence'
                       ? 'bg-[#EDF5F8] text-[#176B87]'
-                      : 'bg-[#E8EBF0] text-[#596579]'
+                      : 'bg-[#D9DEE5] text-[#596579]'
                   }`}
                 >
                   {COMPREHENSIVE_EVIDENCE_ITEMS.length}
@@ -373,7 +373,7 @@ export default function EvidenceAndAuditPage() {
                   className={`px-2 py-0.2 rounded-full text-[10px] font-mono ${
                     activeTab === 'history'
                       ? 'bg-[#EDF5F8] text-[#176B87]'
-                      : 'bg-[#E8EBF0] text-[#596579]'
+                      : 'bg-[#D9DEE5] text-[#596579]'
                   }`}
                 >
                   {COMPREHENSIVE_AUDIT_LOGS.length}
@@ -392,7 +392,7 @@ export default function EvidenceAndAuditPage() {
             EVIDENCE RELATIONSHIP: Full 7-Stage Traceability Pipeline Widget
             Evidence ↓ Field Report ↓ Execution Event ↓ Activity ↓ Progress Update ↓ Variance ↓ Impact
             ========================================================================= */}
-        <div className="bg-white border border-[#D9DEE5] rounded-xl p-5 shadow-xs space-y-3">
+        <div className="bg-white border border-[#D9DEE5] rounded-lg p-5 shadow-xs space-y-3">
           <div className="flex items-center justify-between pb-2 border-b border-[#D9DEE5]/60 flex-wrap gap-2">
             <div className="flex items-center gap-2">
               <Layers className="w-4 h-4 text-[#176B87]" />
@@ -430,7 +430,7 @@ export default function EvidenceAndAuditPage() {
             {/* 2. Field Report */}
             <div className="p-3 rounded-lg bg-[#F7F8FA] border border-[#D9DEE5] flex flex-col justify-between text-xs space-y-2">
               <div>
-                <span className="text-[10px] font-mono font-bold text-[#8A94A6] uppercase block">
+                <span className="text-[10px] font-mono font-bold text-[#7B8798] uppercase block">
                   Stage 2
                 </span>
                 <div className="font-bold text-[#172033] text-xs mt-0.5 flex items-center gap-1">
@@ -446,7 +446,7 @@ export default function EvidenceAndAuditPage() {
             {/* 3. Execution Event */}
             <div className="p-3 rounded-lg bg-[#F7F8FA] border border-[#D9DEE5] flex flex-col justify-between text-xs space-y-2">
               <div>
-                <span className="text-[10px] font-mono font-bold text-[#8A94A6] uppercase block">
+                <span className="text-[10px] font-mono font-bold text-[#7B8798] uppercase block">
                   Stage 3
                 </span>
                 <div className="font-bold text-[#172033] text-xs mt-0.5 flex items-center gap-1">
@@ -462,7 +462,7 @@ export default function EvidenceAndAuditPage() {
             {/* 4. Activity */}
             <div className="p-3 rounded-lg bg-[#F7F8FA] border border-[#D9DEE5] flex flex-col justify-between text-xs space-y-2">
               <div>
-                <span className="text-[10px] font-mono font-bold text-[#8A94A6] uppercase block">
+                <span className="text-[10px] font-mono font-bold text-[#7B8798] uppercase block">
                   Stage 4
                 </span>
                 <div className="font-bold text-[#172033] text-xs mt-0.5 flex items-center gap-1">
@@ -492,17 +492,17 @@ export default function EvidenceAndAuditPage() {
             </div>
 
             {/* 6. Variance */}
-            <div className="p-3 rounded-lg bg-[#FEF7EE] border border-[#ECD1A4] flex flex-col justify-between text-xs space-y-2">
+            <div className="p-3 rounded-lg bg-[#FDF6ED] border border-[#F0D4A6] flex flex-col justify-between text-xs space-y-2">
               <div>
-                <span className="text-[10px] font-mono font-bold text-[#9A5B13] uppercase block">
+                <span className="text-[10px] font-mono font-bold text-[#D98B32] uppercase block">
                   Stage 6
                 </span>
                 <div className="font-bold text-[#172033] text-xs mt-0.5 flex items-center gap-1">
-                  <SlidersHorizontal className="w-3.5 h-3.5 text-[#9A5B13]" />
+                  <SlidersHorizontal className="w-3.5 h-3.5 text-[#D98B32]" />
                   <span>Variance</span>
                 </div>
               </div>
-              <div className="text-[10px] text-[#9A5B13] pt-1 border-t border-[#ECD1A4]/60 font-mono font-bold">
+              <div className="text-[10px] text-[#D98B32] pt-1 border-t border-[#F0D4A6]/60 font-mono font-bold">
                 -7% Slip Cleared
               </div>
             </div>
@@ -531,7 +531,7 @@ export default function EvidenceAndAuditPage() {
         {activeTab === 'evidence' && (
           <div className="space-y-6">
             {/* EVIDENCE CONTROLS & FILTERS BAR */}
-            <div className="bg-white border border-[#D9DEE5] rounded-xl p-5 shadow-xs space-y-4">
+            <div className="bg-white border border-[#D9DEE5] rounded-lg p-5 shadow-xs space-y-4">
               <div className="flex items-center justify-between flex-wrap gap-2">
                 <div className="flex items-center gap-2">
                   <Filter className="w-4 h-4 text-[#176B87]" />
@@ -553,7 +553,7 @@ export default function EvidenceAndAuditPage() {
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3 text-xs">
                 {/* 1. Type Filter */}
                 <div className="space-y-1">
-                  <label className="text-[10px] font-bold uppercase text-[#8A94A6]">Type</label>
+                  <label className="text-[10px] font-bold uppercase text-[#7B8798]">Type</label>
                   <select
                     value={selectedType}
                     onChange={(e) => setSelectedType(e.target.value)}
@@ -570,7 +570,7 @@ export default function EvidenceAndAuditPage() {
 
                 {/* 2. Activity Filter */}
                 <div className="space-y-1">
-                  <label className="text-[10px] font-bold uppercase text-[#8A94A6]">Activity</label>
+                  <label className="text-[10px] font-bold uppercase text-[#7B8798]">Activity</label>
                   <select
                     value={selectedActivity}
                     onChange={(e) => setSelectedActivity(e.target.value)}
@@ -586,7 +586,7 @@ export default function EvidenceAndAuditPage() {
 
                 {/* 3. Execution Event Filter */}
                 <div className="space-y-1">
-                  <label className="text-[10px] font-bold uppercase text-[#8A94A6]">Execution Event</label>
+                  <label className="text-[10px] font-bold uppercase text-[#7B8798]">Execution Event</label>
                   <select
                     value={selectedExecutionEvent}
                     onChange={(e) => setSelectedExecutionEvent(e.target.value)}
@@ -601,7 +601,7 @@ export default function EvidenceAndAuditPage() {
 
                 {/* 4. Uploaded By Filter */}
                 <div className="space-y-1">
-                  <label className="text-[10px] font-bold uppercase text-[#8A94A6]">Uploaded By</label>
+                  <label className="text-[10px] font-bold uppercase text-[#7B8798]">Uploaded By</label>
                   <select
                     value={selectedUploader}
                     onChange={(e) => setSelectedUploader(e.target.value)}
@@ -615,7 +615,7 @@ export default function EvidenceAndAuditPage() {
 
                 {/* 5. Verification Status Filter */}
                 <div className="space-y-1">
-                  <label className="text-[10px] font-bold uppercase text-[#8A94A6]">Verification</label>
+                  <label className="text-[10px] font-bold uppercase text-[#7B8798]">Verification</label>
                   <select
                     value={selectedVerificationStatus}
                     onChange={(e) => setSelectedVerificationStatus(e.target.value)}
@@ -630,7 +630,7 @@ export default function EvidenceAndAuditPage() {
 
                 {/* 6. Date Search */}
                 <div className="space-y-1">
-                  <label className="text-[10px] font-bold uppercase text-[#8A94A6]">Date</label>
+                  <label className="text-[10px] font-bold uppercase text-[#7B8798]">Date</label>
                   <input
                     type="date"
                     value={selectedDate}
@@ -643,7 +643,7 @@ export default function EvidenceAndAuditPage() {
               {/* Free Text Search */}
               <div className="pt-2 border-t border-[#D9DEE5]/60 flex items-center justify-between gap-3 flex-wrap">
                 <div className="relative flex-1 max-w-md">
-                  <Search className="w-3.5 h-3.5 text-[#8A94A6] absolute left-3 top-2.5" />
+                  <Search className="w-3.5 h-3.5 text-[#7B8798] absolute left-3 top-2.5" />
                   <input
                     type="text"
                     value={evidenceSearch}
@@ -672,11 +672,11 @@ export default function EvidenceAndAuditPage() {
                 - Verification
                 - Status
                 ========================================================================= */}
-            <div className="bg-white border border-[#D9DEE5] rounded-xl shadow-xs overflow-hidden">
+            <div className="bg-white border border-[#D9DEE5] rounded-lg shadow-xs overflow-hidden">
               <div className="overflow-x-auto">
                 <table className="w-full min-w-[880px] text-left border-collapse text-xs">
                   <thead>
-                    <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[10px] uppercase font-bold text-[#8A94A6] tracking-wider">
+                    <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[10px] uppercase font-bold text-[#7B8798] tracking-wider">
                       <th className="py-3 px-4">Evidence ID</th>
                       <th className="py-3 px-4">Type</th>
                       <th className="py-3 px-4 min-w-[160px]">Source</th>
@@ -689,7 +689,7 @@ export default function EvidenceAndAuditPage() {
                       <th className="py-3 px-4 text-right">Actions</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-[#E8EBF0]">
+                  <tbody className="divide-y divide-[#D9DEE5]">
                     {filteredEvidence.map((item) => {
                       const typeBadge = getEvidenceTypeBadge(item.type);
                       const TypeIcon = typeBadge.icon;
@@ -697,7 +697,7 @@ export default function EvidenceAndAuditPage() {
                       return (
                         <tr
                           key={item.id}
-                          className="hover:bg-[#F0F2F5]/60 transition-colors cursor-pointer group"
+                          className="hover:bg-[#F1F3F5]/60 transition-colors cursor-pointer group"
                           onClick={() => setPreviewEvidence(item)}
                         >
                           {/* 1. Evidence ID */}
@@ -746,25 +746,25 @@ export default function EvidenceAndAuditPage() {
                                 </p>
                               </div>
                             ) : (
-                              <span className="text-[#8A94A6] italic font-mono text-[11px]">Unlinked</span>
+                              <span className="text-[#7B8798] italic font-mono text-[11px]">Unlinked</span>
                             )}
                           </td>
 
                           {/* 5. Execution Event */}
                           <td className="py-3 px-4">
                             {item.executionEventId ? (
-                              <span className="font-mono text-xs font-semibold text-[#176B87] px-2 py-0.5 rounded bg-[#F0F2F5] border border-[#D9DEE5]">
+                              <span className="font-mono text-xs font-semibold text-[#176B87] px-2 py-0.5 rounded bg-[#F1F3F5] border border-[#D9DEE5]">
                                 {item.executionEventId}
                               </span>
                             ) : (
-                              <span className="text-[#8A94A6] text-[11px] font-mono">None</span>
+                              <span className="text-[#7B8798] text-[11px] font-mono">None</span>
                             )}
                           </td>
 
                           {/* 6. Uploaded By */}
                           <td className="py-3 px-4">
                             <div className="font-medium text-[#172033]">{item.uploader}</div>
-                            <div className="text-[10px] text-[#8A94A6]">{item.uploaderRole}</div>
+                            <div className="text-[10px] text-[#7B8798]">{item.uploaderRole}</div>
                           </td>
 
                           {/* 7. Date */}
@@ -782,7 +782,7 @@ export default function EvidenceAndAuditPage() {
                                 </span>
                               </div>
                             ) : (
-                              <span className="text-[11px] text-[#9A5B13]">Pending QC</span>
+                              <span className="text-[11px] text-[#D98B32]">Pending QC</span>
                             )}
                           </td>
 
@@ -832,7 +832,7 @@ export default function EvidenceAndAuditPage() {
         {activeTab === 'history' && (
           <div className="space-y-6">
             {/* AUDIT SPOTLIGHT EXAMPLE CARD */}
-            <div className="p-4 rounded-xl bg-[#EDF7F2] border border-[#B8DCC9] shadow-xs space-y-3">
+            <div className="p-4 rounded-lg bg-[#EDF7F2] border border-[#B8DCC9] shadow-xs space-y-3">
               <div className="flex items-center justify-between pb-2 border-b border-[#B8DCC9]/60 flex-wrap gap-2">
                 <span className="text-xs font-bold uppercase tracking-wider text-[#2E7D5B] flex items-center gap-1.5">
                   <CheckCircle2 className="w-4 h-4" />
@@ -845,7 +845,7 @@ export default function EvidenceAndAuditPage() {
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
                 <div className="p-3 rounded-lg bg-white border border-[#B8DCC9]">
-                  <span className="text-[10px] uppercase font-bold text-[#8A94A6] block mb-0.5">
+                  <span className="text-[10px] uppercase font-bold text-[#7B8798] block mb-0.5">
                     What Changed
                   </span>
                   <div className="font-bold text-sm text-[#172033]">
@@ -857,7 +857,7 @@ export default function EvidenceAndAuditPage() {
                 </div>
 
                 <div className="p-3 rounded-lg bg-white border border-[#B8DCC9]">
-                  <span className="text-[10px] uppercase font-bold text-[#8A94A6] block mb-0.5">
+                  <span className="text-[10px] uppercase font-bold text-[#7B8798] block mb-0.5">
                     Who (Changed by)
                   </span>
                   <div className="font-bold text-sm text-[#172033]">
@@ -869,7 +869,7 @@ export default function EvidenceAndAuditPage() {
                 </div>
 
                 <div className="p-3 rounded-lg bg-white border border-[#B8DCC9]">
-                  <span className="text-[10px] uppercase font-bold text-[#8A94A6] block mb-0.5">
+                  <span className="text-[10px] uppercase font-bold text-[#7B8798] block mb-0.5">
                     Reason
                   </span>
                   <div className="font-bold text-xs text-[#172033]">
@@ -883,7 +883,7 @@ export default function EvidenceAndAuditPage() {
             </div>
 
             {/* AUDIT ACTIONS FILTER & CONTROLS */}
-            <div className="bg-white border border-[#D9DEE5] rounded-xl p-5 shadow-xs space-y-4">
+            <div className="bg-white border border-[#D9DEE5] rounded-lg p-5 shadow-xs space-y-4">
               <div className="flex items-center justify-between flex-wrap gap-2">
                 <div className="flex items-center gap-2">
                   <History className="w-4 h-4 text-[#176B87]" />
@@ -903,7 +903,7 @@ export default function EvidenceAndAuditPage() {
 
               {/* Action Category Filter Chips */}
               <div className="space-y-1.5">
-                <label className="text-[10px] font-bold uppercase text-[#8A94A6]">
+                <label className="text-[10px] font-bold uppercase text-[#7B8798]">
                   Filter by Action Category
                 </label>
                 <div className="flex items-center gap-1.5 flex-wrap">
@@ -925,7 +925,7 @@ export default function EvidenceAndAuditPage() {
                       className={`px-3 py-1 rounded-lg text-xs font-semibold transition-all ${
                         auditActionFilter === act
                           ? 'bg-[#176B87] text-white shadow-xs'
-                          : 'bg-white border border-[#D9DEE5] text-[#596579] hover:bg-[#F0F2F5]'
+                          : 'bg-white border border-[#D9DEE5] text-[#596579] hover:bg-[#F1F3F5]'
                       }`}
                     >
                       {act === 'ALL' ? 'All Actions' : act}
@@ -938,7 +938,7 @@ export default function EvidenceAndAuditPage() {
               <div className="pt-2 border-t border-[#D9DEE5]/60 flex items-center justify-between flex-wrap gap-3">
                 <div className="flex items-center gap-3 flex-1 max-w-lg">
                   <div className="relative flex-1">
-                    <Search className="w-3.5 h-3.5 text-[#8A94A6] absolute left-3 top-2.5" />
+                    <Search className="w-3.5 h-3.5 text-[#7B8798] absolute left-3 top-2.5" />
                     <input
                       type="text"
                       value={auditSearch}
@@ -967,11 +967,11 @@ export default function EvidenceAndAuditPage() {
             </div>
 
             {/* AUDIT TABLE: Who | What | When | Before | After | Reason */}
-            <div className="bg-white border border-[#D9DEE5] rounded-xl shadow-xs overflow-hidden">
+            <div className="bg-white border border-[#D9DEE5] rounded-lg shadow-xs overflow-hidden">
               <div className="overflow-x-auto">
                 <table className="w-full min-w-[880px] text-left border-collapse text-xs">
                   <thead>
-                    <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[10px] uppercase font-bold text-[#8A94A6] tracking-wider">
+                    <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[10px] uppercase font-bold text-[#7B8798] tracking-wider">
                       <th className="py-3 px-4">Audit ID</th>
                       <th className="py-3 px-4 min-w-[140px]">Who (Changed by)</th>
                       <th className="py-3 px-4 min-w-[180px]">What (Action)</th>
@@ -982,12 +982,12 @@ export default function EvidenceAndAuditPage() {
                       <th className="py-3 px-4 min-w-[200px]">Details</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-[#E8EBF0]">
+                  <tbody className="divide-y divide-[#D9DEE5]">
                     {filteredAuditLogs.map((log) => (
                       <tr
                         key={log.id}
                         onClick={() => setSelectedAuditEntry(log)}
-                        className="hover:bg-[#F0F2F5]/60 transition-colors cursor-pointer group"
+                        className="hover:bg-[#F1F3F5]/60 transition-colors cursor-pointer group"
                       >
                         {/* Audit ID */}
                         <td className="py-3 px-4 font-mono font-bold text-[#176B87]">
@@ -1002,9 +1002,9 @@ export default function EvidenceAndAuditPage() {
                           <span
                             className={`inline-block px-1.5 py-0.2 rounded text-[9px] font-mono font-bold uppercase mt-0.5 ${
                               log.role === 'SYSTEM'
-                                ? 'bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0]'
+                                ? 'bg-[#F1F3F5] text-[#596579] border border-[#D9DEE5]'
                                 : log.role === 'manager'
-                                ? 'bg-[#F2EDF8] text-[#6D42A6] border border-[#D4C3EC]'
+                                ? 'bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0]'
                                 : 'bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]'
                             }`}
                           >
@@ -1066,8 +1066,8 @@ export default function EvidenceAndAuditPage() {
             Rule: Do not make SHA-256, Append-only, Immutable ledger, Digest the main UI.
             Place them under: Audit Integrity / Technical Details.
             ========================================================================= */}
-        <details className="group bg-[#F7F8FA] border border-[#D9DEE5] rounded-xl overflow-hidden transition-all">
-          <summary className="p-4 flex items-center justify-between cursor-pointer font-bold text-xs uppercase tracking-wider text-[#176B87] hover:bg-[#F0F2F5] transition-colors">
+        <details className="group bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg overflow-hidden transition-all">
+          <summary className="p-4 flex items-center justify-between cursor-pointer font-bold text-xs uppercase tracking-wider text-[#176B87] hover:bg-[#F1F3F5] transition-colors">
             <div className="flex items-center gap-2">
               <Key className="w-4 h-4 text-[#176B87]" />
               <span>Audit Integrity & Technical Details</span>
@@ -1081,7 +1081,7 @@ export default function EvidenceAndAuditPage() {
           <div className="p-5 border-t border-[#D9DEE5] bg-white space-y-4 text-xs text-[#596579]">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {/* 1. Audit Integrity */}
-              <div className="p-4 rounded-xl bg-[#F7F8FA] border border-[#D9DEE5] space-y-2">
+              <div className="p-4 rounded-lg bg-[#F7F8FA] border border-[#D9DEE5] space-y-2">
                 <div className="flex items-center gap-1.5 font-bold text-xs text-[#172033] uppercase">
                   <Database className="w-4 h-4 text-[#176B87]" />
                   <span>Audit Integrity</span>
@@ -1096,7 +1096,7 @@ export default function EvidenceAndAuditPage() {
               </div>
 
               {/* 2. Technical Details */}
-              <div className="p-4 rounded-xl bg-[#F7F8FA] border border-[#D9DEE5] space-y-2">
+              <div className="p-4 rounded-lg bg-[#F7F8FA] border border-[#D9DEE5] space-y-2">
                 <div className="flex items-center gap-1.5 font-bold text-xs text-[#172033] uppercase">
                   <Lock className="w-4 h-4 text-[#176B87]" />
                   <span>Technical Details & Checksums</span>
@@ -1167,7 +1167,7 @@ export default function EvidenceAndAuditPage() {
               {/* LEFT (Cols 1-6): ORIGINAL EVIDENCE & METADATA */}
               <div className="lg:col-span-6 space-y-4">
                 {/* 1. ORIGINAL EVIDENCE VIEWER */}
-                <div className="bg-[#172033] rounded-xl p-4 text-white space-y-3 relative overflow-hidden">
+                <div className="bg-[#172033] rounded-lg p-4 text-white space-y-3 relative overflow-hidden">
                   <div className="flex items-center justify-between border-b border-white/10 pb-2 text-[11px]">
                     <span className="font-bold text-white uppercase tracking-wider text-[10px]">
                       Original Evidence
@@ -1195,7 +1195,7 @@ export default function EvidenceAndAuditPage() {
                           <div className="font-bold text-sm text-white">
                             High-Resolution Onsite Inspection Capture
                           </div>
-                          <p className="text-[11px] text-[#8A94A6]">
+                          <p className="text-[11px] text-[#7B8798]">
                             Line 24 Spool Pieces installed on Piperack Section B
                           </p>
                         </div>
@@ -1234,7 +1234,7 @@ export default function EvidenceAndAuditPage() {
                         </p>
                       </div>
 
-                      <div className="border-t border-[#D9DEE5] pt-2 flex justify-between items-center text-[10px] text-[#8A94A6]">
+                      <div className="border-t border-[#D9DEE5] pt-2 flex justify-between items-center text-[10px] text-[#7B8798]">
                         <span>Signed: Debajit Borah</span>
                         <span>Counter: Contractor QC</span>
                       </div>
@@ -1249,29 +1249,29 @@ export default function EvidenceAndAuditPage() {
                 </div>
 
                 {/* 2. METADATA */}
-                <div className="p-3.5 rounded-xl bg-[#F7F8FA] border border-[#D9DEE5] space-y-2">
+                <div className="p-3.5 rounded-lg bg-[#F7F8FA] border border-[#D9DEE5] space-y-2">
                   <h4 className="font-bold text-xs text-[#172033] uppercase tracking-wider">
                     Metadata
                   </h4>
                   <div className="grid grid-cols-2 gap-2 text-[11px]">
                     <div>
-                      <span className="text-[10px] uppercase font-bold text-[#8A94A6] block">Filename</span>
+                      <span className="text-[10px] uppercase font-bold text-[#7B8798] block">Filename</span>
                       <span className="font-mono text-[#172033] break-all">{previewEvidence.filename}</span>
                     </div>
                     <div>
-                      <span className="text-[10px] uppercase font-bold text-[#8A94A6] block">File Size</span>
+                      <span className="text-[10px] uppercase font-bold text-[#7B8798] block">File Size</span>
                       <span className="font-mono text-[#172033]">{previewEvidence.fileSize}</span>
                     </div>
                     <div>
-                      <span className="text-[10px] uppercase font-bold text-[#8A94A6] block">Uploaded By</span>
+                      <span className="text-[10px] uppercase font-bold text-[#7B8798] block">Uploaded By</span>
                       <span className="text-[#172033] font-medium">{previewEvidence.uploader}</span>
                     </div>
                     <div>
-                      <span className="text-[10px] uppercase font-bold text-[#8A94A6] block">Timestamp</span>
+                      <span className="text-[10px] uppercase font-bold text-[#7B8798] block">Timestamp</span>
                       <span className="font-mono text-[#172033]">{previewEvidence.timestamp}</span>
                     </div>
                     <div className="col-span-2">
-                      <span className="text-[10px] uppercase font-bold text-[#8A94A6] block">GPS Geolocation</span>
+                      <span className="text-[10px] uppercase font-bold text-[#7B8798] block">GPS Geolocation</span>
                       <span className="font-mono text-[#176B87] flex items-center gap-1">
                         <MapPin className="w-3.5 h-3.5 text-[#176B87]" />
                         {previewEvidence.gpsCoords || 'Site Field Office (27.3485° N, 95.3132° E)'}
@@ -1284,7 +1284,7 @@ export default function EvidenceAndAuditPage() {
               {/* RIGHT (Cols 7-12): EXTRACTED INFORMATION, LINKED EVENT, LINKED ACTIVITY, CONFIDENCE, VERIFICATION */}
               <div className="lg:col-span-6 space-y-4">
                 {/* 3. EXTRACTED INFORMATION */}
-                <div className="p-3.5 rounded-xl bg-white border border-[#D9DEE5] space-y-2">
+                <div className="p-3.5 rounded-lg bg-white border border-[#D9DEE5] space-y-2">
                   <div className="flex items-center justify-between">
                     <span className="text-[10px] uppercase font-bold text-[#176B87] tracking-wider">
                       Extracted Information
@@ -1296,26 +1296,26 @@ export default function EvidenceAndAuditPage() {
 
                   <div className="grid grid-cols-2 gap-2 text-[11px]">
                     <div className="p-2 rounded bg-[#F7F8FA] border border-[#D9DEE5]">
-                      <span className="text-[10px] text-[#8A94A6] uppercase block">Work Type</span>
+                      <span className="text-[10px] text-[#7B8798] uppercase block">Work Type</span>
                       <span className="font-semibold text-[#172033]">
                         {previewEvidence.extractedData?.workType || 'Erection'}
                       </span>
                     </div>
                     <div className="p-2 rounded bg-[#F7F8FA] border border-[#D9DEE5]">
-                      <span className="text-[10px] text-[#8A94A6] uppercase block">Quantity & Unit</span>
+                      <span className="text-[10px] text-[#7B8798] uppercase block">Quantity & Unit</span>
                       <span className="font-mono font-bold text-[#176B87]">
                         {previewEvidence.extractedData?.quantity}{' '}
                         {previewEvidence.extractedData?.unit}
                       </span>
                     </div>
                     <div className="p-2 rounded bg-[#F7F8FA] border border-[#D9DEE5]">
-                      <span className="text-[10px] text-[#8A94A6] uppercase block">Line Identifier</span>
+                      <span className="text-[10px] text-[#7B8798] uppercase block">Line Identifier</span>
                       <span className="font-mono text-[#172033]">
                         {previewEvidence.extractedData?.line || 'Line 24-XX'}
                       </span>
                     </div>
                     <div className="p-2 rounded bg-[#F7F8FA] border border-[#D9DEE5]">
-                      <span className="text-[10px] text-[#8A94A6] uppercase block">Area Location</span>
+                      <span className="text-[10px] text-[#7B8798] uppercase block">Area Location</span>
                       <span className="text-[#172033]">
                         {previewEvidence.extractedData?.area || 'Unit A'}
                       </span>
@@ -1330,9 +1330,9 @@ export default function EvidenceAndAuditPage() {
                 </div>
 
                 {/* 4. LINKED EXECUTION EVENT */}
-                <div className="p-3.5 rounded-xl bg-white border border-[#D9DEE5] space-y-2">
+                <div className="p-3.5 rounded-lg bg-white border border-[#D9DEE5] space-y-2">
                   <div className="flex items-center justify-between">
-                    <span className="text-[10px] uppercase font-bold text-[#8A94A6] tracking-wider">
+                    <span className="text-[10px] uppercase font-bold text-[#7B8798] tracking-wider">
                       Linked Execution Event
                     </span>
                     <span className="font-mono text-xs font-semibold text-[#176B87] px-2 py-0.5 rounded bg-[#EDF5F8] border border-[#B3CBE0]">
@@ -1345,7 +1345,7 @@ export default function EvidenceAndAuditPage() {
                 </div>
 
                 {/* 5. LINKED ACTIVITY */}
-                <div className="p-3.5 rounded-xl bg-[#EDF5F8] border border-[#B3CBE0] space-y-2">
+                <div className="p-3.5 rounded-lg bg-[#EDF5F8] border border-[#B3CBE0] space-y-2">
                   <div className="flex items-center justify-between">
                     <span className="text-[10px] uppercase font-bold text-[#176B87] tracking-wider">
                       Linked Activity
@@ -1365,9 +1365,9 @@ export default function EvidenceAndAuditPage() {
                 </div>
 
                 {/* 6. CONFIDENCE */}
-                <div className="p-3.5 rounded-xl bg-white border border-[#D9DEE5] space-y-2">
+                <div className="p-3.5 rounded-lg bg-white border border-[#D9DEE5] space-y-2">
                   <div className="flex items-center justify-between">
-                    <span className="text-[10px] uppercase font-bold text-[#8A94A6] tracking-wider">
+                    <span className="text-[10px] uppercase font-bold text-[#7B8798] tracking-wider">
                       Confidence
                     </span>
                     <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]">
@@ -1391,22 +1391,22 @@ export default function EvidenceAndAuditPage() {
                 </div>
 
                 {/* 7. VERIFICATION */}
-                <div className="p-3.5 rounded-xl bg-[#F7F8FA] border border-[#D9DEE5] space-y-2">
+                <div className="p-3.5 rounded-lg bg-[#F7F8FA] border border-[#D9DEE5] space-y-2">
                   <div className="flex items-center justify-between">
-                    <span className="text-[10px] uppercase font-bold text-[#8A94A6] tracking-wider">
+                    <span className="text-[10px] uppercase font-bold text-[#7B8798] tracking-wider">
                       Verification
                     </span>
                     {getStatusBadge(previewEvidence.status)}
                   </div>
                   <div className="text-[11px] space-y-1">
                     <div className="flex justify-between">
-                      <span className="text-[#8A94A6]">Verifier:</span>
+                      <span className="text-[#7B8798]">Verifier:</span>
                       <span className="font-semibold text-[#172033]">
                         {previewEvidence.verificationBy || 'Pending QC Sign-Off'}
                       </span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-[#8A94A6]">Verification Date:</span>
+                      <span className="text-[#7B8798]">Verification Date:</span>
                       <span className="font-mono text-[#596579]">
                         {previewEvidence.verificationTimestamp || 'Awaiting sign-off'}
                       </span>
@@ -1447,26 +1447,26 @@ export default function EvidenceAndAuditPage() {
 
               {/* Who & When */}
               <div className="p-3.5 rounded-lg bg-white border border-[#D9DEE5] space-y-2 text-xs">
-                <span className="text-[10px] uppercase font-bold text-[#8A94A6] tracking-wider block">
+                <span className="text-[10px] uppercase font-bold text-[#7B8798] tracking-wider block">
                   Who (Changed by) & When
                 </span>
                 <div className="flex justify-between">
-                  <span className="text-[#8A94A6]">Changed By:</span>
+                  <span className="text-[#7B8798]">Changed By:</span>
                   <span className="font-semibold text-[#172033]">{selectedAuditEntry.actor}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-[#8A94A6]">Role:</span>
+                  <span className="text-[#7B8798]">Role:</span>
                   <span className="font-mono uppercase text-[#176B87]">{selectedAuditEntry.role}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-[#8A94A6]">When:</span>
+                  <span className="text-[#7B8798]">When:</span>
                   <span className="font-mono text-[#172033]">{selectedAuditEntry.timestamp}</span>
                 </div>
               </div>
 
               {/* Before vs After */}
               <div className="space-y-2">
-                <span className="text-[10px] uppercase font-bold text-[#8A94A6] tracking-wider block">
+                <span className="text-[10px] uppercase font-bold text-[#7B8798] tracking-wider block">
                   State Change (Before $\to$ After)
                 </span>
                 <div className="p-3 rounded-lg bg-[#FBEFEE]/60 border border-[#E4B0AA] space-y-1">
@@ -1500,7 +1500,7 @@ export default function EvidenceAndAuditPage() {
 
               {/* Details & Rationale */}
               <div className="p-3.5 rounded-lg bg-[#F7F8FA] border border-[#D9DEE5] space-y-1.5">
-                <span className="text-[10px] uppercase font-bold text-[#8A94A6] tracking-wider block">
+                <span className="text-[10px] uppercase font-bold text-[#7B8798] tracking-wider block">
                   Engineering Context & Details
                 </span>
                 <p className="text-[#172033] leading-relaxed text-xs">{selectedAuditEntry.details}</p>

@@ -345,9 +345,9 @@ export default function EngineerDashboardPage() {
 
         {/* OFFLINE MODE BANNER */}
         {isOffline && (
-          <div className="p-3.5 rounded-xl bg-[#FEF3C7] border border-[#FDE68A] flex items-center justify-between gap-3 text-xs text-[#92400E]">
+          <div className="p-3.5 rounded-lg bg-[#FDF6ED] border border-[#F0D4A6] flex items-center justify-between gap-3 text-xs text-[#D98B32]">
             <div className="flex items-center gap-2.5">
-              <span className="px-2 py-0.5 rounded bg-[#92400E] text-white font-mono font-bold text-[10px] uppercase">
+              <span className="px-2 py-0.5 rounded bg-[#D98B32] text-white font-mono font-bold text-[10px] uppercase">
                 OFFLINE MODE
               </span>
               <span className="font-semibold">
@@ -356,7 +356,7 @@ export default function EngineerDashboardPage() {
             </div>
             <Link
               href="/sync"
-              className="px-2.5 py-1 bg-white border border-[#FDE68A] rounded text-[#92400E] hover:bg-[#FDF6ED] font-mono font-bold text-[11px]"
+              className="px-2.5 py-1 bg-white border border-[#F0D4A6] rounded text-[#D98B32] hover:bg-[#FDF6ED] font-mono font-bold text-[11px]"
             >
               {metrics.pendingUploads} Queued
             </Link>
@@ -366,7 +366,7 @@ export default function EngineerDashboardPage() {
         {/* ========================================================= */}
         {/* TOP: Current User Greeting, Project, Date, Connection & Primary Actions */}
         {/* ========================================================= */}
-        <div className="bg-white border border-[#D9DEE5] rounded-xl p-4 sm:p-5 shadow-xs">
+        <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-5 shadow-xs">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
             <div>
               {/* User Greeting & Status Indicator */}
@@ -374,17 +374,17 @@ export default function EngineerDashboardPage() {
                 <span className="text-sm sm:text-base font-bold text-[#172033]">
                   {greeting}, <strong className="text-[#176B87]">{currentUserName}</strong>
                 </span>
-                <span className="text-[#8A94A6] hidden sm:inline">•</span>
+                <span className="text-[#7B8798] hidden sm:inline">•</span>
                 <div
-                  className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-mono font-bold border ${
+                  className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md text-[11px] font-mono font-bold border ${
                     effectiveStatus === 'OFFLINE'
-                      ? 'bg-[#FEF2F2] border-[#FCA5A5] text-[#991B1B]'
-                      : 'bg-[#F0FDF4] border-[#86EFAC] text-[#166534]'
+                      ? 'bg-[#FBEFEE] border-[#E4B0AA] text-[#B5473C]'
+                      : 'bg-[#EDF7F2] border-[#B8DCC9] text-[#2E7D5B]'
                   }`}
                 >
                   <span
                     className={`w-2 h-2 rounded-full ${
-                      effectiveStatus === 'OFFLINE' ? 'bg-[#DC2626]' : 'bg-[#16A34A]'
+                      effectiveStatus === 'OFFLINE' ? 'bg-[#B5473C]' : 'bg-[#2E7D5B]'
                     }`}
                   />
                   <span>{effectiveStatus === 'OFFLINE' ? 'Offline' : 'Online'}</span>
@@ -416,7 +416,7 @@ export default function EngineerDashboardPage() {
                   setSelectedActivityForCapture('PIP-24-002');
                   setIsCaptureModalOpen(true);
                 }}
-                className="flex-1 sm:flex-initial min-h-[44px] px-4 py-2.5 text-xs sm:text-sm font-bold text-white bg-[#176B87] hover:bg-[#12546A] active:scale-98 rounded-lg shadow-xs transition-all inline-flex items-center justify-center gap-1.5 cursor-pointer"
+                className="flex-1 sm:flex-initial min-h-[44px] px-4 py-2.5 text-xs sm:text-sm font-bold text-white bg-[#176B87] hover:bg-[#135A72] active:scale-98 rounded-lg shadow-xs transition-all inline-flex items-center justify-center gap-1.5 cursor-pointer"
               >
                 <Plus className="w-4 h-4 stroke-[2.5]" />
                 <span>+ CAPTURE FIELD UPDATE</span>
@@ -425,7 +425,7 @@ export default function EngineerDashboardPage() {
               {/* Secondary: OPEN DPR */}
               <Link
                 href="/field/dpr"
-                className="flex-1 sm:flex-initial min-h-[44px] px-4 py-2.5 text-xs sm:text-sm font-bold text-[#172033] bg-white hover:bg-[#F0F2F5] active:scale-98 border border-[#D9DEE5] rounded-lg transition-all inline-flex items-center justify-center gap-1.5 cursor-pointer"
+                className="flex-1 sm:flex-initial min-h-[44px] px-4 py-2.5 text-xs sm:text-sm font-bold text-[#172033] bg-white hover:bg-[#F1F3F5] active:scale-98 border border-[#D9DEE5] rounded-lg transition-all inline-flex items-center justify-center gap-1.5 cursor-pointer"
               >
                 <FileText className="w-4 h-4 text-[#596579]" />
                 <span>OPEN DPR</span>
@@ -480,8 +480,8 @@ export default function EngineerDashboardPage() {
         {/* MY ACTIVITIES */}
         {/* Columns: Activity, Area, Progress, Status, Last Update, Action */}
         {/* ========================================================= */}
-        <section aria-labelledby="my-activities-heading" className="bg-white border border-[#D9DEE5] rounded-xl p-4 sm:p-5 shadow-xs space-y-4">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#E8EBF0] gap-2">
+        <section aria-labelledby="my-activities-heading" className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-5 shadow-xs space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D9DEE5] gap-2">
             <div>
               <h2 id="my-activities-heading" className="text-lg sm:text-xl font-bold uppercase tracking-wide text-[#172033]">
                 My Activities
@@ -509,7 +509,7 @@ export default function EngineerDashboardPage() {
                     <th className="py-3 px-3.5 whitespace-nowrap text-right">Action</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#E8EBF0]">
+                <tbody className="divide-y divide-[#D9DEE5]">
                   {todayActivities.map((act) => (
                     <tr key={act.id} className="hover:bg-[#F9FAFC] transition-colors">
                       {/* 1. Activity */}
@@ -560,7 +560,7 @@ export default function EngineerDashboardPage() {
                         <button
                           type="button"
                           onClick={() => handleOpenCaptureForActivity(act.id)}
-                          className="px-3 py-1.5 text-xs font-bold text-white bg-[#176B87] hover:bg-[#12546A] active:scale-95 rounded transition-all inline-flex items-center gap-1 shadow-xs"
+                          className="px-3 py-1.5 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] active:scale-95 rounded transition-all inline-flex items-center gap-1 shadow-xs"
                         >
                           <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
                           <span>Capture Update</span>
@@ -603,14 +603,14 @@ export default function EngineerDashboardPage() {
                   />
                 </div>
 
-                <div className="flex items-center justify-between pt-2 border-t border-[#F0F2F5] text-xs">
-                  <span className="text-[11px] font-mono text-[#8A94A6]">
+                <div className="flex items-center justify-between pt-2 border-t border-[#F1F3F5] text-xs">
+                  <span className="text-[11px] font-mono text-[#7B8798]">
                     Updated: {act.lastUpdateText}
                   </span>
                   <button
                     type="button"
                     onClick={() => handleOpenCaptureForActivity(act.id)}
-                    className="min-h-[44px] px-3.5 py-2 text-xs font-bold text-white bg-[#176B87] hover:bg-[#12546A] active:bg-[#12546A] rounded-lg transition-colors inline-flex items-center gap-1.5 shadow-xs cursor-pointer"
+                    className="min-h-[44px] px-3.5 py-2 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] active:bg-[#135A72] rounded-lg transition-colors inline-flex items-center gap-1.5 shadow-xs cursor-pointer"
                   >
                     <Plus className="w-3.5 h-3.5" />
                     <span>Capture Update</span>
@@ -625,8 +625,8 @@ export default function EngineerDashboardPage() {
         {/* FIELD UPDATES */}
         {/* Show recent updates. Keep details minimal. Click: View Details */}
         {/* ========================================================= */}
-        <section aria-labelledby="field-updates-heading" className="bg-white border border-[#D9DEE5] rounded-xl p-4 sm:p-5 shadow-xs space-y-4">
-          <div className="flex items-center justify-between pb-3 border-b border-[#E8EBF0]">
+        <section aria-labelledby="field-updates-heading" className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-5 shadow-xs space-y-4">
+          <div className="flex items-center justify-between pb-3 border-b border-[#D9DEE5]">
             <div>
               <h2 id="field-updates-heading" className="text-lg sm:text-xl font-bold uppercase tracking-wide text-[#172033]">
                 Field Updates
@@ -640,7 +640,7 @@ export default function EngineerDashboardPage() {
             </span>
           </div>
 
-          <div className="divide-y divide-[#E8EBF0]">
+          <div className="divide-y divide-[#D9DEE5]">
             {todaySubmissions.map((sub) => (
               <div
                 key={sub.id}
@@ -650,7 +650,7 @@ export default function EngineerDashboardPage() {
                   <div className="flex items-center gap-2 flex-wrap">
                     <span className="font-mono font-bold text-[#176B87]">{sub.activityId}</span>
                     <span className="font-semibold text-[#172033] truncate max-w-xs">{sub.activityName}</span>
-                    <span className="text-[11px] text-[#8A94A6] font-mono">• {sub.time}</span>
+                    <span className="text-[11px] text-[#7B8798] font-mono">• {sub.time}</span>
                   </div>
                   <p className="text-[11px] text-[#596579] truncate max-w-xl">
                     &ldquo;{sub.statement}&rdquo;
@@ -664,7 +664,7 @@ export default function EngineerDashboardPage() {
                         Server confirmed
                       </span>
                     ) : (
-                      <span className="text-[#D98B32] font-bold bg-[#FEF7EE] px-1.5 py-0.2 rounded border border-[#ECD1A4]">
+                      <span className="text-[#D98B32] font-bold bg-[#FDF6ED] px-1.5 py-0.2 rounded border border-[#F0D4A6]">
                         Saved locally
                       </span>
                     )}
@@ -691,8 +691,8 @@ export default function EngineerDashboardPage() {
         {/* Show: Online / Offline, Pending, Syncing, Failed */}
         {/* Strict Rule: Do not show large manager analytics. */}
         {/* ========================================================= */}
-        <section aria-labelledby="sync-heading" className="bg-white border border-[#D9DEE5] rounded-xl p-4 sm:p-5 shadow-xs space-y-4">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#E8EBF0] gap-2">
+        <section aria-labelledby="sync-heading" className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-5 shadow-xs space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D9DEE5] gap-2">
             <div>
               <div className="flex items-center gap-2">
                 <UploadCloud className="w-4 h-4 text-[#176B87]" />
@@ -710,7 +710,7 @@ export default function EngineerDashboardPage() {
                 type="button"
                 onClick={handleSyncNow}
                 disabled={isSyncing || metrics.pendingUploads === 0}
-                className="px-3.5 py-1.5 text-xs font-bold text-white bg-[#176B87] hover:bg-[#12546A] disabled:opacity-50 rounded transition-colors inline-flex items-center gap-1.5 shadow-xs"
+                className="px-3.5 py-1.5 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] disabled:opacity-50 rounded transition-colors inline-flex items-center gap-1.5 shadow-xs"
               >
                 <RefreshCw className={`w-3.5 h-3.5 ${isSyncing ? 'animate-spin' : ''}`} />
                 <span>{isSyncing ? 'Syncing...' : 'Sync Now'}</span>
@@ -768,14 +768,14 @@ export default function EngineerDashboardPage() {
               setSelectedActivityForCapture('PIP-24-002');
               setIsCaptureModalOpen(true);
             }}
-            className="flex-1 min-h-[44px] py-3 px-4 text-xs font-bold text-white bg-[#176B87] active:bg-[#12546A] rounded-lg shadow-sm flex items-center justify-center gap-1.5 cursor-pointer"
+            className="flex-1 min-h-[44px] py-3 px-4 text-xs font-bold text-white bg-[#176B87] active:bg-[#135A72] rounded-lg shadow-sm flex items-center justify-center gap-1.5 cursor-pointer"
           >
             <Plus className="w-4 h-4 stroke-[2.5]" />
             <span>+ CAPTURE UPDATE</span>
           </button>
           <Link
             href="/field/dpr"
-            className="min-h-[44px] py-3 px-4 text-xs font-bold text-[#172033] bg-[#F7F8FA] border border-[#D9DEE5] active:bg-[#E8EBF0] rounded-lg flex items-center justify-center gap-1 cursor-pointer"
+            className="min-h-[44px] py-3 px-4 text-xs font-bold text-[#172033] bg-[#F7F8FA] border border-[#D9DEE5] active:bg-[#D9DEE5] rounded-lg flex items-center justify-center gap-1 cursor-pointer"
           >
             <FileText className="w-4 h-4 text-[#596579]" />
             <span>DPR</span>
@@ -810,7 +810,7 @@ export default function EngineerDashboardPage() {
                   type="button"
                   onClick={handleSubmitFastCapture}
                   disabled={isSubmittingCapture || !customStatement.trim()}
-                  className="px-4 py-2 text-xs font-bold text-white bg-[#176B87] hover:bg-[#12546A] rounded transition-all inline-flex items-center gap-1.5 shadow-xs disabled:opacity-50"
+                  className="px-4 py-2 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] rounded transition-all inline-flex items-center gap-1.5 shadow-xs disabled:opacity-50"
                 >
                   {isSubmittingCapture ? (
                     <>
@@ -867,7 +867,7 @@ export default function EngineerDashboardPage() {
                     key={idx}
                     type="button"
                     onClick={() => setCustomStatement(chip)}
-                    className="px-2.5 py-1 text-[11px] rounded bg-[#F0F2F5] hover:bg-[#E8F1F5] hover:text-[#176B87] text-[#596579] border border-[#D9DEE5] transition-colors text-left"
+                    className="px-2.5 py-1 text-[11px] rounded bg-[#F1F3F5] hover:bg-[#EDF5F8] hover:text-[#176B87] text-[#596579] border border-[#D9DEE5] transition-colors text-left"
                   >
                     + {chip}
                   </button>
@@ -919,7 +919,7 @@ export default function EngineerDashboardPage() {
                   <button
                     type="button"
                     onClick={() => setQuantityValue(Math.max(1, quantityValue - 1))}
-                    className="w-7 h-7 bg-white border border-[#D9DEE5] hover:bg-[#E8EBF0] rounded text-sm font-bold flex items-center justify-center text-[#172033]"
+                    className="w-7 h-7 bg-white border border-[#D9DEE5] hover:bg-[#D9DEE5] rounded text-sm font-bold flex items-center justify-center text-[#172033]"
                   >
                     -
                   </button>
@@ -932,7 +932,7 @@ export default function EngineerDashboardPage() {
                   <button
                     type="button"
                     onClick={() => setQuantityValue(quantityValue + 1)}
-                    className="w-7 h-7 bg-white border border-[#D9DEE5] hover:bg-[#E8EBF0] rounded text-sm font-bold flex items-center justify-center text-[#172033]"
+                    className="w-7 h-7 bg-white border border-[#D9DEE5] hover:bg-[#D9DEE5] rounded text-sm font-bold flex items-center justify-center text-[#172033]"
                   >
                     +
                   </button>
@@ -953,7 +953,7 @@ export default function EngineerDashboardPage() {
             </div>
 
             {/* Photo Attachment */}
-            <div className="flex items-center justify-between p-2.5 bg-[#F0F2F5] border border-[#D9DEE5] rounded">
+            <div className="flex items-center justify-between p-2.5 bg-[#F1F3F5] border border-[#D9DEE5] rounded">
               <div className="flex items-center gap-2">
                 <Camera className="w-4 h-4 text-[#176B87]" />
                 <span className="text-[11px] text-[#172033] font-medium">
@@ -971,7 +971,7 @@ export default function EngineerDashboardPage() {
                     description: 'Captured image with embedded field coordinates.',
                   });
                 }}
-                className="px-2.5 py-1 text-[11px] font-semibold text-[#176B87] bg-white border border-[#D9DEE5] hover:bg-[#E8F1F5] rounded transition-colors"
+                className="px-2.5 py-1 text-[11px] font-semibold text-[#176B87] bg-white border border-[#D9DEE5] hover:bg-[#EDF5F8] rounded transition-colors"
               >
                 {attachedPhotoName ? 'Replace Photo' : 'Capture Photo'}
               </button>
@@ -993,7 +993,7 @@ export default function EngineerDashboardPage() {
               <button
                 type="button"
                 onClick={() => setSelectedDetailUpdate(null)}
-                className="px-4 py-1.5 text-xs font-semibold text-white bg-[#176B87] hover:bg-[#12546A] rounded shadow-xs ml-auto"
+                className="px-4 py-1.5 text-xs font-semibold text-white bg-[#176B87] hover:bg-[#135A72] rounded shadow-xs ml-auto"
               >
                 Close
               </button>
@@ -1001,7 +1001,7 @@ export default function EngineerDashboardPage() {
           >
             <div className="space-y-3 text-xs">
               <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg">
-                <span className="text-[10px] font-mono font-bold text-[#8A94A6] uppercase block">
+                <span className="text-[10px] font-mono font-bold text-[#7B8798] uppercase block">
                   Activity Target
                 </span>
                 <span className="font-mono font-bold text-[#176B87] block mt-0.5">
@@ -1013,13 +1013,13 @@ export default function EngineerDashboardPage() {
               </div>
 
               <div className="p-3 bg-white border border-[#D9DEE5] rounded-lg space-y-2">
-                <span className="text-[10px] font-mono font-bold text-[#8A94A6] uppercase block">
+                <span className="text-[10px] font-mono font-bold text-[#7B8798] uppercase block">
                   Field Statement
                 </span>
                 <p className="text-xs text-[#172033] italic leading-relaxed">
                   &ldquo;{selectedDetailUpdate.statement}&rdquo;
                 </p>
-                <div className="pt-2 border-t border-[#E8EBF0] flex items-center justify-between text-[11px]">
+                <div className="pt-2 border-t border-[#D9DEE5] flex items-center justify-between text-[11px]">
                   <span className="text-[#596579]">Quantity: <strong className="text-[#172033]">{selectedDetailUpdate.quantity}</strong></span>
                   <span className="text-[#596579]">Discipline: <strong className="text-[#172033]">{selectedDetailUpdate.discipline}</strong></span>
                 </div>

@@ -53,7 +53,7 @@ export default function AdminUsersPage() {
       {/* Filter and Search Bar */}
       <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div className="relative flex-1 max-w-sm">
-          <Search className="w-4 h-4 text-[#8A94A6] absolute left-3 top-1/2 -translate-y-1/2" />
+          <Search className="w-4 h-4 text-[#7B8798] absolute left-3 top-1/2 -translate-y-1/2" />
           <input
             type="text"
             value={searchTerm}
@@ -87,7 +87,7 @@ export default function AdminUsersPage() {
           <span className="text-xs text-[#176B87] font-mono">IAM Directory Sync Active</span>
         </div>
 
-        <div className="divide-y divide-[#E8EBF0]">
+        <div className="divide-y divide-[#D9DEE5]">
           {filteredUsers.map((u) => (
             <div key={u.email} className="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:bg-[#F9FAFC] transition-colors">
               <div className="flex items-center gap-3">
@@ -97,7 +97,7 @@ export default function AdminUsersPage() {
                 <div>
                   <h4 className="text-xs font-bold text-[#172033]">{u.name}</h4>
                   <p className="text-[11px] text-[#596579]">{u.email} • {u.title}</p>
-                  <p className="text-[10px] text-[#8A94A6]">{u.organization}</p>
+                  <p className="text-[10px] text-[#7B8798]">{u.organization}</p>
                 </div>
               </div>
 
@@ -105,10 +105,10 @@ export default function AdminUsersPage() {
                 <span
                   className={`px-2.5 py-0.5 rounded text-[11px] font-mono font-bold uppercase ${
                     u.role === 'admin'
-                      ? 'bg-[#FAF5FF] text-[#7E22CE] border border-[#E9D5FF]'
+                      ? 'bg-[#EDF5F8] text-[#3B6EA8] border border-[#B3CBE0]'
                       : u.role === 'manager'
                       ? 'bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0]'
-                      : 'bg-[#F0FDF4] text-[#15803D] border border-[#BBF7D0]'
+                      : 'bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]'
                   }`}
                 >
                   {u.role}
@@ -116,7 +116,7 @@ export default function AdminUsersPage() {
 
                 <button
                   type="button"
-                  className="px-2.5 py-1 text-xs text-[#596579] hover:text-[#172033] hover:bg-[#F0F2F5] border border-[#D9DEE5] rounded transition-colors"
+                  className="px-2.5 py-1 text-xs text-[#596579] hover:text-[#172033] hover:bg-[#F1F3F5] border border-[#D9DEE5] rounded transition-colors"
                 >
                   Edit Permissions
                 </button>

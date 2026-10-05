@@ -73,7 +73,7 @@ function getFactorIcon(name: string) {
     case 'Area / Line':
       return <MapPin className="w-4 h-4 text-[#0284C7]" />;
     case 'Discipline':
-      return <Tag className="w-4 h-4 text-[#7C3AED]" />;
+      return <Tag className="w-4 h-4 text-[#3B6EA8]" />;
     case 'Date / Context':
       return <Calendar className="w-4 h-4 text-[#D98B32]" />;
     case 'Project / WBS':
@@ -194,17 +194,17 @@ export function MatchCard({
 
   return (
     <div
-      className={`bg-white border border-[#D9DEE5] rounded-xl overflow-hidden shadow-xs space-y-0 ${className}`}
+      className={`bg-white border border-[#D9DEE5] rounded-lg overflow-hidden shadow-xs space-y-0 ${className}`}
       data-testid="plnex-match-card"
     >
       {/* =========================================================================
           1. MATCH CARD HEADER: Suggested Activity, Activity ID, Confidence, Status
           ========================================================================= */}
-      <div className="p-4 sm:p-5 bg-gradient-to-b from-[#F7F8FA] to-white border-b border-[#D9DEE5] space-y-4">
+      <div className="p-4 sm:p-5 bg-[#F7F8FA] border-b border-[#D9DEE5] space-y-4">
         {/* Field Statement Context if provided */}
         {fieldStatement && (
-          <div className="p-3 bg-[#F0F2F5]/80 border border-[#D9DEE5] rounded-lg text-xs space-y-1">
-            <span className="text-[10px] uppercase font-bold text-[#8A94A6] block tracking-wider">
+          <div className="p-3 bg-[#F1F3F5] border border-[#D9DEE5] rounded-lg text-xs space-y-1">
+            <span className="text-[10px] uppercase font-bold text-[#7B8798] block tracking-wider">
               Field Execution Report:
             </span>
             <p className="text-[#172033] font-medium italic">
@@ -214,9 +214,9 @@ export function MatchCard({
         )}
 
         {/* Primary Match Card Information */}
-        <div className="p-4 bg-white border border-[#D9DEE5] rounded-xl shadow-xs space-y-3">
+        <div className="p-4 bg-white border border-[#D9DEE5] rounded-lg shadow-xs space-y-3">
           <div className="flex items-center justify-between flex-wrap gap-2">
-            <span className="text-[10px] uppercase font-bold tracking-wider text-[#8A94A6] flex items-center gap-1.5">
+            <span className="text-[10px] uppercase font-bold tracking-wider text-[#7B8798] flex items-center gap-1.5">
               <Sparkles className="w-3.5 h-3.5 text-[#176B87]" />
               AI Match Suggestion
             </span>
@@ -260,7 +260,7 @@ export function MatchCard({
                     </span>
                   </div>
                   <span
-                    className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold border ${
+                    className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-xs font-bold border ${
                       isConfidenceHigh
                         ? 'bg-[#EDF7F2] text-[#2E7D5B] border-[#B8DCC9]'
                         : confidence >= 70
@@ -282,7 +282,7 @@ export function MatchCard({
                 <div className="flex items-center gap-3 text-xs text-[#596579] pt-1 border-t border-[#D9DEE5]/60 flex-wrap">
                   {area && (
                     <span className="inline-flex items-center gap-1">
-                      <MapPin className="w-3.5 h-3.5 text-[#8A94A6]" />
+                      <MapPin className="w-3.5 h-3.5 text-[#7B8798]" />
                       Area: <strong className="text-[#172033]">{area}</strong>
                     </span>
                   )}
@@ -311,11 +311,11 @@ export function MatchCard({
             2. VERIFICATION: CLEARLY SEPARATE CONFIDENCE FROM VERIFICATION
                Example: Confidence: 94% | Verification: Pending
             ========================================================================= */}
-        <div className="p-3.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-xl flex items-center justify-between flex-wrap gap-3">
+        <div className="p-3.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg flex items-center justify-between flex-wrap gap-3">
           <div className="flex items-center gap-6 flex-wrap">
             {/* Confidence metric */}
             <div>
-              <span className="text-[10px] uppercase font-bold text-[#8A94A6] tracking-wider block">
+              <span className="text-[10px] uppercase font-bold text-[#7B8798] tracking-wider block">
                 Confidence:
               </span>
               <span className="font-mono text-base font-bold text-[#172033]">
@@ -327,7 +327,7 @@ export function MatchCard({
 
             {/* Verification metric */}
             <div>
-              <span className="text-[10px] uppercase font-bold text-[#8A94A6] tracking-wider block">
+              <span className="text-[10px] uppercase font-bold text-[#7B8798] tracking-wider block">
                 Verification:
               </span>
               <span
@@ -337,7 +337,7 @@ export function MatchCard({
                     : verificationStatus === 'Rejected'
                     ? 'bg-[#FBEFEE] text-[#B5473C] border-[#E4B0AA]'
                     : verificationStatus === 'Unmatched'
-                    ? 'bg-[#F0F2F5] text-[#596579] border-[#D9DEE5]'
+                    ? 'bg-[#F1F3F5] text-[#596579] border-[#D9DEE5]'
                     : 'bg-[#FDF6ED] text-[#D98B32] border-[#F0D4A6]'
                 }`}
               >
@@ -352,7 +352,7 @@ export function MatchCard({
             <span className="text-[11px] text-[#596579] font-medium block">
               Human-in-the-loop Gate
             </span>
-            <span className="text-[10px] font-mono text-[#8A94A6]">
+            <span className="text-[10px] font-mono text-[#7B8798]">
               94% ≠ Verified · Zero silent updates
             </span>
           </div>
@@ -370,7 +370,7 @@ export function MatchCard({
             <h4 className="font-bold text-xs uppercase tracking-wider text-[#172033]">
               Why this match?
             </h4>
-            <span className="text-[10px] font-mono text-[#8A94A6]">
+            <span className="text-[10px] font-mono text-[#7B8798]">
               (5 Evaluated Factors)
             </span>
           </div>
@@ -393,7 +393,7 @@ export function MatchCard({
             {effectiveFactors.map((factor, idx) => (
               <div
                 key={idx}
-                className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-xl flex items-start justify-between gap-3 text-xs"
+                className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg flex items-start justify-between gap-3 text-xs"
               >
                 <div className="flex items-start gap-2.5 min-w-0">
                   <div className="w-7 h-7 rounded-lg bg-white border border-[#D9DEE5] flex items-center justify-center shrink-0 mt-0.5">
@@ -449,7 +449,7 @@ export function MatchCard({
               {alternatives.map((alt) => (
                 <div
                   key={alt.activityId}
-                  className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-xl flex items-center justify-between gap-3 text-xs hover:border-[#B3CBE0] transition-colors"
+                  className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg flex items-center justify-between gap-3 text-xs hover:border-[#B3CBE0] transition-colors"
                 >
                   <div className="space-y-0.5 min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
@@ -528,7 +528,7 @@ export function MatchCard({
               <button
                 type="button"
                 onClick={onChooseAnother}
-                className="px-3.5 py-2 text-xs font-semibold text-[#172033] bg-white hover:bg-[#F0F2F5] border border-[#D9DEE5] rounded-lg transition-colors flex items-center justify-center gap-1.5"
+                className="px-3.5 py-2 text-xs font-semibold text-[#172033] bg-white hover:bg-[#F1F3F5] border border-[#D9DEE5] rounded-lg transition-colors flex items-center justify-center gap-1.5"
               >
                 <SlidersHorizontal className="w-3.5 h-3.5" />
                 <span>Choose Another</span>

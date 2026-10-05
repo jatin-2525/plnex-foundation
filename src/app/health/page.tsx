@@ -238,7 +238,7 @@ export default function ScheduleHealthPage() {
         {/* =========================================================================
             HEADER: SCHEDULE HEALTH & DATA QUALITY
             ========================================================================= */}
-        <div className="bg-white border border-[#D9DEE5] rounded-xl p-5 shadow-xs space-y-4">
+        <div className="bg-white border border-[#D9DEE5] rounded-lg p-5 shadow-xs space-y-4">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
             <div>
               <div className="flex items-center gap-2 mb-1.5 flex-wrap">
@@ -281,7 +281,7 @@ export default function ScheduleHealthPage() {
               PRIMARY TABS: Schedule Health vs Execution Data Quality
               ========================================================================= */}
           <div className="flex items-center justify-between pt-3 border-t border-[#D9DEE5]/60 flex-wrap gap-3">
-            <div className="flex items-center bg-[#F0F2F5] p-1 rounded-xl border border-[#D9DEE5]">
+            <div className="flex items-center bg-[#F1F3F5] p-1 rounded-lg border border-[#D9DEE5]">
               <button
                 type="button"
                 onClick={() => {
@@ -300,7 +300,7 @@ export default function ScheduleHealthPage() {
                   className={`px-2 py-0.2 rounded-full text-[10px] font-mono ${
                     activeTab === 'Schedule Health'
                       ? 'bg-[#EDF5F8] text-[#176B87]'
-                      : 'bg-[#E8EBF0] text-[#596579]'
+                      : 'bg-[#D9DEE5] text-[#596579]'
                   }`}
                 >
                   {issues.filter((i) => i.category === 'Schedule Health').length}
@@ -325,7 +325,7 @@ export default function ScheduleHealthPage() {
                   className={`px-2 py-0.2 rounded-full text-[10px] font-mono ${
                     activeTab === 'Execution Data Quality'
                       ? 'bg-[#EDF5F8] text-[#176B87]'
-                      : 'bg-[#E8EBF0] text-[#596579]'
+                      : 'bg-[#D9DEE5] text-[#596579]'
                   }`}
                 >
                   {issues.filter((i) => i.category === 'Execution Data Quality').length}
@@ -338,7 +338,7 @@ export default function ScheduleHealthPage() {
               <div className="px-3 py-1.5 rounded-lg bg-[#FBEFEE] border border-[#E4B0AA] text-[#B5473C] font-bold">
                 {metrics.criticalCount} Critical
               </div>
-              <div className="px-3 py-1.5 rounded-lg bg-[#FEF7EE] border border-[#ECD1A4] text-[#9A5B13] font-bold">
+              <div className="px-3 py-1.5 rounded-lg bg-[#FDF6ED] border border-[#F0D4A6] text-[#D98B32] font-bold">
                 {metrics.attentionCount} Warning
               </div>
               <div className="px-3 py-1.5 rounded-lg bg-[#EDF7F2] border border-[#B8DCC9] text-[#2E7D5B] font-bold">
@@ -353,7 +353,7 @@ export default function ScheduleHealthPage() {
             Schedule Health (6): Missing Activity IDs, Duplicate IDs, Invalid Dates, Missing Dependencies, Invalid Hierarchy, Missing WBS
             Execution Data Quality (6): Unmatched Events, Duplicate Events, Missing Values, Conflicting Reports, Low Confidence, Stale Events
             ========================================================================= */}
-        <div className="bg-white border border-[#D9DEE5] rounded-xl p-4 shadow-xs space-y-3">
+        <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 shadow-xs space-y-3">
           <div className="flex items-center justify-between pb-2 border-b border-[#D9DEE5]/60 flex-wrap gap-2">
             <span className="text-xs font-bold text-[#172033] uppercase tracking-wider">
               {activeTab} Rule Audits (6 Checks Configured):
@@ -391,7 +391,7 @@ export default function ScheduleHealthPage() {
                           ? 'bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]'
                           : hasCritical
                           ? 'bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]'
-                          : 'bg-[#FEF7EE] text-[#9A5B13] border border-[#ECD1A4]'
+                          : 'bg-[#FDF6ED] text-[#D98B32] border border-[#F0D4A6]'
                       }`}
                     >
                       {ruleIssues.length === 0 ? 'Passed' : `${ruleIssues.length} Open`}
@@ -409,10 +409,10 @@ export default function ScheduleHealthPage() {
         {/* =========================================================================
             SEARCH & SECONDARY FILTER BAR
             ========================================================================= */}
-        <div className="bg-white border border-[#D9DEE5] rounded-xl p-3.5 shadow-xs space-y-3">
+        <div className="bg-white border border-[#D9DEE5] rounded-lg p-3.5 shadow-xs space-y-3">
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
             <div className="relative flex-1 max-w-md">
-              <Search className="w-3.5 h-3.5 text-[#8A94A6] absolute left-3 top-2.5" />
+              <Search className="w-3.5 h-3.5 text-[#7B8798] absolute left-3 top-2.5" />
               <input
                 type="text"
                 value={searchQuery}
@@ -450,7 +450,7 @@ export default function ScheduleHealthPage() {
                 <button
                   type="button"
                   onClick={handleResetFilters}
-                  className="px-2.5 py-1 text-xs text-[#B5473C] hover:bg-[#FDF0EE] border border-[#E4B0AA] rounded-lg transition-colors flex items-center gap-1"
+                  className="px-2.5 py-1 text-xs text-[#B5473C] hover:bg-[#FBEFEE] border border-[#E4B0AA] rounded-lg transition-colors flex items-center gap-1"
                 >
                   <RotateCcw className="w-3 h-3" />
                   <span>Reset</span>
@@ -467,11 +467,11 @@ export default function ScheduleHealthPage() {
             Actions (Exact 4):
             View | Fix | Review | Resolve
             ========================================================================= */}
-        <div className="bg-white border border-[#D9DEE5] rounded-xl shadow-xs overflow-hidden">
+        <div className="bg-white border border-[#D9DEE5] rounded-lg shadow-xs overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full min-w-[800px] text-left border-collapse text-xs">
               <thead>
-                <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[10px] uppercase font-bold text-[#8A94A6] tracking-wider">
+                <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[10px] uppercase font-bold text-[#7B8798] tracking-wider">
                   <th className="py-3 px-4 whitespace-nowrap">Issue</th>
                   <th className="py-3 px-3 whitespace-nowrap">Severity</th>
                   <th className="py-3 px-4 whitespace-nowrap">Object</th>
@@ -481,7 +481,7 @@ export default function ScheduleHealthPage() {
                   <th className="py-3 px-4 whitespace-nowrap text-right">Action</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#E8EBF0]">
+              <tbody className="divide-y divide-[#D9DEE5]">
                 {filteredIssues.map((issue) => (
                   <tr
                     key={issue.id}
@@ -507,7 +507,7 @@ export default function ScheduleHealthPage() {
                           Critical
                         </span>
                       ) : (
-                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-[#FEF7EE] text-[#9A5B13] border border-[#ECD1A4]">
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-[#FDF6ED] text-[#D98B32] border border-[#F0D4A6]">
                           <AlertCircle className="w-3 h-3" />
                           Needs Attention
                         </span>
@@ -548,8 +548,8 @@ export default function ScheduleHealthPage() {
                           issue.status === 'Resolved'
                             ? 'bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]'
                             : issue.status === 'Open'
-                            ? 'bg-[#FEF7EE] text-[#9A5B13] border border-[#ECD1A4]'
-                            : 'bg-[#F0F2F5] text-[#596579] border border-[#D9DEE5]'
+                            ? 'bg-[#FDF6ED] text-[#D98B32] border border-[#F0D4A6]'
+                            : 'bg-[#F1F3F5] text-[#596579] border border-[#D9DEE5]'
                         }`}
                       >
                         {issue.status}
@@ -563,7 +563,7 @@ export default function ScheduleHealthPage() {
                         <button
                           type="button"
                           onClick={() => handleViewIssue(issue)}
-                          className="px-2 py-1 text-[11px] font-bold text-[#596579] hover:text-[#172033] hover:bg-[#F0F2F5] border border-[#D9DEE5] rounded transition-colors"
+                          className="px-2 py-1 text-[11px] font-bold text-[#596579] hover:text-[#172033] hover:bg-[#F1F3F5] border border-[#D9DEE5] rounded transition-colors"
                           title="View complete issue details"
                         >
                           View
@@ -586,7 +586,7 @@ export default function ScheduleHealthPage() {
                           <button
                             type="button"
                             onClick={() => handleReviewIssue(issue)}
-                            className="px-2 py-1 text-[11px] font-bold text-[#9A5B13] hover:bg-[#FEF7EE] border border-[#ECD1A4] rounded transition-colors"
+                            className="px-2 py-1 text-[11px] font-bold text-[#D98B32] hover:bg-[#FDF6ED] border border-[#F0D4A6] rounded transition-colors"
                             title="Inspect in review queue"
                           >
                             Review
@@ -634,9 +634,9 @@ export default function ScheduleHealthPage() {
         >
           {selectedIssueForDetail && (
             <div className="space-y-5 text-xs p-1">
-              <div className="p-3.5 bg-[#F7F8FA] rounded-xl border border-[#D9DEE5] space-y-2">
+              <div className="p-3.5 bg-[#F7F8FA] rounded-lg border border-[#D9DEE5] space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-bold uppercase text-[#8A94A6]">Affected Object</span>
+                  <span className="text-[10px] font-bold uppercase text-[#7B8798]">Affected Object</span>
                   <span className="px-2 py-0.5 rounded font-mono text-[10px] font-bold bg-[#EDF5F8] text-[#176B87]">
                     {selectedIssueForDetail.objectType}
                   </span>
@@ -650,21 +650,21 @@ export default function ScheduleHealthPage() {
               </div>
 
               <div className="space-y-1">
-                <span className="text-[10px] font-bold uppercase text-[#8A94A6]">Problem Description</span>
-                <p className="text-xs text-[#172033] leading-relaxed p-3 bg-white border border-[#D9DEE5] rounded-xl">
+                <span className="text-[10px] font-bold uppercase text-[#7B8798]">Problem Description</span>
+                <p className="text-xs text-[#172033] leading-relaxed p-3 bg-white border border-[#D9DEE5] rounded-lg">
                   {selectedIssueForDetail.description}
                 </p>
               </div>
 
               <div className="space-y-1">
-                <span className="text-[10px] font-bold uppercase text-[#8A94A6]">Project CPM / EVM Impact</span>
-                <p className="text-xs text-[#B5473C] leading-relaxed p-3 bg-[#FDF0EE] border border-[#E4B0AA] rounded-xl">
+                <span className="text-[10px] font-bold uppercase text-[#7B8798]">Project CPM / EVM Impact</span>
+                <p className="text-xs text-[#B5473C] leading-relaxed p-3 bg-[#FBEFEE] border border-[#E4B0AA] rounded-lg">
                   {selectedIssueForDetail.impactExplanation}
                 </p>
               </div>
 
               {selectedIssueForDetail.fixPayload && (
-                <div className="space-y-2 p-3.5 bg-[#EDF7F2] border border-[#B8DCC9] rounded-xl">
+                <div className="space-y-2 p-3.5 bg-[#EDF7F2] border border-[#B8DCC9] rounded-lg">
                   <span className="text-[10px] font-bold uppercase text-[#2E7D5B] block">
                     Suggested Remediation
                   </span>

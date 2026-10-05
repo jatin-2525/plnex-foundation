@@ -10,9 +10,11 @@
     --background: #F7F8FA;
     --foreground: #172033;
     --surface: #FFFFFF;
+    --secondary-surface: #F1F3F5;
     --border: #D9DEE5;
     --primary: #176B87;
     --secondary: #596579;
+    --muted: #7B8798;
     --success: #2E7D5B;
     --warning: #D98B32;
     --critical: #B5473C;
@@ -43,7 +45,7 @@
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #B0B8C9;
+  background: #7B8798;
 }
 
 /* Accessible focus ring */

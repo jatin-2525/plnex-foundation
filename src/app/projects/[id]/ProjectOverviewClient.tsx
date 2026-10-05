@@ -704,8 +704,8 @@ export default function ProjectOverviewPage() {
       L2: { bg: 'bg-[#3B6EA8]/10', text: 'text-[#3B6EA8]', border: 'border-[#3B6EA8]/30' },
       L3: { bg: 'bg-[#2E7D5B]/10', text: 'text-[#2E7D5B]', border: 'border-[#2E7D5B]/30' },
       L4: { bg: 'bg-[#D98B32]/10', text: 'text-[#D98B32]', border: 'border-[#D98B32]/30' },
-      L5: { bg: 'bg-[#8A94A6]/10', text: 'text-[#172033]', border: 'border-[#8A94A6]/30' },
-      L6: { bg: 'bg-[#F0F2F5]', text: 'text-[#596579]', border: 'border-[#D9DEE5]' },
+      L5: { bg: 'bg-[#7B8798]/10', text: 'text-[#172033]', border: 'border-[#7B8798]/30' },
+      L6: { bg: 'bg-[#F1F3F5]', text: 'text-[#596579]', border: 'border-[#D9DEE5]' },
     };
 
     const colors = levelColorMap[node.level];
@@ -713,7 +713,7 @@ export default function ProjectOverviewPage() {
     return (
       <React.Fragment key={node.id}>
         <div
-          className={`group flex items-center justify-between py-2 px-3 hover:bg-[#F9FAFC] border-b border-[#E8EBF0] text-xs transition-colors ${
+          className={`group flex items-center justify-between py-2 px-3 hover:bg-[#F9FAFC] border-b border-[#D9DEE5] text-xs transition-colors ${
             depth === 0 ? 'bg-[#F7F8FA] font-medium' : ''
           }`}
           style={{ paddingLeft: `${Math.max(12, depth * 24 + 12)}px` }}
@@ -724,7 +724,7 @@ export default function ProjectOverviewPage() {
               <button
                 type="button"
                 onClick={() => toggleNode(node.id)}
-                className="w-5 h-5 flex items-center justify-center rounded hover:bg-[#E8EBF0] text-[#596579] flex-shrink-0 transition-colors"
+                className="w-5 h-5 flex items-center justify-center rounded hover:bg-[#D9DEE5] text-[#596579] flex-shrink-0 transition-colors"
                 aria-label={isExpanded ? 'Collapse node' : 'Expand node'}
               >
                 {isExpanded ? (
@@ -734,7 +734,7 @@ export default function ProjectOverviewPage() {
                 )}
               </button>
             ) : (
-              <span className="w-5 h-5 flex items-center justify-center text-[#8A94A6] text-[10px] flex-shrink-0">
+              <span className="w-5 h-5 flex items-center justify-center text-[#7B8798] text-[10px] flex-shrink-0">
                 &bull;
               </span>
             )}
@@ -754,7 +754,7 @@ export default function ProjectOverviewPage() {
             </span>
 
             {node.isCritical && (
-              <span className="text-[10px] px-1.5 py-0.2 rounded bg-[#FDF0EE] text-[#B5473C] border border-[#E4B0AA] font-mono font-bold flex-shrink-0">
+              <span className="text-[10px] px-1.5 py-0.2 rounded bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA] font-mono font-bold flex-shrink-0">
                 CRITICAL
               </span>
             )}
@@ -796,7 +796,7 @@ export default function ProjectOverviewPage() {
                 setActiveProjectId(project.id);
                 router.push(`/schedule?search=${encodeURIComponent(node.code)}`);
               }}
-              className="text-[#176B87] hover:bg-[#E8F1F5] p-1 rounded transition-colors"
+              className="text-[#176B87] hover:bg-[#EDF5F8] p-1 rounded transition-colors"
               title={`Drill down to ${node.code} in Master Schedule`}
             >
               <ArrowUpRight className="w-3.5 h-3.5" />
@@ -825,7 +825,7 @@ export default function ProjectOverviewPage() {
                 <span className="font-mono text-xs font-bold px-2 py-0.5 rounded bg-[#176B87] text-white">
                   {project.id}
                 </span>
-                <span className="font-mono text-xs font-semibold text-[#596579] bg-[#F0F2F5] px-2 py-0.5 rounded border border-[#D9DEE5]">
+                <span className="font-mono text-xs font-semibold text-[#596579] bg-[#F1F3F5] px-2 py-0.5 rounded border border-[#D9DEE5]">
                   {project.code}
                 </span>
                 <StatusBadge status={project.status} size="sm" />
@@ -841,7 +841,7 @@ export default function ProjectOverviewPage() {
 
               <div className="flex items-center gap-3 text-xs text-[#596579] mt-2 flex-wrap">
                 <span className="flex items-center gap-1">
-                  <Building2 className="w-3.5 h-3.5 text-[#8A94A6]" />
+                  <Building2 className="w-3.5 h-3.5 text-[#7B8798]" />
                   <strong className="text-[#172033]">{project.organization}</strong>
                 </span>
                 <span>&bull;</span>
@@ -864,7 +864,7 @@ export default function ProjectOverviewPage() {
                   setActiveProjectId(project.id);
                   router.push('/schedule');
                 }}
-                className="px-3 py-2 text-xs font-medium text-[#172033] bg-[#F7F8FA] hover:bg-[#E8EBF0] border border-[#D9DEE5] rounded-md transition-colors inline-flex items-center gap-1.5"
+                className="px-3 py-2 text-xs font-medium text-[#172033] bg-[#F7F8FA] hover:bg-[#D9DEE5] border border-[#D9DEE5] rounded-md transition-colors inline-flex items-center gap-1.5"
                 title="Open Master Schedule WBS"
               >
                 <Calendar className="w-3.5 h-3.5 text-[#596579]" />
@@ -874,7 +874,7 @@ export default function ProjectOverviewPage() {
               <button
                 type="button"
                 onClick={() => setIsFieldModalOpen(true)}
-                className="px-3 py-2 text-xs font-semibold text-white bg-[#176B87] hover:bg-[#12546A] rounded-md transition-colors inline-flex items-center gap-1.5 shadow-sm"
+                className="px-3 py-2 text-xs font-semibold text-white bg-[#176B87] hover:bg-[#135A72] rounded-md transition-colors inline-flex items-center gap-1.5 shadow-sm"
                 title="Record new site progress statement"
               >
                 <ClipboardList className="w-3.5 h-3.5" />
@@ -887,7 +887,7 @@ export default function ProjectOverviewPage() {
                   setActiveProjectId(project.id);
                   router.push('/matching');
                 }}
-                className="px-3 py-2 text-xs font-medium text-[#172033] bg-[#F7F8FA] hover:bg-[#E8EBF0] border border-[#D9DEE5] rounded-md transition-colors inline-flex items-center gap-1.5"
+                className="px-3 py-2 text-xs font-medium text-[#172033] bg-[#F7F8FA] hover:bg-[#D9DEE5] border border-[#D9DEE5] rounded-md transition-colors inline-flex items-center gap-1.5"
                 title="View Match Verification Queue"
               >
                 <GitCompare className="w-3.5 h-3.5 text-[#D98B32]" />
@@ -902,7 +902,7 @@ export default function ProjectOverviewPage() {
               <button
                 type="button"
                 onClick={() => setIsReportModalOpen(true)}
-                className="px-3 py-2 text-xs font-medium text-[#596579] hover:text-[#172033] bg-white hover:bg-[#F0F2F5] border border-[#D9DEE5] rounded-md transition-colors inline-flex items-center gap-1.5"
+                className="px-3 py-2 text-xs font-medium text-[#596579] hover:text-[#172033] bg-white hover:bg-[#F1F3F5] border border-[#D9DEE5] rounded-md transition-colors inline-flex items-center gap-1.5"
                 title="Open Project Dossier & Export Reports"
               >
                 <FileText className="w-3.5 h-3.5 text-[#176B87]" />
@@ -1048,7 +1048,7 @@ export default function ProjectOverviewPage() {
             <div className="flex items-center gap-2 flex-wrap">
               {/* Search filter */}
               <div className="relative min-w-[200px]">
-                <Search className="w-3.5 h-3.5 text-[#8A94A6] absolute left-2.5 top-1/2 -translate-y-1/2" />
+                <Search className="w-3.5 h-3.5 text-[#7B8798] absolute left-2.5 top-1/2 -translate-y-1/2" />
                 <input
                   type="text"
                   placeholder="Filter WBS code or title..."
@@ -1061,7 +1061,7 @@ export default function ProjectOverviewPage() {
               <button
                 type="button"
                 onClick={expandAll}
-                className="px-2.5 py-1 text-xs font-medium text-[#172033] bg-white border border-[#D9DEE5] rounded hover:bg-[#E8EBF0] transition-colors"
+                className="px-2.5 py-1 text-xs font-medium text-[#172033] bg-white border border-[#D9DEE5] rounded hover:bg-[#D9DEE5] transition-colors"
               >
                 Expand All
               </button>
@@ -1069,7 +1069,7 @@ export default function ProjectOverviewPage() {
               <button
                 type="button"
                 onClick={collapseAll}
-                className="px-2.5 py-1 text-xs font-medium text-[#596579] bg-white border border-[#D9DEE5] rounded hover:bg-[#E8EBF0] transition-colors"
+                className="px-2.5 py-1 text-xs font-medium text-[#596579] bg-white border border-[#D9DEE5] rounded hover:bg-[#D9DEE5] transition-colors"
               >
                 Collapse
               </button>
@@ -1077,7 +1077,7 @@ export default function ProjectOverviewPage() {
           </div>
 
           {/* Hierarchy Column Header */}
-          <div className="bg-[#F0F2F5] border-b border-[#D9DEE5] px-3 py-2 text-[11px] font-semibold text-[#596579] flex items-center justify-between">
+          <div className="bg-[#F1F3F5] border-b border-[#D9DEE5] px-3 py-2 text-[11px] font-semibold text-[#596579] flex items-center justify-between">
             <div className="flex items-center gap-2">
               <span>WBS CODE &amp; BREAKDOWN HIERARCHY</span>
             </div>
@@ -1090,7 +1090,7 @@ export default function ProjectOverviewPage() {
           </div>
 
           {/* Render Recursive Tree */}
-          <div className="divide-y divide-[#E8EBF0]">
+          <div className="divide-y divide-[#D9DEE5]">
             {renderHierarchyNode(hierarchyTree)}
           </div>
 
@@ -1120,7 +1120,7 @@ export default function ProjectOverviewPage() {
           {/* RECENT EXECUTION */}
           <div className="bg-white border border-[#D9DEE5] rounded-lg p-5 flex flex-col justify-between">
             <div>
-              <div className="flex items-center justify-between pb-3 border-b border-[#E8EBF0] mb-3">
+              <div className="flex items-center justify-between pb-3 border-b border-[#D9DEE5] mb-3">
                 <div className="flex items-center gap-2">
                   <ClipboardList className="w-4 h-4 text-[#176B87]" />
                   <h3 className="text-xs font-bold uppercase tracking-wider text-[#172033]">
@@ -1146,17 +1146,17 @@ export default function ProjectOverviewPage() {
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
                         <span className="font-mono font-bold text-[#176B87]">{event.id}</span>
-                        <span className="font-mono text-[10px] px-1.5 py-0.5 rounded bg-[#F0F2F5] text-[#596579]">
+                        <span className="font-mono text-[10px] px-1.5 py-0.5 rounded bg-[#F1F3F5] text-[#596579]">
                           {event.source}
                         </span>
                       </div>
                       <div className="flex items-center gap-2">
                         <ConfidenceBadge score={event.confidence} />
-                        <span className="text-[11px] text-[#8A94A6] font-mono">{event.eventDate}</span>
+                        <span className="text-[11px] text-[#7B8798] font-mono">{event.eventDate}</span>
                       </div>
                     </div>
 
-                    <p className="text-[#172033] bg-[#F7F8FA] p-2 rounded border border-[#E8EBF0] text-[11px] italic">
+                    <p className="text-[#172033] bg-[#F7F8FA] p-2 rounded border border-[#D9DEE5] text-[11px] italic">
                       &quot;{event.rawText}&quot;
                     </p>
 
@@ -1178,7 +1178,7 @@ export default function ProjectOverviewPage() {
               </div>
             </div>
 
-            <div className="pt-3 mt-4 border-t border-[#E8EBF0] flex items-center justify-between">
+            <div className="pt-3 mt-4 border-t border-[#D9DEE5] flex items-center justify-between">
               <span className="text-[11px] text-[#596579]">
                 Continuous Daily Site Progress Ingestion
               </span>
@@ -1196,7 +1196,7 @@ export default function ProjectOverviewPage() {
           {/* RECENT EVIDENCE */}
           <div className="bg-white border border-[#D9DEE5] rounded-lg p-5 flex flex-col justify-between">
             <div>
-              <div className="flex items-center justify-between pb-3 border-b border-[#E8EBF0] mb-3">
+              <div className="flex items-center justify-between pb-3 border-b border-[#D9DEE5] mb-3">
                 <div className="flex items-center gap-2">
                   <FileText className="w-4 h-4 text-[#176B87]" />
                   <h3 className="text-xs font-bold uppercase tracking-wider text-[#172033]">
@@ -1230,7 +1230,7 @@ export default function ProjectOverviewPage() {
                           {item.title}
                         </span>
                       </div>
-                      <span className="text-[10px] font-mono text-[#8A94A6]">{item.fileSize}</span>
+                      <span className="text-[10px] font-mono text-[#7B8798]">{item.fileSize}</span>
                     </div>
 
                     <div className="flex items-center justify-between text-[11px] text-[#596579]">
@@ -1261,7 +1261,7 @@ export default function ProjectOverviewPage() {
               </div>
             </div>
 
-            <div className="pt-3 mt-4 border-t border-[#E8EBF0] flex items-center justify-between">
+            <div className="pt-3 mt-4 border-t border-[#D9DEE5] flex items-center justify-between">
               <span className="text-[11px] text-[#596579]">
                 Tamper-Evident Audit Trail &amp; QA/QC Documentation
               </span>
@@ -1281,7 +1281,7 @@ export default function ProjectOverviewPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* DEPENDENCY IMPACT */}
           <div className="bg-white border border-[#D9DEE5] rounded-lg p-5">
-            <div className="flex items-center justify-between pb-3 border-b border-[#E8EBF0] mb-3">
+            <div className="flex items-center justify-between pb-3 border-b border-[#D9DEE5] mb-3">
               <div className="flex items-center gap-2">
                 <TrendingDown className="w-4 h-4 text-[#B5473C]" />
                 <h3 className="text-xs font-bold uppercase tracking-wider text-[#172033]">
@@ -1300,7 +1300,7 @@ export default function ProjectOverviewPage() {
 
             <div className="space-y-3 text-xs">
               {/* Primary Driving Delay Chain */}
-              <div className="p-3.5 bg-[#FDF0EE] border border-[#E4B0AA] rounded-lg space-y-2">
+              <div className="p-3.5 bg-[#FBEFEE] border border-[#E4B0AA] rounded-lg space-y-2">
                 <div className="flex items-center justify-between">
                   <span className="font-mono font-bold text-[#B5473C]">PIP-24-002: Weld Line 24-XX Field Joints & NDT Clearance</span>
                   <span className="text-xs font-mono font-bold text-[#B5473C] bg-white px-2 py-0.5 rounded border border-[#E4B0AA]">
@@ -1340,7 +1340,7 @@ export default function ProjectOverviewPage() {
                 <Link
                   href="/variance"
                   onClick={() => setActiveProjectId(project.id)}
-                  className="px-2.5 py-1 text-xs font-semibold text-white bg-[#176B87] hover:bg-[#12546A] rounded transition-colors whitespace-nowrap"
+                  className="px-2.5 py-1 text-xs font-semibold text-white bg-[#176B87] hover:bg-[#135A72] rounded transition-colors whitespace-nowrap"
                 >
                   Simulate Recovery
                 </Link>
@@ -1350,14 +1350,14 @@ export default function ProjectOverviewPage() {
 
           {/* SCHEDULE HEALTH */}
           <div className="bg-white border border-[#D9DEE5] rounded-lg p-5">
-            <div className="flex items-center justify-between pb-3 border-b border-[#E8EBF0] mb-3">
+            <div className="flex items-center justify-between pb-3 border-b border-[#D9DEE5] mb-3">
               <div className="flex items-center gap-2">
                 <CheckCircle2 className="w-4 h-4 text-[#2E7D5B]" />
                 <h3 className="text-xs font-bold uppercase tracking-wider text-[#172033]">
                   Baseline Schedule Health
                 </h3>
               </div>
-              <span className="text-xs font-mono font-bold text-[#176B87] bg-[#E8F1F5] px-2 py-0.5 rounded">
+              <span className="text-xs font-mono font-bold text-[#176B87] bg-[#EDF5F8] px-2 py-0.5 rounded">
                 Health Score: {MOCK_HEALTH_SCORE.overall} / 100
               </span>
             </div>
@@ -1432,7 +1432,7 @@ export default function ProjectOverviewPage() {
                 type="button"
                 onClick={handleSubmitFieldReport}
                 disabled={isSubmittingField || !fieldReportText.trim()}
-                className="px-4 py-1.5 text-xs font-semibold text-white bg-[#176B87] hover:bg-[#12546A] rounded transition-colors inline-flex items-center gap-1.5 disabled:opacity-50"
+                className="px-4 py-1.5 text-xs font-semibold text-white bg-[#176B87] hover:bg-[#135A72] rounded transition-colors inline-flex items-center gap-1.5 disabled:opacity-50"
               >
                 {isSubmittingField ? 'Processing Extraction...' : 'Extract & Match'}
               </button>
@@ -1450,7 +1450,7 @@ export default function ProjectOverviewPage() {
                   onClick={() => setFieldSource('FIELD_QUICK_FORM')}
                   className={`p-2 text-center rounded border transition-colors ${
                     fieldSource === 'FIELD_QUICK_FORM'
-                      ? 'bg-[#E8F1F5] text-[#176B87] border-[#176B87] font-semibold'
+                      ? 'bg-[#EDF5F8] text-[#176B87] border-[#176B87] font-semibold'
                       : 'bg-[#F7F8FA] text-[#596579] border-[#D9DEE5]'
                   }`}
                 >
@@ -1461,7 +1461,7 @@ export default function ProjectOverviewPage() {
                   onClick={() => setFieldSource('SITE_DIARY')}
                   className={`p-2 text-center rounded border transition-colors ${
                     fieldSource === 'SITE_DIARY'
-                      ? 'bg-[#E8F1F5] text-[#176B87] border-[#176B87] font-semibold'
+                      ? 'bg-[#EDF5F8] text-[#176B87] border-[#176B87] font-semibold'
                       : 'bg-[#F7F8FA] text-[#596579] border-[#D9DEE5]'
                   }`}
                 >
@@ -1472,7 +1472,7 @@ export default function ProjectOverviewPage() {
                   onClick={() => setFieldSource('DPR_PDF')}
                   className={`p-2 text-center rounded border transition-colors ${
                     fieldSource === 'DPR_PDF'
-                      ? 'bg-[#E8F1F5] text-[#176B87] border-[#176B87] font-semibold'
+                      ? 'bg-[#EDF5F8] text-[#176B87] border-[#176B87] font-semibold'
                       : 'bg-[#F7F8FA] text-[#596579] border-[#D9DEE5]'
                   }`}
                 >
@@ -1494,7 +1494,7 @@ export default function ProjectOverviewPage() {
               />
             </div>
 
-            <div className="p-2.5 bg-[#F0F2F5] rounded text-[11px] text-[#596579] flex items-start gap-2">
+            <div className="p-2.5 bg-[#F1F3F5] rounded text-[11px] text-[#596579] flex items-start gap-2">
               <Info className="w-4 h-4 text-[#176B87] flex-shrink-0 mt-0.5" />
               <span>
                 PLnEX NLP engine will parse activity quantities, locations, and weld joints, scoring candidates against L5/L6 activities in the schedule twin.
@@ -1515,7 +1515,7 @@ export default function ProjectOverviewPage() {
               <button
                 type="button"
                 onClick={() => setSelectedEvidence(null)}
-                className="px-3.5 py-1.5 text-xs text-[#172033] bg-[#F7F8FA] hover:bg-[#E8EBF0] border border-[#D9DEE5] rounded"
+                className="px-3.5 py-1.5 text-xs text-[#172033] bg-[#F7F8FA] hover:bg-[#D9DEE5] border border-[#D9DEE5] rounded"
               >
                 Close
               </button>
@@ -1577,7 +1577,7 @@ export default function ProjectOverviewPage() {
                   });
                   setIsReportModalOpen(false);
                 }}
-                className="px-3.5 py-1.5 text-xs font-semibold text-white bg-[#176B87] hover:bg-[#12546A] rounded inline-flex items-center gap-1.5"
+                className="px-3.5 py-1.5 text-xs font-semibold text-white bg-[#176B87] hover:bg-[#135A72] rounded inline-flex items-center gap-1.5"
               >
                 <Download className="w-3.5 h-3.5" />
                 <span>Export CSV Dossier</span>

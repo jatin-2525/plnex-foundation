@@ -737,7 +737,7 @@ export default function ReviewQueuePage() {
         <Breadcrumbs items={breadcrumbs} />
 
         {/* HEADER */}
-        <div className="bg-white border border-[#D9DEE5] rounded-xl p-5 md:p-6 shadow-xs">
+        <div className="bg-white border border-[#D9DEE5] rounded-lg p-5 md:p-6 shadow-xs">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-[#D9DEE5]/60">
             <div>
               <div className="flex items-center gap-2 mb-1">
@@ -745,7 +745,7 @@ export default function ReviewQueuePage() {
                   <ShieldCheck className="w-3.5 h-3.5" />
                   Human-in-the-Loop Verification
                 </span>
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-mono font-medium bg-[#F0F2F5] text-[#596579] border border-[#D9DEE5]">
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-mono font-medium bg-[#F1F3F5] text-[#596579] border border-[#D9DEE5]">
                   Action Queue Only · Zero Silent Conversions
                 </span>
               </div>
@@ -771,7 +771,7 @@ export default function ReviewQueuePage() {
 
           {/* GOVERNANCE POLICY BANNER */}
           <div className="pt-4">
-            <div className="p-3.5 bg-[#EDF5F8] border border-[#B3CBE0] rounded-xl flex items-start gap-3 text-xs">
+            <div className="p-3.5 bg-[#EDF5F8] border border-[#B3CBE0] rounded-lg flex items-start gap-3 text-xs">
               <ShieldCheck className="w-5 h-5 text-[#176B87] shrink-0 mt-0.5" />
               <div className="space-y-0.5">
                 <h4 className="font-bold text-[#172033]">
@@ -789,7 +789,7 @@ export default function ReviewQueuePage() {
         <CoreFlowBanner currentStage="HUMAN_VERIFICATION" />
 
         {/* SUMMARY TABS */}
-        <div className="bg-white border border-[#D9DEE5] rounded-xl overflow-hidden shadow-xs">
+        <div className="bg-white border border-[#D9DEE5] rounded-lg overflow-hidden shadow-xs">
           <div className="flex border-b border-[#D9DEE5] bg-[#F7F8FA] overflow-x-auto">
             {tabs.map((tab) => {
               const isActive = activeTab === tab;
@@ -804,20 +804,20 @@ export default function ReviewQueuePage() {
                   className={`flex items-center gap-2 px-5 py-3.5 text-xs font-semibold border-b-2 whitespace-nowrap transition-colors min-h-[48px] ${
                     isActive
                       ? 'border-[#176B87] text-[#176B87] bg-white'
-                      : 'border-transparent text-[#596579] hover:text-[#172033] hover:bg-[#F0F2F5]'
+                      : 'border-transparent text-[#596579] hover:text-[#172033] hover:bg-[#F1F3F5]'
                   }`}
                 >
-                  {isHistory && <Archive className="w-3.5 h-3.5 text-[#8A94A6]" />}
+                  {isHistory && <Archive className="w-3.5 h-3.5 text-[#7B8798]" />}
                   <span>{tab}</span>
                   <span
                     className={`px-2 py-0.5 rounded-full text-[10px] font-mono font-bold ${
                       isActive
                         ? 'bg-[#EDF5F8] text-[#176B87]'
                         : isHistory
-                        ? 'bg-[#F0F2F5] text-[#8A94A6]'
+                        ? 'bg-[#F1F3F5] text-[#7B8798]'
                         : count > 0
-                        ? 'bg-[#E8EBF0] text-[#172033]'
-                        : 'bg-[#F0F2F5] text-[#8A94A6]'
+                        ? 'bg-[#D9DEE5] text-[#172033]'
+                        : 'bg-[#F1F3F5] text-[#7B8798]'
                     }`}
                   >
                     {count}
@@ -830,7 +830,7 @@ export default function ReviewQueuePage() {
           {/* SEARCH & ACTIVE QUEUE NOTICE */}
           <div className="p-4 border-b border-[#D9DEE5]/60 flex items-center justify-between gap-3 text-xs flex-wrap">
             <div className="relative flex-1 max-w-md">
-              <Search className="w-4 h-4 text-[#8A94A6] absolute left-3 top-1/2 -translate-y-1/2" />
+              <Search className="w-4 h-4 text-[#7B8798] absolute left-3 top-1/2 -translate-y-1/2" />
               <input
                 type="text"
                 value={searchQuery}
@@ -842,7 +842,7 @@ export default function ReviewQueuePage() {
                 <button
                   type="button"
                   onClick={() => setSearchQuery('')}
-                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[#8A94A6] hover:text-[#172033]"
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[#7B8798] hover:text-[#172033]"
                 >
                   <X className="w-3.5 h-3.5" />
                 </button>
@@ -861,7 +861,7 @@ export default function ReviewQueuePage() {
           {/* MAIN REVIEW QUEUE EVENT CARDS */}
           <div className="p-4 space-y-4">
             {filteredEvents.length === 0 ? (
-              <div className="p-12 text-center text-[#596579] bg-[#FAFAFA] rounded-xl border border-dashed border-[#D9DEE5]">
+              <div className="p-12 text-center text-[#596579] bg-[#FAFAFA] rounded-lg border border-dashed border-[#D9DEE5]">
                 <CheckCircle2 className="w-10 h-10 text-[#2E7D5B] mx-auto mb-3" />
                 <h3 className="font-bold text-lg text-[#172033]">
                   {activeTab === 'Verified History'
@@ -878,15 +878,15 @@ export default function ReviewQueuePage() {
               filteredEvents.map((evt) => (
                 <div
                   key={evt.id}
-                  className="bg-white border border-[#D9DEE5] rounded-xl overflow-hidden shadow-xs hover:border-[#B3CBE0] transition-colors"
+                  className="bg-white border border-[#D9DEE5] rounded-lg overflow-hidden shadow-xs hover:border-[#B3CBE0] transition-colors"
                 >
                   {/* Event Top Meta Bar */}
                   <div className="px-4 py-2.5 bg-[#F7F8FA] border-b border-[#D9DEE5] flex items-center justify-between flex-wrap gap-2 text-xs">
                     <div className="flex items-center gap-3">
                       <span className="font-mono font-bold text-[#176B87]">{evt.id}</span>
-                      <span className="text-[#8A94A6]">•</span>
+                      <span className="text-[#7B8798]">•</span>
                       <span className="font-semibold text-[#172033]">{evt.submittedBy}</span>
-                      <span className="text-[#8A94A6]">•</span>
+                      <span className="text-[#7B8798]">•</span>
                       <span className="text-[#596579] font-mono text-[11px]">{evt.date}</span>
                     </div>
 
@@ -1055,7 +1055,7 @@ export default function ReviewQueuePage() {
               {/* 3-Column Inspection: Raw Field Observation, Editable Parameters, Physical Evidence */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {/* Column 1: Editable Extraction Fields */}
-                <div className="p-4 bg-[#F7F8FA] border border-[#D9DEE5] rounded-xl space-y-3">
+                <div className="p-4 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg space-y-3">
                   <div className="flex items-center justify-between">
                     <span className="font-bold text-xs uppercase tracking-wider text-[#596579]">
                       Extracted Parameters (Editable)
@@ -1121,25 +1121,25 @@ export default function ReviewQueuePage() {
                   ) : (
                     <div className="space-y-2 pt-1 text-xs">
                       <div className="flex justify-between py-1 border-b border-[#D9DEE5]/60">
-                        <span className="text-[#8A94A6]">Work Type:</span>
+                        <span className="text-[#7B8798]">Work Type:</span>
                         <strong className="text-[#172033]">{selectedEvent.workType}</strong>
                       </div>
                       <div className="flex justify-between py-1 border-b border-[#D9DEE5]/60">
-                        <span className="text-[#8A94A6]">Quantity / Unit:</span>
+                        <span className="text-[#7B8798]">Quantity / Unit:</span>
                         <strong className="text-[#172033] font-mono">{selectedEvent.extractedQuantity} {selectedEvent.unit}</strong>
                       </div>
                       <div className="flex justify-between py-1 border-b border-[#D9DEE5]/60">
-                        <span className="text-[#8A94A6]">Area:</span>
+                        <span className="text-[#7B8798]">Area:</span>
                         <strong className="text-[#172033]">{selectedEvent.area}</strong>
                       </div>
                       {selectedEvent.line && (
                         <div className="flex justify-between py-1 border-b border-[#D9DEE5]/60">
-                          <span className="text-[#8A94A6]">Line Code:</span>
+                          <span className="text-[#7B8798]">Line Code:</span>
                           <strong className="text-[#172033] font-mono">{selectedEvent.line}</strong>
                         </div>
                       )}
                       <div className="flex justify-between py-1">
-                        <span className="text-[#8A94A6]">Shift Time:</span>
+                        <span className="text-[#7B8798]">Shift Time:</span>
                         <strong className="text-[#172033] font-mono">{selectedEvent.shiftTime}</strong>
                       </div>
                     </div>
@@ -1147,13 +1147,13 @@ export default function ReviewQueuePage() {
                 </div>
 
                 {/* Column 2: Physical Evidence & Rules Checked */}
-                <div className="p-4 bg-[#F7F8FA] border border-[#D9DEE5] rounded-xl space-y-3">
+                <div className="p-4 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg space-y-3">
                   <span className="font-bold text-xs uppercase tracking-wider text-[#596579] block">
                     Physical Evidence & QC Proofs ({selectedEvent.evidenceItems.length})
                   </span>
 
                   {selectedEvent.evidenceItems.length === 0 ? (
-                    <div className="p-3 bg-white border border-[#D9DEE5] rounded-lg text-[#8A94A6] italic text-center">
+                    <div className="p-3 bg-white border border-[#D9DEE5] rounded-lg text-[#7B8798] italic text-center">
                       No photographic or document proofs attached to this field log.
                     </div>
                   ) : (
@@ -1173,7 +1173,7 @@ export default function ReviewQueuePage() {
                               <span className="font-semibold text-[#172033] block truncate max-w-[200px]">
                                 {item.title}
                               </span>
-                              <span className="text-[10px] text-[#8A94A6] font-mono">
+                              <span className="text-[10px] text-[#7B8798] font-mono">
                                 Time: {item.timestamp}
                               </span>
                             </div>
@@ -1187,7 +1187,7 @@ export default function ReviewQueuePage() {
                   )}
 
                   <div className="pt-2 border-t border-[#D9DEE5]/60 space-y-1.5">
-                    <span className="text-[10px] uppercase font-bold text-[#8A94A6] block">
+                    <span className="text-[10px] uppercase font-bold text-[#7B8798] block">
                       Deterministic Rules Verified:
                     </span>
                     {selectedEvent.rulesEvaluated.map((rule, idx) => (

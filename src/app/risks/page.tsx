@@ -603,7 +603,7 @@ export default function DelayDependencyImpactPage() {
             HEADER: Delay & Dependency Impact
             Operational, clean language. Jargon moved to Calculation Details.
             ========================================================================= */}
-        <div className="bg-white border border-[#D9DEE5] rounded-xl p-5 md:p-6 shadow-xs">
+        <div className="bg-white border border-[#D9DEE5] rounded-lg p-5 md:p-6 shadow-xs">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-[#D9DEE5]/60">
             <div>
               <div className="flex items-center gap-2 mb-1">
@@ -639,7 +639,7 @@ export default function DelayDependencyImpactPage() {
 
           {/* OPERATIONAL BANNER */}
           <div className="pt-4">
-            <div className="p-3.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-xl flex items-start gap-3 text-xs">
+            <div className="p-3.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg flex items-start gap-3 text-xs">
               <GitBranch className="w-5 h-5 text-[#176B87] shrink-0 mt-0.5" />
               <div className="space-y-0.5">
                 <h4 className="font-bold text-[#172033]">
@@ -661,13 +661,13 @@ export default function DelayDependencyImpactPage() {
           <button
             type="button"
             onClick={() => setSelectedSeverityFilter('ALL')}
-            className={`p-4 rounded-xl border text-left transition-all ${
+            className={`p-4 rounded-lg border text-left transition-all ${
               selectedSeverityFilter === 'ALL'
                 ? 'bg-[#EDF5F8] border-[#176B87] shadow-2xs'
                 : 'bg-white border-[#D9DEE5] hover:bg-[#F7F8FA]'
             }`}
           >
-            <span className="text-[10px] font-bold uppercase tracking-wider text-[#8A94A6] block">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-[#7B8798] block">
               Open Delays
             </span>
             <div className="flex items-baseline gap-1 mt-1">
@@ -685,13 +685,13 @@ export default function DelayDependencyImpactPage() {
           <button
             type="button"
             onClick={() => setSelectedSeverityFilter(selectedSeverityFilter === 'Critical' ? 'ALL' : 'Critical')}
-            className={`p-4 rounded-xl border text-left transition-all ${
+            className={`p-4 rounded-lg border text-left transition-all ${
               selectedSeverityFilter === 'Critical'
                 ? 'bg-[#FBEFEE] border-[#B5473C] shadow-2xs'
                 : 'bg-white border-[#D9DEE5] hover:bg-[#F7F8FA]'
             }`}
           >
-            <span className="text-[10px] font-bold uppercase tracking-wider text-[#8A94A6] block">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-[#7B8798] block">
               Critical Path Slips
             </span>
             <div className="flex items-baseline gap-1 mt-1">
@@ -706,8 +706,8 @@ export default function DelayDependencyImpactPage() {
           </button>
 
           {/* 3. Total Delay Days */}
-          <div className="bg-white border border-[#D9DEE5] rounded-xl p-4 shadow-2xs">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-[#8A94A6] block">
+          <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 shadow-2xs">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-[#7B8798] block">
               Total Delay Days
             </span>
             <div className="flex items-baseline gap-1 mt-1">
@@ -722,8 +722,8 @@ export default function DelayDependencyImpactPage() {
           </div>
 
           {/* 4. Impacted Dependencies */}
-          <div className="bg-white border border-[#D9DEE5] rounded-xl p-4 shadow-2xs">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-[#8A94A6] block">
+          <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 shadow-2xs">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-[#7B8798] block">
               Impacted Dependencies
             </span>
             <div className="flex items-baseline gap-1 mt-1">
@@ -741,13 +741,13 @@ export default function DelayDependencyImpactPage() {
           <button
             type="button"
             onClick={() => setSelectedStatusFilter(selectedStatusFilter === 'Active' ? 'ALL' : 'Active')}
-            className={`p-4 rounded-xl border text-left transition-all col-span-2 sm:col-span-1 ${
+            className={`p-4 rounded-lg border text-left transition-all col-span-2 sm:col-span-1 ${
               selectedStatusFilter === 'Active'
                 ? 'bg-[#FBEFEE] border-[#B5473C] shadow-2xs'
                 : 'bg-white border-[#D9DEE5] hover:bg-[#F7F8FA]'
             }`}
           >
-            <span className="text-[10px] font-bold uppercase tracking-wider text-[#8A94A6] block">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-[#7B8798] block">
               Active Actions
             </span>
             <div className="flex items-baseline gap-1 mt-1">
@@ -776,7 +776,7 @@ export default function DelayDependencyImpactPage() {
             AND
             Activity A ↓ Activity B ↓ Activity C
             ========================================================================= */}
-        <div className="bg-white border-2 border-[#176B87]/40 rounded-xl p-5 md:p-6 shadow-sm space-y-5">
+        <div className="bg-white border-2 border-[#176B87]/40 rounded-lg p-5 md:p-6 shadow-sm space-y-5">
           <div className="flex items-center justify-between pb-3 border-b border-[#D9DEE5]/60 flex-wrap gap-2">
             <div className="flex items-center gap-2">
               <span className="px-2.5 py-0.5 rounded text-[11px] font-bold uppercase tracking-wider bg-[#176B87] text-white">
@@ -814,7 +814,7 @@ export default function DelayDependencyImpactPage() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
                 {/* 1. Source Activity */}
                 <div className="p-3 rounded-lg bg-[#F7F8FA] border border-[#D9DEE5]">
-                  <span className="text-[10px] uppercase font-bold text-[#8A94A6] tracking-wider block mb-0.5">
+                  <span className="text-[10px] uppercase font-bold text-[#7B8798] tracking-wider block mb-0.5">
                     Source Activity
                   </span>
                   <div className="font-bold text-[#172033] text-sm">
@@ -841,7 +841,7 @@ export default function DelayDependencyImpactPage() {
 
               {/* 3. Cause */}
               <div className="p-3 rounded-lg bg-white border border-[#D9DEE5] text-xs">
-                <span className="text-[10px] uppercase font-bold text-[#8A94A6] tracking-wider block mb-1">
+                <span className="text-[10px] uppercase font-bold text-[#7B8798] tracking-wider block mb-1">
                   Cause
                 </span>
                 <p className="text-[#172033] font-medium leading-relaxed">
@@ -866,7 +866,7 @@ export default function DelayDependencyImpactPage() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
                 {/* 5. Affected Activities */}
                 <div className="p-3 rounded-lg bg-[#F7F8FA] border border-[#D9DEE5]">
-                  <span className="text-[10px] uppercase font-bold text-[#8A94A6] tracking-wider block mb-1">
+                  <span className="text-[10px] uppercase font-bold text-[#7B8798] tracking-wider block mb-1">
                     Affected Activities ({selectedDelay.affectedActivities.length})
                   </span>
                   <ul className="space-y-1 text-[#172033] font-semibold">
@@ -881,7 +881,7 @@ export default function DelayDependencyImpactPage() {
 
                 {/* 6. Dependency */}
                 <div className="p-3 rounded-lg bg-[#F7F8FA] border border-[#D9DEE5]">
-                  <span className="text-[10px] uppercase font-bold text-[#8A94A6] tracking-wider block mb-1">
+                  <span className="text-[10px] uppercase font-bold text-[#7B8798] tracking-wider block mb-1">
                     Dependency
                   </span>
                   <div className="font-mono font-bold text-xs text-[#176B87]">
@@ -919,14 +919,14 @@ export default function DelayDependencyImpactPage() {
             </div>
 
             {/* RIGHT (Cols 8-12): DEPENDENCY FLOW Activity A ↓ Activity B ↓ Activity C */}
-            <div className="lg:col-span-5 p-4 rounded-xl bg-[#F7F8FA] border border-[#D9DEE5] flex flex-col justify-between space-y-3">
+            <div className="lg:col-span-5 p-4 rounded-lg bg-[#F7F8FA] border border-[#D9DEE5] flex flex-col justify-between space-y-3">
               <div>
                 <div className="flex items-center justify-between pb-2 border-b border-[#D9DEE5]">
                   <h3 className="text-xs font-bold text-[#176B87] uppercase tracking-wider flex items-center gap-1.5">
                     <GitBranch className="w-3.5 h-3.5" />
                     Dependency
                   </h3>
-                  <span className="text-[10px] font-mono text-[#8A94A6]">
+                  <span className="text-[10px] font-mono text-[#7B8798]">
                     Actual Dependency Data
                   </span>
                 </div>
@@ -974,7 +974,7 @@ export default function DelayDependencyImpactPage() {
                           </div>
 
                           <div className="flex items-center justify-between text-[11px] pt-1.5 mt-1.5 border-t border-[#D9DEE5]/60 font-mono">
-                            <span className="text-[#8A94A6]">{node.activityId} ({node.discipline})</span>
+                            <span className="text-[#7B8798]">{node.activityId} ({node.discipline})</span>
                             <span className={node.status === 'Delayed' ? 'text-[#B5473C] font-bold' : 'text-[#596579]'}>
                               {node.delayText}
                             </span>
@@ -1008,9 +1008,9 @@ export default function DelayDependencyImpactPage() {
         {/* =========================================================================
             CONTROLS & SEARCH BAR
             ========================================================================= */}
-        <div className="bg-white border border-[#D9DEE5] rounded-xl p-4 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+        <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
           <div className="relative flex-1 max-w-md">
-            <Search className="w-4 h-4 text-[#8A94A6] absolute left-3 top-1/2 -translate-y-1/2" />
+            <Search className="w-4 h-4 text-[#7B8798] absolute left-3 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               value={searchQuery}
@@ -1022,7 +1022,7 @@ export default function DelayDependencyImpactPage() {
               <button
                 type="button"
                 onClick={() => setSearchQuery('')}
-                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[#8A94A6] hover:text-[#172033]"
+                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[#7B8798] hover:text-[#172033]"
               >
                 <X className="w-3.5 h-3.5" />
               </button>
@@ -1032,7 +1032,7 @@ export default function DelayDependencyImpactPage() {
           <div className="flex items-center gap-2 flex-wrap">
             {/* Severity Filter */}
             <div className="flex items-center gap-1.5">
-              <span className="text-[#8A94A6] font-medium text-[11px]">Severity:</span>
+              <span className="text-[#7B8798] font-medium text-[11px]">Severity:</span>
               <select
                 value={selectedSeverityFilter}
                 onChange={(e) => setSelectedSeverityFilter(e.target.value as any)}
@@ -1048,7 +1048,7 @@ export default function DelayDependencyImpactPage() {
 
             {/* Status Filter */}
             <div className="flex items-center gap-1.5">
-              <span className="text-[#8A94A6] font-medium text-[11px]">Status:</span>
+              <span className="text-[#7B8798] font-medium text-[11px]">Status:</span>
               <select
                 value={selectedStatusFilter}
                 onChange={(e) => setSelectedStatusFilter(e.target.value as any)}
@@ -1068,7 +1068,7 @@ export default function DelayDependencyImpactPage() {
             ALL PROJECT DELAYS TABLE:
             Source Activity | Actual Delay | Cause | Evidence | Affected Activities | Dependency | Current Impact | Recommended Action
             ========================================================================= */}
-        <div className="bg-white border border-[#D9DEE5] rounded-xl overflow-hidden shadow-xs">
+        <div className="bg-white border border-[#D9DEE5] rounded-lg overflow-hidden shadow-xs">
           <div className="p-4 bg-[#F7F8FA] border-b border-[#D9DEE5] flex items-center justify-between">
             <h3 className="font-bold text-xs uppercase tracking-wider text-[#172033]">
               All Project Delays & Downstream Impacts
@@ -1163,7 +1163,7 @@ export default function DelayDependencyImpactPage() {
                             {item.affectedActivities.map((act, i) => (
                               <span
                                 key={i}
-                                className="inline-block px-1.5 py-0.2 rounded text-[10px] font-semibold bg-[#F0F2F5] text-[#172033] mr-1 mb-0.5"
+                                className="inline-block px-1.5 py-0.2 rounded text-[10px] font-semibold bg-[#F1F3F5] text-[#172033] mr-1 mb-0.5"
                               >
                                 {act}
                               </span>
@@ -1218,8 +1218,8 @@ export default function DelayDependencyImpactPage() {
             Eliminates jargon headings from the top-level view.
             Places CPM methodology, topological sort, and float math here.
             ========================================================================= */}
-        <details className="group bg-[#F7F8FA] border border-[#D9DEE5] rounded-xl overflow-hidden transition-all">
-          <summary className="p-4 flex items-center justify-between cursor-pointer font-bold text-xs uppercase tracking-wider text-[#176B87] hover:bg-[#F0F2F5] transition-colors">
+        <details className="group bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg overflow-hidden transition-all">
+          <summary className="p-4 flex items-center justify-between cursor-pointer font-bold text-xs uppercase tracking-wider text-[#176B87] hover:bg-[#F1F3F5] transition-colors">
             <div className="flex items-center gap-2">
               <SlidersHorizontal className="w-4 h-4 text-[#176B87]" />
               <span>Calculation Details</span>
@@ -1308,7 +1308,7 @@ export default function DelayDependencyImpactPage() {
         >
           <div className="space-y-6 text-xs text-[#172033]">
             {/* HEADER KPI CARD */}
-            <div className="p-4 bg-[#F7F8FA] border border-[#D9DEE5] rounded-xl space-y-3">
+            <div className="p-4 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg space-y-3">
               <div className="flex items-center justify-between flex-wrap gap-2">
                 <div className="flex items-center gap-2">
                   <span className="font-mono font-bold text-base text-[#176B87]">
@@ -1328,32 +1328,32 @@ export default function DelayDependencyImpactPage() {
 
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-[11px] pt-1 border-t border-[#D9DEE5]/60">
                 <div>
-                  <span className="text-[#8A94A6] uppercase font-bold text-[9px] block">Source Activity</span>
+                  <span className="text-[#7B8798] uppercase font-bold text-[9px] block">Source Activity</span>
                   <span className="font-mono font-bold text-[#176B87]">{selectedDelay.sourceActivityId}</span>
                 </div>
                 <div>
-                  <span className="text-[#8A94A6] uppercase font-bold text-[9px] block">Actual Delay</span>
+                  <span className="text-[#7B8798] uppercase font-bold text-[9px] block">Actual Delay</span>
                   <span className="font-mono font-bold text-[#B5473C]">+{selectedDelay.delayDays} Days</span>
                 </div>
                 <div>
-                  <span className="text-[#8A94A6] uppercase font-bold text-[9px] block">Critical Slip</span>
+                  <span className="text-[#7B8798] uppercase font-bold text-[9px] block">Critical Slip</span>
                   <span className="font-mono font-bold text-[#B5473C]">+{selectedDelay.delayDurationDetails.netCriticalSlipDays} Days</span>
                 </div>
                 <div>
-                  <span className="text-[#8A94A6] uppercase font-bold text-[9px] block">Owner</span>
+                  <span className="text-[#7B8798] uppercase font-bold text-[9px] block">Owner</span>
                   <span className="font-bold text-[#172033]">{selectedDelay.owner}</span>
                 </div>
               </div>
             </div>
 
             {/* DEPENDENCY CHAIN (Activity A ↓ Activity B ↓ Activity C) */}
-            <div className="p-4 bg-white border border-[#D9DEE5] rounded-xl space-y-3">
+            <div className="p-4 bg-white border border-[#D9DEE5] rounded-lg space-y-3">
               <div className="flex items-center justify-between">
                 <h4 className="font-bold text-xs uppercase tracking-wider text-[#176B87] flex items-center gap-1.5">
                   <GitBranch className="w-3.5 h-3.5" />
                   Sequential Dependency Chain
                 </h4>
-                <span className="text-[10px] font-mono text-[#8A94A6]">Predecessor $\to$ Successor Flow</span>
+                <span className="text-[10px] font-mono text-[#7B8798]">Predecessor $\to$ Successor Flow</span>
               </div>
 
               <div className="space-y-2 pt-1">
@@ -1369,7 +1369,7 @@ export default function DelayDependencyImpactPage() {
                             <span className="font-mono font-bold text-[#176B87] text-xs">
                               {node.activityId}
                             </span>
-                            <span className="text-[10px] font-bold uppercase text-[#8A94A6]">
+                            <span className="text-[10px] font-bold uppercase text-[#7B8798]">
                               {node.step}
                             </span>
                             <span className="text-[10px] font-semibold text-[#596579] bg-white px-1.5 py-0.2 rounded border border-[#D9DEE5]">
@@ -1394,7 +1394,7 @@ export default function DelayDependencyImpactPage() {
                         >
                           {node.delayText || node.status}
                         </span>
-                        <span className="text-[10px] text-[#8A94A6] block mt-0.5 font-mono">
+                        <span className="text-[10px] text-[#7B8798] block mt-0.5 font-mono">
                           {node.floatRemaining}
                         </span>
                       </div>
@@ -1403,7 +1403,7 @@ export default function DelayDependencyImpactPage() {
                     {/* Vector Arrow to Next Node */}
                     {idx < selectedDelay.dependencyChain.length - 1 && (
                       <div className="flex items-center justify-center py-1">
-                        <div className="flex items-center gap-1.5 text-[10px] font-mono text-[#8A94A6]">
+                        <div className="flex items-center gap-1.5 text-[10px] font-mono text-[#7B8798]">
                           <ArrowDown className="w-3.5 h-3.5 text-[#176B87]" />
                           <span>{node.depTypeToNext || 'FS +0d'}</span>
                         </div>
@@ -1417,7 +1417,7 @@ export default function DelayDependencyImpactPage() {
             {/* WHY DELAYED (ROOT CAUSES) & EVIDENCE */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {/* Why Delayed */}
-              <div className="p-4 bg-[#FBEFEE] border border-[#E4B0AA] rounded-xl space-y-2">
+              <div className="p-4 bg-[#FBEFEE] border border-[#E4B0AA] rounded-lg space-y-2">
                 <h4 className="font-bold text-xs uppercase tracking-wider text-[#B5473C] flex items-center gap-1.5">
                   <AlertTriangle className="w-3.5 h-3.5" />
                   Why Delayed (Physical Root Causes)
@@ -1430,7 +1430,7 @@ export default function DelayDependencyImpactPage() {
               </div>
 
               {/* Evidence Attached */}
-              <div className="p-4 bg-white border border-[#D9DEE5] rounded-xl space-y-2">
+              <div className="p-4 bg-white border border-[#D9DEE5] rounded-lg space-y-2">
                 <h4 className="font-bold text-xs uppercase tracking-wider text-[#596579] flex items-center gap-1.5">
                   <Camera className="w-3.5 h-3.5 text-[#176B87]" />
                   Verified Site Evidence ({selectedDelay.evidenceItems.length})
@@ -1449,7 +1449,7 @@ export default function DelayDependencyImpactPage() {
                         )}
                         <span className="font-mono truncate">{ev.title}</span>
                       </div>
-                      <span className="text-[#8A94A6] text-[10px] shrink-0">{ev.timestamp}</span>
+                      <span className="text-[#7B8798] text-[10px] shrink-0">{ev.timestamp}</span>
                     </div>
                   ))}
                 </div>
@@ -1457,12 +1457,12 @@ export default function DelayDependencyImpactPage() {
             </div>
 
             {/* AFFECTED DOWNSTREAM ACTIVITIES CASCADE */}
-            <div className="p-4 bg-white border border-[#D9DEE5] rounded-xl space-y-3">
+            <div className="p-4 bg-white border border-[#D9DEE5] rounded-lg space-y-3">
               <div className="flex items-center justify-between">
                 <h4 className="font-bold text-xs uppercase tracking-wider text-[#172033]">
                   Affected Downstream Activities ({selectedDelay.affectedDownstream.length} in Delay Path)
                 </h4>
-                <span className="text-[11px] text-[#8A94A6]">Cascade Propagation</span>
+                <span className="text-[11px] text-[#7B8798]">Cascade Propagation</span>
               </div>
 
               <div className="border border-[#D9DEE5] rounded-lg overflow-hidden divide-y divide-[#D9DEE5]">
@@ -1496,7 +1496,7 @@ export default function DelayDependencyImpactPage() {
             {/* CURRENT MITIGATION & NEXT ACTION */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {/* Mitigation */}
-              <div className="p-4 bg-[#EDF5F8] border border-[#B3CBE0] rounded-xl space-y-2">
+              <div className="p-4 bg-[#EDF5F8] border border-[#B3CBE0] rounded-lg space-y-2">
                 <h4 className="font-bold text-xs uppercase tracking-wider text-[#176B87]">
                   Current Schedule Mitigation Plan
                 </h4>
@@ -1506,7 +1506,7 @@ export default function DelayDependencyImpactPage() {
               </div>
 
               {/* Next Action */}
-              <div className="p-4 bg-white border border-[#D9DEE5] rounded-xl space-y-2">
+              <div className="p-4 bg-white border border-[#D9DEE5] rounded-lg space-y-2">
                 <h4 className="font-bold text-xs uppercase tracking-wider text-[#172033]">
                   Assigned Next Action
                 </h4>

@@ -85,7 +85,7 @@ export default function ForgotPasswordPage() {
       {/* Centered Minimal Authentication Panel */}
       <div className="bg-white border border-[#D9DEE5] rounded-lg shadow-sm overflow-hidden">
         {/* Header with PLnEX branding */}
-        <div className="px-6 pt-7 pb-5 text-center border-b border-[#E8EBF0] bg-white">
+        <div className="px-6 pt-7 pb-5 text-center border-b border-[#D9DEE5] bg-white">
           <div className="inline-flex items-center justify-center w-10 h-10 rounded-md bg-[#176B87] text-white font-black text-lg tracking-tighter mb-3 shadow-xs">
             PX
           </div>
@@ -179,7 +179,7 @@ export default function ForgotPasswordPage() {
                 Work Email <span className="text-[#B5473C]">*</span>
               </label>
               <div className="relative">
-                <Mail className="w-4 h-4 text-[#8A94A6] absolute left-3 top-1/2 -translate-y-1/2" />
+                <Mail className="w-4 h-4 text-[#7B8798] absolute left-3 top-1/2 -translate-y-1/2" />
                 <input
                   id="recovery-email"
                   type="email"
@@ -192,7 +192,7 @@ export default function ForgotPasswordPage() {
                   disabled={pageState === 'submitting'}
                   placeholder="name@oilindia.in"
                   autoComplete="email"
-                  className={`w-full pl-9 pr-3 py-2 text-xs bg-[#F7F8FA] border rounded-md text-[#172033] placeholder-[#8A94A6] focus:bg-white outline-none transition-colors ${
+                  className={`w-full pl-9 pr-3 py-2 text-xs bg-[#F7F8FA] border rounded-md text-[#172033] placeholder-[#7B8798] focus:bg-white outline-none transition-colors ${
                     emailError
                       ? 'border-[#B5473C] focus:border-[#B5473C] bg-[#FBEFEE]/30'
                       : 'border-[#D9DEE5] focus:border-[#176B87]'
@@ -227,7 +227,7 @@ export default function ForgotPasswordPage() {
             </button>
 
             {/* Back to Sign In Link */}
-            <div className="pt-3 border-t border-[#E8EBF0] flex items-center justify-between text-xs text-[#596579]">
+            <div className="pt-3 border-t border-[#D9DEE5] flex items-center justify-between text-xs text-[#596579]">
               <Link
                 href="/login"
                 className="inline-flex items-center gap-1 font-medium text-[#176B87] hover:underline"
@@ -264,7 +264,7 @@ export default function ForgotPasswordPage() {
           <button
             type="button"
             onClick={() => handleQuickFill('valid')}
-            className="px-2 py-1 bg-[#F0F2F5] hover:bg-[#E8EBF0] text-[#172033] rounded text-[11px] font-mono transition-colors"
+            className="px-2 py-1 bg-[#F1F3F5] hover:bg-[#D9DEE5] text-[#172033] rounded text-[11px] font-mono transition-colors"
           >
             Valid Email
           </button>

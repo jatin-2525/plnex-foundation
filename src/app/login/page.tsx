@@ -167,7 +167,7 @@ function LoginForm() {
       {/* Centered Authentication Panel */}
       <div className="bg-white border border-[#D9DEE5] rounded-lg shadow-sm overflow-hidden">
         {/* Header with PLnEX branding */}
-        <div className="px-6 pt-7 pb-5 text-center border-b border-[#E8EBF0] bg-white">
+        <div className="px-6 pt-7 pb-5 text-center border-b border-[#D9DEE5] bg-white">
           <div className="inline-flex items-center justify-center w-10 h-10 rounded-md bg-[#176B87] text-white font-black text-lg tracking-tighter mb-3 shadow-xs">
             PX
           </div>
@@ -194,7 +194,7 @@ function LoginForm() {
                 Access granted. Loading role-specific workspace...
               </p>
             </div>
-            <div className="w-full bg-[#E8EBF0] h-1.5 rounded-full overflow-hidden">
+            <div className="w-full bg-[#D9DEE5] h-1.5 rounded-full overflow-hidden">
               <div className="h-full bg-[#2E7D5B] rounded-full w-full" />
             </div>
             <span className="inline-flex items-center gap-1.5 text-xs text-[#176B87] font-medium font-mono">
@@ -237,7 +237,7 @@ function LoginForm() {
                 Work Email <span className="text-[#B5473C]">*</span>
               </label>
               <div className="relative">
-                <Mail className="w-4 h-4 text-[#8A94A6] absolute left-3 top-1/2 -translate-y-1/2" />
+                <Mail className="w-4 h-4 text-[#7B8798] absolute left-3 top-1/2 -translate-y-1/2" />
                 <input
                   id="work-email"
                   type="email"
@@ -250,7 +250,7 @@ function LoginForm() {
                   disabled={loginState === 'submitting'}
                   placeholder="name@oilindia.in"
                   autoComplete="username"
-                  className={`w-full pl-9 pr-3 py-2 text-xs bg-[#F7F8FA] border rounded-md text-[#172033] placeholder-[#8A94A6] focus:bg-white outline-none transition-colors ${
+                  className={`w-full pl-9 pr-3 py-2 text-xs bg-[#F7F8FA] border rounded-md text-[#172033] placeholder-[#7B8798] focus:bg-white outline-none transition-colors ${
                     emailError
                       ? 'border-[#B5473C] focus:border-[#B5473C] bg-[#FBEFEE]/30'
                       : 'border-[#D9DEE5] focus:border-[#176B87]'
@@ -279,7 +279,7 @@ function LoginForm() {
                 </Link>
               </div>
               <div className="relative">
-                <Lock className="w-4 h-4 text-[#8A94A6] absolute left-3 top-1/2 -translate-y-1/2" />
+                <Lock className="w-4 h-4 text-[#7B8798] absolute left-3 top-1/2 -translate-y-1/2" />
                 <input
                   id="password"
                   type={showPassword ? 'text' : 'password'}
@@ -292,7 +292,7 @@ function LoginForm() {
                   disabled={loginState === 'submitting'}
                   placeholder="••••••••••••"
                   autoComplete="current-password"
-                  className={`w-full pl-9 pr-9 py-2 text-xs bg-[#F7F8FA] border rounded-md text-[#172033] placeholder-[#8A94A6] focus:bg-white outline-none transition-colors ${
+                  className={`w-full pl-9 pr-9 py-2 text-xs bg-[#F7F8FA] border rounded-md text-[#172033] placeholder-[#7B8798] focus:bg-white outline-none transition-colors ${
                     passwordError
                       ? 'border-[#B5473C] focus:border-[#B5473C] bg-[#FBEFEE]/30'
                       : 'border-[#D9DEE5] focus:border-[#176B87]'
@@ -301,7 +301,7 @@ function LoginForm() {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[#8A94A6] hover:text-[#172033] p-1 rounded transition-colors"
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[#7B8798] hover:text-[#172033] p-1 rounded transition-colors"
                   aria-label={showPassword ? 'Hide password' : 'Show password'}
                 >
                   {showPassword ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
@@ -349,7 +349,7 @@ function LoginForm() {
             </button>
 
             {/* Bottom Links */}
-            <div className="pt-3 border-t border-[#E8EBF0] flex items-center justify-between text-xs text-[#596579]">
+            <div className="pt-3 border-t border-[#D9DEE5] flex items-center justify-between text-xs text-[#596579]">
               <span>New project engineer?</span>
               <Link
                 href="/register"
@@ -387,14 +387,14 @@ function LoginForm() {
           <button
             type="button"
             onClick={() => handleQuickFill('engineer')}
-            className="px-2 py-1 bg-[#F0FDF4] hover:bg-[#DCFCE7] text-[#15803D] border border-[#BBF7D0] rounded text-[11px] font-mono font-medium transition-colors"
+            className="px-2 py-1 bg-[#EDF7F2] hover:bg-[#B8DCC9]/40 text-[#2E7D5B] border border-[#B8DCC9] rounded text-[11px] font-mono font-medium transition-colors"
           >
             Site Engineer → /engineer
           </button>
           <button
             type="button"
             onClick={() => handleQuickFill('admin')}
-            className="px-2 py-1 bg-[#FAF5FF] hover:bg-[#F3E8FF] text-[#7E22CE] border border-[#E9D5FF] rounded text-[11px] font-mono font-medium transition-colors"
+            className="px-2 py-1 bg-[#EDF5F8] hover:bg-[#B3CBE0]/40 text-[#3B6EA8] border border-[#B3CBE0] rounded text-[11px] font-mono font-medium transition-colors"
           >
             Admin → /admin
           </button>

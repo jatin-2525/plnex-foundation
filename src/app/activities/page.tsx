@@ -453,35 +453,35 @@ export default function MyActivitiesPage() {
     switch (status) {
       case 'not-started':
         return (
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-xs font-medium bg-[#F0F2F5] text-[#596579] border border-[#D9DEE5]">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#8A94A6]" />
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-xs font-medium bg-[#F1F3F5] text-[#596579] border border-[#D9DEE5]">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#7B8798]" />
             Not Started
           </span>
         );
       case 'in-progress':
         return (
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-xs font-medium bg-[#E8F1F5] text-[#176B87] border border-[#C5DCE6]">
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-xs font-medium bg-[#EDF5F8] text-[#176B87] border border-[#C5DCE6]">
             <span className="w-1.5 h-1.5 rounded-full bg-[#176B87]" />
             In Progress
           </span>
         );
       case 'completed':
         return (
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-xs font-medium bg-[#EBF5EF] text-[#2E7D5B] border border-[#B8DCC9]">
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-xs font-medium bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]">
             <span className="w-1.5 h-1.5 rounded-full bg-[#2E7D5B]" />
             Completed
           </span>
         );
       case 'blocked':
         return (
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-xs font-medium bg-[#FDF5E8] text-[#D98B32] border border-[#F0D4A6]">
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-xs font-medium bg-[#FDF6ED] text-[#D98B32] border border-[#F0D4A6]">
             <Lock className="w-3 h-3 text-[#D98B32]" />
             Blocked
           </span>
         );
       case 'delayed':
         return (
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-xs font-medium bg-[#FDF0EE] text-[#B5473C] border border-[#E4B0AA]">
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-xs font-medium bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
             <span className="w-1.5 h-1.5 rounded-full bg-[#B5473C]" />
             Delayed
           </span>
@@ -499,7 +499,7 @@ export default function MyActivitiesPage() {
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
             <div>
               <div className="flex items-center gap-2 mb-1.5">
-                <div className="w-8 h-8 rounded bg-[#E8F1F5] flex items-center justify-center text-[#176B87]">
+                <div className="w-8 h-8 rounded bg-[#EDF5F8] flex items-center justify-center text-[#176B87]">
                   <ListChecks className="w-4 h-4" />
                 </div>
                 <div>
@@ -528,24 +528,24 @@ export default function MyActivitiesPage() {
           </div>
 
           {/* Metrics Ribbon */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 mt-4 pt-4 border-t border-[#E8EBF0]">
-            <div className="p-2.5 bg-[#F7F8FA] border border-[#E8EBF0] rounded">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 mt-4 pt-4 border-t border-[#D9DEE5]">
+            <div className="p-2.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded">
               <span className="text-[11px] text-[#596579] font-medium block">Total Assigned</span>
               <span className="text-lg font-bold text-[#172033] font-mono">{metrics.total} packages</span>
             </div>
-            <div className="p-2.5 bg-[#F7F8FA] border border-[#E8EBF0] rounded">
+            <div className="p-2.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded">
               <span className="text-[11px] text-[#176B87] font-medium block">In Progress</span>
               <span className="text-lg font-bold text-[#176B87] font-mono">{metrics.inProgress} active</span>
             </div>
-            <div className="p-2.5 bg-[#F7F8FA] border border-[#E8EBF0] rounded">
+            <div className="p-2.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded">
               <span className="text-[11px] text-[#B5473C] font-medium block">Delayed / Blocked</span>
               <span className="text-lg font-bold text-[#B5473C] font-mono">{metrics.delayed + metrics.blocked} attention</span>
             </div>
-            <div className="p-2.5 bg-[#F7F8FA] border border-[#E8EBF0] rounded">
+            <div className="p-2.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded">
               <span className="text-[11px] text-[#2E7D5B] font-medium block">Completed</span>
               <span className="text-lg font-bold text-[#2E7D5B] font-mono">{metrics.completed} finished</span>
             </div>
-            <div className="p-2.5 bg-[#F7F8FA] border border-[#E8EBF0] rounded">
+            <div className="p-2.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded">
               <span className="text-[11px] text-[#596579] font-medium block">Avg Progress</span>
               <span className="text-lg font-bold text-[#172033] font-mono">{metrics.avgProgress}%</span>
             </div>
@@ -557,19 +557,19 @@ export default function MyActivitiesPage() {
           <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3">
             {/* Search Input */}
             <div className="relative flex-1 min-w-[240px]">
-              <Search className="w-4 h-4 text-[#8A94A6] absolute left-3 top-1/2 -translate-y-1/2" />
+              <Search className="w-4 h-4 text-[#7B8798] absolute left-3 top-1/2 -translate-y-1/2" />
               <input
                 type="text"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search assigned activity ID, title, or area..."
-                className="w-full pl-9 pr-8 py-2 text-xs bg-[#F7F8FA] border border-[#D9DEE5] focus:border-[#176B87] focus:bg-white rounded-md text-[#172033] placeholder-[#8A94A6] transition-colors outline-none"
+                className="w-full pl-9 pr-8 py-2 text-xs bg-[#F7F8FA] border border-[#D9DEE5] focus:border-[#176B87] focus:bg-white rounded-md text-[#172033] placeholder-[#7B8798] transition-colors outline-none"
               />
               {search && (
                 <button
                   type="button"
                   onClick={() => setSearch('')}
-                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[#8A94A6] hover:text-[#172033]"
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[#7B8798] hover:text-[#172033]"
                   aria-label="Clear search"
                 >
                   <X className="w-3.5 h-3.5" />
@@ -666,7 +666,7 @@ export default function MyActivitiesPage() {
                 <button
                   type="button"
                   onClick={clearAllFilters}
-                  className="px-2.5 py-1.5 text-xs text-[#B5473C] hover:bg-[#FDF0EE] border border-[#E4B0AA] rounded-md transition-colors inline-flex items-center gap-1"
+                  className="px-2.5 py-1.5 text-xs text-[#B5473C] hover:bg-[#FBEFEE] border border-[#E4B0AA] rounded-md transition-colors inline-flex items-center gap-1"
                 >
                   <X className="w-3.5 h-3.5" />
                   <span>Clear</span>
@@ -675,12 +675,12 @@ export default function MyActivitiesPage() {
             </div>
           </div>
 
-          <div className="flex items-center justify-between text-xs text-[#596579] pt-2 border-t border-[#F0F2F5]">
+          <div className="flex items-center justify-between text-xs text-[#596579] pt-2 border-t border-[#F1F3F5]">
             <span>
               Showing <strong className="text-[#172033] font-mono">{filteredActivities.length}</strong> of{' '}
               <span className="font-mono">{activities.length}</span> assigned activities
             </span>
-            <span className="text-[11px] text-[#8A94A6]">Click any row to open the Activity Detail Drawer</span>
+            <span className="text-[11px] text-[#7B8798]">Click any row to open the Activity Detail Drawer</span>
           </div>
         </div>
 
@@ -702,7 +702,7 @@ export default function MyActivitiesPage() {
                   <th className="py-3 px-3.5 whitespace-nowrap text-right">Action</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#E8EBF0]">
+              <tbody className="divide-y divide-[#D9DEE5]">
                 {filteredActivities.map((act) => {
                   const isSlipped = act.delayDays > 0;
                   const isBehindProgress = act.actualProgress < act.plannedProgress;
@@ -739,7 +739,7 @@ export default function MyActivitiesPage() {
 
                       {/* 4. Discipline */}
                       <td className="py-3 px-3.5 align-middle whitespace-nowrap">
-                        <span className="px-2 py-0.5 bg-[#F0F2F5] border border-[#D9DEE5] rounded text-[11px] text-[#172033] font-medium">
+                        <span className="px-2 py-0.5 bg-[#F1F3F5] border border-[#D9DEE5] rounded text-[11px] text-[#172033] font-medium">
                           {act.discipline}
                         </span>
                       </td>
@@ -777,7 +777,7 @@ export default function MyActivitiesPage() {
                           </div>
                         ) : isBehindProgress ? (
                           <div className="flex items-center gap-1.5">
-                            <span className="font-mono font-bold text-xs px-2 py-0.5 rounded bg-[#FEF7EE] text-[#9A5B13] border border-[#ECD1A4]">
+                            <span className="font-mono font-bold text-xs px-2 py-0.5 rounded bg-[#FDF6ED] text-[#D98B32] border border-[#F0D4A6]">
                               {act.actualProgress - act.plannedProgress}% lag
                             </span>
                             <WhyButton
@@ -788,7 +788,7 @@ export default function MyActivitiesPage() {
                             />
                           </div>
                         ) : (
-                          <span className="font-mono text-xs px-2 py-0.5 rounded bg-[#EBF5EF] text-[#2E7D5B] border border-[#B8DCC9]">
+                          <span className="font-mono text-xs px-2 py-0.5 rounded bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]">
                             On Track
                           </span>
                         )}
@@ -816,7 +816,7 @@ export default function MyActivitiesPage() {
                             <button
                               type="button"
                               onClick={(e) => handleOpenCapture(e, act)}
-                              className="px-2.5 py-1 text-xs font-semibold text-white bg-[#176B87] hover:bg-[#12546A] rounded transition-colors inline-flex items-center gap-1 shadow-2xs"
+                              className="px-2.5 py-1 text-xs font-semibold text-white bg-[#176B87] hover:bg-[#135A72] rounded transition-colors inline-flex items-center gap-1 shadow-2xs"
                               title="Capture field progress for this activity"
                             >
                               <Plus className="w-3.5 h-3.5" />
@@ -830,10 +830,10 @@ export default function MyActivitiesPage() {
                               e.stopPropagation();
                               handleOpenDrawer(act);
                             }}
-                            className="px-2 py-1 text-xs font-medium text-[#596579] hover:text-[#172033] hover:bg-[#F0F2F5] border border-[#D9DEE5] rounded transition-colors inline-flex items-center gap-1"
+                            className="px-2 py-1 text-xs font-medium text-[#596579] hover:text-[#172033] hover:bg-[#F1F3F5] border border-[#D9DEE5] rounded transition-colors inline-flex items-center gap-1"
                             title="Open Activity Detail Drawer"
                           >
-                            <Eye className="w-3.5 h-3.5 text-[#8A94A6]" />
+                            <Eye className="w-3.5 h-3.5 text-[#7B8798]" />
                             <span>Details</span>
                           </button>
                         </div>
@@ -862,7 +862,7 @@ export default function MyActivitiesPage() {
                   <span className="font-mono font-bold text-sm text-[#176B87]">
                     {act.id}
                   </span>
-                  <span className="px-1.5 py-0.2 rounded text-[10px] bg-[#F0F2F5] border border-[#D9DEE5] text-[#596579]">
+                  <span className="px-1.5 py-0.2 rounded text-[10px] bg-[#F1F3F5] border border-[#D9DEE5] text-[#596579]">
                     {act.discipline}
                   </span>
                 </div>
@@ -876,14 +876,14 @@ export default function MyActivitiesPage() {
                   {act.area} • WBS {act.wbs}
                 </p>
                 {act.blockedReason && (
-                  <p className="text-[11px] text-[#D98B32] mt-1 bg-[#FDF5E8] p-1.5 rounded border border-[#F0D4A6]">
+                  <p className="text-[11px] text-[#D98B32] mt-1 bg-[#FDF6ED] p-1.5 rounded border border-[#F0D4A6]">
                     {act.blockedReason}
                   </p>
                 )}
               </div>
 
               {/* Dates & Progress */}
-              <div className="p-2.5 bg-[#F7F8FA] rounded border border-[#E8EBF0] space-y-1.5 text-xs font-mono">
+              <div className="p-2.5 bg-[#F7F8FA] rounded border border-[#D9DEE5] space-y-1.5 text-xs font-mono">
                 <div className="flex justify-between text-[#596579] text-[11px]">
                   <span>Planned: {act.plannedStart} → {act.plannedFinish}</span>
                   <span>{act.lastUpdate}</span>
@@ -902,14 +902,14 @@ export default function MyActivitiesPage() {
               </div>
 
               {/* Bottom Card Actions: Primary Capture Update & Secondary View Activity */}
-              <div className="pt-2 border-t border-[#E8EBF0] flex items-center justify-between gap-2">
+              <div className="pt-2 border-t border-[#D9DEE5] flex items-center justify-between gap-2">
                 <button
                   type="button"
                   onClick={(e) => {
                     e.stopPropagation();
                     handleOpenDrawer(act);
                   }}
-                  className="min-h-[44px] px-3 py-2 text-xs font-medium text-[#596579] hover:bg-[#F0F2F5] active:bg-[#E8EBF0] border border-[#D9DEE5] rounded-lg flex-1 text-center transition-colors cursor-pointer"
+                  className="min-h-[44px] px-3 py-2 text-xs font-medium text-[#596579] hover:bg-[#F1F3F5] active:bg-[#D9DEE5] border border-[#D9DEE5] rounded-lg flex-1 text-center transition-colors cursor-pointer"
                 >
                   View Activity
                 </button>
@@ -917,7 +917,7 @@ export default function MyActivitiesPage() {
                 <button
                   type="button"
                   onClick={(e) => handleOpenCapture(e, act)}
-                  className="min-h-[44px] px-4 py-2 text-xs font-bold text-white bg-[#176B87] hover:bg-[#12546A] active:bg-[#12546A] rounded-lg flex-1 inline-flex items-center justify-center gap-1.5 shadow-xs transition-colors cursor-pointer"
+                  className="min-h-[44px] px-4 py-2 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] active:bg-[#135A72] rounded-lg flex-1 inline-flex items-center justify-center gap-1.5 shadow-xs transition-colors cursor-pointer"
                 >
                   <Plus className="w-3.5 h-3.5" />
                   <span>Capture Update</span>
@@ -949,7 +949,7 @@ export default function MyActivitiesPage() {
                   type="button"
                   onClick={handleQuickCaptureSubmit}
                   disabled={isSubmittingCapture || !captureStatement.trim()}
-                  className="px-4 py-1.5 text-xs font-semibold text-white bg-[#176B87] hover:bg-[#12546A] rounded inline-flex items-center gap-1.5 shadow-xs"
+                  className="px-4 py-1.5 text-xs font-semibold text-white bg-[#176B87] hover:bg-[#135A72] rounded inline-flex items-center gap-1.5 shadow-xs"
                 >
                   {isSubmittingCapture ? 'Submitting...' : 'Submit Progress Update'}
                 </button>
@@ -1003,7 +1003,7 @@ export default function MyActivitiesPage() {
                     type="text"
                     disabled
                     value={captureTargetActivity.unit}
-                    className="w-full px-2 py-1 bg-[#F0F2F5] border border-[#D9DEE5] rounded font-mono text-[#596579]"
+                    className="w-full px-2 py-1 bg-[#F1F3F5] border border-[#D9DEE5] rounded font-mono text-[#596579]"
                   />
                 </div>
               </div>

@@ -368,9 +368,9 @@ export default function DPRTimeAgentPage() {
 
         {/* OFFLINE MODE BANNER (Priority 2 Requirement 3) */}
         {isOffline && (
-          <div className="p-3.5 rounded-xl bg-[#FEF3C7] border border-[#FDE68A] flex items-center justify-between gap-3 text-xs text-[#92400E]">
+          <div className="p-3.5 rounded-lg bg-[#FDF6ED] border border-[#F0D4A6] flex items-center justify-between gap-3 text-xs text-[#D98B32]">
             <div className="flex items-center gap-2.5">
-              <span className="px-2 py-0.5 rounded bg-[#92400E] text-white font-mono font-bold text-[10px] uppercase">
+              <span className="px-2 py-0.5 rounded bg-[#D98B32] text-white font-mono font-bold text-[10px] uppercase">
                 OFFLINE MODE
               </span>
               <span className="font-semibold">
@@ -384,7 +384,7 @@ export default function DPRTimeAgentPage() {
         )}
 
         {/* PAGE HEADER */}
-        <div className="bg-white border border-[#D9DEE5] rounded-xl p-5 md:p-6 shadow-xs">
+        <div className="bg-white border border-[#D9DEE5] rounded-lg p-5 md:p-6 shadow-xs">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
               <div className="flex items-center gap-2 mb-1">
@@ -393,7 +393,7 @@ export default function DPRTimeAgentPage() {
                   Time Agent Protocol
                 </span>
                 {isOffline ? (
-                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-bold bg-[#FEF3C7] text-[#92400E] border border-[#FDE68A]">
+                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-bold bg-[#FDF6ED] text-[#D98B32] border border-[#F0D4A6]">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#D98B32]" />
                     Offline Mode
                   </span>
@@ -430,7 +430,7 @@ export default function DPRTimeAgentPage() {
                     description: 'DPR state cached to browser storage.',
                   });
                 }}
-                className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-[#172033] bg-white border border-[#D9DEE5] hover:bg-[#F0F2F5] rounded-lg transition-colors"
+                className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-[#172033] bg-white border border-[#D9DEE5] hover:bg-[#F1F3F5] rounded-lg transition-colors"
               >
                 <Save className="w-3.5 h-3.5 text-[#596579]" />
                 <span>Save Draft</span>
@@ -474,7 +474,7 @@ export default function DPRTimeAgentPage() {
                       >
                         {isPassed ? <Check className="w-3 h-3 stroke-[3]" /> : s.step}
                       </span>
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-[#8A94A6]">
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-[#7B8798]">
                         Step {s.step}
                       </span>
                     </div>
@@ -510,7 +510,7 @@ export default function DPRTimeAgentPage() {
                   type="button"
                   disabled={currentStep === 1}
                   onClick={() => setCurrentStep((prev) => Math.max(1, prev - 1) as DPRStep)}
-                  className="min-h-[44px] min-w-[44px] p-2 rounded-lg border border-[#D9DEE5] bg-white text-[#172033] hover:bg-[#F0F2F5] active:bg-[#E8EBF0] disabled:opacity-40 flex items-center justify-center transition-colors cursor-pointer"
+                  className="min-h-[44px] min-w-[44px] p-2 rounded-lg border border-[#D9DEE5] bg-white text-[#172033] hover:bg-[#F1F3F5] active:bg-[#D9DEE5] disabled:opacity-40 flex items-center justify-center transition-colors cursor-pointer"
                   aria-label="Previous step"
                 >
                   <ArrowLeft className="w-5 h-5" />
@@ -519,7 +519,7 @@ export default function DPRTimeAgentPage() {
                   type="button"
                   disabled={currentStep === 7}
                   onClick={() => setCurrentStep((prev) => Math.min(7, prev + 1) as DPRStep)}
-                  className="min-h-[44px] min-w-[44px] p-2 rounded-lg border border-[#D9DEE5] bg-white text-[#172033] hover:bg-[#F0F2F5] active:bg-[#E8EBF0] disabled:opacity-40 flex items-center justify-center transition-colors cursor-pointer"
+                  className="min-h-[44px] min-w-[44px] p-2 rounded-lg border border-[#D9DEE5] bg-white text-[#172033] hover:bg-[#F1F3F5] active:bg-[#D9DEE5] disabled:opacity-40 flex items-center justify-center transition-colors cursor-pointer"
                   aria-label="Next step"
                 >
                   <ArrowRight className="w-5 h-5" />
@@ -537,8 +537,8 @@ export default function DPRTimeAgentPage() {
             - pending entries */}
         <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
           {/* 1. Activities Planned */}
-          <div className="bg-white border border-[#D9DEE5] rounded-xl p-3.5 shadow-2xs">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-[#8A94A6] block">
+          <div className="bg-white border border-[#D9DEE5] rounded-lg p-3.5 shadow-2xs">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-[#7B8798] block">
               Activities Planned
             </span>
             <div className="flex items-baseline gap-1.5 mt-1">
@@ -553,8 +553,8 @@ export default function DPRTimeAgentPage() {
           </div>
 
           {/* 2. Activities Updated */}
-          <div className="bg-white border border-[#D9DEE5] rounded-xl p-3.5 shadow-2xs">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-[#8A94A6] block">
+          <div className="bg-white border border-[#D9DEE5] rounded-lg p-3.5 shadow-2xs">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-[#7B8798] block">
               Activities Updated
             </span>
             <div className="flex items-baseline gap-1.5 mt-1">
@@ -569,8 +569,8 @@ export default function DPRTimeAgentPage() {
           </div>
 
           {/* 3. Activities Completed */}
-          <div className="bg-white border border-[#D9DEE5] rounded-xl p-3.5 shadow-2xs">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-[#8A94A6] block">
+          <div className="bg-white border border-[#D9DEE5] rounded-lg p-3.5 shadow-2xs">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-[#7B8798] block">
               Activities Completed
             </span>
             <div className="flex items-baseline gap-1.5 mt-1">
@@ -585,8 +585,8 @@ export default function DPRTimeAgentPage() {
           </div>
 
           {/* 4. Blocked Activities */}
-          <div className="bg-white border border-[#D9DEE5] rounded-xl p-3.5 shadow-2xs">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-[#8A94A6] block">
+          <div className="bg-white border border-[#D9DEE5] rounded-lg p-3.5 shadow-2xs">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-[#7B8798] block">
               Blocked Activities
             </span>
             <div className="flex items-baseline gap-1.5 mt-1">
@@ -601,8 +601,8 @@ export default function DPRTimeAgentPage() {
           </div>
 
           {/* 5. Pending Entries */}
-          <div className="bg-white border border-[#D9DEE5] rounded-xl p-3.5 shadow-2xs col-span-2 sm:col-span-1">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-[#8A94A6] block">
+          <div className="bg-white border border-[#D9DEE5] rounded-lg p-3.5 shadow-2xs col-span-2 sm:col-span-1">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-[#7B8798] block">
               Pending Entries
             </span>
             <div className="flex items-baseline gap-1.5 mt-1">
@@ -621,7 +621,7 @@ export default function DPRTimeAgentPage() {
             STEP 1: PROJECT + DATE
             ========================================================================= */}
         {currentStep === 1 && (
-          <div className="bg-white border border-[#D9DEE5] rounded-xl p-6 space-y-6 shadow-xs animate-in fade-in duration-200">
+          <div className="bg-white border border-[#D9DEE5] rounded-lg p-6 space-y-6 shadow-xs animate-in fade-in duration-200">
             <div className="border-b border-[#D9DEE5]/60 pb-3 flex items-center justify-between">
               <div>
                 <h3 className="text-base font-bold text-[#172033]">
@@ -654,7 +654,7 @@ export default function DPRTimeAgentPage() {
                   <p className="font-medium text-[#596579]">
                     {activeProject?.name || 'Duliajan Gas Processing & Pipeline Interconnect'}
                   </p>
-                  <p className="text-[11px] text-[#8A94A6]">
+                  <p className="text-[11px] text-[#7B8798]">
                     Location: Duliajan Field, Dibrugarh, Assam · Client: Oil India Limited
                   </p>
                 </div>
@@ -700,7 +700,7 @@ export default function DPRTimeAgentPage() {
                   className="w-full p-2.5 bg-white border border-[#D9DEE5] rounded-lg text-xs font-medium text-[#172033] outline-hidden focus:border-[#176B87]"
                   placeholder="e.g. Clear, Heavy Rain, Stoppages..."
                 />
-                <p className="text-[11px] text-[#8A94A6]">
+                <p className="text-[11px] text-[#7B8798]">
                   Monsoon conditions logged: Work suspended for 1.5 hrs due to squall at 11:30.
                 </p>
               </div>
@@ -716,7 +716,7 @@ export default function DPRTimeAgentPage() {
                   onChange={(e) => setContractorName(e.target.value)}
                   className="w-full p-2.5 bg-white border border-[#D9DEE5] rounded-lg text-xs font-medium text-[#172033] outline-hidden focus:border-[#176B87]"
                 />
-                <p className="text-[11px] text-[#8A94A6]">
+                <p className="text-[11px] text-[#7B8798]">
                   Active Permit to Work: PTW-OIL-2026-894 (Hot Work) & PTW-OIL-2026-895 (Rigging)
                 </p>
               </div>
@@ -740,7 +740,7 @@ export default function DPRTimeAgentPage() {
             STEP 2: TODAY'S ACTIVITIES
             ========================================================================= */}
         {currentStep === 2 && (
-          <div className="bg-white border border-[#D9DEE5] rounded-xl p-6 space-y-6 shadow-xs animate-in fade-in duration-200">
+          <div className="bg-white border border-[#D9DEE5] rounded-lg p-6 space-y-6 shadow-xs animate-in fade-in duration-200">
             <div className="border-b border-[#D9DEE5]/60 pb-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
               <div>
                 <h3 className="text-base font-bold text-[#172033]">
@@ -827,7 +827,7 @@ export default function DPRTimeAgentPage() {
                         isSelected ? prev.filter((id) => id !== act.id) : [...prev, act.id]
                       );
                     }}
-                    className={`p-3.5 rounded-xl border transition-all cursor-pointer flex items-center justify-between gap-3 ${
+                    className={`p-3.5 rounded-lg border transition-all cursor-pointer flex items-center justify-between gap-3 ${
                       isSelected
                         ? 'border-[#176B87] bg-[#EDF5F8]/40 shadow-2xs'
                         : 'border-[#D9DEE5] bg-white hover:bg-[#F7F8FA]'
@@ -843,13 +843,13 @@ export default function DPRTimeAgentPage() {
                       <div className="min-w-0">
                         <div className="flex items-center gap-2 mb-0.5">
                           <span className="font-mono font-bold text-[#176B87]">{act.id}</span>
-                          <span className="text-[10px] font-mono text-[#8A94A6]">WBS {act.wbs}</span>
+                          <span className="text-[10px] font-mono text-[#7B8798]">WBS {act.wbs}</span>
                           {act.isCritical && (
                             <span className="text-[10px] font-bold px-1.5 py-0.2 rounded bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
                               Critical Path
                             </span>
                           )}
-                          <span className="text-[10px] font-semibold text-[#596579] bg-[#F0F2F5] px-2 py-0.2 rounded">
+                          <span className="text-[10px] font-semibold text-[#596579] bg-[#F1F3F5] px-2 py-0.2 rounded">
                             {act.discipline}
                           </span>
                         </div>
@@ -912,7 +912,7 @@ export default function DPRTimeAgentPage() {
             - evidence
             ========================================================================= */}
         {currentStep === 3 && (
-          <div className="bg-white border border-[#D9DEE5] rounded-xl p-6 space-y-6 shadow-xs animate-in fade-in duration-200">
+          <div className="bg-white border border-[#D9DEE5] rounded-lg p-6 space-y-6 shadow-xs animate-in fade-in duration-200">
             <div className="border-b border-[#D9DEE5]/60 pb-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
               <div>
                 <h3 className="text-base font-bold text-[#172033]">
@@ -968,11 +968,11 @@ export default function DPRTimeAgentPage() {
               {fieldUpdates.map((update, idx) => (
                 <div
                   key={update.id}
-                  className="p-4 rounded-xl border border-[#D9DEE5] bg-[#FAFAFA] hover:bg-white transition-all space-y-3"
+                  className="p-4 rounded-lg border border-[#D9DEE5] bg-[#FAFAFA] hover:bg-white transition-all space-y-3"
                 >
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#D9DEE5]/60 pb-2.5">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <span className="font-mono text-[11px] font-bold text-[#596579] bg-[#F0F2F5] px-2 py-0.5 rounded">
+                      <span className="font-mono text-[11px] font-bold text-[#596579] bg-[#F1F3F5] px-2 py-0.5 rounded">
                         #{idx + 1} · {update.id}
                       </span>
                       <span className="font-mono font-bold text-[#176B87] text-xs">
@@ -1004,7 +1004,7 @@ export default function DPRTimeAgentPage() {
                               description: `Removed ${update.id}`,
                             });
                           }}
-                          className="text-[#8A94A6] hover:text-[#B5473C] p-1"
+                          className="text-[#7B8798] hover:text-[#B5473C] p-1"
                           title="Remove this update"
                         >
                           <Trash2 className="w-3.5 h-3.5" />
@@ -1017,7 +1017,7 @@ export default function DPRTimeAgentPage() {
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                     {/* Quantity + Unit */}
                     <div>
-                      <label className="text-[10px] uppercase font-bold text-[#8A94A6] block mb-1">
+                      <label className="text-[10px] uppercase font-bold text-[#7B8798] block mb-1">
                         Quantity & Unit
                       </label>
                       <div className="flex gap-2">
@@ -1041,7 +1041,7 @@ export default function DPRTimeAgentPage() {
 
                     {/* Time Window */}
                     <div>
-                      <label className="text-[10px] uppercase font-bold text-[#8A94A6] block mb-1">
+                      <label className="text-[10px] uppercase font-bold text-[#7B8798] block mb-1">
                         Shift Time Window
                       </label>
                       <input
@@ -1055,7 +1055,7 @@ export default function DPRTimeAgentPage() {
 
                     {/* Location / Area */}
                     <div>
-                      <label className="text-[10px] uppercase font-bold text-[#8A94A6] block mb-1">
+                      <label className="text-[10px] uppercase font-bold text-[#7B8798] block mb-1">
                         Location / Area / Line
                       </label>
                       <input
@@ -1069,7 +1069,7 @@ export default function DPRTimeAgentPage() {
 
                   {/* Remarks */}
                   <div>
-                    <label className="text-[10px] uppercase font-bold text-[#8A94A6] block mb-1">
+                    <label className="text-[10px] uppercase font-bold text-[#7B8798] block mb-1">
                       Engineer Site Observations & Remarks
                     </label>
                     <input
@@ -1083,7 +1083,7 @@ export default function DPRTimeAgentPage() {
                   {/* Evidence Pills */}
                   <div className="pt-1 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                     <div className="flex items-center gap-1.5 flex-wrap">
-                      <span className="text-[10px] uppercase font-bold text-[#8A94A6]">Evidence:</span>
+                      <span className="text-[10px] uppercase font-bold text-[#7B8798]">Evidence:</span>
                       {update.evidence.map((ev) => (
                         <span
                           key={ev.id}
@@ -1151,7 +1151,7 @@ export default function DPRTimeAgentPage() {
             STEP 4: EXTRACT EXECUTION INFORMATION (Time Agent)
             ========================================================================= */}
         {currentStep === 4 && (
-          <div className="bg-white border border-[#D9DEE5] rounded-xl p-6 space-y-6 shadow-xs animate-in fade-in duration-200">
+          <div className="bg-white border border-[#D9DEE5] rounded-lg p-6 space-y-6 shadow-xs animate-in fade-in duration-200">
             <div className="border-b border-[#D9DEE5]/60 pb-3 flex items-center justify-between">
               <div>
                 <h3 className="text-base font-bold text-[#172033]">
@@ -1167,7 +1167,7 @@ export default function DPRTimeAgentPage() {
             </div>
 
             {/* Extraction Console */}
-            <div className="bg-[#EDF5F8]/40 border border-[#B3CBE0] rounded-xl p-5 space-y-4">
+            <div className="bg-[#EDF5F8]/40 border border-[#B3CBE0] rounded-lg p-5 space-y-4">
               <div className="flex items-center justify-between flex-wrap gap-2">
                 <div className="flex items-center gap-2">
                   <div className="w-8 h-8 rounded-lg bg-[#176B87] text-white flex items-center justify-center font-bold">
@@ -1258,7 +1258,7 @@ export default function DPRTimeAgentPage() {
             STEP 5: REVIEW EXTRACTED DATA
             ========================================================================= */}
         {currentStep === 5 && (
-          <div className="bg-white border border-[#D9DEE5] rounded-xl p-6 space-y-6 shadow-xs animate-in fade-in duration-200">
+          <div className="bg-white border border-[#D9DEE5] rounded-lg p-6 space-y-6 shadow-xs animate-in fade-in duration-200">
             <div className="border-b border-[#D9DEE5]/60 pb-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
               <div>
                 <h3 className="text-base font-bold text-[#172033]">
@@ -1274,7 +1274,7 @@ export default function DPRTimeAgentPage() {
             </div>
 
             {/* Extracted Data Table */}
-            <div className="border border-[#D9DEE5] rounded-xl overflow-x-auto">
+            <div className="border border-[#D9DEE5] rounded-lg overflow-x-auto">
               <table className="w-full min-w-[700px] text-left text-xs border-collapse">
                 <thead>
                   <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[11px] font-bold uppercase tracking-wider text-[#596579]">
@@ -1361,7 +1361,7 @@ export default function DPRTimeAgentPage() {
             Rule: "Before final submission: show a clear review summary."
             ========================================================================= */}
         {currentStep === 6 && (
-          <div className="bg-white border border-[#D9DEE5] rounded-xl p-6 space-y-6 shadow-xs animate-in fade-in duration-200">
+          <div className="bg-white border border-[#D9DEE5] rounded-lg p-6 space-y-6 shadow-xs animate-in fade-in duration-200">
             <div className="border-b border-[#D9DEE5]/60 pb-3 flex items-center justify-between">
               <div>
                 <h3 className="text-base font-bold text-[#172033]">
@@ -1380,7 +1380,7 @@ export default function DPRTimeAgentPage() {
             {/* 4 Verification Rules Checklist */}
             <div className="space-y-3 text-xs">
               {/* Rule 1 */}
-              <div className="p-3.5 bg-[#EDF7F2] border border-[#B8DCC9] rounded-xl flex items-start gap-3">
+              <div className="p-3.5 bg-[#EDF7F2] border border-[#B8DCC9] rounded-lg flex items-start gap-3">
                 <CheckCircle2 className="w-5 h-5 text-[#2E7D5B] shrink-0 mt-0.5" />
                 <div className="space-y-0.5">
                   <h4 className="font-bold text-[#172033]">
@@ -1393,7 +1393,7 @@ export default function DPRTimeAgentPage() {
               </div>
 
               {/* Rule 2 */}
-              <div className="p-3.5 bg-[#EDF7F2] border border-[#B8DCC9] rounded-xl flex items-start gap-3">
+              <div className="p-3.5 bg-[#EDF7F2] border border-[#B8DCC9] rounded-lg flex items-start gap-3">
                 <CheckCircle2 className="w-5 h-5 text-[#2E7D5B] shrink-0 mt-0.5" />
                 <div className="space-y-0.5">
                   <h4 className="font-bold text-[#172033]">
@@ -1406,7 +1406,7 @@ export default function DPRTimeAgentPage() {
               </div>
 
               {/* Rule 3 */}
-              <div className="p-3.5 bg-[#EDF7F2] border border-[#B8DCC9] rounded-xl flex items-start gap-3">
+              <div className="p-3.5 bg-[#EDF7F2] border border-[#B8DCC9] rounded-lg flex items-start gap-3">
                 <CheckCircle2 className="w-5 h-5 text-[#2E7D5B] shrink-0 mt-0.5" />
                 <div className="space-y-0.5">
                   <h4 className="font-bold text-[#172033]">
@@ -1419,7 +1419,7 @@ export default function DPRTimeAgentPage() {
               </div>
 
               {/* Rule 4: Weather / Impediment Conflict */}
-              <div className="p-3.5 bg-[#FBEFEE] border border-[#E4B0AA] rounded-xl flex items-start gap-3">
+              <div className="p-3.5 bg-[#FBEFEE] border border-[#E4B0AA] rounded-lg flex items-start gap-3">
                 <AlertCircle className="w-5 h-5 text-[#B5473C] shrink-0 mt-0.5" />
                 <div className="space-y-1">
                   <h4 className="font-bold text-[#B5473C]">
@@ -1447,7 +1447,7 @@ export default function DPRTimeAgentPage() {
             </div>
 
             {/* Engineer Formal Digital Signature Sign-Off */}
-            <div className="p-4 bg-[#F7F8FA] border border-[#D9DEE5] rounded-xl space-y-3 text-xs">
+            <div className="p-4 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg space-y-3 text-xs">
               <label className="flex items-start gap-2.5 cursor-pointer">
                 <input
                   type="checkbox"
@@ -1500,7 +1500,7 @@ export default function DPRTimeAgentPage() {
             - Failed
             ========================================================================= */}
         {currentStep === 7 && (
-          <div className="bg-white border border-[#D9DEE5] rounded-xl p-6 space-y-6 shadow-xs animate-in fade-in duration-200">
+          <div className="bg-white border border-[#D9DEE5] rounded-lg p-6 space-y-6 shadow-xs animate-in fade-in duration-200">
             {/* Review Summary before final submission */}
             <div className="border-b border-[#D9DEE5]/60 pb-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
               <div>
@@ -1518,14 +1518,14 @@ export default function DPRTimeAgentPage() {
                   submissionState === 'Submitted'
                     ? 'bg-[#EDF7F2] text-[#2E7D5B] border-[#B8DCC9]'
                     : submissionState === 'Saved locally'
-                    ? 'bg-[#FEF3C7] text-[#92400E] border-[#FDE68A]'
+                    ? 'bg-[#FDF6ED] text-[#D98B32] border-[#F0D4A6]'
                     : submissionState === 'Processing'
                     ? 'bg-[#EDF5F8] text-[#176B87] border-[#B3CBE0]'
                     : submissionState === 'Needs Confirmation'
                     ? 'bg-[#FDF6ED] text-[#D98B32] border-[#F0D4A6]'
                     : submissionState === 'Failed'
                     ? 'bg-[#FBEFEE] text-[#B5473C] border-[#E4B0AA]'
-                    : 'bg-[#F0F2F5] text-[#172033] border-[#D9DEE5]'
+                    : 'bg-[#F1F3F5] text-[#172033] border-[#D9DEE5]'
                 }`}
               >
                 <span className="w-2 h-2 rounded-full bg-current" />
@@ -1534,7 +1534,7 @@ export default function DPRTimeAgentPage() {
             </div>
 
             {/* CLEAR REVIEW SUMMARY CARD (Before final submission) */}
-            <div className="bg-[#F7F8FA] border border-[#D9DEE5] rounded-xl p-5 space-y-4 text-xs">
+            <div className="bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg p-5 space-y-4 text-xs">
               <div className="flex items-center justify-between">
                 <span className="font-bold text-sm text-[#172033]">
                   DPR Pre-Submission Audit Dossier
@@ -1546,19 +1546,19 @@ export default function DPRTimeAgentPage() {
 
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-1 border-t border-[#D9DEE5]/60 text-[11px]">
                 <div>
-                  <span className="text-[#8A94A6] uppercase font-bold text-[9px] block">Project</span>
+                  <span className="text-[#7B8798] uppercase font-bold text-[9px] block">Project</span>
                   <span className="font-bold text-[#172033]">{activeProject?.code || 'OIL-DUL-01'}</span>
                 </div>
                 <div>
-                  <span className="text-[#8A94A6] uppercase font-bold text-[9px] block">Reporting Date</span>
+                  <span className="text-[#7B8798] uppercase font-bold text-[9px] block">Reporting Date</span>
                   <span className="font-bold text-[#172033]">{reportingDate} ({reportingShift})</span>
                 </div>
                 <div>
-                  <span className="text-[#8A94A6] uppercase font-bold text-[9px] block">Site Engineer</span>
+                  <span className="text-[#7B8798] uppercase font-bold text-[9px] block">Site Engineer</span>
                   <span className="font-bold text-[#172033]">{siteEngineer}</span>
                 </div>
                 <div>
-                  <span className="text-[#8A94A6] uppercase font-bold text-[9px] block">Contractor</span>
+                  <span className="text-[#7B8798] uppercase font-bold text-[9px] block">Contractor</span>
                   <span className="font-bold text-[#172033] truncate block">{contractorName}</span>
                 </div>
               </div>
@@ -1566,30 +1566,30 @@ export default function DPRTimeAgentPage() {
               {/* Summary Metrics Snapshot */}
               <div className="p-3 bg-white border border-[#D9DEE5] rounded-lg grid grid-cols-5 gap-2 text-center text-[11px]">
                 <div>
-                  <span className="text-[#8A94A6] block">Planned</span>
+                  <span className="text-[#7B8798] block">Planned</span>
                   <span className="font-mono font-bold text-[#172033]">{summaryMetrics.activitiesPlanned}</span>
                 </div>
                 <div>
-                  <span className="text-[#8A94A6] block">Updated</span>
+                  <span className="text-[#7B8798] block">Updated</span>
                   <span className="font-mono font-bold text-[#176B87]">{summaryMetrics.activitiesUpdated}</span>
                 </div>
                 <div>
-                  <span className="text-[#8A94A6] block">Completed</span>
+                  <span className="text-[#7B8798] block">Completed</span>
                   <span className="font-mono font-bold text-[#2E7D5B]">{summaryMetrics.activitiesCompleted}</span>
                 </div>
                 <div>
-                  <span className="text-[#8A94A6] block">Blocked</span>
+                  <span className="text-[#7B8798] block">Blocked</span>
                   <span className="font-mono font-bold text-[#B5473C]">{summaryMetrics.blockedActivities}</span>
                 </div>
                 <div>
-                  <span className="text-[#8A94A6] block">Pending</span>
+                  <span className="text-[#7B8798] block">Pending</span>
                   <span className="font-mono font-bold text-[#D98B32]">{summaryMetrics.pendingEntries}</span>
                 </div>
               </div>
 
               {/* Linked updates breakdown */}
               <div className="space-y-1.5 pt-1">
-                <span className="text-[10px] uppercase font-bold text-[#8A94A6] block">
+                <span className="text-[10px] uppercase font-bold text-[#7B8798] block">
                   Verified Field Submissions (4 Updates)
                 </span>
                 <div className="space-y-1">
@@ -1604,7 +1604,7 @@ export default function DPRTimeAgentPage() {
                         <span className="text-[#596579]">· {u.quantity} {u.unit}</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <span className="text-[#8A94A6]">{u.evidence.length} proofs</span>
+                        <span className="text-[#7B8798]">{u.evidence.length} proofs</span>
                         <span
                           className={`font-bold ${
                             u.verificationState === 'Confirmed' ? 'text-[#2E7D5B]' : 'text-[#B5473C]'
@@ -1631,13 +1631,13 @@ export default function DPRTimeAgentPage() {
             </div>
 
             {/* SUBMISSION STATE CONTROLLER (Allows testing all 6 submission states) */}
-            <div className="p-4 border border-[#D9DEE5] rounded-xl space-y-3 bg-[#FAFAFA]">
+            <div className="p-4 border border-[#D9DEE5] rounded-lg space-y-3 bg-[#FAFAFA]">
               <div className="flex items-center justify-between">
                 <span className="text-[11px] uppercase font-bold text-[#596579] flex items-center gap-1.5">
                   <Activity className="w-3.5 h-3.5 text-[#176B87]" />
                   Simulate / Switch Submission State:
                 </span>
-                <span className="text-[11px] text-[#8A94A6]">Interactive State Testing</span>
+                <span className="text-[11px] text-[#7B8798]">Interactive State Testing</span>
               </div>
               <div className="flex flex-wrap gap-2">
                 {(
@@ -1675,7 +1675,7 @@ export default function DPRTimeAgentPage() {
 
             {/* SUBMISSION STATE RESULTS */}
             {submissionState === 'Submitted' && (
-              <div className="p-5 bg-[#EDF7F2] border-2 border-[#B8DCC9] rounded-xl text-center space-y-3">
+              <div className="p-5 bg-[#EDF7F2] border-2 border-[#B8DCC9] rounded-lg text-center space-y-3">
                 <div className="w-12 h-12 rounded-full bg-white border border-[#B8DCC9] text-[#2E7D5B] flex items-center justify-center mx-auto">
                   <CheckCircle2 className="w-6 h-6" />
                 </div>
@@ -1697,7 +1697,7 @@ export default function DPRTimeAgentPage() {
                         description: `Saved ${submittedDprCode}.pdf`,
                       });
                     }}
-                    className="px-4 py-2 text-xs font-bold text-[#172033] bg-white border border-[#D9DEE5] hover:bg-[#F0F2F5] rounded-lg inline-flex items-center gap-1.5 shadow-2xs"
+                    className="px-4 py-2 text-xs font-bold text-[#172033] bg-white border border-[#D9DEE5] hover:bg-[#F1F3F5] rounded-lg inline-flex items-center gap-1.5 shadow-2xs"
                   >
                     <Download className="w-3.5 h-3.5" />
                     <span>Download DPR PDF</span>
@@ -1723,7 +1723,7 @@ export default function DPRTimeAgentPage() {
 
             {/* SUBMISSION STATE RESULT: Saved Locally (Offline Mode) */}
             {submissionState === 'Saved locally' && (
-              <div className="p-5 bg-[#EDF7F2] border-2 border-[#B8DCC9] rounded-xl text-center space-y-3">
+              <div className="p-5 bg-[#EDF7F2] border-2 border-[#B8DCC9] rounded-lg text-center space-y-3">
                 <div className="w-12 h-12 rounded-full bg-white border border-[#B8DCC9] text-[#2E7D5B] flex items-center justify-center mx-auto">
                   <CheckCircle2 className="w-6 h-6" />
                 </div>
@@ -1758,7 +1758,7 @@ export default function DPRTimeAgentPage() {
             )}
 
             {submissionState === 'Needs Confirmation' && (
-              <div className="p-4 bg-[#FDF6ED] border-2 border-[#F0D4A6] rounded-xl space-y-2 text-xs">
+              <div className="p-4 bg-[#FDF6ED] border-2 border-[#F0D4A6] rounded-lg space-y-2 text-xs">
                 <div className="flex items-start gap-2.5">
                   <AlertTriangle className="w-5 h-5 text-[#D98B32] shrink-0 mt-0.5" />
                   <div>
@@ -1791,7 +1791,7 @@ export default function DPRTimeAgentPage() {
             )}
 
             {submissionState === 'Failed' && (
-              <div className="p-4 bg-[#FBEFEE] border-2 border-[#E4B0AA] rounded-xl space-y-2 text-xs">
+              <div className="p-4 bg-[#FBEFEE] border-2 border-[#E4B0AA] rounded-lg space-y-2 text-xs">
                 <div className="flex items-start gap-2.5">
                   <AlertCircle className="w-5 h-5 text-[#B5473C] shrink-0 mt-0.5" />
                   <div>
@@ -1859,25 +1859,25 @@ export default function DPRTimeAgentPage() {
           {selectedUpdateForDrawer && (
             <div className="space-y-4 text-xs text-[#172033]">
               <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg space-y-1">
-                <span className="text-[10px] uppercase font-bold text-[#8A94A6] block">Location</span>
+                <span className="text-[10px] uppercase font-bold text-[#7B8798] block">Location</span>
                 <span className="font-semibold">{selectedUpdateForDrawer.locationArea}</span>
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg">
-                  <span className="text-[10px] uppercase font-bold text-[#8A94A6] block">Output Qty</span>
+                  <span className="text-[10px] uppercase font-bold text-[#7B8798] block">Output Qty</span>
                   <span className="font-mono font-bold text-sm">
                     {selectedUpdateForDrawer.quantity} {selectedUpdateForDrawer.unit}
                   </span>
                 </div>
                 <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg">
-                  <span className="text-[10px] uppercase font-bold text-[#8A94A6] block">Shift Window</span>
+                  <span className="text-[10px] uppercase font-bold text-[#7B8798] block">Shift Window</span>
                   <span className="font-semibold">{selectedUpdateForDrawer.time}</span>
                 </div>
               </div>
 
               <div>
-                <span className="text-[10px] uppercase font-bold text-[#8A94A6] block mb-1">
+                <span className="text-[10px] uppercase font-bold text-[#7B8798] block mb-1">
                   Observations & Remarks
                 </span>
                 <p className="p-3 bg-white border border-[#D9DEE5] rounded-lg font-medium leading-relaxed">
@@ -1886,7 +1886,7 @@ export default function DPRTimeAgentPage() {
               </div>
 
               <div>
-                <span className="text-[10px] uppercase font-bold text-[#8A94A6] block mb-1">
+                <span className="text-[10px] uppercase font-bold text-[#7B8798] block mb-1">
                   Verification Status & Heuristics
                 </span>
                 <div className="p-3 bg-white border border-[#D9DEE5] rounded-lg space-y-1">
@@ -1901,7 +1901,7 @@ export default function DPRTimeAgentPage() {
               </div>
 
               <div>
-                <span className="text-[10px] uppercase font-bold text-[#8A94A6] block mb-1">
+                <span className="text-[10px] uppercase font-bold text-[#7B8798] block mb-1">
                   Attached Physical Evidence ({selectedUpdateForDrawer.evidence.length})
                 </span>
                 <div className="space-y-1.5">
@@ -1918,7 +1918,7 @@ export default function DPRTimeAgentPage() {
                         )}
                         <span className="font-mono font-medium">{ev.name}</span>
                       </div>
-                      <span className="text-[#8A94A6]">{ev.timestamp}</span>
+                      <span className="text-[#7B8798]">{ev.timestamp}</span>
                     </div>
                   ))}
                 </div>

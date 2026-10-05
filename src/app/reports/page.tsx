@@ -190,7 +190,7 @@ export default function ReportsAndMemoryPage() {
         {/* =========================================================================
             HEADER: REPORTS & PROJECT MEMORY
             ========================================================================= */}
-        <div className="bg-white border border-[#D9DEE5] rounded-xl p-5 shadow-xs space-y-4">
+        <div className="bg-white border border-[#D9DEE5] rounded-lg p-5 shadow-xs space-y-4">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
             <div>
               <div className="flex items-center gap-2 mb-1.5 flex-wrap">
@@ -225,7 +225,7 @@ export default function ReportsAndMemoryPage() {
               PRIMARY TABS: REPORTS vs PROJECT MEMORY (Clearly Separated)
               ========================================================================= */}
           <div className="flex items-center justify-between pt-3 border-t border-[#D9DEE5]/60 flex-wrap gap-3">
-            <div className="flex items-center bg-[#F0F2F5] p-1 rounded-xl border border-[#D9DEE5]">
+            <div className="flex items-center bg-[#F1F3F5] p-1 rounded-lg border border-[#D9DEE5]">
               <button
                 type="button"
                 onClick={() => setActiveTab('reports')}
@@ -241,7 +241,7 @@ export default function ReportsAndMemoryPage() {
                   className={`px-2 py-0.2 rounded-full text-[10px] font-mono ${
                     activeTab === 'reports'
                       ? 'bg-[#EDF5F8] text-[#176B87]'
-                      : 'bg-[#E8EBF0] text-[#596579]'
+                      : 'bg-[#D9DEE5] text-[#596579]'
                   }`}
                 >
                   6 Available
@@ -263,7 +263,7 @@ export default function ReportsAndMemoryPage() {
                   className={`px-2 py-0.2 rounded-full text-[10px] font-mono ${
                     activeTab === 'memory'
                       ? 'bg-[#EDF5F8] text-[#176B87]'
-                      : 'bg-[#E8EBF0] text-[#596579]'
+                      : 'bg-[#D9DEE5] text-[#596579]'
                   }`}
                 >
                   {HISTORICAL_MEMORY_RECORDS.length} Verified Records
@@ -298,7 +298,7 @@ export default function ReportsAndMemoryPage() {
                     key={tmpl.id}
                     type="button"
                     onClick={() => setSelectedReportId(tmpl.id)}
-                    className={`p-5 rounded-xl border text-left transition-all relative flex flex-col justify-between space-y-3 ${
+                    className={`p-5 rounded-lg border text-left transition-all relative flex flex-col justify-between space-y-3 ${
                       isSelected
                         ? 'border-[#176B87] bg-white shadow-xs ring-2 ring-[#176B87]'
                         : 'border-[#D9DEE5] bg-white hover:border-[#176B87]/50 hover:bg-[#FAFAFA]'
@@ -309,7 +309,7 @@ export default function ReportsAndMemoryPage() {
                         <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0]">
                           {tmpl.badge}
                         </span>
-                        <div className="flex items-center gap-1 text-[10px] font-mono text-[#8A94A6]">
+                        <div className="flex items-center gap-1 text-[10px] font-mono text-[#7B8798]">
                           {tmpl.formatsSupported.join(' · ')}
                         </div>
                       </div>
@@ -322,8 +322,8 @@ export default function ReportsAndMemoryPage() {
                       </p>
                     </div>
 
-                    <div className="pt-3 border-t border-[#E8EBF0] flex items-center justify-between text-xs">
-                      <span className="text-[#8A94A6] font-mono text-[11px]">
+                    <div className="pt-3 border-t border-[#D9DEE5] flex items-center justify-between text-xs">
+                      <span className="text-[#7B8798] font-mono text-[11px]">
                         {tmpl.defaultTimeframe}
                       </span>
                       <span
@@ -340,7 +340,7 @@ export default function ReportsAndMemoryPage() {
             </div>
 
             {/* REPORT BUILDER CONFIGURATION PANEL */}
-            <div className="bg-white border border-[#D9DEE5] rounded-xl p-5 shadow-xs space-y-4">
+            <div className="bg-white border border-[#D9DEE5] rounded-lg p-5 shadow-xs space-y-4">
               <div className="flex items-center justify-between pb-3 border-b border-[#D9DEE5]/60 flex-wrap gap-2">
                 <div className="flex items-center gap-2">
                   <SlidersHorizontal className="w-4 h-4 text-[#176B87]" />
@@ -412,7 +412,7 @@ export default function ReportsAndMemoryPage() {
               </div>
 
               {/* Toggles */}
-              <div className="flex items-center gap-6 flex-wrap pt-2 border-t border-[#E8EBF0] text-xs">
+              <div className="flex items-center gap-6 flex-wrap pt-2 border-t border-[#D9DEE5] text-xs">
                 <label className="flex items-center gap-2 cursor-pointer text-[#172033]">
                   <input
                     type="checkbox"
@@ -454,7 +454,7 @@ export default function ReportsAndMemoryPage() {
                   <button
                     type="button"
                     onClick={() => setPreviewReportOpen(true)}
-                    className="px-4 py-2 bg-white hover:bg-[#F0F2F5] text-[#172033] border border-[#D9DEE5] text-xs font-bold rounded-lg shadow-xs transition-colors flex items-center gap-1.5"
+                    className="px-4 py-2 bg-white hover:bg-[#F1F3F5] text-[#172033] border border-[#D9DEE5] text-xs font-bold rounded-lg shadow-xs transition-colors flex items-center gap-1.5"
                   >
                     <Eye className="w-3.5 h-3.5 text-[#176B87]" />
                     <span>Preview Report</span>
@@ -474,21 +474,21 @@ export default function ReportsAndMemoryPage() {
                     <button
                       type="button"
                       onClick={() => handleExportReport('PDF')}
-                      className="px-3 py-2 text-xs font-bold hover:bg-[#F0F2F5] text-[#172033] transition-colors"
+                      className="px-3 py-2 text-xs font-bold hover:bg-[#F1F3F5] text-[#172033] transition-colors"
                     >
                       Export PDF
                     </button>
                     <button
                       type="button"
                       onClick={() => handleExportReport('XLSX')}
-                      className="px-3 py-2 text-xs font-bold hover:bg-[#F0F2F5] text-[#2E7D5B] border-l border-[#D9DEE5] transition-colors"
+                      className="px-3 py-2 text-xs font-bold hover:bg-[#F1F3F5] text-[#2E7D5B] border-l border-[#D9DEE5] transition-colors"
                     >
                       XLSX
                     </button>
                     <button
                       type="button"
                       onClick={() => handleExportReport('CSV')}
-                      className="px-3 py-2 text-xs font-bold hover:bg-[#F0F2F5] text-[#596579] border-l border-[#D9DEE5] transition-colors"
+                      className="px-3 py-2 text-xs font-bold hover:bg-[#F1F3F5] text-[#596579] border-l border-[#D9DEE5] transition-colors"
                     >
                       CSV
                     </button>
@@ -524,7 +524,7 @@ export default function ReportsAndMemoryPage() {
         {activeTab === 'memory' && (
           <div className="space-y-6">
             {/* EMPIRICAL REPOSITORY BANNER */}
-            <div className="p-4 rounded-xl bg-[#EDF5F8] border border-[#B3CBE0] flex items-start gap-3.5 text-xs">
+            <div className="p-4 rounded-lg bg-[#EDF5F8] border border-[#B3CBE0] flex items-start gap-3.5 text-xs">
               <BookOpen className="w-5 h-5 text-[#176B87] shrink-0 mt-0.5" />
               <div className="space-y-1">
                 <h3 className="font-bold text-[#172033] uppercase tracking-wider text-[11px]">
@@ -537,7 +537,7 @@ export default function ReportsAndMemoryPage() {
             </div>
 
             {/* SEARCH & FILTERS BAR */}
-            <div className="bg-white border border-[#D9DEE5] rounded-xl p-5 shadow-xs space-y-4">
+            <div className="bg-white border border-[#D9DEE5] rounded-lg p-5 shadow-xs space-y-4">
               <div className="flex items-center justify-between flex-wrap gap-2">
                 <div className="flex items-center gap-2">
                   <Filter className="w-4 h-4 text-[#176B87]" />
@@ -557,7 +557,7 @@ export default function ReportsAndMemoryPage() {
 
               {/* Free Text Search */}
               <div className="relative">
-                <Search className="w-4 h-4 text-[#8A94A6] absolute left-3 top-2.5" />
+                <Search className="w-4 h-4 text-[#7B8798] absolute left-3 top-2.5" />
                 <input
                   type="text"
                   value={memorySearch}
@@ -571,7 +571,7 @@ export default function ReportsAndMemoryPage() {
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 text-xs pt-1">
                 {/* 1. Category Facet (The 6 required categories) */}
                 <div>
-                  <label className="block text-[10px] font-bold uppercase text-[#8A94A6] mb-1">
+                  <label className="block text-[10px] font-bold uppercase text-[#7B8798] mb-1">
                     Memory Facet
                   </label>
                   <select
@@ -591,7 +591,7 @@ export default function ReportsAndMemoryPage() {
 
                 {/* 2. Project Filter */}
                 <div>
-                  <label className="block text-[10px] font-bold uppercase text-[#8A94A6] mb-1">
+                  <label className="block text-[10px] font-bold uppercase text-[#7B8798] mb-1">
                     Project
                   </label>
                   <select
@@ -608,7 +608,7 @@ export default function ReportsAndMemoryPage() {
 
                 {/* 3. Discipline Filter */}
                 <div>
-                  <label className="block text-[10px] font-bold uppercase text-[#8A94A6] mb-1">
+                  <label className="block text-[10px] font-bold uppercase text-[#7B8798] mb-1">
                     Discipline
                   </label>
                   <select
@@ -625,7 +625,7 @@ export default function ReportsAndMemoryPage() {
 
                 {/* 4. Year Filter */}
                 <div>
-                  <label className="block text-[10px] font-bold uppercase text-[#8A94A6] mb-1">
+                  <label className="block text-[10px] font-bold uppercase text-[#7B8798] mb-1">
                     Year / Era
                   </label>
                   <select
@@ -658,7 +658,7 @@ export default function ReportsAndMemoryPage() {
                 <div
                   key={rec.id}
                   onClick={() => setSelectedMemoryRecord(rec)}
-                  className="bg-white border border-[#D9DEE5] hover:border-[#176B87] rounded-xl p-5 shadow-xs transition-all cursor-pointer flex flex-col justify-between space-y-4 group"
+                  className="bg-white border border-[#D9DEE5] hover:border-[#176B87] rounded-lg p-5 shadow-xs transition-all cursor-pointer flex flex-col justify-between space-y-4 group"
                 >
                   <div className="space-y-3">
                     <div className="flex items-center justify-between">
@@ -666,7 +666,7 @@ export default function ReportsAndMemoryPage() {
                         <span className="font-mono text-xs font-bold text-[#176B87] bg-[#EDF5F8] px-2 py-0.5 rounded border border-[#B3CBE0]">
                           {rec.id}
                         </span>
-                        <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-[#F0F2F5] text-[#596579]">
+                        <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-[#F1F3F5] text-[#596579]">
                           {rec.category}
                         </span>
                       </div>
@@ -687,18 +687,18 @@ export default function ReportsAndMemoryPage() {
                     {/* DURATION & PRODUCTIVITY METRICS */}
                     <div className="grid grid-cols-2 gap-2 text-xs bg-[#F7F8FA] p-3 rounded-lg border border-[#D9DEE5]/80">
                       <div>
-                        <span className="text-[10px] uppercase font-bold text-[#8A94A6] block">
+                        <span className="text-[10px] uppercase font-bold text-[#7B8798] block">
                           Actual Duration
                         </span>
                         <span className="font-mono text-xs font-bold text-[#172033]">
                           {rec.actualDurationDays} days{' '}
-                          <span className="text-[10px] font-normal text-[#8A94A6]">
+                          <span className="text-[10px] font-normal text-[#7B8798]">
                             (Plan: {rec.plannedDurationDays}d)
                           </span>
                         </span>
                       </div>
                       <div>
-                        <span className="text-[10px] uppercase font-bold text-[#8A94A6] block">
+                        <span className="text-[10px] uppercase font-bold text-[#7B8798] block">
                           Productivity Rate
                         </span>
                         <span className="font-mono text-xs font-bold text-[#176B87]">
@@ -709,8 +709,8 @@ export default function ReportsAndMemoryPage() {
 
                     {/* PAST DECISION IF APPLICABLE */}
                     {rec.pastDecision && (
-                      <div className="p-3 bg-[#FEF7EE] border border-[#ECD1A4] rounded-lg space-y-1 text-xs">
-                        <span className="text-[10px] font-bold uppercase text-[#9A5B13] block">
+                      <div className="p-3 bg-[#FDF6ED] border border-[#F0D4A6] rounded-lg space-y-1 text-xs">
+                        <span className="text-[10px] font-bold uppercase text-[#D98B32] block">
                           Past Decision Record
                         </span>
                         <p className="text-[#172033] font-medium">{rec.pastDecision.summary}</p>
@@ -813,21 +813,21 @@ export default function ReportsAndMemoryPage() {
               </div>
             </div>
 
-            <div className="p-4 bg-[#F7F8FA] border border-[#D9DEE5] rounded-xl flex items-center justify-between">
+            <div className="p-4 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg flex items-center justify-between">
               <div>
-                <span className="text-[10px] text-[#8A94A6] uppercase font-bold block">Physical Verified Progress</span>
+                <span className="text-[10px] text-[#7B8798] uppercase font-bold block">Physical Verified Progress</span>
                 <span className="text-xl font-bold font-mono text-[#176B87]">73.0%</span>
               </div>
               <div>
-                <span className="text-[10px] text-[#8A94A6] uppercase font-bold block">Baseline Target</span>
+                <span className="text-[10px] text-[#7B8798] uppercase font-bold block">Baseline Target</span>
                 <span className="text-xl font-bold font-mono text-[#172033]">80.0%</span>
               </div>
               <div>
-                <span className="text-[10px] text-[#8A94A6] uppercase font-bold block">CPM Critical Variance</span>
+                <span className="text-[10px] text-[#7B8798] uppercase font-bold block">CPM Critical Variance</span>
                 <span className="text-xl font-bold font-mono text-[#B5473C]">-7.0% (-2d)</span>
               </div>
               <div>
-                <span className="text-[10px] text-[#8A94A6] uppercase font-bold block">Evidence Dossier</span>
+                <span className="text-[10px] text-[#7B8798] uppercase font-bold block">Evidence Dossier</span>
                 <span className="text-xl font-bold font-mono text-[#2E7D5B]">100% Traceable</span>
               </div>
             </div>
@@ -866,8 +866,8 @@ export default function ReportsAndMemoryPage() {
               </div>
 
               {/* Source link card */}
-              <div className="p-3.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-xl space-y-1.5">
-                <span className="text-[10px] font-bold uppercase text-[#8A94A6] block">
+              <div className="p-3.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg space-y-1.5">
+                <span className="text-[10px] font-bold uppercase text-[#7B8798] block">
                   Verified Source Record
                 </span>
                 <div className="font-bold text-xs text-[#172033]">
@@ -882,7 +882,7 @@ export default function ReportsAndMemoryPage() {
               </div>
 
               {/* Evidence link card */}
-              <div className="p-3.5 bg-[#EDF7F2] border border-[#B8DCC9] rounded-xl flex items-center justify-between">
+              <div className="p-3.5 bg-[#EDF7F2] border border-[#B8DCC9] rounded-lg flex items-center justify-between">
                 <div>
                   <span className="text-[10px] font-bold uppercase text-[#2E7D5B] block">
                     Linked Evidence Proof
@@ -905,7 +905,7 @@ export default function ReportsAndMemoryPage() {
               </div>
 
               {/* Verification sign-off */}
-              <div className="p-3 bg-white border border-[#D9DEE5] rounded-xl text-[11px] text-[#596579] space-y-1">
+              <div className="p-3 bg-white border border-[#D9DEE5] rounded-lg text-[11px] text-[#596579] space-y-1">
                 <div>Verified By: <strong className="text-[#172033]">{selectedMemoryRecord.verifiedBy}</strong></div>
                 <div>Timestamp: <span className="font-mono">{selectedMemoryRecord.verifiedAt}</span></div>
                 <div>Confidence Score: <strong className="font-mono text-[#176B87]">{selectedMemoryRecord.confidenceScore}%</strong></div>

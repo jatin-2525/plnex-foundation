@@ -252,7 +252,7 @@ export default function MatchingPage() {
       accessorKey: 'id',
       width: '110px',
       cell: ({ row }) => (
-        <span className="font-mono text-xs font-bold text-[#596579] bg-[#F0F2F5] px-2 py-0.5 rounded">
+        <span className="font-mono text-xs font-bold text-[#596579] bg-[#F1F3F5] px-2 py-0.5 rounded">
           {row.id}
         </span>
       ),
@@ -301,7 +301,7 @@ export default function MatchingPage() {
       cell: ({ row }) => (
         <div>
           <ConfidenceBadge score={row.confidence} size="sm" />
-          <span className="text-[10px] text-[#8A94A6] block mt-0.5">Assistive Score</span>
+          <span className="text-[10px] text-[#7B8798] block mt-0.5">Assistive Score</span>
         </div>
       ),
     },
@@ -326,7 +326,7 @@ export default function MatchingPage() {
               <span className="w-1.5 h-1.5 rounded-full bg-current" />
               <span>{isApproved ? 'Verified' : isRejected ? 'Rejected' : 'Pending'}</span>
             </span>
-            <span className="text-[10px] text-[#8A94A6] block mt-0.5">
+            <span className="text-[10px] text-[#7B8798] block mt-0.5">
               {isApproved ? 'Committed to Twin' : 'Awaiting Review'}
             </span>
           </div>
@@ -342,7 +342,7 @@ export default function MatchingPage() {
         <div className="flex items-center justify-end gap-1.5" onClick={(e) => e.stopPropagation()}>
           <button
             onClick={() => setActiveReviewEvent(row)}
-            className="px-2.5 py-1 bg-[#F0F2F5] hover:bg-[#E8EBF0] text-[#172033] rounded text-xs font-semibold transition-colors"
+            className="px-2.5 py-1 bg-[#F1F3F5] hover:bg-[#D9DEE5] text-[#172033] rounded text-xs font-semibold transition-colors"
           >
             Review Match
           </button>

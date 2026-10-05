@@ -1195,13 +1195,13 @@ export default function SchedulePage() {
   const getVersionBadgeClass = (status: VersionState) => {
     switch (status) {
       case 'current':
-        return 'bg-[#EBF5EF] text-[#2E7D5B] border-[#B8DCC9]';
+        return 'bg-[#EDF7F2] text-[#2E7D5B] border-[#B8DCC9]';
       case 'previous':
-        return 'bg-[#F0F2F5] text-[#596579] border-[#D9DEE5]';
+        return 'bg-[#F1F3F5] text-[#596579] border-[#D9DEE5]';
       case 'processing':
         return 'bg-[#EDF5F8] text-[#176B87] border-[#C5DCE6]';
       case 'failed':
-        return 'bg-[#FDF0EE] text-[#B5473C] border-[#E4B0AA]';
+        return 'bg-[#FBEFEE] text-[#B5473C] border-[#E4B0AA]';
     }
   };
 
@@ -1218,9 +1218,9 @@ export default function SchedulePage() {
       case 'L5':
         return 'bg-[#172033]/10 text-[#172033] border-[#172033]/20';
       case 'L6':
-        return 'bg-[#F0F2F5] text-[#596579] border-[#D9DEE5]';
+        return 'bg-[#F1F3F5] text-[#596579] border-[#D9DEE5]';
       default:
-        return 'bg-[#F0F2F5] text-[#596579] border-[#D9DEE5]';
+        return 'bg-[#F1F3F5] text-[#596579] border-[#D9DEE5]';
     }
   };
 
@@ -1232,7 +1232,7 @@ export default function SchedulePage() {
         {/* =========================================================================
             HEADER: SCHEDULE MANAGEMENT & VERSION METADATA
             ========================================================================= */}
-        <div className="bg-white border border-[#D9DEE5] rounded-xl p-5 shadow-xs space-y-4">
+        <div className="bg-white border border-[#D9DEE5] rounded-lg p-5 shadow-xs space-y-4">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
             <div>
               <div className="flex items-center gap-2 mb-1.5 flex-wrap">
@@ -1264,7 +1264,7 @@ export default function SchedulePage() {
               <button
                 type="button"
                 onClick={handleStartImport}
-                className="px-3.5 py-2 text-xs font-semibold text-white bg-[#176B87] hover:bg-[#12546A] rounded-lg transition-colors inline-flex items-center gap-1.5 shadow-sm"
+                className="px-3.5 py-2 text-xs font-semibold text-white bg-[#176B87] hover:bg-[#135A72] rounded-lg transition-colors inline-flex items-center gap-1.5 shadow-sm"
               >
                 <Upload className="w-3.5 h-3.5" />
                 <span>Import Schedule</span>
@@ -1278,7 +1278,7 @@ export default function SchedulePage() {
                   className={`px-2.5 py-2 text-xs rounded-lg border transition-colors ${
                     isSimulatedEmpty
                       ? 'bg-[#B5473C] text-white border-[#B5473C]'
-                      : 'bg-white text-[#596579] border-[#D9DEE5] hover:bg-[#F0F2F5]'
+                      : 'bg-white text-[#596579] border-[#D9DEE5] hover:bg-[#F1F3F5]'
                   }`}
                   title="Toggle demonstration of empty schedule state (Admin only)"
                 >
@@ -1294,9 +1294,9 @@ export default function SchedulePage() {
               - Metadata: Source: Primavera P6 XML, Status: Current
               - Rule: Never silently overwrite previous versions.
               ========================================================================= */}
-          <div className="p-4 bg-[#F7F8FA] border border-[#D9DEE5] rounded-xl flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="p-4 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div className="flex items-start md:items-center gap-3.5">
-              <div className="w-10 h-10 rounded-xl bg-white border border-[#D9DEE5] flex items-center justify-center text-[#176B87] shadow-xs shrink-0">
+              <div className="w-10 h-10 rounded-lg bg-white border border-[#D9DEE5] flex items-center justify-center text-[#176B87] shadow-xs shrink-0">
                 <Layers className="w-5 h-5" />
               </div>
 
@@ -1308,7 +1308,7 @@ export default function SchedulePage() {
                   <span className="font-mono font-bold text-base text-[#172033]">
                     V3 · Rev 3.2
                   </span>
-                  <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider bg-[#EBF5EF] text-[#2E7D5B] border border-[#B8DCC9]">
+                  <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]">
                     Status: Current
                   </span>
                 </div>
@@ -1385,7 +1385,7 @@ export default function SchedulePage() {
             SPECIAL DISPLAY: Failed Version Validation Error Report
             ========================================================================= */}
         {activeVersion.status === 'failed' && activeVersion.errors && (
-          <div className="bg-[#FDF0EE] border border-[#E4B0AA] rounded-xl p-5 space-y-3">
+          <div className="bg-[#FBEFEE] border border-[#E4B0AA] rounded-lg p-5 space-y-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <ShieldAlert className="w-5 h-5 text-[#B5473C]" />
@@ -1438,7 +1438,7 @@ export default function SchedulePage() {
             HIERARCHY BANNER & EXPANDABLE TREE CONTROLS
             L1 Project ↓ L2 Area ↓ L3 Discipline ↓ L4 Work Package ↓ L5 Activity ↓ L6 Sub-Activity
             ========================================================================= */}
-        <div className="bg-white border border-[#D9DEE5] rounded-xl p-4 shadow-xs space-y-3">
+        <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 shadow-xs space-y-3">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#D9DEE5]/60">
             <div className="flex items-center gap-2">
               <FolderTree className="w-4 h-4 text-[#176B87]" />
@@ -1461,7 +1461,7 @@ export default function SchedulePage() {
               <button
                 type="button"
                 onClick={handleCollapseAll}
-                className="px-2.5 py-1 text-xs font-medium text-[#596579] bg-[#F0F2F5] hover:bg-[#E5E9EE] rounded-md transition-colors inline-flex items-center gap-1"
+                className="px-2.5 py-1 text-xs font-medium text-[#596579] bg-[#F1F3F5] hover:bg-[#E5E9EE] rounded-md transition-colors inline-flex items-center gap-1"
               >
                 <Minimize2 className="w-3 h-3" />
                 <span>Collapse All</span>
@@ -1470,14 +1470,14 @@ export default function SchedulePage() {
               <button
                 type="button"
                 onClick={() => handleExpandToLevel('L3')}
-                className="px-2 py-1 text-[11px] font-mono text-[#596579] hover:text-[#172033] hover:bg-[#F0F2F5] rounded"
+                className="px-2 py-1 text-[11px] font-mono text-[#596579] hover:text-[#172033] hover:bg-[#F1F3F5] rounded"
               >
                 To L3 (Discipline)
               </button>
               <button
                 type="button"
                 onClick={() => handleExpandToLevel('L5')}
-                className="px-2 py-1 text-[11px] font-mono text-[#596579] hover:text-[#172033] hover:bg-[#F0F2F5] rounded"
+                className="px-2 py-1 text-[11px] font-mono text-[#596579] hover:text-[#172033] hover:bg-[#F1F3F5] rounded"
               >
                 To L5 (Activity)
               </button>
@@ -1516,7 +1516,7 @@ export default function SchedulePage() {
               <span className="text-[10px] text-[#596579] mt-0.5">Discrete Task Schedule</span>
             </div>
 
-            <div className="p-2.5 rounded-lg bg-[#F0F2F5] border border-[#D9DEE5] flex flex-col justify-between">
+            <div className="p-2.5 rounded-lg bg-[#F1F3F5] border border-[#D9DEE5] flex flex-col justify-between">
               <span className="font-mono text-[10px] font-bold text-[#596579] uppercase">L6 · Tier 6</span>
               <div className="font-bold text-[#172033] mt-1 text-xs">Sub-Activity</div>
               <span className="text-[10px] text-[#596579] mt-0.5">Field Shift Step</span>
@@ -1527,23 +1527,23 @@ export default function SchedulePage() {
         {/* =========================================================================
             SEARCH & FILTER BAR
             ========================================================================= */}
-        <div className="bg-white border border-[#D9DEE5] rounded-xl p-3.5 space-y-3 shadow-xs">
+        <div className="bg-white border border-[#D9DEE5] rounded-lg p-3.5 space-y-3 shadow-xs">
           <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3">
             {/* Search: Activity ID / Activity Name / WBS */}
             <div className="relative flex-1 min-w-[260px]">
-              <Search className="w-4 h-4 text-[#8A94A6] absolute left-3 top-1/2 -translate-y-1/2" />
+              <Search className="w-4 h-4 text-[#7B8798] absolute left-3 top-1/2 -translate-y-1/2" />
               <input
                 type="text"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search by Activity ID, Activity Name, or WBS..."
-                className="w-full pl-9 pr-8 py-2 text-xs bg-[#F7F8FA] border border-[#D9DEE5] focus:border-[#176B87] focus:bg-white rounded-lg text-[#172033] placeholder-[#8A94A6] transition-colors outline-none"
+                className="w-full pl-9 pr-8 py-2 text-xs bg-[#F7F8FA] border border-[#D9DEE5] focus:border-[#176B87] focus:bg-white rounded-lg text-[#172033] placeholder-[#7B8798] transition-colors outline-none"
               />
               {search && (
                 <button
                   type="button"
                   onClick={() => setSearch('')}
-                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[#8A94A6] hover:text-[#172033]"
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[#7B8798] hover:text-[#172033]"
                   aria-label="Clear search"
                 >
                   <X className="w-3.5 h-3.5" />
@@ -1627,7 +1627,7 @@ export default function SchedulePage() {
                 <button
                   type="button"
                   onClick={clearAllFilters}
-                  className="px-2.5 py-1.5 text-xs text-[#B5473C] hover:bg-[#FDF0EE] border border-[#E4B0AA] rounded-lg transition-colors inline-flex items-center gap-1"
+                  className="px-2.5 py-1.5 text-xs text-[#B5473C] hover:bg-[#FBEFEE] border border-[#E4B0AA] rounded-lg transition-colors inline-flex items-center gap-1"
                 >
                   <X className="w-3.5 h-3.5" />
                   <span>Clear</span>
@@ -1637,14 +1637,14 @@ export default function SchedulePage() {
           </div>
 
           {/* Results count & View Mode Toggle */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between text-xs text-[#596579] pt-2 border-t border-[#F0F2F5] gap-2">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between text-xs text-[#596579] pt-2 border-t border-[#F1F3F5] gap-2">
             <div className="flex items-center gap-2">
               <span>
                 Showing <strong className="text-[#172033] font-mono">{visibleTreeActivities.length}</strong> of{' '}
                 <span className="font-mono">{activities.length}</span> activities in WBS tree
               </span>
               {hasActiveFilters && (
-                <span className="text-[11px] px-2 py-0.5 rounded bg-[#E8F1F5] text-[#176B87] font-medium">
+                <span className="text-[11px] px-2 py-0.5 rounded bg-[#EDF5F8] text-[#176B87] font-medium">
                   Filtered
                 </span>
               )}
@@ -1652,8 +1652,8 @@ export default function SchedulePage() {
 
             {/* View Mode Toggle: Operational vs Detailed */}
             <div className="flex items-center gap-2">
-              <span className="text-[11px] text-[#8A94A6]">Table View:</span>
-              <div className="inline-flex items-center p-0.5 bg-[#F0F2F5] rounded-lg border border-[#D9DEE5]">
+              <span className="text-[11px] text-[#7B8798]">Table View:</span>
+              <div className="inline-flex items-center p-0.5 bg-[#F1F3F5] rounded-lg border border-[#D9DEE5]">
                 <button
                   type="button"
                   onClick={() => setViewMode('operational')}
@@ -1685,8 +1685,8 @@ export default function SchedulePage() {
             EMPTY STATES
             ========================================================================= */}
         {isSimulatedEmpty || (activities.length === 0 && activeVersion.status !== 'failed') ? (
-          <div className="bg-white border border-[#D9DEE5] rounded-xl p-12 text-center shadow-xs">
-            <div className="w-12 h-12 rounded-full bg-[#E8F1F5] text-[#176B87] flex items-center justify-center mx-auto mb-4">
+          <div className="bg-white border border-[#D9DEE5] rounded-lg p-12 text-center shadow-xs">
+            <div className="w-12 h-12 rounded-full bg-[#EDF5F8] text-[#176B87] flex items-center justify-center mx-auto mb-4">
               <Calendar className="w-6 h-6" />
             </div>
             <h3 className="text-sm font-bold text-[#172033] mb-1">No schedule has been imported.</h3>
@@ -1696,15 +1696,15 @@ export default function SchedulePage() {
             <button
               type="button"
               onClick={handleStartImport}
-              className="px-4 py-2 text-xs font-semibold text-white bg-[#176B87] hover:bg-[#12546A] rounded-lg transition-colors inline-flex items-center gap-2"
+              className="px-4 py-2 text-xs font-semibold text-white bg-[#176B87] hover:bg-[#135A72] rounded-lg transition-colors inline-flex items-center gap-2"
             >
               <Upload className="w-4 h-4" />
               <span>Import Schedule</span>
             </button>
           </div>
         ) : visibleTreeActivities.length === 0 && activeVersion.status !== 'failed' ? (
-          <div className="bg-white border border-[#D9DEE5] rounded-xl p-10 text-center shadow-xs">
-            <div className="w-10 h-10 rounded-full bg-[#F0F2F5] text-[#596579] flex items-center justify-center mx-auto mb-3">
+          <div className="bg-white border border-[#D9DEE5] rounded-lg p-10 text-center shadow-xs">
+            <div className="w-10 h-10 rounded-full bg-[#F1F3F5] text-[#596579] flex items-center justify-center mx-auto mb-3">
               <Search className="w-5 h-5" />
             </div>
             <h3 className="text-sm font-bold text-[#172033] mb-1">No activities match current filters</h3>
@@ -1714,7 +1714,7 @@ export default function SchedulePage() {
             <button
               type="button"
               onClick={clearAllFilters}
-              className="px-3.5 py-1.5 text-xs font-medium text-[#176B87] bg-[#E8F1F5] hover:bg-[#D9EAF0] rounded-lg transition-colors"
+              className="px-3.5 py-1.5 text-xs font-medium text-[#176B87] bg-[#EDF5F8] hover:bg-[#D9EAF0] rounded-lg transition-colors"
             >
               Clear All Filters
             </button>
@@ -1725,7 +1725,7 @@ export default function SchedulePage() {
               Default Table:
               Activity ID | Activity | Area | Discipline | Start | Finish | Progress | Status | Variance | Action
               ========================================================================= */
-          <div className="bg-white border border-[#D9DEE5] rounded-xl overflow-hidden shadow-xs">
+          <div className="bg-white border border-[#D9DEE5] rounded-lg overflow-hidden shadow-xs">
             <div className="overflow-x-auto">
               {viewMode === 'operational' ? (
                 /* -----------------------------------------------------------------
@@ -1747,7 +1747,7 @@ export default function SchedulePage() {
                       <th className="py-3 px-3.5 whitespace-nowrap text-right">Action</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-[#E8EBF0]">
+                  <tbody className="divide-y divide-[#D9DEE5]">
                     {visibleTreeActivities.map((item) => {
                       const row = item.activity;
                       const isExpanded = expandedNodeIds.has(row.id);
@@ -1784,7 +1784,7 @@ export default function SchedulePage() {
                                     e.stopPropagation();
                                     toggleNode(row.id);
                                   }}
-                                  className="w-5 h-5 flex items-center justify-center rounded hover:bg-[#E8F1F5] text-[#176B87] transition-colors -ml-1 shrink-0"
+                                  className="w-5 h-5 flex items-center justify-center rounded hover:bg-[#EDF5F8] text-[#176B87] transition-colors -ml-1 shrink-0"
                                   title={isExpanded ? 'Collapse node' : 'Expand node'}
                                   aria-label={`Toggle ${row.id}`}
                                 >
@@ -1795,7 +1795,7 @@ export default function SchedulePage() {
                                   )}
                                 </button>
                               ) : (
-                                <span className="w-5 h-5 flex items-center justify-center text-[#8A94A6] shrink-0 text-[10px]">
+                                <span className="w-5 h-5 flex items-center justify-center text-[#7B8798] shrink-0 text-[10px]">
                                   •
                                 </span>
                               )}
@@ -1831,7 +1831,7 @@ export default function SchedulePage() {
 
                           {/* 4. Discipline */}
                           <td className="py-3 px-3.5 align-middle whitespace-nowrap">
-                            <span className="px-2 py-0.5 bg-[#F0F2F5] border border-[#D9DEE5] rounded text-[11px] text-[#172033] font-medium">
+                            <span className="px-2 py-0.5 bg-[#F1F3F5] border border-[#D9DEE5] rounded text-[11px] text-[#172033] font-medium">
                               {row.discipline}
                             </span>
                           </td>
@@ -1899,7 +1899,7 @@ export default function SchedulePage() {
                                 setActiveActivity(row);
                                 openActivityDrawer(row.id);
                               }}
-                              className="px-2.5 py-1 text-xs font-medium text-[#176B87] hover:bg-[#E8F1F5] border border-[#C5D9E2] rounded-md transition-colors inline-flex items-center gap-1"
+                              className="px-2.5 py-1 text-xs font-medium text-[#176B87] hover:bg-[#EDF5F8] border border-[#C5D9E2] rounded-md transition-colors inline-flex items-center gap-1"
                               title="Open Activity Detail Drawer for WBS, Actual Dates, Dependencies, Evidence, and Audit History"
                             >
                               <SlidersHorizontal className="w-3 h-3" />
@@ -1934,7 +1934,7 @@ export default function SchedulePage() {
                       <th className="py-3 px-3 whitespace-nowrap min-w-[160px]">Dependencies</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-[#E8EBF0]">
+                  <tbody className="divide-y divide-[#D9DEE5]">
                     {visibleTreeActivities.map((item) => {
                       const row = item.activity;
                       const isExpanded = expandedNodeIds.has(row.id);
@@ -1975,7 +1975,7 @@ export default function SchedulePage() {
                                   )}
                                 </button>
                               ) : (
-                                <span className="w-4 h-4 text-center text-[#8A94A6] text-[10px]">•</span>
+                                <span className="w-4 h-4 text-center text-[#7B8798] text-[10px]">•</span>
                               )}
                               <span className="font-semibold text-[#172033] group-hover:text-[#176B87] transition-colors">
                                 {row.name}
@@ -2011,7 +2011,7 @@ export default function SchedulePage() {
 
                           {/* 6. Discipline */}
                           <td className="py-3 px-3 align-middle whitespace-nowrap">
-                            <span className="px-2 py-0.5 bg-[#F0F2F5] border border-[#D9DEE5] rounded text-[11px] text-[#172033] font-medium">
+                            <span className="px-2 py-0.5 bg-[#F1F3F5] border border-[#D9DEE5] rounded text-[11px] text-[#172033] font-medium">
                               {row.discipline}
                             </span>
                           </td>
@@ -2031,7 +2031,7 @@ export default function SchedulePage() {
                             {row.actualStart ? (
                               <span className="text-[#172033]">{row.actualStart}</span>
                             ) : (
-                              <span className="text-[#8A94A6] italic">-</span>
+                              <span className="text-[#7B8798] italic">-</span>
                             )}
                           </td>
 
@@ -2042,7 +2042,7 @@ export default function SchedulePage() {
                             ) : row.actualStart ? (
                               <span className="text-[#176B87] italic">In Progress</span>
                             ) : (
-                              <span className="text-[#8A94A6] italic">-</span>
+                              <span className="text-[#7B8798] italic">-</span>
                             )}
                           </td>
 
@@ -2089,10 +2089,10 @@ export default function SchedulePage() {
                                   Pred: <strong className="text-[#176B87]">{row.predecessors.join(', ')}</strong>
                                 </span>
                               ) : (
-                                <span className="text-[#8A94A6] italic">No Predecessors</span>
+                                <span className="text-[#7B8798] italic">No Predecessors</span>
                               )}
                               {row.successors.length > 0 && (
-                                <span className="text-[#8A94A6]">Succ: {row.successors.join(', ')}</span>
+                                <span className="text-[#7B8798]">Succ: {row.successors.join(', ')}</span>
                               )}
                             </div>
                           </td>
@@ -2115,7 +2115,7 @@ export default function SchedulePage() {
                   View: {viewMode === 'operational' ? 'Default Scannable (10 cols)' : 'Full P6 Matrix (14 cols)'}
                 </span>
               </div>
-              <div className="text-[11px] text-[#8A94A6]">
+              <div className="text-[11px] text-[#7B8798]">
                 Click &ldquo;Details&rdquo; or any row to open the Activity Drawer for WBS, Actual Dates, Dependencies, Evidence, and Audit History.
               </div>
             </div>
@@ -2162,7 +2162,7 @@ export default function SchedulePage() {
                   <button
                     type="button"
                     onClick={() => setIsImportModalOpen(false)}
-                    className="px-4 py-1.5 text-xs font-semibold text-white bg-[#176B87] hover:bg-[#12546A] rounded-lg"
+                    className="px-4 py-1.5 text-xs font-semibold text-white bg-[#176B87] hover:bg-[#135A72] rounded-lg"
                   >
                     Done &amp; View Schedule
                   </button>
@@ -2202,8 +2202,8 @@ export default function SchedulePage() {
                       isCurrent
                         ? 'bg-[#176B87] text-white font-bold'
                         : isPassed
-                        ? 'bg-[#EBF5EF] text-[#2E7D5B] font-semibold'
-                        : 'text-[#8A94A6]'
+                        ? 'bg-[#EDF7F2] text-[#2E7D5B] font-semibold'
+                        : 'text-[#7B8798]'
                     }`}
                     title={stepName}
                   >
@@ -2216,7 +2216,7 @@ export default function SchedulePage() {
             {/* STAGE 1: SELECT FILE */}
             {importStep === 1 && (
               <div className="space-y-4">
-                <div className="border-2 border-dashed border-[#D9DEE5] hover:border-[#176B87] rounded-xl p-6 text-center bg-[#F7F8FA] transition-colors">
+                <div className="border-2 border-dashed border-[#D9DEE5] hover:border-[#176B87] rounded-lg p-6 text-center bg-[#F7F8FA] transition-colors">
                   <FileSpreadsheet className="w-10 h-10 text-[#176B87] mx-auto mb-2" />
                   <p className="font-semibold text-sm text-[#172033]">
                     Select or drag Primavera P6 baseline XML schedule file
@@ -2229,21 +2229,21 @@ export default function SchedulePage() {
                     <button
                       type="button"
                       onClick={() => handleFileChosen('OIL_DUL_BASELINE_REV4.0.xml', false)}
-                      className="px-4 py-2 text-xs font-semibold text-white bg-[#176B87] hover:bg-[#12546A] rounded-lg shadow-xs"
+                      className="px-4 py-2 text-xs font-semibold text-white bg-[#176B87] hover:bg-[#135A72] rounded-lg shadow-xs"
                     >
                       Select Sample Primavera P6 XML File
                     </button>
                     <button
                       type="button"
                       onClick={() => handleFileChosen('OIL_DUL_CORRUPT_SAMPLE.xml', true)}
-                      className="px-3.5 py-2 text-xs font-medium text-[#B5473C] bg-white border border-[#E4B0AA] hover:bg-[#FDF0EE] rounded-lg"
+                      className="px-3.5 py-2 text-xs font-medium text-[#B5473C] bg-white border border-[#E4B0AA] hover:bg-[#FBEFEE] rounded-lg"
                     >
                       Test with Validation Errors
                     </button>
                   </div>
                 </div>
 
-                <div className="p-3 bg-[#EDF5F8] rounded-xl border border-[#B3CBE0] text-xs text-[#176B87] flex items-start gap-2.5">
+                <div className="p-3 bg-[#EDF5F8] rounded-lg border border-[#B3CBE0] text-xs text-[#176B87] flex items-start gap-2.5">
                   <Info className="w-4 h-4 shrink-0 mt-0.5" />
                   <div>
                     <strong className="font-semibold">Schedule Lineage Rule:</strong>
@@ -2260,7 +2260,7 @@ export default function SchedulePage() {
               <div className="p-8 text-center space-y-3">
                 <Loader2 className="w-8 h-8 text-[#176B87] animate-spin mx-auto" />
                 <h4 className="text-sm font-bold text-[#172033]">Uploading {selectedFile}...</h4>
-                <div className="w-64 mx-auto bg-[#E8EBF0] rounded-full h-2 overflow-hidden">
+                <div className="w-64 mx-auto bg-[#D9DEE5] rounded-full h-2 overflow-hidden">
                   <div className="bg-[#176B87] h-2 rounded-full w-2/3" />
                 </div>
                 <p className="text-[11px] text-[#596579]">Streaming schedule XML payload to baseline ingestion service...</p>
@@ -2292,7 +2292,7 @@ export default function SchedulePage() {
             {/* STAGE 5: ERROR REPORT (Validation errors identifying: Row, Column, Problem, Correction) */}
             {importStep === 5 && (
               <div className="space-y-3">
-                <div className="p-3 bg-[#FDF0EE] border border-[#E4B0AA] rounded-xl text-xs text-[#B5473C]">
+                <div className="p-3 bg-[#FBEFEE] border border-[#E4B0AA] rounded-lg text-xs text-[#B5473C]">
                   <div className="flex items-center gap-2 font-bold mb-1">
                     <ShieldAlert className="w-4 h-4 shrink-0" />
                     <span>Validation Error Report ({importErrors.length} Issues Identified)</span>
@@ -2303,7 +2303,7 @@ export default function SchedulePage() {
                 </div>
 
                 {/* Canonical Error Report Table */}
-                <div className="border border-[#E4B0AA] rounded-xl overflow-x-auto bg-white shadow-xs">
+                <div className="border border-[#E4B0AA] rounded-lg overflow-x-auto bg-white shadow-xs">
                   <table className="w-full min-w-[500px] text-left text-xs border-collapse">
                     <thead>
                       <tr className="bg-[#FAF2F1] border-b border-[#E4B0AA] text-[#B5473C] font-semibold">
@@ -2333,7 +2333,7 @@ export default function SchedulePage() {
                   <button
                     type="button"
                     onClick={() => handleFileChosen('OIL_DUL_FIXED_BASELINE.xml', false)}
-                    className="px-3.5 py-1.5 text-xs font-semibold text-white bg-[#176B87] hover:bg-[#12546A] rounded-lg shadow-xs"
+                    className="px-3.5 py-1.5 text-xs font-semibold text-white bg-[#176B87] hover:bg-[#135A72] rounded-lg shadow-xs"
                   >
                     Re-Validate with Corrected File →
                   </button>
@@ -2344,12 +2344,12 @@ export default function SchedulePage() {
             {/* STAGE 6: PREVIEW */}
             {importStep === 6 && (
               <div className="space-y-4">
-                <div className="p-3 bg-[#EBF5EF] border border-[#B8DCC9] rounded-xl text-xs text-[#2E7D5B] flex items-center gap-2">
+                <div className="p-3 bg-[#EDF7F2] border border-[#B8DCC9] rounded-lg text-xs text-[#2E7D5B] flex items-center gap-2">
                   <CheckCircle2 className="w-4 h-4 shrink-0" />
                   <span className="font-semibold">Schedule Baseline Analysis Verified &amp; Ready for Preview</span>
                 </div>
 
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 p-3.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-xl">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 p-3.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg">
                   <div>
                     <span className="text-[11px] text-[#596579] block">Total Activities</span>
                     <span className="text-lg font-bold text-[#172033] font-mono">154</span>
@@ -2368,7 +2368,7 @@ export default function SchedulePage() {
                   </div>
                 </div>
 
-                <div className="p-3 bg-white border border-[#D9DEE5] rounded-xl text-xs space-y-1">
+                <div className="p-3 bg-white border border-[#D9DEE5] rounded-lg text-xs space-y-1">
                   <span className="font-bold text-[#172033] block">Import Metadata Summary:</span>
                   <p className="text-[#596579]">
                     File: <strong className="text-[#172033] font-mono">{selectedFile}</strong> · Source: <strong className="text-[#172033]">Primavera P6 XML</strong> · Data Date: <strong className="text-[#172033]">18 Sep 2026</strong>
@@ -2379,7 +2379,7 @@ export default function SchedulePage() {
                   <button
                     type="button"
                     onClick={() => setImportStep(7)}
-                    className="px-4 py-2 text-xs font-semibold text-white bg-[#176B87] hover:bg-[#12546A] rounded-lg shadow-xs"
+                    className="px-4 py-2 text-xs font-semibold text-white bg-[#176B87] hover:bg-[#135A72] rounded-lg shadow-xs"
                   >
                     Proceed to Create Version →
                   </button>
@@ -2406,7 +2406,7 @@ export default function SchedulePage() {
                     required
                   />
                   {versionOverwriteError && (
-                    <div className="p-2.5 bg-[#FDF0EE] border border-[#E4B0AA] rounded-lg text-[11px] text-[#B5473C] mt-2 flex items-start gap-1.5">
+                    <div className="p-2.5 bg-[#FBEFEE] border border-[#E4B0AA] rounded-lg text-[11px] text-[#B5473C] mt-2 flex items-start gap-1.5">
                       <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5" />
                       <span>{versionOverwriteError}</span>
                     </div>
@@ -2426,7 +2426,7 @@ export default function SchedulePage() {
                   />
                 </div>
 
-                <div className="p-3 bg-[#F7F8FA] rounded-xl border border-[#D9DEE5] text-[11px] text-[#596579]">
+                <div className="p-3 bg-[#F7F8FA] rounded-lg border border-[#D9DEE5] text-[11px] text-[#596579]">
                   <strong className="text-[#172033] block mb-0.5">Version Lineage Governance:</strong>
                   Version {currentOperationalVersion.label} will be safely archived as <strong>Previous</strong>. The new version will be set as <strong>Current</strong>.
                 </div>
@@ -2441,7 +2441,7 @@ export default function SchedulePage() {
                   </button>
                   <button
                     type="submit"
-                    className="px-4 py-2 text-xs font-semibold text-white bg-[#176B87] hover:bg-[#12546A] rounded-lg shadow-xs"
+                    className="px-4 py-2 text-xs font-semibold text-white bg-[#176B87] hover:bg-[#135A72] rounded-lg shadow-xs"
                   >
                     Create Version &amp; Activate Baseline
                   </button>

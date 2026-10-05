@@ -22,10 +22,10 @@ export function ErrorState({
 }: ErrorStateProps) {
   return (
     <div
-      className={`bg-white border border-[#E4B0AA] rounded-xl p-6 md:p-8 flex flex-col items-center text-center shadow-xs ${className}`}
+      className={`bg-white border border-[#E4B0AA] rounded-lg p-6 md:p-8 flex flex-col items-center text-center shadow-xs ${className}`}
       role="alert"
     >
-      <div className="w-12 h-12 rounded-xl bg-[#FBEFEE] border border-[#E4B0AA] flex items-center justify-center text-[#B5473C] mb-4 flex-shrink-0">
+      <div className="w-12 h-12 rounded-lg bg-[#FBEFEE] border border-[#E4B0AA] flex items-center justify-center text-[#B5473C] mb-4 flex-shrink-0">
         <AlertCircle className="w-6 h-6" />
       </div>
       <h3 className="text-lg sm:text-xl font-bold text-[#172033] mb-1.5 tracking-tight">{title}</h3>
@@ -33,7 +33,7 @@ export function ErrorState({
         {message}
       </p>
       {code && (
-        <span className="inline-block px-2.5 py-0.5 bg-[#F0F2F5] border border-[#D9DEE5] rounded text-xs font-mono text-[#596579] mb-6">
+        <span className="inline-block px-2.5 py-0.5 bg-[#F1F3F5] border border-[#D9DEE5] rounded text-xs font-mono text-[#596579] mb-6">
           Diagnostic Code: {code}
         </span>
       )}

@@ -104,7 +104,7 @@ export function CoreFlowBanner({
 
   return (
     <div
-      className={`bg-white border border-[#D9DEE5] rounded-xl overflow-hidden shadow-xs ${className}`}
+      className={`bg-white border border-[#D9DEE5] rounded-lg overflow-hidden shadow-xs ${className}`}
       data-testid="plnex-core-flow-banner"
     >
       {/* Top Header Bar */}
@@ -155,12 +155,12 @@ export function CoreFlowBanner({
               return (
                 <div
                   key={step.key}
-                  className={`relative p-3 rounded-xl border transition-all flex flex-col justify-between ${
+                  className={`relative p-3 rounded-lg border transition-all flex flex-col justify-between ${
                     isGate
                       ? 'border-[#176B87] bg-[#EDF5F8] ring-2 ring-[#176B87]/20'
                       : isCurrent
                       ? 'border-[#B3CBE0] bg-white shadow-xs'
-                      : 'border-[#E8EBF0] bg-[#FAFAFA]'
+                      : 'border-[#D9DEE5] bg-[#FAFAFA]'
                   }`}
                 >
                   <div>
@@ -169,7 +169,7 @@ export function CoreFlowBanner({
                         className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-mono font-bold ${
                           isGate
                             ? 'bg-[#176B87] text-white'
-                            : 'bg-[#F0F2F5] text-[#596579]'
+                            : 'bg-[#F1F3F5] text-[#596579]'
                         }`}
                       >
                         {step.num}
@@ -179,11 +179,11 @@ export function CoreFlowBanner({
                           Human Gate
                         </span>
                       ) : step.isAi ? (
-                        <span className="text-[9px] font-semibold px-1.5 py-0.5 rounded uppercase bg-[#F0F2F5] text-[#596579]">
+                        <span className="text-[9px] font-semibold px-1.5 py-0.5 rounded uppercase bg-[#F1F3F5] text-[#596579]">
                           AI / Heuristic
                         </span>
                       ) : (
-                        <span className="text-[9px] font-semibold px-1.5 py-0.5 rounded uppercase bg-[#F0F2F5] text-[#8A94A6]">
+                        <span className="text-[9px] font-semibold px-1.5 py-0.5 rounded uppercase bg-[#F1F3F5] text-[#7B8798]">
                           Field / System
                         </span>
                       )}
@@ -196,7 +196,7 @@ export function CoreFlowBanner({
                             ? 'text-[#176B87]'
                             : isCurrent
                             ? 'text-[#172033]'
-                            : 'text-[#8A94A6]'
+                            : 'text-[#7B8798]'
                         }`}
                       />
                       <h4
@@ -215,7 +215,7 @@ export function CoreFlowBanner({
 
                   {/* Flow arrow on wide screens */}
                   {idx < FLOW_STEPS.length - 1 && (
-                    <div className="hidden lg:block absolute -right-2 top-1/2 -translate-y-1/2 z-10 text-[#8A94A6]">
+                    <div className="hidden lg:block absolute -right-2 top-1/2 -translate-y-1/2 z-10 text-[#7B8798]">
                       <ChevronRight className="w-4 h-4" />
                     </div>
                   )}
@@ -225,7 +225,7 @@ export function CoreFlowBanner({
           </div>
 
           {/* Core Governance Disclaimer */}
-          <div className="p-3 bg-[#FDF6ED] border border-[#F0D4A6] rounded-xl flex items-start gap-2.5 text-xs">
+          <div className="p-3 bg-[#FDF6ED] border border-[#F0D4A6] rounded-lg flex items-start gap-2.5 text-xs">
             <ShieldAlert className="w-4 h-4 text-[#D98B32] shrink-0 mt-0.5" />
             <div className="space-y-0.5">
               <span className="font-bold text-[#172033]">

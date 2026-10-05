@@ -383,7 +383,7 @@ export default function FieldCapturePage() {
       },
       Unknown: {
         label: 'Unknown',
-        bg: 'bg-[#F0F2F5]',
+        bg: 'bg-[#F1F3F5]',
         text: 'text-[#596579]',
         border: 'border-[#D9DEE5]',
         icon: HelpCircle,
@@ -429,16 +429,16 @@ export default function FieldCapturePage() {
 
         {/* OFFLINE MODE BANNER */}
         {isOffline && (
-          <div className="p-3.5 rounded-xl bg-[#FEF3C7] border border-[#FDE68A] flex items-center justify-between gap-3 text-xs text-[#92400E]">
+          <div className="p-3.5 rounded-lg bg-[#FDF6ED] border border-[#F0D4A6] flex items-center justify-between gap-3 text-xs text-[#D98B32]">
             <div className="flex items-center gap-2.5">
-              <span className="px-2 py-0.5 rounded bg-[#92400E] text-white font-mono font-bold text-[10px] uppercase">
+              <span className="px-2 py-0.5 rounded bg-[#D98B32] text-white font-mono font-bold text-[10px] uppercase">
                 OFFLINE MODE
               </span>
               <span className="font-semibold">
                 Updates will be synchronized when online mode is restored.
               </span>
             </div>
-            <span className="text-[11px] font-mono text-[#92400E]">
+            <span className="text-[11px] font-mono text-[#D98B32]">
               IndexedDB Active
             </span>
           </div>
@@ -447,7 +447,7 @@ export default function FieldCapturePage() {
         {/* ========================================================= */}
         {/* TOP CONTEXT HEADER: Project & Date */}
         {/* ========================================================= */}
-        <div className="bg-white border border-[#D9DEE5] rounded-xl p-4 sm:p-5 shadow-xs">
+        <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-5 shadow-xs">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div className="space-y-0.5">
               <div className="flex items-center gap-2">
@@ -455,7 +455,7 @@ export default function FieldCapturePage() {
                 <span className="font-mono text-xs font-bold text-[#176B87]">
                   {activeProject.code}
                 </span>
-                <span className="text-[#8A94A6]">•</span>
+                <span className="text-[#7B8798]">•</span>
                 <span className="text-xs text-[#596579]">
                   Date: <strong className="text-[#172033] font-mono">{formatProjectDate(PROJECT_REPORT_DATE, true)}</strong>
                 </span>
@@ -468,7 +468,7 @@ export default function FieldCapturePage() {
             <div className="flex items-center gap-2">
               <Link
                 href="/engineer"
-                className="px-3 py-1.5 text-xs text-[#596579] hover:text-[#172033] bg-[#F7F8FA] hover:bg-[#F0F2F5] border border-[#D9DEE5] rounded-lg transition-colors font-medium inline-flex items-center gap-1"
+                className="px-3 py-1.5 text-xs text-[#596579] hover:text-[#172033] bg-[#F7F8FA] hover:bg-[#F1F3F5] border border-[#D9DEE5] rounded-lg transition-colors font-medium inline-flex items-center gap-1"
               >
                 <span>Engineer Dashboard</span>
               </Link>
@@ -480,7 +480,7 @@ export default function FieldCapturePage() {
         {/* STEP 1: PRIMARY SCREEN — "What happened?" */}
         {/* ========================================================= */}
         {step === 'primary' && (
-          <div className="bg-white border border-[#D9DEE5] rounded-xl p-5 sm:p-6 shadow-xs space-y-5">
+          <div className="bg-white border border-[#D9DEE5] rounded-lg p-5 sm:p-6 shadow-xs space-y-5">
             {/* Large Prompt */}
             <div>
               <h2 className="text-xl sm:text-2xl font-black text-[#172033] tracking-tight">
@@ -498,7 +498,7 @@ export default function FieldCapturePage() {
                 value={fieldText}
                 onChange={(e) => setFieldText(e.target.value)}
                 placeholder="Type what happened in the field..."
-                className="w-full p-3.5 text-sm sm:text-base font-normal bg-[#F7F8FA] focus:bg-white border-2 border-[#D9DEE5] focus:border-[#176B87] rounded-xl text-[#172033] placeholder-[#8A94A6] outline-none transition-all leading-relaxed shadow-2xs"
+                className="w-full p-3.5 text-sm sm:text-base font-normal bg-[#F7F8FA] focus:bg-white border-2 border-[#D9DEE5] focus:border-[#176B87] rounded-lg text-[#172033] placeholder-[#7B8798] outline-none transition-all leading-relaxed shadow-2xs"
               />
 
               {/* Minimal Typing Quick Chips */}
@@ -514,7 +514,7 @@ export default function FieldCapturePage() {
                     key={idx}
                     type="button"
                     onClick={() => setFieldText(chip)}
-                    className="px-2.5 py-1 text-[11px] rounded-full bg-[#F0F2F5] hover:bg-[#E8F1F5] hover:text-[#176B87] text-[#596579] border border-[#D9DEE5] transition-colors"
+                    className="px-2.5 py-1 text-[11px] rounded-full bg-[#F1F3F5] hover:bg-[#EDF5F8] hover:text-[#176B87] text-[#596579] border border-[#D9DEE5] transition-colors"
                   >
                     + {chip}
                   </button>
@@ -523,16 +523,16 @@ export default function FieldCapturePage() {
             </div>
 
             {/* Actions: Record Voice, Photo, Document, Field Note (44px touch target) */}
-            <div className="pt-2 border-t border-[#E8EBF0] space-y-3">
+            <div className="pt-2 border-t border-[#D9DEE5] space-y-3">
               <div className="grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-2.5">
                 {/* 1. Record Voice */}
                 <button
                   type="button"
                   onClick={toggleVoiceRecording}
-                  className={`min-h-[44px] h-11 px-3.5 text-xs sm:text-sm font-semibold rounded-xl border transition-all inline-flex items-center justify-center gap-2 cursor-pointer ${
+                  className={`min-h-[44px] h-11 px-3.5 text-xs sm:text-sm font-semibold rounded-lg border transition-all inline-flex items-center justify-center gap-2 cursor-pointer ${
                     isRecordingVoice
                       ? 'bg-[#FBEFEE] text-[#B5473C] border-[#B5473C] font-bold col-span-2 sm:col-span-1'
-                      : 'bg-white text-[#172033] border-[#D9DEE5] hover:bg-[#F0F2F5]'
+                      : 'bg-white text-[#172033] border-[#D9DEE5] hover:bg-[#F1F3F5]'
                   }`}
                 >
                   {isRecordingVoice ? (
@@ -559,7 +559,7 @@ export default function FieldCapturePage() {
                       description: 'Geotagged site image attached directly.',
                     });
                   }}
-                  className="min-h-[44px] h-11 px-3.5 text-xs sm:text-sm font-semibold text-[#172033] bg-white border border-[#D9DEE5] hover:bg-[#F0F2F5] rounded-xl transition-colors inline-flex items-center justify-center gap-2 cursor-pointer"
+                  className="min-h-[44px] h-11 px-3.5 text-xs sm:text-sm font-semibold text-[#172033] bg-white border border-[#D9DEE5] hover:bg-[#F1F3F5] rounded-lg transition-colors inline-flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <Camera className="w-4 h-4 text-[#176B87]" />
                   <span>{attachedPhoto ? 'Photo Attached' : 'Photo'}</span>
@@ -576,7 +576,7 @@ export default function FieldCapturePage() {
                       description: 'Shift inspection report attached directly.',
                     });
                   }}
-                  className="min-h-[44px] h-11 px-3.5 text-xs sm:text-sm font-semibold text-[#172033] bg-white border border-[#D9DEE5] hover:bg-[#F0F2F5] rounded-xl transition-colors inline-flex items-center justify-center gap-2 cursor-pointer"
+                  className="min-h-[44px] h-11 px-3.5 text-xs sm:text-sm font-semibold text-[#172033] bg-white border border-[#D9DEE5] hover:bg-[#F1F3F5] rounded-lg transition-colors inline-flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <Paperclip className="w-4 h-4 text-[#176B87]" />
                   <span>{attachedDoc ? 'Document Attached' : 'Document'}</span>
@@ -586,7 +586,7 @@ export default function FieldCapturePage() {
                 <button
                   type="button"
                   onClick={() => setIsAddingNote(!isAddingNote)}
-                  className="min-h-[44px] h-11 px-3.5 text-xs sm:text-sm font-semibold text-[#172033] bg-white border border-[#D9DEE5] hover:bg-[#F0F2F5] rounded-xl transition-colors inline-flex items-center justify-center gap-2 cursor-pointer col-span-2 sm:col-span-1"
+                  className="min-h-[44px] h-11 px-3.5 text-xs sm:text-sm font-semibold text-[#172033] bg-white border border-[#D9DEE5] hover:bg-[#F1F3F5] rounded-lg transition-colors inline-flex items-center justify-center gap-2 cursor-pointer col-span-2 sm:col-span-1"
                 >
                   <FileText className="w-4 h-4 text-[#176B87]" />
                   <span>{fieldNote ? 'Field Note Attached' : 'Add Note'}</span>
@@ -601,7 +601,7 @@ export default function FieldCapturePage() {
                     <button
                       type="button"
                       onClick={() => setIsAddingNote(false)}
-                      className="text-[#8A94A6] hover:text-[#172033]"
+                      className="text-[#7B8798] hover:text-[#172033]"
                     >
                       <X className="w-3.5 h-3.5" />
                     </button>
@@ -648,7 +648,7 @@ export default function FieldCapturePage() {
               <button
                 type="button"
                 onClick={handleExtractAndContinue}
-                className="w-full min-h-[48px] py-3.5 px-6 text-sm sm:text-base font-bold text-white bg-[#176B87] hover:bg-[#12546A] active:scale-99 rounded-xl shadow-sm transition-all inline-flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full min-h-[48px] py-3.5 px-6 text-sm sm:text-base font-bold text-white bg-[#176B87] hover:bg-[#135A72] active:scale-99 rounded-lg shadow-sm transition-all inline-flex items-center justify-center gap-2 cursor-pointer"
               >
                 <span>Extract &amp; Continue</span>
                 <ArrowRight className="w-5 h-5 stroke-[2.5]" />
@@ -663,7 +663,7 @@ export default function FieldCapturePage() {
         {step === 'review' && (
           <div className="space-y-5">
             {/* Notice: AI is an editable hypothesis */}
-            <div className="p-3.5 rounded-xl bg-[#FDF6ED] border border-[#F0D4A6] text-xs text-[#9A5B13] flex items-start gap-2.5">
+            <div className="p-3.5 rounded-lg bg-[#FDF6ED] border border-[#F0D4A6] text-xs text-[#D98B32] flex items-start gap-2.5">
               <AlertTriangle className="w-4 h-4 text-[#D98B32] shrink-0 mt-0.5" />
               <div>
                 <strong className="block text-[#172033]">AI Extraction Hypothesis</strong>
@@ -674,8 +674,8 @@ export default function FieldCapturePage() {
             </div>
 
             {/* REVIEW EXTRACTED DATA CARD */}
-            <div className="bg-white border border-[#D9DEE5] rounded-xl p-5 sm:p-6 shadow-xs space-y-4">
-              <div className="flex items-center justify-between pb-3 border-b border-[#E8EBF0]">
+            <div className="bg-white border border-[#D9DEE5] rounded-lg p-5 sm:p-6 shadow-xs space-y-4">
+              <div className="flex items-center justify-between pb-3 border-b border-[#D9DEE5]">
                 <div>
                   <h2 className="text-base font-bold text-[#172033]">
                     Review Extracted Data
@@ -716,7 +716,7 @@ export default function FieldCapturePage() {
                           },
                         })
                       }
-                      className="w-8 h-8 rounded bg-white border border-[#D9DEE5] font-bold text-sm text-[#172033] flex items-center justify-center hover:bg-[#F0F2F5]"
+                      className="w-8 h-8 rounded bg-white border border-[#D9DEE5] font-bold text-sm text-[#172033] flex items-center justify-center hover:bg-[#F1F3F5]"
                     >
                       -
                     </button>
@@ -745,12 +745,12 @@ export default function FieldCapturePage() {
                           },
                         })
                       }
-                      className="w-8 h-8 rounded bg-white border border-[#D9DEE5] font-bold text-sm text-[#172033] flex items-center justify-center hover:bg-[#F0F2F5]"
+                      className="w-8 h-8 rounded bg-white border border-[#D9DEE5] font-bold text-sm text-[#172033] flex items-center justify-center hover:bg-[#F1F3F5]"
                     >
                       +
                     </button>
                   </div>
-                  <span className="text-[10px] text-[#8A94A6] block truncate">{extractedData.quantity.reason}</span>
+                  <span className="text-[10px] text-[#7B8798] block truncate">{extractedData.quantity.reason}</span>
                 </div>
 
                 {/* 2. Unit */}
@@ -772,7 +772,7 @@ export default function FieldCapturePage() {
                     }
                     className="w-full px-2.5 py-1.5 font-mono font-bold text-sm bg-white border border-[#D9DEE5] rounded text-[#172033]"
                   />
-                  <span className="text-[10px] text-[#8A94A6] block truncate">{extractedData.unit.reason}</span>
+                  <span className="text-[10px] text-[#7B8798] block truncate">{extractedData.unit.reason}</span>
                 </div>
 
                 {/* 3. Line */}
@@ -794,7 +794,7 @@ export default function FieldCapturePage() {
                     }
                     className="w-full px-2.5 py-1.5 font-bold text-sm bg-white border border-[#D9DEE5] rounded text-[#172033]"
                   />
-                  <span className="text-[10px] text-[#8A94A6] block truncate">{extractedData.line.reason}</span>
+                  <span className="text-[10px] text-[#7B8798] block truncate">{extractedData.line.reason}</span>
                 </div>
 
                 {/* 4. Work Type */}
@@ -816,7 +816,7 @@ export default function FieldCapturePage() {
                     }
                     className="w-full px-2.5 py-1.5 font-bold text-sm bg-white border border-[#D9DEE5] rounded text-[#172033]"
                   />
-                  <span className="text-[10px] text-[#8A94A6] block truncate">{extractedData.workType.reason}</span>
+                  <span className="text-[10px] text-[#7B8798] block truncate">{extractedData.workType.reason}</span>
                 </div>
 
                 {/* 5. Date */}
@@ -838,7 +838,7 @@ export default function FieldCapturePage() {
                     }
                     className="w-full px-2.5 py-1.5 font-mono font-medium text-sm bg-white border border-[#D9DEE5] rounded text-[#172033]"
                   />
-                  <span className="text-[10px] text-[#8A94A6] block truncate">{extractedData.date.reason}</span>
+                  <span className="text-[10px] text-[#7B8798] block truncate">{extractedData.date.reason}</span>
                 </div>
 
                 {/* 6. Time */}
@@ -860,7 +860,7 @@ export default function FieldCapturePage() {
                     }
                     className="w-full px-2.5 py-1.5 font-mono font-medium text-sm bg-white border border-[#D9DEE5] rounded text-[#172033]"
                   />
-                  <span className="text-[10px] text-[#8A94A6] block truncate">{extractedData.time.reason}</span>
+                  <span className="text-[10px] text-[#7B8798] block truncate">{extractedData.time.reason}</span>
                 </div>
 
                 {/* 7. Discipline */}
@@ -890,15 +890,15 @@ export default function FieldCapturePage() {
                     <option value="Electrical">Electrical</option>
                     <option value="Instrumentation">Instrumentation</option>
                   </select>
-                  <span className="text-[10px] text-[#8A94A6] block truncate">{extractedData.discipline.reason}</span>
+                  <span className="text-[10px] text-[#7B8798] block truncate">{extractedData.discipline.reason}</span>
                 </div>
               </div>
             </div>
 
             {/* CANDIDATE ACTIVITY & MATCH CONFIDENCE */}
-            <div className="bg-white border border-[#D9DEE5] rounded-xl p-5 sm:p-6 shadow-xs space-y-4">
-              <div className="pb-3 border-b border-[#E8EBF0]">
-                <span className="text-[10px] font-mono font-bold uppercase text-[#8A94A6] tracking-wider block">
+            <div className="bg-white border border-[#D9DEE5] rounded-lg p-5 sm:p-6 shadow-xs space-y-4">
+              <div className="pb-3 border-b border-[#D9DEE5]">
+                <span className="text-[10px] font-mono font-bold uppercase text-[#7B8798] tracking-wider block">
                   Schedule Twin Target Matching
                 </span>
                 <h3 className="text-base font-bold text-[#172033]">
@@ -907,7 +907,7 @@ export default function FieldCapturePage() {
               </div>
 
               {/* Target Activity Selector & Confidence Badge */}
-              <div className="p-4 rounded-xl bg-[#F7F8FA] border border-[#D9DEE5] space-y-3">
+              <div className="p-4 rounded-lg bg-[#F7F8FA] border border-[#D9DEE5] space-y-3">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                   <div>
                     <label className="text-xs font-bold text-[#172033] block">
@@ -935,7 +935,7 @@ export default function FieldCapturePage() {
                 </div>
 
                 {/* Why this match? Explanation Section */}
-                <div className="p-3 bg-white rounded-lg border border-[#E8EBF0] space-y-1.5 text-xs">
+                <div className="p-3 bg-white rounded-lg border border-[#D9DEE5] space-y-1.5 text-xs">
                   <span className="font-bold text-[#172033] block">Why this match?</span>
                   <ul className="space-y-1 text-[#596579] text-[11px]">
                     <li className="flex items-center gap-1.5">
@@ -994,7 +994,7 @@ export default function FieldCapturePage() {
                 <button
                   type="button"
                   onClick={() => setStep('primary')}
-                  className="min-h-[44px] px-4 py-2.5 text-xs font-bold text-[#596579] hover:text-[#172033] bg-[#F7F8FA] hover:bg-[#F0F2F5] border border-[#D9DEE5] rounded-xl transition-colors inline-flex items-center justify-center gap-1.5 cursor-pointer"
+                  className="min-h-[44px] px-4 py-2.5 text-xs font-bold text-[#596579] hover:text-[#172033] bg-[#F7F8FA] hover:bg-[#F1F3F5] border border-[#D9DEE5] rounded-lg transition-colors inline-flex items-center justify-center gap-1.5 cursor-pointer"
                 >
                   <ArrowLeft className="w-4 h-4" />
                   <span>Back to Edit</span>
@@ -1004,7 +1004,7 @@ export default function FieldCapturePage() {
                   type="button"
                   onClick={handleConfirm}
                   disabled={isSubmitting}
-                  className="flex-1 sm:flex-initial min-h-[48px] px-6 py-3 text-sm sm:text-base font-bold text-white bg-[#176B87] hover:bg-[#12546A] active:scale-99 rounded-xl shadow-sm transition-all inline-flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer"
+                  className="flex-1 sm:flex-initial min-h-[48px] px-6 py-3 text-sm sm:text-base font-bold text-white bg-[#176B87] hover:bg-[#135A72] active:scale-99 rounded-lg shadow-sm transition-all inline-flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer"
                 >
                   {isSubmitting ? (
                     <>
@@ -1027,7 +1027,7 @@ export default function FieldCapturePage() {
         {/* STEP 3: COMPLETED SUCCESS SCREEN */}
         {/* ========================================================= */}
         {step === 'completed' && (
-          <div className="bg-white border border-[#D9DEE5] rounded-xl p-8 shadow-xs text-center space-y-4">
+          <div className="bg-white border border-[#D9DEE5] rounded-lg p-8 shadow-xs text-center space-y-4">
             <div className="w-14 h-14 rounded-full bg-[#EDF7F2] border border-[#B8DCC9] flex items-center justify-center text-[#2E7D5B] mx-auto">
               <CheckCircle2 className="w-8 h-8" />
             </div>
@@ -1060,7 +1060,7 @@ export default function FieldCapturePage() {
                   setFieldNote('');
                   setStep('primary');
                 }}
-                className="w-full sm:w-auto min-h-[44px] px-5 py-2.5 text-xs font-bold text-[#172033] bg-white hover:bg-[#F0F2F5] active:bg-[#E8EBF0] border border-[#D9DEE5] rounded-xl transition-colors inline-flex items-center justify-center gap-1.5 cursor-pointer"
+                className="w-full sm:w-auto min-h-[44px] px-5 py-2.5 text-xs font-bold text-[#172033] bg-white hover:bg-[#F1F3F5] active:bg-[#D9DEE5] border border-[#D9DEE5] rounded-lg transition-colors inline-flex items-center justify-center gap-1.5 cursor-pointer"
               >
                 <Plus className="w-4 h-4" />
                 <span>Record Another Event</span>
@@ -1068,7 +1068,7 @@ export default function FieldCapturePage() {
 
               <Link
                 href="/engineer"
-                className="w-full sm:w-auto min-h-[44px] px-5 py-2.5 text-xs font-bold text-white bg-[#176B87] hover:bg-[#12546A] active:bg-[#12546A] rounded-xl transition-colors inline-flex items-center justify-center gap-1.5 cursor-pointer"
+                className="w-full sm:w-auto min-h-[44px] px-5 py-2.5 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] active:bg-[#135A72] rounded-lg transition-colors inline-flex items-center justify-center gap-1.5 cursor-pointer"
               >
                 <span>Back to Engineer Dashboard</span>
                 <ArrowRight className="w-4 h-4" />
@@ -1083,7 +1083,7 @@ export default function FieldCapturePage() {
             <button
               type="button"
               onClick={handleExtractAndContinue}
-              className="w-full min-h-[48px] py-3.5 px-4 text-sm font-bold text-white bg-[#176B87] active:bg-[#12546A] rounded-xl shadow-sm flex items-center justify-center gap-2 cursor-pointer"
+              className="w-full min-h-[48px] py-3.5 px-4 text-sm font-bold text-white bg-[#176B87] active:bg-[#135A72] rounded-lg shadow-sm flex items-center justify-center gap-2 cursor-pointer"
             >
               <span>Extract &amp; Continue</span>
               <ArrowRight className="w-4 h-4 stroke-[2.5]" />

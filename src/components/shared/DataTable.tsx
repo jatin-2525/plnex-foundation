@@ -115,14 +115,14 @@ export function DataTable<T>({
                       key={col.id}
                       onClick={() => col.sortable && handleSort(col.id)}
                       className={`px-4 py-3 font-semibold text-[#172033] ${
-                        col.sortable ? 'cursor-pointer select-none hover:bg-[#F0F2F5]' : ''
+                        col.sortable ? 'cursor-pointer select-none hover:bg-[#F1F3F5]' : ''
                       } ${col.align === 'right' ? 'text-right' : col.align === 'center' ? 'text-center' : 'text-left'}`}
                       style={{ width: col.width, minWidth: col.minWidth }}
                     >
                       <div className={`flex items-center gap-1.5 ${col.align === 'right' ? 'justify-end' : col.align === 'center' ? 'justify-center' : 'justify-start'}`}>
                         <span>{col.header}</span>
                         {col.sortable && (
-                          <span className="text-[#8A94A6]">
+                          <span className="text-[#7B8798]">
                             {isSorted ? (
                               sortDirection === 'asc' ? (
                                 <ChevronUp className="w-3.5 h-3.5 text-[#176B87]" />
@@ -140,7 +140,7 @@ export function DataTable<T>({
                 })}
             </tr>
           </thead>
-          <tbody className="divide-y divide-[#E8EBF0] text-[#172033]">
+          <tbody className="divide-y divide-[#D9DEE5] text-[#172033]">
             {paginatedData.map((row, index) => {
               const rowKey = keyExtractor(row, startIndex + index);
               const isSelected = selectedIds.includes(rowKey);
@@ -150,7 +150,7 @@ export function DataTable<T>({
                   key={rowKey}
                   onClick={() => onRowClick && onRowClick(row)}
                   className={`transition-colors ${
-                    isSelected ? 'bg-[#EDF5F8]' : 'hover:bg-[#F0F2F5]/60'
+                    isSelected ? 'bg-[#EDF5F8]' : 'hover:bg-[#F1F3F5]/60'
                   } ${onRowClick ? 'cursor-pointer' : ''}`}
                 >
                   {selectable && (
@@ -208,7 +208,7 @@ export function DataTable<T>({
             <button
               onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
               disabled={currentPage === 1}
-              className="p-1 rounded border border-[#D9DEE5] bg-white text-[#172033] disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[#F0F2F5] transition-colors"
+              className="p-1 rounded border border-[#D9DEE5] bg-white text-[#172033] disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[#F1F3F5] transition-colors"
               aria-label="Previous page"
             >
               <ChevronLeft className="w-4 h-4" />
@@ -216,7 +216,7 @@ export function DataTable<T>({
             <button
               onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
               disabled={currentPage === totalPages}
-              className="p-1 rounded border border-[#D9DEE5] bg-white text-[#172033] disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[#F0F2F5] transition-colors"
+              className="p-1 rounded border border-[#D9DEE5] bg-white text-[#172033] disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[#F1F3F5] transition-colors"
               aria-label="Next page"
             >
               <ChevronRight className="w-4 h-4" />

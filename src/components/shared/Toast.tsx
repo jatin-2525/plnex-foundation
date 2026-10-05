@@ -65,7 +65,7 @@ function ToastItem({ toast, onDismiss }: { toast: ToastMessage; onDismiss: () =>
       </div>
       <button
         onClick={onDismiss}
-        className="text-[#8A94A6] hover:text-[#172033] p-0.5 rounded transition-colors"
+        className="text-[#7B8798] hover:text-[#172033] p-0.5 rounded transition-colors"
         aria-label="Dismiss toast"
       >
         <X className="w-4 h-4" />

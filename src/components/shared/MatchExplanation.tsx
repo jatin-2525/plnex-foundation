@@ -94,7 +94,7 @@ function getFactorIcon(factor: ScoringFactorName) {
     case 'Area / Line':
       return <MapPin className="w-4 h-4 text-[#0284C7]" />;
     case 'Discipline':
-      return <Tag className="w-4 h-4 text-[#7C3AED]" />;
+      return <Tag className="w-4 h-4 text-[#3B6EA8]" />;
     case 'Date / Context':
     case 'Context / Date':
       return <Calendar className="w-4 h-4 text-[#D98B32]" />;
@@ -113,7 +113,7 @@ function getFactorAccentColor(factor: ScoringFactorName) {
     case 'Area / Line':
       return '#0284C7';
     case 'Discipline':
-      return '#7C3AED';
+      return '#3B6EA8';
     case 'Date / Context':
     case 'Context / Date':
       return '#D98B32';
@@ -266,13 +266,13 @@ export function MatchExplanation({
 
   return (
     <div
-      className={`bg-white rounded-xl border border-[#D9DEE5] overflow-hidden shadow-sm space-y-0 ${className}`}
+      className={`bg-white rounded-lg border border-[#D9DEE5] overflow-hidden shadow-xs space-y-0 ${className}`}
       data-testid="plnex-match-explanation"
     >
       {/* =========================================================================
           1. HEADER CARD: SUGGESTED ACTIVITY, CONFIDENCE & MATCH STATUS
           ========================================================================= */}
-      <div className="p-4 sm:p-5 bg-gradient-to-b from-[#F7F8FA] to-white border-b border-[#D9DEE5] space-y-4">
+      <div className="p-4 sm:p-5 bg-[#F7F8FA] border-b border-[#D9DEE5] space-y-4">
         {showHeading && (
           <div className="flex items-center justify-between flex-wrap gap-2">
             <div className="flex items-center gap-2">
@@ -294,7 +294,7 @@ export function MatchExplanation({
 
             {/* Match Status Badge */}
             <div className="flex items-center gap-2">
-              <span className="text-[10px] uppercase tracking-wider font-bold text-[#8A94A6]">
+              <span className="text-[10px] uppercase tracking-wider font-bold text-[#7B8798]">
                 Match Status:
               </span>
               <span
@@ -310,9 +310,9 @@ export function MatchExplanation({
         )}
 
         {/* Suggested Activity Presentation */}
-        <div className="p-3.5 bg-white border border-[#D9DEE5] rounded-xl shadow-xs space-y-2.5">
+        <div className="p-3.5 bg-white border border-[#D9DEE5] rounded-lg shadow-xs space-y-2.5">
           <div className="flex items-center justify-between flex-wrap gap-2">
-            <span className="text-[10px] uppercase tracking-wider font-bold text-[#8A94A6] flex items-center gap-1.5">
+            <span className="text-[10px] uppercase tracking-wider font-bold text-[#7B8798] flex items-center gap-1.5">
               <Layers className="w-3.5 h-3.5 text-[#176B87]" />
               Suggested Activity
             </span>
@@ -350,7 +350,7 @@ export function MatchExplanation({
                 <div className="flex items-center gap-3 text-[11px] text-[#596579] flex-wrap pt-0.5">
                   {suggestedActivity.area && (
                     <span className="inline-flex items-center gap-1">
-                      <MapPin className="w-3 h-3 text-[#8A94A6]" />
+                      <MapPin className="w-3 h-3 text-[#7B8798]" />
                       {suggestedActivity.area}
                     </span>
                   )}
@@ -361,7 +361,7 @@ export function MatchExplanation({
                   )}
                   {suggestedActivity.plannedStart && suggestedActivity.plannedFinish && (
                     <span className="inline-flex items-center gap-1">
-                      <Calendar className="w-3 h-3 text-[#8A94A6]" />
+                      <Calendar className="w-3 h-3 text-[#7B8798]" />
                       Window: {suggestedActivity.plannedStart} → {suggestedActivity.plannedFinish}
                     </span>
                   )}
@@ -395,10 +395,10 @@ export function MatchExplanation({
         </div>
 
         {/* Confidence Bracket & Gauge Bar */}
-        <div className="p-3.5 bg-white border border-[#D9DEE5] rounded-xl space-y-2.5">
+        <div className="p-3.5 bg-white border border-[#D9DEE5] rounded-lg space-y-2.5">
           <div className="flex items-center justify-between flex-wrap gap-2">
             <div className="flex items-center gap-2">
-              <span className="text-[10px] uppercase tracking-wider font-bold text-[#8A94A6]">
+              <span className="text-[10px] uppercase tracking-wider font-bold text-[#7B8798]">
                 Confidence Score:
               </span>
               <div className="flex items-baseline gap-1.5">
@@ -421,10 +421,10 @@ export function MatchExplanation({
 
           {/* Visual Confidence Gauge with 70% and 90% threshold markers */}
           <div className="space-y-1 pt-1">
-            <div className="relative w-full h-3 bg-[#F0F2F5] rounded-full overflow-hidden border border-[#D9DEE5]">
+            <div className="relative w-full h-3 bg-[#F1F3F5] rounded-md overflow-hidden border border-[#D9DEE5]">
               {/* Colored score fill */}
               <div
-                className={`h-full rounded-full transition-all duration-500 ${bracketConfig.barColor}`}
+                className={`h-full rounded-md transition-all duration-500 ${bracketConfig.barColor}`}
                 style={{ width: `${Math.min(100, Math.max(0, confidence))}%` }}
               />
 
@@ -444,7 +444,7 @@ export function MatchExplanation({
             </div>
 
             {/* Threshold Labels */}
-            <div className="flex justify-between items-center text-[10px] font-mono text-[#8A94A6] pt-0.5">
+            <div className="flex justify-between items-center text-[10px] font-mono text-[#7B8798] pt-0.5">
               <span>0% (Unmatched)</span>
               <span className="pl-6 text-[#D98B32] font-semibold">| 70% Review Gate</span>
               <span className="text-[#2E7D5B] font-semibold">| 90% High Suggestion Gate</span>
@@ -456,7 +456,7 @@ export function MatchExplanation({
         {/* Raw Field Observation Snippet if available */}
         {rawFieldStatement && (
           <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg text-xs space-y-1">
-            <span className="text-[10px] uppercase font-bold text-[#8A94A6] block">
+            <span className="text-[10px] uppercase font-bold text-[#7B8798] block">
               Field Submission Source Text:
             </span>
             <p className="text-[#172033] font-mono text-[11px] italic bg-white p-2 rounded border border-[#D9DEE5]/80">
@@ -495,7 +495,7 @@ export function MatchExplanation({
         {/* Stacked Proportional Score Bar */}
         <div className="space-y-1.5">
           <div
-            className="w-full h-3 rounded-md overflow-hidden flex bg-[#E5E9F0] border border-[#D9DEE5]"
+            className="w-full h-3 rounded-md overflow-hidden flex bg-[#F1F3F5] border border-[#D9DEE5]"
             title="Score Composition by Signal Factor"
           >
             {scoringFactors.map((f, idx) => {
@@ -531,7 +531,7 @@ export function MatchExplanation({
                   type="button"
                   onMouseEnter={() => setActiveFactorHighlight(f.factor)}
                   onMouseLeave={() => setActiveFactorHighlight(null)}
-                  className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full border text-[10px] font-medium transition-all ${
+                  className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md border text-[10px] font-medium transition-all ${
                     isHighlighted
                       ? 'ring-2 ring-[#176B87] font-bold bg-white'
                       : 'bg-[#F7F8FA] border-[#D9DEE5] text-[#596579] hover:bg-white'
@@ -553,12 +553,12 @@ export function MatchExplanation({
 
         {/* Expanded Mathematical Formula Display */}
         {isEquationExpanded && (
-          <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-xl space-y-2 text-xs">
+          <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg space-y-2 text-xs">
             <div className="flex items-center justify-between text-[11px] text-[#596579]">
               <span className="font-semibold text-[#172033]">
                 Audit Formula Verification:
               </span>
-              <span className="font-mono text-[10px] text-[#8A94A6]">
+              <span className="font-mono text-[10px] text-[#7B8798]">
                 Sum of discrete contributions = Total confidence
               </span>
             </div>
@@ -578,11 +578,11 @@ export function MatchExplanation({
                   >
                     {f.factor.split(' ')[0]} ({f.contribution > 0 ? `+${f.contribution}` : f.contribution})
                   </span>
-                  {idx < scoringFactors.length - 1 && <span className="text-[#8A94A6]">+</span>}
+                  {idx < scoringFactors.length - 1 && <span className="text-[#7B8798]">+</span>}
                 </React.Fragment>
               ))}
             </div>
-            <p className="text-[10px] text-[#8A94A6] italic">
+            <p className="text-[10px] text-[#7B8798] italic">
               Notice: Confidence is not an opaque probability distribution. Every single point is directly substantiated by the verifiable engineering evidence reasons below.
             </p>
           </div>
@@ -606,7 +606,7 @@ export function MatchExplanation({
               Scoring Factors Breakdown ({scoringFactors.length})
             </h4>
           </div>
-          <span className="text-[10px] font-mono text-[#8A94A6]">
+          <span className="text-[10px] font-mono text-[#7B8798]">
             Weights Sum: 100 pts
           </span>
         </div>
@@ -622,9 +622,9 @@ export function MatchExplanation({
                 key={idx}
                 onMouseEnter={() => setActiveFactorHighlight(item.factor)}
                 onMouseLeave={() => setActiveFactorHighlight(null)}
-                className={`p-3.5 rounded-xl border transition-all ${
+                className={`p-3.5 rounded-lg border transition-all ${
                   isHighlighted
-                    ? 'border-[#176B87] shadow-sm bg-[#EDF5F8]/30'
+                    ? 'border-[#176B87] shadow-xs bg-[#EDF5F8]/30'
                     : 'border-[#D9DEE5] bg-white hover:border-[#B3CBE0]'
                 }`}
               >
@@ -638,7 +638,7 @@ export function MatchExplanation({
                         <span className="font-bold text-xs text-[#172033]">
                           {item.factor}
                         </span>
-                        <span className="text-[10px] font-mono text-[#8A94A6]">
+                        <span className="text-[10px] font-mono text-[#7B8798]">
                           (Weight: {item.maxContribution} pts / {item.weightPercent}%)
                         </span>
                         {item.status === 'FULL_MATCH' && (
@@ -668,12 +668,12 @@ export function MatchExplanation({
                         <div className="pt-1 flex flex-wrap gap-2 text-[10px] font-mono">
                           {item.extractedToken && (
                             <span className="px-2 py-0.5 rounded bg-[#F7F8FA] border border-[#D9DEE5] text-[#172033]">
-                              <strong className="text-[#8A94A6] font-sans">Reported:</strong> {item.extractedToken}
+                              <strong className="text-[#7B8798] font-sans">Reported:</strong> {item.extractedToken}
                             </span>
                           )}
                           {item.targetBaselineToken && (
                             <span className="px-2 py-0.5 rounded bg-[#EDF5F8] border border-[#B3CBE0] text-[#176B87]">
-                              <strong className="text-[#8A94A6] font-sans">Baseline:</strong> {item.targetBaselineToken}
+                              <strong className="text-[#7B8798] font-sans">Baseline:</strong> {item.targetBaselineToken}
                             </span>
                           )}
                         </div>
@@ -697,13 +697,13 @@ export function MatchExplanation({
                       >
                         {item.contribution > 0 ? `+${item.contribution}` : item.contribution}
                       </span>
-                      <span className="text-[10px] text-[#8A94A6]">
+                      <span className="text-[10px] text-[#7B8798]">
                         / {item.maxContribution} pts
                       </span>
                     </div>
 
                     {/* Mini contribution bar */}
-                    <div className="w-full h-1.5 bg-[#F0F2F5] rounded-full overflow-hidden border border-[#D9DEE5]">
+                    <div className="w-full h-1.5 bg-[#F1F3F5] rounded-full overflow-hidden border border-[#D9DEE5]">
                       <div
                         className={`h-full rounded-full ${
                           isNegative
@@ -739,13 +739,13 @@ export function MatchExplanation({
                 Alternative Candidates Evaluated ({alternativeCandidates.length})
               </h4>
             </div>
-            <span className="text-[11px] text-[#8A94A6]">
+            <span className="text-[11px] text-[#7B8798]">
               Secondary candidate activities in scope
             </span>
           </div>
 
           {alternativeCandidates.length === 0 ? (
-            <div className="p-3.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-xl text-xs text-[#8A94A6] italic">
+            <div className="p-3.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg text-xs text-[#7B8798] italic">
               No alternative candidates met the minimum candidate threshold (&gt; 25%) in this plant area.
             </div>
           ) : (
@@ -753,7 +753,7 @@ export function MatchExplanation({
               {alternativeCandidates.map((alt) => (
                 <div
                   key={alt.activityId}
-                  className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-xl flex items-start justify-between gap-3 text-xs hover:border-[#B3CBE0] transition-colors"
+                  className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg flex items-start justify-between gap-3 text-xs hover:border-[#B3CBE0] transition-colors"
                 >
                   <div className="space-y-1 min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
@@ -819,7 +819,7 @@ export function MatchExplanation({
             )}
           </div>
 
-          <div className="p-3.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-xl flex items-start justify-between gap-3 text-xs">
+          <div className="p-3.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg flex items-start justify-between gap-3 text-xs">
             <div className="flex items-start gap-2.5 min-w-0">
               <div className="w-8 h-8 rounded-lg bg-white border border-[#D9DEE5] flex items-center justify-center shrink-0 mt-0.5">
                 {getEvidenceIcon(evidenceSource.type)}
@@ -830,7 +830,7 @@ export function MatchExplanation({
                     {evidenceSource.title}
                   </span>
                   {evidenceSource.id && (
-                    <span className="text-[10px] font-mono text-[#8A94A6]">
+                    <span className="text-[10px] font-mono text-[#7B8798]">
                       ({evidenceSource.id})
                     </span>
                   )}
@@ -842,7 +842,7 @@ export function MatchExplanation({
                   </p>
                 )}
 
-                <div className="flex items-center gap-3 text-[10px] text-[#8A94A6] flex-wrap pt-0.5">
+                <div className="flex items-center gap-3 text-[10px] text-[#7B8798] flex-wrap pt-0.5">
                   {evidenceSource.uploadedBy && (
                     <span className="inline-flex items-center gap-1">
                       <User className="w-3 h-3" />
@@ -893,18 +893,18 @@ export function MatchExplanation({
               <span className="font-mono text-[10px] px-1.5 py-0.2 rounded bg-white border border-[#D9DEE5] text-[#176B87]">
                 {algorithmVersion.version}
               </span>
-              <span className="text-[10px] text-[#8A94A6]">
+              <span className="text-[10px] text-[#7B8798]">
                 Ruleset: {algorithmVersion.rulepack}
               </span>
             </div>
 
-            <div className="flex items-center gap-1 font-mono text-[10px] text-[#8A94A6]">
+            <div className="flex items-center gap-1 font-mono text-[10px] text-[#7B8798]">
               <Clock className="w-3 h-3" />
               <span>Generated: {generatedTimestamp}</span>
             </div>
           </div>
 
-          <div className="flex items-center justify-between flex-wrap gap-2 text-[10px] text-[#8A94A6] pt-1 border-t border-[#D9DEE5]/60">
+          <div className="flex items-center justify-between flex-wrap gap-2 text-[10px] text-[#7B8798] pt-1 border-t border-[#D9DEE5]/60">
             <p className="max-w-xl">
               {algorithmVersion.description}
             </p>

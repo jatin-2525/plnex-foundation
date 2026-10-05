@@ -90,7 +90,7 @@ export default function FieldPage() {
       accessorKey: 'id',
       width: '120px',
       cell: ({ row }) => (
-        <span className="font-mono text-xs font-bold text-[#596579] bg-[#F0F2F5] px-2 py-0.5 rounded">
+        <span className="font-mono text-xs font-bold text-[#596579] bg-[#F1F3F5] px-2 py-0.5 rounded">
           {row.id}
         </span>
       ),
@@ -137,7 +137,7 @@ export default function FieldPage() {
               <p className="text-[11px] text-[#596579] truncate">{row.matchedActivityName}</p>
             </>
           ) : (
-            <span className="text-xs text-[#8A94A6] italic">Unmatched (Routed to Review)</span>
+            <span className="text-xs text-[#7B8798] italic">Unmatched (Routed to Review)</span>
           )}
         </div>
       ),
@@ -175,7 +175,7 @@ export default function FieldPage() {
           <div className="flex items-center gap-2">
             <Link
               href="/field/capture"
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-white hover:bg-[#F0F2F5] text-[#172033] border border-[#D9DEE5] text-xs font-bold rounded-lg shadow-2xs transition-colors"
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-white hover:bg-[#F1F3F5] text-[#172033] border border-[#D9DEE5] text-xs font-bold rounded-lg shadow-2xs transition-colors"
             >
               <Sparkles className="w-3.5 h-3.5 text-[#176B87]" />
               <span>Field Capture</span>
@@ -217,7 +217,7 @@ export default function FieldPage() {
                 className={`flex items-center gap-2 px-4 py-3 text-xs font-medium border-b-2 whitespace-nowrap transition-colors ${
                   activeTab === tab.id
                     ? 'border-[#176B87] text-[#176B87] bg-white'
-                    : 'border-transparent text-[#596579] hover:text-[#172033] hover:bg-[#F0F2F5]'
+                    : 'border-transparent text-[#596579] hover:text-[#172033] hover:bg-[#F1F3F5]'
                 }`}
               >
                 <tab.icon className="w-3.5 h-3.5" />

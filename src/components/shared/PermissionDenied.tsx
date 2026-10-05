@@ -33,7 +33,7 @@ export function PermissionDenied({
       </p>
 
       <div className="flex flex-wrap items-center justify-center gap-2 mb-6">
-        <span className="px-2.5 py-1 bg-[#F0F2F5] border border-[#D9DEE5] rounded text-xs font-mono text-[#172033]">
+        <span className="px-2.5 py-1 bg-[#F1F3F5] border border-[#D9DEE5] rounded text-xs font-mono text-[#172033]">
           Current Role: <strong className="uppercase">{role}</strong>
         </span>
         <span className="px-2.5 py-1 bg-[#FDF6ED] border border-[#F0D4A6] rounded text-xs font-mono text-[#D98B32]">
@@ -44,7 +44,7 @@ export function PermissionDenied({
       {onGoBack && (
         <button
           onClick={onGoBack}
-          className="inline-flex items-center gap-2 px-4 py-2 bg-white hover:bg-[#F0F2F5] text-[#172033] border border-[#D9DEE5] text-sm font-medium rounded-md transition-colors"
+          className="inline-flex items-center gap-2 px-4 py-2 bg-white hover:bg-[#F1F3F5] text-[#172033] border border-[#D9DEE5] text-sm font-medium rounded-md transition-colors"
         >
           <ArrowLeft className="w-4 h-4 text-[#596579]" />
           Return to Overview

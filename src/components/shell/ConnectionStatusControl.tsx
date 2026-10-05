@@ -79,7 +79,7 @@ export function ConnectionStatusControl() {
         {effectiveStatus === 'ONLINE' ? (
           <span className="w-2 h-2 rounded-full bg-[#2E7D5B] ring-2 ring-[#EDF7F2]" />
         ) : effectiveStatus === 'OFFLINE' ? (
-          <span className="w-2 h-2 rounded-full bg-[#D98B32] ring-2 ring-[#FEF3C7]" />
+          <span className="w-2 h-2 rounded-full bg-[#D98B32] ring-2 ring-[#FDF6ED]" />
         ) : (
           <RefreshCw className="w-2.5 h-2.5 text-[#176B87] animate-spin" />
         )}
@@ -94,16 +94,16 @@ export function ConnectionStatusControl() {
         </span>
 
         {/* Mode Tag */}
-        <span className="text-[10px] text-[#8A94A6] hidden sm:inline">
+        <span className="text-[10px] text-[#7B8798] hidden sm:inline">
           {connectionMode === 'AUTOMATIC' ? '(Auto)' : `(${connectionMode.toLowerCase()})`}
         </span>
 
-        <ChevronDown className={`w-3 h-3 text-[#8A94A6] transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+        <ChevronDown className={`w-3 h-3 text-[#7B8798] transition-transform ${isOpen ? 'rotate-180' : ''}`} />
       </button>
 
       {/* Dropdown Popover */}
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-80 sm:w-96 bg-white border border-[#D9DEE5] rounded-xl shadow-lg z-50 p-4 text-xs space-y-3.5 animate-in fade-in duration-150">
+        <div className="absolute right-0 mt-2 w-80 sm:w-96 bg-white border border-[#D9DEE5] rounded-lg shadow-lg z-50 p-4 text-xs space-y-3.5 animate-in fade-in duration-150">
           {/* Header */}
           <div className="flex items-center justify-between border-b border-[#D9DEE5]/60 pb-2.5">
             <div>
@@ -127,7 +127,7 @@ export function ConnectionStatusControl() {
 
           {/* 3 Modes Selector (Priority 2 Requirement 1) */}
           <div className="space-y-1.5">
-            <span className="text-[10px] uppercase font-bold text-[#8A94A6] tracking-wider block">
+            <span className="text-[10px] uppercase font-bold text-[#7B8798] tracking-wider block">
               Connection Mode
             </span>
 
@@ -227,7 +227,7 @@ export function ConnectionStatusControl() {
 
           {/* Offline Mode Notice Banner (Priority 2 Requirement 3) */}
           {effectiveStatus === 'OFFLINE' && (
-            <div className="p-2.5 rounded-lg bg-[#FEF3C7]/60 border border-[#FDE68A] text-[11px] text-[#92400E] space-y-0.5">
+            <div className="p-2.5 rounded-lg bg-[#FDF6ED]/60 border border-[#F0D4A6] text-[11px] text-[#D98B32] space-y-0.5">
               <span className="font-bold block uppercase tracking-wider text-[10px]">
                 OFFLINE MODE
               </span>
@@ -262,7 +262,7 @@ export function ConnectionStatusControl() {
           {isPrivilegedAdmin && (
             <div className="pt-2 border-t border-[#D9DEE5]/60 space-y-2">
               <div className="flex items-center justify-between">
-                <span className="text-[10px] font-bold text-[#8A94A6] uppercase tracking-wider flex items-center gap-1">
+                <span className="text-[10px] font-bold text-[#7B8798] uppercase tracking-wider flex items-center gap-1">
                   <Sliders className="w-3 h-3 text-[#176B87]" />
                   Admin Test Mode
                 </span>
@@ -316,7 +316,7 @@ export function ConnectionStatusControl() {
 
                   {/* Quick Acceptance Test Runner */}
                   <div className="pt-1.5 border-t border-[#D9DEE5]/60">
-                    <span className="text-[10px] text-[#8A94A6] block font-bold mb-1">
+                    <span className="text-[10px] text-[#7B8798] block font-bold mb-1">
                       Quick Acceptance Scenarios:
                     </span>
                     <div className="grid grid-cols-2 gap-1.5">
@@ -326,7 +326,7 @@ export function ConnectionStatusControl() {
                           const res = await triggerTestScenario('online_capture');
                           addToast({ type: 'success', title: 'Test Scenario 1', description: res });
                         }}
-                        className="p-1 text-[10px] bg-white border border-[#D9DEE5] rounded hover:bg-[#F0F2F5] text-left truncate"
+                        className="p-1 text-[10px] bg-white border border-[#D9DEE5] rounded hover:bg-[#F1F3F5] text-left truncate"
                         title="Scenario 1: Online -> capture -> server confirms"
                       >
                         1. Online Capture
@@ -337,7 +337,7 @@ export function ConnectionStatusControl() {
                           const res = await triggerTestScenario('offline_capture');
                           addToast({ type: 'warning', title: 'Test Scenario 2', description: res });
                         }}
-                        className="p-1 text-[10px] bg-white border border-[#D9DEE5] rounded hover:bg-[#F0F2F5] text-left truncate"
+                        className="p-1 text-[10px] bg-white border border-[#D9DEE5] rounded hover:bg-[#F1F3F5] text-left truncate"
                         title="Scenario 2: Offline -> capture -> local save"
                       >
                         2. Offline Capture
@@ -348,7 +348,7 @@ export function ConnectionStatusControl() {
                           const res = await triggerTestScenario('return_online_sync');
                           addToast({ type: 'success', title: 'Test Scenario 4', description: res });
                         }}
-                        className="p-1 text-[10px] bg-white border border-[#D9DEE5] rounded hover:bg-[#F0F2F5] text-left truncate"
+                        className="p-1 text-[10px] bg-white border border-[#D9DEE5] rounded hover:bg-[#F1F3F5] text-left truncate"
                         title="Scenario 4: Return Online -> queue syncs"
                       >
                         3. Return & Sync
@@ -359,7 +359,7 @@ export function ConnectionStatusControl() {
                           const res = await triggerTestScenario('server_failure');
                           addToast({ type: 'error', title: 'Test Scenario 5', description: res });
                         }}
-                        className="p-1 text-[10px] bg-white border border-[#D9DEE5] rounded hover:bg-[#F0F2F5] text-left truncate"
+                        className="p-1 text-[10px] bg-white border border-[#D9DEE5] rounded hover:bg-[#F1F3F5] text-left truncate"
                         title="Scenario 5: Server failure -> item remains Failed"
                       >
                         4. Test Failure

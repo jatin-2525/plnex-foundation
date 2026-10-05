@@ -214,7 +214,7 @@ export function Sidebar({ collapsed, onToggle, mobileMenuOpen, onCloseMobile }: 
         {navGroups.map((group, gIdx) => (
           <div key={gIdx} className="space-y-1">
             {!collapsed && group.group && (
-              <h4 className="px-3 pt-2 text-[10px] font-bold uppercase tracking-wider text-[#8A94A6]">
+              <h4 className="px-3 pt-2 text-[10px] font-bold uppercase tracking-wider text-[#7B8798]">
                 {group.group}
               </h4>
             )}
@@ -229,7 +229,7 @@ export function Sidebar({ collapsed, onToggle, mobileMenuOpen, onCloseMobile }: 
                   className={`flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-medium transition-colors relative group ${
                     isActive
                       ? 'bg-[#EDF5F8] text-[#176B87] font-semibold'
-                      : 'text-[#596579] hover:bg-[#F0F2F5] hover:text-[#172033]'
+                      : 'text-[#596579] hover:bg-[#F1F3F5] hover:text-[#172033]'
                   }`}
                   title={collapsed ? (item.isLive ? `${item.label} (Live)` : item.label) : undefined}
                 >
@@ -263,10 +263,10 @@ export function Sidebar({ collapsed, onToggle, mobileMenuOpen, onCloseMobile }: 
                           className={`ml-auto pl-3 flex-shrink-0 inline-flex items-center justify-center`}
                         >
                           <span
-                            className={`px-2 py-0.5 rounded-full text-[10px] font-mono font-bold leading-none ${
+                            className={`px-2 py-0.5 rounded-md text-[10px] font-mono font-bold leading-none ${
                               typeof item.badge === 'number'
                                 ? 'bg-[#FDF6ED] text-[#D98B32] border border-[#F0D4A6]'
-                                : 'bg-[#EDF2F8] text-[#176B87] border border-[#B3CBE0]'
+                                : 'bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0]'
                             }`}
                           >
                             {item.badge}
@@ -285,7 +285,7 @@ export function Sidebar({ collapsed, onToggle, mobileMenuOpen, onCloseMobile }: 
       {/* Footer collapse button */}
       <div className="p-2 border-t border-[#D9DEE5] bg-[#F7F8FA] flex items-center justify-between">
         {!collapsed && (
-          <div className="px-2 text-[10px] text-[#8A94A6] font-mono">
+          <div className="px-2 text-[10px] text-[#7B8798] font-mono">
             <span>PLnEX • {role.toUpperCase()} • V3 · Rev 3.2</span>
           </div>
         )}

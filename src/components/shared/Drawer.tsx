@@ -59,7 +59,7 @@ export function Drawer({
       {/* Container: Fullscreen sheet on mobile, slide-over drawer on tablet/desktop */}
       <div className="fixed inset-0 sm:inset-y-0 sm:right-0 sm:left-auto max-w-full flex sm:pl-10 z-10">
         <div
-          className={`w-full sm:w-screen sm:${widthClass} h-full bg-white sm:border-l border-[#D9DEE5] shadow-2xl flex flex-col transform transition-transform animate-in slide-in-from-bottom sm:slide-in-from-right duration-200`}
+          className={`w-full sm:w-screen sm:${widthClass} h-full bg-white sm:border-l border-[#D9DEE5] shadow-lg flex flex-col transform transition-transform duration-150`}
         >
           {/* Header */}
           <div className="flex items-start justify-between px-4 sm:px-6 py-3.5 sm:py-4 border-b border-[#D9DEE5] bg-white flex-shrink-0">
@@ -69,7 +69,7 @@ export function Drawer({
             </div>
             <button
               onClick={onClose}
-              className="min-w-[44px] min-h-[44px] flex items-center justify-center p-2 text-[#596579] hover:text-[#172033] hover:bg-[#F0F2F5] rounded-lg transition-colors -mr-1 flex-shrink-0 cursor-pointer"
+              className="min-w-[44px] min-h-[44px] flex items-center justify-center p-2 text-[#596579] hover:text-[#172033] hover:bg-[#F1F3F5] rounded-md transition-colors -mr-1 flex-shrink-0 cursor-pointer"
               aria-label="Close drawer"
             >
               <X className="w-5 h-5" />

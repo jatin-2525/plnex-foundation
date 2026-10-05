@@ -91,7 +91,7 @@ export default function VariancePage() {
       <StateWrapper>
         {/* Section 1: "Why is this delayed?" Dependency Chain Visualization */}
         <div className="bg-white border border-[#D9DEE5] rounded-lg p-5 space-y-4">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#E8EBF0]">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#D9DEE5]">
             <div>
               <div className="flex items-center gap-2">
                 <GitBranch className="w-4 h-4 text-[#176B87]" />
@@ -150,9 +150,9 @@ export default function VariancePage() {
                       <VarianceBadge daysDelay={step.delayDays} size="sm" />
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs mt-2 pt-2 border-t border-[#E8EBF0]">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs mt-2 pt-2 border-t border-[#D9DEE5]">
                       <div>
-                        <span className="text-[10px] uppercase font-bold text-[#8A94A6]">Cause / Origin</span>
+                        <span className="text-[10px] uppercase font-bold text-[#7B8798]">Cause / Origin</span>
                         <p className="text-[#596579] mt-0.5">{step.reason}</p>
                       </div>
                       <div>
@@ -169,7 +169,7 @@ export default function VariancePage() {
 
         {/* Section 2: Deterministic What-If Simulator */}
         <div className="bg-white border border-[#D9DEE5] rounded-lg p-5 space-y-4">
-          <div className="pb-3 border-b border-[#E8EBF0] flex items-center justify-between flex-wrap gap-2">
+          <div className="pb-3 border-b border-[#D9DEE5] flex items-center justify-between flex-wrap gap-2">
             <div>
               <div className="flex items-center gap-2">
                 <Play className="w-4 h-4 text-[#176B87]" />
@@ -239,7 +239,7 @@ export default function VariancePage() {
           {/* Simulation Output */}
           {simulationResult && (
             <div className="p-4 border rounded-lg bg-white border-[#D9DEE5] space-y-4 animate-in fade-in duration-150">
-              <div className="flex items-center justify-between pb-3 border-b border-[#E8EBF0]">
+              <div className="flex items-center justify-between pb-3 border-b border-[#D9DEE5]">
                 <div>
                   <h4 className="text-xs font-bold uppercase tracking-wider text-[#172033]">
                     Simulation Results: What If +{simulationResult.additionalDays} Days Occurs?
@@ -293,7 +293,7 @@ export default function VariancePage() {
                     ))}
                   </div>
                 ) : (
-                  <p className="text-xs text-[#8A94A6]">
+                  <p className="text-xs text-[#7B8798]">
                     No downstream successors impacted; activity has sufficient free float buffer.
                   </p>
                 )}
@@ -304,7 +304,7 @@ export default function VariancePage() {
 
         {/* Section 3: Project Memory — Institutional Knowledge */}
         <div className="bg-white border border-[#D9DEE5] rounded-lg p-5 space-y-4">
-          <div className="flex items-center gap-2 pb-3 border-b border-[#E8EBF0]">
+          <div className="flex items-center gap-2 pb-3 border-b border-[#D9DEE5]">
             <BookOpen className="w-4 h-4 text-[#176B87]" />
             <div>
               <h3 className="text-sm font-bold text-[#172033]">
@@ -321,7 +321,7 @@ export default function VariancePage() {
               <div key={mem.id} className="p-4 border border-[#D9DEE5] rounded-lg bg-[#F7F8FA]">
                 <div className="flex items-center justify-between mb-1">
                   <span className="font-mono text-xs font-bold text-[#176B87]">{mem.projectCode}</span>
-                  <span className="px-2 py-0.5 bg-[#F0F2F5] text-xs font-medium rounded text-[#596579]">
+                  <span className="px-2 py-0.5 bg-[#F1F3F5] text-xs font-medium rounded text-[#596579]">
                     {mem.discipline}
                   </span>
                 </div>

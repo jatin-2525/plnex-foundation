@@ -86,17 +86,17 @@ export default function AdminOrganizationsPage() {
 
               <div className="mt-3 space-y-1.5 text-xs text-[#596579]">
                 <div className="flex items-center gap-1.5">
-                  <MapPin className="w-3.5 h-3.5 text-[#8A94A6]" />
+                  <MapPin className="w-3.5 h-3.5 text-[#7B8798]" />
                   <span>{org.locations}</span>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <Briefcase className="w-3.5 h-3.5 text-[#8A94A6]" />
+                  <Briefcase className="w-3.5 h-3.5 text-[#7B8798]" />
                   <span>{org.projects} Linked Projects • {org.activeUsers} Personnel</span>
                 </div>
               </div>
             </div>
 
-            <div className="mt-4 pt-3 border-t border-[#E8EBF0] flex items-center justify-end">
+            <div className="mt-4 pt-3 border-t border-[#D9DEE5] flex items-center justify-end">
               <button
                 type="button"
                 className="px-2.5 py-1 text-xs text-[#176B87] hover:bg-[#EDF5F8] rounded font-medium transition-colors"

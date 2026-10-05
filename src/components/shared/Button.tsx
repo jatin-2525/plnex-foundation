@@ -16,19 +16,19 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 export const BUTTON_VARIANTS: Record<ButtonVariant, string> = {
   primary:
-    'bg-[#176B87] hover:bg-[#135A72] active:bg-[#0E4658] text-white border border-[#176B87] shadow-xs disabled:bg-[#8A94A6] disabled:border-[#8A94A6]',
+    'bg-[#176B87] hover:bg-[#135A72] active:bg-[#0F4A5E] text-white border border-[#176B87] shadow-xs disabled:bg-[#7B8798] disabled:border-[#7B8798]',
   secondary:
-    'bg-white hover:bg-[#F0F2F5] active:bg-[#E8EBF0] text-[#172033] border border-[#D9DEE5] hover:border-[#CBD5E1] shadow-xs disabled:text-[#8A94A6] disabled:border-[#E8EBF0]',
+    'bg-white hover:bg-[#F1F3F5] active:bg-[#D9DEE5] text-[#172033] border border-[#D9DEE5] hover:border-[#CBD5E1] shadow-xs disabled:text-[#7B8798] disabled:border-[#D9DEE5]',
   tertiary:
-    'bg-transparent hover:bg-[#F0F2F5] active:bg-[#E8EBF0] text-[#596579] hover:text-[#172033] border border-transparent disabled:text-[#8A94A6]',
+    'bg-transparent hover:bg-[#F1F3F5] active:bg-[#D9DEE5] text-[#596579] hover:text-[#172033] border border-transparent disabled:text-[#7B8798]',
   danger:
-    'bg-[#FEF2F2] hover:bg-[#FEE2E2] active:bg-[#FECACA] text-[#B91C1C] border border-[#FECACA] hover:border-[#FCA5A5] shadow-xs disabled:text-[#8A94A6]',
+    'bg-[#FBEFEE] hover:bg-[#F8E3E1] active:bg-[#F4D0CC] text-[#B5473C] border border-[#E4B0AA] shadow-xs disabled:text-[#7B8798]',
 };
 
 export const BUTTON_SIZES: Record<ButtonSize, string> = {
   sm: 'h-8 px-3 text-xs gap-1.5',
-  md: 'h-9 px-4 text-xs font-medium gap-2',
-  lg: 'h-10 px-5 text-sm font-medium gap-2.5',
+  md: 'h-9 px-3.5 text-xs font-semibold gap-2',
+  lg: 'h-10 px-4 text-sm font-semibold gap-2.5',
 };
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
@@ -52,7 +52,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         type={type}
         disabled={disabled || isLoading}
-        className={`inline-flex items-center justify-center font-medium rounded-lg transition-colors cursor-pointer disabled:cursor-not-allowed select-none ${BUTTON_VARIANTS[variant]} ${BUTTON_SIZES[size]} ${className}`}
+        className={`inline-flex items-center justify-center font-medium rounded-md transition-colors cursor-pointer disabled:cursor-not-allowed select-none ${BUTTON_VARIANTS[variant]} ${BUTTON_SIZES[size]} ${className}`}
         {...rest}
       >
         {isLoading ? (

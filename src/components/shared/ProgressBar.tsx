@@ -35,7 +35,7 @@ export function ProgressBar({
   } else if (status === 'in-progress') {
     barColor = colors.accent.primary;
   } else if (status === 'pending' || status === 'not-started') {
-    barColor = '#8A94A6';
+    barColor = '#7B8798';
   }
 
   const heightClasses = {
@@ -59,7 +59,7 @@ export function ProgressBar({
         </div>
       )}
       <div
-        className={`w-full bg-[#E8EBF0] rounded-full overflow-hidden relative ${heightClasses}`}
+        className={`w-full bg-[#D9DEE5] rounded-full overflow-hidden relative ${heightClasses}`}
         role="progressbar"
         aria-valuenow={clampedActual}
         aria-valuemin={0}

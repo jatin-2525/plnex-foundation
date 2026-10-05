@@ -50,7 +50,7 @@ export function PageHeader({
       </div>
 
       {metadata && (
-        <div className="mt-4 pt-3 border-t border-[#E8EBF0] flex items-center gap-4 text-xs md:text-[13px] text-[#596579] flex-wrap">
+        <div className="mt-4 pt-3 border-t border-[#D9DEE5] flex items-center gap-4 text-xs md:text-[13px] text-[#596579] flex-wrap">
           {metadata}
         </div>
       )}

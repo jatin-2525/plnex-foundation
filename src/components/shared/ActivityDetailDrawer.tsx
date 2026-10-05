@@ -147,15 +147,15 @@ export function ActivityDetailDrawer({
       case 'Piping':
         return { bg: 'bg-[#EDF5F8]', text: 'text-[#176B87]', border: 'border-[#B3CBE0]' };
       case 'Civil':
-        return { bg: 'bg-[#FDF5E8]', text: 'text-[#B87326]', border: 'border-[#F0D4A6]' };
+        return { bg: 'bg-[#FDF6ED]', text: 'text-[#D98B32]', border: 'border-[#F0D4A6]' };
       case 'Mechanical':
-        return { bg: 'bg-[#F3EFF8]', text: 'text-[#6B4E9B]', border: 'border-[#D4C7E8]' };
+        return { bg: 'bg-[#EDF5F8]', text: 'text-[#3B6EA8]', border: 'border-[#B3CBE0]' };
       case 'Electrical':
-        return { bg: 'bg-[#EFF8F3]', text: 'text-[#2E7D5B]', border: 'border-[#BEE2D1]' };
+        return { bg: 'bg-[#EDF7F2]', text: 'text-[#2E7D5B]', border: 'border-[#B8DCC9]' };
       case 'Instrumentation':
-        return { bg: 'bg-[#FDF0EE]', text: 'text-[#B5473C]', border: 'border-[#E4B0AA]' };
+        return { bg: 'bg-[#FBEFEE]', text: 'text-[#B5473C]', border: 'border-[#E4B0AA]' };
       default:
-        return { bg: 'bg-[#F0F2F5]', text: 'text-[#596579]', border: 'border-[#D9DEE5]' };
+        return { bg: 'bg-[#F1F3F5]', text: 'text-[#596579]', border: 'border-[#D9DEE5]' };
     }
   };
 
@@ -218,7 +218,7 @@ export function ActivityDetailDrawer({
 
       {/* Container: Fullscreen sheet on mobile, slide-over drawer on tablet/desktop */}
       <div className="fixed inset-0 sm:inset-y-0 sm:right-0 sm:left-auto max-w-full flex sm:pl-10 z-10">
-        <div className="w-full sm:w-screen sm:max-w-3xl h-full bg-white sm:border-l border-[#D9DEE5] shadow-2xl flex flex-col transform transition-transform animate-in slide-in-from-bottom sm:slide-in-from-right duration-200">
+        <div className="w-full sm:w-screen sm:max-w-3xl h-full bg-white sm:border-l border-[#D9DEE5] shadow-lg flex flex-col transform transition-transform duration-150">
           
           {/* =========================================================================
               HEADER:
@@ -237,7 +237,7 @@ export function ActivityDetailDrawer({
 
                   {/* Critical Path Badge */}
                   {activity.isCritical && (
-                    <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-[#FDF0EE] text-[#B5473C] border border-[#E4B0AA] uppercase tracking-wider inline-flex items-center gap-1">
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA] uppercase tracking-wider inline-flex items-center gap-1">
                       <AlertTriangle className="w-3 h-3" />
                       <span>Critical Path (Float: 0d)</span>
                     </span>
@@ -264,7 +264,7 @@ export function ActivityDetailDrawer({
               <button
                 type="button"
                 onClick={handleClose}
-                className="min-w-[44px] min-h-[44px] flex items-center justify-center p-2 text-[#596579] hover:text-[#172033] hover:bg-[#F0F2F5] rounded-lg transition-colors -mr-1 flex-shrink-0 cursor-pointer"
+                className="min-w-[44px] min-h-[44px] flex items-center justify-center p-2 text-[#596579] hover:text-[#172033] hover:bg-[#F1F3F5] rounded-lg transition-colors -mr-1 flex-shrink-0 cursor-pointer"
                 aria-label="Close activity detail drawer"
               >
                 <X className="w-5 h-5" />
@@ -285,33 +285,33 @@ export function ActivityDetailDrawer({
             </div>
 
             {/* Advanced Schedule Metadata Strip (Moved from Default Table) */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-1.5 pt-2 border-t border-[#E8EBF0] text-[11px] font-mono">
+            <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-1.5 pt-2 border-t border-[#D9DEE5] text-[11px] font-mono">
               <div className="px-2 py-1 bg-[#F7F8FA] rounded border border-[#D9DEE5]">
-                <span className="text-[9px] text-[#8A94A6] uppercase font-bold block">WBS</span>
+                <span className="text-[9px] text-[#7B8798] uppercase font-bold block">WBS</span>
                 <span className="text-[#172033] font-semibold truncate block">{activity.wbs}</span>
               </div>
               <div className="px-2 py-1 bg-[#F7F8FA] rounded border border-[#D9DEE5]">
-                <span className="text-[9px] text-[#8A94A6] uppercase font-bold block">Actual Start</span>
+                <span className="text-[9px] text-[#7B8798] uppercase font-bold block">Actual Start</span>
                 <span className="text-[#172033] font-semibold truncate block">{activity.actualStart || 'Pending'}</span>
               </div>
               <div className="px-2 py-1 bg-[#F7F8FA] rounded border border-[#D9DEE5]">
-                <span className="text-[9px] text-[#8A94A6] uppercase font-bold block">Actual Finish</span>
+                <span className="text-[9px] text-[#7B8798] uppercase font-bold block">Actual Finish</span>
                 <span className="text-[#172033] font-semibold truncate block">{activity.actualFinish || 'In Progress'}</span>
               </div>
               <div className="px-2 py-1 bg-[#F7F8FA] rounded border border-[#D9DEE5]">
-                <span className="text-[9px] text-[#8A94A6] uppercase font-bold block">Dependencies</span>
+                <span className="text-[9px] text-[#7B8798] uppercase font-bold block">Dependencies</span>
                 <span className="text-[#176B87] font-semibold truncate block">{detailedPredecessors.length + detailedSuccessors.length} links</span>
               </div>
               <div className="px-2 py-1 bg-[#F7F8FA] rounded border border-[#D9DEE5]">
-                <span className="text-[9px] text-[#8A94A6] uppercase font-bold block">Evidence</span>
+                <span className="text-[9px] text-[#7B8798] uppercase font-bold block">Evidence</span>
                 <span className="text-[#2E7D5B] font-semibold truncate block">{linkedEvidenceItems.length} items</span>
               </div>
               <div className="px-2 py-1 bg-[#F7F8FA] rounded border border-[#D9DEE5]">
-                <span className="text-[9px] text-[#8A94A6] uppercase font-bold block">Execution Events</span>
+                <span className="text-[9px] text-[#7B8798] uppercase font-bold block">Execution Events</span>
                 <span className="text-[#176B87] font-semibold truncate block">{linkedExecutionEvents.length} events</span>
               </div>
               <div className="px-2 py-1 bg-[#F7F8FA] rounded border border-[#D9DEE5]">
-                <span className="text-[9px] text-[#8A94A6] uppercase font-bold block">History</span>
+                <span className="text-[9px] text-[#7B8798] uppercase font-bold block">History</span>
                 <span className="text-[#596579] font-semibold truncate block">{auditHistory.length} logs</span>
               </div>
             </div>
@@ -333,7 +333,7 @@ export function ActivityDetailDrawer({
                   className={`flex items-center gap-1.5 py-3 px-3.5 text-xs font-semibold whitespace-nowrap border-b-2 transition-colors ${
                     isActive
                       ? 'border-[#176B87] text-[#176B87] bg-white rounded-t-md font-bold'
-                      : 'border-transparent text-[#596579] hover:text-[#172033] hover:bg-[#F0F2F5]'
+                      : 'border-transparent text-[#596579] hover:text-[#172033] hover:bg-[#F1F3F5]'
                   }`}
                 >
                   <Icon className="w-3.5 h-3.5" />
@@ -343,7 +343,7 @@ export function ActivityDetailDrawer({
                       className={`ml-0.5 px-1.5 py-0.2 rounded-full text-[10px] font-mono ${
                         isActive
                           ? 'bg-[#176B87] text-white'
-                          : 'bg-[#E8EBF0] text-[#596579]'
+                          : 'bg-[#D9DEE5] text-[#596579]'
                       }`}
                     >
                       {tab.count}
@@ -365,7 +365,7 @@ export function ActivityDetailDrawer({
             {activeTab === 'overview' && (
               <div className="space-y-6 animate-in fade-in duration-150">
                 {/* Project Context Card */}
-                <div className="p-4 bg-[#F7F8FA] border border-[#D9DEE5] rounded-xl space-y-3">
+                <div className="p-4 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg space-y-3">
                   <div className="flex items-center justify-between border-b border-[#D9DEE5]/60 pb-2">
                     <span className="text-[11px] font-bold uppercase tracking-wider text-[#596579] flex items-center gap-1.5">
                       <Building2 className="w-3.5 h-3.5 text-[#176B87]" />
@@ -378,22 +378,22 @@ export function ActivityDetailDrawer({
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
                     <div>
-                      <span className="text-[#8A94A6] block text-[10px] uppercase font-bold">Project Name</span>
+                      <span className="text-[#7B8798] block text-[10px] uppercase font-bold">Project Name</span>
                       <strong className="text-[#172033]">{projectName}</strong>
                     </div>
                     <div>
-                      <span className="text-[#8A94A6] block text-[10px] uppercase font-bold">Field Location</span>
+                      <span className="text-[#7B8798] block text-[10px] uppercase font-bold">Field Location</span>
                       <span className="text-[#172033]">{location}</span>
                     </div>
                     <div>
-                      <span className="text-[#8A94A6] block text-[10px] uppercase font-bold">Assigned Lead Engineer</span>
+                      <span className="text-[#7B8798] block text-[10px] uppercase font-bold">Assigned Lead Engineer</span>
                       <span className="font-semibold text-[#176B87] flex items-center gap-1">
                         <HardHat className="w-3 h-3" />
                         {activity.assignedEngineer}
                       </span>
                     </div>
                     <div>
-                      <span className="text-[#8A94A6] block text-[10px] uppercase font-bold">Active Schedule Baseline</span>
+                      <span className="text-[#7B8798] block text-[10px] uppercase font-bold">Active Schedule Baseline</span>
                       <span className="font-mono text-[#596579]">V3 · Rev 3.2 (Primavera P6 XML)</span>
                     </div>
                   </div>
@@ -406,10 +406,10 @@ export function ActivityDetailDrawer({
                       <Layers className="w-3.5 h-3.5" />
                       L1–L6 Work Breakdown Hierarchy
                     </h3>
-                    <span className="text-[11px] text-[#8A94A6] font-mono">6 Levels Defined</span>
+                    <span className="text-[11px] text-[#7B8798] font-mono">6 Levels Defined</span>
                   </div>
 
-                  <div className="space-y-2 border border-[#D9DEE5] rounded-xl p-3 bg-white divide-y divide-[#E8EBF0]">
+                  <div className="space-y-2 border border-[#D9DEE5] rounded-lg p-3 bg-white divide-y divide-[#D9DEE5]">
                     {hierarchy.map((step) => {
                       const isTarget = step.isCurrent;
                       return (
@@ -423,7 +423,7 @@ export function ActivityDetailDrawer({
                             className={`font-mono text-[10px] font-bold px-2 py-0.5 rounded border flex-shrink-0 mt-0.5 ${
                               isTarget
                                 ? 'bg-[#176B87] text-white border-[#176B87]'
-                                : 'bg-[#F0F2F5] text-[#596579] border-[#D9DEE5]'
+                                : 'bg-[#F1F3F5] text-[#596579] border-[#D9DEE5]'
                             }`}
                           >
                             {step.level}
@@ -434,7 +434,7 @@ export function ActivityDetailDrawer({
                               <span className="font-mono text-xs font-semibold text-[#172033]">
                                 {step.code}
                               </span>
-                              <span className="text-[10px] text-[#8A94A6] font-medium uppercase">
+                              <span className="text-[10px] text-[#7B8798] font-medium uppercase">
                                 {step.category}
                               </span>
                             </div>
@@ -461,22 +461,22 @@ export function ActivityDetailDrawer({
                 {/* Classification Details Grid */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {/* WBS & Classification Card */}
-                  <div className="p-4 bg-white border border-[#D9DEE5] rounded-xl space-y-2.5">
+                  <div className="p-4 bg-white border border-[#D9DEE5] rounded-lg space-y-2.5">
                     <span className="text-[11px] font-bold uppercase tracking-wider text-[#596579] block">
                       WBS &amp; Discipline Classification
                     </span>
                     <div className="space-y-2 text-xs">
-                      <div className="flex justify-between items-center py-1 border-b border-[#E8EBF0]">
+                      <div className="flex justify-between items-center py-1 border-b border-[#D9DEE5]">
                         <span className="text-[#596579]">WBS Code:</span>
                         <strong className="font-mono text-[#172033]">{activity.wbs}</strong>
                       </div>
-                      <div className="flex justify-between items-center py-1 border-b border-[#E8EBF0]">
+                      <div className="flex justify-between items-center py-1 border-b border-[#D9DEE5]">
                         <span className="text-[#596579]">Hierarchy Tier:</span>
                         <span className="font-mono font-bold text-[#176B87]">
                           {activity.wbsLevel} (Discrete Activity)
                         </span>
                       </div>
-                      <div className="flex justify-between items-center py-1 border-b border-[#E8EBF0]">
+                      <div className="flex justify-between items-center py-1 border-b border-[#D9DEE5]">
                         <span className="text-[#596579]">Engineering Discipline:</span>
                         <span
                           className={`font-semibold px-2 py-0.5 rounded text-[11px] border ${discTheme.bg} ${discTheme.text} ${discTheme.border}`}
@@ -494,22 +494,22 @@ export function ActivityDetailDrawer({
                   </div>
 
                   {/* Area & Asset Location Card */}
-                  <div className="p-4 bg-white border border-[#D9DEE5] rounded-xl space-y-2.5">
+                  <div className="p-4 bg-white border border-[#D9DEE5] rounded-lg space-y-2.5">
                     <span className="text-[11px] font-bold uppercase tracking-wider text-[#596579] block">
                       Asset Location &amp; Tags
                     </span>
                     <div className="space-y-2 text-xs">
-                      <div className="flex justify-between items-center py-1 border-b border-[#E8EBF0]">
+                      <div className="flex justify-between items-center py-1 border-b border-[#D9DEE5]">
                         <span className="text-[#596579]">Asset Area:</span>
                         <strong className="text-[#172033]">{activity.area}</strong>
                       </div>
-                      <div className="flex justify-between items-center py-1 border-b border-[#E8EBF0]">
+                      <div className="flex justify-between items-center py-1 border-b border-[#D9DEE5]">
                         <span className="text-[#596579]">Line / Equipment:</span>
                         <span className="font-mono font-bold text-[#176B87]">
                           {activity.line || 'Not Tagged'}
                         </span>
                       </div>
-                      <div className="flex justify-between items-center py-1 border-b border-[#E8EBF0]">
+                      <div className="flex justify-between items-center py-1 border-b border-[#D9DEE5]">
                         <span className="text-[#596579]">Physical Grid:</span>
                         <span className="font-mono text-[#596579]">Grid B-14 to B-20 (Rack B)</span>
                       </div>
@@ -524,7 +524,7 @@ export function ActivityDetailDrawer({
                 </div>
 
                 {/* Scope Description */}
-                <div className="p-4 bg-[#F7F8FA] border border-[#D9DEE5] rounded-xl space-y-1.5">
+                <div className="p-4 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg space-y-1.5">
                   <span className="text-[11px] font-bold uppercase tracking-wider text-[#596579] block">
                     Engineering Scope Description
                   </span>
@@ -541,7 +541,7 @@ export function ActivityDetailDrawer({
             {activeTab === 'plan-vs-actual' && (
               <div className="space-y-6 animate-in fade-in duration-150">
                 {/* Progress & Variance Big Banner */}
-                <div className="p-4 bg-[#F7F8FA] border border-[#D9DEE5] rounded-xl space-y-4">
+                <div className="p-4 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg space-y-4">
                   <div className="flex items-center justify-between flex-wrap gap-2">
                     <div>
                       <span className="text-[11px] font-bold uppercase tracking-wider text-[#596579]">
@@ -565,7 +565,7 @@ export function ActivityDetailDrawer({
                     <div className="flex items-center gap-2">
                       <VarianceBadge daysDelay={activity.delayDays} />
                       {activity.delayDays > 0 && (
-                        <span className="px-2.5 py-1 rounded-lg bg-[#FDF0EE] border border-[#E4B0AA] text-[#B5473C] text-xs font-mono font-bold">
+                        <span className="px-2.5 py-1 rounded-lg bg-[#FBEFEE] border border-[#E4B0AA] text-[#B5473C] text-xs font-mono font-bold">
                           +{activity.delayDays}d Slip
                         </span>
                       )}
@@ -598,12 +598,12 @@ export function ActivityDetailDrawer({
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {/* Planned Schedule (P6 Baseline) */}
-                    <div className="p-4 bg-white border border-[#D9DEE5] rounded-xl space-y-3">
-                      <div className="flex items-center justify-between border-b border-[#E8EBF0] pb-2">
+                    <div className="p-4 bg-white border border-[#D9DEE5] rounded-lg space-y-3">
+                      <div className="flex items-center justify-between border-b border-[#D9DEE5] pb-2">
                         <span className="text-[11px] font-bold uppercase text-[#596579]">
                           P6 Planned Baseline
                         </span>
-                        <span className="px-1.5 py-0.5 rounded bg-[#F0F2F5] text-[10px] font-mono text-[#596579]">
+                        <span className="px-1.5 py-0.5 rounded bg-[#F1F3F5] text-[10px] font-mono text-[#596579]">
                           V3 · Rev 3.2
                         </span>
                       </div>
@@ -631,7 +631,7 @@ export function ActivityDetailDrawer({
                     </div>
 
                     {/* Actual Field Execution */}
-                    <div className="p-4 bg-white border border-[#176B87]/30 rounded-xl space-y-3 bg-[#EDF5F8]/20">
+                    <div className="p-4 bg-white border border-[#176B87]/30 rounded-lg space-y-3 bg-[#EDF5F8]/20">
                       <div className="flex items-center justify-between border-b border-[#176B87]/20 pb-2">
                         <span className="text-[11px] font-bold uppercase text-[#176B87]">
                           Field Execution (Verified)
@@ -675,7 +675,7 @@ export function ActivityDetailDrawer({
 
                 {/* Variance Diagnostics */}
                 {activity.variance < 0 && (
-                  <div className="p-4 bg-[#FDF0EE] border border-[#E4B0AA] rounded-xl space-y-2">
+                  <div className="p-4 bg-[#FBEFEE] border border-[#E4B0AA] rounded-lg space-y-2">
                     <div className="flex items-center gap-2 text-[#B5473C] font-bold">
                       <AlertTriangle className="w-4 h-4 flex-shrink-0" />
                       <span>Physical Variance Analysis ({activity.variance}%)</span>
@@ -718,8 +718,8 @@ export function ActivityDetailDrawer({
                 </div>
 
                 {linkedExecutionEvents.length === 0 ? (
-                  <div className="p-8 text-center border border-dashed border-[#D9DEE5] rounded-xl space-y-2 bg-[#F7F8FA]">
-                    <Cpu className="w-6 h-6 text-[#8A94A6] mx-auto" />
+                  <div className="p-8 text-center border border-dashed border-[#D9DEE5] rounded-lg space-y-2 bg-[#F7F8FA]">
+                    <Cpu className="w-6 h-6 text-[#7B8798] mx-auto" />
                     <p className="text-xs font-bold text-[#172033]">No execution events matched yet</p>
                     <p className="text-[11px] text-[#596579]">
                       Submit daily updates from Field Ingestion or review matches in Review Queue.
@@ -730,48 +730,48 @@ export function ActivityDetailDrawer({
                     {linkedExecutionEvents.map((evt) => (
                       <div
                         key={evt.id}
-                        className="p-4 bg-white border border-[#D9DEE5] rounded-xl space-y-3 hover:border-[#176B87] transition-all shadow-2xs"
+                        className="p-4 bg-white border border-[#D9DEE5] rounded-lg space-y-3 hover:border-[#176B87] transition-all shadow-2xs"
                       >
                         <div className="flex items-center justify-between flex-wrap gap-2">
                           <div className="flex items-center gap-2">
                             <span className="font-mono font-bold text-xs text-[#176B87] bg-[#EDF5F8] px-2 py-0.5 rounded border border-[#B3CBE0]">
                               {evt.id}
                             </span>
-                            <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-[#F0F2F5] text-[#596579] border border-[#D9DEE5] uppercase">
+                            <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-[#F1F3F5] text-[#596579] border border-[#D9DEE5] uppercase">
                               {evt.source.replace('_', ' ')}
                             </span>
                             <ConfidenceBadge score={evt.confidence} />
                           </div>
 
-                          <div className="flex items-center gap-1 text-[11px] text-[#8A94A6] font-mono">
+                          <div className="flex items-center gap-1 text-[11px] text-[#7B8798] font-mono">
                             <Clock className="w-3 h-3" />
                             <span>{evt.eventDate} {evt.eventTime || ''}</span>
                           </div>
                         </div>
 
                         {/* Raw Field Statement */}
-                        <div className="p-3 bg-[#F7F8FA] rounded-lg border border-[#E8EBF0] text-xs italic text-[#172033] leading-relaxed">
+                        <div className="p-3 bg-[#F7F8FA] rounded-lg border border-[#D9DEE5] text-xs italic text-[#172033] leading-relaxed">
                           &quot;{evt.rawText}&quot;
                         </div>
 
                         {/* Extracted Structured Info */}
-                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-[11px] pt-1 border-t border-[#E8EBF0]">
+                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-[11px] pt-1 border-t border-[#D9DEE5]">
                           <div>
-                            <span className="text-[#8A94A6] block text-[9px] uppercase font-bold">Quantity</span>
+                            <span className="text-[#7B8798] block text-[9px] uppercase font-bold">Quantity</span>
                             <span className="font-mono font-bold text-[#172033]">
                               {evt.quantity} {evt.unit}
                             </span>
                           </div>
                           <div>
-                            <span className="text-[#8A94A6] block text-[9px] uppercase font-bold">Discipline</span>
+                            <span className="text-[#7B8798] block text-[9px] uppercase font-bold">Discipline</span>
                             <span className="font-semibold text-[#172033]">{evt.discipline}</span>
                           </div>
                           <div>
-                            <span className="text-[#8A94A6] block text-[9px] uppercase font-bold">Work Area</span>
+                            <span className="text-[#7B8798] block text-[9px] uppercase font-bold">Work Area</span>
                             <span className="truncate block text-[#172033]">{evt.area}</span>
                           </div>
                           <div>
-                            <span className="text-[#8A94A6] block text-[9px] uppercase font-bold">Status</span>
+                            <span className="text-[#7B8798] block text-[9px] uppercase font-bold">Status</span>
                             <span className="font-bold text-[#2E7D5B] capitalize">
                               {evt.status.replace('-', ' ')}
                             </span>
@@ -780,11 +780,11 @@ export function ActivityDetailDrawer({
 
                         {/* Match Reasons & Explanation */}
                         {evt.matchedReasons && evt.matchedReasons.length > 0 && (
-                          <div className="text-[11px] text-[#596579] space-y-1 bg-[#F0FDF4] p-2 rounded border border-[#BBF7D0]">
-                            <span className="font-bold text-[#15803D] block text-[10px] uppercase">
+                          <div className="text-[11px] text-[#596579] space-y-1 bg-[#EDF7F2] p-2 rounded border border-[#B8DCC9]">
+                            <span className="font-bold text-[#2E7D5B] block text-[10px] uppercase">
                               Match Justification:
                             </span>
-                            <ul className="list-disc list-inside space-y-0.5 text-[#166534]">
+                            <ul className="list-disc list-inside space-y-0.5 text-[#2E7D5B]">
                               {evt.matchedReasons.map((r, i) => (
                                 <li key={i}>{r}</li>
                               ))}
@@ -793,7 +793,7 @@ export function ActivityDetailDrawer({
                         )}
 
                         {/* Interactive Full Deterministic Match Explanation */}
-                        <div className="pt-2 border-t border-[#E8EBF0] flex items-center justify-between">
+                        <div className="pt-2 border-t border-[#D9DEE5] flex items-center justify-between">
                           <button
                             type="button"
                             onClick={() =>
@@ -855,8 +855,8 @@ export function ActivityDetailDrawer({
                 </div>
 
                 {linkedEvidenceItems.length === 0 ? (
-                  <div className="p-8 text-center border border-dashed border-[#D9DEE5] rounded-xl space-y-2 bg-[#F7F8FA]">
-                    <Camera className="w-6 h-6 text-[#8A94A6] mx-auto" />
+                  <div className="p-8 text-center border border-dashed border-[#D9DEE5] rounded-lg space-y-2 bg-[#F7F8FA]">
+                    <Camera className="w-6 h-6 text-[#7B8798] mx-auto" />
                     <p className="text-xs font-bold text-[#172033]">No evidence files attached</p>
                     <p className="text-[11px] text-[#596579]">
                       Attach photos or inspection reports from Daily Progress Reporting.
@@ -867,7 +867,7 @@ export function ActivityDetailDrawer({
                     {linkedEvidenceItems.map((item) => (
                       <div
                         key={item.id}
-                        className="p-4 bg-white border border-[#D9DEE5] rounded-xl space-y-3 hover:border-[#176B87] transition-all shadow-2xs"
+                        className="p-4 bg-white border border-[#D9DEE5] rounded-lg space-y-3 hover:border-[#176B87] transition-all shadow-2xs"
                       >
                         <div className="flex items-start justify-between gap-3">
                           <div className="space-y-1">
@@ -875,16 +875,16 @@ export function ActivityDetailDrawer({
                               <span className="font-mono font-bold text-xs text-[#176B87] bg-[#EDF5F8] px-2 py-0.5 rounded border border-[#B3CBE0]">
                                 {item.id}
                               </span>
-                              <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-[#F0F2F5] text-[#596579] border border-[#D9DEE5] uppercase">
+                              <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-[#F1F3F5] text-[#596579] border border-[#D9DEE5] uppercase">
                                 {item.type}
                               </span>
                               {item.verifiedStatus ? (
-                                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold bg-[#F0FDF4] text-[#15803D] border border-[#BBF7D0]">
+                                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]">
                                   <ShieldCheck className="w-3 h-3" />
                                   <span>Verified QC</span>
                                 </span>
                               ) : (
-                                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold bg-[#FDF5E8] text-[#B87326] border border-[#F0D4A6]">
+                                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold bg-[#FDF6ED] text-[#D98B32] border border-[#F0D4A6]">
                                   <Clock className="w-3 h-3" />
                                   <span>Pending QC</span>
                                 </span>
@@ -899,7 +899,7 @@ export function ActivityDetailDrawer({
                           <button
                             type="button"
                             onClick={() => setPreviewEvidenceModal(item)}
-                            className="p-1.5 text-[#596579] hover:text-[#172033] border border-[#D9DEE5] rounded hover:bg-[#F0F2F5] transition-colors"
+                            className="p-1.5 text-[#596579] hover:text-[#172033] border border-[#D9DEE5] rounded hover:bg-[#F1F3F5] transition-colors"
                             title="Preview evidence"
                           >
                             <Eye className="w-4 h-4" />
@@ -907,18 +907,18 @@ export function ActivityDetailDrawer({
                         </div>
 
                         {item.notes && (
-                          <p className="text-xs text-[#596579] bg-[#F7F8FA] p-2.5 rounded-lg border border-[#E8EBF0] italic">
+                          <p className="text-xs text-[#596579] bg-[#F7F8FA] p-2.5 rounded-lg border border-[#D9DEE5] italic">
                             &quot;{item.notes}&quot;
                           </p>
                         )}
 
-                        <div className="flex items-center justify-between text-[11px] text-[#8A94A6] pt-1 border-t border-[#E8EBF0] flex-wrap gap-2">
+                        <div className="flex items-center justify-between text-[11px] text-[#7B8798] pt-1 border-t border-[#D9DEE5] flex-wrap gap-2">
                           <span className="font-medium text-[#596579]">
                             Uploaded by: <strong className="text-[#172033]">{item.uploader}</strong>
                           </span>
                           <span className="font-mono">{item.timestamp}</span>
                           {item.sha256Hash && (
-                            <span className="font-mono text-[9px] text-[#8A94A6] truncate max-w-[150px]">
+                            <span className="font-mono text-[9px] text-[#7B8798] truncate max-w-[150px]">
                               SHA: {item.sha256Hash}
                             </span>
                           )}
@@ -936,7 +936,7 @@ export function ActivityDetailDrawer({
             {activeTab === 'dependencies' && (
               <div className="space-y-6 animate-in fade-in duration-150">
                 {/* Dependency Flow Chain Diagram */}
-                <div className="p-4 bg-[#F7F8FA] border border-[#D9DEE5] rounded-xl space-y-3">
+                <div className="p-4 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg space-y-3">
                   <span className="text-[11px] font-bold uppercase tracking-wider text-[#596579] block">
                     Critical Path Dependency Chain (Predecessors → Activity → Successors)
                   </span>
@@ -944,7 +944,7 @@ export function ActivityDetailDrawer({
                   <div className="flex items-center gap-2 overflow-x-auto py-2">
                     {/* Predecessors Box */}
                     <div className="p-2.5 bg-white border border-[#D9DEE5] rounded-lg min-w-[150px] space-y-1">
-                      <span className="text-[9px] font-bold uppercase text-[#8A94A6] block">Predecessor</span>
+                      <span className="text-[9px] font-bold uppercase text-[#7B8798] block">Predecessor</span>
                       {detailedPredecessors.length > 0 ? (
                         detailedPredecessors.map((p) => (
                           <div key={p.id}>
@@ -959,11 +959,11 @@ export function ActivityDetailDrawer({
                           </div>
                         ))
                       ) : (
-                        <span className="text-[11px] text-[#8A94A6] italic">None (Project Start)</span>
+                        <span className="text-[11px] text-[#7B8798] italic">None (Project Start)</span>
                       )}
                     </div>
 
-                    <ArrowRight className="w-4 h-4 text-[#8A94A6] flex-shrink-0" />
+                    <ArrowRight className="w-4 h-4 text-[#7B8798] flex-shrink-0" />
 
                     {/* Current Activity Box (Highlighted) */}
                     <div className="p-2.5 bg-[#EDF5F8] border-2 border-[#176B87] rounded-lg min-w-[180px] space-y-1 shadow-xs">
@@ -974,11 +974,11 @@ export function ActivityDetailDrawer({
                       </span>
                     </div>
 
-                    <ArrowRight className="w-4 h-4 text-[#8A94A6] flex-shrink-0" />
+                    <ArrowRight className="w-4 h-4 text-[#7B8798] flex-shrink-0" />
 
                     {/* Successors Box */}
                     <div className="p-2.5 bg-white border border-[#D9DEE5] rounded-lg min-w-[160px] space-y-1">
-                      <span className="text-[9px] font-bold uppercase text-[#8A94A6] block">Successors</span>
+                      <span className="text-[9px] font-bold uppercase text-[#7B8798] block">Successors</span>
                       {detailedSuccessors.length > 0 ? (
                         detailedSuccessors.map((s) => (
                           <div key={s.id} className="pb-1 last:pb-0">
@@ -993,7 +993,7 @@ export function ActivityDetailDrawer({
                           </div>
                         ))
                       ) : (
-                        <span className="text-[11px] text-[#8A94A6] italic">None (Final Deliverable)</span>
+                        <span className="text-[11px] text-[#7B8798] italic">None (Final Deliverable)</span>
                       )}
                     </div>
                   </div>
@@ -1007,7 +1007,7 @@ export function ActivityDetailDrawer({
                   </h3>
 
                   {detailedPredecessors.length === 0 ? (
-                    <p className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg text-xs text-[#8A94A6] italic">
+                    <p className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg text-xs text-[#7B8798] italic">
                       No upstream predecessors linked. Activity starts on baseline start date.
                     </p>
                   ) : (
@@ -1015,7 +1015,7 @@ export function ActivityDetailDrawer({
                       {detailedPredecessors.map((pred) => (
                         <div
                           key={pred.id}
-                          className="p-3.5 bg-white border border-[#D9DEE5] rounded-xl space-y-2 hover:border-[#176B87] transition-colors"
+                          className="p-3.5 bg-white border border-[#D9DEE5] rounded-lg space-y-2 hover:border-[#176B87] transition-colors"
                         >
                           <div className="flex items-center justify-between">
                             <div className="flex items-center gap-2">
@@ -1026,16 +1026,16 @@ export function ActivityDetailDrawer({
                               >
                                 {pred.id}
                               </button>
-                              <span className="text-[10px] px-1.5 py-0.2 rounded bg-[#F0F2F5] text-[#596579] font-mono">
+                              <span className="text-[10px] px-1.5 py-0.2 rounded bg-[#F1F3F5] text-[#596579] font-mono">
                                 {pred.type}
                               </span>
                               <StatusBadge status={pred.status as any} />
                             </div>
-                            <span className="font-mono text-[11px] text-[#8A94A6]">{pred.plannedPeriod}</span>
+                            <span className="font-mono text-[11px] text-[#7B8798]">{pred.plannedPeriod}</span>
                           </div>
 
                           <p className="text-xs font-semibold text-[#172033]">{pred.name}</p>
-                          <p className="text-[11px] text-[#596579] bg-[#F7F8FA] p-2 rounded border border-[#E8EBF0]">
+                          <p className="text-[11px] text-[#596579] bg-[#F7F8FA] p-2 rounded border border-[#D9DEE5]">
                             {pred.notes}
                           </p>
                         </div>
@@ -1052,7 +1052,7 @@ export function ActivityDetailDrawer({
                   </h3>
 
                   {detailedSuccessors.length === 0 ? (
-                    <p className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg text-xs text-[#8A94A6] italic">
+                    <p className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg text-xs text-[#7B8798] italic">
                       No downstream successors configured.
                     </p>
                   ) : (
@@ -1060,7 +1060,7 @@ export function ActivityDetailDrawer({
                       {detailedSuccessors.map((succ) => (
                         <div
                           key={succ.id}
-                          className="p-3.5 bg-white border border-[#D9DEE5] rounded-xl space-y-2 hover:border-[#176B87] transition-colors"
+                          className="p-3.5 bg-white border border-[#D9DEE5] rounded-lg space-y-2 hover:border-[#176B87] transition-colors"
                         >
                           <div className="flex items-center justify-between">
                             <div className="flex items-center gap-2">
@@ -1071,16 +1071,16 @@ export function ActivityDetailDrawer({
                               >
                                 {succ.id}
                               </button>
-                              <span className="text-[10px] px-1.5 py-0.2 rounded bg-[#F0F2F5] text-[#596579] font-mono">
+                              <span className="text-[10px] px-1.5 py-0.2 rounded bg-[#F1F3F5] text-[#596579] font-mono">
                                 {succ.type}
                               </span>
                               <StatusBadge status={succ.status as any} />
                             </div>
-                            <span className="font-mono text-[11px] text-[#8A94A6]">{succ.plannedPeriod}</span>
+                            <span className="font-mono text-[11px] text-[#7B8798]">{succ.plannedPeriod}</span>
                           </div>
 
                           <p className="text-xs font-semibold text-[#172033]">{succ.name}</p>
-                          <p className="text-[11px] text-[#596579] bg-[#F7F8FA] p-2 rounded border border-[#E8EBF0]">
+                          <p className="text-[11px] text-[#596579] bg-[#F7F8FA] p-2 rounded border border-[#D9DEE5]">
                             {succ.notes}
                           </p>
                         </div>
@@ -1090,13 +1090,13 @@ export function ActivityDetailDrawer({
                 </div>
 
                 {/* Schedule Float & Downstream Impact Card */}
-                <div className="p-4 bg-[#FDF5E8] border border-[#F0D4A6] rounded-xl space-y-3">
+                <div className="p-4 bg-[#FDF6ED] border border-[#F0D4A6] rounded-lg space-y-3">
                   <div className="flex items-center justify-between border-b border-[#F0D4A6] pb-2">
-                    <span className="font-bold text-xs uppercase tracking-wider text-[#B87326] flex items-center gap-1.5">
+                    <span className="font-bold text-xs uppercase tracking-wider text-[#D98B32] flex items-center gap-1.5">
                       <AlertTriangle className="w-3.5 h-3.5" />
                       CPM Schedule Impact &amp; Float Analysis
                     </span>
-                    <span className="font-mono font-bold text-xs text-[#B87326]">
+                    <span className="font-mono font-bold text-xs text-[#D98B32]">
                       Total Float: {impactData.totalFloatDays}d
                     </span>
                   </div>
@@ -1106,7 +1106,7 @@ export function ActivityDetailDrawer({
                   </p>
 
                   <div className="p-3 bg-white/80 rounded-lg border border-[#F0D4A6] space-y-1.5 text-xs">
-                    <span className="text-[10px] uppercase font-bold text-[#B87326] block">
+                    <span className="text-[10px] uppercase font-bold text-[#D98B32] block">
                       Active Mitigation Strategy:
                     </span>
                     <p className="text-[#172033]">{impactData.currentMitigation}</p>
@@ -1135,11 +1135,11 @@ export function ActivityDetailDrawer({
                     </p>
                   </div>
 
-                  <span className="text-[11px] font-mono text-[#8A94A6]">Tamper-Evident</span>
+                  <span className="text-[11px] font-mono text-[#7B8798]">Tamper-Evident</span>
                 </div>
 
                 {auditHistory.length === 0 ? (
-                  <p className="p-6 bg-[#F7F8FA] border border-[#D9DEE5] rounded-xl text-center text-xs text-[#8A94A6]">
+                  <p className="p-6 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg text-center text-xs text-[#7B8798]">
                     No historical modifications recorded for this activity yet.
                   </p>
                 ) : (
@@ -1148,15 +1148,15 @@ export function ActivityDetailDrawer({
                       <div key={log.id} className="relative pl-8 space-y-1.5">
                         <div className="absolute left-2 top-2.5 w-3.5 h-3.5 rounded-full bg-[#176B87] border-2 border-white -translate-x-1/2" />
 
-                        <div className="p-3.5 bg-white border border-[#D9DEE5] rounded-xl space-y-2 hover:bg-[#F7F8FA] transition-colors shadow-2xs">
+                        <div className="p-3.5 bg-white border border-[#D9DEE5] rounded-lg space-y-2 hover:bg-[#F7F8FA] transition-colors shadow-2xs">
                           <div className="flex items-center justify-between flex-wrap gap-2">
                             <div className="flex items-center gap-2">
                               <span className="font-mono font-bold text-xs text-[#176B87]">{log.id}</span>
-                              <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-[#F0F2F5] text-[#596579] border border-[#D9DEE5]">
+                              <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-[#F1F3F5] text-[#596579] border border-[#D9DEE5]">
                                 {log.actionCategory || log.action}
                               </span>
                             </div>
-                            <span className="font-mono text-[11px] text-[#8A94A6]">{log.timestamp}</span>
+                            <span className="font-mono text-[11px] text-[#7B8798]">{log.timestamp}</span>
                           </div>
 
                           <div className="flex items-center justify-between text-xs font-semibold text-[#172033]">
@@ -1164,19 +1164,19 @@ export function ActivityDetailDrawer({
                           </div>
 
                           {log.whatChanged && (
-                            <p className="text-xs font-medium text-[#172033] bg-[#F7F8FA] p-2 rounded border border-[#E8EBF0]">
+                            <p className="text-xs font-medium text-[#172033] bg-[#F7F8FA] p-2 rounded border border-[#D9DEE5]">
                               {log.whatChanged}
                             </p>
                           )}
 
                           {(log.before || log.previousValue) && (
                             <div className="grid grid-cols-2 gap-2 text-[11px] font-mono pt-1">
-                              <div className="p-2 bg-[#FDF0EE] text-[#B5473C] rounded border border-[#E4B0AA]">
+                              <div className="p-2 bg-[#FBEFEE] text-[#B5473C] rounded border border-[#E4B0AA]">
                                 <span className="text-[9px] uppercase font-bold block text-[#B5473C]/80">Before:</span>
                                 <span>{log.before || log.previousValue}</span>
                               </div>
-                              <div className="p-2 bg-[#F0FDF4] text-[#15803D] rounded border border-[#BBF7D0]">
-                                <span className="text-[9px] uppercase font-bold block text-[#15803D]/80">After:</span>
+                              <div className="p-2 bg-[#EDF7F2] text-[#2E7D5B] rounded border border-[#B8DCC9]">
+                                <span className="text-[9px] uppercase font-bold block text-[#2E7D5B]/80">After:</span>
                                 <span>{log.after || log.newValue}</span>
                               </div>
                             </div>
@@ -1215,7 +1215,7 @@ export function ActivityDetailDrawer({
                 className={`px-3 py-1.5 text-xs font-semibold rounded-lg border transition-colors inline-flex items-center gap-1.5 ${
                   activeTab === 'dependencies'
                     ? 'bg-[#176B87] text-white border-[#176B87]'
-                    : 'bg-white text-[#596579] hover:text-[#172033] border-[#D9DEE5] hover:bg-[#F0F2F5]'
+                    : 'bg-white text-[#596579] hover:text-[#172033] border-[#D9DEE5] hover:bg-[#F1F3F5]'
                 }`}
                 title="View upstream and downstream dependency impact"
               >
@@ -1230,7 +1230,7 @@ export function ActivityDetailDrawer({
                 className={`px-3 py-1.5 text-xs font-semibold rounded-lg border transition-colors inline-flex items-center gap-1.5 ${
                   activeTab === 'evidence'
                     ? 'bg-[#176B87] text-white border-[#176B87]'
-                    : 'bg-white text-[#596579] hover:text-[#172033] border-[#D9DEE5] hover:bg-[#F0F2F5]'
+                    : 'bg-white text-[#596579] hover:text-[#172033] border-[#D9DEE5] hover:bg-[#F1F3F5]'
                 }`}
                 title="View linked evidence documentation"
               >
@@ -1253,7 +1253,7 @@ export function ActivityDetailDrawer({
               <button
                 type="button"
                 onClick={handleCaptureUpdate}
-                className="px-3.5 py-1.5 text-xs font-bold text-white bg-[#176B87] hover:bg-[#12546A] rounded-lg shadow-sm transition-colors inline-flex items-center gap-1.5"
+                className="px-3.5 py-1.5 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] rounded-lg shadow-sm transition-colors inline-flex items-center gap-1.5"
                 title="Capture physical site progress for this activity"
               >
                 <Plus className="w-3.5 h-3.5" />
@@ -1271,11 +1271,11 @@ export function ActivityDetailDrawer({
             className="fixed inset-0 bg-[#172033]/60 transition-opacity"
             onClick={() => setPreviewEvidenceModal(null)}
           />
-          <div className="relative w-full max-w-lg bg-white rounded-xl border border-[#D9DEE5] shadow-2xl p-5 space-y-4">
+          <div className="relative w-full max-w-lg bg-white rounded-lg border border-[#D9DEE5] shadow-lg p-5 space-y-4">
             <div className="flex items-center justify-between border-b border-[#D9DEE5] pb-3">
               <div className="flex items-center gap-2">
                 <span className="font-mono font-bold text-sm text-[#176B87]">{previewEvidenceModal.id}</span>
-                <span className="text-xs font-bold px-2 py-0.5 rounded bg-[#F0F2F5] text-[#596579]">
+                <span className="text-xs font-bold px-2 py-0.5 rounded bg-[#F1F3F5] text-[#596579]">
                   {previewEvidenceModal.type}
                 </span>
               </div>
@@ -1295,10 +1295,10 @@ export function ActivityDetailDrawer({
               </p>
             </div>
 
-            <div className="p-4 bg-[#F7F8FA] rounded-xl border border-[#D9DEE5] text-center space-y-2">
-              <Camera className="w-10 h-10 text-[#8A94A6] mx-auto" />
+            <div className="p-4 bg-[#F7F8FA] rounded-lg border border-[#D9DEE5] text-center space-y-2">
+              <Camera className="w-10 h-10 text-[#7B8798] mx-auto" />
               <p className="text-xs text-[#596579]">Cryptographically sealed preview from site repository.</p>
-              <div className="font-mono text-[10px] text-[#8A94A6] break-all">
+              <div className="font-mono text-[10px] text-[#7B8798] break-all">
                 SHA256: {previewEvidenceModal.sha256Hash || 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'}
               </div>
             </div>

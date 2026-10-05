@@ -44,7 +44,7 @@ export function ConfirmationDialog({
       case 'primary':
       default:
         return (
-          <div className="w-10 h-10 rounded-lg bg-[#EDF2F8] border border-[#B3CBE0] flex items-center justify-center text-[#176B87] flex-shrink-0">
+          <div className="w-10 h-10 rounded-lg bg-[#EDF5F8] border border-[#B3CBE0] flex items-center justify-center text-[#176B87] flex-shrink-0">
             <Info className="w-5 h-5" />
           </div>
         );
@@ -75,7 +75,7 @@ export function ConfirmationDialog({
             type="button"
             onClick={onClose}
             disabled={isLoading}
-            className="px-4 py-2 text-sm font-medium text-[#596579] hover:text-[#172033] hover:bg-[#F0F2F5] rounded-md transition-colors border border-[#D9DEE5]"
+            className="px-4 py-2 text-sm font-medium text-[#596579] hover:text-[#172033] hover:bg-[#F1F3F5] rounded-md transition-colors border border-[#D9DEE5]"
           >
             {cancelLabel}
           </button>

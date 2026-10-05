@@ -54,7 +54,7 @@ function getEntityTypeIcon(type: SearchResultType) {
     case 'Risk':
       return <AlertTriangle className="w-3.5 h-3.5 text-[#B5473C]" />;
     case 'Report':
-      return <FileBarChart className="w-3.5 h-3.5 text-[#7C3AED]" />;
+      return <FileBarChart className="w-3.5 h-3.5 text-[#3B6EA8]" />;
     default:
       return <Search className="w-3.5 h-3.5 text-[#596579]" />;
   }
@@ -64,11 +64,11 @@ function getEntityTypeIcon(type: SearchResultType) {
 function getEntityTypeBadge(type: SearchResultType) {
   switch (type) {
     case 'Project':
-      return 'bg-[#EDF5F8] text-[#0284C7] border-[#B3CBE0]';
+      return 'bg-[#EDF5F8] text-[#176B87] border-[#B3CBE0]';
     case 'Activity':
       return 'bg-[#EDF5F8] text-[#176B87] border-[#B3CBE0]';
     case 'Execution Event':
-      return 'bg-[#EDF2F8] text-[#3B6EA8] border-[#CAD5E2]';
+      return 'bg-[#EDF5F8] text-[#3B6EA8] border-[#B3CBE0]';
     case 'Evidence':
       return 'bg-[#EDF7F2] text-[#2E7D5B] border-[#B8DCC9]';
     case 'Review Item':
@@ -76,9 +76,9 @@ function getEntityTypeBadge(type: SearchResultType) {
     case 'Risk':
       return 'bg-[#FBEFEE] text-[#B5473C] border-[#E4B0AA]';
     case 'Report':
-      return 'bg-[#F3EFF8] text-[#7C3AED] border-[#D4C7E8]';
+      return 'bg-[#EDF5F8] text-[#3B6EA8] border-[#B3CBE0]';
     default:
-      return 'bg-[#F0F2F5] text-[#596579] border-[#D9DEE5]';
+      return 'bg-[#F1F3F5] text-[#596579] border-[#D9DEE5]';
   }
 }
 
@@ -113,7 +113,7 @@ function getStatusBadgeClass(status: string) {
   ) {
     return 'bg-[#FBEFEE] text-[#B5473C] border-[#E4B0AA]';
   }
-  return 'bg-[#F0F2F5] text-[#596579] border-[#D9DEE5]';
+  return 'bg-[#F1F3F5] text-[#596579] border-[#D9DEE5]';
 }
 
 export function GlobalSearch() {
@@ -274,21 +274,21 @@ export function GlobalSearch() {
     >
       {/* Dark backdrop */}
       <div
-        className="fixed inset-0 bg-[#172033]/50 backdrop-blur-xs transition-opacity animate-in fade-in duration-150"
+        className="fixed inset-0 bg-[#172033]/50 transition-opacity duration-150"
         onClick={() => setGlobalSearchOpen(false)}
         aria-hidden="true"
       />
 
       <div className="flex min-h-full items-start justify-center pt-16 sm:pt-24 p-3 sm:p-4">
         <div
-          className="relative w-full max-w-3xl bg-white rounded-xl border border-[#D9DEE5] shadow-2xl overflow-hidden animate-in zoom-in-95 duration-150 flex flex-col max-h-[80vh]"
+          className="relative w-full max-w-3xl bg-white rounded-lg border border-[#D9DEE5] shadow-lg overflow-hidden duration-150 flex flex-col max-h-[80vh]"
           onClick={(e) => e.stopPropagation()}
         >
           {/* =========================================================================
               1. SEARCH INPUT HEADER
               ========================================================================= */}
           <div className="flex items-center px-4 py-3.5 border-b border-[#D9DEE5] bg-white gap-3">
-            <Search className="w-5 h-5 text-[#8A94A6] shrink-0" />
+            <Search className="w-5 h-5 text-[#7B8798] shrink-0" />
             <input
               ref={inputRef}
               type="text"
@@ -296,7 +296,7 @@ export function GlobalSearch() {
               onChange={(e) => setQuery(e.target.value)}
               onKeyDown={handleInputKeyDown}
               placeholder="Search across Projects, Activities, Events, Evidence, Review items, Risks, Reports..."
-              className="w-full text-sm bg-transparent outline-none text-[#172033] placeholder-[#8A94A6]"
+              className="w-full text-sm bg-transparent outline-none text-[#172033] placeholder-[#7B8798]"
             />
 
             {isLoading && (
@@ -307,14 +307,14 @@ export function GlobalSearch() {
               <button
                 type="button"
                 onClick={() => setQuery('')}
-                className="text-[#8A94A6] hover:text-[#172033] p-1 rounded transition-colors"
+                className="text-[#7B8798] hover:text-[#172033] p-1 rounded transition-colors"
                 aria-label="Clear search query"
               >
                 <X className="w-4 h-4" />
               </button>
             )}
 
-            <kbd className="hidden sm:inline-flex items-center gap-0.5 px-2 py-0.5 text-[10px] font-mono font-medium text-[#596579] bg-[#F0F2F5] border border-[#D9DEE5] rounded">
+            <kbd className="hidden sm:inline-flex items-center gap-0.5 px-2 py-0.5 text-[10px] font-mono font-medium text-[#596579] bg-[#F1F3F5] border border-[#D9DEE5] rounded">
               ESC
             </kbd>
           </div>
@@ -330,10 +330,10 @@ export function GlobalSearch() {
                   key={cat.id}
                   type="button"
                   onClick={() => setActiveCategory(cat.id)}
-                  className={`px-2.5 py-1 rounded-full text-[11px] font-medium whitespace-nowrap transition-colors border ${
+                  className={`px-2.5 py-1 rounded-md text-[11px] font-medium whitespace-nowrap transition-colors border ${
                     isSelected
                       ? 'bg-[#176B87] text-white border-[#176B87] shadow-xs'
-                      : 'bg-white border-[#D9DEE5] text-[#596579] hover:bg-[#F0F2F5]'
+                      : 'bg-white border-[#D9DEE5] text-[#596579] hover:bg-[#F1F3F5]'
                   }`}
                 >
                   {cat.label}
@@ -347,7 +347,7 @@ export function GlobalSearch() {
               ========================================================================= */}
           <div
             ref={resultsContainerRef}
-            className="flex-1 overflow-y-auto p-2 sm:p-3 divide-y divide-[#F0F2F5]"
+            className="flex-1 overflow-y-auto p-2 sm:p-3 divide-y divide-[#F1F3F5]"
           >
             {/* STATE 1: ERROR STATE */}
             {hasError && (
@@ -397,7 +397,7 @@ export function GlobalSearch() {
             {/* STATE 3: NO RESULTS STATE */}
             {!isLoading && !hasError && query && results.length === 0 && (
               <div className="p-8 text-center space-y-3">
-                <div className="w-10 h-10 rounded-full bg-[#F0F2F5] text-[#8A94A6] flex items-center justify-center mx-auto">
+                <div className="w-10 h-10 rounded-full bg-[#F1F3F5] text-[#7B8798] flex items-center justify-center mx-auto">
                   <Search className="w-5 h-5" />
                 </div>
                 <div>
@@ -409,13 +409,13 @@ export function GlobalSearch() {
                   </p>
                 </div>
                 <div className="pt-2 flex items-center justify-center gap-2 flex-wrap text-xs">
-                  <span className="text-[11px] text-[#8A94A6]">Try searching:</span>
+                  <span className="text-[11px] text-[#7B8798]">Try searching:</span>
                   {['PIP-24-001', 'Line 24', 'EVT-2026-001', 'DPR', 'RSK-001'].map((term) => (
                     <button
                       key={term}
                       type="button"
                       onClick={() => setQuery(term)}
-                      className="px-2 py-0.5 rounded bg-[#F0F2F5] hover:bg-[#E5E9F0] text-[#176B87] font-mono text-[11px] border border-[#D9DEE5]"
+                      className="px-2 py-0.5 rounded bg-[#F1F3F5] hover:bg-[#E5E9F0] text-[#176B87] font-mono text-[11px] border border-[#D9DEE5]"
                     >
                       {term}
                     </button>
@@ -436,7 +436,7 @@ export function GlobalSearch() {
                     <button
                       type="button"
                       onClick={handleClearRecent}
-                      className="text-[10px] text-[#8A94A6] hover:text-[#B5473C] transition-colors"
+                      className="text-[10px] text-[#7B8798] hover:text-[#B5473C] transition-colors"
                     >
                       Clear Recent
                     </button>
@@ -444,7 +444,7 @@ export function GlobalSearch() {
                 </div>
 
                 {recentSearches.length === 0 ? (
-                  <p className="px-2 py-3 text-xs text-[#8A94A6] italic text-center">
+                  <p className="px-2 py-3 text-xs text-[#7B8798] italic text-center">
                     No recent searches yet. Enter an Activity ID, line tag, or report name.
                   </p>
                 ) : (
@@ -459,10 +459,10 @@ export function GlobalSearch() {
                             setQuery(rec.query);
                           }
                         }}
-                        className="flex items-center justify-between p-2.5 rounded-lg hover:bg-[#F0F2F5] transition-colors cursor-pointer group"
+                        className="flex items-center justify-between p-2.5 rounded-lg hover:bg-[#F1F3F5] transition-colors cursor-pointer group"
                       >
                         <div className="flex items-center gap-2.5 min-w-0">
-                          <div className="w-6 h-6 rounded bg-white border border-[#D9DEE5] flex items-center justify-center shrink-0 text-[#8A94A6]">
+                          <div className="w-6 h-6 rounded bg-white border border-[#D9DEE5] flex items-center justify-center shrink-0 text-[#7B8798]">
                             <Clock className="w-3.5 h-3.5" />
                           </div>
                           <div className="truncate">
@@ -478,13 +478,13 @@ export function GlobalSearch() {
                         </div>
 
                         <div className="flex items-center gap-2 shrink-0">
-                          <span className="text-[10px] font-mono text-[#8A94A6]">
+                          <span className="text-[10px] font-mono text-[#7B8798]">
                             {rec.relativeTime}
                           </span>
                           <button
                             type="button"
                             onClick={(e) => handleRemoveRecentItem(rec.id, e)}
-                            className="p-1 text-[#8A94A6] hover:text-[#B5473C] opacity-0 group-hover:opacity-100 transition-opacity"
+                            className="p-1 text-[#7B8798] hover:text-[#B5473C] opacity-0 group-hover:opacity-100 transition-opacity"
                             title="Remove from history"
                           >
                             <X className="w-3 h-3" />
@@ -496,8 +496,8 @@ export function GlobalSearch() {
                 )}
 
                 {/* Quick Discover suggestions */}
-                <div className="pt-3 border-t border-[#F0F2F5]">
-                  <span className="px-2 text-[10px] uppercase font-bold text-[#8A94A6] block mb-2">
+                <div className="pt-3 border-t border-[#F1F3F5]">
+                  <span className="px-2 text-[10px] uppercase font-bold text-[#7B8798] block mb-2">
                     Quick Jump Suggestions (Across 7 Data Stores):
                   </span>
                   <div className="flex flex-wrap gap-1.5 px-2">
@@ -526,7 +526,7 @@ export function GlobalSearch() {
             {/* STATE 5: MATCHED RESULTS LIST */}
             {!isLoading && !hasError && query && results.length > 0 && (
               <div className="space-y-1">
-                <div className="px-2 py-1 text-[11px] font-bold text-[#8A94A6] flex items-center justify-between">
+                <div className="px-2 py-1 text-[11px] font-bold text-[#7B8798] flex items-center justify-between">
                   <span>
                     Results ({results.length} entities found across project index)
                   </span>
@@ -545,7 +545,7 @@ export function GlobalSearch() {
                       key={`${item.type}-${item.id}`}
                       onClick={() => handleSelectResult(item)}
                       onMouseEnter={() => setSelectedIndex(idx)}
-                      className={`p-3 rounded-xl border transition-all cursor-pointer flex items-start justify-between gap-3 ${
+                      className={`p-3 rounded-lg border transition-all cursor-pointer flex items-start justify-between gap-3 ${
                         isSelected
                           ? 'bg-[#EDF5F8] border-[#176B87] shadow-xs'
                           : 'bg-white border-[#D9DEE5] hover:border-[#B3CBE0]'
@@ -632,7 +632,7 @@ export function GlobalSearch() {
               </span>
             </div>
 
-            <div className="flex items-center gap-2 text-[10px] text-[#8A94A6]">
+            <div className="flex items-center gap-2 text-[10px] text-[#7B8798]">
               <ShieldCheck className="w-3.5 h-3.5 text-[#176B87]" />
               <span>Full Cross-Entity Project Index</span>
             </div>

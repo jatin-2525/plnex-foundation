@@ -28,7 +28,7 @@ export function Breadcrumbs({ items, className = '' }: BreadcrumbsProps) {
           const isLast = idx === items.length - 1;
           return (
             <li key={idx} className="flex items-center gap-1.5">
-              <ChevronRight className="w-3.5 h-3.5 text-[#8A94A6]" />
+              <ChevronRight className="w-3.5 h-3.5 text-[#7B8798]" />
               {item.href && !isLast ? (
                 <Link
                   href={item.href}

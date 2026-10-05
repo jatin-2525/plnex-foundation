@@ -93,7 +93,7 @@ export default function ShowcasePage() {
             </button>
             <button
               onClick={() => setIsDrawerOpen(true)}
-              className="px-3 py-1.5 bg-white hover:bg-[#F0F2F5] text-[#172033] border border-[#D9DEE5] rounded-md text-xs font-medium transition-colors"
+              className="px-3 py-1.5 bg-white hover:bg-[#F1F3F5] text-[#172033] border border-[#D9DEE5] rounded-md text-xs font-medium transition-colors"
             >
               Open Test Drawer
             </button>
@@ -134,7 +134,7 @@ export default function ShowcasePage() {
                   className={`px-2.5 py-1 rounded text-xs font-mono transition-colors ${
                     simulatedState === s.id
                       ? 'bg-[#176B87] text-white font-bold'
-                      : 'bg-[#F0F2F5] text-[#596579] hover:bg-[#E8EBF0] hover:text-[#172033]'
+                      : 'bg-[#F1F3F5] text-[#596579] hover:bg-[#D9DEE5] hover:text-[#172033]'
                   }`}
                 >
                   {s.label}
@@ -160,7 +160,7 @@ export default function ShowcasePage() {
                   className={`px-2.5 py-1 rounded text-xs transition-colors ${
                     userSession?.role === r.id
                       ? 'bg-[#176B87] text-white font-bold'
-                      : 'bg-[#F0F2F5] text-[#596579] hover:bg-[#E8EBF0]'
+                      : 'bg-[#F1F3F5] text-[#596579] hover:bg-[#D9DEE5]'
                   }`}
                 >
                   {r.label}
@@ -399,7 +399,7 @@ export default function ShowcasePage() {
       {/* =========================================================================
           REUSABLE COMPONENT: PLnEX MATCH EXPLANATION COMPONENT
           ========================================================================= */}
-      <div className="bg-white border border-[#D9DEE5] rounded-xl p-5 space-y-4">
+      <div className="bg-white border border-[#D9DEE5] rounded-lg p-5 space-y-4">
         <div className="flex items-center justify-between flex-wrap gap-2">
           <div>
             <h3 className="text-sm font-bold text-[#172033] flex items-center gap-2">
@@ -414,7 +414,7 @@ export default function ShowcasePage() {
 
         {/* Interactive Scenario Switcher */}
         <div className="flex items-center gap-2 flex-wrap text-xs pt-1">
-          <span className="text-[11px] font-bold text-[#8A94A6] uppercase">Test Scenarios:</span>
+          <span className="text-[11px] font-bold text-[#7B8798] uppercase">Test Scenarios:</span>
           {[
             { id: 'EVT-2026-001', label: '94% High Confidence (Erect Spools)', badge: 'Auto-link' },
             { id: 'EVT-2026-002', label: '86% Review Required (Field Welds)', badge: 'Review' },
@@ -455,7 +455,7 @@ export default function ShowcasePage() {
       {/* =========================================================================
           REUSABLE COMPONENT: PLnEX NOTIFICATION CENTER
           ========================================================================= */}
-      <div className="bg-white border border-[#D9DEE5] rounded-xl p-5 space-y-4">
+      <div className="bg-white border border-[#D9DEE5] rounded-lg p-5 space-y-4">
         <div>
           <h3 className="text-sm font-bold text-[#172033] flex items-center gap-2">
             <Bell className="w-4 h-4 text-[#176B87]" />
@@ -473,7 +473,7 @@ export default function ShowcasePage() {
       {/* =========================================================================
           REUSABLE COMPONENT: PLnEX GLOBAL UNIVERSAL SEARCH
           ========================================================================= */}
-      <div className="bg-white border border-[#D9DEE5] rounded-xl p-5 space-y-4">
+      <div className="bg-white border border-[#D9DEE5] rounded-lg p-5 space-y-4">
         <div className="flex items-center justify-between flex-wrap gap-2">
           <div>
             <h3 className="text-sm font-bold text-[#172033] flex items-center gap-2">

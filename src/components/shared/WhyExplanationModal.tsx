@@ -42,7 +42,7 @@ export function WhyExplanationModal({
       case 'health':
         return <Activity className="w-5 h-5 text-[#D98B32]" />;
       case 'variance':
-        return <TrendingDown className="w-5 h-5 text-[#9A5B13]" />;
+        return <TrendingDown className="w-5 h-5 text-[#D98B32]" />;
       default:
         return <HelpCircle className="w-5 h-5 text-[#176B87]" />;
     }
@@ -57,9 +57,9 @@ export function WhyExplanationModal({
       case 'health':
         return 'bg-[#FDF6ED] text-[#D98B32] border-[#F0D4A6]';
       case 'variance':
-        return 'bg-[#FEF7EE] text-[#9A5B13] border-[#ECD1A4]';
+        return 'bg-[#FDF6ED] text-[#D98B32] border-[#F0D4A6]';
       default:
-        return 'bg-[#F0F2F5] text-[#172033] border-[#D9DEE5]';
+        return 'bg-[#F1F3F5] text-[#172033] border-[#D9DEE5]';
     }
   };
 
@@ -73,7 +73,7 @@ export function WhyExplanationModal({
       footer={
         <div className="flex items-center justify-between w-full text-xs">
           <div className="flex items-center gap-1.5 text-[#596579] font-mono text-[11px] truncate max-w-xs">
-            <Clock className="w-3.5 h-3.5 text-[#8A94A6] shrink-0" />
+            <Clock className="w-3.5 h-3.5 text-[#7B8798] shrink-0" />
             <span className="truncate">Timestamp: {data.timestamp || 'Authoritative Snapshot'}</span>
           </div>
 
@@ -105,13 +105,13 @@ export function WhyExplanationModal({
     >
       <div className="space-y-4 text-xs">
         {/* Metric Summary Header Card */}
-        <div className="p-4 rounded-xl bg-[#F7F8FA] border border-[#D9DEE5] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div className="p-4 rounded-lg bg-[#F7F8FA] border border-[#D9DEE5] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-white border border-[#D9DEE5] flex items-center justify-center shrink-0 shadow-2xs">
+            <div className="w-10 h-10 rounded-lg bg-white border border-[#D9DEE5] flex items-center justify-center shrink-0 shadow-2xs">
               {getTypeIcon()}
             </div>
             <div>
-              <span className="text-[10px] uppercase font-bold text-[#8A94A6] tracking-wider block">
+              <span className="text-[10px] uppercase font-bold text-[#7B8798] tracking-wider block">
                 {data.metricLabel}
               </span>
               <div className="text-base font-bold font-mono text-[#172033] mt-0.5">
@@ -126,8 +126,8 @@ export function WhyExplanationModal({
         </div>
 
         {/* Executive Plain English Summary */}
-        <div className="p-3.5 rounded-xl bg-white border border-[#D9DEE5] space-y-1">
-          <span className="text-[10px] uppercase font-bold text-[#8A94A6] tracking-wider block">
+        <div className="p-3.5 rounded-lg bg-white border border-[#D9DEE5] space-y-1">
+          <span className="text-[10px] uppercase font-bold text-[#7B8798] tracking-wider block">
             Executive Root-Cause Summary
           </span>
           <p className="text-xs text-[#172033] leading-relaxed">
@@ -138,13 +138,13 @@ export function WhyExplanationModal({
         {/* Contributing Factors Breakdown Table / List */}
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <span className="text-[10px] uppercase font-bold text-[#8A94A6] tracking-wider">
+            <span className="text-[10px] uppercase font-bold text-[#7B8798] tracking-wider">
               Scoring Factors &amp; Contributors ({data.factors.length})
             </span>
             <span className="text-[11px] text-[#596579] font-mono">Weight / Impact</span>
           </div>
 
-          <div className="divide-y divide-[#E8EBF0] border border-[#D9DEE5] rounded-xl overflow-hidden bg-white">
+          <div className="divide-y divide-[#D9DEE5] border border-[#D9DEE5] rounded-lg overflow-hidden bg-white">
             {data.factors.map((f, idx) => (
               <div key={idx} className="p-3 hover:bg-[#F9FAFC] transition-colors space-y-1">
                 <div className="flex items-center justify-between gap-2">
@@ -160,7 +160,7 @@ export function WhyExplanationModal({
                   </div>
                   <span className={`font-mono font-bold text-xs px-2 py-0.5 rounded border ${
                     f.status === 'positive'
-                      ? 'bg-[#EBF5EF] text-[#2E7D5B] border-[#B8DCC9]'
+                      ? 'bg-[#EDF7F2] text-[#2E7D5B] border-[#B8DCC9]'
                       : f.status === 'negative'
                       ? 'bg-[#FBEFEE] text-[#B5473C] border-[#E4B0AA]'
                       : 'bg-[#EDF5F8] text-[#176B87] border-[#B3CBE0]'
@@ -178,7 +178,7 @@ export function WhyExplanationModal({
 
         {/* Recommendation / Actionable Next Step */}
         {data.recommendation && (
-          <div className="p-3.5 rounded-xl bg-[#EDF7F2] border border-[#B8DCC9] space-y-1">
+          <div className="p-3.5 rounded-lg bg-[#EDF7F2] border border-[#B8DCC9] space-y-1">
             <div className="flex items-center gap-1.5 font-bold text-[#2E7D5B] text-xs">
               <CheckCircle2 className="w-4 h-4 text-[#2E7D5B]" />
               <span>Recommended Project Controls Action</span>
@@ -196,7 +196,7 @@ export function WhyExplanationModal({
               <Cpu className="w-3.5 h-3.5 text-[#176B87]" />
               <span>Rule Engine: <strong>{data.algorithmOrRule}</strong></span>
             </div>
-            <span className="text-[#8A94A6]">Deterministic Trace</span>
+            <span className="text-[#7B8798]">Deterministic Trace</span>
           </div>
         )}
       </div>
