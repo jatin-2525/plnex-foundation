@@ -4,6 +4,20 @@ import React from 'react';
 import { CanonicalDataState } from '../../lib/domain/canonicalModels';
 import { StatusBadge } from './StatusBadge';
 
+export const CANONICAL_DATA_STATES = [
+  'DRAFT',
+  'PROCESSING',
+  'PENDING_REVIEW',
+  'VERIFIED',
+  'UNMATCHED',
+  'CONFLICT',
+  'DUPLICATE',
+  'STALE',
+  'FAILED',
+  'SYNC_PENDING',
+  'SERVER_CONFIRMED',
+] as const;
+
 export interface CanonicalStateBadgeProps {
   state: CanonicalDataState;
   showIcon?: boolean;

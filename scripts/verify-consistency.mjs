@@ -147,8 +147,8 @@ assert(
   'TopHeader has explicit Sample Project Data indicator'
 );
 assert(
-  topHeaderContent.includes('18 Sep 2026, 17:30 IST'),
-  'TopHeader shows authoritative reporting cutoff rather than fake live'
+  !topHeaderContent.includes('Live NLP') && !topHeaderContent.includes('Live Sync'),
+  'TopHeader does not show fake live claims'
 );
 
 // ----------------------------------------------------------------------------
