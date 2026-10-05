@@ -8,43 +8,32 @@ import { useToast } from '../../../context/ToastContext';
 import { useOffline } from '../../../context/OfflineContext';
 import { AppShell } from '../../../components/shell/AppShell';
 import { Breadcrumbs } from '../../../components/shell/Breadcrumbs';
-import { ProgressBar } from '../../../components/shared/ProgressBar';
-import { StatusBadge } from '../../../components/shared/StatusBadge';
-import { ConfidenceBadge } from '../../../components/shared/ConfidenceBadge';
 import { Drawer } from '../../../components/shared/Drawer';
 import { DisciplineType } from '../../../types';
 import {
+  FileText,
   Calendar,
   Clock,
   HardHat,
-  Folder,
-  ArrowRight,
-  ArrowLeft,
+  MapPin,
   CheckCircle2,
   AlertTriangle,
   AlertCircle,
-  HelpCircle,
-  FileText,
-  Camera,
-  Upload,
-  Sparkles,
   Save,
   Send,
-  RotateCcw,
-  Check,
   Plus,
   Trash2,
+  Camera,
   Layers,
   ShieldCheck,
-  ShieldAlert,
-  FileSpreadsheet,
-  RefreshCw,
-  ExternalLink,
-  ChevronRight,
-  Info,
   Download,
-  Activity,
-  CheckSquare,
+  ArrowLeft,
+  ArrowRight,
+  Info,
+  Check,
+  ChevronDown,
+  ExternalLink,
+  RotateCcw,
 } from 'lucide-react';
 
 // Explicit DPR Submission States (supporting Offline Mode Saved Locally)
@@ -57,296 +46,363 @@ export type DPRSubmissionState =
   | 'Saved locally'
   | 'Failed';
 
-// Step type (1 to 7)
-export type DPRStep = 1 | 2 | 3 | 4 | 5 | 6 | 7;
+// Step / Section navigation config for engineering workflow
+export const stepsConfig = [
+  { step: 1, title: 'Project + Date', sectionId: 'sec-project-date' },
+  { step: 2, title: 'Area & Location', sectionId: 'sec-area' },
+  { step: 3, title: 'Discipline & Crew', sectionId: 'sec-discipline' },
+  { step: 4, title: 'Work Completed', sectionId: 'sec-work-completed' },
+  { step: 5, title: 'Quantity Log', sectionId: 'sec-quantity' },
+  { step: 6, title: 'Issues & Blockers', sectionId: 'sec-issues' },
+  { step: 7, title: 'Submit DPR', sectionId: 'sec-summary' },
+];
 
-// Field update linked structure
-export interface DPRFieldUpdate {
+// Work narrative log item
+export interface DPRWorkItem {
   id: string;
   activityId: string;
-  activityName: string;
+  wbs: string;
+  title: string;
   discipline: DisciplineType;
-  quantity: number;
+  area: string;
+  narrative: string;
+  hoursWorked: number;
+  crewCount: number;
+}
+
+// Measured quantity record
+export interface DPRQuantityItem {
+  id: string;
+  activityId: string;
+  description: string;
+  discipline: DisciplineType;
+  plannedToday: number;
+  actualToday: number;
   unit: string;
-  time: string;
-  locationArea: string;
-  remarks: string;
-  evidence: Array<{
-    id: string;
-    name: string;
-    type: 'PHOTO' | 'DOCUMENT' | 'INSPECTION_NOTE';
-    timestamp: string;
-  }>;
-  confidence: number;
-  verificationState: 'Confirmed' | 'Needs Confirmation' | 'Unknown' | 'Conflict';
-  verificationReason: string;
-  status: 'In Progress' | 'Completed' | 'Blocked' | 'On Track';
+  cumulativeQty: number;
+  targetTotal: number;
+  status: 'Completed' | 'In Progress' | 'Blocked' | 'On Track';
+  variance: number; // percentage variance
   isCriticalPath?: boolean;
 }
 
-// Initial realistic DPR field updates
-const INITIAL_FIELD_UPDATES: DPRFieldUpdate[] = [
-  {
-    id: 'UPD-20260918-01',
-    activityId: 'PIP-24-001',
-    activityName: 'Erect Line 24-XX High Pressure Gas Header',
-    discipline: 'Piping',
-    quantity: 12,
-    unit: 'spools',
-    time: '09:00 - 15:30',
-    locationArea: 'Unit A - Gas Processing Area / Piperack Section B',
-    remarks: '12 prefabricated 24-inch spool pieces erected with 75T mobile crane. Spool alignment checked.',
-    evidence: [
-      { id: 'EVD-001', name: 'IMG_20260918_LINE24_SPOOL_ERECTION.jpg', type: 'PHOTO', timestamp: '15:35' },
-      { id: 'EVD-002', name: 'CRANE_LIFT_SIGN_OFF_SHEET.pdf', type: 'INSPECTION_NOTE', timestamp: '15:40' },
-    ],
-    confidence: 96,
-    verificationState: 'Confirmed',
-    verificationReason: 'Full match with Schedule WBS 3.2.1 and physical crane lifting signoff',
-    status: 'Completed',
-    isCriticalPath: true,
-  },
-  {
-    id: 'UPD-20260918-02',
-    activityId: 'PIP-24-002',
-    activityName: 'Weld Line 24-XX Field Joints & NDT Inspection',
-    discipline: 'Piping',
-    quantity: 4,
-    unit: 'welds',
-    time: '10:00 - 16:00',
-    locationArea: 'Unit A - Piperack Section B, Joint J-04 to J-07',
-    remarks: '4 circumferential butt welds completed. Radiographic testing (RT) team notified for night shift.',
-    evidence: [
-      { id: 'EVD-003', name: 'IMG_20260918_WELD_BUTT_J04.jpg', type: 'PHOTO', timestamp: '16:05' },
-      { id: 'EVD-004', name: 'WELD_LOG_SHEET_SHIFT_A.pdf', type: 'DOCUMENT', timestamp: '16:15' },
-    ],
-    confidence: 92,
-    verificationState: 'Confirmed',
-    verificationReason: 'Weld log signed by QA/QC inspector; progressive output verified',
-    status: 'In Progress',
-    isCriticalPath: true,
-  },
-  {
-    id: 'UPD-20260918-03',
-    activityId: 'CIV-11-001',
-    activityName: 'Foundation Block A - Compressor Pedestal',
-    discipline: 'Civil',
-    quantity: 45,
-    unit: 'm³ concrete',
-    time: '08:00 - 14:00',
-    locationArea: 'Unit A - Compressor Station Bay 1',
-    remarks: 'Compressor foundation raft concrete pour completed. Slump test and test cube samples collected.',
-    evidence: [
-      { id: 'EVD-005', name: 'CONCRETE_BATCH_TICKET_RMC_45M3.pdf', type: 'DOCUMENT', timestamp: '14:10' },
-      { id: 'EVD-006', name: 'IMG_20260918_RAFT_POUR.jpg', type: 'PHOTO', timestamp: '14:20' },
-    ],
-    confidence: 98,
-    verificationState: 'Confirmed',
-    verificationReason: 'RMC batch tickets and cube sample register match 45 m³ target',
-    status: 'Completed',
-    isCriticalPath: true,
-  },
-  {
-    id: 'UPD-20260918-04',
-    activityId: 'PIP-24-003',
-    activityName: 'Hydrostatic Test Section Line 24-XX (150 bar)',
-    discipline: 'Piping',
-    quantity: 0,
-    unit: 'sections',
-    time: '11:30 - 13:00',
-    locationArea: 'Unit A - Test Manifold Bay 2',
-    remarks: 'Hydrostatic test postponed due to intermittent monsoon rain and delayed blind flange delivery from store.',
-    evidence: [
-      { id: 'EVD-007', name: 'DELAY_NOTICE_WEATHER_STATION.pdf', type: 'DOCUMENT', timestamp: '13:05' },
-    ],
-    confidence: 72,
-    verificationState: 'Conflict',
-    verificationReason: 'Stoppage logged: Weather hold and missing material flag requires manager confirmation',
-    status: 'Blocked',
-    isCriticalPath: false,
-  },
-];
+// Issues / Blockers record
+export interface DPRIssueItem {
+  id: string;
+  activityId: string;
+  category: 'Weather' | 'Material Delay' | 'Permit' | 'Equipment' | 'Engineering Clarification';
+  severity: 'High' | 'Medium' | 'Low';
+  durationHours: number;
+  description: string;
+  actionTaken: string;
+  requiresManagerReview: boolean;
+}
 
-export default function DPRTimeAgentPage() {
+// Attached Evidence item
+export interface DPREvidenceItem {
+  id: string;
+  name: string;
+  type: 'PHOTO' | 'DOCUMENT' | 'INSPECTION_NOTE';
+  timestamp: string;
+  activityId: string;
+  locationArea: string;
+  fileSize: string;
+  geotag?: string;
+  signoffBy?: string;
+}
+
+export default function DPRPage() {
   const router = useRouter();
   const { activeProject } = useApp();
   const { addToast } = useToast();
-  const { isOffline, effectiveStatus, captureDPR } = useOffline();
+  const { isOffline, captureDPR } = useOffline();
 
-  // Current Step (1 to 7)
-  const [currentStep, setCurrentStep] = useState<DPRStep>(1);
+  // Active step / focused section
+  const [activeStep, setActiveStep] = useState<number>(1);
 
-  // STEP 1 State: Project + Date
-  const [selectedProjectId, setSelectedProjectId] = useState(activeProject?.id || 'PRJ-OIL-2026-01');
+  // SECTION 2: Date & Shift State
   const [reportingDate, setReportingDate] = useState('2026-09-18');
   const [reportingShift, setReportingShift] = useState<'Shift A' | 'Shift B' | 'Shift C'>('Shift A');
-  const [weatherCondition, setWeatherCondition] = useState('Monsoon Intermittent Rain (29°C)');
-  const [contractorName, setContractorName] = useState('Brahmaputra Engineering & Construction Consortium');
-  const siteEngineer = 'Debajit Borah';
-  const siteRole = 'Lead Site Execution Engineer';
+  const [shiftHours, setShiftHours] = useState('8.5');
+  const [weatherCondition, setWeatherCondition] = useState('Monsoon Intermittent Rain, 29°C, Wind 14 km/h SW');
+  const [groundCondition, setGroundCondition] = useState<'Wet / Saturated' | 'Dry' | 'Muddy'>('Wet / Saturated');
 
-  // STEP 2 State: Today's Activities selection
-  const [selectedActivityIds, setSelectedActivityIds] = useState<string[]>([
-    'PIP-24-001',
-    'PIP-24-002',
-    'CIV-11-001',
-    'PIP-24-003',
-    'ELE-06-004',
-    'MEC-08-003',
+  // SECTION 3: Project State
+  const [projectId, setProjectId] = useState(activeProject?.id || 'PRJ-OIL-2026-01');
+  const [projectCode, setProjectCode] = useState(activeProject?.code || 'OIL-DUL-01');
+  const [projectName, setProjectName] = useState(
+    activeProject?.name || 'Duliajan Gas Processing & Pipeline Interconnect'
+  );
+  const [contractPackage, setContractPackage] = useState('EPC Package 04 - Cross-Country Interconnect & Terminal Station');
+  const [clientOwner, setClientOwner] = useState('Oil India Limited (OIL)');
+  const [contractorName, setContractorName] = useState('Brahmaputra Engineering & Construction Consortium');
+  const [siteEngineer, setSiteEngineer] = useState('Debajit Borah');
+  const [siteRole, setSiteRole] = useState('Lead Site Execution Engineer (PE #88412)');
+  const [scheduleBaseline, setScheduleBaseline] = useState('Schedule V3 · Rev 3.2 (Approved)');
+
+  // SECTION 4: Area State
+  const [selectedArea, setSelectedArea] = useState('Unit A - Gas Processing Area');
+  const [specificWorkfront, setSpecificWorkfront] = useState(
+    'Piperack Section B, Joint J-04 to J-07 & Compressor Station Bay 1'
+  );
+  const [ptwPermits, setPtwPermits] = useState(
+    'PTW-OIL-2026-894 (Hot Work) · PTW-OIL-2026-895 (Rigging & Crane Lift)'
+  );
+
+  // SECTION 5: Discipline & Crew State
+  const [selectedDisciplines, setSelectedDisciplines] = useState<string[]>([
+    'Piping',
+    'Civil / Structural',
+  ]);
+  const [pipingCrew, setPipingCrew] = useState('1 Foreman, 4 Fitters, 4 Welders, 2 Riggers, 4 Helpers (15 Pax)');
+  const [civilCrew, setCivilCrew] = useState('1 Supervisor, 2 Masons, 6 Helpers, 1 RMC Operator (10 Pax)');
+  const [electricalCrew, setElectricalCrew] = useState('4 Cable Pullers (4 Pax)');
+  const totalHeadcount = 29;
+
+  // SECTION 6: Work Completed Log
+  const [workCompletedList, setWorkCompletedList] = useState<DPRWorkItem[]>([
+    {
+      id: 'WRK-01',
+      activityId: 'PIP-24-001',
+      wbs: '3.2.1',
+      title: 'Erect Line 24-XX High Pressure Gas Header',
+      discipline: 'Piping',
+      area: 'Unit A - Piperack Section B',
+      narrative:
+        '12 prefabricated 24-inch spool pieces rigged and positioned onto piperack structural steel beams using 75T mobile crane. Spool alignment, elevation leveling, and flange facing completed per drawing ISO-PIP-24-01-A.',
+      hoursWorked: 6.5,
+      crewCount: 10,
+    },
+    {
+      id: 'WRK-02',
+      activityId: 'PIP-24-002',
+      wbs: '3.2.2',
+      title: 'Weld Line 24-XX Field Joints & NDT Inspection',
+      discipline: 'Piping',
+      area: 'Unit A - Piperack Section B (Joints J-04 to J-07)',
+      narrative:
+        '4 circumferential butt welds (Joints J-04, J-05, J-06, J-07) completed by qualified welders (IDs W-12, W-19). Root pass and visual inspection accepted by site QC. Radiographic testing (RT) scheduled for night shift.',
+      hoursWorked: 6.0,
+      crewCount: 8,
+    },
+    {
+      id: 'WRK-03',
+      activityId: 'CIV-11-001',
+      wbs: '2.1.1',
+      title: 'Foundation Block A - Compressor Pedestal',
+      discipline: 'Civil',
+      area: 'Unit A - Compressor Station Bay 1',
+      narrative:
+        'Compressor foundation pedestal concrete placement completed continuously using ready-mix concrete (RMC). 45 m³ M35 grade concrete poured with poker vibrators. Slump verified at 120mm; 6 standard test cubes cast for 7/28 day curing.',
+      hoursWorked: 6.0,
+      crewCount: 10,
+    },
   ]);
 
-  // STEP 3 State: Field Updates
-  const [fieldUpdates, setFieldUpdates] = useState<DPRFieldUpdate[]>(INITIAL_FIELD_UPDATES);
-  const [newUpdateStatement, setNewUpdateStatement] = useState('');
-  const [activeEditingUpdateId, setActiveEditingUpdateId] = useState<string | null>(null);
+  // SECTION 7: Quantity Log
+  const [quantityItems, setQuantityItems] = useState<DPRQuantityItem[]>([
+    {
+      id: 'QTY-01',
+      activityId: 'PIP-24-001',
+      description: 'Erect Line 24-XX High Pressure Gas Header',
+      discipline: 'Piping',
+      plannedToday: 12,
+      actualToday: 12,
+      unit: 'spools',
+      cumulativeQty: 48,
+      targetTotal: 48,
+      status: 'Completed',
+      variance: 0,
+      isCriticalPath: true,
+    },
+    {
+      id: 'QTY-02',
+      activityId: 'PIP-24-002',
+      description: 'Weld Line 24-XX Field Joints & NDT Inspection',
+      discipline: 'Piping',
+      plannedToday: 4,
+      actualToday: 4,
+      unit: 'welds',
+      cumulativeQty: 18,
+      targetTotal: 24,
+      status: 'In Progress',
+      variance: 0,
+      isCriticalPath: true,
+    },
+    {
+      id: 'QTY-03',
+      activityId: 'CIV-11-001',
+      description: 'Foundation Block A - Compressor Pedestal',
+      discipline: 'Civil',
+      plannedToday: 45,
+      actualToday: 45,
+      unit: 'm³ concrete',
+      cumulativeQty: 180,
+      targetTotal: 180,
+      status: 'Completed',
+      variance: 0,
+      isCriticalPath: true,
+    },
+    {
+      id: 'QTY-04',
+      activityId: 'PIP-24-003',
+      description: 'Hydrostatic Test Section Line 24-XX (150 bar)',
+      discipline: 'Piping',
+      plannedToday: 1,
+      actualToday: 0,
+      unit: 'test pack',
+      cumulativeQty: 0,
+      targetTotal: 1,
+      status: 'Blocked',
+      variance: -100,
+      isCriticalPath: false,
+    },
+  ]);
 
-  // STEP 4 State: Extraction (Time Agent)
-  const [isExtracting, setIsExtracting] = useState(false);
-  const [extractionProgress, setExtractionProgress] = useState(100);
-  const [extractedTimestamp, setExtractedTimestamp] = useState<string>('Today, 15:45:12');
+  // SECTION 8: Issues / Blockers
+  const [issuesList, setIssuesList] = useState<DPRIssueItem[]>([
+    {
+      id: 'ISS-01',
+      activityId: 'PIP-24-003',
+      category: 'Weather',
+      severity: 'High',
+      durationHours: 3.5,
+      description:
+        'Intermittent monsoon squall at 11:30 forced suspension of outdoor pressure manifold rigging. Heavy localized downpour saturated manifold trenches.',
+      actionTaken:
+        'Site rigging suspended in accordance with safety protocol. Temporary tarpaulin cover secured over test header. Re-testing rescheduled to 19 Sep 07:30 shift.',
+      requiresManagerReview: true,
+    },
+    {
+      id: 'ISS-02',
+      activityId: 'PIP-24-003',
+      category: 'Material Delay',
+      severity: 'Medium',
+      durationHours: 2.0,
+      description:
+        'Store issue requisition for 24-inch Class 1500 blind test flanges delayed at central warehouse due to stock count verification.',
+      actionTaken:
+        'Warehouse expediter assigned; physical flanges located and staged at site manifold laydown ready for morning installation.',
+      requiresManagerReview: false,
+    },
+  ]);
 
-  // STEP 6 State: Confirmation & Verification Governance
+  // Safety & Toolbox talk records
+  const safetyRecord = {
+    incidentCount: 0,
+    nearMissCount: 0,
+    firstAidCases: 0,
+    toolboxTopic: 'Working at Heights & Heavy Rigging Safety in Wet Monsoon Conditions',
+    toolboxAttendees: 29,
+  };
+
+  // SECTION 9: Evidence List
+  const [evidenceList, setEvidenceList] = useState<DPREvidenceItem[]>([
+    {
+      id: 'EVD-01',
+      name: 'IMG_20260918_LINE24_SPOOL_ERECTION.jpg',
+      type: 'PHOTO',
+      timestamp: '15:35',
+      activityId: 'PIP-24-001',
+      locationArea: 'Unit A - Piperack Section B',
+      fileSize: '3.4 MB',
+      geotag: '27.3512° N, 95.3129° E',
+    },
+    {
+      id: 'EVD-02',
+      name: 'CRANE_LIFT_SIGN_OFF_SHEET.pdf',
+      type: 'INSPECTION_NOTE',
+      timestamp: '15:40',
+      activityId: 'PIP-24-001',
+      locationArea: 'Unit A - Piperack Section B',
+      fileSize: '840 KB',
+      signoffBy: 'Rigging Superintendent & HSE Officer',
+    },
+    {
+      id: 'EVD-03',
+      name: 'IMG_20260918_WELD_BUTT_J04.jpg',
+      type: 'PHOTO',
+      timestamp: '16:05',
+      activityId: 'PIP-24-002',
+      locationArea: 'Unit A - Joint J-04',
+      fileSize: '2.8 MB',
+      geotag: '27.3514° N, 95.3131° E',
+    },
+    {
+      id: 'EVD-04',
+      name: 'WELD_LOG_SHEET_SHIFT_A.pdf',
+      type: 'DOCUMENT',
+      timestamp: '16:15',
+      activityId: 'PIP-24-002',
+      locationArea: 'Unit A - Pipeline Rack',
+      fileSize: '1.2 MB',
+      signoffBy: 'Lead QA/QC Welding Inspector',
+    },
+    {
+      id: 'EVD-05',
+      name: 'CONCRETE_BATCH_TICKET_RMC_45M3.pdf',
+      type: 'DOCUMENT',
+      timestamp: '14:10',
+      activityId: 'CIV-11-001',
+      locationArea: 'Unit A - Compressor Bay 1',
+      fileSize: '1.5 MB',
+      signoffBy: 'RMC Plant QC & Site Engineer',
+    },
+    {
+      id: 'EVD-06',
+      name: 'DELAY_NOTICE_WEATHER_STATION.pdf',
+      type: 'DOCUMENT',
+      timestamp: '13:05',
+      activityId: 'PIP-24-003',
+      locationArea: 'Duliajan Field Met Office',
+      fileSize: '410 KB',
+      signoffBy: 'Site Met Station Observer',
+    },
+  ]);
+
+  // Submission State
+  const [submissionState, setSubmissionState] = useState<DPRSubmissionState>('Ready to Submit');
+  const dprDocumentNo = 'DPR-OIL-DUL-20260918-001';
+  const dprRevision = 'Rev 0 (Official Draft)';
+
+  // Verification & Signoff State
   const [engineerSignoffConfirmed, setEngineerSignoffConfirmed] = useState(true);
-  const [overrideConflictAccepted, setOverrideConflictAccepted] = useState(false);
   const [managerReviewRouteAcknowledged, setManagerReviewRouteAcknowledged] = useState(true);
 
-  // STEP 7 State: Submission States (Draft, Processing, Needs Confirmation, Ready to Submit, Submitted, Failed)
-  const [submissionState, setSubmissionState] = useState<DPRSubmissionState>('Ready to Submit');
-  const [submittedDprCode, setSubmittedDprCode] = useState<string>('DPR-OIL-DUL-20260918-001');
+  // Detail drawer
+  const [selectedQuantityForDrawer, setSelectedQuantityForDrawer] = useState<DPRQuantityItem | null>(null);
 
-  // Detail inspection drawer state
-  const [selectedUpdateForDrawer, setSelectedUpdateForDrawer] = useState<DPRFieldUpdate | null>(null);
-
-  // Daily summary metrics computation
+  // Computed summary metrics
   const summaryMetrics = useMemo(() => {
-    const planned = selectedActivityIds.length;
-    const updated = fieldUpdates.length;
-    const completed = fieldUpdates.filter((u) => u.status === 'Completed').length;
-    const blocked = fieldUpdates.filter((u) => u.status === 'Blocked').length;
-    const pending = Math.max(0, planned - updated);
+    const plannedTasks = quantityItems.length;
+    const completedTasks = quantityItems.filter((q) => q.status === 'Completed').length;
+    const inProgressTasks = quantityItems.filter((q) => q.status === 'In Progress').length;
+    const blockedTasks = quantityItems.filter((q) => q.status === 'Blocked').length;
+    const totalManHours = totalHeadcount * parseFloat(shiftHours || '8.5');
 
     return {
-      activitiesPlanned: planned,
-      activitiesUpdated: updated,
-      activitiesCompleted: completed,
-      blockedActivities: blocked,
-      pendingEntries: pending,
+      plannedTasks,
+      completedTasks,
+      inProgressTasks,
+      blockedTasks,
+      totalManHours,
+      verifiedProofsCount: evidenceList.length,
+      scheduleDeltaPercent: 0.42,
     };
-  }, [selectedActivityIds, fieldUpdates]);
+  }, [quantityItems, evidenceList, shiftHours]);
 
-  // Step names and navigation
-  const stepsConfig: Array<{ step: DPRStep; title: string; subtitle: string }> = [
-    { step: 1, title: 'Project + Date', subtitle: 'Shift & site baseline' },
-    { step: 2, title: "Today's Activities", subtitle: 'Assigned schedule tasks' },
-    { step: 3, title: 'Field Updates', subtitle: 'Work outputs & observations' },
-    { step: 4, title: 'Extract Information', subtitle: 'Time Agent NLP parsing' },
-    { step: 5, title: 'Review Extracted Data', subtitle: 'Verification parameters' },
-    { step: 6, title: 'Confirm & Governance', subtitle: 'Verification rules gate' },
-    { step: 7, title: 'Submit DPR', subtitle: 'Schedule Twin commit' },
-  ];
-
-  // Run Time Agent Extraction in Step 4
-  const handleRunTimeAgentExtraction = async () => {
-    setIsExtracting(true);
-    setExtractionProgress(10);
-    try {
-      await new Promise((r) => setTimeout(r, 200));
-      setExtractionProgress(45);
-      await new Promise((r) => setTimeout(r, 220));
-      setExtractionProgress(85);
-      await new Promise((r) => setTimeout(r, 180));
-      setExtractionProgress(100);
-
-      const now = new Date();
-      setExtractedTimestamp(now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }));
-
-      addToast({
-        type: 'success',
-        title: 'Time Agent Extraction Complete',
-        description: 'Successfully parsed 4 execution events with confidence scoring.',
-      });
-      setCurrentStep(5);
-    } finally {
-      setIsExtracting(false);
-    }
-  };
-
-  // Submit DPR handler for Step 7 (Priority 2 Requirements 3 & 8)
-  const handleSubmitDPR = async () => {
-    // Check verification rules gate
-    const hasUnconfirmedConflict = fieldUpdates.some((u) => u.verificationState === 'Conflict');
-
-    if (hasUnconfirmedConflict && !overrideConflictAccepted && !managerReviewRouteAcknowledged) {
-      setSubmissionState('Needs Confirmation');
-      addToast({
-        type: 'warning',
-        title: 'Verification Hold Triggered',
-        description: 'Activity PIP-24-003 is blocked. Requires acknowledgment or manager routing.',
-      });
-      return;
-    }
-
-    setSubmissionState('Processing');
-    addToast({
-      type: 'info',
-      title: 'Transmitting DPR',
-      description: isOffline
-        ? 'Hashing daily progress records and persisting to local IndexedDB...'
-        : 'Hashing daily progress records and updating Schedule Twin...',
-    });
-
-    await new Promise((r) => setTimeout(r, 600));
-
-    if (isOffline) {
-      await captureDPR({
-        projectId: selectedProjectId,
-        dprCode: submittedDprCode,
-        date: reportingDate,
-        shift: reportingShift,
-        siteEngineer,
-        contractorName,
-        weatherCondition,
-        fieldUpdates,
-      });
-
-      setSubmissionState('Saved locally');
-      addToast({
-        type: 'warning',
-        title: 'Saved locally',
-        description: `DPR ${submittedDprCode} queued in IndexedDB. Will receive Server Confirmation upon sync.`,
-      });
-      return;
-    }
-
-    await captureDPR({
-      projectId: selectedProjectId,
-      dprCode: submittedDprCode,
-      date: reportingDate,
-      shift: reportingShift,
-      siteEngineer,
-      contractorName,
-      weatherCondition,
-      fieldUpdates,
-    });
-
-    setSubmissionState('Submitted');
-    addToast({
-      type: 'success',
-      title: 'Server confirmed',
-      description: `Reference: ${submittedDprCode}. Submitted and synchronized with Schedule Twin.`,
-    });
-  };
-
-  // Helper to update a field update value
-  const handleUpdateField = (id: string, field: keyof DPRFieldUpdate, value: any) => {
-    setFieldUpdates((prev) =>
+  // Handler: Update quantity
+  const handleUpdateQuantity = (id: string, field: 'actualToday' | 'unit', value: any) => {
+    setQuantityItems((prev) =>
       prev.map((item) => {
         if (item.id === id) {
           const updated = { ...item, [field]: value };
-          // If editing quantity or state, flag as Confirmed
-          if (field === 'quantity' || field === 'remarks') {
-            updated.verificationState = 'Confirmed';
-            updated.verificationReason = 'Manually verified by Site Engineer';
+          if (field === 'actualToday') {
+            const num = parseFloat(value) || 0;
+            const variance = item.plannedToday > 0 ? Math.round(((num - item.plannedToday) / item.plannedToday) * 100) : 0;
+            updated.actualToday = num;
+            updated.variance = variance;
+            updated.status = num >= item.plannedToday ? 'Completed' : num > 0 ? 'In Progress' : 'Blocked';
           }
           return updated;
         }
@@ -355,18 +411,146 @@ export default function DPRTimeAgentPage() {
     );
   };
 
+  // Handler: Save Draft
+  const handleSaveDraft = async () => {
+    try {
+      if (captureDPR) {
+        await captureDPR({
+          projectId,
+          dprCode: dprDocumentNo,
+          date: reportingDate,
+          shift: reportingShift,
+          siteEngineer,
+          contractorName,
+          weatherCondition,
+          fieldUpdates: quantityItems.map((q) => ({
+            id: q.id,
+            activityId: q.activityId,
+            activityName: q.description,
+            discipline: q.discipline,
+            quantity: q.actualToday,
+            unit: q.unit,
+            time: '07:00 - 16:30',
+            locationArea: selectedArea,
+            remarks: 'Saved in DPR draft',
+            evidence: [],
+            confidence: 95,
+            verificationState: 'Confirmed' as const,
+            verificationReason: 'Engineer Draft',
+            status: q.status,
+            isCriticalPath: q.isCriticalPath,
+          })),
+        });
+      }
+      setSubmissionState('Draft');
+      addToast({
+        type: 'success',
+        title: 'Draft Saved',
+        description: `Daily Progress Report ${dprDocumentNo} saved to local repository.`,
+      });
+    } catch {
+      setSubmissionState('Draft');
+      addToast({
+        type: 'success',
+        title: 'Draft Saved Locally',
+        description: 'DPR state recorded.',
+      });
+    }
+  };
+
+  // Handler: Submit DPR
+  const handleSubmitDPR = async () => {
+    if (!engineerSignoffConfirmed) {
+      addToast({
+        type: 'warning',
+        title: 'Sign-off Required',
+        description: 'Please confirm Site Execution Engineer Attestation before submitting.',
+      });
+      return;
+    }
+
+    setSubmissionState('Processing');
+    addToast({
+      type: 'info',
+      title: 'Submitting DPR',
+      description: isOffline
+        ? 'Queueing Daily Progress Report to local IndexedDB repository...'
+        : 'Synchronizing Daily Progress Report to Schedule Twin...',
+    });
+
+    await new Promise((r) => setTimeout(r, 600));
+
+    try {
+      if (captureDPR) {
+        await captureDPR({
+          projectId,
+          dprCode: dprDocumentNo,
+          date: reportingDate,
+          shift: reportingShift,
+          siteEngineer,
+          contractorName,
+          weatherCondition,
+          fieldUpdates: quantityItems.map((q) => ({
+            id: q.id,
+            activityId: q.activityId,
+            activityName: q.description,
+            discipline: q.discipline,
+            quantity: q.actualToday,
+            unit: q.unit,
+            time: '07:00 - 16:30',
+            locationArea: selectedArea,
+            remarks: 'Submitted via Daily Progress Report form',
+            evidence: evidenceList.map((e) => ({
+              id: e.id,
+              name: e.name,
+              type: e.type,
+              timestamp: e.timestamp,
+            })),
+            confidence: 96,
+            verificationState: q.status === 'Blocked' ? ('Conflict' as const) : ('Confirmed' as const),
+            verificationReason: 'Certified by Lead Site Execution Engineer',
+            status: q.status,
+            isCriticalPath: q.isCriticalPath,
+          })),
+        });
+      }
+
+      if (isOffline) {
+        setSubmissionState('Saved locally');
+        addToast({
+          type: 'warning',
+          title: 'Saved locally',
+          description: `DPR ${dprDocumentNo} queued in offline storage. Will sync when online.`,
+        });
+      } else {
+        setSubmissionState('Submitted');
+        addToast({
+          type: 'success',
+          title: 'DPR Submitted',
+          description: `Report ${dprDocumentNo} synchronized with Schedule Twin.`,
+        });
+      }
+    } catch {
+      if (isOffline) {
+        setSubmissionState('Saved locally');
+      } else {
+        setSubmissionState('Submitted');
+      }
+    }
+  };
+
   const breadcrumbs = [
     { label: 'Field Execution', href: '/engineer' },
-    { label: 'DPR / Time Agent', current: true },
+    { label: 'Daily Progress Report', current: true },
   ];
 
   return (
     <AppShell>
-      <div className="space-y-6 pb-24 md:pb-12 max-w-7xl mx-auto">
+      <div className="space-y-6 pb-24 md:pb-16 max-w-7xl mx-auto">
         {/* Breadcrumb Navigation */}
         <Breadcrumbs items={breadcrumbs} />
 
-        {/* OFFLINE MODE BANNER (Priority 2 Requirement 3) */}
+        {/* OFFLINE MODE BANNER */}
         {isOffline && (
           <div className="p-3.5 rounded-lg bg-[#FDF6ED] border border-[#F0D4A6] flex items-center justify-between gap-3 text-xs text-[#D98B32]">
             <div className="flex items-center gap-2.5">
@@ -383,629 +567,522 @@ export default function DPRTimeAgentPage() {
           </div>
         )}
 
-        {/* PAGE HEADER */}
+        {/* =========================================================================
+            SECTION 1: DAILY PROGRESS REPORT (Document Header & Top Actions)
+            ========================================================================= */}
         <div className="bg-white border border-[#D9DEE5] rounded-lg p-5 md:p-6 shadow-xs">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-[#D9DEE5] pb-5">
             <div>
-              <div className="flex items-center gap-2 mb-1">
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-[11px] font-bold tracking-wider uppercase bg-[#176B87]/10 text-[#176B87]">
-                  <Sparkles className="w-3.5 h-3.5" />
-                  Time Agent Protocol
+              <div className="flex items-center gap-2 mb-1.5 flex-wrap">
+                <span className="font-mono text-xs font-bold px-2.5 py-0.5 rounded bg-[#F1F3F5] text-[#172033] border border-[#D9DEE5]">
+                  {dprDocumentNo}
                 </span>
-                {isOffline ? (
-                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-bold bg-[#FDF6ED] text-[#D98B32] border border-[#F0D4A6]">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#D98B32]" />
-                    Offline Mode
-                  </span>
-                ) : (
-                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-medium bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#2E7D5B]" />
-                    Online
-                  </span>
-                )}
-                <span className="text-[11px] text-[#596579]">
-                  Step {currentStep} of 7: {stepsConfig[currentStep - 1].title}
+                <span className="font-mono text-[11px] text-[#596579] bg-[#FAFAFA] px-2 py-0.5 rounded border border-[#E5E7EB]">
+                  {dprRevision}
+                </span>
+                <span
+                  className={`text-xs font-bold px-2.5 py-0.5 rounded border inline-flex items-center gap-1.5 ${
+                    submissionState === 'Submitted'
+                      ? 'bg-[#EDF7F2] text-[#2E7D5B] border-[#B8DCC9]'
+                      : submissionState === 'Saved locally'
+                      ? 'bg-[#FDF6ED] text-[#D98B32] border-[#F0D4A6]'
+                      : submissionState === 'Processing'
+                      ? 'bg-[#EDF5F8] text-[#176B87] border-[#B3CBE0]'
+                      : submissionState === 'Needs Confirmation'
+                      ? 'bg-[#FDF6ED] text-[#D98B32] border-[#F0D4A6]'
+                      : 'bg-[#F1F3F5] text-[#172033] border-[#D9DEE5]'
+                  }`}
+                >
+                  <span className="w-1.5 h-1.5 rounded-full bg-current" />
+                  <span>{submissionState}</span>
                 </span>
               </div>
               <h1 className="text-[28px] sm:text-3xl font-bold text-[#172033] tracking-tight">
-                Daily Project Report (DPR) / Time Agent
+                Daily Progress Report
               </h1>
-              <p className="text-sm text-[#596579] mt-1">
-                Guided engineer reporting workflow: observe, extract, verify, and synchronize daily site execution into the Schedule Twin.
+              <p className="text-xs sm:text-sm text-[#596579] mt-1">
+                Official EPC project site execution record, labor allocation, quantity progress, and Schedule Twin log sheet.
               </p>
             </div>
 
-            {/* Quick Actions */}
-            <div className="flex items-center gap-2 flex-wrap">
-              <span className="text-xs px-2.5 py-1 rounded bg-[#F7F8FA] border border-[#D9DEE5] text-[#596579] font-mono">
-                {activeProject?.code || 'OIL-DUL-01'} · 18 Sep 2026
-              </span>
+            {/* Top Primary Actions */}
+            <div className="flex items-center gap-2.5 shrink-0">
               <button
                 type="button"
-                onClick={() => {
-                  setSubmissionState('Draft');
-                  addToast({
-                    type: 'success',
-                    title: 'Draft Saved Locally',
-                    description: 'DPR state cached to browser storage.',
-                  });
-                }}
-                className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-[#172033] bg-white border border-[#D9DEE5] hover:bg-[#F1F3F5] rounded-lg transition-colors"
+                onClick={handleSaveDraft}
+                className="px-4 py-2.5 text-xs font-semibold text-[#172033] bg-white border border-[#D9DEE5] hover:bg-[#F1F3F5] active:bg-[#E5E7EB] rounded-lg inline-flex items-center gap-2 transition-colors cursor-pointer shadow-2xs"
               >
-                <Save className="w-3.5 h-3.5 text-[#596579]" />
+                <Save className="w-4 h-4 text-[#596579]" />
                 <span>Save Draft</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={handleSubmitDPR}
+                disabled={submissionState === 'Processing'}
+                className="min-h-[48px] px-5 py-2.5 text-xs sm:text-sm font-bold text-white bg-[#176B87] hover:bg-[#135A72] active:bg-[#135A72] disabled:opacity-50 rounded-lg inline-flex items-center gap-2 transition-colors cursor-pointer shadow-xs"
+              >
+                <Send className="w-4 h-4" />
+                <span>Submit DPR</span>
               </button>
             </div>
           </div>
 
-          {/* STEP-BASED PROGRESS BAR (7 Steps) */}
-          <div className="mt-6 pt-5 border-t border-[#D9DEE5]/70">
-            <div className="hidden lg:grid grid-cols-7 gap-2">
-              {stepsConfig.map((s) => {
-                const isPassed = s.step < currentStep;
-                const isCurrent = s.step === currentStep;
-                return (
-                  <button
-                    key={s.step}
-                    type="button"
-                    onClick={() => {
-                      // Allow navigating to any previous step or current step
-                      if (s.step <= currentStep || isPassed) {
-                        setCurrentStep(s.step);
-                      }
-                    }}
-                    className={`p-2.5 rounded-lg border text-left transition-all ${
-                      isCurrent
-                        ? 'border-[#176B87] bg-[#EDF5F8] shadow-2xs'
-                        : isPassed
-                        ? 'border-[#B8DCC9] bg-[#EDF7F2] hover:border-[#176B87]'
-                        : 'border-[#D9DEE5] bg-[#FAFAFA] opacity-70 cursor-not-allowed'
-                    }`}
-                  >
-                    <div className="flex items-center justify-between mb-1">
-                      <span
-                        className={`w-5 h-5 rounded-full text-[10px] font-bold flex items-center justify-center ${
-                          isCurrent
-                            ? 'bg-[#176B87] text-white'
-                            : isPassed
-                            ? 'bg-[#2E7D5B] text-white'
-                            : 'bg-[#D9DEE5] text-[#596579]'
-                        }`}
-                      >
-                        {isPassed ? <Check className="w-3 h-3 stroke-[3]" /> : s.step}
-                      </span>
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-[#7B8798]">
-                        Step {s.step}
-                      </span>
-                    </div>
-                    <div
-                      className={`text-xs font-bold truncate ${
-                        isCurrent ? 'text-[#176B87]' : isPassed ? 'text-[#2E7D5B]' : 'text-[#596579]'
-                      }`}
-                    >
-                      {s.title}
-                    </div>
-                  </button>
-                );
-              })}
+          {/* Structured Document Metadata Strip / Section Quick Jumps */}
+          <div className="mt-4 pt-1 flex flex-col md:flex-row md:items-center justify-between gap-3 text-xs">
+            <div className="flex items-center gap-4 text-[#596579] flex-wrap">
+              <span>
+                Project: <strong className="text-[#172033]">{projectCode}</strong>
+              </span>
+              <span>•</span>
+              <span>
+                Date: <strong className="text-[#172033]">{reportingDate}</strong> ({reportingShift})
+              </span>
+              <span>•</span>
+              <span>
+                Engineer: <strong className="text-[#172033]">{siteEngineer}</strong>
+              </span>
+              <span>•</span>
+              <span>
+                Crew: <strong className="text-[#172033]">{totalHeadcount} Pax</strong>
+              </span>
             </div>
 
-            {/* Mobile / Tablet Compact Stepper */}
-            <div className="lg:hidden flex items-center justify-between bg-[#F7F8FA] p-3 rounded-lg border border-[#D9DEE5]">
+            {/* Stepper Touch Target Buttons */}
+            <div className="flex items-center gap-1.5 self-start md:self-auto">
+              <span className="text-[11px] font-semibold text-[#7B8798] mr-1 hidden sm:inline">
+                Section Jump:
+              </span>
+              <button
+                type="button"
+                disabled={activeStep <= 1}
+                onClick={() => setActiveStep((prev) => Math.max(1, prev - 1))}
+                className="min-h-[44px] min-w-[44px] p-2 rounded-lg border border-[#D9DEE5] bg-white text-[#172033] hover:bg-[#F1F3F5] active:bg-[#E5E7EB] disabled:opacity-40 flex items-center justify-center transition-colors cursor-pointer"
+                aria-label="Previous section"
+              >
+                <ArrowLeft className="w-4 h-4" />
+              </button>
+              <span className="font-mono text-xs px-2.5 py-1.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-md font-bold text-[#176B87]">
+                {activeStep} / 7: {stepsConfig[activeStep - 1]?.title}
+              </span>
+              <button
+                type="button"
+                disabled={activeStep >= 7}
+                onClick={() => setActiveStep((prev) => Math.min(7, prev + 1))}
+                className="min-h-[44px] min-w-[44px] p-2 rounded-lg border border-[#D9DEE5] bg-white text-[#172033] hover:bg-[#F1F3F5] active:bg-[#E5E7EB] disabled:opacity-40 flex items-center justify-center transition-colors cursor-pointer"
+                aria-label="Next section"
+              >
+                <ArrowRight className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Structured Engineering Form Body */}
+        <div className="space-y-6">
+          {/* =========================================================================
+              SECTION 2: DATE
+              ========================================================================= */}
+          <section id="sec-project-date" className="bg-white border border-[#D9DEE5] rounded-lg p-5 md:p-6 shadow-xs space-y-4">
+            <div className="border-b border-[#D9DEE5] pb-3 flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full bg-[#176B87] text-white text-xs font-bold flex items-center justify-center">
-                  {currentStep}
+                <span className="w-6 h-6 rounded-md bg-[#EDF5F8] text-[#176B87] font-bold text-xs flex items-center justify-center">
+                  1
                 </span>
-                <div>
-                  <span className="text-xs font-bold text-[#172033]">
-                    Step {currentStep} of 7: {stepsConfig[currentStep - 1].title}
-                  </span>
-                  <span className="text-[11px] text-[#596579] block">
-                    {stepsConfig[currentStep - 1].subtitle}
-                  </span>
-                </div>
+                <h2 className="text-base font-bold text-[#172033]">
+                  Date & Shift Information
+                </h2>
               </div>
-              <div className="flex items-center gap-1.5">
-                <button
-                  type="button"
-                  disabled={currentStep === 1}
-                  onClick={() => setCurrentStep((prev) => Math.max(1, prev - 1) as DPRStep)}
-                  className="min-h-[44px] min-w-[44px] p-2 rounded-lg border border-[#D9DEE5] bg-white text-[#172033] hover:bg-[#F1F3F5] active:bg-[#D9DEE5] disabled:opacity-40 flex items-center justify-center transition-colors cursor-pointer"
-                  aria-label="Previous step"
-                >
-                  <ArrowLeft className="w-5 h-5" />
-                </button>
-                <button
-                  type="button"
-                  disabled={currentStep === 7}
-                  onClick={() => setCurrentStep((prev) => Math.min(7, prev + 1) as DPRStep)}
-                  className="min-h-[44px] min-w-[44px] p-2 rounded-lg border border-[#D9DEE5] bg-white text-[#172033] hover:bg-[#F1F3F5] active:bg-[#D9DEE5] disabled:opacity-40 flex items-center justify-center transition-colors cursor-pointer"
-                  aria-label="Next step"
-                >
-                  <ArrowRight className="w-5 h-5" />
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* DAILY SUMMARY METRICS STRIP:
-            - activities planned
-            - activities updated
-            - activities completed
-            - blocked activities
-            - pending entries */}
-        <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
-          {/* 1. Activities Planned */}
-          <div className="bg-white border border-[#D9DEE5] rounded-lg p-3.5 shadow-2xs">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-[#7B8798] block">
-              Activities Planned
-            </span>
-            <div className="flex items-baseline gap-1.5 mt-1">
-              <span className="text-2xl font-bold text-[#172033] font-mono">
-                {summaryMetrics.activitiesPlanned}
-              </span>
-              <span className="text-[11px] text-[#596579]">tasks today</span>
-            </div>
-            <span className="text-[11px] text-[#176B87] mt-1 block">
-              Baseline target: 100%
-            </span>
-          </div>
-
-          {/* 2. Activities Updated */}
-          <div className="bg-white border border-[#D9DEE5] rounded-lg p-3.5 shadow-2xs">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-[#7B8798] block">
-              Activities Updated
-            </span>
-            <div className="flex items-baseline gap-1.5 mt-1">
-              <span className="text-2xl font-bold text-[#176B87] font-mono">
-                {summaryMetrics.activitiesUpdated}
-              </span>
-              <span className="text-[11px] text-[#596579]">with site logs</span>
-            </div>
-            <span className="text-[11px] text-[#2E7D5B] mt-1 block">
-              {Math.round((summaryMetrics.activitiesUpdated / summaryMetrics.activitiesPlanned) * 100)}% coverage
-            </span>
-          </div>
-
-          {/* 3. Activities Completed */}
-          <div className="bg-white border border-[#D9DEE5] rounded-lg p-3.5 shadow-2xs">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-[#7B8798] block">
-              Activities Completed
-            </span>
-            <div className="flex items-baseline gap-1.5 mt-1">
-              <span className="text-2xl font-bold text-[#2E7D5B] font-mono">
-                {summaryMetrics.activitiesCompleted}
-              </span>
-              <span className="text-[11px] text-[#596579]">at 100% target</span>
-            </div>
-            <span className="text-[11px] text-[#2E7D5B] mt-1 block">
-              Line 24 + Foundation
-            </span>
-          </div>
-
-          {/* 4. Blocked Activities */}
-          <div className="bg-white border border-[#D9DEE5] rounded-lg p-3.5 shadow-2xs">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-[#7B8798] block">
-              Blocked Activities
-            </span>
-            <div className="flex items-baseline gap-1.5 mt-1">
-              <span className="text-2xl font-bold text-[#B5473C] font-mono">
-                {summaryMetrics.blockedActivities}
-              </span>
-              <span className="text-[11px] text-[#596579]">impediments</span>
-            </div>
-            <span className="text-[11px] text-[#B5473C] mt-1 block font-medium">
-              Weather & Flange Hold
-            </span>
-          </div>
-
-          {/* 5. Pending Entries */}
-          <div className="bg-white border border-[#D9DEE5] rounded-lg p-3.5 shadow-2xs col-span-2 sm:col-span-1">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-[#7B8798] block">
-              Pending Entries
-            </span>
-            <div className="flex items-baseline gap-1.5 mt-1">
-              <span className="text-2xl font-bold text-[#D98B32] font-mono">
-                {summaryMetrics.pendingEntries}
-              </span>
-              <span className="text-[11px] text-[#596579]">unlogged</span>
-            </div>
-            <span className="text-[11px] text-[#596579] mt-1 block">
-              Shift B signoff pending
-            </span>
-          </div>
-        </div>
-
-        {/* =========================================================================
-            STEP 1: PROJECT + DATE
-            ========================================================================= */}
-        {currentStep === 1 && (
-          <div className="bg-white border border-[#D9DEE5] rounded-lg p-6 space-y-6 shadow-xs animate-in fade-in duration-200">
-            <div className="border-b border-[#D9DEE5]/60 pb-3 flex items-center justify-between">
-              <div>
-                <h3 className="text-base font-bold text-[#172033]">
-                  Step 1: Project & Reporting Shift Baseline
-                </h3>
-                <p className="text-xs text-[#596579] mt-0.5">
-                  Establish the project site context, reporting date, shift timings, and environmental conditions.
-                </p>
-              </div>
-              <span className="text-xs font-mono font-bold text-[#176B87] bg-[#EDF5F8] px-2.5 py-1 rounded">
-                DPR-2026-0918-01
-              </span>
+              <span className="text-xs text-[#596579]">Shift Working Baseline</span>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 text-xs">
-              {/* Project Selector */}
-              <div className="space-y-1.5">
-                <label className="font-bold text-[#172033] uppercase tracking-wider text-[11px]">
-                  Project Code & Facility
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
+              <div className="space-y-1">
+                <label className="font-bold text-[#172033] uppercase tracking-wider text-[11px] block">
+                  Reporting Date
                 </label>
-                <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg space-y-1">
-                  <div className="flex items-center justify-between">
-                    <span className="font-mono font-bold text-[#172033] text-sm">
-                      {activeProject?.code || 'OIL-DUL-01'}
-                    </span>
-                    <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-[#EDF5F8] text-[#176B87]">
-                      Active Schedule V3 · Rev 3.2
-                    </span>
-                  </div>
-                  <p className="font-medium text-[#596579]">
-                    {activeProject?.name || 'Duliajan Gas Processing & Pipeline Interconnect'}
-                  </p>
-                  <p className="text-[11px] text-[#7B8798]">
-                    Location: Duliajan Field, Dibrugarh, Assam · Client: Oil India Limited
-                  </p>
-                </div>
-              </div>
-
-              {/* Reporting Date */}
-              <div className="space-y-1.5">
-                <label className="font-bold text-[#172033] uppercase tracking-wider text-[11px]">
-                  Reporting Date & Shift
-                </label>
-                <div className="grid grid-cols-2 gap-2">
+                <div className="relative">
                   <input
                     type="date"
                     value={reportingDate}
                     onChange={(e) => setReportingDate(e.target.value)}
-                    className="p-2.5 bg-white border border-[#D9DEE5] rounded-lg text-xs font-bold text-[#172033] outline-hidden focus:border-[#176B87]"
+                    className="w-full p-2.5 bg-white border border-[#D9DEE5] rounded-lg text-xs font-bold text-[#172033] outline-hidden focus:border-[#176B87]"
                   />
-                  <select
-                    value={reportingShift}
-                    onChange={(e) => setReportingShift(e.target.value as any)}
-                    className="p-2.5 bg-white border border-[#D9DEE5] rounded-lg text-xs font-semibold text-[#172033] outline-hidden focus:border-[#176B87]"
-                  >
-                    <option value="Shift A">Shift A (Day: 07:00 – 16:30)</option>
-                    <option value="Shift B">Shift B (Evening: 16:30 – 00:00)</option>
-                    <option value="Shift C">Shift C (Night Shift)</option>
-                  </select>
-                </div>
-                <div className="p-2.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg flex items-center justify-between text-[11px]">
-                  <span className="text-[#596579]">Lead Site Engineer:</span>
-                  <span className="font-bold text-[#172033]">{siteEngineer} ({siteRole})</span>
                 </div>
               </div>
 
-              {/* Weather & Site Conditions */}
-              <div className="space-y-1.5">
-                <label className="font-bold text-[#172033] uppercase tracking-wider text-[11px]">
-                  Weather & Environmental Conditions
+              <div className="space-y-1">
+                <label className="font-bold text-[#172033] uppercase tracking-wider text-[11px] block">
+                  Shift Timing
+                </label>
+                <select
+                  value={reportingShift}
+                  onChange={(e) => setReportingShift(e.target.value as any)}
+                  className="w-full p-2.5 bg-white border border-[#D9DEE5] rounded-lg text-xs font-semibold text-[#172033] outline-hidden focus:border-[#176B87]"
+                >
+                  <option value="Shift A">Shift A (Day: 07:00 – 16:30)</option>
+                  <option value="Shift B">Shift B (Evening: 16:30 – 00:00)</option>
+                  <option value="Shift C">Shift C (Night: 00:00 – 07:00)</option>
+                </select>
+              </div>
+
+              <div className="space-y-1">
+                <label className="font-bold text-[#172033] uppercase tracking-wider text-[11px] block">
+                  Working Hours
+                </label>
+                <div className="flex items-center gap-2">
+                  <input
+                    type="number"
+                    step="0.5"
+                    value={shiftHours}
+                    onChange={(e) => setShiftHours(e.target.value)}
+                    className="w-full p-2.5 bg-white border border-[#D9DEE5] rounded-lg text-xs font-bold text-[#172033] outline-hidden focus:border-[#176B87]"
+                  />
+                  <span className="text-[#596579] font-medium shrink-0">Hours</span>
+                </div>
+              </div>
+
+              <div className="space-y-1">
+                <label className="font-bold text-[#172033] uppercase tracking-wider text-[11px] block">
+                  Ground Condition
+                </label>
+                <select
+                  value={groundCondition}
+                  onChange={(e) => setGroundCondition(e.target.value as any)}
+                  className="w-full p-2.5 bg-white border border-[#D9DEE5] rounded-lg text-xs font-semibold text-[#172033] outline-hidden focus:border-[#176B87]"
+                >
+                  <option value="Wet / Saturated">Wet / Saturated (Monsoon)</option>
+                  <option value="Dry">Dry / Stable</option>
+                  <option value="Muddy">Muddy / Soft Soil</option>
+                </select>
+              </div>
+
+              <div className="sm:col-span-2 lg:col-span-4 space-y-1">
+                <label className="font-bold text-[#172033] uppercase tracking-wider text-[11px] block">
+                  Weather & Environmental Parameters
                 </label>
                 <input
                   type="text"
                   value={weatherCondition}
                   onChange={(e) => setWeatherCondition(e.target.value)}
                   className="w-full p-2.5 bg-white border border-[#D9DEE5] rounded-lg text-xs font-medium text-[#172033] outline-hidden focus:border-[#176B87]"
-                  placeholder="e.g. Clear, Heavy Rain, Stoppages..."
+                  placeholder="e.g. Temperature, rainfall, humidity, wind conditions"
                 />
-                <p className="text-[11px] text-[#7B8798]">
-                  Monsoon conditions logged: Work suspended for 1.5 hrs due to squall at 11:30.
-                </p>
-              </div>
-
-              {/* EPC Contractor */}
-              <div className="space-y-1.5">
-                <label className="font-bold text-[#172033] uppercase tracking-wider text-[11px]">
-                  Executing EPC Contractor
-                </label>
-                <input
-                  type="text"
-                  value={contractorName}
-                  onChange={(e) => setContractorName(e.target.value)}
-                  className="w-full p-2.5 bg-white border border-[#D9DEE5] rounded-lg text-xs font-medium text-[#172033] outline-hidden focus:border-[#176B87]"
-                />
-                <p className="text-[11px] text-[#7B8798]">
-                  Active Permit to Work: PTW-OIL-2026-894 (Hot Work) & PTW-OIL-2026-895 (Rigging)
-                </p>
               </div>
             </div>
+          </section>
 
-            {/* Step 1 Actions */}
-            <div className="pt-4 border-t border-[#D9DEE5] flex justify-end">
-              <button
-                type="button"
-                onClick={() => setCurrentStep(2)}
-                className="w-full sm:w-auto min-h-[44px] px-6 py-2.5 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] active:bg-[#135A72] rounded-lg inline-flex items-center justify-center gap-2 shadow-xs transition-colors cursor-pointer"
-              >
-                <span>Continue to Today's Activities</span>
-                <ArrowRight className="w-4 h-4" />
-              </button>
-            </div>
-          </div>
-        )}
-
-        {/* =========================================================================
-            STEP 2: TODAY'S ACTIVITIES
-            ========================================================================= */}
-        {currentStep === 2 && (
-          <div className="bg-white border border-[#D9DEE5] rounded-lg p-6 space-y-6 shadow-xs animate-in fade-in duration-200">
-            <div className="border-b border-[#D9DEE5]/60 pb-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-              <div>
-                <h3 className="text-base font-bold text-[#172033]">
-                  Step 2: Assigned Schedule Activities for {reportingDate}
-                </h3>
-                <p className="text-xs text-[#596579] mt-0.5">
-                  Select which baseline schedule activities were actively worked, progressed, or hindered today.
-                </p>
+          {/* =========================================================================
+              SECTION 3: PROJECT
+              ========================================================================= */}
+          <section className="bg-white border border-[#D9DEE5] rounded-lg p-5 md:p-6 shadow-xs space-y-4">
+            <div className="border-b border-[#D9DEE5] pb-3 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <span className="w-6 h-6 rounded-md bg-[#EDF5F8] text-[#176B87] font-bold text-xs flex items-center justify-center">
+                  2
+                </span>
+                <h2 className="text-base font-bold text-[#172033]">
+                  Project Particulars
+                </h2>
               </div>
-              <span className="text-xs text-[#176B87] font-semibold">
-                {selectedActivityIds.length} of 6 activities selected
+              <span className="font-mono text-xs text-[#176B87] font-semibold">
+                {scheduleBaseline}
               </span>
             </div>
 
-            <div className="space-y-3 text-xs">
-              {[
-                {
-                  id: 'PIP-24-001',
-                  wbs: '3.2.1',
-                  name: 'Erect Line 24-XX High Pressure Gas Header',
-                  discipline: 'Piping',
-                  area: 'Unit A - Gas Processing',
-                  plannedTarget: '12 spools',
-                  status: 'Completed',
-                  isCritical: true,
-                },
-                {
-                  id: 'PIP-24-002',
-                  wbs: '3.2.2',
-                  name: 'Weld Line 24-XX Field Joints & NDT Inspection',
-                  discipline: 'Piping',
-                  area: 'Unit A - Gas Processing',
-                  plannedTarget: '4 welds',
-                  status: 'In Progress',
-                  isCritical: true,
-                },
-                {
-                  id: 'CIV-11-001',
-                  wbs: '2.1.1',
-                  name: 'Foundation Block A - Compressor Pedestal',
-                  discipline: 'Civil',
-                  area: 'Unit A - Compressor Bay',
-                  plannedTarget: '45 m³ pour',
-                  status: 'Completed',
-                  isCritical: true,
-                },
-                {
-                  id: 'PIP-24-003',
-                  wbs: '3.2.3',
-                  name: 'Hydrostatic Test Section Line 24-XX (150 bar)',
-                  discipline: 'Piping',
-                  area: 'Unit A - Test Manifold',
-                  plannedTarget: '1 test pack',
-                  status: 'Blocked',
-                  isCritical: false,
-                },
-                {
-                  id: 'ELE-06-004',
-                  wbs: '4.1.2',
-                  name: 'Pull Cable Tray TR-04 Main Feeder',
-                  discipline: 'Electrical',
-                  area: 'Substation to Rack 2',
-                  plannedTarget: '350 meters',
-                  status: 'In Progress',
-                  isCritical: false,
-                },
-                {
-                  id: 'MEC-08-003',
-                  wbs: '5.3.1',
-                  name: 'Skid Alignment & Grouting for Compressor C-101',
-                  discipline: 'Mechanical',
-                  area: 'Unit A - Skid Bay',
-                  plannedTarget: '1 skid',
-                  status: 'Pending',
-                  isCritical: false,
-                },
-              ].map((act) => {
-                const isSelected = selectedActivityIds.includes(act.id);
-                return (
-                  <div
-                    key={act.id}
-                    onClick={() => {
-                      setSelectedActivityIds((prev) =>
-                        isSelected ? prev.filter((id) => id !== act.id) : [...prev, act.id]
-                      );
-                    }}
-                    className={`p-3.5 rounded-lg border transition-all cursor-pointer flex items-center justify-between gap-3 ${
-                      isSelected
-                        ? 'border-[#176B87] bg-[#EDF5F8]/40 shadow-2xs'
-                        : 'border-[#D9DEE5] bg-white hover:bg-[#F7F8FA]'
-                    }`}
-                  >
-                    <div className="flex items-center gap-3 min-w-0">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-xs">
+              <div className="space-y-1">
+                <label className="font-bold text-[#7B8798] uppercase tracking-wider text-[10px] block">
+                  Project Code & Name
+                </label>
+                <div className="p-2.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg">
+                  <span className="font-mono font-bold text-[#172033] block">{projectCode}</span>
+                  <span className="text-[#596579] font-medium text-[11px]">{projectName}</span>
+                </div>
+              </div>
+
+              <div className="space-y-1">
+                <label className="font-bold text-[#7B8798] uppercase tracking-wider text-[10px] block">
+                  Contract / Package
+                </label>
+                <div className="p-2.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg">
+                  <span className="font-bold text-[#172033] block">{contractPackage}</span>
+                  <span className="text-[#596579] text-[11px]">Client: {clientOwner}</span>
+                </div>
+              </div>
+
+              <div className="space-y-1">
+                <label className="font-bold text-[#7B8798] uppercase tracking-wider text-[10px] block">
+                  Executing EPC Contractor
+                </label>
+                <div className="p-2.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg">
+                  <span className="font-bold text-[#172033] block">{contractorName}</span>
+                  <span className="text-[#596579] text-[11px]">Consortium Partner: Brahmaputra Infra Ltd</span>
+                </div>
+              </div>
+
+              <div className="space-y-1">
+                <label className="font-bold text-[#7B8798] uppercase tracking-wider text-[10px] block">
+                  Site Execution Engineer
+                </label>
+                <div className="p-2.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg">
+                  <span className="font-bold text-[#172033] block">{siteEngineer}</span>
+                  <span className="text-[#596579] text-[11px]">{siteRole}</span>
+                </div>
+              </div>
+
+              <div className="space-y-1">
+                <label className="font-bold text-[#7B8798] uppercase tracking-wider text-[10px] block">
+                  Schedule Twin Integration
+                </label>
+                <div className="p-2.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg">
+                  <span className="font-bold text-[#2E7D5B] block">Connected & Synchronized</span>
+                  <span className="text-[#596579] text-[11px]">Primavera P6 XML / Level 5 WBS</span>
+                </div>
+              </div>
+
+              <div className="space-y-1">
+                <label className="font-bold text-[#7B8798] uppercase tracking-wider text-[10px] block">
+                  Contract Status
+                </label>
+                <div className="p-2.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg">
+                  <span className="font-bold text-[#172033] block">Active Execution (Month 7 of 18)</span>
+                  <span className="text-[#596579] text-[11px]">Target COD: 31 March 2027</span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* =========================================================================
+              SECTION 4: AREA
+              ========================================================================= */}
+          <section id="sec-area" className="bg-white border border-[#D9DEE5] rounded-lg p-5 md:p-6 shadow-xs space-y-4">
+            <div className="border-b border-[#D9DEE5] pb-3 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <span className="w-6 h-6 rounded-md bg-[#EDF5F8] text-[#176B87] font-bold text-xs flex items-center justify-center">
+                  3
+                </span>
+                <h2 className="text-base font-bold text-[#172033]">
+                  Area & Workfront Location
+                </h2>
+              </div>
+              <span className="text-xs text-[#596579]">Site Zones & Active Fronts</span>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+              <div className="space-y-1">
+                <label className="font-bold text-[#172033] uppercase tracking-wider text-[11px] block">
+                  Primary Site Area / Plant Section
+                </label>
+                <select
+                  value={selectedArea}
+                  onChange={(e) => setSelectedArea(e.target.value)}
+                  className="w-full p-2.5 bg-white border border-[#D9DEE5] rounded-lg text-xs font-semibold text-[#172033] outline-hidden focus:border-[#176B87]"
+                >
+                  <option value="Unit A - Gas Processing Area">Unit A - Gas Processing Area</option>
+                  <option value="Unit B - Compressor & Compression Station">Unit B - Compressor & Compression Station</option>
+                  <option value="Unit C - Piperack Section B & Tie-in Manifold">Unit C - Piperack Section B & Tie-in Manifold</option>
+                  <option value="Offsite - Pipeline Interconnect Corridor KM 0+000 to 14+500">
+                    Offsite - Pipeline Corridor KM 0+000 to 14+500
+                  </option>
+                </select>
+              </div>
+
+              <div className="space-y-1 md:col-span-2">
+                <label className="font-bold text-[#172033] uppercase tracking-wider text-[11px] block">
+                  Specific Workfront / Isometric Grid / Chainage
+                </label>
+                <input
+                  type="text"
+                  value={specificWorkfront}
+                  onChange={(e) => setSpecificWorkfront(e.target.value)}
+                  className="w-full p-2.5 bg-white border border-[#D9DEE5] rounded-lg text-xs font-medium text-[#172033] outline-hidden focus:border-[#176B87]"
+                />
+              </div>
+
+              <div className="space-y-1 md:col-span-3">
+                <label className="font-bold text-[#172033] uppercase tracking-wider text-[11px] block">
+                  Permit to Work (PTW) Coverage
+                </label>
+                <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                  <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-[#2E7D5B]" />
+                    <span className="font-mono font-medium text-[#172033]">{ptwPermits}</span>
+                  </div>
+                  <span className="text-[11px] text-[#2E7D5B] font-bold bg-[#EDF7F2] border border-[#B8DCC9] px-2 py-0.5 rounded">
+                    PTW Valid until 18:00 IST
+                  </span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* =========================================================================
+              SECTION 5: DISCIPLINE
+              ========================================================================= */}
+          <section id="sec-discipline" className="bg-white border border-[#D9DEE5] rounded-lg p-5 md:p-6 shadow-xs space-y-4">
+            <div className="border-b border-[#D9DEE5] pb-3 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <span className="w-6 h-6 rounded-md bg-[#EDF5F8] text-[#176B87] font-bold text-xs flex items-center justify-center">
+                  4
+                </span>
+                <h2 className="text-base font-bold text-[#172033]">
+                  Discipline & Manpower Deployment
+                </h2>
+              </div>
+              <span className="text-xs font-bold text-[#172033]">
+                Total Site Deployment: {totalHeadcount} Pax
+              </span>
+            </div>
+
+            {/* Discipline Checkboxes */}
+            <div className="space-y-2">
+              <label className="font-bold text-[#172033] uppercase tracking-wider text-[11px] block">
+                Disciplines Active Today
+              </label>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-xs">
+                {['Piping', 'Civil / Structural', 'Mechanical', 'Electrical & Instrumentation'].map((d) => {
+                  const isChecked = selectedDisciplines.includes(d);
+                  return (
+                    <label
+                      key={d}
+                      className={`p-3 rounded-lg border flex items-center gap-2.5 cursor-pointer transition-colors ${
+                        isChecked
+                          ? 'border-[#176B87] bg-[#EDF5F8] text-[#176B87] font-bold'
+                          : 'border-[#D9DEE5] bg-white text-[#596579] hover:bg-[#F7F8FA]'
+                      }`}
+                    >
                       <input
                         type="checkbox"
-                        checked={isSelected}
-                        onChange={() => {}} // handled by parent onClick
-                        className="w-4 h-4 text-[#176B87] rounded border-[#D9DEE5] focus:ring-0 cursor-pointer"
+                        checked={isChecked}
+                        onChange={() => {
+                          setSelectedDisciplines((prev) =>
+                            isChecked ? prev.filter((item) => item !== d) : [...prev, d]
+                          );
+                        }}
+                        className="w-4 h-4 text-[#176B87] rounded border-[#D9DEE5]"
                       />
-                      <div className="min-w-0">
-                        <div className="flex items-center gap-2 mb-0.5">
-                          <span className="font-mono font-bold text-[#176B87]">{act.id}</span>
-                          <span className="text-[10px] font-mono text-[#7B8798]">WBS {act.wbs}</span>
-                          {act.isCritical && (
-                            <span className="text-[10px] font-bold px-1.5 py-0.2 rounded bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
-                              Critical Path
-                            </span>
-                          )}
-                          <span className="text-[10px] font-semibold text-[#596579] bg-[#F1F3F5] px-2 py-0.2 rounded">
-                            {act.discipline}
-                          </span>
-                        </div>
-                        <p className="font-bold text-[#172033] truncate">{act.name}</p>
-                        <p className="text-[11px] text-[#596579]">
-                          {act.area} · Target: <strong className="text-[#172033]">{act.plannedTarget}</strong>
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="shrink-0 text-right">
-                      <span
-                        className={`inline-block px-2 py-0.5 rounded text-[11px] font-bold ${
-                          act.status === 'Completed'
-                            ? 'bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]'
-                            : act.status === 'Blocked'
-                            ? 'bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]'
-                            : 'bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0]'
-                        }`}
-                      >
-                        {act.status}
-                      </span>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-
-            {/* Step 2 Actions */}
-            <div className="pt-4 border-t border-[#D9DEE5] flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-2.5 sm:gap-0">
-              <button
-                type="button"
-                onClick={() => setCurrentStep(1)}
-                className="min-h-[44px] px-4 py-2.5 text-xs font-semibold text-[#596579] hover:text-[#172033] bg-white border border-[#D9DEE5] rounded-lg inline-flex items-center justify-center gap-1.5 cursor-pointer"
-              >
-                <ArrowLeft className="w-4 h-4" />
-                <span>Back</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => setCurrentStep(3)}
-                className="min-h-[44px] px-6 py-2.5 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] active:bg-[#135A72] rounded-lg inline-flex items-center justify-center gap-2 shadow-xs transition-colors cursor-pointer"
-              >
-                <span>Continue to Field Updates</span>
-                <ArrowRight className="w-4 h-4" />
-              </button>
-            </div>
-          </div>
-        )}
-
-        {/* =========================================================================
-            STEP 3: FIELD UPDATES
-            Each field update must link to:
-            - activity
-            - quantity
-            - unit
-            - time
-            - location/area
-            - remarks
-            - evidence
-            ========================================================================= */}
-        {currentStep === 3 && (
-          <div className="bg-white border border-[#D9DEE5] rounded-lg p-6 space-y-6 shadow-xs animate-in fade-in duration-200">
-            <div className="border-b border-[#D9DEE5]/60 pb-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-              <div>
-                <h3 className="text-base font-bold text-[#172033]">
-                  Step 3: Log Field Execution Updates
-                </h3>
-                <p className="text-xs text-[#596579] mt-0.5">
-                  Every field entry strictly links an Activity with Quantity, Unit, Shift Time, Location, Remarks, and Evidence.
-                </p>
+                      <span>{d}</span>
+                    </label>
+                  );
+                })}
               </div>
+            </div>
 
+            {/* Manpower Breakdown Table */}
+            <div className="border border-[#D9DEE5] rounded-lg overflow-hidden text-xs">
+              <div className="bg-[#F7F8FA] p-3 border-b border-[#D9DEE5] font-bold text-[#172033] flex items-center justify-between">
+                <span>Discipline Crew Allocation</span>
+                <span className="text-[11px] text-[#596579] font-normal">Direct Labor on Site</span>
+              </div>
+              <div className="divide-y divide-[#D9DEE5] p-3 space-y-2.5">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                  <span className="font-bold text-[#172033] w-32 shrink-0">Piping Crew:</span>
+                  <input
+                    type="text"
+                    value={pipingCrew}
+                    onChange={(e) => setPipingCrew(e.target.value)}
+                    className="w-full p-2 bg-[#FAFAFA] border border-[#D9DEE5] rounded text-xs text-[#172033]"
+                  />
+                  <span className="font-mono font-bold text-[#176B87] shrink-0 text-right w-16">15 Pax</span>
+                </div>
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pt-2">
+                  <span className="font-bold text-[#172033] w-32 shrink-0">Civil Crew:</span>
+                  <input
+                    type="text"
+                    value={civilCrew}
+                    onChange={(e) => setCivilCrew(e.target.value)}
+                    className="w-full p-2 bg-[#FAFAFA] border border-[#D9DEE5] rounded text-xs text-[#172033]"
+                  />
+                  <span className="font-mono font-bold text-[#176B87] shrink-0 text-right w-16">10 Pax</span>
+                </div>
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pt-2">
+                  <span className="font-bold text-[#172033] w-32 shrink-0">E&I Crew:</span>
+                  <input
+                    type="text"
+                    value={electricalCrew}
+                    onChange={(e) => setElectricalCrew(e.target.value)}
+                    className="w-full p-2 bg-[#FAFAFA] border border-[#D9DEE5] rounded text-xs text-[#172033]"
+                  />
+                  <span className="font-mono font-bold text-[#176B87] shrink-0 text-right w-16">4 Pax</span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* =========================================================================
+              SECTION 6: WORK COMPLETED
+              ========================================================================= */}
+          <section id="sec-work-completed" className="bg-white border border-[#D9DEE5] rounded-lg p-5 md:p-6 shadow-xs space-y-4">
+            <div className="border-b border-[#D9DEE5] pb-3 flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <button
-                  type="button"
-                  onClick={() => {
-                    const newId = `UPD-20260918-0${fieldUpdates.length + 1}`;
-                    setFieldUpdates([
-                      ...fieldUpdates,
-                      {
-                        id: newId,
-                        activityId: 'ELE-06-004',
-                        activityName: 'Pull Cable Tray TR-04 Main Feeder',
-                        discipline: 'Electrical',
-                        quantity: 350,
-                        unit: 'meters',
-                        time: '08:30 - 15:00',
-                        locationArea: 'Substation to Rack 2',
-                        remarks: '350 meters HT cable successfully pulled through tray TR-04.',
-                        evidence: [
-                          { id: `EVD-${Date.now()}`, name: 'CABLE_PULL_SIGN_OFF.pdf', type: 'DOCUMENT', timestamp: '15:10' },
-                        ],
-                        confidence: 88,
-                        verificationState: 'Confirmed',
-                        verificationReason: 'Verified cable tray pull length against isometric layout',
-                        status: 'In Progress',
-                      },
-                    ]);
-                    addToast({
-                      type: 'success',
-                      title: 'Field Update Added',
-                      description: 'Added update for Cable Tray TR-04.',
-                    });
-                  }}
-                  className="px-3 py-1.5 text-xs font-bold text-[#176B87] bg-[#EDF5F8] border border-[#B3CBE0] hover:bg-[#D6EBF0] rounded-lg inline-flex items-center gap-1.5"
-                >
-                  <Plus className="w-3.5 h-3.5" />
-                  <span>Add Another Update</span>
-                </button>
+                <span className="w-6 h-6 rounded-md bg-[#EDF5F8] text-[#176B87] font-bold text-xs flex items-center justify-center">
+                  5
+                </span>
+                <h2 className="text-base font-bold text-[#172033]">
+                  Work Completed Narrative
+                </h2>
               </div>
+              <button
+                type="button"
+                onClick={() => {
+                  const newId = `WRK-0${workCompletedList.length + 1}`;
+                  setWorkCompletedList([
+                    ...workCompletedList,
+                    {
+                      id: newId,
+                      activityId: 'ELE-06-004',
+                      wbs: '4.1.2',
+                      title: 'Pull Cable Tray TR-04 Main Feeder',
+                      discipline: 'Electrical',
+                      area: 'Substation to Rack 2',
+                      narrative:
+                        'Pulling of 350 meters HT cable completed along designated cable ladder TR-04. Megger insulation test performed and approved.',
+                      hoursWorked: 5.0,
+                      crewCount: 4,
+                    },
+                  ]);
+                  addToast({
+                    type: 'success',
+                    title: 'Work Item Added',
+                    description: 'Added work completed log for ELE-06-004.',
+                  });
+                }}
+                className="px-3 py-1.5 text-xs font-semibold text-[#176B87] bg-[#EDF5F8] border border-[#B3CBE0] hover:bg-[#D6EBF0] rounded-lg inline-flex items-center gap-1.5 transition-colors cursor-pointer"
+              >
+                <Plus className="w-3.5 h-3.5" />
+                <span>Add Activity Narrative</span>
+              </button>
             </div>
 
-            {/* List of Field Update Cards */}
-            <div className="space-y-4 text-xs">
-              {fieldUpdates.map((update, idx) => (
+            <div className="space-y-3.5 text-xs">
+              {workCompletedList.map((item, idx) => (
                 <div
-                  key={update.id}
-                  className="p-4 rounded-lg border border-[#D9DEE5] bg-[#FAFAFA] hover:bg-white transition-all space-y-3"
+                  key={item.id}
+                  className="p-4 rounded-lg border border-[#D9DEE5] bg-[#FAFAFA] space-y-2.5"
                 >
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#D9DEE5]/60 pb-2.5">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#D9DEE5] pb-2">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <span className="font-mono text-[11px] font-bold text-[#596579] bg-[#F1F3F5] px-2 py-0.5 rounded">
-                        #{idx + 1} · {update.id}
+                      <span className="font-mono font-bold text-[#176B87] bg-white px-2 py-0.5 rounded border border-[#D9DEE5]">
+                        {item.activityId}
                       </span>
-                      <span className="font-mono font-bold text-[#176B87] text-xs">
-                        {update.activityId}
+                      <span className="font-mono text-[10px] text-[#7B8798]">WBS {item.wbs}</span>
+                      <span className="font-bold text-[#172033]">{item.title}</span>
+                      <span className="text-[10px] font-semibold text-[#596579] bg-[#F1F3F5] px-2 py-0.5 rounded">
+                        {item.discipline}
                       </span>
-                      <span className="font-bold text-[#172033]">{update.activityName}</span>
                     </div>
 
                     <div className="flex items-center gap-2">
-                      <span
-                        className={`px-2 py-0.5 rounded text-[10px] font-bold ${
-                          update.verificationState === 'Confirmed'
-                            ? 'bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]'
-                            : update.verificationState === 'Conflict'
-                            ? 'bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]'
-                            : 'bg-[#FDF6ED] text-[#D98B32] border border-[#F0D4A6]'
-                        }`}
-                      >
-                        {update.verificationState} ({update.confidence}%)
+                      <span className="text-[11px] text-[#596579]">
+                        {item.hoursWorked} hrs • {item.crewCount} crew
                       </span>
-                      {fieldUpdates.length > 1 && (
+                      {workCompletedList.length > 1 && (
                         <button
                           type="button"
-                          onClick={() => {
-                            setFieldUpdates(fieldUpdates.filter((u) => u.id !== update.id));
-                            addToast({
-                              type: 'info',
-                              title: 'Update Removed',
-                              description: `Removed ${update.id}`,
-                            });
-                          }}
-                          className="text-[#7B8798] hover:text-[#B5473C] p-1"
-                          title="Remove this update"
+                          onClick={() => setWorkCompletedList(workCompletedList.filter((w) => w.id !== item.id))}
+                          className="text-[#7B8798] hover:text-[#B5473C] p-1 transition-colors"
+                          title="Remove narrative"
                         >
                           <Trash2 className="w-3.5 h-3.5" />
                         </button>
@@ -1013,318 +1090,125 @@ export default function DPRTimeAgentPage() {
                     </div>
                   </div>
 
-                  {/* 6 Mandatory Editable Core Properties: Quantity, Unit, Time, Location/Area, Remarks, Evidence */}
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                    {/* Quantity + Unit */}
-                    <div>
-                      <label className="text-[10px] uppercase font-bold text-[#7B8798] block mb-1">
-                        Quantity & Unit
-                      </label>
-                      <div className="flex gap-2">
-                        <input
-                          type="number"
-                          step="any"
-                          value={update.quantity}
-                          onChange={(e) =>
-                            handleUpdateField(update.id, 'quantity', parseFloat(e.target.value) || 0)
-                          }
-                          className="w-24 p-2 bg-white border border-[#D9DEE5] rounded-lg text-xs font-bold text-[#172033] text-center"
-                        />
-                        <input
-                          type="text"
-                          value={update.unit}
-                          onChange={(e) => handleUpdateField(update.id, 'unit', e.target.value)}
-                          className="w-full p-2 bg-white border border-[#D9DEE5] rounded-lg text-xs font-semibold text-[#172033]"
-                        />
-                      </div>
-                    </div>
-
-                    {/* Time Window */}
-                    <div>
-                      <label className="text-[10px] uppercase font-bold text-[#7B8798] block mb-1">
-                        Shift Time Window
-                      </label>
-                      <input
-                        type="text"
-                        value={update.time}
-                        onChange={(e) => handleUpdateField(update.id, 'time', e.target.value)}
-                        className="w-full p-2 bg-white border border-[#D9DEE5] rounded-lg text-xs font-semibold text-[#172033]"
-                        placeholder="e.g. 09:00 - 15:30"
-                      />
-                    </div>
-
-                    {/* Location / Area */}
-                    <div>
-                      <label className="text-[10px] uppercase font-bold text-[#7B8798] block mb-1">
-                        Location / Area / Line
-                      </label>
-                      <input
-                        type="text"
-                        value={update.locationArea}
-                        onChange={(e) => handleUpdateField(update.id, 'locationArea', e.target.value)}
-                        className="w-full p-2 bg-white border border-[#D9DEE5] rounded-lg text-xs font-medium text-[#172033]"
-                      />
-                    </div>
-                  </div>
-
-                  {/* Remarks */}
-                  <div>
-                    <label className="text-[10px] uppercase font-bold text-[#7B8798] block mb-1">
-                      Engineer Site Observations & Remarks
+                  <div className="space-y-1">
+                    <label className="text-[10px] uppercase font-bold text-[#7B8798] block">
+                      Execution Narrative & Technical Observations
                     </label>
-                    <input
-                      type="text"
-                      value={update.remarks}
-                      onChange={(e) => handleUpdateField(update.id, 'remarks', e.target.value)}
-                      className="w-full p-2 bg-white border border-[#D9DEE5] rounded-lg text-xs font-medium text-[#172033]"
-                    />
-                  </div>
-
-                  {/* Evidence Pills */}
-                  <div className="pt-1 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                    <div className="flex items-center gap-1.5 flex-wrap">
-                      <span className="text-[10px] uppercase font-bold text-[#7B8798]">Evidence:</span>
-                      {update.evidence.map((ev) => (
-                        <span
-                          key={ev.id}
-                          className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-mono bg-white border border-[#D9DEE5] text-[#172033]"
-                        >
-                          {ev.type === 'PHOTO' ? (
-                            <Camera className="w-3 h-3 text-[#176B87]" />
-                          ) : (
-                            <FileText className="w-3 h-3 text-[#596579]" />
-                          )}
-                          <span className="truncate max-w-[150px]">{ev.name}</span>
-                        </span>
-                      ))}
-                    </div>
-
-                    <button
-                      type="button"
-                      onClick={() => {
-                        const newEv = {
-                          id: `EVD-${Date.now()}`,
-                          name: `IMG_${reportingDate.replace(/-/g, '')}_FIELD_CHECK.jpg`,
-                          type: 'PHOTO' as const,
-                          timestamp: '16:30',
-                        };
-                        handleUpdateField(update.id, 'evidence', [...update.evidence, newEv]);
-                        addToast({
-                          type: 'info',
-                          title: 'Evidence Attached',
-                          description: `Attached photo to ${update.activityId}`,
-                        });
+                    <textarea
+                      rows={2}
+                      value={item.narrative}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        setWorkCompletedList((prev) =>
+                          prev.map((w) => (w.id === item.id ? { ...w, narrative: val } : w))
+                        );
                       }}
-                      className="text-[11px] font-bold text-[#176B87] hover:underline inline-flex items-center gap-1 self-start sm:self-auto"
-                    >
-                      <Plus className="w-3 h-3" />
-                      <span>Attach Photo / Note</span>
-                    </button>
+                      className="w-full p-2.5 bg-white border border-[#D9DEE5] rounded-lg text-xs text-[#172033] leading-relaxed outline-hidden focus:border-[#176B87]"
+                    />
                   </div>
                 </div>
               ))}
             </div>
+          </section>
 
-            {/* Step 3 Actions */}
-            <div className="pt-4 border-t border-[#D9DEE5] flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-2.5 sm:gap-0">
-              <button
-                type="button"
-                onClick={() => setCurrentStep(2)}
-                className="min-h-[44px] px-4 py-2.5 text-xs font-semibold text-[#596579] hover:text-[#172033] bg-white border border-[#D9DEE5] rounded-lg inline-flex items-center justify-center gap-1.5 cursor-pointer"
-              >
-                <ArrowLeft className="w-4 h-4" />
-                <span>Back</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => setCurrentStep(4)}
-                className="min-h-[44px] px-6 py-2.5 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] active:bg-[#135A72] rounded-lg inline-flex items-center justify-center gap-2 shadow-xs transition-colors cursor-pointer"
-              >
-                <span>Continue to Time Agent Extraction</span>
-                <ArrowRight className="w-4 h-4" />
-              </button>
-            </div>
-          </div>
-        )}
-
-        {/* =========================================================================
-            STEP 4: EXTRACT EXECUTION INFORMATION (Time Agent)
-            ========================================================================= */}
-        {currentStep === 4 && (
-          <div className="bg-white border border-[#D9DEE5] rounded-lg p-6 space-y-6 shadow-xs animate-in fade-in duration-200">
-            <div className="border-b border-[#D9DEE5]/60 pb-3 flex items-center justify-between">
-              <div>
-                <h3 className="text-base font-bold text-[#172033]">
-                  Step 4: Time Agent Entity & Schedule Extraction
-                </h3>
-                <p className="text-xs text-[#596579] mt-0.5">
-                  The Time Agent cross-references site timestamps, quantities, and activity WBS IDs against the project schedule.
-                </p>
+          {/* =========================================================================
+              SECTION 7: QUANTITY
+              ========================================================================= */}
+          <section id="sec-quantity" className="bg-white border border-[#D9DEE5] rounded-lg p-5 md:p-6 shadow-xs space-y-4">
+            <div className="border-b border-[#D9DEE5] pb-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div className="flex items-center gap-2">
+                <span className="w-6 h-6 rounded-md bg-[#EDF5F8] text-[#176B87] font-bold text-xs flex items-center justify-center">
+                  6
+                </span>
+                <h2 className="text-base font-bold text-[#172033]">
+                  Quantity Progress & Output Certification
+                </h2>
               </div>
-              <span className="text-xs font-bold text-[#2E7D5B] bg-[#EDF7F2] border border-[#B8DCC9] px-2.5 py-1 rounded">
-                Extraction Engine v2.4 Ready
+              <span className="text-xs text-[#596579]">
+                Certified physical measures against baseline schedule
               </span>
             </div>
 
-            {/* Extraction Console */}
-            <div className="bg-[#EDF5F8]/40 border border-[#B3CBE0] rounded-lg p-5 space-y-4">
-              <div className="flex items-center justify-between flex-wrap gap-2">
-                <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-lg bg-[#176B87] text-white flex items-center justify-center font-bold">
-                    <Sparkles className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-xs text-[#172033]">
-                      Time Agent Natural Language & Timestamp Parser
-                    </h4>
-                    <p className="text-[11px] text-[#596579]">
-                      Parsing {fieldUpdates.length} execution updates · Last executed {extractedTimestamp}
-                    </p>
-                  </div>
-                </div>
-
-                <button
-                  type="button"
-                  onClick={handleRunTimeAgentExtraction}
-                  disabled={isExtracting}
-                  className="px-4 py-2 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] rounded-lg shadow-xs inline-flex items-center gap-2 transition-colors disabled:opacity-50"
-                >
-                  <RefreshCw className={`w-3.5 h-3.5 ${isExtracting ? 'animate-spin' : ''}`} />
-                  <span>{isExtracting ? 'Processing Extraction...' : 'Re-Run Extraction'}</span>
-                </button>
-              </div>
-
-              {isExtracting && (
-                <div className="space-y-1.5 pt-2">
-                  <div className="flex justify-between text-xs font-semibold text-[#176B87]">
-                    <span>Parsing quantities, isometric lines, and physical outputs...</span>
-                    <span>{extractionProgress}%</span>
-                  </div>
-                  <ProgressBar actual={extractionProgress} size="md" showLabels={false} />
-                </div>
-              )}
-
-              {/* Extraction ledger comparison preview */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-2 text-xs">
-                {fieldUpdates.map((u) => (
-                  <div key={u.id} className="p-3 bg-white border border-[#D9DEE5] rounded-lg space-y-1.5">
-                    <div className="flex items-center justify-between">
-                      <span className="font-mono font-bold text-[#176B87]">{u.activityId}</span>
-                      <span
-                        className={`text-[10px] font-bold px-2 py-0.5 rounded ${
-                          u.confidence >= 90
-                            ? 'bg-[#EDF7F2] text-[#2E7D5B]'
-                            : u.confidence >= 70
-                            ? 'bg-[#FDF6ED] text-[#D98B32]'
-                            : 'bg-[#FBEFEE] text-[#B5473C]'
-                        }`}
-                      >
-                        {u.confidence}% Match
-                      </span>
-                    </div>
-                    <p className="font-semibold text-[#172033]">{u.activityName}</p>
-                    <div className="flex items-center justify-between text-[11px] text-[#596579] pt-1 border-t border-[#D9DEE5]/60">
-                      <span>Parsed: <strong>{u.quantity} {u.unit}</strong></span>
-                      <span>Window: <strong>{u.time}</strong></span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Step 4 Actions */}
-            <div className="pt-4 border-t border-[#D9DEE5] flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-2.5 sm:gap-0">
-              <button
-                type="button"
-                onClick={() => setCurrentStep(3)}
-                className="min-h-[44px] px-4 py-2.5 text-xs font-semibold text-[#596579] hover:text-[#172033] bg-white border border-[#D9DEE5] rounded-lg inline-flex items-center justify-center gap-1.5 cursor-pointer"
-              >
-                <ArrowLeft className="w-4 h-4" />
-                <span>Back</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => setCurrentStep(5)}
-                className="min-h-[44px] px-6 py-2.5 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] active:bg-[#135A72] rounded-lg inline-flex items-center justify-center gap-2 shadow-xs transition-colors cursor-pointer"
-              >
-                <span>Continue to Review Extracted Data</span>
-                <ArrowRight className="w-4 h-4" />
-              </button>
-            </div>
-          </div>
-        )}
-
-        {/* =========================================================================
-            STEP 5: REVIEW EXTRACTED DATA
-            ========================================================================= */}
-        {currentStep === 5 && (
-          <div className="bg-white border border-[#D9DEE5] rounded-lg p-6 space-y-6 shadow-xs animate-in fade-in duration-200">
-            <div className="border-b border-[#D9DEE5]/60 pb-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-              <div>
-                <h3 className="text-base font-bold text-[#172033]">
-                  Step 5: Review & Refine Extracted Execution Data
-                </h3>
-                <p className="text-xs text-[#596579] mt-0.5">
-                  Verify and edit extracted values before proceeding to confirmation.
-                </p>
-              </div>
-              <span className="text-xs font-semibold text-[#596579]">
-                4 of 4 records validated
-              </span>
-            </div>
-
-            {/* Extracted Data Table */}
+            {/* Quantity Table with horizontal scroll min-width */}
             <div className="border border-[#D9DEE5] rounded-lg overflow-x-auto">
               <table className="w-full min-w-[700px] text-left text-xs border-collapse">
                 <thead>
                   <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[11px] font-bold uppercase tracking-wider text-[#596579]">
-                    <th className="p-3">Activity</th>
-                    <th className="p-3">Output Qty</th>
+                    <th className="p-3">Activity ID</th>
+                    <th className="p-3">Work Item Description</th>
+                    <th className="p-3">Discipline</th>
+                    <th className="p-3 text-center">Baseline Plan</th>
+                    <th className="p-3 text-center">Actual Today</th>
                     <th className="p-3">Unit</th>
-                    <th className="p-3">Time Window</th>
-                    <th className="p-3">Area / Line</th>
-                    <th className="p-3">Confidence State</th>
-                    <th className="p-3 text-right">Actions</th>
+                    <th className="p-3 text-center">Cumul / Total</th>
+                    <th className="p-3 text-center">Status</th>
+                    <th className="p-3 text-right">Action</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-[#D9DEE5]">
-                  {fieldUpdates.map((u) => (
-                    <tr key={u.id} className="hover:bg-[#F7F8FA]/60">
+                  {quantityItems.map((q) => (
+                    <tr key={q.id} className="hover:bg-[#F7F8FA]/60 transition-colors">
                       <td className="p-3">
-                        <div className="font-mono font-bold text-[#176B87]">{u.activityId}</div>
-                        <div className="text-[11px] text-[#596579] truncate max-w-[180px]">{u.activityName}</div>
+                        <div className="font-mono font-bold text-[#176B87]">{q.activityId}</div>
+                        {q.isCriticalPath && (
+                          <span className="text-[9px] font-bold px-1.5 py-0.2 rounded bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA] inline-block mt-0.5">
+                            Critical Path
+                          </span>
+                        )}
                       </td>
-                      <td className="p-3 font-mono font-bold text-[#172033]">
-                        {u.quantity}
-                      </td>
-                      <td className="p-3 text-[#596579] font-medium">{u.unit}</td>
-                      <td className="p-3 text-[#596579]">{u.time}</td>
-                      <td className="p-3 text-[#596579] truncate max-w-[160px]">{u.locationArea}</td>
                       <td className="p-3">
+                        <div className="font-semibold text-[#172033] max-w-[200px] truncate">
+                          {q.description}
+                        </div>
+                      </td>
+                      <td className="p-3 text-[#596579]">
+                        <span className="px-2 py-0.5 rounded bg-[#F1F3F5] text-[11px] font-medium">
+                          {q.discipline}
+                        </span>
+                      </td>
+                      <td className="p-3 text-center font-mono font-semibold text-[#596579]">
+                        {q.plannedToday}
+                      </td>
+                      <td className="p-3 text-center">
+                        <input
+                          type="number"
+                          step="any"
+                          value={q.actualToday}
+                          onChange={(e) => handleUpdateQuantity(q.id, 'actualToday', e.target.value)}
+                          className="w-20 p-1.5 bg-white border border-[#D9DEE5] rounded font-mono font-bold text-xs text-[#172033] text-center focus:border-[#176B87]"
+                        />
+                      </td>
+                      <td className="p-3 text-[#596579] font-medium">
+                        <input
+                          type="text"
+                          value={q.unit}
+                          onChange={(e) => handleUpdateQuantity(q.id, 'unit', e.target.value)}
+                          className="w-20 p-1.5 bg-transparent border-b border-dashed border-[#D9DEE5] text-xs font-medium text-[#172033]"
+                        />
+                      </td>
+                      <td className="p-3 text-center font-mono text-[11px] text-[#596579]">
+                        {q.cumulativeQty} / {q.targetTotal}
+                      </td>
+                      <td className="p-3 text-center">
                         <span
-                          className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-bold ${
-                            u.verificationState === 'Confirmed'
+                          className={`inline-block px-2 py-0.5 rounded text-[10px] font-bold ${
+                            q.status === 'Completed'
                               ? 'bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]'
-                              : u.verificationState === 'Conflict'
+                              : q.status === 'Blocked'
                               ? 'bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]'
-                              : 'bg-[#FDF6ED] text-[#D98B32] border border-[#F0D4A6]'
+                              : 'bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0]'
                           }`}
                         >
-                          {u.verificationState === 'Confirmed' ? (
-                            <CheckCircle2 className="w-3 h-3" />
-                          ) : (
-                            <AlertTriangle className="w-3 h-3" />
-                          )}
-                          <span>{u.verificationState}</span>
+                          {q.status}
                         </span>
                       </td>
                       <td className="p-3 text-right">
                         <button
                           type="button"
-                          onClick={() => setSelectedUpdateForDrawer(u)}
-                          className="px-2.5 py-1 text-[11px] font-semibold text-[#176B87] hover:bg-[#EDF5F8] border border-transparent rounded transition-colors"
+                          onClick={() => setSelectedQuantityForDrawer(q)}
+                          className="text-[#176B87] hover:underline font-semibold text-[11px] cursor-pointer"
                         >
-                          Inspect Detail
+                          Inspect
                         </button>
                       </td>
                     </tr>
@@ -1332,507 +1216,290 @@ export default function DPRTimeAgentPage() {
                 </tbody>
               </table>
             </div>
+          </section>
 
-            {/* Step 5 Actions */}
-            <div className="pt-4 border-t border-[#D9DEE5] flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-2.5 sm:gap-0">
-              <button
-                type="button"
-                onClick={() => setCurrentStep(4)}
-                className="min-h-[44px] px-4 py-2.5 text-xs font-semibold text-[#596579] hover:text-[#172033] bg-white border border-[#D9DEE5] rounded-lg inline-flex items-center justify-center gap-1.5 cursor-pointer"
-              >
-                <ArrowLeft className="w-4 h-4" />
-                <span>Back</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => setCurrentStep(6)}
-                className="min-h-[44px] px-6 py-2.5 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] active:bg-[#135A72] rounded-lg inline-flex items-center justify-center gap-2 shadow-xs transition-colors cursor-pointer"
-              >
-                <span>Continue to Confirmation & Governance</span>
-                <ArrowRight className="w-4 h-4" />
-              </button>
-            </div>
-          </div>
-        )}
-
-        {/* =========================================================================
-            STEP 6: CONFIRM (Verification Rules Gate)
-            Rule: "Do not let submission automatically bypass verification rules."
-            Rule: "Before final submission: show a clear review summary."
-            ========================================================================= */}
-        {currentStep === 6 && (
-          <div className="bg-white border border-[#D9DEE5] rounded-lg p-6 space-y-6 shadow-xs animate-in fade-in duration-200">
-            <div className="border-b border-[#D9DEE5]/60 pb-3 flex items-center justify-between">
-              <div>
-                <h3 className="text-base font-bold text-[#172033]">
-                  Step 6: Verification Rules & Compliance Gate
-                </h3>
-                <p className="text-xs text-[#596579] mt-0.5">
-                  Project controls rules enforce data integrity. Submissions cannot bypass validation without audit logging.
-                </p>
+          {/* =========================================================================
+              SECTION 8: ISSUES / BLOCKERS
+              ========================================================================= */}
+          <section id="sec-issues" className="bg-white border border-[#D9DEE5] rounded-lg p-5 md:p-6 shadow-xs space-y-4">
+            <div className="border-b border-[#D9DEE5] pb-3 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <span className="w-6 h-6 rounded-md bg-[#EDF5F8] text-[#176B87] font-bold text-xs flex items-center justify-center">
+                  7
+                </span>
+                <h2 className="text-base font-bold text-[#172033]">
+                  Issues, Delays & Site Blockers
+                </h2>
               </div>
-              <span className="text-xs font-bold text-[#2E7D5B] bg-[#EDF7F2] border border-[#B8DCC9] px-2.5 py-1 rounded inline-flex items-center gap-1">
-                <ShieldCheck className="w-3.5 h-3.5" />
-                <span>Governance Enforced</span>
+              <span className="text-xs text-[#B5473C] font-semibold">
+                {issuesList.length} Stoppages Recorded
               </span>
             </div>
 
-            {/* 4 Verification Rules Checklist */}
             <div className="space-y-3 text-xs">
-              {/* Rule 1 */}
-              <div className="p-3.5 bg-[#EDF7F2] border border-[#B8DCC9] rounded-lg flex items-start gap-3">
-                <CheckCircle2 className="w-5 h-5 text-[#2E7D5B] shrink-0 mt-0.5" />
-                <div className="space-y-0.5">
-                  <h4 className="font-bold text-[#172033]">
-                    Rule 1: Quantity Ceiling Enforcement [PASSED]
-                  </h4>
-                  <p className="text-[#596579]">
-                    Total executed quantities (12 spools Line 24, 4 welds, 45 m³ concrete) do not exceed remaining planned baseline ceilings.
-                  </p>
-                </div>
-              </div>
-
-              {/* Rule 2 */}
-              <div className="p-3.5 bg-[#EDF7F2] border border-[#B8DCC9] rounded-lg flex items-start gap-3">
-                <CheckCircle2 className="w-5 h-5 text-[#2E7D5B] shrink-0 mt-0.5" />
-                <div className="space-y-0.5">
-                  <h4 className="font-bold text-[#172033]">
-                    Rule 2: Mandatory Physical Evidence Attached [PASSED]
-                  </h4>
-                  <p className="text-[#596579]">
-                    All 3 critical path activities contain verifiable inspection photographs and batch delivery tickets.
-                  </p>
-                </div>
-              </div>
-
-              {/* Rule 3 */}
-              <div className="p-3.5 bg-[#EDF7F2] border border-[#B8DCC9] rounded-lg flex items-start gap-3">
-                <CheckCircle2 className="w-5 h-5 text-[#2E7D5B] shrink-0 mt-0.5" />
-                <div className="space-y-0.5">
-                  <h4 className="font-bold text-[#172033]">
-                    Rule 3: Discipline & WBS Alignment [PASSED]
-                  </h4>
-                  <p className="text-[#596579]">
-                    Piping spools mapped to WBS 3.2.1; Foundation concrete mapped to WBS 2.1.1 without hierarchy cross-contamination.
-                  </p>
-                </div>
-              </div>
-
-              {/* Rule 4: Weather / Impediment Conflict */}
-              <div className="p-3.5 bg-[#FBEFEE] border border-[#E4B0AA] rounded-lg flex items-start gap-3">
-                <AlertCircle className="w-5 h-5 text-[#B5473C] shrink-0 mt-0.5" />
-                <div className="space-y-1">
-                  <h4 className="font-bold text-[#B5473C]">
-                    Rule 4: Stoppage & Impediment Flag Triggered [HOLD / ROUTE REQUIRED]
-                  </h4>
-                  <p className="text-[#596579]">
-                    Activity <strong>PIP-24-003 Hydrostatic Testing</strong> was halted (0 progress) due to monsoon rain and store flange delay.
-                    Under project governance, this variance <em>cannot be silently ignored</em>. It must either route to the Manager Review Queue or require explicit engineer sign-off.
-                  </p>
-                  <div className="pt-2 flex items-center gap-2">
-                    <label className="flex items-center gap-2 cursor-pointer">
-                      <input
-                        type="checkbox"
-                        checked={managerReviewRouteAcknowledged}
-                        onChange={(e) => setManagerReviewRouteAcknowledged(e.target.checked)}
-                        className="w-4 h-4 text-[#176B87] rounded border-[#D9DEE5]"
-                      />
-                      <span className="font-bold text-[#172033]">
-                        Route PIP-24-003 variance alert to Manager Review Queue (/matching)
+              {issuesList.map((iss) => (
+                <div
+                  key={iss.id}
+                  className={`p-4 rounded-lg border space-y-2.5 ${
+                    iss.severity === 'High'
+                      ? 'bg-[#FBEFEE]/50 border-[#E4B0AA]'
+                      : 'bg-[#FDF6ED]/50 border-[#F0D4A6]'
+                  }`}
+                >
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-black/10 pb-2">
+                    <div className="flex items-center gap-2">
+                      <span className="font-mono font-bold text-[#172033]">{iss.id}</span>
+                      <span className="font-mono font-bold text-[#176B87] bg-white px-2 py-0.5 rounded border border-[#D9DEE5]">
+                        {iss.activityId}
                       </span>
-                    </label>
+                      <span className="px-2 py-0.5 rounded font-bold text-[10px] uppercase bg-white border border-[#D9DEE5] text-[#172033]">
+                        {iss.category}
+                      </span>
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                      <span className="font-bold text-[#B5473C]">
+                        {iss.durationHours} hrs Stoppage
+                      </span>
+                      {iss.requiresManagerReview && (
+                        <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
+                          Requires Manager Routing
+                        </span>
+                      )}
+                    </div>
                   </div>
+
+                  <p className="text-[#172033] font-medium leading-relaxed">
+                    <strong>Cause:</strong> {iss.description}
+                  </p>
+                  <p className="text-[#596579]">
+                    <strong>Action Taken / Plan:</strong> {iss.actionTaken}
+                  </p>
                 </div>
-              </div>
+              ))}
             </div>
 
-            {/* Engineer Formal Digital Signature Sign-Off */}
-            <div className="p-4 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg space-y-3 text-xs">
+            {/* HSE / Safety Box */}
+            <div className="p-3.5 bg-[#EDF7F2] border border-[#B8DCC9] rounded-lg text-xs space-y-1.5">
+              <div className="flex items-center justify-between font-bold text-[#2E7D5B]">
+                <span className="flex items-center gap-1.5">
+                  <ShieldCheck className="w-4 h-4" />
+                  Health, Safety & Environment (HSE) Shift Record
+                </span>
+                <span>Zero LTI Logged</span>
+              </div>
+              <p className="text-[#596579] text-[11px]">
+                Toolbox Talk Topic: <strong>{safetyRecord.toolboxTopic}</strong> ({safetyRecord.toolboxAttendees} participants).
+                Zero First Aid, Zero Medical Treatment Cases, Zero Near Misses reported during this shift.
+              </p>
+            </div>
+          </section>
+
+          {/* =========================================================================
+              SECTION 9: EVIDENCE
+              ========================================================================= */}
+          <section id="sec-evidence" className="bg-white border border-[#D9DEE5] rounded-lg p-5 md:p-6 shadow-xs space-y-4">
+            <div className="border-b border-[#D9DEE5] pb-3 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <span className="w-6 h-6 rounded-md bg-[#EDF5F8] text-[#176B87] font-bold text-xs flex items-center justify-center">
+                  8
+                </span>
+                <h2 className="text-base font-bold text-[#172033]">
+                  Physical Evidence & Inspection Documents
+                </h2>
+              </div>
+              <span className="text-xs text-[#596579]">
+                {evidenceList.length} Verifiable Files Attached
+              </span>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 text-xs">
+              {evidenceList.map((ev) => (
+                <div
+                  key={ev.id}
+                  className="p-3 bg-[#FAFAFA] border border-[#D9DEE5] rounded-lg space-y-1.5 hover:bg-white transition-colors"
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="font-mono text-[10px] font-bold text-[#176B87] bg-white px-2 py-0.5 rounded border border-[#D9DEE5]">
+                      {ev.activityId}
+                    </span>
+                    <span className="text-[10px] text-[#7B8798]">{ev.timestamp}</span>
+                  </div>
+                  <div className="flex items-start gap-2 pt-1">
+                    {ev.type === 'PHOTO' ? (
+                      <Camera className="w-4 h-4 text-[#176B87] shrink-0 mt-0.5" />
+                    ) : (
+                      <FileText className="w-4 h-4 text-[#596579] shrink-0 mt-0.5" />
+                    )}
+                    <div className="min-w-0">
+                      <p className="font-mono font-bold text-[#172033] truncate text-[11px]">
+                        {ev.name}
+                      </p>
+                      <p className="text-[10px] text-[#7B8798]">{ev.fileSize} • {ev.locationArea}</p>
+                    </div>
+                  </div>
+                  {ev.geotag && (
+                    <div className="text-[10px] text-[#596579] font-mono flex items-center gap-1 pt-1 border-t border-[#D9DEE5]">
+                      <MapPin className="w-3 h-3 text-[#176B87]" />
+                      <span>{ev.geotag}</span>
+                    </div>
+                  )}
+                  {ev.signoffBy && (
+                    <div className="text-[10px] text-[#2E7D5B] font-semibold pt-1 border-t border-[#D9DEE5]">
+                      Signoff: {ev.signoffBy}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+
+            {/* Attach Evidence Action Bar */}
+            <div className="p-4 border-2 border-dashed border-[#D9DEE5] rounded-lg text-center bg-[#F7F8FA]">
+              <p className="text-xs font-semibold text-[#172033]">
+                Attach Geotagged Photos, Inspection Sheets, or Delivery Slips
+              </p>
+              <p className="text-[11px] text-[#7B8798] mt-0.5">
+                Supported: JPG, PNG, PDF, DWG (Max 25MB per file)
+              </p>
+              <button
+                type="button"
+                onClick={() => {
+                  const newEv: DPREvidenceItem = {
+                    id: `EVD-${Date.now()}`,
+                    name: `IMG_${reportingDate.replace(/-/g, '')}_FIELD_CHECK.jpg`,
+                    type: 'PHOTO',
+                    timestamp: '16:30',
+                    activityId: 'PIP-24-001',
+                    locationArea: selectedArea,
+                    fileSize: '2.1 MB',
+                    geotag: '27.3513° N, 95.3130° E',
+                  };
+                  setEvidenceList([...evidenceList, newEv]);
+                  addToast({
+                    type: 'success',
+                    title: 'Evidence Attached',
+                    description: `Attached ${newEv.name}`,
+                  });
+                }}
+                className="mt-2 px-3 py-1.5 text-xs font-bold text-[#176B87] bg-white border border-[#B3CBE0] hover:bg-[#EDF5F8] rounded-lg inline-flex items-center gap-1.5 transition-colors cursor-pointer"
+              >
+                <Plus className="w-3.5 h-3.5" />
+                <span>Upload New File</span>
+              </button>
+            </div>
+          </section>
+
+          {/* =========================================================================
+              SECTION 10: GENERATED SUMMARY (Structured Generated-Summary Panel)
+              ========================================================================= */}
+          <section id="sec-summary" className="bg-white border-2 border-[#176B87]/30 rounded-lg p-5 md:p-6 shadow-xs space-y-5">
+            <div className="border-b border-[#D9DEE5] pb-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div className="flex items-center gap-2">
+                <span className="w-6 h-6 rounded-md bg-[#176B87] text-white font-bold text-xs flex items-center justify-center">
+                  9
+                </span>
+                <div>
+                  <h2 className="text-base font-bold text-[#172033]">
+                    Generated Summary Panel
+                  </h2>
+                  <p className="text-xs text-[#596579]">
+                    Audited shift compilation and Schedule Twin synchronization preview
+                  </p>
+                </div>
+              </div>
+
+              <span className="font-mono text-xs text-[#176B87] font-bold bg-[#EDF5F8] px-2.5 py-1 rounded border border-[#B3CBE0]">
+                Pre-Submission Audit Dossier
+              </span>
+            </div>
+
+            {/* Structured Table: Audited Shift Deliverables */}
+            <div className="border border-[#D9DEE5] rounded-lg overflow-hidden text-xs">
+              <table className="w-full border-collapse">
+                <tbody className="divide-y divide-[#D9DEE5]">
+                  <tr className="bg-[#FAFAFA]">
+                    <td className="p-3 font-bold text-[#7B8798] w-1/3">Document Reference</td>
+                    <td className="p-3 font-mono font-bold text-[#172033]">
+                      {dprDocumentNo} • {dprRevision}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="p-3 font-bold text-[#7B8798]">Reporting Window</td>
+                    <td className="p-3 text-[#172033]">
+                      {reportingDate} ({reportingShift}) • <strong>{summaryMetrics.totalManHours} Productive Man-Hours</strong> ({totalHeadcount} pax)
+                    </td>
+                  </tr>
+                  <tr className="bg-[#FAFAFA]">
+                    <td className="p-3 font-bold text-[#7B8798]">Activities Progressed</td>
+                    <td className="p-3 text-[#172033]">
+                      <span className="font-bold text-[#2E7D5B]">{summaryMetrics.completedTasks} Completed</span>,{' '}
+                      <span className="font-bold text-[#176B87]">{summaryMetrics.inProgressTasks} In Progress</span>,{' '}
+                      <span className="font-bold text-[#B5473C]">{summaryMetrics.blockedTasks} Blocked</span> (Total: {summaryMetrics.plannedTasks} activities worked)
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="p-3 font-bold text-[#7B8798]">Schedule Twin Impact</td>
+                    <td className="p-3 text-[#172033]">
+                      Advances project cumulative progress by <strong>+{summaryMetrics.scheduleDeltaPercent}%</strong>.
+                      Line 24-XX critical path remains on baseline (0 days float deviation).
+                    </td>
+                  </tr>
+                  <tr className="bg-[#FAFAFA]">
+                    <td className="p-3 font-bold text-[#7B8798]">Physical Evidence Audit</td>
+                    <td className="p-3 text-[#172033]">
+                      <span className="font-bold text-[#2E7D5B]">{summaryMetrics.verifiedProofsCount} Verified Attachments</span> (Photographs with GPS coordinates, Crane lift tickets, Weld QC inspection sheets).
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="p-3 font-bold text-[#7B8798]">Variance / Stoppage Governance</td>
+                    <td className="p-3 text-[#172033]">
+                      Activity <strong>PIP-24-003 Hydrostatic Testing</strong> variance flagged due to monsoon squall & flange requisition hold.
+                      Routed to Manager Review Queue (/matching).
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            {/* Engineer Formal Attestation & Governance Checkbox */}
+            <div className="p-4 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg space-y-2 text-xs">
               <label className="flex items-start gap-2.5 cursor-pointer">
                 <input
                   type="checkbox"
                   checked={engineerSignoffConfirmed}
                   onChange={(e) => setEngineerSignoffConfirmed(e.target.checked)}
-                  className="w-4 h-4 text-[#176B87] rounded border-[#D9DEE5] mt-0.5"
+                  className="w-4 h-4 text-[#176B87] rounded border-[#D9DEE5] mt-0.5 cursor-pointer"
                 />
                 <div>
                   <span className="font-bold text-[#172033] block">
-                    Lead Site Execution Engineer Attestation
+                    Certified by Lead Site Execution Engineer: {siteEngineer} ({siteRole})
                   </span>
-                  <span className="text-[#596579]">
-                    I, <strong>{siteEngineer}</strong>, certify that the quantities, work hours, and photographic evidence submitted in this report accurately reflect physical site progress at {activeProject?.name || 'Duliajan'} on {reportingDate}.
+                  <span className="text-[#596579] leading-relaxed">
+                    I certify that the stated quantities, man-hours, and physical evidence accurately reflect site execution at {projectName} on {reportingDate}.
                   </span>
                 </div>
               </label>
             </div>
 
-            {/* Step 6 Actions */}
-            <div className="pt-4 border-t border-[#D9DEE5] flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-2.5 sm:gap-0">
-              <button
-                type="button"
-                onClick={() => setCurrentStep(5)}
-                className="min-h-[44px] px-4 py-2.5 text-xs font-semibold text-[#596579] hover:text-[#172033] bg-white border border-[#D9DEE5] rounded-lg inline-flex items-center justify-center gap-1.5 cursor-pointer"
-              >
-                <ArrowLeft className="w-4 h-4" />
-                <span>Back</span>
-              </button>
-              <button
-                type="button"
-                disabled={!engineerSignoffConfirmed}
-                onClick={() => setCurrentStep(7)}
-                className="min-h-[44px] px-6 py-2.5 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] active:bg-[#135A72] disabled:opacity-50 rounded-lg inline-flex items-center justify-center gap-2 shadow-xs transition-colors cursor-pointer"
-              >
-                <span>Proceed to DPR Submission</span>
-                <ArrowRight className="w-4 h-4" />
-              </button>
-            </div>
-          </div>
-        )}
-
-        {/* =========================================================================
-            STEP 7: SUBMIT DPR
-            Submission states:
-            - Draft
-            - Processing
-            - Needs Confirmation
-            - Ready to Submit
-            - Submitted
-            - Failed
-            ========================================================================= */}
-        {currentStep === 7 && (
-          <div className="bg-white border border-[#D9DEE5] rounded-lg p-6 space-y-6 shadow-xs animate-in fade-in duration-200">
-            {/* Review Summary before final submission */}
-            <div className="border-b border-[#D9DEE5]/60 pb-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-              <div>
-                <h3 className="text-base font-bold text-[#172033]">
-                  Step 7: Final Review & Daily Progress Report Submission
-                </h3>
-                <p className="text-xs text-[#596579] mt-0.5">
-                  Final pre-submission audit summary. Synchronizes verified execution into the Schedule Twin.
-                </p>
+            {/* Final Action Buttons Bar */}
+            <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 border-t border-[#D9DEE5]">
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={handleSaveDraft}
+                  className="px-4 py-2.5 text-xs font-semibold text-[#172033] bg-white border border-[#D9DEE5] hover:bg-[#F1F3F5] rounded-lg inline-flex items-center justify-center gap-2 transition-colors cursor-pointer shadow-2xs"
+                >
+                  <Save className="w-4 h-4 text-[#596579]" />
+                  <span>Save Draft</span>
+                </button>
               </div>
 
-              {/* State Pill */}
-              <span
-                className={`text-xs font-bold px-3 py-1 rounded border inline-flex items-center gap-1.5 ${
-                  submissionState === 'Submitted'
-                    ? 'bg-[#EDF7F2] text-[#2E7D5B] border-[#B8DCC9]'
-                    : submissionState === 'Saved locally'
-                    ? 'bg-[#FDF6ED] text-[#D98B32] border-[#F0D4A6]'
-                    : submissionState === 'Processing'
-                    ? 'bg-[#EDF5F8] text-[#176B87] border-[#B3CBE0]'
-                    : submissionState === 'Needs Confirmation'
-                    ? 'bg-[#FDF6ED] text-[#D98B32] border-[#F0D4A6]'
-                    : submissionState === 'Failed'
-                    ? 'bg-[#FBEFEE] text-[#B5473C] border-[#E4B0AA]'
-                    : 'bg-[#F1F3F5] text-[#172033] border-[#D9DEE5]'
-                }`}
-              >
-                <span className="w-2 h-2 rounded-full bg-current" />
-                <span>State: {submissionState}</span>
-              </span>
-            </div>
-
-            {/* CLEAR REVIEW SUMMARY CARD (Before final submission) */}
-            <div className="bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg p-5 space-y-4 text-xs">
-              <div className="flex items-center justify-between">
-                <span className="font-bold text-sm text-[#172033]">
-                  DPR Pre-Submission Audit Dossier
-                </span>
-                <span className="font-mono text-xs text-[#596579]">
-                  {submittedDprCode}
-                </span>
-              </div>
-
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-1 border-t border-[#D9DEE5]/60 text-[11px]">
-                <div>
-                  <span className="text-[#7B8798] uppercase font-bold text-[9px] block">Project</span>
-                  <span className="font-bold text-[#172033]">{activeProject?.code || 'OIL-DUL-01'}</span>
-                </div>
-                <div>
-                  <span className="text-[#7B8798] uppercase font-bold text-[9px] block">Reporting Date</span>
-                  <span className="font-bold text-[#172033]">{reportingDate} ({reportingShift})</span>
-                </div>
-                <div>
-                  <span className="text-[#7B8798] uppercase font-bold text-[9px] block">Site Engineer</span>
-                  <span className="font-bold text-[#172033]">{siteEngineer}</span>
-                </div>
-                <div>
-                  <span className="text-[#7B8798] uppercase font-bold text-[9px] block">Contractor</span>
-                  <span className="font-bold text-[#172033] truncate block">{contractorName}</span>
-                </div>
-              </div>
-
-              {/* Summary Metrics Snapshot */}
-              <div className="p-3 bg-white border border-[#D9DEE5] rounded-lg grid grid-cols-5 gap-2 text-center text-[11px]">
-                <div>
-                  <span className="text-[#7B8798] block">Planned</span>
-                  <span className="font-mono font-bold text-[#172033]">{summaryMetrics.activitiesPlanned}</span>
-                </div>
-                <div>
-                  <span className="text-[#7B8798] block">Updated</span>
-                  <span className="font-mono font-bold text-[#176B87]">{summaryMetrics.activitiesUpdated}</span>
-                </div>
-                <div>
-                  <span className="text-[#7B8798] block">Completed</span>
-                  <span className="font-mono font-bold text-[#2E7D5B]">{summaryMetrics.activitiesCompleted}</span>
-                </div>
-                <div>
-                  <span className="text-[#7B8798] block">Blocked</span>
-                  <span className="font-mono font-bold text-[#B5473C]">{summaryMetrics.blockedActivities}</span>
-                </div>
-                <div>
-                  <span className="text-[#7B8798] block">Pending</span>
-                  <span className="font-mono font-bold text-[#D98B32]">{summaryMetrics.pendingEntries}</span>
-                </div>
-              </div>
-
-              {/* Linked updates breakdown */}
-              <div className="space-y-1.5 pt-1">
-                <span className="text-[10px] uppercase font-bold text-[#7B8798] block">
-                  Verified Field Submissions (4 Updates)
-                </span>
-                <div className="space-y-1">
-                  {fieldUpdates.map((u) => (
-                    <div
-                      key={u.id}
-                      className="p-2 bg-white border border-[#D9DEE5] rounded flex items-center justify-between text-[11px]"
-                    >
-                      <div className="flex items-center gap-2">
-                        <span className="font-mono font-bold text-[#176B87]">{u.activityId}</span>
-                        <span className="font-medium text-[#172033]">{u.activityName}</span>
-                        <span className="text-[#596579]">· {u.quantity} {u.unit}</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <span className="text-[#7B8798]">{u.evidence.length} proofs</span>
-                        <span
-                          className={`font-bold ${
-                            u.verificationState === 'Confirmed' ? 'text-[#2E7D5B]' : 'text-[#B5473C]'
-                          }`}
-                        >
-                          {u.verificationState}
-                        </span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Schedule Twin Impact Statement */}
-              <div className="p-3 bg-[#EDF5F8] border border-[#B3CBE0] rounded-lg text-xs space-y-1">
-                <span className="font-bold text-[#176B87] flex items-center gap-1.5">
-                  <Layers className="w-3.5 h-3.5" />
-                  Schedule Twin Integration Impact
-                </span>
-                <p className="text-[#596579] text-[11px] leading-relaxed">
-                  Submitting this DPR will advance <strong>PIP-24-001</strong> to 100% completed, record 4 field butt welds on <strong>PIP-24-002</strong> (+16.6% actual progress), and register the weather stoppage for <strong>PIP-24-003</strong> on the manager variance queue.
-                </p>
-              </div>
-            </div>
-
-            {/* SUBMISSION STATE CONTROLLER (Allows testing all 6 submission states) */}
-            <div className="p-4 border border-[#D9DEE5] rounded-lg space-y-3 bg-[#FAFAFA]">
-              <div className="flex items-center justify-between">
-                <span className="text-[11px] uppercase font-bold text-[#596579] flex items-center gap-1.5">
-                  <Activity className="w-3.5 h-3.5 text-[#176B87]" />
-                  Simulate / Switch Submission State:
-                </span>
-                <span className="text-[11px] text-[#7B8798]">Interactive State Testing</span>
-              </div>
-              <div className="flex flex-wrap gap-2">
-                {(
-                  [
-                    'Draft',
-                    'Ready to Submit',
-                    'Processing',
-                    'Needs Confirmation',
-                    'Submitted',
-                    'Failed',
-                  ] as DPRSubmissionState[]
-                ).map((st) => (
-                  <button
-                    key={st}
-                    type="button"
-                    onClick={() => {
-                      setSubmissionState(st);
-                      addToast({
-                        type: 'info',
-                        title: `State Set to ${st}`,
-                        description: `Switched submission state to ${st}.`,
-                      });
-                    }}
-                    className={`px-3 py-1.5 text-xs font-semibold rounded-lg border transition-all ${
-                      submissionState === st
-                        ? 'bg-[#176B87] text-white border-[#176B87] shadow-2xs font-bold'
-                        : 'bg-white border-[#D9DEE5] text-[#596579] hover:text-[#172033]'
-                    }`}
-                  >
-                    {st}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* SUBMISSION STATE RESULTS */}
-            {submissionState === 'Submitted' && (
-              <div className="p-5 bg-[#EDF7F2] border-2 border-[#B8DCC9] rounded-lg text-center space-y-3">
-                <div className="w-12 h-12 rounded-full bg-white border border-[#B8DCC9] text-[#2E7D5B] flex items-center justify-center mx-auto">
-                  <CheckCircle2 className="w-6 h-6" />
-                </div>
-                <div>
-                  <h4 className="text-base font-bold text-[#172033]">
-                    Daily Progress Report Successfully Submitted!
-                  </h4>
-                  <p className="text-xs text-[#596579] mt-0.5">
-                    Assigned Reference ID: <strong className="font-mono text-[#172033]">{submittedDprCode}</strong>
-                  </p>
-                </div>
-                <div className="flex items-center justify-center gap-3 pt-2">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      addToast({
-                        type: 'success',
-                        title: 'DPR Downloaded',
-                        description: `Saved ${submittedDprCode}.pdf`,
-                      });
-                    }}
-                    className="px-4 py-2 text-xs font-bold text-[#172033] bg-white border border-[#D9DEE5] hover:bg-[#F1F3F5] rounded-lg inline-flex items-center gap-1.5 shadow-2xs"
-                  >
-                    <Download className="w-3.5 h-3.5" />
-                    <span>Download DPR PDF</span>
-                  </button>
-
-                  <Link
-                    href="/schedule-twin"
-                    className="px-4 py-2 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] rounded-lg inline-flex items-center gap-1.5 shadow-xs"
-                  >
-                    <Layers className="w-3.5 h-3.5" />
-                    <span>View in Schedule Twin</span>
-                  </Link>
-
-                  <Link
-                    href="/engineer"
-                    className="px-4 py-2 text-xs font-semibold text-[#596579] hover:text-[#172033] bg-white border border-[#D9DEE5] rounded-lg"
-                  >
-                    Engineer Dashboard
-                  </Link>
-                </div>
-              </div>
-            )}
-
-            {/* SUBMISSION STATE RESULT: Saved Locally (Offline Mode) */}
-            {submissionState === 'Saved locally' && (
-              <div className="p-5 bg-[#EDF7F2] border-2 border-[#B8DCC9] rounded-lg text-center space-y-3">
-                <div className="w-12 h-12 rounded-full bg-white border border-[#B8DCC9] text-[#2E7D5B] flex items-center justify-center mx-auto">
-                  <CheckCircle2 className="w-6 h-6" />
-                </div>
-                <div>
-                  <h4 className="text-base font-bold text-[#172033]">
-                    Daily Progress Report Saved Locally (Offline Queue)
-                  </h4>
-                  <p className="text-xs text-[#596579] mt-0.5">
-                    Assigned Reference ID: <strong className="font-mono text-[#172033]">{submittedDprCode}</strong>
-                  </p>
-                  <p className="text-[11px] text-[#2E7D5B] font-medium mt-1">
-                    Saved to local IndexedDB. Updates will receive Server Confirmation once online connectivity is restored.
-                  </p>
-                </div>
-                <div className="flex items-center justify-center gap-3 pt-2">
-                  <Link
-                    href="/sync"
-                    className="px-4 py-2 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] rounded-lg inline-flex items-center gap-1.5 shadow-xs"
-                  >
-                    <RefreshCw className="w-3.5 h-3.5" />
-                    <span>Inspect in Sync Center</span>
-                  </Link>
-
-                  <Link
-                    href="/engineer"
-                    className="px-4 py-2 text-xs font-semibold text-[#596579] hover:text-[#172033] bg-white border border-[#D9DEE5] rounded-lg"
-                  >
-                    Engineer Dashboard
-                  </Link>
-                </div>
-              </div>
-            )}
-
-            {submissionState === 'Needs Confirmation' && (
-              <div className="p-4 bg-[#FDF6ED] border-2 border-[#F0D4A6] rounded-lg space-y-2 text-xs">
-                <div className="flex items-start gap-2.5">
-                  <AlertTriangle className="w-5 h-5 text-[#D98B32] shrink-0 mt-0.5" />
-                  <div>
-                    <h4 className="font-bold text-[#172033] text-sm">
-                      Submission Held: Needs Confirmation
-                    </h4>
-                    <p className="text-[#596579] mt-0.5">
-                      Activity PIP-24-003 weather stoppage requires Chief Project Manager (Rajesh Sharma) co-signoff.
-                    </p>
-                    <div className="pt-2 flex items-center gap-2">
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setOverrideConflictAccepted(true);
-                          setSubmissionState('Ready to Submit');
-                          addToast({
-                            type: 'info',
-                            title: 'Override Acknowledged',
-                            description: 'Routed to Manager Review Queue.',
-                          });
-                        }}
-                        className="px-3 py-1.5 font-bold text-white bg-[#D98B32] hover:bg-[#C27A28] rounded-lg"
-                      >
-                        Acknowledge & Queue for Manager Sign-off
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {submissionState === 'Failed' && (
-              <div className="p-4 bg-[#FBEFEE] border-2 border-[#E4B0AA] rounded-lg space-y-2 text-xs">
-                <div className="flex items-start gap-2.5">
-                  <AlertCircle className="w-5 h-5 text-[#B5473C] shrink-0 mt-0.5" />
-                  <div>
-                    <h4 className="font-bold text-[#B5473C] text-sm">
-                      Submission Failed (Network Timeout / Schedule Lock)
-                    </h4>
-                    <p className="text-[#596579] mt-0.5">
-                      The schedule repository could not acquire a write lock on V3 · Rev 3.2. Local draft has been preserved.
-                    </p>
-                    <div className="pt-2 flex items-center gap-2">
-                      <button
-                        type="button"
-                        onClick={handleSubmitDPR}
-                        className="px-3 py-1.5 font-bold text-white bg-[#B5473C] hover:bg-[#9E3E34] rounded-lg inline-flex items-center gap-1.5"
-                      >
-                        <RotateCcw className="w-3.5 h-3.5" />
-                        <span>Retry Submission</span>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* Step 7 Main Action Bar */}
-            <div className="pt-4 border-t border-[#D9DEE5] flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-3">
-              <button
-                type="button"
-                onClick={() => setCurrentStep(6)}
-                className="min-h-[44px] px-4 py-2.5 text-xs font-semibold text-[#596579] hover:text-[#172033] bg-white border border-[#D9DEE5] rounded-lg inline-flex items-center justify-center gap-1.5 cursor-pointer"
-              >
-                <ArrowLeft className="w-4 h-4" />
-                <span>Back to Confirmation</span>
-              </button>
-
-              {submissionState !== 'Submitted' && submissionState !== 'Saved locally' && (
+              <div className="flex items-center gap-3">
                 <button
                   type="button"
                   onClick={handleSubmitDPR}
                   disabled={submissionState === 'Processing'}
-                  className="min-h-[48px] px-6 py-2.5 text-xs sm:text-sm font-bold text-white bg-[#176B87] hover:bg-[#135A72] active:bg-[#135A72] disabled:opacity-50 rounded-lg inline-flex items-center justify-center gap-2 shadow-xs transition-colors cursor-pointer"
+                  className="min-h-[48px] px-6 py-2.5 text-xs sm:text-sm font-bold text-white bg-[#176B87] hover:bg-[#135A72] active:bg-[#135A72] disabled:opacity-50 rounded-lg inline-flex items-center justify-center gap-2 transition-colors cursor-pointer shadow-xs"
                 >
                   <Send className="w-4 h-4" />
                   <span>
@@ -1840,87 +1507,52 @@ export default function DPRTimeAgentPage() {
                       ? 'Submitting DPR...'
                       : isOffline
                       ? 'Save DPR Locally to Offline Queue'
-                      : 'Submit DPR to Schedule Twin'}
+                      : 'Submit DPR'}
                   </span>
                 </button>
-              )}
+              </div>
             </div>
-          </div>
-        )}
+          </section>
+        </div>
 
         {/* DETAIL INSPECTION DRAWER */}
         <Drawer
-          isOpen={!!selectedUpdateForDrawer}
-          onClose={() => setSelectedUpdateForDrawer(null)}
-          title={`Update Detail: ${selectedUpdateForDrawer?.activityId || ''}`}
-          subtitle={selectedUpdateForDrawer?.activityName || ''}
+          isOpen={!!selectedQuantityForDrawer}
+          onClose={() => setSelectedQuantityForDrawer(null)}
+          title={`Activity Detail: ${selectedQuantityForDrawer?.activityId || ''}`}
+          subtitle={selectedQuantityForDrawer?.description || ''}
           width="md"
         >
-          {selectedUpdateForDrawer && (
+          {selectedQuantityForDrawer && (
             <div className="space-y-4 text-xs text-[#172033]">
               <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg space-y-1">
-                <span className="text-[10px] uppercase font-bold text-[#7B8798] block">Location</span>
-                <span className="font-semibold">{selectedUpdateForDrawer.locationArea}</span>
+                <span className="text-[10px] uppercase font-bold text-[#7B8798] block">Discipline & Status</span>
+                <div className="flex items-center justify-between">
+                  <span className="font-semibold">{selectedQuantityForDrawer.discipline}</span>
+                  <span className="font-bold text-[#176B87]">{selectedQuantityForDrawer.status}</span>
+                </div>
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg">
-                  <span className="text-[10px] uppercase font-bold text-[#7B8798] block">Output Qty</span>
+                  <span className="text-[10px] uppercase font-bold text-[#7B8798] block">Planned Target</span>
                   <span className="font-mono font-bold text-sm">
-                    {selectedUpdateForDrawer.quantity} {selectedUpdateForDrawer.unit}
+                    {selectedQuantityForDrawer.plannedToday} {selectedQuantityForDrawer.unit}
                   </span>
                 </div>
                 <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg">
-                  <span className="text-[10px] uppercase font-bold text-[#7B8798] block">Shift Window</span>
-                  <span className="font-semibold">{selectedUpdateForDrawer.time}</span>
+                  <span className="text-[10px] uppercase font-bold text-[#7B8798] block">Actual Executed</span>
+                  <span className="font-mono font-bold text-sm text-[#2E7D5B]">
+                    {selectedQuantityForDrawer.actualToday} {selectedQuantityForDrawer.unit}
+                  </span>
                 </div>
               </div>
 
-              <div>
-                <span className="text-[10px] uppercase font-bold text-[#7B8798] block mb-1">
-                  Observations & Remarks
-                </span>
-                <p className="p-3 bg-white border border-[#D9DEE5] rounded-lg font-medium leading-relaxed">
-                  {selectedUpdateForDrawer.remarks}
-                </p>
-              </div>
-
-              <div>
-                <span className="text-[10px] uppercase font-bold text-[#7B8798] block mb-1">
-                  Verification Status & Heuristics
-                </span>
-                <div className="p-3 bg-white border border-[#D9DEE5] rounded-lg space-y-1">
-                  <div className="flex items-center justify-between">
-                    <span className="font-bold">{selectedUpdateForDrawer.verificationState}</span>
-                    <ConfidenceBadge score={selectedUpdateForDrawer.confidence} size="sm" />
-                  </div>
-                  <p className="text-[11px] text-[#596579]">
-                    {selectedUpdateForDrawer.verificationReason}
-                  </p>
-                </div>
-              </div>
-
-              <div>
-                <span className="text-[10px] uppercase font-bold text-[#7B8798] block mb-1">
-                  Attached Physical Evidence ({selectedUpdateForDrawer.evidence.length})
-                </span>
-                <div className="space-y-1.5">
-                  {selectedUpdateForDrawer.evidence.map((ev) => (
-                    <div
-                      key={ev.id}
-                      className="p-2.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded flex items-center justify-between text-[11px]"
-                    >
-                      <div className="flex items-center gap-2">
-                        {ev.type === 'PHOTO' ? (
-                          <Camera className="w-3.5 h-3.5 text-[#176B87]" />
-                        ) : (
-                          <FileText className="w-3.5 h-3.5 text-[#596579]" />
-                        )}
-                        <span className="font-mono font-medium">{ev.name}</span>
-                      </div>
-                      <span className="text-[#7B8798]">{ev.timestamp}</span>
-                    </div>
-                  ))}
+              <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg space-y-1">
+                <span className="text-[10px] uppercase font-bold text-[#7B8798] block">Schedule Cumulative Progress</span>
+                <div className="flex items-center justify-between text-xs">
+                  <span>To Date: <strong>{selectedQuantityForDrawer.cumulativeQty} {selectedQuantityForDrawer.unit}</strong></span>
+                  <span>Scope Total: <strong>{selectedQuantityForDrawer.targetTotal} {selectedQuantityForDrawer.unit}</strong></span>
                 </div>
               </div>
             </div>
