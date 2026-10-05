@@ -1348,21 +1348,39 @@ export default function SchedulePage() {
   };
 
   const getLevelBadgeClass = (level: WBSLevel) => {
+    // Standardized neutral badge styling across all hierarchy levels - no 6 rainbow colors
     switch (level) {
       case 'L1':
-        return 'bg-[#176B87] text-white border-[#176B87]';
+        return 'bg-[#172033] text-white border-[#172033] font-bold';
       case 'L2':
-        return 'bg-[#3B6EA8] text-white border-[#3B6EA8]';
       case 'L3':
-        return 'bg-[#2E7D5B]/15 text-[#2E7D5B] border-[#2E7D5B]/30';
       case 'L4':
-        return 'bg-[#D98B32]/15 text-[#D98B32] border-[#D98B32]/30';
       case 'L5':
-        return 'bg-[#172033]/10 text-[#172033] border-[#172033]/20';
+        return 'bg-[#F1F3F5] text-[#172033] border-[#D9DEE5] font-semibold';
       case 'L6':
-        return 'bg-[#F1F3F5] text-[#596579] border-[#D9DEE5]';
+        return 'bg-white text-[#596579] border-[#D9DEE5] font-normal';
       default:
-        return 'bg-[#F1F3F5] text-[#596579] border-[#D9DEE5]';
+        return 'bg-[#F1F3F5] text-[#596579] border-[#D9DEE5] font-normal';
+    }
+  };
+
+  const getActivityTypographyClass = (level: WBSLevel) => {
+    // Consistent typography with subtle structural hierarchy weight
+    switch (level) {
+      case 'L1':
+        return 'font-bold text-[#172033]';
+      case 'L2':
+        return 'font-semibold text-[#172033]';
+      case 'L3':
+        return 'font-semibold text-[#172033]';
+      case 'L4':
+        return 'font-medium text-[#172033]';
+      case 'L5':
+        return 'font-medium text-[#172033]';
+      case 'L6':
+        return 'font-normal text-[#596579]';
+      default:
+        return 'font-medium text-[#172033]';
     }
   };
 
@@ -1626,43 +1644,36 @@ export default function SchedulePage() {
             </div>
           </div>
 
-          {/* Sequential Hierarchy Pipeline Visual */}
+          {/* Clean Unified Hierarchy Structure (Consistent neutral typography & subtle markers - NO 6 different colors) */}
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 pt-1 text-xs">
-            <div className="p-2.5 rounded-lg bg-[#176B87]/10 border border-[#176B87]/30 flex flex-col justify-between">
-              <span className="font-mono text-[10px] font-bold text-[#176B87] uppercase">L1 · Tier 1</span>
-              <div className="font-bold text-[#172033] mt-1 text-xs">Project</div>
-              <span className="text-[10px] text-[#596579] mt-0.5">Overall Capital Asset</span>
-            </div>
-
-            <div className="p-2.5 rounded-lg bg-[#3B6EA8]/10 border border-[#3B6EA8]/30 flex flex-col justify-between">
-              <span className="font-mono text-[10px] font-bold text-[#3B6EA8] uppercase">L2 · Tier 2</span>
-              <div className="font-bold text-[#172033] mt-1 text-xs">Area</div>
-              <span className="text-[10px] text-[#596579] mt-0.5">Physical Site Plot</span>
-            </div>
-
-            <div className="p-2.5 rounded-lg bg-[#2E7D5B]/10 border border-[#2E7D5B]/30 flex flex-col justify-between">
-              <span className="font-mono text-[10px] font-bold text-[#2E7D5B] uppercase">L3 · Tier 3</span>
-              <div className="font-bold text-[#172033] mt-1 text-xs">Discipline</div>
-              <span className="text-[10px] text-[#596579] mt-0.5">Engineering Trade</span>
-            </div>
-
-            <div className="p-2.5 rounded-lg bg-[#D98B32]/10 border border-[#D98B32]/30 flex flex-col justify-between">
-              <span className="font-mono text-[10px] font-bold text-[#D98B32] uppercase">L4 · Tier 4</span>
-              <div className="font-bold text-[#172033] mt-1 text-xs">Work Package</div>
-              <span className="text-[10px] text-[#596579] mt-0.5">Contract Scope Unit</span>
-            </div>
-
-            <div className="p-2.5 rounded-lg bg-[#172033]/10 border border-[#172033]/20 flex flex-col justify-between">
-              <span className="font-mono text-[10px] font-bold text-[#172033] uppercase">L5 · Tier 5</span>
-              <div className="font-bold text-[#172033] mt-1 text-xs">Activity</div>
-              <span className="text-[10px] text-[#596579] mt-0.5">Discrete Task Schedule</span>
-            </div>
-
-            <div className="p-2.5 rounded-lg bg-[#F1F3F5] border border-[#D9DEE5] flex flex-col justify-between">
-              <span className="font-mono text-[10px] font-bold text-[#596579] uppercase">L6 · Tier 6</span>
-              <div className="font-bold text-[#172033] mt-1 text-xs">Sub-Activity</div>
-              <span className="text-[10px] text-[#596579] mt-0.5">Field Shift Step</span>
-            </div>
+            {[
+              { code: 'L1', name: 'Project', desc: 'Overall Capital Asset', marker: '▼' },
+              { code: 'L2', name: 'Area', desc: 'Physical Site Plot', marker: '▼' },
+              { code: 'L3', name: 'Discipline', desc: 'Engineering Trade', marker: '▼' },
+              { code: 'L4', name: 'Work Package', desc: 'Contract Scope Unit', marker: '▼' },
+              { code: 'L5', name: 'Activity', desc: 'Discrete Task Schedule', marker: '▼' },
+              { code: 'L6', name: 'Sub-Activity', desc: 'Field Shift Step', marker: '└' },
+            ].map((tierItem) => (
+              <div
+                key={tierItem.code}
+                className="p-2.5 rounded-lg bg-[#F7F8FA] border border-[#D9DEE5] flex flex-col justify-between"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="font-mono text-[10px] font-bold text-[#172033] bg-[#E5E9EE] px-1.5 py-0.2 rounded">
+                    {tierItem.code}
+                  </span>
+                  <span className="font-mono text-xs text-[#7B8798] select-none font-bold">
+                    {tierItem.marker}
+                  </span>
+                </div>
+                <div className="font-semibold text-[#172033] mt-1.5 text-xs">
+                  {tierItem.name}
+                </div>
+                <span className="text-[10px] text-[#596579] mt-0.5 leading-tight truncate">
+                  {tierItem.desc}
+                </span>
+              </div>
+            ))}
           </div>
         </div>
 
@@ -2045,25 +2056,31 @@ export default function SchedulePage() {
                                       e.stopPropagation();
                                       toggleNode(row.id);
                                     }}
-                                    className="w-5 h-5 flex items-center justify-center rounded hover:bg-[#EDF5F8] text-[#176B87] transition-colors -ml-1 shrink-0"
-                                    title={isExpanded ? 'Collapse node' : 'Expand node'}
+                                    className="w-5 h-5 flex items-center justify-center rounded hover:bg-[#E5E9EE] text-[#596579] hover:text-[#172033] transition-colors -ml-1 shrink-0"
+                                    title={isExpanded ? `Collapse ${row.wbsLevel}` : `Expand ${row.wbsLevel}`}
                                     aria-label={`Toggle ${row.id}`}
                                   >
                                     {isExpanded ? (
-                                      <ChevronDown className="w-3.5 h-3.5" />
+                                      <ChevronDown className="w-3.5 h-3.5 text-[#596579]" />
                                     ) : (
-                                      <ChevronRight className="w-3.5 h-3.5" />
+                                      <ChevronRight className="w-3.5 h-3.5 text-[#596579]" />
                                     )}
                                   </button>
                                 ) : (
-                                  <span className="w-5 h-5 flex items-center justify-center text-[#7B8798] shrink-0 text-[10px]">
-                                    •
+                                  <span
+                                    className="w-5 h-5 flex items-center justify-center font-mono text-[13px] text-[#7B8798] select-none shrink-0 -ml-1"
+                                    aria-hidden="true"
+                                    title={`${row.wbsLevel} Leaf Step`}
+                                  >
+                                    └
                                   </span>
                                 )
                               )}
 
                               <span
-                                className="font-semibold text-xs text-[#172033] group-hover:text-[#176B87] transition-colors truncate max-w-sm"
+                                className={`text-xs ${getActivityTypographyClass(
+                                  row.wbsLevel
+                                )} group-hover:text-[#176B87] transition-colors truncate max-w-sm`}
                                 title={row.name}
                               >
                                 {row.name}
@@ -2320,19 +2337,32 @@ export default function SchedulePage() {
                                       e.stopPropagation();
                                       toggleNode(row.id);
                                     }}
-                                    className="w-4 h-4 flex items-center justify-center rounded text-[#176B87]"
+                                    className="w-5 h-5 flex items-center justify-center rounded hover:bg-[#E5E9EE] text-[#596579] hover:text-[#172033] transition-colors -ml-1 shrink-0"
+                                    title={isExpanded ? `Collapse ${row.wbsLevel}` : `Expand ${row.wbsLevel}`}
+                                    aria-label={`Toggle ${row.id}`}
                                   >
                                     {isExpanded ? (
-                                      <ChevronDown className="w-3 h-3" />
+                                      <ChevronDown className="w-3.5 h-3.5 text-[#596579]" />
                                     ) : (
-                                      <ChevronRight className="w-3 h-3" />
+                                      <ChevronRight className="w-3.5 h-3.5 text-[#596579]" />
                                     )}
                                   </button>
                                 ) : (
-                                  <span className="w-4 h-4 text-center text-[#7B8798] text-[10px]">•</span>
+                                  <span
+                                    className="w-5 h-5 flex items-center justify-center font-mono text-[13px] text-[#7B8798] select-none shrink-0 -ml-1"
+                                    aria-hidden="true"
+                                    title={`${row.wbsLevel} Leaf Step`}
+                                  >
+                                    └
+                                  </span>
                                 )
                               )}
-                              <span className="font-semibold text-[#172033] group-hover:text-[#176B87] transition-colors truncate max-w-xs" title={row.name}>
+                              <span
+                                className={`text-xs ${getActivityTypographyClass(
+                                  row.wbsLevel
+                                )} group-hover:text-[#176B87] transition-colors truncate max-w-xs`}
+                                title={row.name}
+                              >
                                 {row.name}
                               </span>
                               {row.isCritical && (
