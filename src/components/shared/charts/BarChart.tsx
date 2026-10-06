@@ -224,7 +224,7 @@ export function BarChart({
                     y={y + 3.5}
                     textAnchor="end"
                     fontSize="10"
-                    fill="#7B8798"
+                    fill="#596579"
                     fontFamily="inherit"
                     fontWeight="500"
                   >
@@ -363,7 +363,7 @@ export function BarChart({
                       textAnchor="middle"
                       fontSize="9"
                       fontFamily="monospace"
-                      fill="#7B8798"
+                      fill="#596579"
                     >
                       {item.subLabel}
                     </text>

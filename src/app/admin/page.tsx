@@ -250,7 +250,7 @@ export default function AdminDashboardPage() {
               <Clock className="w-4 h-4 text-[#D98B32]" />
               Session Expiration & Route Guard Testing
             </h3>
-            <span className="text-[10px] font-mono text-[#D98B32] bg-[#FDF6ED] px-2 py-0.5 rounded border border-[#F0D4A6]">
+            <span className="text-[10px] font-mono text-[#8C5311] bg-[#FDF6ED] px-2 py-0.5 rounded border border-[#F0D4A6]">
               Testing Tool
             </span>
           </div>

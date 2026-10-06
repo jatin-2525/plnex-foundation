@@ -236,7 +236,7 @@ export function MatchExplanation({
       return {
         label: '70–89 Review Required',
         sublabel: 'Planner Attestation Required',
-        badgeClass: 'bg-[#FDF6ED] text-[#D98B32] border-[#F0D4A6]',
+        badgeClass: 'bg-[#FDF6ED] text-[#8C5311] border-[#F0D4A6]',
         barColor: 'bg-[#D98B32]',
         icon: <AlertTriangle className="w-4 h-4 text-[#D98B32]" />,
       };
@@ -257,7 +257,7 @@ export function MatchExplanation({
       return 'bg-[#EDF7F2] text-[#2E7D5B] border-[#B8DCC9]';
     }
     if (s.includes('review') || s.includes('pending')) {
-      return 'bg-[#FDF6ED] text-[#D98B32] border-[#F0D4A6]';
+      return 'bg-[#FDF6ED] text-[#8C5311] border-[#F0D4A6]';
     }
     if (s.includes('unmatched') || s.includes('reject') || s.includes('conflict')) {
       return 'bg-[#FBEFEE] text-[#B5473C] border-[#E4B0AA]';
@@ -295,7 +295,7 @@ export function MatchExplanation({
 
             {/* Match Status Badge */}
             <div className="flex items-center gap-2">
-              <span className="text-[10px] uppercase tracking-wider font-bold text-[#7B8798]">
+              <span className="text-[10px] uppercase tracking-wider font-semibold text-[#596579]">
                 Match Status:
               </span>
               <span
@@ -313,7 +313,7 @@ export function MatchExplanation({
         {/* Suggested Activity Presentation */}
         <div className="p-3.5 bg-white border border-[#D9DEE5] rounded-lg shadow-xs space-y-2.5">
           <div className="flex items-center justify-between flex-wrap gap-2">
-            <span className="text-[10px] uppercase tracking-wider font-bold text-[#7B8798] flex items-center gap-1.5">
+            <span className="text-[10px] uppercase tracking-wider font-semibold text-[#596579] flex items-center gap-1.5">
               <Layers className="w-3.5 h-3.5 text-[#176B87]" />
               Suggested Activity
             </span>
@@ -414,7 +414,7 @@ export function MatchExplanation({
         {/* Raw Field Observation Snippet if available */}
         {rawFieldStatement && (
           <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg text-xs space-y-1">
-            <span className="text-[10px] uppercase font-bold text-[#7B8798] block">
+            <span className="text-[10px] uppercase font-semibold text-[#596579] block">
               Field Submission Source Text:
             </span>
             <p className="text-[#172033] font-mono text-[11px] italic bg-white p-2 rounded border border-[#D9DEE5]/80">
@@ -605,7 +605,7 @@ export function MatchExplanation({
                           </span>
                         )}
                         {item.status === 'PARTIAL_MATCH' && (
-                          <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-[#FDF6ED] text-[#D98B32] border border-[#F0D4A6]">
+                          <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-[#FDF6ED] text-[#8C5311] border border-[#F0D4A6]">
                             △ partial
                           </span>
                         )}

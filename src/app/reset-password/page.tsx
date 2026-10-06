@@ -172,7 +172,7 @@ function ResetPasswordForm() {
         {/* State 2: Token Expired */}
         {pageState === 'token_expired' && (
           <div className="p-6 md:p-8 space-y-4 text-center animate-in fade-in zoom-in-95 duration-200">
-            <div className="w-12 h-12 rounded-full bg-[#FDF6ED] border border-[#F0D4A6] flex items-center justify-center text-[#D98B32] mx-auto">
+            <div className="w-12 h-12 rounded-full bg-[#FDF6ED] border border-[#F0D4A6] flex items-center justify-center text-[#8C5311] mx-auto">
               <Clock className="w-6 h-6" />
             </div>
             <div>
@@ -182,7 +182,7 @@ function ResetPasswordForm() {
               </p>
             </div>
             <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded text-[11px] text-[#596579] font-mono text-left space-y-0.5">
-              <div>Validity Window: <span className="text-[#D98B32] font-semibold">EXPIRED (&gt; 60 mins)</span></div>
+              <div>Validity Window: <span className="text-[#8C5311] font-semibold">EXPIRED (&gt; 60 mins)</span></div>
               <div>Single-Use Token: <span className="text-[#172033]">Decommissioned</span></div>
             </div>
             <div className="pt-2">
@@ -412,7 +412,7 @@ function ResetPasswordForm() {
           <button
             type="button"
             onClick={() => handleQuickFill('expired_token')}
-            className="px-2 py-1 bg-[#FDF6ED] hover:bg-[#FDF6ED]/80 text-[#D98B32] border border-[#F0D4A6] rounded text-[11px] font-mono transition-colors"
+            className="px-2 py-1 bg-[#FDF6ED] hover:bg-[#FDF6ED]/80 text-[#8C5311] border border-[#F0D4A6] rounded text-[11px] font-mono transition-colors"
           >
             Test Expired Token
           </button>

@@ -358,7 +358,7 @@ export default function OfflineSyncCenterPage() {
                     Online · Connected
                   </span>
                 ) : effectiveStatus === 'OFFLINE' ? (
-                  <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-[#FDF6ED] text-[#D98B32] border border-[#F0D4A6]">
+                  <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-[#FDF6ED] text-[#8C5311] border border-[#F0D4A6]">
                     <span className="w-2 h-2 rounded-full bg-[#D98B32]" />
                     Offline · Local Storage Active
                   </span>
@@ -380,7 +380,7 @@ export default function OfflineSyncCenterPage() {
 
             {/* Connection Mode Controls */}
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2">
-              <span className="text-[11px] uppercase font-semibold text-[#7B8798]">
+              <span className="text-[11px] uppercase font-semibold text-[#596579]">
                 connectionMode:
               </span>
               <div className="flex items-center bg-[#F1F3F5] p-1 rounded-lg border border-[#D9DEE5] text-xs">
@@ -436,7 +436,7 @@ export default function OfflineSyncCenterPage() {
                   }}
                   className={`px-3 py-1 rounded font-medium transition-colors flex items-center gap-1.5 ${
                     connectionMode === 'OFFLINE'
-                      ? 'bg-white text-[#D98B32] shadow-xs font-bold'
+                      ? 'bg-white text-[#8C5311] shadow-xs font-bold'
                       : 'text-[#596579] hover:text-[#172033]'
                   }`}
                 >
@@ -454,7 +454,7 @@ export default function OfflineSyncCenterPage() {
               ========================================================================= */}
           <div className="space-y-2">
             <div className="flex items-center justify-between text-xs text-[#596579] font-medium flex-wrap gap-2">
-              <span className="text-[10px] uppercase font-bold text-[#7B8798] tracking-wider">
+              <span className="text-[10px] uppercase font-semibold text-[#596579] tracking-wider">
                 Current Queue State at a Glance:
               </span>
               <div className="flex items-center gap-1.5 text-[11px] font-mono">
@@ -618,7 +618,7 @@ export default function OfflineSyncCenterPage() {
             }`}
           >
             <div className="flex items-center justify-between mb-1">
-              <span className="text-[10px] uppercase font-bold text-[#7B8798]">Pending</span>
+              <span className="text-[10px] uppercase font-semibold text-[#596579]">Pending</span>
               <Clock className="w-3.5 h-3.5 text-[#D98B32]" />
             </div>
             <div className="text-xl font-bold font-mono text-[#D98B32]">
@@ -635,7 +635,7 @@ export default function OfflineSyncCenterPage() {
             }`}
           >
             <div className="flex items-center justify-between mb-1">
-              <span className="text-[10px] uppercase font-bold text-[#7B8798]">Uploading</span>
+              <span className="text-[10px] uppercase font-semibold text-[#596579]">Uploading</span>
               <UploadCloud className="w-3.5 h-3.5 text-[#176B87]" />
             </div>
             <div className="text-xl font-bold font-mono text-[#176B87]">
@@ -652,7 +652,7 @@ export default function OfflineSyncCenterPage() {
             }`}
           >
             <div className="flex items-center justify-between mb-1">
-              <span className="text-[10px] uppercase font-bold text-[#7B8798]">Confirmed</span>
+              <span className="text-[10px] uppercase font-semibold text-[#596579]">Confirmed</span>
               <CheckCircle2 className="w-3.5 h-3.5 text-[#2E7D5B]" />
             </div>
             <div className="text-xl font-bold font-mono text-[#2E7D5B]">
@@ -669,7 +669,7 @@ export default function OfflineSyncCenterPage() {
             }`}
           >
             <div className="flex items-center justify-between mb-1">
-              <span className="text-[10px] uppercase font-bold text-[#7B8798]">Failed</span>
+              <span className="text-[10px] uppercase font-semibold text-[#596579]">Failed</span>
               <AlertCircle className="w-3.5 h-3.5 text-[#B5473C]" />
             </div>
             <div className="text-xl font-bold font-mono text-[#B5473C]">
@@ -686,7 +686,7 @@ export default function OfflineSyncCenterPage() {
             }`}
           >
             <div className="flex items-center justify-between mb-1">
-              <span className="text-[10px] uppercase font-bold text-[#7B8798]">Conflicts</span>
+              <span className="text-[10px] uppercase font-semibold text-[#596579]">Conflicts</span>
               <AlertTriangle className="w-3.5 h-3.5 text-[#B5473C]" />
             </div>
             <div className="text-xl font-bold font-mono text-[#B5473C]">
@@ -1040,7 +1040,7 @@ export default function OfflineSyncCenterPage() {
 
             {/* 6 Automated Acceptance Test Runner Buttons */}
             <div className="pt-2 border-t border-[#D9DEE5]/60 space-y-2">
-              <span className="text-[10px] uppercase font-bold text-[#7B8798] tracking-wider block">
+              <span className="text-[10px] uppercase font-semibold text-[#596579] tracking-wider block">
                 Verification Scenarios:
               </span>
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
@@ -1204,7 +1204,7 @@ export default function OfflineSyncCenterPage() {
 
               {/* CHANGED FIELDS MATRIX */}
               <div className="p-3.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg space-y-2">
-                <span className="text-[10px] uppercase font-bold text-[#7B8798] tracking-wider block">
+                <span className="text-[10px] uppercase font-semibold text-[#596579] tracking-wider block">
                   Changed Fields & Discrepancy Matrix
                 </span>
                 <div className="space-y-1.5 text-xs">
@@ -1375,7 +1375,7 @@ export default function OfflineSyncCenterPage() {
                       Reconcile / Custom Merge Option
                     </span>
                   </div>
-                  <span className="text-[10px] text-[#7B8798] uppercase font-bold">
+                  <span className="text-[10px] text-[#596579] uppercase font-semibold">
                     Engineering Discretion
                   </span>
                 </div>
@@ -1384,7 +1384,7 @@ export default function OfflineSyncCenterPage() {
                   <div className="space-y-3 pt-2">
                     <div className="grid grid-cols-2 gap-3">
                       <div>
-                        <label className="text-[10px] font-bold uppercase text-[#7B8798] block mb-1">
+                        <label className="text-[10px] font-semibold uppercase text-[#596579] block mb-1">
                           Reconciled Quantity (Welds)
                         </label>
                         <input
@@ -1395,7 +1395,7 @@ export default function OfflineSyncCenterPage() {
                         />
                       </div>
                       <div>
-                        <label className="text-[10px] font-bold uppercase text-[#7B8798] block mb-1">
+                        <label className="text-[10px] font-semibold uppercase text-[#596579] block mb-1">
                           Calculated Progress %
                         </label>
                         <input
@@ -1408,7 +1408,7 @@ export default function OfflineSyncCenterPage() {
                     </div>
 
                     <div>
-                      <label className="text-[10px] font-bold uppercase text-[#7B8798] block mb-1">
+                      <label className="text-[10px] font-semibold uppercase text-[#596579] block mb-1">
                         Merged Engineering Notes
                       </label>
                       <textarea
@@ -1454,7 +1454,7 @@ export default function OfflineSyncCenterPage() {
 
               {/* PAYLOAD DETAILS */}
               <div className="p-3.5 rounded-lg bg-white border border-[#D9DEE5] space-y-2">
-                <span className="text-[10px] uppercase font-bold text-[#7B8798] tracking-wider block">
+                <span className="text-[10px] uppercase font-semibold text-[#596579] tracking-wider block">
                   Buffered Local Payload
                 </span>
                 <div className="space-y-1.5 text-xs font-mono">
@@ -1495,7 +1495,7 @@ export default function OfflineSyncCenterPage() {
 
               {/* TRANSMISSION TELEMETRY */}
               <div className="p-3.5 rounded-lg bg-white border border-[#D9DEE5] space-y-2">
-                <span className="text-[10px] uppercase font-bold text-[#7B8798] tracking-wider block">
+                <span className="text-[10px] uppercase font-semibold text-[#596579] tracking-wider block">
                   Transmission Telemetry
                 </span>
                 <div className="space-y-1 text-[11px]">

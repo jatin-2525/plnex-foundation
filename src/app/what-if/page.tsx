@@ -1027,7 +1027,7 @@ export default function WhatIfSimulatorPage() {
                                   act.pathImpact === 'Critical Path Slip'
                                     ? 'bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]'
                                     : act.pathImpact === 'Float Buffer Consumed'
-                                    ? 'bg-[#FDF6ED] text-[#D98B32] border border-[#F0D4A6]'
+                                    ? 'bg-[#FDF6ED] text-[#8C5311] border border-[#F0D4A6]'
                                     : 'bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]'
                                 }`}
                               >
@@ -1085,11 +1085,11 @@ export default function WhatIfSimulatorPage() {
 
                         <div className="grid grid-cols-2 gap-1 pt-1.5 border-t border-[#D9DEE5]/60 text-[11px] font-mono">
                           <div>
-                            <span className="text-[10px] text-[#7B8798] uppercase block">Baseline</span>
+                            <span className="text-[10px] text-[#596579] uppercase font-semibold block">Baseline</span>
                             <span>{formatFriendlyDate(ms.currentDate)}</span>
                           </div>
                           <div>
-                            <span className="text-[10px] text-[#7B8798] uppercase block">Simulated</span>
+                            <span className="text-[10px] text-[#596579] uppercase font-semibold block">Simulated</span>
                             <span className={ms.shiftDays > 0 ? 'text-[#B5473C] font-bold' : 'text-[#172033]'}>
                               {formatFriendlyDate(ms.simulatedDate)}
                             </span>
@@ -1444,7 +1444,7 @@ export default function WhatIfSimulatorPage() {
                     className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase ${
                       selectedActivityDetail.pathImpact === 'Critical Path Slip'
                         ? 'bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]'
-                        : 'bg-[#FDF6ED] text-[#D98B32] border border-[#F0D4A6]'
+                        : 'bg-[#FDF6ED] text-[#8C5311] border border-[#F0D4A6]'
                     }`}
                   >
                     {selectedActivityDetail.pathImpact}
@@ -1463,7 +1463,7 @@ export default function WhatIfSimulatorPage() {
                 </h5>
                 <div className="grid grid-cols-2 gap-3">
                   <div className="p-3 rounded-lg bg-white border border-[#D9DEE5]">
-                    <span className="text-[10px] uppercase font-bold text-[#7B8798] block">
+                    <span className="text-[10px] uppercase font-semibold text-[#596579] block">
                       Current Planned Finish
                     </span>
                     <span className="font-mono text-sm font-semibold text-[#172033]">

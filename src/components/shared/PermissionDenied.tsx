@@ -22,7 +22,7 @@ export function PermissionDenied({
     <div
       className={`bg-white border border-[#D9DEE5] rounded-lg p-8 md:p-12 flex flex-col items-center text-center ${className}`}
     >
-      <div className="w-12 h-12 rounded-lg bg-[#FDF6ED] border border-[#F0D4A6] flex items-center justify-center text-[#D98B32] mb-4">
+      <div className="w-12 h-12 rounded-lg bg-[#FDF6ED] border border-[#F0D4A6] flex items-center justify-center text-[#8C5311] mb-4">
         <ShieldAlert className="w-6 h-6" />
       </div>
       <h3 className="text-base font-semibold text-[#172033] mb-1.5">
@@ -36,7 +36,7 @@ export function PermissionDenied({
         <span className="px-2.5 py-1 bg-[#F1F3F5] border border-[#D9DEE5] rounded text-xs font-mono text-[#172033]">
           Current Role: <strong className="uppercase">{role}</strong>
         </span>
-        <span className="px-2.5 py-1 bg-[#FDF6ED] border border-[#F0D4A6] rounded text-xs font-mono text-[#D98B32]">
+        <span className="px-2.5 py-1 bg-[#FDF6ED] border border-[#F0D4A6] rounded text-xs font-mono text-[#8C5311]">
           Required: <code className="font-semibold">{requiredPermission}</code>
         </span>
       </div>

@@ -474,7 +474,7 @@ export default function MyActivitiesPage() {
         );
       case 'blocked':
         return (
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-xs font-medium bg-[#FDF6ED] text-[#D98B32] border border-[#F0D4A6]">
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-xs font-medium bg-[#FDF6ED] text-[#8C5311] border border-[#F0D4A6]">
             <Lock className="w-3 h-3 text-[#D98B32]" />
             Blocked
           </span>
@@ -777,7 +777,7 @@ export default function MyActivitiesPage() {
                           </div>
                         ) : isBehindProgress ? (
                           <div className="flex items-center gap-1.5">
-                            <span className="font-mono font-bold text-xs px-2 py-0.5 rounded bg-[#FDF6ED] text-[#D98B32] border border-[#F0D4A6]">
+                            <span className="font-mono font-bold text-xs px-2 py-0.5 rounded bg-[#FDF6ED] text-[#8C5311] border border-[#F0D4A6]">
                               {act.actualProgress - act.plannedProgress}% lag
                             </span>
                             <WhyButton
@@ -876,7 +876,7 @@ export default function MyActivitiesPage() {
                   {act.area} • WBS {act.wbs}
                 </p>
                 {act.blockedReason && (
-                  <p className="text-[11px] text-[#D98B32] mt-1 bg-[#FDF6ED] p-1.5 rounded border border-[#F0D4A6]">
+                  <p className="text-[11px] text-[#8C5311] mt-1 bg-[#FDF6ED] p-1.5 rounded border border-[#F0D4A6]">
                     {act.blockedReason}
                   </p>
                 )}

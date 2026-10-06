@@ -584,7 +584,7 @@ export default function ReportsAndMemoryPage() {
                       : 'border-[#D9DEE5] bg-[#F7F8FA] hover:bg-white hover:border-[#176B87]/40'
                   }`}
                 >
-                  <div className="text-[11px] uppercase font-semibold text-[#7B8798]">All Sections</div>
+                  <div className="text-[11px] uppercase font-semibold text-[#596579]">All Sections</div>
                   <div className="text-xs font-semibold text-[#172033] mt-0.5">
                     {HISTORICAL_MEMORY_RECORDS.length} Records
                   </div>
@@ -601,7 +601,7 @@ export default function ReportsAndMemoryPage() {
                   }`}
                 >
                   <div className="flex items-center justify-between">
-                    <span className="text-[11px] uppercase font-semibold text-[#7B8798]">Section</span>
+                    <span className="text-[11px] uppercase font-semibold text-[#596579]">Section</span>
                     <span className="text-[11px] font-mono px-1.5 py-0.5 rounded bg-white text-[#176B87] font-semibold border border-[#B3CBE0]">
                       {HISTORICAL_MEMORY_RECORDS.filter((r) => r.section === 'Decisions').length}
                     </span>
@@ -622,7 +622,7 @@ export default function ReportsAndMemoryPage() {
                   }`}
                 >
                   <div className="flex items-center justify-between">
-                    <span className="text-[11px] uppercase font-semibold text-[#7B8798]">Section</span>
+                    <span className="text-[11px] uppercase font-semibold text-[#596579]">Section</span>
                     <span className="text-[11px] font-mono px-1.5 py-0.5 rounded bg-white text-[#176B87] font-semibold border border-[#B3CBE0]">
                       {HISTORICAL_MEMORY_RECORDS.filter((r) => r.section === 'Lessons').length}
                     </span>
@@ -643,7 +643,7 @@ export default function ReportsAndMemoryPage() {
                   }`}
                 >
                   <div className="flex items-center justify-between">
-                    <span className="text-[11px] uppercase font-semibold text-[#7B8798]">Section</span>
+                    <span className="text-[11px] uppercase font-semibold text-[#596579]">Section</span>
                     <span className="text-[11px] font-mono px-1.5 py-0.5 rounded bg-white text-[#176B87] font-semibold border border-[#B3CBE0]">
                       {HISTORICAL_MEMORY_RECORDS.filter((r) => r.section === 'Recurring Issues').length}
                     </span>
@@ -664,7 +664,7 @@ export default function ReportsAndMemoryPage() {
                   }`}
                 >
                   <div className="flex items-center justify-between">
-                    <span className="text-[11px] uppercase font-semibold text-[#7B8798]">Section</span>
+                    <span className="text-[11px] uppercase font-semibold text-[#596579]">Section</span>
                     <span className="text-[11px] font-mono px-1.5 py-0.5 rounded bg-white text-[#176B87] font-semibold border border-[#B3CBE0]">
                       {HISTORICAL_MEMORY_RECORDS.filter((r) => r.section === 'Important Events').length}
                     </span>
@@ -710,7 +710,7 @@ export default function ReportsAndMemoryPage() {
               {/* Structured Filters Row */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs pt-1">
                 <div>
-                  <label className="block text-[11px] font-semibold uppercase text-[#7B8798] mb-1">
+                  <label className="block text-[11px] font-semibold uppercase text-[#596579] mb-1">
                     Project
                   </label>
                   <select
@@ -726,7 +726,7 @@ export default function ReportsAndMemoryPage() {
                 </div>
 
                 <div>
-                  <label className="block text-[11px] font-semibold uppercase text-[#7B8798] mb-1">
+                  <label className="block text-[11px] font-semibold uppercase text-[#596579] mb-1">
                     Discipline
                   </label>
                   <select
@@ -742,7 +742,7 @@ export default function ReportsAndMemoryPage() {
                 </div>
 
                 <div>
-                  <label className="block text-[11px] font-semibold uppercase text-[#7B8798] mb-1">
+                  <label className="block text-[11px] font-semibold uppercase text-[#596579] mb-1">
                     Year
                   </label>
                   <select
@@ -809,11 +809,11 @@ export default function ReportsAndMemoryPage() {
                     {rec.section === 'Decisions' && rec.decisionDetails && (
                       <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg space-y-1.5 text-xs">
                         <div>
-                          <span className="text-[11px] font-semibold uppercase text-[#7B8798] block">Decision</span>
+                          <span className="text-[11px] font-semibold uppercase text-[#596579] block">Decision</span>
                           <p className="text-[#172033] font-medium">{rec.decisionDetails.decision}</p>
                         </div>
                         <div>
-                          <span className="text-[11px] font-semibold uppercase text-[#7B8798] block">Rationale</span>
+                          <span className="text-[11px] font-semibold uppercase text-[#596579] block">Rationale</span>
                           <p className="text-[#596579]">{rec.decisionDetails.rationale}</p>
                         </div>
                         <div className="pt-1 border-t border-[#D9DEE5]/60 text-[11px] text-[#596579] flex items-center justify-between">
@@ -827,7 +827,7 @@ export default function ReportsAndMemoryPage() {
                     {rec.section === 'Lessons' && rec.lessonDetails && (
                       <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg space-y-1.5 text-xs">
                         <div>
-                          <span className="text-[11px] font-semibold uppercase text-[#7B8798] block">Observation</span>
+                          <span className="text-[11px] font-semibold uppercase text-[#596579] block">Observation</span>
                           <p className="text-[#596579]">{rec.lessonDetails.whatHappened}</p>
                         </div>
                         <div>
@@ -877,7 +877,7 @@ export default function ReportsAndMemoryPage() {
                     {/* DURATION & PRODUCTIVITY METRICS */}
                     <div className="grid grid-cols-2 gap-2 text-xs bg-[#F7F8FA] p-2.5 rounded-lg border border-[#D9DEE5]/80">
                       <div>
-                        <span className="text-[11px] uppercase font-semibold text-[#7B8798] block">
+                        <span className="text-[11px] uppercase font-semibold text-[#596579] block">
                           Actual Duration
                         </span>
                         <span className="font-mono text-sm font-semibold text-[#172033]">
@@ -888,7 +888,7 @@ export default function ReportsAndMemoryPage() {
                         </span>
                       </div>
                       <div>
-                        <span className="text-[11px] uppercase font-semibold text-[#7B8798] block">
+                        <span className="text-[11px] uppercase font-semibold text-[#596579] block">
                           Productivity Rate
                         </span>
                         <span className="font-mono text-sm font-semibold text-[#176B87]">
@@ -980,19 +980,19 @@ export default function ReportsAndMemoryPage() {
 
             <div className="p-4 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg flex items-center justify-between">
               <div>
-                <span className="text-[11px] text-[#7B8798] uppercase font-semibold block">Physical Verified Progress</span>
+                <span className="text-[11px] text-[#596579] uppercase font-semibold block">Physical Verified Progress</span>
                 <span className="text-[26px] sm:text-[28px] font-bold font-mono text-[#176B87] leading-none">73.0%</span>
               </div>
               <div>
-                <span className="text-[11px] text-[#7B8798] uppercase font-semibold block">Baseline Target</span>
+                <span className="text-[11px] text-[#596579] uppercase font-semibold block">Baseline Target</span>
                 <span className="text-[26px] sm:text-[28px] font-bold font-mono text-[#172033] leading-none">80.0%</span>
               </div>
               <div>
-                <span className="text-[11px] text-[#7B8798] uppercase font-semibold block">CPM Critical Variance</span>
+                <span className="text-[11px] text-[#596579] uppercase font-semibold block">CPM Critical Variance</span>
                 <span className="text-[26px] sm:text-[28px] font-bold font-mono text-[#9E332A] leading-none">-7.0% (-2d)</span>
               </div>
               <div>
-                <span className="text-[11px] text-[#7B8798] uppercase font-semibold block">Evidence Dossier</span>
+                <span className="text-[11px] text-[#596579] uppercase font-semibold block">Evidence Dossier</span>
                 <span className="text-[26px] sm:text-[28px] font-bold font-mono text-[#2E7D5B] leading-none">100% Traceable</span>
               </div>
             </div>
@@ -1037,7 +1037,7 @@ export default function ReportsAndMemoryPage() {
 
               {/* Source link card */}
               <div className="p-3.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg space-y-1.5">
-                <span className="text-[11px] font-semibold uppercase text-[#7B8798] block">
+                <span className="text-[11px] font-semibold uppercase text-[#596579] block">
                   Verified Source Record
                 </span>
                 <div className="font-semibold text-sm text-[#172033]">

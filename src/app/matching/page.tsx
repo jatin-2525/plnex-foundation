@@ -320,7 +320,7 @@ export default function MatchingPage() {
                   ? 'bg-[#EDF7F2] text-[#2E7D5B] border-[#B8DCC9]'
                   : isRejected
                   ? 'bg-[#FBEFEE] text-[#B5473C] border-[#E4B0AA]'
-                  : 'bg-[#FDF6ED] text-[#D98B32] border-[#F0D4A6]'
+                  : 'bg-[#FDF6ED] text-[#8C5311] border-[#F0D4A6]'
               }`}
             >
               <span className="w-1.5 h-1.5 rounded-full bg-current" />
@@ -399,7 +399,7 @@ export default function MatchingPage() {
           </div>
 
           <div className="bg-white border border-[#F0D4A6] rounded-lg p-3.5 flex items-start gap-3">
-            <div className="w-8 h-8 rounded bg-[#FDF6ED] text-[#D98B32] flex items-center justify-center flex-shrink-0">
+            <div className="w-8 h-8 rounded bg-[#FDF6ED] text-[#8C5311] flex items-center justify-center flex-shrink-0">
               <AlertTriangle className="w-4 h-4" />
             </div>
             <div>

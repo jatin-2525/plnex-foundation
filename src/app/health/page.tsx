@@ -725,7 +725,7 @@ export default function ScheduleHealthPage() {
             <div className="space-y-5 text-xs p-1">
               <div className="p-3.5 bg-[#F7F8FA] rounded-lg border border-[#D9DEE5] space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-bold uppercase text-[#7B8798]">Affected Object</span>
+                  <span className="text-[10px] font-semibold uppercase text-[#596579]">Affected Object</span>
                   <span className="px-2 py-0.5 rounded font-mono text-[10px] font-bold bg-[#EDF5F8] text-[#176B87]">
                     {selectedIssueForDetail.objectType}
                   </span>
@@ -739,14 +739,14 @@ export default function ScheduleHealthPage() {
               </div>
 
               <div className="space-y-1">
-                <span className="text-[10px] font-bold uppercase text-[#7B8798]">Problem Description</span>
+                <span className="text-[10px] font-semibold uppercase text-[#596579]">Problem Description</span>
                 <p className="text-xs text-[#172033] leading-relaxed p-3 bg-white border border-[#D9DEE5] rounded-lg">
                   {selectedIssueForDetail.description}
                 </p>
               </div>
 
               <div className="space-y-1">
-                <span className="text-[10px] font-bold uppercase text-[#7B8798]">Project CPM / EVM Impact</span>
+                <span className="text-[10px] font-semibold uppercase text-[#596579]">Project CPM / EVM Impact</span>
                 <p className="text-xs text-[#9E332A] leading-relaxed p-3 bg-[#FBEFEE] border border-[#E4B0AA] rounded-lg">
                   {selectedIssueForDetail.impactExplanation}
                 </p>

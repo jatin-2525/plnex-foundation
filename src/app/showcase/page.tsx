@@ -245,11 +245,11 @@ export default function ShowcasePage() {
             </h4>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
-                <span className="text-xs font-bold text-[#7B8798] uppercase block mb-1">State 1: High Confidence</span>
+                <span className="text-xs font-semibold text-[#596579] uppercase block mb-1">State 1: High Confidence</span>
                 <ConfidenceBlock score={94} />
               </div>
               <div>
-                <span className="text-xs font-bold text-[#7B8798] uppercase block mb-1">State 2: Medium Confidence</span>
+                <span className="text-xs font-semibold text-[#596579] uppercase block mb-1">State 2: Medium Confidence</span>
                 <ConfidenceBlock
                   score={71}
                   alternatives={[
@@ -269,7 +269,7 @@ export default function ShowcasePage() {
                 />
               </div>
               <div>
-                <span className="text-xs font-bold text-[#7B8798] uppercase block mb-1">State 3: Low Confidence</span>
+                <span className="text-xs font-semibold text-[#596579] uppercase block mb-1">State 3: Low Confidence</span>
                 <ConfidenceBlock score={42} />
               </div>
             </div>
@@ -362,7 +362,7 @@ export default function ShowcasePage() {
                 description: 'Field event matched at 86% confidence. Routed to review queue.',
               })
             }
-            className="px-3 py-1.5 bg-[#FDF6ED] text-[#D98B32] border border-[#F0D4A6] rounded text-xs font-medium"
+            className="px-3 py-1.5 bg-[#FDF6ED] text-[#8C5311] border border-[#F0D4A6] rounded text-xs font-medium"
           >
             Trigger Warning Toast
           </button>
@@ -451,7 +451,7 @@ export default function ShowcasePage() {
 
         {/* Interactive Scenario Switcher */}
         <div className="flex items-center gap-2 flex-wrap text-xs pt-1">
-          <span className="text-[11px] font-bold text-[#7B8798] uppercase">Test Scenarios:</span>
+          <span className="text-[11px] font-semibold text-[#596579] uppercase">Test Scenarios:</span>
           {[
             { id: 'EVT-2026-001', label: '94% High Confidence (Erect Spools)', badge: 'Auto-link' },
             { id: 'EVT-2026-002', label: '86% Review Required (Field Welds)', badge: 'Review' },

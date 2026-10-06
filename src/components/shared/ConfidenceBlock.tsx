@@ -127,7 +127,7 @@ export function ConfidenceBlock({
                 isHigh
                   ? 'text-[#2E7D5B]'
                   : isMedium
-                  ? 'text-[#D98B32]'
+                  ? 'text-[#8C5311]'
                   : 'text-[#B5473C]'
               }`}
             >
@@ -184,7 +184,7 @@ export function ConfidenceBlock({
             <span className="text-xs font-bold text-[#172033] uppercase tracking-wider">
               Alternative Activities
             </span>
-            <span className="text-[11px] text-[#D98B32] font-semibold">
+            <span className="text-[11px] text-[#8C5311] font-semibold">
               Select correct activity
             </span>
           </div>

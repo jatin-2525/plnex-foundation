@@ -618,7 +618,7 @@ export default function ExecutionIntelligencePage() {
 
           {/* VISUAL SEPARATION OF CONCEPTS (Pipeline Definition Strip) */}
           <div className="pt-4">
-            <div className="text-[10px] font-bold uppercase tracking-wider text-[#7B8798] mb-2 flex items-center justify-between">
+            <div className="text-[10px] font-semibold uppercase tracking-wider text-[#596579] mb-2 flex items-center justify-between">
               <span>Three Separated Project-Control Stages (No Generic AI Black-Box)</span>
               <span className="font-mono text-[#176B87]">Canonical Flow: Extraction → Matching → Verification</span>
             </div>
@@ -692,7 +692,7 @@ export default function ExecutionIntelligencePage() {
                 : 'bg-white border-[#D9DEE5] hover:bg-[#F7F8FA]'
             }`}
           >
-            <span className="text-[10px] font-bold uppercase tracking-wider text-[#7B8798] block">
+            <span className="text-[10px] font-semibold uppercase tracking-wider text-[#596579] block">
               Total Execution Events
             </span>
             <div className="flex items-baseline gap-1.5 mt-1">
@@ -715,7 +715,7 @@ export default function ExecutionIntelligencePage() {
                 : 'bg-white border-[#D9DEE5] hover:bg-[#F7F8FA]'
             }`}
           >
-            <span className="text-[10px] font-bold uppercase tracking-wider text-[#7B8798] block">
+            <span className="text-[10px] font-semibold uppercase tracking-wider text-[#596579] block">
               Matched & Verified
             </span>
             <div className="flex items-baseline gap-1.5 mt-1">
@@ -738,7 +738,7 @@ export default function ExecutionIntelligencePage() {
                 : 'bg-white border-[#D9DEE5] hover:bg-[#F7F8FA]'
             }`}
           >
-            <span className="text-[10px] font-bold uppercase tracking-wider text-[#7B8798] block">
+            <span className="text-[10px] font-semibold uppercase tracking-wider text-[#596579] block">
               Needs Review
             </span>
             <div className="flex items-baseline gap-1.5 mt-1">
@@ -761,7 +761,7 @@ export default function ExecutionIntelligencePage() {
                 : 'bg-white border-[#D9DEE5] hover:bg-[#F7F8FA]'
             }`}
           >
-            <span className="text-[10px] font-bold uppercase tracking-wider text-[#7B8798] block">
+            <span className="text-[10px] font-semibold uppercase tracking-wider text-[#596579] block">
               Unmatched Events
             </span>
             <div className="flex items-baseline gap-1.5 mt-1">
@@ -784,7 +784,7 @@ export default function ExecutionIntelligencePage() {
                 : 'bg-white border-[#D9DEE5] hover:bg-[#F7F8FA]'
             }`}
           >
-            <span className="text-[10px] font-bold uppercase tracking-wider text-[#7B8798] block">
+            <span className="text-[10px] font-semibold uppercase tracking-wider text-[#596579] block">
               Conflicts & Holds
             </span>
             <div className="flex items-baseline gap-1.5 mt-1">
@@ -931,7 +931,7 @@ export default function ExecutionIntelligencePage() {
                         <span className="text-[10px] uppercase font-bold text-[#596579] bg-white px-2 py-0.5 rounded border border-[#D9DEE5]">
                           {evt.source.replace(/_/g, ' ')}
                         </span>
-                        <span className="text-[10px] font-semibold text-[#7B8798]">
+                        <span className="text-[10px] font-semibold text-[#596579]">
                           Shift: {evt.shiftTime}
                         </span>
                       </div>
@@ -961,7 +961,7 @@ export default function ExecutionIntelligencePage() {
 
                         {/* Event Description (What happened in the field) */}
                         <div>
-                          <span className="text-[10px] uppercase font-bold text-[#7B8798] block mb-0.5">
+                          <span className="text-[10px] uppercase font-bold text-[#596579] block mb-0.5">
                             Event Description (What Happened)
                           </span>
                           <p className="text-xs font-semibold text-[#172033] leading-relaxed bg-[#FAFAFA] p-2.5 rounded-lg border border-[#D9DEE5]">
@@ -972,7 +972,7 @@ export default function ExecutionIntelligencePage() {
                         {/* Extracted Quantity, Unit, Area, Discipline */}
                         <div className="grid grid-cols-2 gap-2 text-xs">
                           <div className="bg-[#F7F8FA] p-2.5 rounded border border-[#D9DEE5]">
-                            <span className="text-[9px] uppercase font-bold text-[#7B8798] block">
+                            <span className="text-[9px] uppercase font-semibold text-[#596579] block">
                               Extracted Quantity
                             </span>
                             <span className="font-mono font-bold text-sm text-[#172033]">
@@ -980,13 +980,13 @@ export default function ExecutionIntelligencePage() {
                             </span>
                           </div>
                           <div className="bg-[#F7F8FA] p-2.5 rounded border border-[#D9DEE5]">
-                            <span className="text-[9px] uppercase font-bold text-[#7B8798] block">
+                            <span className="text-[9px] uppercase font-semibold text-[#596579] block">
                               Discipline
                             </span>
                             <span className="font-bold text-xs text-[#172033]">{evt.discipline}</span>
                           </div>
                           <div className="col-span-2 bg-[#F7F8FA] p-2.5 rounded border border-[#D9DEE5]">
-                            <span className="text-[9px] uppercase font-bold text-[#7B8798] block">
+                            <span className="text-[9px] uppercase font-semibold text-[#596579] block">
                               Area / Workfront
                             </span>
                             <span className="font-semibold text-xs text-[#172033] truncate block">
@@ -1012,7 +1012,7 @@ export default function ExecutionIntelligencePage() {
 
                         {/* Suggested Activity */}
                         <div>
-                          <span className="text-[10px] uppercase font-bold text-[#7B8798] block mb-0.5">
+                          <span className="text-[10px] uppercase font-bold text-[#596579] block mb-0.5">
                             Suggested Activity
                           </span>
                           {evt.candidateActivityId ? (
@@ -1044,7 +1044,7 @@ export default function ExecutionIntelligencePage() {
                         {/* Progressive Disclosure Trigger: "Why this match?" */}
                         <div className="pt-1">
                           <div className="flex items-center justify-between">
-                            <span className="text-[10px] uppercase font-bold text-[#7B8798]">
+                            <span className="text-[10px] uppercase font-semibold text-[#596579]">
                               Match Alignment:
                             </span>
                             <button
@@ -1078,7 +1078,7 @@ export default function ExecutionIntelligencePage() {
 
                           {/* Verification State */}
                           <div>
-                            <span className="text-[10px] uppercase font-bold text-[#7B8798] block mb-0.5">
+                            <span className="text-[10px] uppercase font-bold text-[#596579] block mb-0.5">
                               Verification State
                             </span>
                             <div className="p-2 bg-[#F7F8FA] border border-[#D9DEE5] rounded flex items-center justify-between text-xs">
@@ -1095,7 +1095,7 @@ export default function ExecutionIntelligencePage() {
 
                           {/* Evidence */}
                           <div>
-                            <span className="text-[10px] uppercase font-bold text-[#7B8798] block mb-1">
+                            <span className="text-[10px] uppercase font-semibold text-[#596579] block mb-1">
                               Evidence ({evt.evidenceItems.length} proofs)
                             </span>
                             {evt.evidenceItems.length > 0 ? (
@@ -1260,13 +1260,13 @@ export default function ExecutionIntelligencePage() {
                         {/* ADVANCED TECHNICAL DETAILS (Non-prominent) */}
                         {isTechExpanded && (
                           <div className="p-3 bg-white border border-[#D9DEE5] rounded-lg space-y-2 text-[11px]">
-                            <span className="font-bold text-[#7B8798] uppercase tracking-wider text-[9px] block">
+                            <span className="font-semibold text-[#596579] uppercase tracking-wider text-[9px] block">
                               Deterministic Weight Signals & Parsing Trace
                             </span>
                             <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-[#596579]">
                               {evt.signals.map((sig, idx) => (
                                 <div key={idx} className="p-2 bg-[#FAFAFA] rounded border border-[#D9DEE5]">
-                                  <span className="text-[9px] uppercase font-bold text-[#7B8798] block truncate">
+                                  <span className="text-[9px] uppercase font-semibold text-[#596579] block truncate">
                                     {sig.name}
                                   </span>
                                   <strong className="text-[#172033] font-mono text-xs">
@@ -1482,14 +1482,14 @@ export default function ExecutionIntelligencePage() {
                 </div>
 
                 <div className="flex items-center gap-2">
-                  <span className="text-[#7B8798] uppercase font-bold text-[10px]">Confidence:</span>
+                  <span className="text-[#596579] uppercase font-semibold text-[10px]">Confidence:</span>
                   <ConfidenceBadge score={selectedEventForDrawer.confidence} size="md" />
                 </div>
               </div>
 
               {/* 1. EXTRACTION BREAKDOWN */}
               <div>
-                <h4 className="font-bold text-xs uppercase tracking-wider text-[#176B87] mb-2 flex items-center gap-1.5">
+                <h4 className="font-semibold text-xs uppercase tracking-wider text-[#172033] mb-2 flex items-center gap-1.5">
                   <span className="w-4 h-4 rounded-full bg-[#176B87] text-white text-[9px] font-bold flex items-center justify-center">
                     1
                   </span>
@@ -1502,17 +1502,17 @@ export default function ExecutionIntelligencePage() {
 
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
                     <div className="p-2.5 bg-[#FAFAFA] border border-[#D9DEE5] rounded">
-                      <span className="text-[9px] uppercase font-bold text-[#7B8798] block">Quantity & Unit</span>
+                      <span className="text-[9px] uppercase font-semibold text-[#596579] block">Quantity & Unit</span>
                       <span className="font-bold font-mono text-[#172033]">
                         {selectedEventForDrawer.extractedQuantity} {selectedEventForDrawer.unit}
                       </span>
                     </div>
                     <div className="p-2.5 bg-[#FAFAFA] border border-[#D9DEE5] rounded">
-                      <span className="text-[9px] uppercase font-bold text-[#7B8798] block">Discipline</span>
+                      <span className="text-[9px] uppercase font-semibold text-[#596579] block">Discipline</span>
                       <span className="font-bold text-[#172033]">{selectedEventForDrawer.discipline}</span>
                     </div>
                     <div className="p-2.5 bg-[#FAFAFA] border border-[#D9DEE5] rounded col-span-2">
-                      <span className="text-[9px] uppercase font-bold text-[#7B8798] block">Area</span>
+                      <span className="text-[9px] uppercase font-semibold text-[#596579] block">Area</span>
                       <span className="font-bold text-[#172033] truncate block">{selectedEventForDrawer.area}</span>
                     </div>
                   </div>
@@ -1591,7 +1591,7 @@ export default function ExecutionIntelligencePage() {
                   )}
 
                   <div>
-                    <span className="text-[10px] uppercase font-bold text-[#7B8798] block mb-1">
+                    <span className="text-[10px] uppercase font-semibold text-[#596579] block mb-1">
                       Attached Physical Evidence ({selectedEventForDrawer.evidenceItems.length})
                     </span>
                     {selectedEventForDrawer.evidenceItems.length > 0 ? (

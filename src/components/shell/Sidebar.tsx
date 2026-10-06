@@ -124,7 +124,7 @@ export function Sidebar({ collapsed, onToggle, mobileMenuOpen, onCloseMobile }: 
         {NAV_GROUPS.map((group) => (
           <div key={group.group} className="space-y-0.5">
             {!collapsed && (
-              <h4 className="px-3 pt-2 pb-1 text-[11px] font-semibold uppercase tracking-wider text-[#7B8798] select-none">
+              <h4 className="px-3 pt-2 pb-1 text-[11px] font-semibold uppercase tracking-wider text-[#596579] select-none">
                 {group.group}
               </h4>
             )}
@@ -152,7 +152,7 @@ export function Sidebar({ collapsed, onToggle, mobileMenuOpen, onCloseMobile }: 
 
                   <item.icon
                     className={`w-4 h-4 flex-shrink-0 ${
-                      isActive ? 'text-[#176B87]' : 'text-[#7B8798] group-hover:text-[#596579]'
+                      isActive ? 'text-[#176B87]' : 'text-[#596579] group-hover:text-[#596579]'
                     }`}
                   />
 
@@ -162,7 +162,7 @@ export function Sidebar({ collapsed, onToggle, mobileMenuOpen, onCloseMobile }: 
                       {item.badge !== undefined && (
                         <span
                           className={`ml-auto pl-2 flex-shrink-0 text-[11px] font-mono leading-none font-medium ${
-                            isActive ? 'text-[#176B87]' : 'text-[#7B8798]'
+                            isActive ? 'text-[#176B87]' : 'text-[#596579]'
                           }`}
                         >
                           [{item.badge}]
@@ -188,12 +188,12 @@ export function Sidebar({ collapsed, onToggle, mobileMenuOpen, onCloseMobile }: 
           title={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
         >
           {!collapsed && (
-            <span className="text-[11px] font-medium text-[#7B8798]">Collapse sidebar</span>
+            <span className="text-[11px] font-medium text-[#596579]">Collapse sidebar</span>
           )}
           {collapsed ? (
-            <ChevronRight className="w-4 h-4 text-[#7B8798]" />
+            <ChevronRight className="w-4 h-4 text-[#596579]" />
           ) : (
-            <ChevronLeft className="w-4 h-4 text-[#7B8798]" />
+            <ChevronLeft className="w-4 h-4 text-[#596579]" />
           )}
         </button>
       </div>

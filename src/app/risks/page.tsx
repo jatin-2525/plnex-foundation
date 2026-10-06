@@ -679,7 +679,7 @@ export default function DelayDependencyImpactPage() {
       case 'Critical Path':
         return { bg: 'bg-[#FBEFEE]', border: 'border-[#E4B0AA]', text: 'text-[#B5473C]', badge: 'Critical Path Slip' };
       case 'Secondary Float':
-        return { bg: 'bg-[#FDF6ED]', border: 'border-[#F0D4A6]', text: 'text-[#D98B32]', badge: 'Buffer Consumed' };
+        return { bg: 'bg-[#FDF6ED]', border: 'border-[#F0D4A6]', text: 'text-[#8C5311]', badge: 'Buffer Consumed' };
       case 'Buffered':
       default:
         return { bg: 'bg-[#EDF7F2]', border: 'border-[#B8DCC9]', text: 'text-[#2E7D5B]', badge: 'Float Absorbed' };
@@ -691,7 +691,7 @@ export default function DelayDependencyImpactPage() {
       case 'Unmitigated Slip':
         return { bg: 'bg-[#FBEFEE]', text: 'text-[#B5473C]', border: 'border-[#E4B0AA]' };
       case 'Recovery In Progress':
-        return { bg: 'bg-[#FDF6ED]', text: 'text-[#D98B32]', border: 'border-[#F0D4A6]' };
+        return { bg: 'bg-[#FDF6ED]', text: 'text-[#8C5311]', border: 'border-[#F0D4A6]' };
       case 'Schedule Realignment':
         return { bg: 'bg-[#EDF5F8]', text: 'text-[#176B87]', border: 'border-[#B3CBE0]' };
       case 'Recovered':
@@ -864,7 +864,7 @@ export default function DelayDependencyImpactPage() {
             }`}
           >
             <div>
-              <span className="text-[11px] font-semibold uppercase tracking-wider text-[#7B8798] block">
+              <span className="text-[11px] font-semibold uppercase tracking-wider text-[#596579] block">
                 Critical Path Delays
               </span>
               <div className="flex items-baseline gap-1 mt-1">
@@ -882,7 +882,7 @@ export default function DelayDependencyImpactPage() {
           {/* 3. Max Critical Path Slip */}
           <div className="p-4 flex flex-col justify-between">
             <div>
-              <span className="text-[11px] font-semibold uppercase tracking-wider text-[#7B8798] block">
+              <span className="text-[11px] font-semibold uppercase tracking-wider text-[#596579] block">
                 Max Critical Path Slip
               </span>
               <div className="flex items-baseline gap-1 mt-1">
@@ -900,7 +900,7 @@ export default function DelayDependencyImpactPage() {
           {/* 4. Dependent Activities Impacted */}
           <div className="p-4 flex flex-col justify-between">
             <div>
-              <span className="text-[11px] font-semibold uppercase tracking-wider text-[#7B8798] block">
+              <span className="text-[11px] font-semibold uppercase tracking-wider text-[#596579] block">
                 Dependent Activities
               </span>
               <div className="flex items-baseline gap-1 mt-1">
@@ -918,7 +918,7 @@ export default function DelayDependencyImpactPage() {
           {/* 5. Float Consumed */}
           <div className="p-4 flex flex-col justify-between col-span-2 sm:col-span-1">
             <div>
-              <span className="text-[11px] font-semibold uppercase tracking-wider text-[#7B8798] block">
+              <span className="text-[11px] font-semibold uppercase tracking-wider text-[#596579] block">
                 Critical Float Consumed
               </span>
               <div className="flex items-baseline gap-1 mt-1">
@@ -978,7 +978,7 @@ export default function DelayDependencyImpactPage() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
                 {/* 1. Delayed Activity (Source Activity) */}
                 <div className="p-3.5 rounded-lg bg-[#F7F8FA] border border-[#D9DEE5]">
-                  <span className="text-[10px] uppercase font-bold text-[#7B8798] tracking-wider block mb-0.5">
+                  <span className="text-[10px] uppercase font-semibold text-[#596579] tracking-wider block mb-0.5">
                     Delayed Activity (Source Activity)
                   </span>
                   <div className="font-bold text-[#172033] text-sm">
@@ -1011,7 +1011,7 @@ export default function DelayDependencyImpactPage() {
 
               {/* 3. Cause */}
               <div className="p-3.5 rounded-lg bg-white border border-[#D9DEE5] text-xs space-y-1">
-                <span className="text-[11px] uppercase font-semibold text-[#7B8798] tracking-wider block">
+                <span className="text-[11px] uppercase font-semibold text-[#596579] tracking-wider block">
                   Cause (Physical Site Root Cause)
                 </span>
                 <p className="text-[#172033] text-sm leading-relaxed">
@@ -1026,7 +1026,7 @@ export default function DelayDependencyImpactPage() {
               {/* 4. Dependent Activities */}
               <div className="p-3.5 rounded-lg bg-[#F7F8FA] border border-[#D9DEE5] text-xs">
                 <div className="flex items-center justify-between mb-1.5">
-                  <span className="text-[11px] uppercase font-semibold text-[#7B8798] tracking-wider block">
+                  <span className="text-[11px] uppercase font-semibold text-[#596579] tracking-wider block">
                     Dependent Activities ({selectedDelay.affectedActivities.length} Predecessor Ties)
                   </span>
                   <span className="text-[11px] font-mono font-semibold text-[#176B87] bg-white px-2 py-0.5 rounded border border-[#D9DEE5]">
@@ -1065,11 +1065,11 @@ export default function DelayDependencyImpactPage() {
                 </p>
                 <div className="grid grid-cols-2 gap-2 pt-1 font-mono text-[11px] text-[#596579]">
                   <div className="p-1.5 bg-white/80 rounded border border-[#E4B0AA]/60">
-                    <span className="text-[9px] uppercase font-sans text-[#7B8798] block">Total Float Before Slip</span>
+                    <span className="text-[9px] uppercase font-sans text-[#596579] block">Total Float Before Slip</span>
                     <strong className="text-[#172033]">{selectedDelay.totalFloatDays} Days</strong>
                   </div>
                   <div className="p-1.5 bg-white/80 rounded border border-[#E4B0AA]/60">
-                    <span className="text-[9px] uppercase font-sans text-[#7B8798] block">Remaining Float Buffer</span>
+                    <span className="text-[9px] uppercase font-sans text-[#596579] block">Remaining Float Buffer</span>
                     <strong className={selectedDelay.remainingFloatDays === 0 ? 'text-[#B5473C]' : 'text-[#2E7D5B]'}>
                       {selectedDelay.remainingFloatDays} Days {selectedDelay.remainingFloatDays === 0 ? '(Driving)' : ''}
                     </strong>
@@ -1099,7 +1099,7 @@ export default function DelayDependencyImpactPage() {
             <div className="lg:col-span-5 p-4 rounded-lg bg-[#F7F8FA] border border-[#D9DEE5] flex flex-col justify-between space-y-3">
               <div>
                 <div className="flex items-center justify-between pb-2 border-b border-[#D9DEE5]">
-                  <h3 className="text-xs font-bold text-[#176B87] uppercase tracking-wider flex items-center gap-1.5">
+                  <h3 className="text-xs font-semibold text-[#172033] uppercase tracking-wider flex items-center gap-1.5">
                     <GitBranch className="w-3.5 h-3.5" />
                     Downstream Impact Cascade
                   </h3>
@@ -1118,7 +1118,7 @@ export default function DelayDependencyImpactPage() {
                   <strong className="text-[#172033] block mb-0.5">Example Cascading Schedule Rule:</strong>
                   <div className="font-mono text-xs text-[#176B87] space-y-0.5">
                     <div>{selectedDelay.sourceActivityName} <span className="text-[#B5473C] font-bold">+{selectedDelay.delayDays.toFixed(0)} days</span></div>
-                    <div className="text-[10px] uppercase font-bold text-[#7B8798] pt-1">Downstream Cascade:</div>
+                    <div className="text-[10px] uppercase font-semibold text-[#596579] pt-1">Downstream Cascade:</div>
                     {selectedDelay.downstreamImpacts.map((d, i) => (
                       <div key={i} className="pl-2 flex items-center justify-between">
                         <span>
@@ -1379,7 +1379,7 @@ export default function DelayDependencyImpactPage() {
                         {/* 5. Downstream Impact */}
                         <td className="p-3.5">
                           <div className="flex items-center justify-between mb-1">
-                            <span className="text-[11px] font-semibold uppercase text-[#7B8798]">Impact Cascade</span>
+                            <span className="text-[11px] font-semibold uppercase text-[#596579]">Impact Cascade</span>
                             <WhyButton
                               onClick={(e) => {
                                 e.stopPropagation();
@@ -1574,21 +1574,21 @@ export default function DelayDependencyImpactPage() {
 
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-[11px] pt-1 border-t border-[#D9DEE5]/60">
                 <div>
-                  <span className="text-[#7B8798] uppercase font-bold text-[9px] block">Delay Duration</span>
+                  <span className="text-[#596579] uppercase font-semibold text-[9px] block">Delay Duration</span>
                   <span className="font-mono font-bold text-[#B5473C] text-sm">+{selectedDelay.delayDays} Days</span>
                 </div>
                 <div>
-                  <span className="text-[#7B8798] uppercase font-bold text-[9px] block">Critical Slip</span>
+                  <span className="text-[#596579] uppercase font-semibold text-[9px] block">Critical Slip</span>
                   <span className="font-mono font-bold text-[#B5473C] text-sm">+{selectedDelay.criticalPathSlipDays} Days</span>
                 </div>
                 <div>
-                  <span className="text-[#7B8798] uppercase font-bold text-[9px] block">Remaining Float</span>
+                  <span className="text-[#596579] uppercase font-semibold text-[9px] block">Remaining Float</span>
                   <span className={`font-mono font-bold text-sm ${selectedDelay.remainingFloatDays === 0 ? 'text-[#B5473C]' : 'text-[#2E7D5B]'}`}>
                     {selectedDelay.remainingFloatDays} Days
                   </span>
                 </div>
                 <div>
-                  <span className="text-[#7B8798] uppercase font-bold text-[9px] block">Lead Engineer</span>
+                  <span className="text-[#596579] uppercase font-semibold text-[9px] block">Lead Engineer</span>
                   <span className="font-bold text-[#172033]">{selectedDelay.owner}</span>
                 </div>
               </div>
@@ -1597,7 +1597,7 @@ export default function DelayDependencyImpactPage() {
             {/* DOWNSTREAM IMPACT BREAKDOWN */}
             <div className="p-4 bg-white border border-[#D9DEE5] rounded-lg space-y-3">
               <div className="flex items-center justify-between">
-                <h4 className="font-bold text-xs uppercase tracking-wider text-[#176B87] flex items-center gap-1.5">
+                <h4 className="font-semibold text-xs uppercase tracking-wider text-[#172033] flex items-center gap-1.5">
                   <GitBranch className="w-3.5 h-3.5" />
                   Downstream Impact Cascade
                 </h4>
@@ -1630,7 +1630,7 @@ export default function DelayDependencyImpactPage() {
             {/* DEPENDENCY CHAIN (Activity A ↓ Activity B ↓ Activity C) */}
             <div className="p-4 bg-white border border-[#D9DEE5] rounded-lg space-y-3">
               <div className="flex items-center justify-between">
-                <h4 className="font-bold text-xs uppercase tracking-wider text-[#176B87] flex items-center gap-1.5">
+                <h4 className="font-semibold text-xs uppercase tracking-wider text-[#172033] flex items-center gap-1.5">
                   <Activity className="w-3.5 h-3.5" />
                   Sequential Dependency Chain
                 </h4>
@@ -1650,7 +1650,7 @@ export default function DelayDependencyImpactPage() {
                             <span className="font-mono font-bold text-[#176B87] text-xs">
                               {node.activityId}
                             </span>
-                            <span className="text-[10px] font-bold uppercase text-[#7B8798]">
+                            <span className="text-[10px] font-semibold uppercase text-[#596579]">
                               {node.step}
                             </span>
                             <span className="text-[10px] font-semibold text-[#596579] bg-white px-1.5 py-0.2 rounded border border-[#D9DEE5]">
@@ -1669,7 +1669,7 @@ export default function DelayDependencyImpactPage() {
                               : node.status === 'Delayed'
                               ? 'bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]'
                               : node.status === 'Blocked'
-                              ? 'bg-[#FDF6ED] text-[#D98B32] border border-[#F0D4A6]'
+                              ? 'bg-[#FDF6ED] text-[#8C5311] border border-[#F0D4A6]'
                               : 'bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0]'
                           }`}
                         >
@@ -1740,7 +1740,7 @@ export default function DelayDependencyImpactPage() {
             {/* CRITICAL PATH IMPACT & MITIGATION */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="p-4 bg-[#EDF5F8] border border-[#B3CBE0] rounded-lg space-y-2">
-                <h4 className="font-bold text-xs uppercase tracking-wider text-[#176B87]">
+                <h4 className="font-semibold text-xs uppercase tracking-wider text-[#172033]">
                   Schedule Recovery Action
                 </h4>
                 <p className="text-xs text-[#172033] leading-relaxed">

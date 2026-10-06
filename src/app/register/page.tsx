@@ -264,7 +264,7 @@ export default function RegisterPage() {
 
             {/* Duplicate Email Alert Banner */}
             {registerState === 'duplicate_email' && (
-              <div className="p-3 bg-[#FDF6ED] border border-[#F0D4A6] rounded-md flex items-start gap-2.5 text-xs text-[#D98B32] animate-in fade-in duration-150">
+              <div className="p-3 bg-[#FDF6ED] border border-[#F0D4A6] rounded-md flex items-start gap-2.5 text-xs text-[#8C5311] animate-in fade-in duration-150">
                 <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
                 <div>
                   <strong className="block font-semibold">Account Already Registered</strong>
@@ -685,7 +685,7 @@ export default function RegisterPage() {
           <button
             type="button"
             onClick={() => handleQuickFill('duplicate')}
-            className="px-2 py-1 bg-[#FDF6ED] hover:bg-[#FDF6ED]/80 text-[#D98B32] border border-[#F0D4A6] rounded text-[11px] font-mono transition-colors"
+            className="px-2 py-1 bg-[#FDF6ED] hover:bg-[#FDF6ED]/80 text-[#8C5311] border border-[#F0D4A6] rounded text-[11px] font-mono transition-colors"
           >
             Duplicate Email
           </button>

@@ -278,7 +278,7 @@ export default function ForgotPasswordPage() {
           <button
             type="button"
             onClick={() => handleQuickFill('server')}
-            className="px-2 py-1 bg-[#FDF6ED] hover:bg-[#FDF6ED]/80 text-[#D98B32] border border-[#F0D4A6] rounded text-[11px] font-mono transition-colors"
+            className="px-2 py-1 bg-[#FDF6ED] hover:bg-[#FDF6ED]/80 text-[#8C5311] border border-[#F0D4A6] rounded text-[11px] font-mono transition-colors"
           >
             Server Error (500)
           </button>

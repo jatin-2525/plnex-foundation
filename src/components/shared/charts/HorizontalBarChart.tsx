@@ -277,7 +277,7 @@ export function HorizontalBarChart({
                     y={height - padBottom + 16}
                     textAnchor="middle"
                     fontSize="10"
-                    fill="#7B8798"
+                    fill="#596579"
                     fontFamily="inherit"
                   >
                     {variant === 'top-variances' ? `-${tickVal}%` : `${tickVal} ${effectiveUnit}`}
@@ -357,7 +357,7 @@ export function HorizontalBarChart({
                     textAnchor="end"
                     fontSize="11"
                     fontWeight="bold"
-                    fill={CHART_TOKENS.neutral.text}
+                    fill={CHART_TOKENS.neutral.heading}
                   >
                     {item.label}
                   </text>
@@ -369,7 +369,7 @@ export function HorizontalBarChart({
                     textAnchor="end"
                     fontSize="9"
                     fontFamily="monospace"
-                    fill={item.isCritical ? CHART_TOKENS.critical.text : CHART_TOKENS.neutral.axis}
+                    fill={item.isCritical ? CHART_TOKENS.critical.text : CHART_TOKENS.neutral.text}
                   >
                     {item.id} • {item.subLabel || ''}
                     {item.isCritical ? ' [CRITICAL PATH ✕]' : ''}

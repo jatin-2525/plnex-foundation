@@ -51,7 +51,7 @@ export const CANONICAL_STATE_CONFIGS: Record<CanonicalDataState, CanonicalStateC
     key: 'PENDING_REVIEW',
     label: 'Pending Review',
     description: 'Awaiting human planner or site engineer verification.',
-    badgeClass: 'bg-[#FDF6ED] text-[#D98B32] border-[#F0D4A6]',
+    badgeClass: 'bg-[#FDF6ED] text-[#8C5311] border-[#F0D4A6]',
   },
   VERIFIED: {
     key: 'VERIFIED',
@@ -75,7 +75,7 @@ export const CANONICAL_STATE_CONFIGS: Record<CanonicalDataState, CanonicalStateC
     key: 'DUPLICATE',
     label: 'Duplicate',
     description: 'Identical record already received in current reporting cycle.',
-    badgeClass: 'bg-[#FDF6ED] text-[#D98B32] border-[#F0D4A6]',
+    badgeClass: 'bg-[#FDF6ED] text-[#8C5311] border-[#F0D4A6]',
   },
   STALE: {
     key: 'STALE',

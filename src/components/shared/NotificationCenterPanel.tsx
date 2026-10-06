@@ -89,7 +89,7 @@ function getSeverityBadge(severity: NotificationSeverity) {
     case 'medium':
       return {
         label: severity === 'warning' ? 'Warning' : 'Medium',
-        className: 'bg-[#FDF6ED] text-[#D98B32] border-[#F0D4A6]',
+        className: 'bg-[#FDF6ED] text-[#8C5311] border-[#F0D4A6]',
       };
     case 'info':
     default:

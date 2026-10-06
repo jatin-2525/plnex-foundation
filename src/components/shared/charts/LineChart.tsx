@@ -256,7 +256,7 @@ export function LineChart({
                     y={y + 3.5}
                     textAnchor="end"
                     fontSize="10"
-                    fill={isZero ? '#172033' : '#7B8798'}
+                    fill={isZero ? '#172033' : '#596579'}
                     fontFamily="inherit"
                     fontWeight={isZero ? '700' : '500'}
                   >

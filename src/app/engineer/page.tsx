@@ -499,7 +499,7 @@ export default function EngineerDashboardPage() {
 
         {/* OFFLINE MODE BANNER */}
         {isOffline && (
-          <div className="p-3.5 rounded-lg bg-[#FDF6ED] border border-[#F0D4A6] flex items-center justify-between gap-3 text-xs text-[#D98B32]">
+          <div className="p-3.5 rounded-lg bg-[#FDF6ED] border border-[#F0D4A6] flex items-center justify-between gap-3 text-xs text-[#8C5311]">
             <div className="flex items-center gap-2.5">
               <span className="px-2 py-0.5 rounded bg-[#D98B32] text-white font-mono font-bold text-[10px] uppercase">
                 OFFLINE MODE
@@ -510,7 +510,7 @@ export default function EngineerDashboardPage() {
             </div>
             <Link
               href="/sync"
-              className="px-2.5 py-1 bg-white border border-[#F0D4A6] rounded text-[#D98B32] hover:bg-[#FDF6ED] font-mono font-bold text-[11px] whitespace-nowrap"
+              className="px-2.5 py-1 bg-white border border-[#F0D4A6] rounded text-[#8C5311] hover:bg-[#FDF6ED] font-mono font-bold text-[11px] whitespace-nowrap"
             >
               {metrics.pendingUploads} Queued for Sync
             </Link>
@@ -1217,7 +1217,7 @@ export default function EngineerDashboardPage() {
                         ? 'bg-[#EDF7F2] border-[#B8DCC9] text-[#2E7D5B]'
                         : item.status === 'Under Review'
                         ? 'bg-[#EDF5F8] border-[#B3CBE0] text-[#176B87]'
-                        : 'bg-[#FDF6ED] border-[#F0D4A6] text-[#D98B32]'
+                        : 'bg-[#FDF6ED] border-[#F0D4A6] text-[#8C5311]'
                     }`}
                   >
                     {item.status}
@@ -1293,7 +1293,7 @@ export default function EngineerDashboardPage() {
                         Server confirmed
                       </span>
                     ) : (
-                      <span className="text-[#D98B32] font-bold bg-[#FDF6ED] px-1.5 py-0.2 rounded border border-[#F0D4A6]">
+                      <span className="text-[#8C5311] font-bold bg-[#FDF6ED] px-1.5 py-0.2 rounded border border-[#F0D4A6]">
                         Saved locally
                       </span>
                     )}
@@ -1360,7 +1360,7 @@ export default function EngineerDashboardPage() {
                       className={`text-[10px] font-mono font-bold px-1.5 py-0.2 rounded border ${
                         ev.verified
                           ? 'bg-[#EDF7F2] border-[#B8DCC9] text-[#2E7D5B]'
-                          : 'bg-[#FDF6ED] border-[#F0D4A6] text-[#D98B32]'
+                          : 'bg-[#FDF6ED] border-[#F0D4A6] text-[#8C5311]'
                       }`}
                     >
                       {ev.verified ? 'QC Verified' : 'QC Pending'}
@@ -1633,7 +1633,7 @@ export default function EngineerDashboardPage() {
           >
             <div className="space-y-3 text-xs">
               <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg">
-                <span className="text-[10px] font-mono font-bold text-[#7B8798] uppercase block">
+                <span className="text-[10px] font-mono font-semibold text-[#596579] uppercase block">
                   Activity Target
                 </span>
                 <span className="font-mono font-bold text-[#176B87] block mt-0.5">
@@ -1645,7 +1645,7 @@ export default function EngineerDashboardPage() {
               </div>
 
               <div className="p-3 bg-white border border-[#D9DEE5] rounded-lg space-y-2">
-                <span className="text-[10px] font-mono font-bold text-[#7B8798] uppercase block">
+                <span className="text-[10px] font-mono font-semibold text-[#596579] uppercase block">
                   Field Statement
                 </span>
                 <p className="text-xs text-[#172033] italic leading-relaxed">
@@ -1698,7 +1698,7 @@ export default function EngineerDashboardPage() {
           >
             <div className="space-y-3 text-xs">
               <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg">
-                <span className="text-[10px] font-mono font-bold text-[#7B8798] uppercase block">
+                <span className="text-[10px] font-mono font-semibold text-[#596579] uppercase block">
                   Subject & Target Activity
                 </span>
                 <span className="font-bold text-[#172033] text-sm block mt-0.5">
@@ -1710,7 +1710,7 @@ export default function EngineerDashboardPage() {
               </div>
 
               <div className="p-3 bg-white border border-[#D9DEE5] rounded-lg space-y-2">
-                <span className="text-[10px] font-mono font-bold text-[#7B8798] uppercase block">
+                <span className="text-[10px] font-mono font-semibold text-[#596579] uppercase block">
                   Inspection Notes & Geotag
                 </span>
                 <p className="text-xs text-[#172033] leading-relaxed">

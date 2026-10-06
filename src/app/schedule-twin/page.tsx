@@ -1158,7 +1158,7 @@ export default function ScheduleTwinPage() {
               </div>
 
               {/* Dedicated Track Column Header (P / A / F) */}
-              <div className="w-7 flex-shrink-0 border-r border-[#D9DEE5] p-2 text-center text-[10px] font-mono font-bold text-[#7B8798]">
+              <div className="w-7 flex-shrink-0 border-r border-[#D9DEE5] p-2 text-center text-[10px] font-mono font-semibold text-[#596579]">
                 Trk
               </div>
 

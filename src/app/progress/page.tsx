@@ -1317,7 +1317,7 @@ export default function ProgressVariancePage() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 pt-2 border-t border-[#D9DEE5]/60">
             {/* Part 1: Causal Factors Ledger */}
             <div className="lg:col-span-2 space-y-2.5">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-[#7B8798] block">
+              <span className="text-[11px] font-semibold uppercase tracking-wider text-[#596579] block">
                 Primary Variance Drivers & Mitigation Protocols
               </span>
               <div className="space-y-2">
@@ -1364,7 +1364,7 @@ export default function ProgressVariancePage() {
 
             {/* Part 2: Critical Path Impact Callout Box */}
             <div className="space-y-3">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-[#7B8798] block">
+              <span className="text-[11px] font-semibold uppercase tracking-wider text-[#596579] block">
                 Critical Path Float Consumption
               </span>
 
@@ -1895,7 +1895,7 @@ export default function ProgressVariancePage() {
                 {selectedActivity.history.length > 0 && (
                   <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg overflow-x-auto">
                     <div className="flex items-center gap-2 min-w-max">
-                      <span className="text-[11px] font-semibold uppercase text-[#7B8798] mr-1">
+                      <span className="text-[11px] font-semibold uppercase text-[#596579] mr-1">
                         Progression:
                       </span>
                       {selectedActivity.history
@@ -2043,7 +2043,7 @@ export default function ProgressVariancePage() {
             {/* 3. User & 4. Timestamp (Pre-filled & Audited) */}
             <div className="grid grid-cols-2 gap-3 pt-1">
               <div>
-                <label className="font-bold text-[#7B8798] block mb-1">3. Authenticated User</label>
+                <label className="font-semibold text-[#596579] block mb-1">3. Authenticated User</label>
                 <div className="p-2 bg-[#F1F3F5] rounded border border-[#D9DEE5] text-[#596579] font-mono text-[11px] flex items-center gap-1.5">
                   <User className="w-3.5 h-3.5" />
                   <span>{userSession?.name || 'Debajit Borah'}</span>
@@ -2051,7 +2051,7 @@ export default function ProgressVariancePage() {
               </div>
 
               <div>
-                <label className="font-bold text-[#7B8798] block mb-1">4. Verification Timestamp</label>
+                <label className="font-semibold text-[#596579] block mb-1">4. Verification Timestamp</label>
                 <div className="p-2 bg-[#F1F3F5] rounded border border-[#D9DEE5] text-[#596579] font-mono text-[11px] flex items-center gap-1.5">
                   <Clock className="w-3.5 h-3.5" />
                   <span>{reportingDate}</span>
@@ -2061,7 +2061,7 @@ export default function ProgressVariancePage() {
 
             {/* 5. Audit Record Hash */}
             <div>
-              <label className="font-bold text-[#7B8798] block mb-1">5. Immutable Audit Hash</label>
+              <label className="font-semibold text-[#596579] block mb-1">5. Immutable Audit Hash</label>
               <div className="p-2 bg-[#F1F3F5] rounded border border-[#D9DEE5] text-[#596579] font-mono text-[11px] flex items-center gap-1.5">
                 <Hash className="w-3.5 h-3.5" />
                 <span>{editAuditHash}</span>
@@ -2070,7 +2070,7 @@ export default function ProgressVariancePage() {
 
             {/* Warning when required fields are missing */}
             {(!editReason.trim() || !editSource.trim()) && (
-              <div className="p-2.5 bg-[#FDF6ED] border border-[#F0D4A6] rounded-lg text-[11px] text-[#D98B32] flex items-center gap-2">
+              <div className="p-2.5 bg-[#FDF6ED] border border-[#F0D4A6] rounded-lg text-[11px] text-[#8C5311] flex items-center gap-2">
                 <Lock className="w-4 h-4 shrink-0" />
                 <span>Arbitrary edits are blocked: Reason and Source Evidence must be specified.</span>
               </div>

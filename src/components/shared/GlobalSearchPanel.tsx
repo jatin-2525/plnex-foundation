@@ -62,7 +62,7 @@ function getEntityTypeBadge(type: SearchResultType) {
     case 'Evidence':
       return 'bg-[#EDF7F2] text-[#2E7D5B] border-[#B8DCC9]';
     case 'Review Item':
-      return 'bg-[#FDF6ED] text-[#D98B32] border-[#F0D4A6]';
+      return 'bg-[#FDF6ED] text-[#8C5311] border-[#F0D4A6]';
     case 'Risk':
       return 'bg-[#FBEFEE] text-[#B5473C] border-[#E4B0AA]';
     case 'Report':
@@ -91,7 +91,7 @@ function getStatusBadgeClass(status: string) {
     s.includes('available') ||
     s.includes('planning')
   ) {
-    return 'bg-[#FDF6ED] text-[#D98B32] border-[#F0D4A6]';
+    return 'bg-[#FDF6ED] text-[#8C5311] border-[#F0D4A6]';
   }
   if (
     s.includes('delayed') ||

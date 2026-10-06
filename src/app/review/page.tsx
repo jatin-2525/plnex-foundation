@@ -1175,7 +1175,7 @@ export default function ReviewQueuePage() {
                             evt.status === 'High Confidence'
                               ? 'bg-[#EDF7F2] text-[#2E7D5B] border-[#B8DCC9]'
                               : evt.status === 'Manager Review'
-                              ? 'bg-[#FDF6ED] text-[#D98B32] border-[#F0D4A6]'
+                              ? 'bg-[#FDF6ED] text-[#8C5311] border-[#F0D4A6]'
                               : evt.status === 'Conflicts' || evt.status === 'Duplicates'
                               ? 'bg-[#FDF6ED] text-[#B5473C] border-[#E4B0AA]'
                               : 'bg-[#F1F3F5] text-[#596579] border-[#D9DEE5]'
@@ -1204,7 +1204,7 @@ export default function ReviewQueuePage() {
                     {/* COL 1: 1. WHAT HAPPENED? & WHAT EVIDENCE EXISTS? (5 cols) */}
                     <div className="lg:col-span-5 p-4 space-y-3">
                       <div className="flex items-center justify-between">
-                        <span className="text-[10px] font-bold uppercase tracking-wider text-[#7B8798] flex items-center gap-1">
+                        <span className="text-[10px] font-semibold uppercase tracking-wider text-[#596579] flex items-center gap-1">
                           <Info className="w-3 h-3 text-[#176B87]" />
                           <span>1. What Happened?</span>
                         </span>
@@ -1238,7 +1238,7 @@ export default function ReviewQueuePage() {
 
                       {/* What Evidence Exists? */}
                       <div className="pt-2 border-t border-[#D9DEE5]/60 space-y-1.5">
-                        <div className="flex items-center justify-between text-[10px] font-bold uppercase tracking-wider text-[#7B8798]">
+                        <div className="flex items-center justify-between text-[10px] font-semibold uppercase tracking-wider text-[#596579]">
                           <span>What Evidence Exists?</span>
                           <span>{evt.evidenceItems.length} File{evt.evidenceItems.length === 1 ? '' : 's'}</span>
                         </div>
@@ -1276,7 +1276,7 @@ export default function ReviewQueuePage() {
 
                     {/* COL 2: 2. SUGGESTED ACTIVITY & ALTERNATIVE MATCHES (3 cols) */}
                     <div className="lg:col-span-3 p-4 space-y-3">
-                      <div className="text-[10px] font-bold uppercase tracking-wider text-[#7B8798]">
+                      <div className="text-[10px] font-semibold uppercase tracking-wider text-[#596579]">
                         2. Suggested Activity
                       </div>
 
@@ -1307,7 +1307,7 @@ export default function ReviewQueuePage() {
 
                       {/* Alternative Matches */}
                       <div className="pt-2 border-t border-[#D9DEE5]/60 space-y-1.5">
-                        <div className="text-[10px] font-bold uppercase tracking-wider text-[#7B8798]">
+                        <div className="text-[10px] font-semibold uppercase tracking-wider text-[#596579]">
                           Alternative Matches ({evt.alternativeCandidates.length})
                         </div>
 
@@ -1350,7 +1350,7 @@ export default function ReviewQueuePage() {
 
                     {/* COL 3: 3. HOW CONFIDENT IS THE MATCH? & WHY WAS IT SUGGESTED? (2 cols) */}
                     <div className="lg:col-span-2 p-4 space-y-2.5">
-                      <div className="text-[10px] font-bold uppercase tracking-wider text-[#7B8798]">
+                      <div className="text-[10px] font-semibold uppercase tracking-wider text-[#596579]">
                         3. Confidence & Why?
                       </div>
 
@@ -1377,7 +1377,7 @@ export default function ReviewQueuePage() {
                       {/* Deterministic Signals Checklist */}
                       <div className="space-y-1 text-[11px] pt-1">
                         <div className="flex items-center justify-between">
-                          <span className="text-[10px] font-bold uppercase tracking-wider text-[#7B8798]">
+                          <span className="text-[10px] font-semibold uppercase tracking-wider text-[#596579]">
                             Why was it suggested?
                           </span>
                           <WhyButton
@@ -1418,7 +1418,7 @@ export default function ReviewQueuePage() {
                     {/* COL 4: 4. WHAT SHOULD I DO? (PRIMARY ACTIONS) (2 cols) */}
                     <div className="lg:col-span-2 p-4 flex flex-col justify-between bg-[#FAFAFB] space-y-3">
                       <div>
-                        <div className="text-[10px] font-bold uppercase tracking-wider text-[#7B8798] mb-2">
+                        <div className="text-[10px] font-semibold uppercase tracking-wider text-[#596579] mb-2">
                           4. What Should I Do?
                         </div>
 
@@ -1521,7 +1521,7 @@ export default function ReviewQueuePage() {
                       setClarificationQueryText('');
                       setIsClarificationModalOpen(true);
                     }}
-                    className="px-3 py-2 font-semibold text-[#D98B32] hover:bg-[#FDF6ED] bg-white border border-[#F0D4A6] rounded-lg transition-colors inline-flex items-center gap-1"
+                    className="px-3 py-2 font-semibold text-[#8C5311] hover:bg-[#FDF6ED] bg-white border border-[#F0D4A6] rounded-lg transition-colors inline-flex items-center gap-1"
                   >
                     <MessageSquare className="w-3.5 h-3.5" />
                     <span>Request Clarification</span>
@@ -1727,7 +1727,7 @@ export default function ReviewQueuePage() {
                   )}
 
                   <div className="pt-2 border-t border-[#D9DEE5]/60 space-y-1.5">
-                    <span className="text-[10px] uppercase font-bold text-[#7B8798] block">
+                    <span className="text-[10px] uppercase font-semibold text-[#596579] block">
                       Deterministic Rules Verified:
                     </span>
                     {selectedEvent.rulesEvaluated.map((rule, idx) => (

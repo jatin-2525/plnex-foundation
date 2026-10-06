@@ -183,7 +183,7 @@ export function CoreFlowBanner({
                           AI / Heuristic
                         </span>
                       ) : (
-                        <span className="text-[9px] font-semibold px-1.5 py-0.5 rounded uppercase bg-[#F1F3F5] text-[#7B8798]">
+                        <span className="text-[9px] font-semibold px-1.5 py-0.5 rounded uppercase bg-[#F1F3F5] text-[#596579]">
                           Field / System
                         </span>
                       )}

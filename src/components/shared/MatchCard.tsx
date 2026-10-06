@@ -96,7 +96,7 @@ function renderFactorBadge(status: ScoringFactorStatus) {
       );
     case 'partial':
       return (
-        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-bold bg-[#FDF6ED] text-[#D98B32] border border-[#F0D4A6]">
+        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-bold bg-[#FDF6ED] text-[#8C5311] border border-[#F0D4A6]">
           <span>△</span>
           <span>partial</span>
         </span>
@@ -205,7 +205,7 @@ export function MatchCard({
         {/* Field Statement Context if provided */}
         {fieldStatement && (
           <div className="p-3 bg-[#F1F3F5] border border-[#D9DEE5] rounded-lg text-xs space-y-1">
-            <span className="text-[10px] uppercase font-bold text-[#7B8798] block tracking-wider">
+            <span className="text-[10px] uppercase font-semibold text-[#596579] block tracking-wider">
               Field Execution Report:
             </span>
             <p className="text-[#172033] font-medium italic">
@@ -217,7 +217,7 @@ export function MatchCard({
         {/* Primary Match Card Information */}
         <div className="p-4 bg-white border border-[#D9DEE5] rounded-lg shadow-xs space-y-3">
           <div className="flex items-center justify-between flex-wrap gap-2">
-            <span className="text-[10px] uppercase font-bold tracking-wider text-[#7B8798] flex items-center gap-1.5">
+            <span className="text-[10px] uppercase font-semibold tracking-wider text-[#596579] flex items-center gap-1.5">
               <Sparkles className="w-3.5 h-3.5 text-[#176B87]" />
               AI Match Suggestion
             </span>
@@ -272,7 +272,7 @@ export function MatchCard({
                       isConfidenceHigh
                         ? 'bg-[#EDF7F2] text-[#2E7D5B] border-[#B8DCC9]'
                         : confidence >= 70
-                        ? 'bg-[#FDF6ED] text-[#D98B32] border-[#F0D4A6]'
+                        ? 'bg-[#FDF6ED] text-[#8C5311] border-[#F0D4A6]'
                         : 'bg-[#FBEFEE] text-[#B5473C] border-[#E4B0AA]'
                     }`}
                   >
@@ -332,7 +332,7 @@ export function MatchCard({
           <div className="flex items-center gap-6 flex-wrap">
             {/* Confidence metric */}
             <div>
-              <span className="text-[10px] uppercase font-bold text-[#7B8798] tracking-wider block">
+              <span className="text-[10px] uppercase font-semibold text-[#596579] tracking-wider block">
                 Confidence:
               </span>
               <div className="mt-0.5">
@@ -344,7 +344,7 @@ export function MatchCard({
 
             {/* Verification metric */}
             <div>
-              <span className="text-[10px] uppercase font-bold text-[#7B8798] tracking-wider block">
+              <span className="text-[10px] uppercase font-semibold text-[#596579] tracking-wider block">
                 Verification:
               </span>
               <span
@@ -355,7 +355,7 @@ export function MatchCard({
                     ? 'bg-[#FBEFEE] text-[#B5473C] border-[#E4B0AA]'
                     : verificationStatus === 'Unmatched'
                     ? 'bg-[#F1F3F5] text-[#596579] border-[#D9DEE5]'
-                    : 'bg-[#FDF6ED] text-[#D98B32] border-[#F0D4A6]'
+                    : 'bg-[#FDF6ED] text-[#8C5311] border-[#F0D4A6]'
                 }`}
               >
                 <span className="w-1.5 h-1.5 rounded-full bg-current" />

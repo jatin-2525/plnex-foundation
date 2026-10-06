@@ -1662,7 +1662,7 @@ export default function SchedulePage() {
                   <span className="font-mono text-[10px] font-bold text-[#172033] bg-[#E5E9EE] px-1.5 py-0.2 rounded">
                     {tierItem.code}
                   </span>
-                  <span className="font-mono text-xs text-[#7B8798] select-none font-bold">
+                  <span className="font-mono text-xs text-[#596579] select-none font-semibold">
                     {tierItem.marker}
                   </span>
                 </div>

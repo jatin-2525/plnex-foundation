@@ -37,7 +37,7 @@ export function ConfirmationDialog({
         );
       case 'warning':
         return (
-          <div className="w-10 h-10 rounded-lg bg-[#FDF6ED] border border-[#F0D4A6] flex items-center justify-center text-[#D98B32] flex-shrink-0">
+          <div className="w-10 h-10 rounded-lg bg-[#FDF6ED] border border-[#F0D4A6] flex items-center justify-center text-[#8C5311] flex-shrink-0">
             <AlertTriangle className="w-5 h-5" />
           </div>
         );

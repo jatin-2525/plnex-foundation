@@ -53,11 +53,11 @@ export function UserMenu() {
             <span className="text-xs font-semibold text-[#172033] leading-tight truncate">
               {displayName}
             </span>
-            <span className="text-[10px] text-[#7B8798] leading-none mt-0.5">
+            <span className="text-[10px] text-[#596579] leading-none mt-0.5">
               {displayRole}
             </span>
           </div>
-          <ChevronDown className="w-3 h-3 text-[#7B8798] flex-shrink-0 ml-0.5" />
+          <ChevronDown className="w-3 h-3 text-[#596579] flex-shrink-0 ml-0.5" />
         </div>
         <ChevronDown className="w-3.5 h-3.5 text-[#596579] sm:hidden flex-shrink-0" />
       </button>
@@ -71,13 +71,13 @@ export function UserMenu() {
             <p className="text-[11px] text-[#176B87] font-medium mt-1">
               {userSession?.title} • {displayRole}
             </p>
-            <p className="text-[10px] text-[#7B8798] mt-0.5">{userSession?.organization}</p>
+            <p className="text-[10px] text-[#596579] mt-0.5">{userSession?.organization}</p>
           </div>
 
           {/* Admin Explicit Role View Switcher */}
           {userSession?.role === 'admin' && (
             <div className="p-2 border-b border-[#D9DEE5]">
-              <div className="px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-[#7B8798] flex items-center gap-1.5">
+              <div className="px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-[#596579] flex items-center gap-1.5">
                 <Shield className="w-3 h-3 text-[#176B87]" />
                 <span>Admin View Switcher</span>
               </div>

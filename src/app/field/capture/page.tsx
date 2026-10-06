@@ -234,7 +234,7 @@ export default function FieldCapturePage() {
 
         {/* OFFLINE MODE BANNER */}
         {isOffline && (
-          <div className="p-3 rounded-lg bg-[#FDF6ED] border border-[#F0D4A6] flex items-center justify-between gap-3 text-xs text-[#D98B32]">
+          <div className="p-3 rounded-lg bg-[#FDF6ED] border border-[#F0D4A6] flex items-center justify-between gap-3 text-xs text-[#8C5311]">
             <div className="flex items-center gap-2">
               <span className="px-2 py-0.5 rounded bg-[#D98B32] text-white font-mono font-bold text-[10px] uppercase">
                 OFFLINE MODE

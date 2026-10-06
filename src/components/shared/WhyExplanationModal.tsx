@@ -100,7 +100,7 @@ export function WhyExplanationModal({
       case 'confidence':
         return 'bg-[#EDF5F8] text-[#176B87] border-[#B3CBE0]';
       case 'health':
-        return 'bg-[#FDF6ED] text-[#D98B32] border-[#F0D4A6]';
+        return 'bg-[#FDF6ED] text-[#8C5311] border-[#F0D4A6]';
       case 'variance':
         return 'bg-[#FBEFEE] text-[#B5473C] border-[#E4B0AA]';
       case 'delay':
@@ -160,7 +160,7 @@ export function WhyExplanationModal({
               {getTypeIcon()}
             </div>
             <div>
-              <span className="text-[11px] uppercase font-semibold text-[#7B8798] tracking-wider block">
+              <span className="text-[11px] uppercase font-semibold text-[#596579] tracking-wider block">
                 {data.metricLabel}
               </span>
               <div className="text-xl font-bold font-mono text-[#172033] mt-0.5">
@@ -178,7 +178,7 @@ export function WhyExplanationModal({
 
         {/* Executive Plain English Summary */}
         <div className="p-3.5 rounded-lg bg-white border border-[#D9DEE5] space-y-1">
-          <span className="text-[11px] uppercase font-semibold text-[#7B8798] tracking-wider block">
+          <span className="text-[11px] uppercase font-semibold text-[#596579] tracking-wider block">
             Executive Summary
           </span>
           <p className="text-xs text-[#172033] leading-relaxed">
@@ -189,7 +189,7 @@ export function WhyExplanationModal({
         {/* Contributing Factors Breakdown (Core Explainability) */}
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <span className="text-[11px] uppercase font-semibold text-[#7B8798] tracking-wider">
+            <span className="text-[11px] uppercase font-semibold text-[#596579] tracking-wider">
               Contributing Factors ({data.factors.length})
             </span>
             <span className="text-[11px] text-[#596579] font-mono">Impact / Contribution</span>

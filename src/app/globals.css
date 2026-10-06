@@ -49,6 +49,26 @@
 }
 
 /* Accessible focus ring */
+/* Accessible form placeholders & disabled contrast */
+  ::placeholder {
+    color: #596579;
+    opacity: 1;
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: #596579;
+    opacity: 1;
+  }
+
+  input:disabled,
+  textarea:disabled,
+  select:disabled,
+  button:disabled {
+    cursor: not-allowed;
+    opacity: 0.65;
+  }
+
 *:focus-visible {
   outline: 2px solid #176B87;
   outline-offset: 2px;

@@ -302,7 +302,7 @@ export default function ProjectsPage() {
         );
       case 'near-critical':
         return (
-          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-medium bg-[#FDF6ED] text-[#D98B32] border border-[#F0D4A6]">
+          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-medium bg-[#FDF6ED] text-[#8C5311] border border-[#F0D4A6]">
             <span className="w-1.5 h-1.5 rounded-full bg-[#D98B32]" />
             Float Erosion
           </span>
@@ -690,7 +690,7 @@ export default function ProjectsPage() {
                             <Link
                               href="/matching"
                               onClick={() => setActiveProjectId(project.id)}
-                              className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-mono font-semibold bg-[#FDF6ED] text-[#D98B32] border border-[#F0D4A6] hover:bg-[#F9ECCF] transition-colors"
+                              className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-mono font-semibold bg-[#FDF6ED] text-[#8C5311] border border-[#F0D4A6] hover:bg-[#F9ECCF] transition-colors"
                               title="Click to view match verification queue"
                             >
                               <AlertTriangle className="w-3 h-3 text-[#D98B32]" />

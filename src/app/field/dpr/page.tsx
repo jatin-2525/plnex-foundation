@@ -552,7 +552,7 @@ export default function DPRPage() {
 
         {/* OFFLINE MODE BANNER */}
         {isOffline && (
-          <div className="p-3.5 rounded-lg bg-[#FDF6ED] border border-[#F0D4A6] flex items-center justify-between gap-3 text-xs text-[#D98B32]">
+          <div className="p-3.5 rounded-lg bg-[#FDF6ED] border border-[#F0D4A6] flex items-center justify-between gap-3 text-xs text-[#8C5311]">
             <div className="flex items-center gap-2.5">
               <span className="px-2 py-0.5 rounded bg-[#D98B32] text-white font-mono font-bold text-[10px] uppercase">
                 OFFLINE MODE
@@ -585,11 +585,11 @@ export default function DPRPage() {
                     submissionState === 'Submitted'
                       ? 'bg-[#EDF7F2] text-[#2E7D5B] border-[#B8DCC9]'
                       : submissionState === 'Saved locally'
-                      ? 'bg-[#FDF6ED] text-[#D98B32] border-[#F0D4A6]'
+                      ? 'bg-[#FDF6ED] text-[#8C5311] border-[#F0D4A6]'
                       : submissionState === 'Processing'
                       ? 'bg-[#EDF5F8] text-[#176B87] border-[#B3CBE0]'
                       : submissionState === 'Needs Confirmation'
-                      ? 'bg-[#FDF6ED] text-[#D98B32] border-[#F0D4A6]'
+                      ? 'bg-[#FDF6ED] text-[#8C5311] border-[#F0D4A6]'
                       : 'bg-[#F1F3F5] text-[#172033] border-[#D9DEE5]'
                   }`}
                 >
@@ -650,7 +650,7 @@ export default function DPRPage() {
 
             {/* Stepper Touch Target Buttons */}
             <div className="flex items-center gap-1.5 self-start md:self-auto">
-              <span className="text-[11px] font-semibold text-[#7B8798] mr-1 hidden sm:inline">
+              <span className="text-[11px] font-semibold text-[#596579] mr-1 hidden sm:inline">
                 Section Jump:
               </span>
               <button
@@ -792,7 +792,7 @@ export default function DPRPage() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-xs">
               <div className="space-y-1">
-                <label className="font-bold text-[#7B8798] uppercase tracking-wider text-[10px] block">
+                <label className="font-semibold text-[#596579] uppercase tracking-wider text-[10px] block">
                   Project Code & Name
                 </label>
                 <div className="p-2.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg">
@@ -802,7 +802,7 @@ export default function DPRPage() {
               </div>
 
               <div className="space-y-1">
-                <label className="font-bold text-[#7B8798] uppercase tracking-wider text-[10px] block">
+                <label className="font-semibold text-[#596579] uppercase tracking-wider text-[10px] block">
                   Contract / Package
                 </label>
                 <div className="p-2.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg">
@@ -812,7 +812,7 @@ export default function DPRPage() {
               </div>
 
               <div className="space-y-1">
-                <label className="font-bold text-[#7B8798] uppercase tracking-wider text-[10px] block">
+                <label className="font-semibold text-[#596579] uppercase tracking-wider text-[10px] block">
                   Executing EPC Contractor
                 </label>
                 <div className="p-2.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg">
@@ -822,7 +822,7 @@ export default function DPRPage() {
               </div>
 
               <div className="space-y-1">
-                <label className="font-bold text-[#7B8798] uppercase tracking-wider text-[10px] block">
+                <label className="font-semibold text-[#596579] uppercase tracking-wider text-[10px] block">
                   Site Execution Engineer
                 </label>
                 <div className="p-2.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg">
@@ -832,7 +832,7 @@ export default function DPRPage() {
               </div>
 
               <div className="space-y-1">
-                <label className="font-bold text-[#7B8798] uppercase tracking-wider text-[10px] block">
+                <label className="font-semibold text-[#596579] uppercase tracking-wider text-[10px] block">
                   Schedule Twin Integration
                 </label>
                 <div className="p-2.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg">
@@ -842,7 +842,7 @@ export default function DPRPage() {
               </div>
 
               <div className="space-y-1">
-                <label className="font-bold text-[#7B8798] uppercase tracking-wider text-[10px] block">
+                <label className="font-semibold text-[#596579] uppercase tracking-wider text-[10px] block">
                   Contract Status
                 </label>
                 <div className="p-2.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg">
@@ -1091,7 +1091,7 @@ export default function DPRPage() {
                   </div>
 
                   <div className="space-y-1">
-                    <label className="text-[10px] uppercase font-bold text-[#7B8798] block">
+                    <label className="text-[10px] uppercase font-semibold text-[#596579] block">
                       Execution Narrative & Technical Observations
                     </label>
                     <textarea
@@ -1418,19 +1418,19 @@ export default function DPRPage() {
               <table className="w-full border-collapse">
                 <tbody className="divide-y divide-[#D9DEE5]">
                   <tr className="bg-[#FAFAFA]">
-                    <td className="p-3 font-bold text-[#7B8798] w-1/3">Document Reference</td>
+                    <td className="p-3 font-semibold text-[#596579] w-1/3">Document Reference</td>
                     <td className="p-3 font-mono font-bold text-[#172033]">
                       {dprDocumentNo} • {dprRevision}
                     </td>
                   </tr>
                   <tr>
-                    <td className="p-3 font-bold text-[#7B8798]">Reporting Window</td>
+                    <td className="p-3 font-semibold text-[#596579]">Reporting Window</td>
                     <td className="p-3 text-[#172033]">
                       {reportingDate} ({reportingShift}) • <strong>{summaryMetrics.totalManHours} Productive Man-Hours</strong> ({totalHeadcount} pax)
                     </td>
                   </tr>
                   <tr className="bg-[#FAFAFA]">
-                    <td className="p-3 font-bold text-[#7B8798]">Activities Progressed</td>
+                    <td className="p-3 font-semibold text-[#596579]">Activities Progressed</td>
                     <td className="p-3 text-[#172033]">
                       <span className="font-bold text-[#2E7D5B]">{summaryMetrics.completedTasks} Completed</span>,{' '}
                       <span className="font-bold text-[#176B87]">{summaryMetrics.inProgressTasks} In Progress</span>,{' '}
@@ -1438,20 +1438,20 @@ export default function DPRPage() {
                     </td>
                   </tr>
                   <tr>
-                    <td className="p-3 font-bold text-[#7B8798]">Schedule Twin Impact</td>
+                    <td className="p-3 font-semibold text-[#596579]">Schedule Twin Impact</td>
                     <td className="p-3 text-[#172033]">
                       Advances project cumulative progress by <strong>+{summaryMetrics.scheduleDeltaPercent}%</strong>.
                       Line 24-XX critical path remains on baseline (0 days float deviation).
                     </td>
                   </tr>
                   <tr className="bg-[#FAFAFA]">
-                    <td className="p-3 font-bold text-[#7B8798]">Physical Evidence Audit</td>
+                    <td className="p-3 font-semibold text-[#596579]">Physical Evidence Audit</td>
                     <td className="p-3 text-[#172033]">
                       <span className="font-bold text-[#2E7D5B]">{summaryMetrics.verifiedProofsCount} Verified Attachments</span> (Photographs with GPS coordinates, Crane lift tickets, Weld QC inspection sheets).
                     </td>
                   </tr>
                   <tr>
-                    <td className="p-3 font-bold text-[#7B8798]">Variance / Stoppage Governance</td>
+                    <td className="p-3 font-semibold text-[#596579]">Variance / Stoppage Governance</td>
                     <td className="p-3 text-[#172033]">
                       Activity <strong>PIP-24-003 Hydrostatic Testing</strong> variance flagged due to monsoon squall & flange requisition hold.
                       Routed to Manager Review Queue (/matching).
@@ -1526,7 +1526,7 @@ export default function DPRPage() {
           {selectedQuantityForDrawer && (
             <div className="space-y-4 text-xs text-[#172033]">
               <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg space-y-1">
-                <span className="text-[10px] uppercase font-bold text-[#7B8798] block">Discipline & Status</span>
+                <span className="text-[10px] uppercase font-semibold text-[#596579] block">Discipline & Status</span>
                 <div className="flex items-center justify-between">
                   <span className="font-semibold">{selectedQuantityForDrawer.discipline}</span>
                   <span className="font-bold text-[#176B87]">{selectedQuantityForDrawer.status}</span>
@@ -1535,13 +1535,13 @@ export default function DPRPage() {
 
               <div className="grid grid-cols-2 gap-3">
                 <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg">
-                  <span className="text-[10px] uppercase font-bold text-[#7B8798] block">Planned Target</span>
+                  <span className="text-[10px] uppercase font-semibold text-[#596579] block">Planned Target</span>
                   <span className="font-mono font-bold text-sm">
                     {selectedQuantityForDrawer.plannedToday} {selectedQuantityForDrawer.unit}
                   </span>
                 </div>
                 <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg">
-                  <span className="text-[10px] uppercase font-bold text-[#7B8798] block">Actual Executed</span>
+                  <span className="text-[10px] uppercase font-semibold text-[#596579] block">Actual Executed</span>
                   <span className="font-mono font-bold text-sm text-[#2E7D5B]">
                     {selectedQuantityForDrawer.actualToday} {selectedQuantityForDrawer.unit}
                   </span>
@@ -1549,7 +1549,7 @@ export default function DPRPage() {
               </div>
 
               <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg space-y-1">
-                <span className="text-[10px] uppercase font-bold text-[#7B8798] block">Schedule Cumulative Progress</span>
+                <span className="text-[10px] uppercase font-semibold text-[#596579] block">Schedule Cumulative Progress</span>
                 <div className="flex items-center justify-between text-xs">
                   <span>To Date: <strong>{selectedQuantityForDrawer.cumulativeQty} {selectedQuantityForDrawer.unit}</strong></span>
                   <span>Scope Total: <strong>{selectedQuantityForDrawer.targetTotal} {selectedQuantityForDrawer.unit}</strong></span>

@@ -133,7 +133,7 @@ export function ActivityDetailDrawer({
       case 'Piping':
         return { bg: 'bg-[#EDF5F8]', text: 'text-[#176B87]', border: 'border-[#B3CBE0]' };
       case 'Civil':
-        return { bg: 'bg-[#FDF6ED]', text: 'text-[#D98B32]', border: 'border-[#F0D4A6]' };
+        return { bg: 'bg-[#FDF6ED]', text: 'text-[#8C5311]', border: 'border-[#F0D4A6]' };
       case 'Mechanical':
         return { bg: 'bg-[#EDF5F8]', text: 'text-[#3B6EA8]', border: 'border-[#B3CBE0]' };
       case 'Electrical':
@@ -332,7 +332,7 @@ export function ActivityDetailDrawer({
               <div className="space-y-4 animate-in fade-in duration-150">
                 {/* Primary: Scope Description */}
                 <div className="p-3.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg space-y-1.5">
-                  <span className="text-[11px] uppercase font-semibold text-[#7B8798] tracking-wider block">
+                  <span className="text-[11px] uppercase font-semibold text-[#596579] tracking-wider block">
                     Scope Description
                   </span>
                   <p className="text-sm text-[#172033] leading-relaxed">
@@ -342,7 +342,7 @@ export function ActivityDetailDrawer({
 
                 {/* Primary: Key Work Parameters */}
                 <div className="p-3.5 bg-white border border-[#D9DEE5] rounded-lg space-y-2.5">
-                  <span className="text-[11px] uppercase font-semibold text-[#7B8798] tracking-wider block">
+                  <span className="text-[11px] uppercase font-semibold text-[#596579] tracking-wider block">
                     Execution Classification
                   </span>
                   <div className="space-y-1.5 text-sm">
@@ -479,7 +479,7 @@ export function ActivityDetailDrawer({
                   <div className="flex items-center justify-between">
                     <div>
                       <div className="flex items-center gap-1.5">
-                        <span className="text-[11px] uppercase font-semibold text-[#7B8798] tracking-wider block">
+                        <span className="text-[11px] uppercase font-semibold text-[#596579] tracking-wider block">
                           Physical Progress
                         </span>
                         <WhyButton
@@ -529,14 +529,14 @@ export function ActivityDetailDrawer({
 
                 {/* Primary Milestone Dates Card */}
                 <div className="p-3.5 bg-white border border-[#D9DEE5] rounded-lg space-y-2.5">
-                  <span className="text-[11px] uppercase font-semibold text-[#7B8798] tracking-wider block">
+                  <span className="text-[11px] uppercase font-semibold text-[#596579] tracking-wider block">
                     Schedule Dates &amp; Milestone Milestones
                   </span>
                   <div className="grid grid-cols-2 gap-3 text-xs">
                     <div className="p-2.5 rounded bg-[#F7F8FA] border border-[#D9DEE5] space-y-1">
-                      <span className="text-[11px] uppercase font-semibold text-[#7B8798] block">Planned Start</span>
+                      <span className="text-[11px] uppercase font-semibold text-[#596579] block">Planned Start</span>
                       <strong className="font-mono text-[#172033] block">{activity.plannedStart}</strong>
-                      <span className="text-[11px] uppercase font-semibold text-[#7B8798] block pt-1">Planned Finish</span>
+                      <span className="text-[11px] uppercase font-semibold text-[#596579] block pt-1">Planned Finish</span>
                       <strong className="font-mono text-[#172033] block">{activity.plannedFinish}</strong>
                     </div>
 
@@ -604,7 +604,7 @@ export function ActivityDetailDrawer({
             {activeTab === 'execution' && (
               <div className="space-y-3.5 animate-in fade-in duration-150">
                 <div className="flex items-center justify-between">
-                  <span className="text-[11px] uppercase font-semibold text-[#7B8798] tracking-wider">
+                  <span className="text-[11px] uppercase font-semibold text-[#596579] tracking-wider">
                     Execution Events ({linkedExecutionEvents.length})
                   </span>
                   <Link
@@ -728,7 +728,7 @@ export function ActivityDetailDrawer({
              {activeTab === 'evidence' && (
                <div className="space-y-3.5 animate-in fade-in duration-150">
                  <div className="flex items-center justify-between">
-                   <span className="text-[11px] uppercase font-semibold text-[#7B8798] tracking-wider">
+                   <span className="text-[11px] uppercase font-semibold text-[#596579] tracking-wider">
                      Evidence Records ({linkedEvidenceItems.length})
                    </span>
                    <Link
@@ -765,7 +765,7 @@ export function ActivityDetailDrawer({
                                    <span>Verified QC</span>
                                  </span>
                                ) : (
-                                 <span className="inline-flex items-center gap-1 px-1.5 py-0.2 rounded text-[11px] font-semibold bg-[#FDF6ED] text-[#D98B32] border border-[#F0D4A6]">
+                                 <span className="inline-flex items-center gap-1 px-1.5 py-0.2 rounded text-[11px] font-semibold bg-[#FDF6ED] text-[#8C5311] border border-[#F0D4A6]">
                                    <Clock className="w-3 h-3" />
                                    <span>Pending QC</span>
                                  </span>
@@ -811,16 +811,16 @@ export function ActivityDetailDrawer({
                            {expandedEvidenceId === item.id && (
                              <div className="mt-2 p-2 bg-[#F7F8FA] rounded border border-[#D9DEE5] space-y-1 text-[11px] font-mono">
                                <div className="flex justify-between">
-                                 <span className="text-[#7B8798]">Uploader:</span>
+                                 <span className="text-[#596579]">Uploader:</span>
                                  <span className="text-[#172033] font-semibold">{item.uploader}</span>
                                </div>
                                <div className="flex justify-between">
-                                 <span className="text-[#7B8798]">Timestamp:</span>
+                                 <span className="text-[#596579]">Timestamp:</span>
                                  <span className="text-[#172033]">{item.timestamp}</span>
                                </div>
                                {item.sha256Hash && (
                                  <div className="pt-1 border-t border-[#D9DEE5]">
-                                   <span className="text-[#7B8798] block">SHA-256 Digest:</span>
+                                   <span className="text-[#596579] block">SHA-256 Digest:</span>
                                    <span className="text-[#596579] break-all">{item.sha256Hash}</span>
                                  </div>
                                )}
@@ -844,7 +844,7 @@ export function ActivityDetailDrawer({
                 {/* Float & Critical Path Summary */}
                 <div className="p-3.5 bg-[#FDF6ED] border border-[#F0D4A6] rounded-lg flex items-center justify-between text-xs">
                   <div>
-                    <span className="text-[11px] uppercase font-semibold text-[#D98B32] block">
+                    <span className="text-[11px] uppercase font-semibold text-[#8C5311] block">
                       CPM Float Analysis
                     </span>
                     <strong className="text-sm font-semibold text-[#172033]">
@@ -866,7 +866,7 @@ export function ActivityDetailDrawer({
 
                 {/* Predecessors List */}
                 <div className="space-y-2">
-                  <span className="text-[11px] uppercase font-semibold text-[#7B8798] tracking-wider block">
+                  <span className="text-[11px] uppercase font-semibold text-[#596579] tracking-wider block">
                     Predecessors ({detailedPredecessors.length})
                   </span>
 
@@ -904,7 +904,7 @@ export function ActivityDetailDrawer({
 
                 {/* Successors List */}
                 <div className="space-y-2">
-                  <span className="text-[11px] uppercase font-semibold text-[#7B8798] tracking-wider block">
+                  <span className="text-[11px] uppercase font-semibold text-[#596579] tracking-wider block">
                     Successors ({detailedSuccessors.length})
                   </span>
 
@@ -960,7 +960,7 @@ export function ActivityDetailDrawer({
                         {impactData.projectedScheduleImpact}
                       </p>
                       <div className="p-2.5 bg-[#F7F8FA] rounded border border-[#D9DEE5] space-y-1 text-[11px]">
-                        <span className="text-[#D98B32] font-semibold block uppercase text-[11px]">Active Mitigation:</span>
+                        <span className="text-[#8C5311] font-semibold block uppercase text-[11px]">Active Mitigation:</span>
                         <p className="text-[#172033]">{impactData.currentMitigation}</p>
                         <span className="text-[#176B87] font-semibold block uppercase text-[11px] pt-1">Recommended Action:</span>
                         <p className="text-[#172033]">{impactData.recommendedAction}</p>
@@ -979,7 +979,7 @@ export function ActivityDetailDrawer({
             {activeTab === 'history' && (
               <div className="space-y-3.5 animate-in fade-in duration-150">
                 <div className="flex items-center justify-between">
-                  <span className="text-[11px] uppercase font-semibold text-[#7B8798] tracking-wider">
+                  <span className="text-[11px] uppercase font-semibold text-[#596579] tracking-wider">
                     History &amp; Audit Trail ({auditHistory.length})
                   </span>
                   <span className="text-[11px] font-mono text-[#7B8798]">Tamper-Evident</span>

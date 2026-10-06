@@ -361,7 +361,7 @@ export default function ManagerDashboardPage() {
             <div className="p-4 rounded-lg bg-white border border-[#F0D4A6] hover:border-[#D98B32] transition-all shadow-xs flex flex-col justify-between space-y-3">
               <div className="space-y-1.5">
                 <div className="flex items-center justify-between">
-                  <span className="px-2 py-0.5 rounded text-[11px] font-mono font-semibold uppercase bg-[#FDF6ED] text-[#D98B32] border border-[#F0D4A6]">
+                  <span className="px-2 py-0.5 rounded text-[11px] font-mono font-semibold uppercase bg-[#FDF6ED] text-[#8C5311] border border-[#F0D4A6]">
                     Review Match
                   </span>
                   <WhyButton
@@ -449,7 +449,7 @@ export default function ManagerDashboardPage() {
             <div className="p-4 rounded-lg bg-white border border-[#F0D4A6] hover:border-[#D98B32] transition-all shadow-xs flex flex-col justify-between space-y-3">
               <div className="space-y-1.5">
                 <div className="flex items-center justify-between">
-                  <span className="px-2 py-0.5 rounded text-[11px] font-mono font-semibold uppercase bg-[#FDF6ED] text-[#D98B32] border border-[#F0D4A6]">
+                  <span className="px-2 py-0.5 rounded text-[11px] font-mono font-semibold uppercase bg-[#FDF6ED] text-[#8C5311] border border-[#F0D4A6]">
                     Dependency Impact
                   </span>
                   <div className="flex items-center gap-1.5">
@@ -482,7 +482,7 @@ export default function ManagerDashboardPage() {
             <div className="p-4 rounded-lg bg-white border border-[#F0D4A6] hover:border-[#D98B32] transition-all shadow-xs flex flex-col justify-between space-y-3">
               <div className="space-y-1.5">
                 <div className="flex items-center justify-between">
-                  <span className="px-2 py-0.5 rounded text-[11px] font-mono font-semibold uppercase bg-[#FDF6ED] text-[#D98B32] border border-[#F0D4A6]">
+                  <span className="px-2 py-0.5 rounded text-[11px] font-mono font-semibold uppercase bg-[#FDF6ED] text-[#8C5311] border border-[#F0D4A6]">
                     Evidence Conflict
                   </span>
                   <span className="text-[11px] font-mono font-semibold text-[#B5473C]">Audit Grade Alert</span>
@@ -698,14 +698,14 @@ export default function ManagerDashboardPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3 text-xs">
                 {/* 1. Activity & Delay */}
                 <div>
-                  <span className="text-[10px] uppercase font-bold text-[#7B8798] block">Activity & Delay</span>
+                  <span className="text-[10px] uppercase font-bold text-[#596579] block">Activity & Delay</span>
                   <p className="text-[#172033] font-semibold mt-0.5">PIP-24-001 (+2d slip)</p>
                   <span className="text-[10px] text-[#596579]">Planned: 15 Aug - 30 Sep</span>
                 </div>
 
                 {/* 2. Cause */}
                 <div>
-                  <span className="text-[10px] uppercase font-bold text-[#7B8798] block">Cause</span>
+                  <span className="text-[10px] uppercase font-bold text-[#596579] block">Cause</span>
                   <p className="text-[#596579] mt-0.5">
                     Crane mobilization delayed 2 days due to heavy rainfall at Unit A laydown.
                   </p>
@@ -713,7 +713,7 @@ export default function ManagerDashboardPage() {
 
                 {/* 3. Affected Activities */}
                 <div>
-                  <span className="text-[10px] uppercase font-bold text-[#7B8798] block">Affected Activities</span>
+                  <span className="text-[10px] uppercase font-bold text-[#596579] block">Affected Activities</span>
                   <p className="font-mono text-[#172033] mt-0.5 font-medium">
                     PIP-24-002 (Welds), PIP-24-003 (Hydro-test), INS-04-015
                   </p>
@@ -721,7 +721,7 @@ export default function ManagerDashboardPage() {
 
                 {/* 4. Impact */}
                 <div>
-                  <span className="text-[10px] uppercase font-bold text-[#7B8798] block">Impact</span>
+                  <span className="text-[10px] uppercase font-bold text-[#596579] block">Impact</span>
                   <p className="text-[#B5473C] font-semibold mt-0.5">
                     Pushes 150-bar hydrostatic pressure test milestone by +2 days. Zero float.
                   </p>
@@ -729,7 +729,7 @@ export default function ManagerDashboardPage() {
 
                 {/* 5. Action */}
                 <div className="flex flex-col justify-end">
-                  <span className="text-[10px] uppercase font-bold text-[#7B8798] block mb-1">Action</span>
+                  <span className="text-[10px] uppercase font-bold text-[#596579] block mb-1">Action</span>
                   <Link
                     href="/what-if"
                     className="w-full py-1.5 px-2 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-bold rounded text-center transition-colors shadow-xs"
@@ -744,7 +744,7 @@ export default function ManagerDashboardPage() {
             <div className="border border-[#F0D4A6] rounded-lg p-4 bg-[#FFFCF7] space-y-3">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-[#F0D4A6]/60">
                 <div className="flex items-center gap-2">
-                  <span className="font-mono text-xs font-bold text-[#D98B32] bg-[#FDF6ED] border border-[#F0D4A6] px-2 py-0.5 rounded">
+                  <span className="font-mono text-xs font-bold text-[#8C5311] bg-[#FDF6ED] border border-[#F0D4A6] px-2 py-0.5 rounded">
                     ELE-11-032
                   </span>
                   <span className="text-xs font-bold text-[#172033]">
@@ -760,14 +760,14 @@ export default function ManagerDashboardPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3 text-xs">
                 {/* 1. Activity & Delay */}
                 <div>
-                  <span className="text-[10px] uppercase font-bold text-[#7B8798] block">Activity & Delay</span>
+                  <span className="text-[10px] uppercase font-bold text-[#596579] block">Activity & Delay</span>
                   <p className="text-[#172033] font-semibold mt-0.5">ELE-11-032 (+1d lag)</p>
                   <span className="text-[10px] text-[#596579]">Planned: 01 Sep - 15 Oct</span>
                 </div>
 
                 {/* 2. Cause */}
                 <div>
-                  <span className="text-[10px] uppercase font-bold text-[#7B8798] block">Cause</span>
+                  <span className="text-[10px] uppercase font-bold text-[#596579] block">Cause</span>
                   <p className="text-[#596579] mt-0.5">
                     Overhead steel gallery bracket alignment hold point awaiting re-torque inspection.
                   </p>
@@ -775,7 +775,7 @@ export default function ManagerDashboardPage() {
 
                 {/* 3. Affected Activities */}
                 <div>
-                  <span className="text-[10px] uppercase font-bold text-[#7B8798] block">Affected Activities</span>
+                  <span className="text-[10px] uppercase font-bold text-[#596579] block">Affected Activities</span>
                   <p className="font-mono text-[#172033] mt-0.5 font-medium">
                     INS-04-015 (Smart Transmitters)
                   </p>
@@ -783,7 +783,7 @@ export default function ManagerDashboardPage() {
 
                 {/* 4. Impact */}
                 <div>
-                  <span className="text-[10px] uppercase font-bold text-[#7B8798] block">Impact</span>
+                  <span className="text-[10px] uppercase font-bold text-[#596579] block">Impact</span>
                   <p className="text-[#D98B32] font-semibold mt-0.5">
                     Absorbs 1 day of 3-day float buffer. No immediate milestone push.
                   </p>
@@ -791,7 +791,7 @@ export default function ManagerDashboardPage() {
 
                 {/* 5. Action */}
                 <div className="flex flex-col justify-end">
-                  <span className="text-[10px] uppercase font-bold text-[#7B8798] block mb-1">Action</span>
+                  <span className="text-[10px] uppercase font-bold text-[#596579] block mb-1">Action</span>
                   <button
                     type="button"
                     onClick={() => openActivityDrawer('ELE-11-032')}
@@ -813,7 +813,7 @@ export default function ManagerDashboardPage() {
                 <h2 id="review-heading" className="text-lg sm:text-xl font-semibold text-[#172033] tracking-tight">
                   Review Required Queue
                 </h2>
-                <span className="px-2 py-0.5 rounded-full bg-[#FDF6ED] text-[#D98B32] border border-[#F0D4A6] text-[11px] font-mono font-semibold">
+                <span className="px-2 py-0.5 rounded-full bg-[#FDF6ED] text-[#8C5311] border border-[#F0D4A6] text-[11px] font-mono font-semibold">
                   {reviewEvents.length} Actions Pending
                 </span>
               </div>
@@ -1111,7 +1111,7 @@ export default function ManagerDashboardPage() {
           <div className="space-y-4 text-xs">
             {/* Field Statement */}
             <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg">
-              <span className="text-[10px] font-mono font-bold text-[#7B8798] uppercase block">
+              <span className="text-[10px] font-mono font-semibold text-[#596579] uppercase block">
                 Raw Field Statement
               </span>
               <p className="text-xs font-semibold text-[#172033] mt-1 leading-relaxed">
@@ -1124,7 +1124,7 @@ export default function ManagerDashboardPage() {
 
             {/* Candidate Target */}
             <div className="p-3 bg-white border border-[#D9DEE5] rounded-lg space-y-2">
-              <span className="text-[10px] font-mono font-bold text-[#7B8798] uppercase block">
+              <span className="text-[10px] font-mono font-semibold text-[#596579] uppercase block">
                 Target Schedule Activity
               </span>
               <div className="flex items-center justify-between">

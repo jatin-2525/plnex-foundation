@@ -72,7 +72,7 @@ function getEntityTypeBadge(type: SearchResultType) {
     case 'Evidence':
       return 'bg-[#EDF7F2] text-[#2E7D5B] border-[#B8DCC9]';
     case 'Review Item':
-      return 'bg-[#FDF6ED] text-[#D98B32] border-[#F0D4A6]';
+      return 'bg-[#FDF6ED] text-[#8C5311] border-[#F0D4A6]';
     case 'Risk':
       return 'bg-[#FBEFEE] text-[#B5473C] border-[#E4B0AA]';
     case 'Report':
@@ -102,7 +102,7 @@ function getStatusBadgeClass(status: string) {
     s.includes('available') ||
     s.includes('planning')
   ) {
-    return 'bg-[#FDF6ED] text-[#D98B32] border-[#F0D4A6]';
+    return 'bg-[#FDF6ED] text-[#8C5311] border-[#F0D4A6]';
   }
   if (
     s.includes('delayed') ||
@@ -497,7 +497,7 @@ export function GlobalSearch() {
 
                 {/* Quick Discover suggestions */}
                 <div className="pt-3 border-t border-[#F1F3F5]">
-                  <span className="px-2 text-[10px] uppercase font-bold text-[#7B8798] block mb-2">
+                  <span className="px-2 text-[10px] uppercase font-semibold text-[#596579] block mb-2">
                     Quick Jump Suggestions (Across 7 Data Stores):
                   </span>
                   <div className="flex flex-wrap gap-1.5 px-2">
@@ -526,7 +526,7 @@ export function GlobalSearch() {
             {/* STATE 5: MATCHED RESULTS LIST */}
             {!isLoading && !hasError && query && results.length > 0 && (
               <div className="space-y-1">
-                <div className="px-2 py-1 text-[11px] font-bold text-[#7B8798] flex items-center justify-between">
+                <div className="px-2 py-1 text-[11px] font-semibold text-[#596579] flex items-center justify-between">
                   <span>
                     Results ({results.length} entities found across project index)
                   </span>

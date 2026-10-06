@@ -117,7 +117,7 @@ export function ConnectionStatusControl() {
                 effectiveStatus === 'ONLINE'
                   ? 'bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]'
                   : effectiveStatus === 'OFFLINE'
-                  ? 'bg-[#FDF6ED] text-[#D98B32] border border-[#F0D4A6]'
+                  ? 'bg-[#FDF6ED] text-[#8C5311] border border-[#F0D4A6]'
                   : 'bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0]'
               }`}
             >
@@ -127,7 +127,7 @@ export function ConnectionStatusControl() {
 
           {/* 3 Modes Selector (Priority 2 Requirement 1) */}
           <div className="space-y-1.5">
-            <span className="text-[10px] uppercase font-bold text-[#7B8798] tracking-wider block">
+            <span className="text-[10px] uppercase font-semibold text-[#596579] tracking-wider block">
               Connection Mode
             </span>
 
@@ -204,14 +204,14 @@ export function ConnectionStatusControl() {
               }`}
             >
               <div className="flex items-start gap-2.5">
-                <div className="p-1 rounded bg-white border border-[#D9DEE5] text-[#D98B32] mt-0.5">
+                <div className="p-1 rounded bg-white border border-[#D9DEE5] text-[#8C5311] mt-0.5">
                   <WifiOff className="w-3.5 h-3.5" />
                 </div>
                 <div>
                   <div className="font-bold text-xs text-[#172033] flex items-center gap-1.5">
                     <span>Offline</span>
                     {connectionMode === 'OFFLINE' && (
-                      <span className="text-[10px] font-semibold text-[#D98B32] bg-white px-1.5 py-0.2 rounded border border-[#F0D4A6]">
+                      <span className="text-[10px] font-semibold text-[#8C5311] bg-white px-1.5 py-0.2 rounded border border-[#F0D4A6]">
                         Simulated
                       </span>
                     )}
@@ -227,7 +227,7 @@ export function ConnectionStatusControl() {
 
           {/* Offline Mode Notice Banner (Priority 2 Requirement 3) */}
           {effectiveStatus === 'OFFLINE' && (
-            <div className="p-2.5 rounded-lg bg-[#FDF6ED]/60 border border-[#F0D4A6] text-[11px] text-[#D98B32] space-y-0.5">
+            <div className="p-2.5 rounded-lg bg-[#FDF6ED]/60 border border-[#F0D4A6] text-[11px] text-[#8C5311] space-y-0.5">
               <span className="font-bold block uppercase tracking-wider text-[10px]">
                 OFFLINE MODE
               </span>
@@ -262,7 +262,7 @@ export function ConnectionStatusControl() {
           {isPrivilegedAdmin && (
             <div className="pt-2 border-t border-[#D9DEE5]/60 space-y-2">
               <div className="flex items-center justify-between">
-                <span className="text-[10px] font-bold text-[#7B8798] uppercase tracking-wider flex items-center gap-1">
+                <span className="text-[10px] font-semibold text-[#596579] uppercase tracking-wider flex items-center gap-1">
                   <Sliders className="w-3 h-3 text-[#176B87]" />
                   Admin Test Mode
                 </span>
@@ -316,7 +316,7 @@ export function ConnectionStatusControl() {
 
                   {/* Quick Acceptance Test Runner */}
                   <div className="pt-1.5 border-t border-[#D9DEE5]/60">
-                    <span className="text-[10px] text-[#7B8798] block font-bold mb-1">
+                    <span className="text-[10px] text-[#596579] block font-semibold mb-1">
                       Quick Acceptance Scenarios:
                     </span>
                     <div className="grid grid-cols-2 gap-1.5">

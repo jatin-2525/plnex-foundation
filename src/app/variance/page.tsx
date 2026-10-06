@@ -152,7 +152,7 @@ export default function VariancePage() {
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs mt-2 pt-2 border-t border-[#D9DEE5]">
                       <div>
-                        <span className="text-[10px] uppercase font-bold text-[#7B8798]">Cause / Origin</span>
+                        <span className="text-[10px] uppercase font-semibold text-[#596579]">Cause / Origin</span>
                         <p className="text-[#596579] mt-0.5">{step.reason}</p>
                       </div>
                       <div>

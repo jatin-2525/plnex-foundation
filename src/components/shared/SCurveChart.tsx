@@ -223,7 +223,7 @@ export function SCurveChart({
                     y={y + 3.5}
                     textAnchor="end"
                     fontSize="10"
-                    fill="#7B8798"
+                    fill="#596579"
                     fontFamily="inherit"
                     fontWeight="500"
                   >
@@ -484,7 +484,7 @@ export function SCurveChart({
                   {activePoint.actual !== null ? (
                     <tspan fontWeight="bold" fill="#2E7D5B">{activePoint.actual.toFixed(1)}%</tspan>
                   ) : (
-                    <tspan fill="#7B8798">N/A (Future)</tspan>
+                    <tspan fill="#596579">N/A (Future)</tspan>
                   )}
                 </text>
 
@@ -620,7 +620,7 @@ export function SCurveChart({
       {showLedger && !isCompact && (
         <div className="p-4 border-t border-[#D9DEE5] bg-white">
           <div className="flex items-center justify-between mb-2">
-            <h4 className="text-xs font-semibold uppercase text-[#7B8798] tracking-wider">
+            <h4 className="text-xs font-semibold uppercase text-[#596579] tracking-wider">
               Level 3 — Cumulative Physical Progress Ledger (Audit Trail)
             </h4>
             <span className="text-[11px] text-[#7B8798]">Source: Primavera P6 Baseline Rev 3.2</span>

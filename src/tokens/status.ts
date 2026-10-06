@@ -71,7 +71,7 @@ export function getActivityStatusConfig(status: ActivityStatus): StatusBadgeConf
     case 'at-risk':
       return {
         label: 'At Risk',
-        color: colors.status.warning,
+        color: colors.status.warningText,
         bgColor: colors.status.warningBg,
         borderColor: colors.status.warningBorder,
       };
@@ -106,7 +106,7 @@ export function getActivityStatusConfig(status: ActivityStatus): StatusBadgeConf
     case 'blocked':
       return {
         label: 'Blocked',
-        color: colors.status.warning,
+        color: colors.status.warningText,
         bgColor: colors.status.warningBg,
         borderColor: colors.status.warningBorder,
       };
@@ -133,7 +133,7 @@ export function getEventStatusConfig(status: EventStatus): StatusBadgeConfig {
     case 'pending-review':
       return {
         label: 'Review Required (70–89%)',
-        color: colors.status.warning,
+        color: colors.status.warningText,
         bgColor: colors.status.warningBg,
         borderColor: colors.status.warningBorder,
       };
@@ -180,7 +180,7 @@ export function getMatchConfidenceConfig(confidence: MatchConfidence): StatusBad
     case 'medium':
       return {
         label: 'Review Required',
-        color: colors.status.warning,
+        color: colors.status.warningText,
         bgColor: colors.status.warningBg,
         borderColor: colors.status.warningBorder,
       };
@@ -221,14 +221,14 @@ export function getVarianceSeverityConfig(severity: VarianceSeverity): StatusBad
     case 'minor':
       return {
         label: 'Minor Delay',
-        color: colors.status.warning,
+        color: colors.status.warningText,
         bgColor: colors.status.warningBg,
         borderColor: colors.status.warningBorder,
       };
     case 'moderate':
       return {
         label: 'Moderate Delay',
-        color: colors.status.warning,
+        color: colors.status.warningText,
         bgColor: colors.status.warningBg,
         borderColor: colors.status.warningBorder,
       };

@@ -843,7 +843,7 @@ export default function ProjectOverviewPage() {
               <Link
                 href="/matching"
                 onClick={() => setActiveProjectId(project.id)}
-                className="px-2.5 py-1 rounded bg-[#FDF6ED] border border-[#F0D4A6] text-[#D98B32] font-semibold hover:bg-[#FCEFD9] transition-colors inline-flex items-center gap-1 cursor-pointer"
+                className="px-2.5 py-1 rounded bg-[#FDF6ED] border border-[#F0D4A6] text-[#8C5311] font-semibold hover:bg-[#FCEFD9] transition-colors inline-flex items-center gap-1 cursor-pointer"
               >
                 <AlertTriangle className="w-3 h-3" />
                 <span>{project.openReviews || 3} Pending Reviews</span>
@@ -1093,7 +1093,7 @@ export default function ProjectOverviewPage() {
                 <span className="font-mono font-bold text-[#D98B32]">
                   ELE-11-032: Cable Tray Installation - Substation to Bay
                 </span>
-                <span className="px-2 py-0.5 rounded font-mono font-bold text-[#D98B32] bg-white border border-[#F0D4A6] text-[11px]">
+                <span className="px-2 py-0.5 rounded font-mono font-bold text-[#8C5311] bg-white border border-[#F0D4A6] text-[11px]">
                   +1 Day Slip (Near-Critical)
                 </span>
               </div>
@@ -1162,7 +1162,7 @@ export default function ProjectOverviewPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             {/* Column 1: Recent Execution Observations */}
             <div className="space-y-3">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-[#7B8798] block">
+              <span className="text-[11px] font-semibold uppercase tracking-wider text-[#596579] block">
                 Execution Events
               </span>
 
@@ -1208,7 +1208,7 @@ export default function ProjectOverviewPage() {
 
             {/* Column 2: Recent Verified Evidence */}
             <div className="space-y-3">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-[#7B8798] block">
+              <span className="text-[11px] font-semibold uppercase tracking-wider text-[#596579] block">
                 Verified Field Evidence Vault
               </span>
 
