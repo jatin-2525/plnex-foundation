@@ -1899,8 +1899,8 @@ export default function SchedulePage() {
                    DEFAULT SCANNABLE TABLE (Exact 10 columns specified by User + Action)
                    Activity ID | Activity | Level | Area | Discipline | Start | Finish | Progress | Status | Variance | Action
                    ----------------------------------------------------------------- */
-                <table className="w-full min-w-[960px] text-left text-xs border-collapse">
-                  <thead className="sticky top-0 z-20 bg-[#F7F8FA] border-b border-[#D9DEE5] text-[#596579] font-medium select-none shadow-[0_1px_2px_rgba(0,0,0,0.04)]">
+                <table className="w-full min-w-[960px] text-left text-sm border-collapse">
+                  <thead className="sticky top-0 z-20 bg-[#F7F8FA] border-b border-[#D9DEE5] text-[#596579] font-semibold text-[11px] sm:text-xs uppercase tracking-wider select-none shadow-[0_1px_2px_rgba(0,0,0,0.04)]">
                     <tr>
                       {/* 1. Activity ID */}
                       <th
@@ -2016,7 +2016,7 @@ export default function SchedulePage() {
                       <th className="py-3 px-3.5 whitespace-nowrap text-right">Action</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-[#E5E9EE]">
+                  <tbody className="divide-y divide-[#E5E9EE] text-[14px]">
                     {displayActivities.map((item) => {
                       const row = item.activity;
                       const isExpanded = expandedNodeIds.has(row.id);
@@ -2037,7 +2037,7 @@ export default function SchedulePage() {
                         >
                           {/* 1. Activity ID */}
                           <td className="py-2.5 px-3.5 align-middle whitespace-nowrap">
-                            <span className="font-mono font-bold text-xs text-[#176B87] group-hover:underline">
+                            <span className="font-mono font-semibold text-xs text-[#176B87] group-hover:underline">
                               {row.id}
                             </span>
                           </td>
@@ -2078,7 +2078,7 @@ export default function SchedulePage() {
                               )}
 
                               <span
-                                className={`text-xs ${getActivityTypographyClass(
+                                className={`text-sm ${getActivityTypographyClass(
                                   row.wbsLevel
                                 )} group-hover:text-[#176B87] transition-colors truncate max-w-sm`}
                                 title={row.name}
@@ -2087,7 +2087,7 @@ export default function SchedulePage() {
                               </span>
 
                               {row.isCritical && (
-                                <span className="text-[9px] font-mono text-[#B5473C] bg-[#FBEFEE] border border-[#E4B0AA] px-1 py-0.2 rounded font-bold shrink-0">
+                                <span className="text-[11px] font-mono text-[#B5473C] bg-[#FBEFEE] border border-[#E4B0AA] px-1.5 py-0.2 rounded font-semibold shrink-0">
                                   CRITICAL
                                 </span>
                               )}
@@ -2097,7 +2097,7 @@ export default function SchedulePage() {
                           {/* 3. Level */}
                           <td className="py-2.5 px-2 align-middle text-center whitespace-nowrap">
                             <span
-                              className={`font-mono text-[9px] px-1.5 py-0.5 rounded border font-bold inline-block ${getLevelBadgeClass(
+                              className={`font-mono text-[11px] px-1.5 py-0.5 rounded border font-semibold inline-block ${getLevelBadgeClass(
                                 row.wbsLevel
                               )}`}
                               title={`${row.wbsLevel} Hierarchy Tier`}
@@ -2107,7 +2107,7 @@ export default function SchedulePage() {
                           </td>
 
                           {/* 4. Area */}
-                          <td className="py-2.5 px-3.5 align-middle whitespace-nowrap text-xs text-[#596579] truncate max-w-[160px]" title={row.area}>
+                          <td className="py-2.5 px-3.5 align-middle whitespace-nowrap text-[13px] text-[#596579] truncate max-w-[160px]" title={row.area}>
                             {row.area}
                           </td>
 
@@ -2211,8 +2211,8 @@ export default function SchedulePage() {
                 /* -----------------------------------------------------------------
                    FULL 14-COLUMN P6 MATRIX VIEW (Detailed mode)
                    ----------------------------------------------------------------- */
-                <table className="w-full min-w-[1200px] text-left text-xs border-collapse">
-                  <thead className="sticky top-0 z-20 bg-[#F7F8FA] border-b border-[#D9DEE5] text-[#596579] font-medium select-none shadow-[0_1px_2px_rgba(0,0,0,0.04)]">
+                <table className="w-full min-w-[1200px] text-left text-sm border-collapse">
+                  <thead className="sticky top-0 z-20 bg-[#F7F8FA] border-b border-[#D9DEE5] text-[#596579] font-semibold text-[11px] sm:text-xs uppercase tracking-wider select-none shadow-[0_1px_2px_rgba(0,0,0,0.04)]">
                     <tr>
                       <th
                         onClick={() => handleSort('id')}
@@ -2366,7 +2366,7 @@ export default function SchedulePage() {
                                 )
                               )}
                               <span
-                                className={`text-xs ${getActivityTypographyClass(
+                                className={`text-sm ${getActivityTypographyClass(
                                   row.wbsLevel
                                 )} group-hover:text-[#176B87] transition-colors truncate max-w-xs`}
                                 title={row.name}
@@ -2374,7 +2374,7 @@ export default function SchedulePage() {
                                 {row.name}
                               </span>
                               {row.isCritical && (
-                                <span className="text-[9px] font-mono text-[#B5473C] bg-[#FBEFEE] border border-[#E4B0AA] px-1 py-0.2 rounded font-bold shrink-0">
+                                <span className="text-[11px] font-mono text-[#B5473C] bg-[#FBEFEE] border border-[#E4B0AA] px-1.5 py-0.2 rounded font-semibold shrink-0">
                                   CRITICAL
                                 </span>
                               )}
@@ -2384,7 +2384,7 @@ export default function SchedulePage() {
                           {/* 3. Level */}
                           <td className="py-2.5 px-2 align-middle text-center whitespace-nowrap">
                             <span
-                              className={`font-mono text-[9px] px-1.5 py-0.5 rounded border font-bold inline-block ${getLevelBadgeClass(
+                              className={`font-mono text-[11px] px-1.5 py-0.5 rounded border font-semibold inline-block ${getLevelBadgeClass(
                                 row.wbsLevel
                               )}`}
                             >
@@ -2700,22 +2700,22 @@ export default function SchedulePage() {
 
                 {/* Canonical Error Report Table */}
                 <div className="border border-[#E4B0AA] rounded-lg overflow-x-auto bg-white shadow-xs">
-                  <table className="w-full min-w-[500px] text-left text-xs border-collapse">
+                  <table className="w-full min-w-[500px] text-left text-sm border-collapse">
                     <thead>
-                      <tr className="bg-[#FAF2F1] border-b border-[#E4B0AA] text-[#B5473C] font-semibold">
+                      <tr className="bg-[#FAF2F1] border-b border-[#E4B0AA] text-[#B5473C] font-semibold text-[11px] sm:text-xs uppercase tracking-wider">
                         <th className="py-2.5 px-3 whitespace-nowrap">Row</th>
                         <th className="py-2.5 px-3 whitespace-nowrap">Column</th>
                         <th className="py-2.5 px-3">Problem</th>
                         <th className="py-2.5 px-3">Correction</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-[#F0D5D2]">
+                    <tbody className="divide-y divide-[#F0D5D2] text-[14px]">
                       {importErrors.map((err, idx) => (
                         <tr key={idx} className="hover:bg-[#FFF9F8]">
-                          <td className="py-2 px-3 font-mono font-bold text-[#172033]">{err.row}</td>
-                          <td className="py-2 px-3 font-semibold text-[#172033]">{err.column}</td>
+                          <td className="py-2 px-3 font-mono font-semibold text-[#172033]">{err.row}</td>
+                          <td className="py-2 px-3 font-medium text-[#172033]">{err.column}</td>
                           <td className="py-2 px-3 text-[#B5473C]">{err.problem}</td>
-                          <td className="py-2 px-3 text-[#2E7D5B] font-mono text-[11px]">{err.correction}</td>
+                          <td className="py-2 px-3 text-[#2E7D5B] font-mono text-[12px]">{err.correction}</td>
                         </tr>
                       ))}
                     </tbody>

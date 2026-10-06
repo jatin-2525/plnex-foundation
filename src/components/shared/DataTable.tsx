@@ -92,9 +92,9 @@ export function DataTable<T>({
   return (
     <div className={`bg-white border border-[#D9DEE5] rounded-lg overflow-hidden flex flex-col ${className}`}>
       <div className="overflow-x-auto">
-        <table className="w-full text-left border-collapse text-xs">
+        <table className="w-full text-left border-collapse text-sm">
           <thead>
-            <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[#596579] font-medium uppercase tracking-wider">
+            <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[#596579] font-semibold uppercase tracking-wider text-[11px] sm:text-xs">
               {selectable && (
                 <th className="w-10 px-4 py-3 text-center">
                   <input
@@ -140,7 +140,7 @@ export function DataTable<T>({
                 })}
             </tr>
           </thead>
-          <tbody className="divide-y divide-[#D9DEE5] text-[#172033]">
+          <tbody className="divide-y divide-[#D9DEE5] text-[#172033] text-[14px]">
             {paginatedData.map((row, index) => {
               const rowKey = keyExtractor(row, startIndex + index);
               const isSelected = selectedIds.includes(rowKey);

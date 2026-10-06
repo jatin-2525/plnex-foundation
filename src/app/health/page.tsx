@@ -316,7 +316,7 @@ export default function ScheduleHealthPage() {
                 <Calendar className="w-4 h-4 text-[#176B87]" />
                 <span>Schedule Health</span>
                 <span
-                  className={`px-2 py-0.2 rounded text-[10px] font-mono font-bold ${
+                  className={`px-2 py-0.2 rounded text-[11px] font-mono font-semibold ${
                     activeTab === 'Schedule Health'
                       ? 'bg-[#EDF5F8] text-[#176B87]'
                       : 'bg-[#D9DEE5] text-[#596579]'
@@ -342,7 +342,7 @@ export default function ScheduleHealthPage() {
                 <FileText className="w-4 h-4 text-[#176B87]" />
                 <span>Execution Data Quality</span>
                 <span
-                  className={`px-2 py-0.2 rounded text-[10px] font-mono font-bold ${
+                  className={`px-2 py-0.2 rounded text-[11px] font-mono font-semibold ${
                     activeTab === 'Execution Data Quality'
                       ? 'bg-[#EDF5F8] text-[#176B87]'
                       : 'bg-[#D9DEE5] text-[#596579]'
@@ -445,7 +445,7 @@ export default function ScheduleHealthPage() {
                 >
                   <div className="flex items-center justify-between mb-2">
                     <span
-                      className={`text-[9px] font-mono px-1.5 py-0.5 rounded font-bold uppercase flex items-center gap-1 ${
+                      className={`text-[11px] font-mono px-1.5 py-0.5 rounded font-semibold uppercase flex items-center gap-1 ${
                         ruleSeverity === 'Healthy'
                           ? 'bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]'
                           : ruleSeverity === 'Critical'
@@ -458,16 +458,16 @@ export default function ScheduleHealthPage() {
                       {ruleSeverity === 'Warning' && <AlertCircle className="w-2.5 h-2.5" />}
                       {ruleSeverity}
                     </span>
-                    <span className="text-[10px] font-mono text-[#596579]">
+                    <span className="text-[11px] font-mono text-[#596579]">
                       {ruleIssues.length} open
                     </span>
                   </div>
 
                   <div>
-                    <div className="text-xs font-bold text-[#172033] line-clamp-1" title={ruleItem.name}>
+                    <div className="text-xs font-semibold text-[#172033] line-clamp-1" title={ruleItem.name}>
                       {ruleItem.name}
                     </div>
-                    <div className="text-[10px] font-mono text-[#596579] mt-0.5">
+                    <div className="text-[11px] font-mono text-[#596579] mt-0.5">
                       {ruleItem.canonicalTerm}
                     </div>
                   </div>
@@ -541,9 +541,9 @@ export default function ScheduleHealthPage() {
             ========================================================================= */}
         <div className="bg-white border border-[#D9DEE5] rounded-lg shadow-xs overflow-hidden">
           <div className="overflow-x-auto">
-            <table className="w-full min-w-[800px] text-left border-collapse text-xs">
+            <table className="w-full min-w-[800px] text-left border-collapse text-sm">
               <thead>
-                <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[10px] uppercase font-bold text-[#7B8798] tracking-wider">
+                <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[11px] sm:text-xs uppercase font-semibold text-[#596579] tracking-wider">
                   <th className="py-3 px-4 whitespace-nowrap">Issue</th>
                   <th className="py-3 px-3 whitespace-nowrap">Severity</th>
                   <th className="py-3 px-4 whitespace-nowrap">Object</th>
@@ -566,10 +566,10 @@ export default function ScheduleHealthPage() {
                       {/* 1. Issue (Rule + Issue ID) */}
                       <td className="py-3.5 px-4 align-top whitespace-nowrap">
                         <div className="space-y-0.5">
-                          <span className="font-bold text-[#172033] block">
+                          <span className="font-semibold text-[#172033] block">
                             {issue.rule}
                           </span>
-                          <span className="font-mono text-[10px] text-[#176B87] bg-[#EDF5F8] px-1.5 py-0.2 rounded border border-[#B3CBE0] inline-block">
+                          <span className="font-mono text-[11px] text-[#176B87] bg-[#EDF5F8] px-1.5 py-0.2 rounded border border-[#B3CBE0] inline-block font-semibold">
                             {issue.id}
                           </span>
                         </div>
@@ -579,17 +579,17 @@ export default function ScheduleHealthPage() {
                       <td className="py-3.5 px-3 align-top whitespace-nowrap">
                         <div className="flex items-center gap-1.5">
                           {effectiveSeverity === 'Critical' ? (
-                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-[#FBEFEE] text-[#9E332A] border border-[#E4B0AA]">
+                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold uppercase bg-[#FBEFEE] text-[#9E332A] border border-[#E4B0AA]">
                               <AlertTriangle className="w-3 h-3" />
                               Critical
                             </span>
                           ) : effectiveSeverity === 'Warning' ? (
-                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-[#FDF6ED] text-[#8C5311] border border-[#F0D4A6]">
+                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold uppercase bg-[#FDF6ED] text-[#8C5311] border border-[#F0D4A6]">
                               <AlertCircle className="w-3 h-3" />
                               Warning
                             </span>
                           ) : (
-                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]">
+                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold uppercase bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]">
                               <CheckCircle2 className="w-3 h-3" />
                               Healthy
                             </span>
@@ -607,7 +607,7 @@ export default function ScheduleHealthPage() {
                           <span className="font-mono font-bold text-[#176B87] block truncate">
                             {issue.objectId}
                           </span>
-                          <span className="text-[11px] text-[#596579] line-clamp-1">
+                          <span className="text-[13px] text-[#596579] line-clamp-1">
                             {issue.objectName}
                           </span>
                         </div>
@@ -615,10 +615,10 @@ export default function ScheduleHealthPage() {
 
                       {/* 4. Description */}
                       <td className="py-3.5 px-4 align-top">
-                        <p className="text-xs text-[#172033] leading-relaxed">
+                        <p className="text-sm text-[#172033] leading-relaxed">
                           {issue.description}
                         </p>
-                        <p className="text-[11px] text-[#596579] mt-0.5 italic">
+                        <p className="text-[13px] text-[#596579] mt-0.5 italic">
                           Impact: {issue.impactExplanation}
                         </p>
                       </td>
@@ -631,7 +631,7 @@ export default function ScheduleHealthPage() {
                       {/* 6. Status */}
                       <td className="py-3.5 px-3 align-top whitespace-nowrap">
                         <span
-                          className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold uppercase ${
+                          className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold uppercase ${
                             issue.status === 'Resolved'
                               ? 'bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]'
                               : issue.status === 'Open'
@@ -650,7 +650,7 @@ export default function ScheduleHealthPage() {
                           <button
                             type="button"
                             onClick={() => handleViewIssue(issue)}
-                            className="px-2 py-1 text-[11px] font-bold text-[#596579] hover:text-[#172033] hover:bg-[#F1F3F5] border border-[#D9DEE5] rounded transition-colors"
+                            className="px-2 py-1 text-[11px] font-semibold text-[#596579] hover:text-[#172033] hover:bg-[#F1F3F5] border border-[#D9DEE5] rounded transition-colors"
                             title="View complete issue details"
                           >
                             View

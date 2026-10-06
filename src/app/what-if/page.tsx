@@ -287,10 +287,10 @@ export default function WhatIfSimulatorPage() {
             ========================================================================= */}
         <div className="bg-amber-50 border-2 border-amber-600 rounded-lg p-3.5 sm:p-4 shadow-xs text-center">
           <div className="flex items-center justify-center gap-2.5">
-            <span className="px-2.5 py-0.5 rounded text-xs font-black uppercase tracking-wider bg-amber-600 text-white shrink-0">
+            <span className="px-2.5 py-0.5 rounded text-xs font-bold uppercase tracking-wider bg-amber-600 text-white shrink-0">
               SIMULATION
             </span>
-            <h2 className="text-sm sm:text-base font-black tracking-wide text-amber-950 uppercase">
+            <h2 className="text-sm sm:text-base font-bold tracking-wide text-amber-950 uppercase">
               SIMULATION — DOES NOT CHANGE THE LIVE SCHEDULE
             </h2>
           </div>
@@ -306,11 +306,11 @@ export default function WhatIfSimulatorPage() {
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-[#D9DEE5]/60">
             <div>
               <div className="flex items-center gap-2 mb-1.5 flex-wrap">
-                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-[11px] font-bold uppercase bg-[#F1F3F5] text-[#596579] border border-[#D9DEE5]">
+                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-[11px] font-semibold uppercase bg-[#F1F3F5] text-[#596579] border border-[#D9DEE5]">
                   <Lock className="w-3 h-3 text-[#596579]" />
                   Master Schedule Baseline Locked
                 </span>
-                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-[11px] font-bold uppercase bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0]">
+                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-[11px] font-semibold uppercase bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0]">
                   Predictive CPM Engine
                 </span>
               </div>
@@ -340,7 +340,7 @@ export default function WhatIfSimulatorPage() {
                 type="button"
                 onClick={() => setIsSaveModalOpen(true)}
                 disabled={!simulationResult}
-                className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-[#172033] bg-white border border-[#D9DEE5] hover:bg-[#F1F3F5] disabled:opacity-50 disabled:cursor-not-allowed rounded-lg transition-colors shadow-xs"
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-[#172033] bg-white border border-[#D9DEE5] hover:bg-[#F1F3F5] disabled:opacity-50 disabled:cursor-not-allowed rounded-lg transition-colors shadow-xs"
               >
                 <Save className="w-3.5 h-3.5 text-[#596579]" />
                 <span>Save Scenario</span>
@@ -350,7 +350,7 @@ export default function WhatIfSimulatorPage() {
               <button
                 type="button"
                 onClick={handleOpenCompare}
-                className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-[#172033] bg-white border border-[#D9DEE5] hover:bg-[#F1F3F5] rounded-lg transition-colors shadow-xs"
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-[#172033] bg-white border border-[#D9DEE5] hover:bg-[#F1F3F5] rounded-lg transition-colors shadow-xs"
               >
                 <GitCompare className="w-3.5 h-3.5 text-[#176B87]" />
                 <span>Compare Scenario</span>
@@ -360,7 +360,7 @@ export default function WhatIfSimulatorPage() {
               <button
                 type="button"
                 onClick={handleReset}
-                className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-[#596579] bg-white border border-[#D9DEE5] hover:bg-[#F1F3F5] rounded-lg transition-colors shadow-xs"
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-[#596579] bg-white border border-[#D9DEE5] hover:bg-[#F1F3F5] rounded-lg transition-colors shadow-xs"
                 title="Reset all inputs to baseline"
               >
                 <RotateCcw className="w-3.5 h-3.5 text-[#596579]" />
@@ -391,7 +391,7 @@ export default function WhatIfSimulatorPage() {
                 }`}
               >
                 <span>Saved Vault</span>
-                <span className="px-1.5 py-0.2 rounded-full text-[10px] bg-[#D9DEE5] text-[#172033] font-mono">
+                <span className="px-1.5 py-0.2 rounded-full text-[11px] bg-[#D9DEE5] text-[#172033] font-mono">
                   {savedScenarios.length}
                 </span>
               </button>
@@ -433,14 +433,14 @@ export default function WhatIfSimulatorPage() {
               {/* Card 1: Current Finish */}
               <div className="bg-white border-2 border-[#D9DEE5] rounded-lg p-4 shadow-xs">
                 <div className="flex items-center justify-between mb-1.5">
-                  <span className="text-[10px] uppercase font-bold text-[#596579] tracking-wider">
+                  <span className="text-[11px] uppercase font-semibold text-[#596579] tracking-wider">
                     Current Finish
                   </span>
-                  <span className="px-1.5 py-0.5 rounded text-[9px] font-bold uppercase bg-[#F1F3F5] text-[#596579] border border-[#D9DEE5]">
+                  <span className="px-1.5 py-0.5 rounded text-[11px] font-semibold uppercase bg-[#F1F3F5] text-[#596579] border border-[#D9DEE5]">
                     Actual Baseline
                   </span>
                 </div>
-                <div className="text-2xl sm:text-3xl font-black font-mono text-[#172033]">
+                <div className="text-[28px] sm:text-3xl font-bold font-mono text-[#172033] leading-none">
                   {formatShortDate(selectedActivity.plannedFinish)}
                 </div>
                 <div className="mt-2 pt-2 border-t border-[#D9DEE5]/60 text-xs text-[#596579] flex items-center justify-between">
@@ -454,11 +454,11 @@ export default function WhatIfSimulatorPage() {
               {/* Card 2: Scenario */}
               <div className="bg-white border-2 border-[#B3CBE0] rounded-lg p-4 shadow-xs">
                 <div className="flex items-center justify-between mb-1.5">
-                  <span className="text-[10px] uppercase font-bold text-[#176B87] tracking-wider">
+                  <span className="text-[11px] uppercase font-semibold text-[#176B87] tracking-wider">
                     Scenario
                   </span>
                   <div className="flex items-center gap-1.5">
-                    <span className="px-1.5 py-0.5 rounded text-[9px] font-bold uppercase bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0]">
+                    <span className="px-1.5 py-0.5 rounded text-[11px] font-semibold uppercase bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0]">
                       Simulation Input
                     </span>
                     <WhyButton
@@ -467,12 +467,12 @@ export default function WhatIfSimulatorPage() {
                     />
                   </div>
                 </div>
-                <div className="text-xl sm:text-2xl font-black font-mono text-[#176B87] truncate" title={scenarioDisplay}>
+                <div className="text-xl sm:text-2xl font-bold font-mono text-[#176B87] truncate leading-none" title={scenarioDisplay}>
                   {scenarioDisplay}
                 </div>
                 <div className="mt-2 pt-2 border-t border-[#B3CBE0]/60 text-xs text-[#596579] flex items-center justify-between">
                   <span>Hypothetical shift:</span>
-                  <span className="font-mono font-bold text-[#176B87]">
+                  <span className="font-mono font-semibold text-[#176B87]">
                     {delayDays >= 0 ? `+${delayDays} days` : `${delayDays} days`}
                   </span>
                 </div>
@@ -481,11 +481,11 @@ export default function WhatIfSimulatorPage() {
               {/* Card 3: Projected Finish */}
               <div className="bg-white border-2 border-[#E4B0AA] rounded-lg p-4 shadow-xs">
                 <div className="flex items-center justify-between mb-1.5">
-                  <span className="text-[10px] uppercase font-bold text-[#B5473C] tracking-wider">
+                  <span className="text-[11px] uppercase font-semibold text-[#B5473C] tracking-wider">
                     Projected Finish
                   </span>
                   <div className="flex items-center gap-1.5">
-                    <span className="px-1.5 py-0.5 rounded text-[9px] font-bold uppercase bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
+                    <span className="px-1.5 py-0.5 rounded text-[11px] font-semibold uppercase bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
                       Simulated Date
                     </span>
                     <WhyButton
@@ -494,7 +494,7 @@ export default function WhatIfSimulatorPage() {
                     />
                   </div>
                 </div>
-                <div className="text-2xl sm:text-3xl font-black font-mono text-[#B5473C]">
+                <div className="text-[28px] sm:text-3xl font-bold font-mono text-[#B5473C] leading-none">
                   {formatShortDate(projectedFinishDate)}
                 </div>
                 <div className="mt-2 pt-2 border-t border-[#E4B0AA]/60 text-xs text-[#596579] flex items-center justify-between">
@@ -508,11 +508,11 @@ export default function WhatIfSimulatorPage() {
               {/* Card 4: Impact */}
               <div className="bg-white border-2 border-[#E4B0AA] rounded-lg p-4 shadow-xs">
                 <div className="flex items-center justify-between mb-1.5">
-                  <span className="text-[10px] uppercase font-bold text-[#B5473C] tracking-wider">
+                  <span className="text-[11px] uppercase font-semibold text-[#B5473C] tracking-wider">
                     Impact
                   </span>
                   <div className="flex items-center gap-1.5">
-                    <span className="px-1.5 py-0.5 rounded text-[9px] font-bold uppercase bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
+                    <span className="px-1.5 py-0.5 rounded text-[11px] font-semibold uppercase bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
                       Critical Path
                     </span>
                     <WhyButton
@@ -521,12 +521,12 @@ export default function WhatIfSimulatorPage() {
                     />
                   </div>
                 </div>
-                <div className="text-2xl sm:text-3xl font-black font-mono text-[#B5473C]">
+                <div className="text-[28px] sm:text-3xl font-bold font-mono text-[#B5473C] leading-none">
                   {impactDisplay}
                 </div>
                 <div className="mt-2 pt-2 border-t border-[#E4B0AA]/60 text-xs text-[#596579] flex items-center justify-between">
                   <span>Schedule slip:</span>
-                  <span className="font-mono font-bold text-[#B5473C]">
+                  <span className="font-mono font-semibold text-[#B5473C]">
                     {impactDisplay}
                   </span>
                 </div>
@@ -660,7 +660,7 @@ export default function WhatIfSimulatorPage() {
                         SIMULATION
                       </h2>
                     </div>
-                    <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-[11px] font-black uppercase tracking-wider bg-amber-500 text-white shadow-xs">
+                    <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-[11px] font-semibold uppercase tracking-wider bg-amber-500 text-white shadow-xs">
                       Isolated Sandbox
                     </span>
                   </div>
@@ -901,15 +901,15 @@ export default function WhatIfSimulatorPage() {
                                   {node.id}
                                 </span>
                                 {isSource ? (
-                                  <span className="px-1.5 py-0.2 rounded text-[9px] font-black uppercase bg-[#176B87] text-white">
+                                  <span className="px-1.5 py-0.5 rounded text-[11px] font-semibold uppercase bg-[#176B87] text-white">
                                     Trigger
                                   </span>
                                 ) : node.shiftDays > 0 ? (
-                                  <span className="px-1.5 py-0.2 rounded text-[9px] font-bold uppercase bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
+                                  <span className="px-1.5 py-0.5 rounded text-[11px] font-semibold uppercase bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
                                     +{node.shiftDays}d Slip
                                   </span>
                                 ) : (
-                                  <span className="px-1.5 py-0.2 rounded text-[9px] font-bold uppercase bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]">
+                                  <span className="px-1.5 py-0.5 rounded text-[11px] font-semibold uppercase bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]">
                                     On Target
                                   </span>
                                 )}
@@ -963,9 +963,9 @@ export default function WhatIfSimulatorPage() {
                   </div>
 
                   <div className="overflow-x-auto">
-                    <table className="w-full min-w-[750px] text-left border-collapse text-xs">
+                    <table className="w-full min-w-[750px] text-left border-collapse text-sm">
                       <thead>
-                        <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[10px] uppercase font-bold text-[#7B8798] tracking-wider">
+                        <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[11px] sm:text-xs uppercase font-semibold text-[#596579] tracking-wider">
                           <th className="py-3 px-4">Activity</th>
                           <th className="py-3 px-4">Discipline / Area</th>
                           <th className="py-3 px-4">Current Date</th>
@@ -1328,9 +1328,9 @@ export default function WhatIfSimulatorPage() {
         >
           <div className="space-y-4 text-xs">
             <div className="overflow-x-auto">
-              <table className="w-full min-w-[650px] text-left border-collapse text-xs">
+              <table className="w-full min-w-[650px] text-left border-collapse text-sm">
                 <thead>
-                  <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[10px] uppercase font-bold text-[#7B8798]">
+                  <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[11px] sm:text-xs uppercase font-semibold text-[#596579]">
                     <th className="py-3 px-4">Metric / Dimension</th>
                     <th className="py-3 px-4 bg-[#EDF7F2]/40 text-[#2E7D5B]">
                       Baseline (V3 · Rev 3.2)

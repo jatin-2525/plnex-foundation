@@ -237,7 +237,7 @@ export function StatusBadge({
   const config = STANDARDIZED_STATUS_CONFIGS[normalized] || STANDARDIZED_STATUS_CONFIGS.Queued;
 
   const sizeClasses = {
-    xs: 'text-[10px] px-1.5 py-0.5 gap-1',
+    xs: 'text-[11px] px-1.5 py-0.5 gap-1',
     sm: 'text-xs px-2 py-0.5 gap-1.5',
     md: 'text-sm px-2.5 py-1 gap-2',
   }[size];

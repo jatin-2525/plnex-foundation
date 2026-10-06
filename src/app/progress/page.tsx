@@ -956,16 +956,16 @@ export default function ProgressVariancePage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {/* 1. Planned Progress */}
             <div className="bg-white border border-[#D9DEE5] rounded-lg p-5 shadow-xs">
-              <span className="text-xs font-bold uppercase tracking-wider text-[#7B8798] block">
+              <span className="text-xs font-semibold uppercase tracking-wider text-[#596579] block">
                 Planned Progress
               </span>
               <div className="flex items-baseline gap-2 mt-2">
-                <span className="text-3xl font-extrabold text-[#172033] font-mono">
+                <span className="text-[28px] sm:text-3xl font-bold text-[#172033] font-mono leading-none">
                   {summaryMetrics.plannedProgress.toFixed(1)}%
                 </span>
                 <span className="text-xs text-[#596579] font-medium">CPM Baseline</span>
               </div>
-              <p className="text-xs text-[#596579] mt-2">
+              <p className="text-[13px] text-[#596579] mt-2">
                 Cumulative baseline target as of {reportingDate.split(' ')[0]} (Data Date).
               </p>
             </div>
@@ -973,7 +973,7 @@ export default function ProgressVariancePage() {
             {/* 2. Actual Verified Progress */}
             <div className="bg-white border border-[#B8DCC9] rounded-lg p-5 shadow-xs">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold uppercase tracking-wider text-[#2E7D5B] block">
+                <span className="text-xs font-semibold uppercase tracking-wider text-[#2E7D5B] block">
                   Actual Verified Progress
                 </span>
                 <WhyButton
@@ -982,12 +982,12 @@ export default function ProgressVariancePage() {
                 />
               </div>
               <div className="flex items-baseline gap-2 mt-2">
-                <span className="text-3xl font-extrabold text-[#176B87] font-mono">
+                <span className="text-[28px] sm:text-3xl font-bold text-[#176B87] font-mono leading-none">
                   {summaryMetrics.actualProgress.toFixed(1)}%
                 </span>
                 <span className="text-xs text-[#2E7D5B] font-bold">100% Traceable</span>
               </div>
-              <p className="text-xs text-[#596579] mt-2">
+              <p className="text-[13px] text-[#596579] mt-2">
                 Physically verified field output substantiated by engineering inspection records.
               </p>
             </div>
@@ -995,7 +995,7 @@ export default function ProgressVariancePage() {
             {/* 3. Variance */}
             <div className="bg-white border border-[#E4B0AA] rounded-lg p-5 shadow-xs">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold uppercase tracking-wider text-[#B5473C] block">
+                <span className="text-xs font-semibold uppercase tracking-wider text-[#B5473C] block">
                   Variance
                 </span>
                 <WhyButton
@@ -1004,14 +1004,14 @@ export default function ProgressVariancePage() {
                 />
               </div>
               <div className="flex items-baseline gap-2 mt-2">
-                <span className="text-3xl font-extrabold text-[#B5473C] font-mono">
+                <span className="text-[28px] sm:text-3xl font-bold text-[#B5473C] font-mono leading-none">
                   {summaryMetrics.variance.toFixed(1)}%
                 </span>
-                <span className="text-xs font-bold px-2 py-0.5 rounded bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
+                <span className="text-xs font-semibold px-2 py-0.5 rounded bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
                   Negative (- Behind)
                 </span>
               </div>
-              <p className="text-xs text-[#596579] mt-2">
+              <p className="text-[13px] text-[#596579] mt-2">
                 Physical lag driven by Line 24 field butt welding and monsoon stoppages.
               </p>
             </div>
@@ -1019,7 +1019,7 @@ export default function ProgressVariancePage() {
             {/* 4. Forecast at Completion */}
             <div className="bg-white border border-[#F0D4A6] rounded-lg p-5 shadow-xs">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold uppercase tracking-wider text-[#D98B32] block">
+                <span className="text-xs font-semibold uppercase tracking-wider text-[#D98B32] block">
                   Forecast at Completion
                 </span>
                 <WhyButton
@@ -1028,12 +1028,12 @@ export default function ProgressVariancePage() {
                 />
               </div>
               <div className="flex items-baseline gap-2 mt-2">
-                <span className="text-3xl font-extrabold text-[#D98B32] font-mono">
+                <span className="text-[28px] sm:text-3xl font-bold text-[#D98B32] font-mono leading-none">
                   100.0%
                 </span>
-                <span className="text-xs text-[#D98B32] font-bold">+4 Days Slip</span>
+                <span className="text-xs text-[#D98B32] font-semibold">+4 Days Slip</span>
               </div>
-              <p className="text-xs text-[#596579] mt-2">
+              <p className="text-[13px] text-[#596579] mt-2">
                 Target completion shifted to 15 Dec 2026 (contractual baseline 11 Dec 2026).
               </p>
             </div>
@@ -1535,9 +1535,9 @@ export default function ProgressVariancePage() {
 
           {/* TABLE CONTAINER WITH MANDATED 7 COLUMNS */}
           <div className="overflow-x-auto">
-            <table className="w-full min-w-[850px] text-left text-xs border-collapse">
+            <table className="w-full min-w-[850px] text-left text-sm border-collapse">
               <thead>
-                <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[11px] font-bold uppercase tracking-wider text-[#596579]">
+                <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-[#596579]">
                   <th className="p-3.5 min-w-[240px]">Activity</th>
                   <th className="p-3.5 whitespace-nowrap text-right">Planned %</th>
                   <th className="p-3.5 whitespace-nowrap text-right">Verified Actual %</th>
@@ -1547,7 +1547,7 @@ export default function ProgressVariancePage() {
                   <th className="p-3.5 min-w-[260px]">Last Verified Update</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#D9DEE5]">
+              <tbody className="divide-y divide-[#D9DEE5] text-[14px]">
                 {filteredActivities.length === 0 ? (
                   <tr>
                     <td colSpan={7} className="p-8 text-center text-[#596579]">
@@ -1568,17 +1568,17 @@ export default function ProgressVariancePage() {
                         {/* 1. Activity (ID, Name, WBS, Area) */}
                         <td className="p-3.5">
                           <div className="flex items-center gap-2">
-                            <span className="font-mono font-bold text-[#176B87] group-hover:underline">
+                            <span className="font-mono font-semibold text-xs text-[#176B87] group-hover:underline">
                               {act.id}
                             </span>
                             {act.isCritical && (
-                              <span className="text-[9px] font-bold px-1.5 py-0.2 rounded bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
+                              <span className="text-[11px] font-mono font-semibold px-1.5 py-0.2 rounded bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
                                 CP
                               </span>
                             )}
                           </div>
-                          <div className="font-bold text-[#172033] mt-0.5">{act.name}</div>
-                          <div className="text-[11px] text-[#596579] flex items-center gap-2 mt-0.5">
+                          <div className="font-semibold text-sm text-[#172033] mt-0.5">{act.name}</div>
+                          <div className="text-[12px] text-[#596579] flex items-center gap-2 mt-0.5">
                             <span className="font-mono text-[#7B8798]">WBS {act.wbs}</span>
                             <span>•</span>
                             <span>{act.discipline}</span>
@@ -1697,27 +1697,27 @@ export default function ProgressVariancePage() {
           }
         >
           {selectedActivity && (
-            <div className="space-y-6 text-xs text-[#172033]">
+            <div className="space-y-6 text-sm text-[#172033]">
               {/* Top Activity Card */}
               <div className="p-4 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg space-y-3">
                 <div className="flex items-center justify-between flex-wrap gap-2">
                   <div className="flex items-center gap-2">
-                    <span className="font-mono text-base font-extrabold text-[#176B87]">
+                    <span className="font-mono text-sm sm:text-base font-bold text-[#176B87]">
                       {selectedActivity.id}
                     </span>
-                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-white text-[#176B87] font-semibold border border-[#B3CBE0]">
+                    <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-white text-[#176B87] font-semibold border border-[#B3CBE0]">
                       WBS {selectedActivity.wbs}
                     </span>
-                    <span className="text-[10px] px-2 py-0.5 rounded bg-white text-[#596579] font-medium border border-[#D9DEE5]">
+                    <span className="text-[11px] px-2 py-0.5 rounded bg-white text-[#596579] font-medium border border-[#D9DEE5]">
                       {selectedActivity.discipline}
                     </span>
                   </div>
-                  <span className="text-xs font-mono font-bold text-[#596579]">
+                  <span className="text-xs font-mono font-medium text-[#596579]">
                     Engineer: {selectedActivity.assignedEngineer}
                   </span>
                 </div>
 
-                <h3 className="text-sm font-bold text-[#172033]">
+                <h3 className="text-[15px] font-semibold text-[#172033]">
                   {selectedActivity.name}
                 </h3>
 
@@ -1725,10 +1725,10 @@ export default function ProgressVariancePage() {
                 <div className="space-y-1.5 pt-1">
                   <div className="flex justify-between items-center text-xs">
                     <span>
-                      Verified Actual: <strong className="font-mono text-[#2E7D5B]">{selectedActivity.actualPercent}%</strong>
+                      Verified Actual: <strong className="font-mono text-[#2E7D5B] font-semibold">{selectedActivity.actualPercent}%</strong>
                     </span>
                     <span>
-                      Planned Target: <strong className="font-mono text-[#596579]">{selectedActivity.plannedPercent}%</strong>
+                      Planned Target: <strong className="font-mono text-[#596579] font-semibold">{selectedActivity.plannedPercent}%</strong>
                     </span>
                   </div>
                   <ProgressBar
@@ -1746,11 +1746,11 @@ export default function ProgressVariancePage() {
                 <div className="flex items-center justify-between border-b border-[#D9DEE5]/60 pb-2">
                   <div className="flex items-center gap-2">
                     <ShieldCheck className="w-4 h-4 text-[#176B87]" />
-                    <h4 className="font-bold text-xs uppercase tracking-wider text-[#172033]">
+                    <h4 className="font-semibold text-xs uppercase tracking-wider text-[#172033]">
                       Verified Progress Execution Lineage
                     </h4>
                   </div>
-                  <span className="text-[10px] font-mono text-[#7B8798]">
+                  <span className="text-[11px] font-mono text-[#7B8798]">
                     Mandatory 5-Stage Audit Chain
                   </span>
                 </div>
@@ -1766,9 +1766,9 @@ export default function ProgressVariancePage() {
                             <span className="w-6 h-6 rounded-full bg-white border border-[#D9DEE5] flex items-center justify-center font-mono font-bold text-xs text-[#596579]">
                               1
                             </span>
-                            <span className="font-bold text-xs text-[#596579]">Previous Progress:</span>
+                            <span className="font-medium text-xs text-[#596579]">Previous Progress:</span>
                           </div>
-                          <span className="font-mono text-base font-extrabold text-[#596579]">
+                          <span className="font-mono text-base font-bold text-[#596579]">
                             {latest.previousPercent}%
                           </span>
                         </div>
@@ -1784,13 +1784,13 @@ export default function ProgressVariancePage() {
                               2
                             </span>
                             <div>
-                              <span className="font-bold text-xs text-[#176B87] block">Execution Event:</span>
+                              <span className="font-semibold text-xs text-[#176B87] block">Execution Event:</span>
                               <span className="text-[11px] text-[#596579] italic truncate max-w-[280px] block">
                                 &ldquo;{latest.statement}&rdquo;
                               </span>
                             </div>
                           </div>
-                          <span className="font-mono text-xs font-bold px-2 py-1 bg-white text-[#176B87] border border-[#B3CBE0] rounded">
+                          <span className="font-mono text-xs font-semibold px-2 py-1 bg-white text-[#176B87] border border-[#B3CBE0] rounded">
                             {latest.executionEventId}
                           </span>
                         </div>
@@ -1806,13 +1806,13 @@ export default function ProgressVariancePage() {
                               3
                             </span>
                             <div>
-                              <span className="font-bold text-xs text-[#2E7D5B] block">Evidence Proof:</span>
+                              <span className="font-semibold text-xs text-[#2E7D5B] block">Evidence Proof:</span>
                               <span className="text-[11px] text-[#596579] block">
                                 {latest.evidenceTitle}
                               </span>
                             </div>
                           </div>
-                          <span className="font-mono text-xs font-bold px-2 py-1 bg-white text-[#2E7D5B] border border-[#B8DCC9] rounded">
+                          <span className="font-mono text-xs font-semibold px-2 py-1 bg-white text-[#2E7D5B] border border-[#B8DCC9] rounded">
                             {latest.evidenceId}
                           </span>
                         </div>
@@ -1828,7 +1828,7 @@ export default function ProgressVariancePage() {
                               4
                             </span>
                             <div>
-                              <span className="font-bold text-xs text-[#D98B32] block">Verified By:</span>
+                              <span className="font-semibold text-xs text-[#D98B32] block">Verified By:</span>
                               <span className="text-[11px] text-[#596579] block">
                                 {latest.verifiedBy}
                               </span>
@@ -1850,13 +1850,13 @@ export default function ProgressVariancePage() {
                               5
                             </span>
                             <div>
-                              <span className="font-bold text-xs text-[#2E7D5B] block">New Verified Progress:</span>
-                              <span className="text-[10px] text-[#596579]">
+                              <span className="font-semibold text-xs text-[#2E7D5B] block">New Verified Progress:</span>
+                              <span className="text-[11px] text-[#596579]">
                                 Delta: +{latest.deltaPercent}% committed to Schedule Twin
                               </span>
                             </div>
                           </div>
-                          <span className="font-mono text-xl font-black text-[#2E7D5B]">
+                          <span className="font-mono text-xl font-bold text-[#2E7D5B]">
                             {latest.newPercent}%
                           </span>
                         </div>
@@ -1882,7 +1882,7 @@ export default function ProgressVariancePage() {
                       Progress History Progression
                     </h4>
                   </div>
-                  <span className="text-[10px] font-mono text-[#7B8798]">
+                  <span className="text-[11px] font-mono text-[#7B8798]">
                     Sequential Verified Updates
                   </span>
                 </div>
@@ -1891,7 +1891,7 @@ export default function ProgressVariancePage() {
                 {selectedActivity.history.length > 0 && (
                   <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg overflow-x-auto">
                     <div className="flex items-center gap-2 min-w-max">
-                      <span className="text-[10px] font-bold uppercase text-[#7B8798] mr-1">
+                      <span className="text-[11px] font-semibold uppercase text-[#7B8798] mr-1">
                         Progression:
                       </span>
                       {selectedActivity.history
@@ -1900,8 +1900,8 @@ export default function ProgressVariancePage() {
                         .map((step, idx, arr) => (
                           <React.Fragment key={step.id}>
                             <div className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-white border border-[#D9DEE5] font-mono text-xs">
-                              <span className="font-bold text-[#172033]">{step.newPercent}%</span>
-                              <span className="text-[10px] text-[#7B8798]">({step.timestamp.split(',')[0]})</span>
+                              <span className="font-semibold text-[#172033]">{step.newPercent}%</span>
+                              <span className="text-[11px] text-[#7B8798]">({step.timestamp.split(',')[0]})</span>
                             </div>
                             {idx < arr.length - 1 && (
                               <ArrowRight className="w-3.5 h-3.5 text-[#176B87] shrink-0" />
@@ -1921,10 +1921,10 @@ export default function ProgressVariancePage() {
                     >
                       <div className="flex items-center justify-between flex-wrap gap-2">
                         <div className="flex items-center gap-2">
-                          <span className="font-mono font-bold text-xs px-2 py-0.5 rounded bg-white border border-[#D9DEE5] text-[#176B87]">
+                          <span className="font-mono font-semibold text-xs px-2 py-0.5 rounded bg-white border border-[#D9DEE5] text-[#176B87]">
                             {step.previousPercent}% → {step.newPercent}%
                           </span>
-                          <span className="text-[11px] font-bold text-[#2E7D5B]">
+                          <span className="text-[11px] font-semibold text-[#2E7D5B]">
                             (+{step.deltaPercent}%)
                           </span>
                         </div>
@@ -1933,11 +1933,11 @@ export default function ProgressVariancePage() {
                         </span>
                       </div>
 
-                      <p className="text-[11px] text-[#172033] font-medium leading-relaxed">
+                      <p className="text-[13px] text-[#172033] font-normal leading-relaxed">
                         {step.statement}
                       </p>
 
-                      <div className="pt-2 border-t border-[#D9DEE5]/60 flex items-center justify-between flex-wrap gap-2 text-[10px] text-[#596579] font-mono">
+                      <div className="pt-2 border-t border-[#D9DEE5]/60 flex items-center justify-between flex-wrap gap-2 text-[11px] text-[#596579] font-mono">
                         <div className="flex items-center gap-3">
                           <span>Event: <strong>{step.executionEventId}</strong></span>
                           <span>Evidence: <strong>{step.evidenceTitle}</strong> ({step.evidenceId})</span>

@@ -134,7 +134,7 @@ export function WhyExplanationModal({
                   onClose();
                   onOpenActivityDrawer(data.subjectId);
                 }}
-                className="px-3 py-1.5 bg-[#EDF5F8] hover:bg-[#DCEBF1] text-[#176B87] border border-[#B3CBE0] rounded-lg font-bold shadow-2xs transition-colors flex items-center gap-1.5 cursor-pointer text-xs"
+                className="px-3 py-1.5 bg-[#EDF5F8] hover:bg-[#DCEBF1] text-[#176B87] border border-[#B3CBE0] rounded-lg font-semibold shadow-2xs transition-colors flex items-center gap-1.5 cursor-pointer text-xs"
               >
                 <Layers className="w-3.5 h-3.5" />
                 <span>Open Activity</span>
@@ -160,17 +160,17 @@ export function WhyExplanationModal({
               {getTypeIcon()}
             </div>
             <div>
-              <span className="text-[10px] uppercase font-bold text-[#7B8798] tracking-wider block">
+              <span className="text-[11px] uppercase font-semibold text-[#7B8798] tracking-wider block">
                 {data.metricLabel}
               </span>
-              <div className="text-base font-bold font-mono text-[#172033] mt-0.5">
+              <div className="text-xl font-bold font-mono text-[#172033] mt-0.5">
                 {data.metricValue}
               </div>
             </div>
           </div>
 
           <div
-            className={`px-2.5 py-1 rounded-md text-[11px] font-bold border self-center ${getBadgeStyle()}`}
+            className={`px-2.5 py-1 rounded-md text-[11px] font-semibold border self-center ${getBadgeStyle()}`}
           >
             {getCategoryLabel()}
           </div>
@@ -178,7 +178,7 @@ export function WhyExplanationModal({
 
         {/* Executive Plain English Summary */}
         <div className="p-3.5 rounded-lg bg-white border border-[#D9DEE5] space-y-1">
-          <span className="text-[10px] uppercase font-bold text-[#7B8798] tracking-wider block">
+          <span className="text-[11px] uppercase font-semibold text-[#7B8798] tracking-wider block">
             Executive Summary
           </span>
           <p className="text-xs text-[#172033] leading-relaxed">
@@ -189,7 +189,7 @@ export function WhyExplanationModal({
         {/* Contributing Factors Breakdown (Core Explainability) */}
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <span className="text-[10px] uppercase font-bold text-[#7B8798] tracking-wider">
+            <span className="text-[11px] uppercase font-semibold text-[#7B8798] tracking-wider">
               Contributing Factors ({data.factors.length})
             </span>
             <span className="text-[11px] text-[#596579] font-mono">Impact / Contribution</span>
@@ -207,10 +207,10 @@ export function WhyExplanationModal({
                     ) : (
                       <Info className="w-3.5 h-3.5 text-[#176B87] shrink-0" />
                     )}
-                    <span className="font-bold text-[#172033] text-xs">{f.factor}</span>
+                    <span className="font-semibold text-[#172033] text-xs">{f.factor}</span>
                   </div>
                   <span
-                    className={`font-mono font-bold text-[11px] px-2 py-0.5 rounded border shrink-0 ${
+                    className={`font-mono font-semibold text-[11px] px-2 py-0.5 rounded border shrink-0 ${
                       f.status === 'positive'
                         ? 'bg-[#EDF7F2] text-[#2E7D5B] border-[#B8DCC9]'
                         : f.status === 'negative'
@@ -232,7 +232,7 @@ export function WhyExplanationModal({
         {/* Actionable Next Step */}
         {data.recommendation && (
           <div className="p-3.5 rounded-lg bg-[#EDF7F2] border border-[#B8DCC9] space-y-1">
-            <div className="flex items-center gap-1.5 font-bold text-[#2E7D5B] text-xs">
+            <div className="flex items-center gap-1.5 font-semibold text-[#2E7D5B] text-xs">
               <CheckCircle2 className="w-4 h-4 text-[#2E7D5B]" />
               <span>Recommended Operational Next Step</span>
             </div>

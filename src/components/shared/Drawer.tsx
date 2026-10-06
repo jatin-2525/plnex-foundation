@@ -64,7 +64,7 @@ export function Drawer({
           {/* Header */}
           <div className="flex items-start justify-between px-4 sm:px-6 py-3.5 sm:py-4 border-b border-[#D9DEE5] bg-white flex-shrink-0">
             <div className="min-w-0 pr-2">
-              <h2 className="text-base sm:text-lg font-bold text-[#172033] truncate">{title}</h2>
+              <h2 className="text-base sm:text-lg font-semibold text-[#172033] truncate">{title}</h2>
               {subtitle && <p className="text-xs text-[#596579] mt-0.5 truncate">{subtitle}</p>}
             </div>
             <button

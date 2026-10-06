@@ -347,7 +347,7 @@ export default function OfflineSyncCenterPage() {
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-[#D9DEE5]/60">
             <div>
               <div className="flex items-center gap-2 mb-1.5 flex-wrap">
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-[11px] font-bold uppercase tracking-wider bg-[#176B87]/10 text-[#176B87]">
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-[11px] font-semibold uppercase tracking-wider bg-[#176B87]/10 text-[#176B87]">
                   Field Synchronization Engine
                 </span>
 
@@ -370,17 +370,17 @@ export default function OfflineSyncCenterPage() {
                 )}
               </div>
 
-              <h1 className="text-xl font-bold text-[#172033] tracking-tight">
+              <h1 className="text-[28px] sm:text-3xl font-bold text-[#172033] tracking-tight">
                 Offline / Sync Center
               </h1>
-              <p className="text-xs text-[#596579] mt-0.5 max-w-2xl">
+              <p className="text-sm text-[#596579] mt-0.5 max-w-2xl">
                 Reliable synchronization queue for remote construction corridors. Field captures are buffered locally and synchronized when network connectivity is established.
               </p>
             </div>
 
             {/* Connection Mode Controls */}
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2">
-              <span className="text-[10px] uppercase font-bold text-[#7B8798]">
+              <span className="text-[11px] uppercase font-semibold text-[#7B8798]">
                 connectionMode:
               </span>
               <div className="flex items-center bg-[#F1F3F5] p-1 rounded-lg border border-[#D9DEE5] text-xs">
@@ -828,9 +828,9 @@ export default function OfflineSyncCenterPage() {
             ========================================================================= */}
         <div className="bg-white border border-[#D9DEE5] rounded-lg shadow-xs overflow-hidden">
           <div className="overflow-x-auto">
-            <table className="w-full min-w-[880px] text-left border-collapse text-xs">
+            <table className="w-full min-w-[880px] text-left border-collapse text-sm">
               <thead>
-                <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[10px] uppercase font-bold text-[#7B8798] tracking-wider">
+                <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[11px] sm:text-xs uppercase font-semibold text-[#596579] tracking-wider">
                   <th className="py-3 px-4">Sync Item ID</th>
                   <th className="py-3 px-4">Type</th>
                   <th className="py-3 px-4">Payload Scope / Title</th>
@@ -863,7 +863,7 @@ export default function OfflineSyncCenterPage() {
                       {/* Type */}
                       <td className="py-3.5 px-4">
                         <span
-                          className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold uppercase border ${typeBadge.bg} ${typeBadge.border} ${typeBadge.text}`}
+                          className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold uppercase border ${typeBadge.bg} ${typeBadge.border} ${typeBadge.text}`}
                         >
                           <TypeIcon className="w-3 h-3" />
                           <span>{typeBadge.label}</span>
@@ -874,7 +874,7 @@ export default function OfflineSyncCenterPage() {
                       <td className="py-3.5 px-4 max-w-xs">
                         <div className="font-semibold text-[#172033] truncate">{item.title}</div>
                         {item.payload.activityId && (
-                          <span className="text-[10px] font-mono text-[#596579]">
+                          <span className="text-[11px] font-mono text-[#596579]">
                             Activity: {item.payload.activityId}
                           </span>
                         )}

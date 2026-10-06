@@ -219,7 +219,7 @@ export function ActivityDetailDrawer({
 
                   {/* Critical Path Badge */}
                   {activity.isCritical && (
-                    <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA] uppercase tracking-wider inline-flex items-center gap-1">
+                    <span className="text-[11px] font-semibold px-2 py-0.5 rounded bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA] uppercase tracking-wider inline-flex items-center gap-1">
                       <AlertTriangle className="w-3 h-3" />
                       <span>Critical (Float: 0d)</span>
                     </span>
@@ -230,14 +230,14 @@ export function ActivityDetailDrawer({
 
                   {/* Discipline Pill */}
                   <span
-                    className={`text-[10px] font-bold px-2 py-0.5 rounded border uppercase tracking-wider ${discTheme.bg} ${discTheme.text} ${discTheme.border}`}
+                    className={`text-[11px] font-semibold px-2 py-0.5 rounded border uppercase tracking-wider ${discTheme.bg} ${discTheme.text} ${discTheme.border}`}
                   >
                     {activity.discipline}
                   </span>
                 </div>
 
                 {/* Activity Name */}
-                <h2 className="text-base font-bold text-[#172033] leading-snug line-clamp-2">
+                <h2 className="text-lg font-semibold text-[#172033] leading-snug line-clamp-2">
                   {activity.name}
                 </h2>
               </div>
@@ -254,14 +254,14 @@ export function ActivityDetailDrawer({
             </div>
 
             {/* Quick Context Subhead: WBS, Area, Line */}
-            <div className="flex items-center gap-2 text-xs text-[#596579] font-mono flex-wrap pt-0.5">
-              <span>WBS: <strong className="text-[#172033]">{activity.wbs}</strong> ({activity.wbsLevel})</span>
+            <div className="flex items-center gap-2 text-[13px] text-[#596579] font-mono flex-wrap pt-0.5">
+              <span>WBS: <strong className="text-[#172033] font-semibold">{activity.wbs}</strong> ({activity.wbsLevel})</span>
               <span>•</span>
-              <span className="truncate">Area: <strong className="text-[#172033]">{activity.area}</strong></span>
+              <span className="truncate">Area: <strong className="text-[#172033] font-semibold">{activity.area}</strong></span>
               {activity.line && (
                 <>
                   <span>•</span>
-                  <span>Line: <strong className="text-[#172033]">{activity.line}</strong></span>
+                  <span>Line: <strong className="text-[#172033] font-semibold">{activity.line}</strong></span>
                 </>
               )}
             </div>
@@ -273,7 +273,7 @@ export function ActivityDetailDrawer({
               </span>
               <span>
                 {activity.delayDays > 0 ? (
-                  <span className="text-[#B5473C] font-bold">+{activity.delayDays}d Delay</span>
+                  <span className="text-[#B5473C] font-semibold">+{activity.delayDays}d Delay</span>
                 ) : (
                   <span className="text-[#2E7D5B] font-semibold">On Schedule</span>
                 )}
@@ -304,7 +304,7 @@ export function ActivityDetailDrawer({
                   <span>{tab.label}</span>
                   {tab.count !== undefined && (
                     <span
-                      className={`ml-0.5 px-1.5 py-0.2 rounded-full text-[10px] font-mono ${
+                      className={`ml-0.5 px-1.5 py-0.2 rounded-full text-[11px] font-mono ${
                         isActive
                           ? 'bg-[#176B87] text-white'
                           : 'bg-[#D9DEE5] text-[#596579]'
@@ -321,7 +321,7 @@ export function ActivityDetailDrawer({
           {/* =========================================================================
               BODY CONTENT: Progressive Disclosure within 420–520px Width
               ========================================================================= */}
-          <div className="flex-1 px-5 py-4 overflow-y-auto text-[#172033] text-xs space-y-4">
+          <div className="flex-1 px-5 py-4 overflow-y-auto text-[#172033] text-sm space-y-4">
             
             {/* ---------------------------------------------------------------------
                 SECTION 1: OVERVIEW
@@ -332,20 +332,20 @@ export function ActivityDetailDrawer({
               <div className="space-y-4 animate-in fade-in duration-150">
                 {/* Primary: Scope Description */}
                 <div className="p-3.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg space-y-1.5">
-                  <span className="text-[10px] uppercase font-bold text-[#7B8798] tracking-wider block">
+                  <span className="text-[11px] uppercase font-semibold text-[#7B8798] tracking-wider block">
                     Scope Description
                   </span>
-                  <p className="text-xs text-[#172033] leading-relaxed">
+                  <p className="text-sm text-[#172033] leading-relaxed">
                     {activity.description || 'No detailed scope description registered.'}
                   </p>
                 </div>
 
                 {/* Primary: Key Work Parameters */}
                 <div className="p-3.5 bg-white border border-[#D9DEE5] rounded-lg space-y-2.5">
-                  <span className="text-[10px] uppercase font-bold text-[#7B8798] tracking-wider block">
+                  <span className="text-[11px] uppercase font-semibold text-[#7B8798] tracking-wider block">
                     Execution Classification
                   </span>
-                  <div className="space-y-1.5 text-xs">
+                  <div className="space-y-1.5 text-sm">
                     <div className="flex justify-between items-center py-1 border-b border-[#D9DEE5]/60">
                       <span className="text-[#596579]">Engineering Discipline:</span>
                       <span className={`font-semibold px-2 py-0.5 rounded text-[11px] border ${discTheme.bg} ${discTheme.text} ${discTheme.border}`}>
@@ -405,7 +405,7 @@ export function ActivityDetailDrawer({
                             }`}
                           >
                             <span
-                              className={`font-mono text-[9px] font-bold px-1.5 py-0.5 rounded border flex-shrink-0 ${
+                              className={`font-mono text-[11px] font-semibold px-1.5 py-0.5 rounded border flex-shrink-0 ${
                                 isTarget
                                   ? 'bg-[#176B87] text-white border-[#176B87]'
                                   : 'bg-[#F1F3F5] text-[#596579] border-[#D9DEE5]'
@@ -416,7 +416,7 @@ export function ActivityDetailDrawer({
                             <div className="flex-1 min-w-0 text-[11px]">
                               <div className="flex justify-between text-[#7B8798]">
                                 <span className="font-mono font-semibold text-[#172033]">{step.code}</span>
-                                <span className="uppercase text-[9px]">{step.category}</span>
+                                <span className="uppercase text-[11px] font-semibold">{step.category}</span>
                               </div>
                               <p className={`mt-0.5 truncate ${isTarget ? 'font-bold text-[#176B87]' : 'text-[#596579]'}`}>
                                 {step.name}
@@ -479,7 +479,7 @@ export function ActivityDetailDrawer({
                   <div className="flex items-center justify-between">
                     <div>
                       <div className="flex items-center gap-1.5">
-                        <span className="text-[10px] uppercase font-bold text-[#7B8798] tracking-wider block">
+                        <span className="text-[11px] uppercase font-semibold text-[#7B8798] tracking-wider block">
                           Physical Progress
                         </span>
                         <WhyButton
@@ -488,11 +488,11 @@ export function ActivityDetailDrawer({
                         />
                       </div>
                       <div className="flex items-baseline gap-2 mt-0.5">
-                        <span className="text-2xl font-black text-[#172033] font-mono">
+                        <span className="text-[28px] font-bold text-[#172033] font-mono leading-none">
                           {activity.actualProgress}%
                         </span>
                         <span className="text-xs text-[#596579] font-mono">
-                          Planned: <strong>{activity.plannedProgress}%</strong>
+                          Planned: <strong className="font-semibold">{activity.plannedProgress}%</strong>
                         </span>
                       </div>
                     </div>
@@ -506,7 +506,7 @@ export function ActivityDetailDrawer({
                         />
                       </div>
                       {activity.delayDays > 0 && (
-                        <span className="text-[11px] font-mono font-bold text-[#B5473C] block mt-0.5">
+                        <span className="text-[11px] font-mono font-semibold text-[#B5473C] block mt-0.5">
                           +{activity.delayDays}d Slippage
                         </span>
                       )}
@@ -529,23 +529,23 @@ export function ActivityDetailDrawer({
 
                 {/* Primary Milestone Dates Card */}
                 <div className="p-3.5 bg-white border border-[#D9DEE5] rounded-lg space-y-2.5">
-                  <span className="text-[10px] uppercase font-bold text-[#7B8798] tracking-wider block">
+                  <span className="text-[11px] uppercase font-semibold text-[#7B8798] tracking-wider block">
                     Schedule Dates &amp; Milestone Milestones
                   </span>
                   <div className="grid grid-cols-2 gap-3 text-xs">
                     <div className="p-2.5 rounded bg-[#F7F8FA] border border-[#D9DEE5] space-y-1">
-                      <span className="text-[9px] uppercase font-bold text-[#7B8798] block">Planned Start</span>
+                      <span className="text-[11px] uppercase font-semibold text-[#7B8798] block">Planned Start</span>
                       <strong className="font-mono text-[#172033] block">{activity.plannedStart}</strong>
-                      <span className="text-[9px] uppercase font-bold text-[#7B8798] block pt-1">Planned Finish</span>
+                      <span className="text-[11px] uppercase font-semibold text-[#7B8798] block pt-1">Planned Finish</span>
                       <strong className="font-mono text-[#172033] block">{activity.plannedFinish}</strong>
                     </div>
 
                     <div className="p-2.5 rounded bg-[#EDF5F8]/40 border border-[#B3CBE0] space-y-1">
-                      <span className="text-[9px] uppercase font-bold text-[#176B87] block">Actual Start</span>
+                      <span className="text-[11px] uppercase font-semibold text-[#176B87] block">Actual Start</span>
                       <strong className="font-mono text-[#172033] block">
                         {activity.actualStart || 'Pending Start'}
                       </strong>
-                      <span className="text-[9px] uppercase font-bold text-[#176B87] block pt-1">Actual Finish</span>
+                      <span className="text-[11px] uppercase font-semibold text-[#176B87] block pt-1">Actual Finish</span>
                       <strong className={`font-mono block ${activity.actualFinish ? 'text-[#2E7D5B]' : 'text-[#B5473C]'}`}>
                         {activity.actualFinish || 'In Progress (Active)'}
                       </strong>
@@ -604,7 +604,7 @@ export function ActivityDetailDrawer({
             {activeTab === 'execution' && (
               <div className="space-y-3.5 animate-in fade-in duration-150">
                 <div className="flex items-center justify-between">
-                  <span className="text-[10px] uppercase font-bold text-[#7B8798] tracking-wider">
+                  <span className="text-[11px] uppercase font-semibold text-[#7B8798] tracking-wider">
                     Execution Events ({linkedExecutionEvents.length})
                   </span>
                   <Link
@@ -632,7 +632,7 @@ export function ActivityDetailDrawer({
                             <span className="font-mono font-bold text-xs text-[#176B87] bg-[#EDF5F8] px-2 py-0.5 rounded border border-[#B3CBE0]">
                               {evt.id}
                             </span>
-                            <span className="text-[10px] font-bold px-1.5 py-0.2 rounded bg-[#F1F3F5] text-[#596579] uppercase">
+                            <span className="text-[11px] font-semibold px-1.5 py-0.2 rounded bg-[#F1F3F5] text-[#596579] uppercase">
                               {evt.source.replace('_', ' ')}
                             </span>
                           </div>
@@ -681,151 +681,151 @@ export function ActivityDetailDrawer({
                           {expandedMatchEventId === evt.id && (
                             <div className="mt-2 space-y-2 text-[11px]">
                               <div className="p-2.5 bg-[#EDF7F2] border border-[#B8DCC9] rounded text-[#2E7D5B] space-y-1">
-                                <span className="font-bold uppercase text-[10px] block">Verified Feature Matches:</span>
+                                <span className="font-semibold uppercase text-[11px] block">Verified Feature Matches:</span>
                                 <div className="space-y-0.5">
-                                  <div className="flex items-center gap-1.5">
-                                    <Check className="w-3 h-3 text-[#2E7D5B]" />
-                                    <span>Activity match: {activity.name}</span>
-                                  </div>
-                                  <div className="flex items-center gap-1.5">
-                                    <Check className="w-3 h-3 text-[#2E7D5B]" />
-                                    <span>Area match: {activity.area}</span>
-                                  </div>
-                                  <div className="flex items-center gap-1.5">
-                                    <Check className="w-3 h-3 text-[#2E7D5B]" />
-                                    <span>Discipline match: {activity.discipline}</span>
-                                  </div>
-                                  <div className="flex items-center gap-1.5">
-                                    <Check className="w-3 h-3 text-[#2E7D5B]" />
-                                    <span>Context match: Shift log &amp; physical unit agreement</span>
-                                  </div>
-                                </div>
-                              </div>
+                                   <div className="flex items-center gap-1.5">
+                                     <Check className="w-3 h-3 text-[#2E7D5B]" />
+                                     <span>Activity match: {activity.name}</span>
+                                   </div>
+                                   <div className="flex items-center gap-1.5">
+                                     <Check className="w-3 h-3 text-[#2E7D5B]" />
+                                     <span>Area match: {activity.area}</span>
+                                   </div>
+                                   <div className="flex items-center gap-1.5">
+                                     <Check className="w-3 h-3 text-[#2E7D5B]" />
+                                     <span>Discipline match: {activity.discipline}</span>
+                                   </div>
+                                   <div className="flex items-center gap-1.5">
+                                     <Check className="w-3 h-3 text-[#2E7D5B]" />
+                                     <span>Context match: Shift log &amp; physical unit agreement</span>
+                                   </div>
+                                 </div>
+                               </div>
 
-                              <div className="pt-1">
-                                <MatchExplanation
-                                  eventId={evt.id}
-                                  compact={true}
-                                  showHeading={false}
-                                  onOpenActivity={(actId) => openActivityDrawer(actId)}
-                                />
-                              </div>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            )}
+                               <div className="pt-1">
+                                 <MatchExplanation
+                                   eventId={evt.id}
+                                   compact={true}
+                                   showHeading={false}
+                                   onOpenActivity={(actId) => openActivityDrawer(actId)}
+                                 />
+                               </div>
+                             </div>
+                           )}
+                         </div>
+                       </div>
+                     ))}
+                   </div>
+                 )}
+               </div>
+             )}
 
-            {/* ---------------------------------------------------------------------
-                SECTION 4: EVIDENCE
-                Primary: Evidence list, Verified state, preview modal
-                Secondary Expandable: Cryptographic SHA256, technical metadata
-                --------------------------------------------------------------------- */}
-            {activeTab === 'evidence' && (
-              <div className="space-y-3.5 animate-in fade-in duration-150">
-                <div className="flex items-center justify-between">
-                  <span className="text-[10px] uppercase font-bold text-[#7B8798] tracking-wider">
-                    Evidence Records ({linkedEvidenceItems.length})
-                  </span>
-                  <Link
-                    href={`/evidence?activityId=${encodeURIComponent(activity.id)}`}
-                    className="text-[11px] font-semibold text-[#176B87] hover:underline"
-                  >
-                    Open Evidence &amp; Audit →
-                  </Link>
-                </div>
+             {/* ---------------------------------------------------------------------
+                 SECTION 4: EVIDENCE
+                 Primary: Evidence list, Verified state, preview modal
+                 Secondary Expandable: Cryptographic SHA256, technical metadata
+                 --------------------------------------------------------------------- */}
+             {activeTab === 'evidence' && (
+               <div className="space-y-3.5 animate-in fade-in duration-150">
+                 <div className="flex items-center justify-between">
+                   <span className="text-[11px] uppercase font-semibold text-[#7B8798] tracking-wider">
+                     Evidence Records ({linkedEvidenceItems.length})
+                   </span>
+                   <Link
+                     href={`/evidence?activityId=${encodeURIComponent(activity.id)}`}
+                     className="text-[11px] font-semibold text-[#176B87] hover:underline"
+                   >
+                     Open Evidence &amp; Audit →
+                   </Link>
+                 </div>
 
-                {linkedEvidenceItems.length === 0 ? (
-                  <div className="p-6 text-center border border-dashed border-[#D9DEE5] rounded-lg bg-[#F7F8FA]">
-                    <p className="text-xs font-semibold text-[#596579]">No physical evidence linked</p>
-                  </div>
-                ) : (
-                  <div className="space-y-3">
-                    {linkedEvidenceItems.map((item) => (
-                      <div
-                        key={item.id}
-                        className="p-3.5 bg-white border border-[#D9DEE5] rounded-lg space-y-2.5 shadow-2xs hover:border-[#176B87] transition-colors"
-                      >
-                        <div className="flex items-start justify-between gap-2">
-                          <div className="space-y-1 min-w-0">
-                            <div className="flex items-center gap-1.5 flex-wrap">
-                              <span className="font-mono font-bold text-xs text-[#176B87] bg-[#EDF5F8] px-2 py-0.5 rounded border border-[#B3CBE0]">
-                                {item.id}
-                              </span>
-                              <span className="text-[10px] font-bold px-1.5 py-0.2 rounded bg-[#F1F3F5] text-[#596579] uppercase">
-                                {item.type}
-                              </span>
-                              {item.verifiedStatus ? (
-                                <span className="inline-flex items-center gap-1 px-1.5 py-0.2 rounded text-[10px] font-semibold bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]">
-                                  <ShieldCheck className="w-3 h-3" />
-                                  <span>Verified QC</span>
-                                </span>
-                              ) : (
-                                <span className="inline-flex items-center gap-1 px-1.5 py-0.2 rounded text-[10px] font-semibold bg-[#FDF6ED] text-[#D98B32] border border-[#F0D4A6]">
-                                  <Clock className="w-3 h-3" />
-                                  <span>Pending QC</span>
-                                </span>
-                              )}
-                            </div>
-                            <h4 className="font-bold text-xs text-[#172033] pt-0.5 truncate">{item.title}</h4>
-                            <span className="text-[11px] text-[#596579] font-mono block">
-                              {item.filename} ({item.fileSize})
-                            </span>
-                          </div>
+                 {linkedEvidenceItems.length === 0 ? (
+                   <div className="p-6 text-center border border-dashed border-[#D9DEE5] rounded-lg bg-[#F7F8FA]">
+                     <p className="text-xs font-semibold text-[#596579]">No physical evidence linked</p>
+                   </div>
+                 ) : (
+                   <div className="space-y-3">
+                     {linkedEvidenceItems.map((item) => (
+                       <div
+                         key={item.id}
+                         className="p-3.5 bg-white border border-[#D9DEE5] rounded-lg space-y-2.5 shadow-2xs hover:border-[#176B87] transition-colors"
+                       >
+                         <div className="flex items-start justify-between gap-2">
+                           <div className="space-y-1 min-w-0">
+                             <div className="flex items-center gap-1.5 flex-wrap">
+                               <span className="font-mono font-bold text-xs text-[#176B87] bg-[#EDF5F8] px-2 py-0.5 rounded border border-[#B3CBE0]">
+                                 {item.id}
+                               </span>
+                               <span className="text-[11px] font-semibold px-1.5 py-0.2 rounded bg-[#F1F3F5] text-[#596579] uppercase">
+                                 {item.type}
+                               </span>
+                               {item.verifiedStatus ? (
+                                 <span className="inline-flex items-center gap-1 px-1.5 py-0.2 rounded text-[11px] font-semibold bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]">
+                                   <ShieldCheck className="w-3 h-3" />
+                                   <span>Verified QC</span>
+                                 </span>
+                               ) : (
+                                 <span className="inline-flex items-center gap-1 px-1.5 py-0.2 rounded text-[11px] font-semibold bg-[#FDF6ED] text-[#D98B32] border border-[#F0D4A6]">
+                                   <Clock className="w-3 h-3" />
+                                   <span>Pending QC</span>
+                                 </span>
+                               )}
+                             </div>
+                             <h4 className="font-semibold text-sm text-[#172033] pt-0.5 truncate">{item.title}</h4>
+                             <span className="text-[11px] text-[#596579] font-mono block">
+                               {item.filename} ({item.fileSize})
+                             </span>
+                           </div>
 
-                          <button
-                            type="button"
-                            onClick={() => setPreviewEvidenceModal(item)}
-                            className="p-1.5 text-[#596579] hover:text-[#172033] border border-[#D9DEE5] rounded hover:bg-[#F1F3F5] transition-colors flex-shrink-0"
-                            title="Preview file"
-                          >
-                            <Eye className="w-4 h-4" />
-                          </button>
-                        </div>
+                           <button
+                             type="button"
+                             onClick={() => setPreviewEvidenceModal(item)}
+                             className="p-1.5 text-[#596579] hover:text-[#172033] border border-[#D9DEE5] rounded hover:bg-[#F1F3F5] transition-colors flex-shrink-0"
+                             title="Preview file"
+                           >
+                             <Eye className="w-4 h-4" />
+                           </button>
+                         </div>
 
-                        {item.notes && (
-                          <p className="text-xs text-[#596579] bg-[#F7F8FA] p-2 rounded border border-[#D9DEE5] italic">
-                            &quot;{item.notes}&quot;
-                          </p>
-                        )}
+                         {item.notes && (
+                           <p className="text-xs text-[#596579] bg-[#F7F8FA] p-2 rounded border border-[#D9DEE5] italic">
+                             &quot;{item.notes}&quot;
+                           </p>
+                         )}
 
-                        {/* Progressive Disclosure: Cryptographic & Telemetry Metadata */}
-                        <div className="pt-1 border-t border-[#D9DEE5]/60">
-                          <button
-                            type="button"
-                            onClick={() =>
-                              setExpandedEvidenceId(
-                                expandedEvidenceId === item.id ? null : item.id
-                              )
-                            }
-                            className="text-[11px] font-semibold text-[#176B87] hover:underline flex items-center justify-between w-full"
-                          >
-                            <span>Cryptographic Proof &amp; Metadata</span>
-                            <span>{expandedEvidenceId === item.id ? 'Hide ▲' : 'Expand ▼'}</span>
-                          </button>
+                         {/* Progressive Disclosure: Cryptographic & Telemetry Metadata */}
+                         <div className="pt-1 border-t border-[#D9DEE5]/60">
+                           <button
+                             type="button"
+                             onClick={() =>
+                               setExpandedEvidenceId(
+                                 expandedEvidenceId === item.id ? null : item.id
+                               )
+                             }
+                             className="text-[11px] font-semibold text-[#176B87] hover:underline flex items-center justify-between w-full"
+                           >
+                             <span>Cryptographic Proof &amp; Metadata</span>
+                             <span>{expandedEvidenceId === item.id ? 'Hide ▲' : 'Expand ▼'}</span>
+                           </button>
 
-                          {expandedEvidenceId === item.id && (
-                            <div className="mt-2 p-2 bg-[#F7F8FA] rounded border border-[#D9DEE5] space-y-1 text-[10px] font-mono">
-                              <div className="flex justify-between">
-                                <span className="text-[#7B8798]">Uploader:</span>
-                                <span className="text-[#172033] font-semibold">{item.uploader}</span>
-                              </div>
-                              <div className="flex justify-between">
-                                <span className="text-[#7B8798]">Timestamp:</span>
-                                <span className="text-[#172033]">{item.timestamp}</span>
-                              </div>
-                              {item.sha256Hash && (
-                                <div className="pt-1 border-t border-[#D9DEE5]">
-                                  <span className="text-[#7B8798] block">SHA-256 Digest:</span>
-                                  <span className="text-[#596579] break-all">{item.sha256Hash}</span>
-                                </div>
-                              )}
-                            </div>
-                          )}
+                           {expandedEvidenceId === item.id && (
+                             <div className="mt-2 p-2 bg-[#F7F8FA] rounded border border-[#D9DEE5] space-y-1 text-[11px] font-mono">
+                               <div className="flex justify-between">
+                                 <span className="text-[#7B8798]">Uploader:</span>
+                                 <span className="text-[#172033] font-semibold">{item.uploader}</span>
+                               </div>
+                               <div className="flex justify-between">
+                                 <span className="text-[#7B8798]">Timestamp:</span>
+                                 <span className="text-[#172033]">{item.timestamp}</span>
+                               </div>
+                               {item.sha256Hash && (
+                                 <div className="pt-1 border-t border-[#D9DEE5]">
+                                   <span className="text-[#7B8798] block">SHA-256 Digest:</span>
+                                   <span className="text-[#596579] break-all">{item.sha256Hash}</span>
+                                 </div>
+                               )}
+                             </div>
+                           )}
                         </div>
                       </div>
                     ))}
@@ -844,15 +844,15 @@ export function ActivityDetailDrawer({
                 {/* Float & Critical Path Summary */}
                 <div className="p-3.5 bg-[#FDF6ED] border border-[#F0D4A6] rounded-lg flex items-center justify-between text-xs">
                   <div>
-                    <span className="text-[10px] uppercase font-bold text-[#D98B32] block">
+                    <span className="text-[11px] uppercase font-semibold text-[#D98B32] block">
                       CPM Float Analysis
                     </span>
-                    <strong className="text-sm font-bold text-[#172033]">
+                    <strong className="text-sm font-semibold text-[#172033]">
                       Total Float: {impactData.totalFloatDays}d
                     </strong>
                   </div>
                   <div className="flex items-center gap-1.5">
-                    <span className={`px-2 py-1 rounded text-xs font-bold uppercase ${
+                    <span className={`px-2 py-1 rounded text-xs font-semibold uppercase ${
                       activity.isCritical ? 'bg-[#FBEFEE] text-[#B5473C]' : 'bg-[#EDF7F2] text-[#2E7D5B]'
                     }`}>
                       {activity.isCritical ? 'Critical Path' : 'Non-Critical'}
@@ -866,7 +866,7 @@ export function ActivityDetailDrawer({
 
                 {/* Predecessors List */}
                 <div className="space-y-2">
-                  <span className="text-[10px] uppercase font-bold text-[#7B8798] tracking-wider block">
+                  <span className="text-[11px] uppercase font-semibold text-[#7B8798] tracking-wider block">
                     Predecessors ({detailedPredecessors.length})
                   </span>
 
@@ -904,7 +904,7 @@ export function ActivityDetailDrawer({
 
                 {/* Successors List */}
                 <div className="space-y-2">
-                  <span className="text-[10px] uppercase font-bold text-[#7B8798] tracking-wider block">
+                  <span className="text-[11px] uppercase font-semibold text-[#7B8798] tracking-wider block">
                     Successors ({detailedSuccessors.length})
                   </span>
 
@@ -960,9 +960,9 @@ export function ActivityDetailDrawer({
                         {impactData.projectedScheduleImpact}
                       </p>
                       <div className="p-2.5 bg-[#F7F8FA] rounded border border-[#D9DEE5] space-y-1 text-[11px]">
-                        <span className="text-[#D98B32] font-bold block uppercase text-[10px]">Active Mitigation:</span>
+                        <span className="text-[#D98B32] font-semibold block uppercase text-[11px]">Active Mitigation:</span>
                         <p className="text-[#172033]">{impactData.currentMitigation}</p>
-                        <span className="text-[#176B87] font-bold block uppercase text-[10px] pt-1">Recommended Action:</span>
+                        <span className="text-[#176B87] font-semibold block uppercase text-[11px] pt-1">Recommended Action:</span>
                         <p className="text-[#172033]">{impactData.recommendedAction}</p>
                       </div>
                     </div>
@@ -979,7 +979,7 @@ export function ActivityDetailDrawer({
             {activeTab === 'history' && (
               <div className="space-y-3.5 animate-in fade-in duration-150">
                 <div className="flex items-center justify-between">
-                  <span className="text-[10px] uppercase font-bold text-[#7B8798] tracking-wider">
+                  <span className="text-[11px] uppercase font-semibold text-[#7B8798] tracking-wider">
                     History &amp; Audit Trail ({auditHistory.length})
                   </span>
                   <span className="text-[11px] font-mono text-[#7B8798]">Tamper-Evident</span>
@@ -997,10 +997,10 @@ export function ActivityDetailDrawer({
 
                         <div className="p-3 bg-white border border-[#D9DEE5] rounded-lg space-y-2 shadow-2xs hover:bg-[#F7F8FA] transition-colors">
                           <div className="flex items-center justify-between flex-wrap gap-1">
-                            <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-[#F1F3F5] text-[#596579] border border-[#D9DEE5]">
+                            <span className="px-2 py-0.5 rounded text-[11px] font-semibold bg-[#F1F3F5] text-[#596579] border border-[#D9DEE5]">
                               {log.actionCategory || log.action}
                             </span>
-                            <span className="font-mono text-[10px] text-[#7B8798]">{log.timestamp}</span>
+                            <span className="font-mono text-[11px] text-[#7B8798]">{log.timestamp}</span>
                           </div>
 
                           <div className="text-xs text-[#172033]">
@@ -1014,20 +1014,20 @@ export function ActivityDetailDrawer({
                           )}
 
                           {(log.before || log.previousValue) && (
-                            <div className="grid grid-cols-2 gap-2 text-[10px] font-mono pt-0.5">
+                            <div className="grid grid-cols-2 gap-2 text-[11px] font-mono pt-0.5">
                               <div className="p-1.5 bg-[#FBEFEE] text-[#B5473C] rounded border border-[#E4B0AA]">
-                                <span className="block text-[9px] uppercase font-bold">Before:</span>
+                                <span className="block text-[11px] uppercase font-semibold">Before:</span>
                                 <span>{log.before || log.previousValue}</span>
                               </div>
                               <div className="p-1.5 bg-[#EDF7F2] text-[#2E7D5B] rounded border border-[#B8DCC9]">
-                                <span className="block text-[9px] uppercase font-bold">After:</span>
+                                <span className="block text-[11px] uppercase font-semibold">After:</span>
                                 <span>{log.after || log.newValue}</span>
                               </div>
                             </div>
                           )}
 
                           {/* Progressive Disclosure: Telemetry & Record ID */}
-                          <div className="pt-1 border-t border-[#D9DEE5]/60 flex items-center justify-between text-[10px] text-[#7B8798]">
+                          <div className="pt-1 border-t border-[#D9DEE5]/60 flex items-center justify-between text-[11px] text-[#7B8798]">
                             <button
                               type="button"
                               onClick={() =>
@@ -1128,7 +1128,7 @@ export function ActivityDetailDrawer({
             </div>
 
             <div>
-              <h4 className="font-bold text-xs text-[#172033]">{previewEvidenceModal.title}</h4>
+              <h4 className="font-semibold text-sm text-[#172033]">{previewEvidenceModal.title}</h4>
               <p className="text-[11px] text-[#596579] font-mono mt-0.5">
                 {previewEvidenceModal.filename} • {previewEvidenceModal.fileSize}
               </p>
@@ -1137,7 +1137,7 @@ export function ActivityDetailDrawer({
             <div className="p-3 bg-[#F7F8FA] rounded-lg border border-[#D9DEE5] text-center space-y-1">
               <Camera className="w-8 h-8 text-[#7B8798] mx-auto" />
               <p className="text-[11px] text-[#596579]">Cryptographically sealed proof.</p>
-              <div className="font-mono text-[9px] text-[#7B8798] break-all">
+              <div className="font-mono text-[11px] text-[#7B8798] break-all">
                 SHA: {previewEvidenceModal.sha256Hash || 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'}
               </div>
             </div>

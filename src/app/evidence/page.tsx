@@ -402,7 +402,7 @@ export default function EvidenceAndAuditPage() {
                 <ShieldCheck className="w-4 h-4" />
                 <span>Evidence</span>
                 <span
-                  className={`px-2 py-0.2 rounded-full text-[10px] font-mono ${
+                  className={`px-2 py-0.2 rounded-full text-[11px] font-mono ${
                     activeTab === 'evidence'
                       ? 'bg-[#EDF5F8] text-[#176B87]'
                       : 'bg-[#D9DEE5] text-[#596579]'
@@ -425,7 +425,7 @@ export default function EvidenceAndAuditPage() {
                 <History className="w-4 h-4" />
                 <span>Audit History</span>
                 <span
-                  className={`px-2 py-0.2 rounded-full text-[10px] font-mono ${
+                  className={`px-2 py-0.2 rounded-full text-[11px] font-mono ${
                     activeTab === 'audit_history'
                       ? 'bg-[#EDF5F8] text-[#176B87]'
                       : 'bg-[#D9DEE5] text-[#596579]'
@@ -448,7 +448,7 @@ export default function EvidenceAndAuditPage() {
                 <CheckCircle2 className="w-4 h-4" />
                 <span>Verification History</span>
                 <span
-                  className={`px-2 py-0.2 rounded-full text-[10px] font-mono ${
+                  className={`px-2 py-0.2 rounded-full text-[11px] font-mono ${
                     activeTab === 'verification_history'
                       ? 'bg-[#EDF5F8] text-[#176B87]'
                       : 'bg-[#D9DEE5] text-[#596579]'
@@ -773,9 +773,9 @@ export default function EvidenceAndAuditPage() {
                 ========================================================================= */}
             <div className="bg-white border border-[#D9DEE5] rounded-lg shadow-xs overflow-hidden">
               <div className="overflow-x-auto">
-                <table className="w-full min-w-[880px] text-left border-collapse text-xs">
+                <table className="w-full min-w-[880px] text-left border-collapse text-sm">
                   <thead>
-                    <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[10px] uppercase font-bold text-[#7B8798] tracking-wider">
+                    <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[11px] sm:text-xs uppercase font-semibold text-[#596579] tracking-wider">
                       <th className="py-3 px-4">Evidence ID</th>
                       <th className="py-3 px-4">Type</th>
                       <th className="py-3 px-4 min-w-[160px]">Source</th>
@@ -810,7 +810,7 @@ export default function EvidenceAndAuditPage() {
                             {/* 2. Type */}
                             <td className="py-3 px-4">
                               <span
-                                className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold uppercase border ${typeBadge.bg} ${typeBadge.border} ${typeBadge.text}`}
+                                className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold uppercase border ${typeBadge.bg} ${typeBadge.border} ${typeBadge.text}`}
                               >
                                 <TypeIcon className="w-3 h-3" />
                                 <span>{typeBadge.label}</span>
@@ -857,7 +857,7 @@ export default function EvidenceAndAuditPage() {
                                   <span className="font-mono text-xs font-bold text-[#176B87] block">
                                     {item.executionEventId}
                                   </span>
-                                  <span className="text-[10px] text-[#596579] truncate block max-w-[130px]">
+                                  <span className="text-[11px] text-[#596579] truncate block max-w-[130px]">
                                     {item.extractedData?.quantity} {item.extractedData?.unit}
                                   </span>
                                 </div>
@@ -869,7 +869,7 @@ export default function EvidenceAndAuditPage() {
                             {/* 6. Uploaded By */}
                             <td className="py-3 px-4">
                               <div className="font-medium text-[#172033]">{item.uploader}</div>
-                              <div className="text-[10px] text-[#7B8798]">{item.uploaderRole}</div>
+                              <div className="text-[11px] text-[#7B8798]">{item.uploaderRole}</div>
                             </td>
 
                             {/* 7. Date */}
@@ -1035,7 +1035,7 @@ export default function EvidenceAndAuditPage() {
                   <div className="font-bold text-sm text-[#172033]">
                     Progress changed:
                   </div>
-                  <div className="text-base font-black font-mono text-[#2E7D5B] mt-0.5">
+                  <div className="text-base font-bold font-mono text-[#2E7D5B] mt-0.5">
                     53% → 65%
                   </div>
                 </div>
@@ -1153,9 +1153,9 @@ export default function EvidenceAndAuditPage() {
             {/* AUDIT TABLE: Who | What | When | Before | After | Reason */}
             <div className="bg-white border border-[#D9DEE5] rounded-lg shadow-xs overflow-hidden">
               <div className="overflow-x-auto">
-                <table className="w-full min-w-[880px] text-left border-collapse text-xs">
+                <table className="w-full min-w-[880px] text-left border-collapse text-sm">
                   <thead>
-                    <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[10px] uppercase font-bold text-[#7B8798] tracking-wider">
+                    <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[11px] sm:text-xs uppercase font-semibold text-[#596579] tracking-wider">
                       <th className="py-3 px-4">Audit ID</th>
                       <th className="py-3 px-4 min-w-[140px]">Who (Changed by)</th>
                       <th className="py-3 px-4 min-w-[180px]">What (Action)</th>
@@ -1182,9 +1182,9 @@ export default function EvidenceAndAuditPage() {
 
                         {/* Who */}
                         <td className="py-3 px-4">
-                          <div className="font-bold text-[#172033]">{log.actor}</div>
+                          <div className="font-semibold text-[#172033]">{log.actor}</div>
                           <span
-                            className={`inline-block px-1.5 py-0.2 rounded text-[9px] font-mono font-bold uppercase mt-0.5 ${
+                            className={`inline-block px-1.5 py-0.2 rounded text-[11px] font-mono font-semibold uppercase mt-0.5 ${
                               log.role === 'SYSTEM'
                                 ? 'bg-[#F1F3F5] text-[#596579] border border-[#D9DEE5]'
                                 : log.role === 'manager'
@@ -1255,12 +1255,12 @@ export default function EvidenceAndAuditPage() {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div className="bg-white border-2 border-[#B8DCC9] rounded-lg p-4 shadow-xs">
                 <div className="flex items-center justify-between mb-1.5">
-                  <span className="text-[10px] uppercase font-bold text-[#2E7D5B] tracking-wider">
+                  <span className="text-[11px] uppercase font-semibold text-[#2E7D5B] tracking-wider">
                     Verified Sign-Offs
                   </span>
                   <CheckCircle2 className="w-4 h-4 text-[#2E7D5B]" />
                 </div>
-                <div className="text-2xl font-black font-mono text-[#2E7D5B]">
+                <div className="text-[28px] font-bold font-mono text-[#2E7D5B] leading-none">
                   {verifiedCount} Items
                 </div>
                 <span className="text-xs text-[#596579] mt-1 block">
@@ -1270,12 +1270,12 @@ export default function EvidenceAndAuditPage() {
 
               <div className="bg-white border-2 border-[#F0D4A6] rounded-lg p-4 shadow-xs">
                 <div className="flex items-center justify-between mb-1.5">
-                  <span className="text-[10px] uppercase font-bold text-[#D98B32] tracking-wider">
+                  <span className="text-[11px] uppercase font-semibold text-[#D98B32] tracking-wider">
                     Pending QC Review
                   </span>
                   <Clock className="w-4 h-4 text-[#D98B32]" />
                 </div>
-                <div className="text-2xl font-black font-mono text-[#D98B32]">
+                <div className="text-[28px] font-bold font-mono text-[#D98B32] leading-none">
                   {pendingCount} Items
                 </div>
                 <span className="text-xs text-[#596579] mt-1 block">
@@ -1285,12 +1285,12 @@ export default function EvidenceAndAuditPage() {
 
               <div className="bg-white border-2 border-[#E4B0AA] rounded-lg p-4 shadow-xs">
                 <div className="flex items-center justify-between mb-1.5">
-                  <span className="text-[10px] uppercase font-bold text-[#B5473C] tracking-wider">
+                  <span className="text-[11px] uppercase font-semibold text-[#B5473C] tracking-wider">
                     Disputed / Conflicts
                   </span>
                   <AlertTriangle className="w-4 h-4 text-[#B5473C]" />
                 </div>
-                <div className="text-2xl font-black font-mono text-[#B5473C]">
+                <div className="text-[28px] font-bold font-mono text-[#B5473C] leading-none">
                   {conflictCount} Items
                 </div>
                 <span className="text-xs text-[#596579] mt-1 block">
@@ -1304,7 +1304,7 @@ export default function EvidenceAndAuditPage() {
               <div className="flex items-center justify-between flex-wrap gap-2">
                 <div className="flex items-center gap-2">
                   <ShieldCheck className="w-4 h-4 text-[#176B87]" />
-                  <h3 className="text-xs font-bold text-[#172033] uppercase tracking-wider">
+                  <h3 className="text-xs font-semibold text-[#172033] uppercase tracking-wider">
                     Verification History Filters
                   </h3>
                 </div>
@@ -1320,7 +1320,7 @@ export default function EvidenceAndAuditPage() {
 
               <div className="flex items-center gap-3 flex-wrap">
                 <div className="flex items-center gap-1.5">
-                  <span className="text-[10px] font-bold uppercase text-[#7B8798]">Status:</span>
+                  <span className="text-[11px] font-semibold uppercase text-[#7B8798]">Status:</span>
                   {['ALL', 'Verified', 'Pending QC', 'Conflict'].map((st) => (
                     <button
                       key={st}
@@ -1353,9 +1353,9 @@ export default function EvidenceAndAuditPage() {
             {/* VERIFICATION DECISIONS TABLE */}
             <div className="bg-white border border-[#D9DEE5] rounded-lg shadow-xs overflow-hidden">
               <div className="overflow-x-auto">
-                <table className="w-full min-w-[880px] text-left border-collapse text-xs">
+                <table className="w-full min-w-[880px] text-left border-collapse text-sm">
                   <thead>
-                    <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[10px] uppercase font-bold text-[#7B8798] tracking-wider">
+                    <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[11px] sm:text-xs uppercase font-semibold text-[#596579] tracking-wider">
                       <th className="py-3 px-4">Evidence Artifact</th>
                       <th className="py-3 px-4">Decision Status</th>
                       <th className="py-3 px-4 min-w-[160px]">Verified By</th>

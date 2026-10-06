@@ -163,10 +163,10 @@ export default function ManagerDashboardPage() {
         <section aria-labelledby="kpi-heading" className="space-y-2.5">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <h2 id="kpi-heading" className="text-xs font-bold uppercase tracking-wider text-[#7B8798]">
+              <h2 id="kpi-heading" className="text-xs font-semibold uppercase tracking-wider text-[#596579]">
                 Project Health & Performance KPIs
               </h2>
-              <span className="text-[11px] text-[#596579]">
+              <span className="text-[12px] text-[#596579]">
                 • Planned: {activeProject.plannedProgress}% vs Actual: {activeProject.overallProgress}%
               </span>
             </div>
@@ -181,7 +181,7 @@ export default function ManagerDashboardPage() {
               className="p-4 bg-white border border-[#D9DEE5] hover:border-[#176B87] rounded-lg shadow-xs transition-colors flex flex-col justify-between group"
             >
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold uppercase tracking-wider text-[#596579]">
+                <span className="text-xs font-semibold uppercase tracking-wider text-[#596579]">
                   Schedule Health
                 </span>
                 <div className="flex items-center gap-1.5">
@@ -194,16 +194,16 @@ export default function ManagerDashboardPage() {
               </div>
               <div className="my-2">
                 <div className="flex items-baseline gap-1.5">
-                  <span className="text-2xl sm:text-3xl font-black font-mono text-[#2E7D5B]">
+                  <span className="text-2xl sm:text-3xl font-bold font-mono text-[#2E7D5B] leading-none">
                     94%
                   </span>
                   <span className="text-xs font-semibold text-[#2E7D5B]">Good</span>
                 </div>
-                <p className="text-[11px] text-[#596579] mt-0.5">
+                <p className="text-[12px] text-[#596579] mt-0.5">
                   DCMA 14-Point • 5 Minor Flags
                 </p>
               </div>
-              <Link href="/health" className="text-[10px] text-[#176B87] group-hover:underline font-semibold flex items-center gap-1">
+              <Link href="/health" className="text-[11px] sm:text-xs text-[#176B87] group-hover:underline font-semibold flex items-center gap-1">
                 Inspect Health &rarr;
               </Link>
             </div>
@@ -213,7 +213,7 @@ export default function ManagerDashboardPage() {
               className="p-4 bg-white border border-[#D9DEE5] hover:border-[#176B87] rounded-lg shadow-xs transition-colors flex flex-col justify-between group"
             >
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold uppercase tracking-wider text-[#596579]">
+                <span className="text-xs font-semibold uppercase tracking-wider text-[#596579]">
                   Verified Progress
                 </span>
                 <div className="flex items-center gap-1.5">
@@ -226,16 +226,16 @@ export default function ManagerDashboardPage() {
               </div>
               <div className="my-2">
                 <div className="flex items-baseline gap-1.5">
-                  <span className="text-2xl sm:text-3xl font-black font-mono text-[#176B87]">
+                  <span className="text-2xl sm:text-3xl font-bold font-mono text-[#176B87] leading-none">
                     {activeProject.overallProgress}%
                   </span>
                   <span className="text-xs text-[#596579]">Actual</span>
                 </div>
-                <p className="text-[11px] text-[#596579] mt-0.5">
+                <p className="text-[12px] text-[#596579] mt-0.5">
                   Target: {activeProject.plannedProgress}% (P6 Target)
                 </p>
               </div>
-              <Link href="/progress" className="text-[10px] text-[#176B87] group-hover:underline font-semibold flex items-center gap-1">
+              <Link href="/progress" className="text-[11px] sm:text-xs text-[#176B87] group-hover:underline font-semibold flex items-center gap-1">
                 Progress Matrix &rarr;
               </Link>
             </div>
@@ -246,23 +246,23 @@ export default function ManagerDashboardPage() {
               className="p-4 bg-white border border-[#D9DEE5] hover:border-[#B5473C] rounded-lg shadow-xs transition-colors flex flex-col justify-between group"
             >
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold uppercase tracking-wider text-[#596579]">
+                <span className="text-xs font-semibold uppercase tracking-wider text-[#596579]">
                   Activities At Risk
                 </span>
                 <AlertTriangle className="w-4 h-4 text-[#B5473C] flex-shrink-0" />
               </div>
               <div className="my-2">
                 <div className="flex items-baseline gap-1.5">
-                  <span className="text-2xl sm:text-3xl font-black font-mono text-[#B5473C]">
+                  <span className="text-2xl sm:text-3xl font-bold font-mono text-[#B5473C] leading-none">
                     3
                   </span>
                   <span className="text-xs font-bold text-[#B5473C]">At Risk</span>
                 </div>
-                <p className="text-[11px] text-[#596579] mt-0.5">
+                <p className="text-[12px] text-[#596579] mt-0.5">
                   1 Critical Path • 2 Near-Critical
                 </p>
               </div>
-              <span className="text-[10px] text-[#176B87] group-hover:underline font-semibold flex items-center gap-1">
+              <span className="text-[11px] sm:text-xs text-[#176B87] group-hover:underline font-semibold flex items-center gap-1">
                 CPM Risk Network &rarr;
               </span>
             </Link>
@@ -273,23 +273,23 @@ export default function ManagerDashboardPage() {
               className="p-4 bg-white border border-[#D9DEE5] hover:border-[#D98B32] rounded-lg shadow-xs transition-colors flex flex-col justify-between group"
             >
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold uppercase tracking-wider text-[#596579]">
+                <span className="text-xs font-semibold uppercase tracking-wider text-[#596579]">
                   Pending Review
                 </span>
                 <Clock className="w-4 h-4 text-[#D98B32] flex-shrink-0" />
               </div>
               <div className="my-2">
                 <div className="flex items-baseline gap-1.5">
-                  <span className="text-2xl sm:text-3xl font-black font-mono text-[#D98B32]">
+                  <span className="text-2xl sm:text-3xl font-bold font-mono text-[#D98B32] leading-none">
                     {reviewEvents.length}
                   </span>
                   <span className="text-xs font-bold text-[#D98B32]">Items</span>
                 </div>
-                <p className="text-[11px] text-[#596579] mt-0.5">
+                <p className="text-[12px] text-[#596579] mt-0.5">
                   Awaiting Planner Validation
                 </p>
               </div>
-              <span className="text-[10px] text-[#176B87] group-hover:underline font-semibold flex items-center gap-1">
+              <span className="text-[11px] sm:text-xs text-[#176B87] group-hover:underline font-semibold flex items-center gap-1">
                 Review Queue &rarr;
               </span>
             </Link>
@@ -297,7 +297,7 @@ export default function ManagerDashboardPage() {
             {/* 5. Schedule Variance */}
             <div className="p-4 bg-[#FBEFEE] border border-[#E4B0AA] rounded-lg shadow-xs flex flex-col justify-between col-span-2 lg:col-span-1">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold uppercase tracking-wider text-[#B5473C]">
+                <span className="text-xs font-semibold uppercase tracking-wider text-[#B5473C]">
                   Schedule Variance
                 </span>
                 <WhyButton
@@ -307,16 +307,16 @@ export default function ManagerDashboardPage() {
               </div>
               <div className="my-2">
                 <div className="flex items-baseline gap-1.5">
-                  <span className="text-2xl sm:text-3xl font-black font-mono text-[#B5473C]">
+                  <span className="text-2xl sm:text-3xl font-bold font-mono text-[#B5473C] leading-none">
                     {activeProject.variance}%
                   </span>
                   <span className="text-xs font-bold text-[#B5473C]">Variance</span>
                 </div>
-                <p className="text-[11px] text-[#B5473C] font-semibold mt-0.5">
+                <p className="text-[12px] text-[#B5473C] font-semibold mt-0.5">
                   +2 Days Behind Baseline Finish
                 </p>
               </div>
-              <a href="#schedule-variance" className="text-[10px] text-[#176B87] hover:underline font-semibold flex items-center gap-1">
+              <a href="#schedule-variance" className="text-[11px] sm:text-xs text-[#176B87] hover:underline font-semibold flex items-center gap-1">
                 Inspect Delay Chain &rarr;
               </a>
             </div>
@@ -333,14 +333,14 @@ export default function ManagerDashboardPage() {
             <div>
               <div className="flex items-center gap-2">
                 <AlertOctagon className="w-5 h-5 text-[#B5473C]" />
-                <h2 id="attention-heading" className="text-lg sm:text-xl font-bold uppercase tracking-wide text-[#172033]">
-                  WHAT NEEDS MY ATTENTION NOW?
+                <h2 id="attention-heading" className="text-lg sm:text-xl font-semibold text-[#172033] tracking-tight">
+                  What Needs My Attention Now?
                 </h2>
-                <span className="px-2 py-0.5 rounded-full bg-[#B5473C] text-white text-[10px] font-mono font-bold">
+                <span className="px-2 py-0.5 rounded-full bg-[#B5473C] text-white text-[11px] font-mono font-semibold">
                   6 Critical Items
                 </span>
               </div>
-              <p className="text-xs text-[#596579] mt-1">
+              <p className="text-[13px] text-[#596579] mt-1">
                 Executive priority queue: Answers <strong>&ldquo;What needs attention?&rdquo;</strong> with immediate decision pathways answering <strong>&ldquo;What should I do?&rdquo;</strong>.
               </p>
             </div>
@@ -348,7 +348,7 @@ export default function ManagerDashboardPage() {
             <div className="flex items-center gap-2">
               <Link
                 href="/review"
-                className="px-3 py-1.5 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-bold rounded shadow-xs transition-colors inline-flex items-center gap-1.5"
+                className="px-3 py-1.5 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-semibold rounded shadow-xs transition-colors inline-flex items-center gap-1.5"
               >
                 <span>Full Review Queue</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -365,7 +365,7 @@ export default function ManagerDashboardPage() {
             <div className="p-4 rounded-lg bg-white border border-[#F0D4A6] hover:border-[#D98B32] transition-all shadow-xs flex flex-col justify-between space-y-3">
               <div className="space-y-1.5">
                 <div className="flex items-center justify-between">
-                  <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase bg-[#FDF6ED] text-[#D98B32] border border-[#F0D4A6]">
+                  <span className="px-2 py-0.5 rounded text-[11px] font-mono font-semibold uppercase bg-[#FDF6ED] text-[#D98B32] border border-[#F0D4A6]">
                     Review Match
                   </span>
                   <WhyButton
@@ -373,19 +373,19 @@ export default function ManagerDashboardPage() {
                     title="Why do these matches require review?"
                   />
                 </div>
-                <h3 className="text-xs font-bold text-[#172033]">
+                <h3 className="text-[15px] sm:text-base font-medium text-[#172033] leading-snug">
                   {reviewEvents.length} Field Matches Awaiting Planner Validation
                 </h3>
-                <p className="text-[11px] text-[#596579] leading-relaxed">
+                <p className="text-[13px] text-[#596579] leading-relaxed">
                   Execution events in the 70%–89% confidence band (Line 24 welding, cable trays) require planner sign-off before actual progress commits to P6.
                 </p>
-                <div className="text-[10px] text-[#D98B32] font-mono bg-[#FFF9F2] p-1.5 rounded border border-[#FBEAD4]">
+                <div className="text-[11px] text-[#D98B32] font-mono bg-[#FFF9F2] p-1.5 rounded border border-[#FBEAD4]">
                   Impact: Schedule Twin baseline synchronization paused.
                 </div>
               </div>
               <Link
                 href="/review"
-                className="w-full py-2 px-3 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-bold rounded shadow-xs text-center transition-colors block"
+                className="w-full py-2 px-3 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-semibold rounded shadow-xs text-center transition-colors block"
               >
                 Review Matches ({reviewEvents.length})
               </Link>
@@ -395,25 +395,25 @@ export default function ManagerDashboardPage() {
             <div className="p-4 rounded-lg bg-white border border-[#E4B0AA] hover:border-[#B5473C] transition-all shadow-xs flex flex-col justify-between space-y-3">
               <div className="space-y-1.5">
                 <div className="flex items-center justify-between">
-                  <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
+                  <span className="px-2 py-0.5 rounded text-[11px] font-mono font-semibold uppercase bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
                     Unmatched Event
                   </span>
-                  <span className="text-[10px] font-mono font-bold text-[#B5473C]">47% Confidence</span>
+                  <span className="text-[11px] font-mono font-semibold text-[#B5473C]">47% Confidence</span>
                 </div>
-                <h3 className="text-xs font-bold text-[#172033]">
+                <h3 className="text-[15px] sm:text-base font-medium text-[#172033] leading-snug">
                   EVT-2026-004: Unit B Drain Line Pipe Installation
                 </h3>
-                <p className="text-[11px] text-[#596579] leading-relaxed">
+                <p className="text-[13px] text-[#596579] leading-relaxed">
                   Field report submitted by Debajit Borah references an unlinked spool code syntax. Cannot automatically resolve to an active P6 baseline node.
                 </p>
-                <div className="text-[10px] text-[#B5473C] font-mono bg-[#FFF5F4] p-1.5 rounded border border-[#FADCD9]">
+                <div className="text-[11px] text-[#B5473C] font-mono bg-[#FFF5F4] p-1.5 rounded border border-[#FADCD9]">
                   Impact: 1.0 job progress uncredited in current reporting period.
                 </div>
               </div>
               <button
                 type="button"
                 onClick={() => setSelectedReviewModalEvent(unmatchedEvent)}
-                className="w-full py-2 px-3 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-bold rounded shadow-xs text-center transition-colors block cursor-pointer"
+                className="w-full py-2 px-3 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-semibold rounded shadow-xs text-center transition-colors block cursor-pointer"
               >
                 Assign Activity Target
               </button>
@@ -423,7 +423,7 @@ export default function ManagerDashboardPage() {
             <div className="p-4 rounded-lg bg-white border border-[#E4B0AA] hover:border-[#B5473C] transition-all shadow-xs flex flex-col justify-between space-y-3">
               <div className="space-y-1.5">
                 <div className="flex items-center justify-between">
-                  <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
+                  <span className="px-2 py-0.5 rounded text-[11px] font-mono font-semibold uppercase bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
                     Delayed Activity
                   </span>
                   <WhyButton
@@ -431,19 +431,19 @@ export default function ManagerDashboardPage() {
                     title="Why is this activity delayed?"
                   />
                 </div>
-                <h3 className="text-xs font-bold text-[#172033]">
+                <h3 className="text-[15px] sm:text-base font-medium text-[#172033] leading-snug">
                   PIP-24-001: Erect Line 24-XX Header (+2d Slip)
                 </h3>
-                <p className="text-[11px] text-[#596579] leading-relaxed">
+                <p className="text-[13px] text-[#596579] leading-relaxed">
                   Critical path activity slipped 2 days due to crane mobilization constraints during heavy rainfall at Unit A laydown. Total float is 0.
                 </p>
-                <div className="text-[10px] text-[#B5473C] font-mono bg-[#FFF5F4] p-1.5 rounded border border-[#FADCD9]">
+                <div className="text-[11px] text-[#B5473C] font-mono bg-[#FFF5F4] p-1.5 rounded border border-[#FADCD9]">
                   Impact: Direct day-for-day slip on commercial hydro-test milestone.
                 </div>
               </div>
               <a
                 href="#schedule-variance"
-                className="w-full py-2 px-3 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-bold rounded shadow-xs text-center transition-colors block"
+                className="w-full py-2 px-3 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-semibold rounded shadow-xs text-center transition-colors block"
               >
                 Inspect Delay Chain
               </a>
@@ -453,7 +453,7 @@ export default function ManagerDashboardPage() {
             <div className="p-4 rounded-lg bg-white border border-[#F0D4A6] hover:border-[#D98B32] transition-all shadow-xs flex flex-col justify-between space-y-3">
               <div className="space-y-1.5">
                 <div className="flex items-center justify-between">
-                  <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase bg-[#FDF6ED] text-[#D98B32] border border-[#F0D4A6]">
+                  <span className="px-2 py-0.5 rounded text-[11px] font-mono font-semibold uppercase bg-[#FDF6ED] text-[#D98B32] border border-[#F0D4A6]">
                     Dependency Impact
                   </span>
                   <div className="flex items-center gap-1.5">
@@ -461,22 +461,22 @@ export default function ManagerDashboardPage() {
                       onClick={() => openWhyExplanation('impact:CIV-11-001')}
                       title="Why does this delay impact downstream activities?"
                     />
-                    <span className="text-[10px] font-mono font-bold text-[#D98B32]">3 Downstream</span>
+                    <span className="text-[11px] font-mono font-semibold text-[#D98B32]">3 Downstream</span>
                   </div>
                 </div>
-                <h3 className="text-xs font-bold text-[#172033]">
+                <h3 className="text-[15px] sm:text-base font-medium text-[#172033] leading-snug">
                   Critical Path Ripple: Hydro-test & Loop Tubing
                 </h3>
-                <p className="text-[11px] text-[#596579] leading-relaxed">
+                <p className="text-[13px] text-[#596579] leading-relaxed">
                   PIP-24-001 delay pushes successor activities PIP-24-002 (Welds), PIP-24-003 (Hydro-test), and INS-04-015 (Smart Transmitters).
                 </p>
-                <div className="text-[10px] text-[#D98B32] font-mono bg-[#FFF9F2] p-1.5 rounded border border-[#FBEAD4]">
+                <div className="text-[11px] text-[#D98B32] font-mono bg-[#FFF9F2] p-1.5 rounded border border-[#FBEAD4]">
                   Impact: Milestone finish pushed from 30 Nov to 02 Dec.
                 </div>
               </div>
               <Link
                 href="/what-if"
-                className="w-full py-2 px-3 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-bold rounded shadow-xs text-center transition-colors block"
+                className="w-full py-2 px-3 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-semibold rounded shadow-xs text-center transition-colors block"
               >
                 Run What-If Simulation
               </Link>
@@ -486,24 +486,24 @@ export default function ManagerDashboardPage() {
             <div className="p-4 rounded-lg bg-white border border-[#F0D4A6] hover:border-[#D98B32] transition-all shadow-xs flex flex-col justify-between space-y-3">
               <div className="space-y-1.5">
                 <div className="flex items-center justify-between">
-                  <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase bg-[#FDF6ED] text-[#D98B32] border border-[#F0D4A6]">
+                  <span className="px-2 py-0.5 rounded text-[11px] font-mono font-semibold uppercase bg-[#FDF6ED] text-[#D98B32] border border-[#F0D4A6]">
                     Evidence Conflict
                   </span>
-                  <span className="text-[10px] font-mono font-bold text-[#B5473C]">Audit Grade Alert</span>
+                  <span className="text-[11px] font-mono font-semibold text-[#B5473C]">Audit Grade Alert</span>
                 </div>
-                <h3 className="text-xs font-bold text-[#172033]">
+                <h3 className="text-[15px] sm:text-base font-medium text-[#172033] leading-snug">
                   EV-DPR-002 vs NDT-XRAY-088 Joint Count Variance
                 </h3>
-                <p className="text-[11px] text-[#596579] leading-relaxed">
+                <p className="text-[13px] text-[#596579] leading-relaxed">
                   Site Engineer DPR reports 12 completed welds on Line 24, but third-party NDT agency report verified and cleared only 10 joints.
                 </p>
-                <div className="text-[10px] text-[#D98B32] font-mono bg-[#FFF9F2] p-1.5 rounded border border-[#FBEAD4]">
+                <div className="text-[11px] text-[#D98B32] font-mono bg-[#FFF9F2] p-1.5 rounded border border-[#FBEAD4]">
                   Impact: Discrepancy of 2 joints requires supervisor reconciliation.
                 </div>
               </div>
               <Link
                 href="/sync"
-                className="w-full py-2 px-3 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-bold rounded shadow-xs text-center transition-colors block"
+                className="w-full py-2 px-3 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-semibold rounded shadow-xs text-center transition-colors block"
               >
                 Reconcile Evidence Conflict
               </Link>
@@ -513,24 +513,24 @@ export default function ManagerDashboardPage() {
             <div className="p-4 rounded-lg bg-white border border-[#D9DEE5] hover:border-[#176B87] transition-all shadow-xs flex flex-col justify-between space-y-3">
               <div className="space-y-1.5">
                 <div className="flex items-center justify-between">
-                  <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase bg-[#F1F3F5] text-[#596579] border border-[#D9DEE5]">
+                  <span className="px-2 py-0.5 rounded text-[11px] font-mono font-semibold uppercase bg-[#F1F3F5] text-[#596579] border border-[#D9DEE5]">
                     Data Quality Issue
                   </span>
-                  <span className="text-[10px] font-mono font-bold text-[#D98B32]">Pending Stamp</span>
+                  <span className="text-[11px] font-mono font-semibold text-[#D98B32]">Pending Stamp</span>
                 </div>
-                <h3 className="text-xs font-bold text-[#172033]">
+                <h3 className="text-[15px] sm:text-base font-medium text-[#172033] leading-snug">
                   DPR-2026-09-18 (Unit A): Missing Quality Signoff
                 </h3>
-                <p className="text-[11px] text-[#596579] leading-relaxed">
+                <p className="text-[13px] text-[#596579] leading-relaxed">
                   Field shift diary was captured and queued without Lead Quality Inspector digital certificate seal. Held in local validation buffer.
                 </p>
-                <div className="text-[10px] text-[#596579] font-mono bg-[#F7F8FA] p-1.5 rounded border border-[#D9DEE5]">
+                <div className="text-[11px] text-[#596579] font-mono bg-[#F7F8FA] p-1.5 rounded border border-[#D9DEE5]">
                   Impact: Record cannot be promoted to Server Confirmed audit grade.
                 </div>
               </div>
               <Link
                 href="/field/dpr"
-                className="w-full py-2 px-3 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-bold rounded shadow-xs text-center transition-colors block"
+                className="w-full py-2 px-3 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-semibold rounded shadow-xs text-center transition-colors block"
               >
                 Request Inspector Signoff
               </Link>
@@ -546,13 +546,13 @@ export default function ManagerDashboardPage() {
         <section aria-labelledby="scurve-heading" className="bg-white border border-[#D9DEE5] rounded-lg p-5 shadow-xs space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D9DEE5] gap-2">
             <div>
-              <span className="text-[10px] font-mono font-bold uppercase text-[#7B8798] tracking-wider">
+              <span className="text-[11px] font-mono font-medium uppercase text-[#596579] tracking-wider">
                 Earned Value & Schedule Trajectory
               </span>
-              <h2 id="scurve-heading" className="text-lg sm:text-xl font-bold text-[#172033]">
+              <h2 id="scurve-heading" className="text-lg sm:text-xl font-semibold text-[#172033] tracking-tight">
                 Project S-Curve — Baseline vs. Actual Earned vs. Forecast
               </h2>
-              <p className="text-xs text-[#596579] mt-0.5">
+              <p className="text-[13px] text-[#596579] mt-0.5">
                 Physical earned progress trajectory across all WBS work packages compared to P6 baseline envelope.
               </p>
             </div>
@@ -584,13 +584,13 @@ export default function ManagerDashboardPage() {
         <section aria-labelledby="progress-heading" className="bg-white border border-[#D9DEE5] rounded-lg p-5 shadow-xs space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D9DEE5] gap-2">
             <div>
-              <span className="text-[10px] font-mono font-bold uppercase text-[#7B8798] tracking-wider">
+              <span className="text-[11px] font-mono font-medium uppercase text-[#596579] tracking-wider">
                 Discipline Performance & Work Packages
               </span>
-              <h2 id="progress-heading" className="text-lg sm:text-xl font-bold text-[#172033]">
+              <h2 id="progress-heading" className="text-lg sm:text-xl font-semibold text-[#172033] tracking-tight">
                 Execution Progress & Discipline Breakdown
               </h2>
-              <p className="text-xs text-[#596579] mt-0.5">
+              <p className="text-[13px] text-[#596579] mt-0.5">
                 Physical progress earned across major engineering disciplines against P6 baseline targets.
               </p>
             </div>
@@ -656,13 +656,13 @@ export default function ManagerDashboardPage() {
         <section id="schedule-variance" aria-labelledby="delay-heading" className="bg-white border border-[#D9DEE5] rounded-lg p-5 shadow-xs space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D9DEE5] gap-2">
             <div>
-              <span className="text-[10px] font-mono font-bold uppercase text-[#7B8798] tracking-wider">
+              <span className="text-[11px] font-mono font-medium uppercase text-[#596579] tracking-wider">
                 Critical Path Propagation & Float Loss
               </span>
-              <h2 id="delay-heading" className="text-lg sm:text-xl font-bold uppercase tracking-wide text-[#172033]">
+              <h2 id="delay-heading" className="text-lg sm:text-xl font-semibold text-[#172033] tracking-tight">
                 Schedule Variance & Delay Impact
               </h2>
-              <p className="text-xs text-[#596579] mt-0.5">
+              <p className="text-[13px] text-[#596579] mt-0.5">
                 Propagation analysis of active schedule variances onto downstream critical activities and commercial milestones.
               </p>
             </div>
@@ -814,14 +814,14 @@ export default function ManagerDashboardPage() {
           <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D9DEE5] gap-2">
             <div>
               <div className="flex items-center gap-2">
-                <h2 id="review-heading" className="text-lg sm:text-xl font-bold uppercase tracking-wide text-[#172033]">
+                <h2 id="review-heading" className="text-lg sm:text-xl font-semibold text-[#172033] tracking-tight">
                   Review Required Queue
                 </h2>
-                <span className="px-2 py-0.5 rounded-full bg-[#FDF6ED] text-[#D98B32] border border-[#F0D4A6] text-xs font-mono font-bold">
+                <span className="px-2 py-0.5 rounded-full bg-[#FDF6ED] text-[#D98B32] border border-[#F0D4A6] text-[11px] font-mono font-semibold">
                   {reviewEvents.length} Actions Pending
                 </span>
               </div>
-              <p className="text-xs text-[#596579] mt-0.5">
+              <p className="text-[13px] text-[#596579] mt-0.5">
                 AI Match Policy: <strong className="text-[#2E7D5B]">≥90% Auto-Link</strong>, <strong className="text-[#D98B32]">70%–89% Planner Review</strong>, <strong className="text-[#B5473C]">&lt;70% Unmatched</strong>.
               </p>
             </div>
@@ -836,14 +836,14 @@ export default function ManagerDashboardPage() {
           {reviewEvents.length === 0 ? (
             <div className="p-8 text-center bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg">
               <CheckCircle2 className="w-8 h-8 text-[#2E7D5B] mx-auto mb-2" />
-              <p className="text-xs font-semibold text-[#172033]">All Review Items Cleared</p>
-              <p className="text-[11px] text-[#596579]">No execution events require planner match confirmation.</p>
+              <p className="text-sm font-semibold text-[#172033]">All Review Items Cleared</p>
+              <p className="text-[13px] text-[#596579]">No execution events require planner match confirmation.</p>
             </div>
           ) : (
             <div className="overflow-x-auto border border-[#D9DEE5] rounded-lg">
-              <table className="w-full min-w-[700px] text-left border-collapse text-xs">
+              <table className="w-full min-w-[700px] text-left border-collapse text-sm">
                 <thead>
-                  <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[#596579] font-medium">
+                  <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[#596579] font-semibold text-[11px] sm:text-xs uppercase tracking-wider">
                     <th className="py-3 px-3.5 whitespace-nowrap min-w-[220px]">Event</th>
                     <th className="py-3 px-3.5 whitespace-nowrap min-w-[200px]">Candidate Activity</th>
                     <th className="py-3 px-3.5 whitespace-nowrap">Confidence</th>
@@ -857,9 +857,9 @@ export default function ManagerDashboardPage() {
                     <tr key={evt.id} className="hover:bg-[#F9FAFC] transition-colors">
                       {/* 1. Event */}
                       <td className="py-3 px-3.5 align-middle">
-                        <span className="font-mono text-xs font-bold text-[#176B87] block">{evt.id}</span>
-                        <p className="text-xs font-medium text-[#172033] mt-0.5 leading-snug">{evt.rawText}</p>
-                        <span className="text-[10px] text-[#7B8798] font-mono mt-0.5 block">
+                        <span className="font-mono text-xs font-semibold text-[#176B87] block">{evt.id}</span>
+                        <p className="text-[14px] font-normal text-[#172033] mt-0.5 leading-snug">{evt.rawText}</p>
+                        <span className="text-[11px] text-[#7B8798] font-mono mt-0.5 block">
                           {evt.eventDate} • {evt.source}
                         </span>
                       </td>
@@ -868,10 +868,10 @@ export default function ManagerDashboardPage() {
                       <td className="py-3 px-3.5 align-middle">
                         {evt.matchedActivityId ? (
                           <>
-                            <span className="font-mono text-xs font-bold text-[#176B87] block">
+                            <span className="font-mono text-xs font-semibold text-[#176B87] block">
                               {evt.matchedActivityId}
                             </span>
-                            <span className="text-xs text-[#172033] leading-tight block">
+                            <span className="text-[13px] text-[#172033] leading-tight block">
                               {evt.matchedActivityName}
                             </span>
                           </>
@@ -918,7 +918,7 @@ export default function ManagerDashboardPage() {
                         <button
                           type="button"
                           onClick={() => setSelectedReviewModalEvent(evt)}
-                          className="px-3 py-1.5 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-bold rounded shadow-xs transition-colors cursor-pointer"
+                          className="px-3 py-1.5 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-semibold rounded shadow-xs transition-colors cursor-pointer"
                         >
                           Review
                         </button>
@@ -938,13 +938,13 @@ export default function ManagerDashboardPage() {
         <section aria-labelledby="execution-heading" className="bg-white border border-[#D9DEE5] rounded-lg p-5 shadow-xs space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D9DEE5] gap-2">
             <div>
-              <span className="text-[10px] font-mono font-bold uppercase text-[#7B8798] tracking-wider">
+              <span className="text-[11px] font-mono font-medium uppercase text-[#596579] tracking-wider">
                 Field Activity Stream & Verification Feed
               </span>
-              <h2 id="execution-heading" className="text-lg sm:text-xl font-bold uppercase tracking-wide text-[#172033]">
+              <h2 id="execution-heading" className="text-lg sm:text-xl font-semibold text-[#172033] tracking-tight">
                 Recent Activity & Field Execution
               </h2>
-              <p className="text-xs text-[#596579] mt-0.5">
+              <p className="text-[13px] text-[#596579] mt-0.5">
                 Stream of verified and processing field updates. Technical extraction parameters and NLP spans are hidden until opened.
               </p>
             </div>

@@ -244,7 +244,7 @@ export default function ReportsAndMemoryPage() {
               <button
                 type="button"
                 onClick={() => setActiveTab('reports')}
-                className={`flex items-center gap-2.5 px-6 py-2 text-xs font-bold rounded-md transition-all ${
+                className={`flex items-center gap-2.5 px-6 py-2 text-xs font-semibold rounded-md transition-all ${
                   activeTab === 'reports'
                     ? 'bg-white text-[#172033] shadow-xs border border-[#D9DEE5]'
                     : 'text-[#596579] hover:text-[#172033]'
@@ -253,7 +253,7 @@ export default function ReportsAndMemoryPage() {
                 <FileText className="w-4 h-4 text-[#176B87]" />
                 <span>Reports</span>
                 <span
-                  className={`px-2 py-0.2 rounded text-[10px] font-mono font-bold ${
+                  className={`px-2 py-0.5 rounded text-[11px] font-mono font-semibold ${
                     activeTab === 'reports'
                       ? 'bg-[#EDF5F8] text-[#176B87]'
                       : 'bg-[#D9DEE5] text-[#596579]'
@@ -266,7 +266,7 @@ export default function ReportsAndMemoryPage() {
               <button
                 type="button"
                 onClick={() => setActiveTab('memory')}
-                className={`flex items-center gap-2.5 px-6 py-2 text-xs font-bold rounded-md transition-all ${
+                className={`flex items-center gap-2.5 px-6 py-2 text-xs font-semibold rounded-md transition-all ${
                   activeTab === 'memory'
                     ? 'bg-white text-[#172033] shadow-xs border border-[#D9DEE5]'
                     : 'text-[#596579] hover:text-[#172033]'
@@ -275,7 +275,7 @@ export default function ReportsAndMemoryPage() {
                 <History className="w-4 h-4 text-[#176B87]" />
                 <span>Project Memory</span>
                 <span
-                  className={`px-2 py-0.2 rounded text-[10px] font-mono font-bold ${
+                  className={`px-2 py-0.5 rounded text-[11px] font-mono font-semibold ${
                     activeTab === 'memory'
                       ? 'bg-[#EDF5F8] text-[#176B87]'
                       : 'bg-[#D9DEE5] text-[#596579]'
@@ -306,7 +306,7 @@ export default function ReportsAndMemoryPage() {
             {/* 5 CANONICAL REPORT CARDS GRID */}
             <div className="space-y-2">
               <div className="flex items-center justify-between pb-1">
-                <span className="text-xs font-bold text-[#172033] uppercase tracking-wider">
+                <span className="text-xs font-semibold text-[#172033] uppercase tracking-wider">
                   Available Structured Reports (5 Standard Formats):
                 </span>
                 <span className="text-[11px] text-[#596579]">
@@ -330,25 +330,25 @@ export default function ReportsAndMemoryPage() {
                     >
                       <div>
                         <div className="flex items-center justify-between mb-2">
-                          <span className="px-2 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0]">
+                          <span className="px-2 py-0.5 rounded text-[11px] font-semibold uppercase tracking-wider bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0]">
                             {tmpl.badge}
                           </span>
                         </div>
 
-                        <h3 className="font-bold text-sm text-[#172033] mb-1">
+                        <h3 className="font-semibold text-[15px] sm:text-base text-[#172033] mb-1">
                           {tmpl.name}
                         </h3>
-                        <p className="text-[11px] text-[#596579] line-clamp-2">
+                        <p className="text-[13px] text-[#596579] line-clamp-2">
                           {tmpl.description}
                         </p>
                       </div>
 
                       <div className="pt-2 border-t border-[#D9DEE5] flex items-center justify-between text-[11px]">
-                        <span className="text-[#7B8798] font-mono text-[10px]">
+                        <span className="text-[#7B8798] font-mono text-[11px]">
                           {tmpl.defaultTimeframe}
                         </span>
                         <span
-                          className={`font-bold ${
+                          className={`font-semibold ${
                             isSelected ? 'text-[#176B87]' : 'text-[#596579]'
                           }`}
                         >
@@ -366,7 +366,7 @@ export default function ReportsAndMemoryPage() {
               <div className="flex items-center justify-between pb-3 border-b border-[#D9DEE5]/60 flex-wrap gap-2">
                 <div className="flex items-center gap-2">
                   <SlidersHorizontal className="w-4 h-4 text-[#176B87]" />
-                  <h3 className="text-xs font-bold text-[#172033] uppercase tracking-wider">
+                  <h3 className="text-xs font-semibold text-[#172033] uppercase tracking-wider">
                     Report Parameters: {activeReportTemplate.name}
                   </h3>
                 </div>
@@ -377,7 +377,7 @@ export default function ReportsAndMemoryPage() {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 text-xs">
                 <div>
-                  <label className="block text-[11px] font-bold text-[#172033] mb-1">
+                  <label className="block text-[11px] font-semibold text-[#172033] mb-1">
                     Project
                   </label>
                   <select
@@ -392,7 +392,7 @@ export default function ReportsAndMemoryPage() {
                 </div>
 
                 <div>
-                  <label className="block text-[11px] font-bold text-[#172033] mb-1">
+                  <label className="block text-[11px] font-semibold text-[#172033] mb-1">
                     Start Date
                   </label>
                   <input
@@ -404,7 +404,7 @@ export default function ReportsAndMemoryPage() {
                 </div>
 
                 <div>
-                  <label className="block text-[11px] font-bold text-[#172033] mb-1">
+                  <label className="block text-[11px] font-semibold text-[#172033] mb-1">
                     End Date (Cutoff)
                   </label>
                   <input
@@ -416,7 +416,7 @@ export default function ReportsAndMemoryPage() {
                 </div>
 
                 <div>
-                  <label className="block text-[11px] font-bold text-[#172033] mb-1">
+                  <label className="block text-[11px] font-semibold text-[#172033] mb-1">
                     Engineering Discipline
                   </label>
                   <select
@@ -476,7 +476,7 @@ export default function ReportsAndMemoryPage() {
                   <button
                     type="button"
                     onClick={() => setPreviewReportOpen(true)}
-                    className="px-4 py-2 bg-white hover:bg-[#F1F3F5] text-[#172033] border border-[#D9DEE5] text-xs font-bold rounded-lg shadow-xs transition-colors flex items-center gap-1.5"
+                    className="px-4 py-2 bg-white hover:bg-[#F1F3F5] text-[#172033] border border-[#D9DEE5] text-xs font-semibold rounded-lg shadow-xs transition-colors flex items-center gap-1.5"
                   >
                     <Eye className="w-3.5 h-3.5 text-[#176B87]" />
                     <span>Preview Report</span>
@@ -486,7 +486,7 @@ export default function ReportsAndMemoryPage() {
                     type="button"
                     onClick={handleGenerateReport}
                     disabled={isGenerating}
-                    className="px-4 py-2 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-bold rounded-lg shadow-xs transition-colors flex items-center gap-1.5 disabled:opacity-50"
+                    className="px-4 py-2 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-semibold rounded-lg shadow-xs transition-colors flex items-center gap-1.5 disabled:opacity-50"
                   >
                     <FileText className="w-3.5 h-3.5" />
                     <span>{isGenerating ? 'Compiling Dossier...' : 'Generate Report'}</span>
@@ -496,21 +496,21 @@ export default function ReportsAndMemoryPage() {
                     <button
                       type="button"
                       onClick={() => handleExportReport('PDF')}
-                      className="px-3 py-2 text-xs font-bold hover:bg-[#F1F3F5] text-[#172033] transition-colors"
+                      className="px-3 py-2 text-xs font-semibold hover:bg-[#F1F3F5] text-[#172033] transition-colors"
                     >
                       Export PDF
                     </button>
                     <button
                       type="button"
                       onClick={() => handleExportReport('XLSX')}
-                      className="px-3 py-2 text-xs font-bold hover:bg-[#F1F3F5] text-[#2E7D5B] border-l border-[#D9DEE5] transition-colors"
+                      className="px-3 py-2 text-xs font-semibold hover:bg-[#F1F3F5] text-[#2E7D5B] border-l border-[#D9DEE5] transition-colors"
                     >
                       XLSX
                     </button>
                     <button
                       type="button"
                       onClick={() => handleExportReport('CSV')}
-                      className="px-3 py-2 text-xs font-bold hover:bg-[#F1F3F5] text-[#596579] border-l border-[#D9DEE5] transition-colors"
+                      className="px-3 py-2 text-xs font-semibold hover:bg-[#F1F3F5] text-[#596579] border-l border-[#D9DEE5] transition-colors"
                     >
                       CSV
                     </button>
@@ -565,7 +565,7 @@ export default function ReportsAndMemoryPage() {
             {/* STRUCTURED MEMORY SECTION HEADER TABS */}
             <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 shadow-xs space-y-3">
               <div className="flex items-center justify-between pb-2 border-b border-[#D9DEE5]/60 flex-wrap gap-2">
-                <span className="text-xs font-bold text-[#172033] uppercase tracking-wider">
+                <span className="text-xs font-semibold text-[#172033] uppercase tracking-wider">
                   Project Memory Sections:
                 </span>
                 <span className="text-[11px] text-[#596579]">
@@ -584,8 +584,8 @@ export default function ReportsAndMemoryPage() {
                       : 'border-[#D9DEE5] bg-[#F7F8FA] hover:bg-white hover:border-[#176B87]/40'
                   }`}
                 >
-                  <div className="text-[10px] uppercase font-bold text-[#7B8798]">All Sections</div>
-                  <div className="text-xs font-bold text-[#172033] mt-0.5">
+                  <div className="text-[11px] uppercase font-semibold text-[#7B8798]">All Sections</div>
+                  <div className="text-xs font-semibold text-[#172033] mt-0.5">
                     {HISTORICAL_MEMORY_RECORDS.length} Records
                   </div>
                 </button>
@@ -601,12 +601,12 @@ export default function ReportsAndMemoryPage() {
                   }`}
                 >
                   <div className="flex items-center justify-between">
-                    <span className="text-[10px] uppercase font-bold text-[#7B8798]">Section</span>
-                    <span className="text-[9px] font-mono px-1.5 py-0.2 rounded bg-white text-[#176B87] font-bold border border-[#B3CBE0]">
+                    <span className="text-[11px] uppercase font-semibold text-[#7B8798]">Section</span>
+                    <span className="text-[11px] font-mono px-1.5 py-0.5 rounded bg-white text-[#176B87] font-semibold border border-[#B3CBE0]">
                       {HISTORICAL_MEMORY_RECORDS.filter((r) => r.section === 'Decisions').length}
                     </span>
                   </div>
-                  <div className="text-xs font-bold text-[#172033] mt-0.5">
+                  <div className="text-xs font-semibold text-[#172033] mt-0.5">
                     Decisions
                   </div>
                 </button>
@@ -622,12 +622,12 @@ export default function ReportsAndMemoryPage() {
                   }`}
                 >
                   <div className="flex items-center justify-between">
-                    <span className="text-[10px] uppercase font-bold text-[#7B8798]">Section</span>
-                    <span className="text-[9px] font-mono px-1.5 py-0.2 rounded bg-white text-[#176B87] font-bold border border-[#B3CBE0]">
+                    <span className="text-[11px] uppercase font-semibold text-[#7B8798]">Section</span>
+                    <span className="text-[11px] font-mono px-1.5 py-0.5 rounded bg-white text-[#176B87] font-semibold border border-[#B3CBE0]">
                       {HISTORICAL_MEMORY_RECORDS.filter((r) => r.section === 'Lessons').length}
                     </span>
                   </div>
-                  <div className="text-xs font-bold text-[#172033] mt-0.5">
+                  <div className="text-xs font-semibold text-[#172033] mt-0.5">
                     Lessons
                   </div>
                 </button>
@@ -643,12 +643,12 @@ export default function ReportsAndMemoryPage() {
                   }`}
                 >
                   <div className="flex items-center justify-between">
-                    <span className="text-[10px] uppercase font-bold text-[#7B8798]">Section</span>
-                    <span className="text-[9px] font-mono px-1.5 py-0.2 rounded bg-white text-[#176B87] font-bold border border-[#B3CBE0]">
+                    <span className="text-[11px] uppercase font-semibold text-[#7B8798]">Section</span>
+                    <span className="text-[11px] font-mono px-1.5 py-0.5 rounded bg-white text-[#176B87] font-semibold border border-[#B3CBE0]">
                       {HISTORICAL_MEMORY_RECORDS.filter((r) => r.section === 'Recurring Issues').length}
                     </span>
                   </div>
-                  <div className="text-xs font-bold text-[#172033] mt-0.5">
+                  <div className="text-xs font-semibold text-[#172033] mt-0.5">
                     Recurring Issues
                   </div>
                 </button>
@@ -664,12 +664,12 @@ export default function ReportsAndMemoryPage() {
                   }`}
                 >
                   <div className="flex items-center justify-between">
-                    <span className="text-[10px] uppercase font-bold text-[#7B8798]">Section</span>
-                    <span className="text-[9px] font-mono px-1.5 py-0.2 rounded bg-white text-[#176B87] font-bold border border-[#B3CBE0]">
+                    <span className="text-[11px] uppercase font-semibold text-[#7B8798]">Section</span>
+                    <span className="text-[11px] font-mono px-1.5 py-0.5 rounded bg-white text-[#176B87] font-semibold border border-[#B3CBE0]">
                       {HISTORICAL_MEMORY_RECORDS.filter((r) => r.section === 'Important Events').length}
                     </span>
                   </div>
-                  <div className="text-xs font-bold text-[#172033] mt-0.5">
+                  <div className="text-xs font-semibold text-[#172033] mt-0.5">
                     Important Events
                   </div>
                 </button>
@@ -681,7 +681,7 @@ export default function ReportsAndMemoryPage() {
               <div className="flex items-center justify-between flex-wrap gap-2">
                 <div className="flex items-center gap-2">
                   <Filter className="w-4 h-4 text-[#176B87]" />
-                  <h3 className="text-xs font-bold text-[#172033] uppercase tracking-wider">
+                  <h3 className="text-xs font-semibold text-[#172033] uppercase tracking-wider">
                     Search &amp; Filters: Project Memory
                   </h3>
                 </div>
@@ -710,7 +710,7 @@ export default function ReportsAndMemoryPage() {
               {/* Structured Filters Row */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs pt-1">
                 <div>
-                  <label className="block text-[10px] font-bold uppercase text-[#7B8798] mb-1">
+                  <label className="block text-[11px] font-semibold uppercase text-[#7B8798] mb-1">
                     Project
                   </label>
                   <select
@@ -726,7 +726,7 @@ export default function ReportsAndMemoryPage() {
                 </div>
 
                 <div>
-                  <label className="block text-[10px] font-bold uppercase text-[#7B8798] mb-1">
+                  <label className="block text-[11px] font-semibold uppercase text-[#7B8798] mb-1">
                     Discipline
                   </label>
                   <select
@@ -742,7 +742,7 @@ export default function ReportsAndMemoryPage() {
                 </div>
 
                 <div>
-                  <label className="block text-[10px] font-bold uppercase text-[#7B8798] mb-1">
+                  <label className="block text-[11px] font-semibold uppercase text-[#7B8798] mb-1">
                     Year
                   </label>
                   <select
@@ -780,23 +780,23 @@ export default function ReportsAndMemoryPage() {
                   <div className="space-y-3">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
-                        <span className="font-mono text-xs font-bold text-[#176B87] bg-[#EDF5F8] px-2 py-0.5 rounded border border-[#B3CBE0]">
+                        <span className="font-mono text-xs font-semibold text-[#176B87] bg-[#EDF5F8] px-2 py-0.5 rounded border border-[#B3CBE0]">
                           {rec.id}
                         </span>
-                        <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-[#F1F3F5] text-[#172033] border border-[#D9DEE5]">
+                        <span className="px-2 py-0.5 rounded text-[11px] font-semibold uppercase bg-[#F1F3F5] text-[#172033] border border-[#D9DEE5]">
                           {rec.section}
                         </span>
-                        <span className="text-[10px] font-mono text-[#7B8798]">
+                        <span className="text-[11px] font-mono text-[#7B8798]">
                           {rec.category}
                         </span>
                       </div>
-                      <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]">
+                      <span className="px-2 py-0.5 rounded text-[11px] font-mono font-semibold bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]">
                         {rec.verifiedProgress}% Verified
                       </span>
                     </div>
 
                     <div>
-                      <h4 className="font-bold text-sm text-[#172033] group-hover:text-[#176B87] transition-colors">
+                      <h4 className="font-semibold text-[15px] sm:text-base text-[#172033] group-hover:text-[#176B87] transition-colors">
                         {rec.title}
                       </h4>
                       <p className="text-[11px] text-[#596579] font-mono mt-0.5">
@@ -809,16 +809,16 @@ export default function ReportsAndMemoryPage() {
                     {rec.section === 'Decisions' && rec.decisionDetails && (
                       <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg space-y-1.5 text-xs">
                         <div>
-                          <span className="text-[10px] font-bold uppercase text-[#7B8798] block">Decision</span>
+                          <span className="text-[11px] font-semibold uppercase text-[#7B8798] block">Decision</span>
                           <p className="text-[#172033] font-medium">{rec.decisionDetails.decision}</p>
                         </div>
                         <div>
-                          <span className="text-[10px] font-bold uppercase text-[#7B8798] block">Rationale</span>
+                          <span className="text-[11px] font-semibold uppercase text-[#7B8798] block">Rationale</span>
                           <p className="text-[#596579]">{rec.decisionDetails.rationale}</p>
                         </div>
                         <div className="pt-1 border-t border-[#D9DEE5]/60 text-[11px] text-[#596579] flex items-center justify-between">
                           <span>Authorized by: <strong className="text-[#172033]">{rec.decisionDetails.authorizedBy}</strong></span>
-                          <span className="text-[#2E7D5B] font-mono font-bold">{rec.decisionDetails.impactOnSchedule}</span>
+                          <span className="text-[#2E7D5B] font-mono font-semibold">{rec.decisionDetails.impactOnSchedule}</span>
                         </div>
                       </div>
                     )}
@@ -827,11 +827,11 @@ export default function ReportsAndMemoryPage() {
                     {rec.section === 'Lessons' && rec.lessonDetails && (
                       <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg space-y-1.5 text-xs">
                         <div>
-                          <span className="text-[10px] font-bold uppercase text-[#7B8798] block">Observation</span>
+                          <span className="text-[11px] font-semibold uppercase text-[#7B8798] block">Observation</span>
                           <p className="text-[#596579]">{rec.lessonDetails.whatHappened}</p>
                         </div>
                         <div>
-                          <span className="text-[10px] font-bold uppercase text-[#2E7D5B] block">Best Practice Learned</span>
+                          <span className="text-[11px] font-semibold uppercase text-[#2E7D5B] block">Best Practice Learned</span>
                           <p className="text-[#172033] font-medium">{rec.lessonDetails.bestPracticeLearned}</p>
                         </div>
                         <div className="pt-1 border-t border-[#D9DEE5]/60 text-[11px] text-[#176B87] font-mono">
@@ -844,11 +844,11 @@ export default function ReportsAndMemoryPage() {
                     {rec.section === 'Recurring Issues' && rec.recurringIssueDetails && (
                       <div className="p-3 bg-[#FDF6ED] border border-[#F0D4A6] rounded-lg space-y-1.5 text-xs">
                         <div>
-                          <span className="text-[10px] font-bold uppercase text-[#8C5311] block">Chronic Root Cause</span>
+                          <span className="text-[11px] font-semibold uppercase text-[#8C5311] block">Chronic Root Cause</span>
                           <p className="text-[#172033] font-medium">{rec.recurringIssueDetails.chronicSymptom}</p>
                         </div>
                         <div>
-                          <span className="text-[10px] font-bold uppercase text-[#8C5311] block">Preemptive Countermeasure</span>
+                          <span className="text-[11px] font-semibold uppercase text-[#8C5311] block">Preemptive Countermeasure</span>
                           <p className="text-[#596579]">{rec.recurringIssueDetails.preemptiveCountermeasure}</p>
                         </div>
                         <div className="pt-1 border-t border-[#F0D4A6]/60 text-[11px] text-[#8C5311] font-mono">
@@ -861,11 +861,11 @@ export default function ReportsAndMemoryPage() {
                     {rec.section === 'Important Events' && rec.eventDetails && (
                       <div className="p-3 bg-[#EDF7F2] border border-[#B8DCC9] rounded-lg space-y-1.5 text-xs">
                         <div>
-                          <span className="text-[10px] font-bold uppercase text-[#2E7D5B] block">Milestone Significance</span>
+                          <span className="text-[11px] font-semibold uppercase text-[#2E7D5B] block">Milestone Significance</span>
                           <p className="text-[#172033] font-medium">{rec.eventDetails.milestoneSignificance}</p>
                         </div>
                         <div>
-                          <span className="text-[10px] font-bold uppercase text-[#2E7D5B] block">Scope Completed</span>
+                          <span className="text-[11px] font-semibold uppercase text-[#2E7D5B] block">Scope Completed</span>
                           <p className="text-[#596579]">{rec.eventDetails.scopeCompleted}</p>
                         </div>
                         <div className="pt-1 border-t border-[#B8DCC9]/60 text-[11px] text-[#2E7D5B] font-mono">
@@ -877,21 +877,21 @@ export default function ReportsAndMemoryPage() {
                     {/* DURATION & PRODUCTIVITY METRICS */}
                     <div className="grid grid-cols-2 gap-2 text-xs bg-[#F7F8FA] p-2.5 rounded-lg border border-[#D9DEE5]/80">
                       <div>
-                        <span className="text-[10px] uppercase font-bold text-[#7B8798] block">
+                        <span className="text-[11px] uppercase font-semibold text-[#7B8798] block">
                           Actual Duration
                         </span>
-                        <span className="font-mono text-xs font-bold text-[#172033]">
+                        <span className="font-mono text-sm font-semibold text-[#172033]">
                           {rec.actualDurationDays} days{' '}
-                          <span className="text-[10px] font-normal text-[#7B8798]">
+                          <span className="text-[11px] font-normal text-[#7B8798]">
                             (Plan: {rec.plannedDurationDays}d)
                           </span>
                         </span>
                       </div>
                       <div>
-                        <span className="text-[10px] uppercase font-bold text-[#7B8798] block">
+                        <span className="text-[11px] uppercase font-semibold text-[#7B8798] block">
                           Productivity Rate
                         </span>
-                        <span className="font-mono text-xs font-bold text-[#176B87]">
+                        <span className="font-mono text-sm font-semibold text-[#176B87]">
                           {rec.productivityObservation.achievedRate}
                         </span>
                       </div>
@@ -904,7 +904,7 @@ export default function ReportsAndMemoryPage() {
                     <div className="flex items-center gap-1.5 text-[#596579] truncate max-w-[240px]">
                       <Lock className="w-3 h-3 text-[#2E7D5B] shrink-0" />
                       <span className="truncate">
-                        Source: <strong className="text-[#172033]">{rec.sourceVerifiedRecord.recordId}</strong>
+                        Source: <strong className="text-[#172033] font-semibold">{rec.sourceVerifiedRecord.recordId}</strong>
                       </span>
                     </div>
 
@@ -912,7 +912,7 @@ export default function ReportsAndMemoryPage() {
                     <Link
                       href={rec.evidenceLink.linkUrl}
                       onClick={(e) => e.stopPropagation()}
-                      className="inline-flex items-center gap-1 font-bold text-[#176B87] hover:underline"
+                      className="inline-flex items-center gap-1 font-semibold text-xs text-[#176B87] hover:underline"
                     >
                       <span>Evidence: {rec.evidenceLink.evidenceId}</span>
                       <ExternalLink className="w-3 h-3" />
@@ -950,7 +950,7 @@ export default function ReportsAndMemoryPage() {
                 <button
                   type="button"
                   onClick={() => handleExportReport('PDF')}
-                  className="px-4 py-2 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-bold rounded-lg shadow-xs flex items-center gap-1.5"
+                  className="px-4 py-2 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-semibold rounded-lg shadow-xs flex items-center gap-1.5"
                 >
                   <Download className="w-3.5 h-3.5" />
                   <span>Download Signed PDF</span>
@@ -962,10 +962,10 @@ export default function ReportsAndMemoryPage() {
           <div className="space-y-6 text-xs bg-white p-2">
             <div className="border-b-2 border-[#172033] pb-4 flex items-start justify-between">
               <div>
-                <span className="text-[10px] font-bold uppercase tracking-widest text-[#176B87] block mb-1">
+                <span className="text-[11px] font-semibold uppercase tracking-wider text-[#176B87] block mb-1">
                   OIL INDIA LIMITED · INFRASTRUCTURE DIVISION
                 </span>
-                <h3 className="text-lg font-bold text-[#172033] uppercase">
+                <h3 className="text-lg sm:text-xl font-semibold text-[#172033] uppercase">
                   {activeReportTemplate.title}
                 </h3>
                 <p className="text-xs text-[#596579] mt-0.5">
@@ -980,20 +980,20 @@ export default function ReportsAndMemoryPage() {
 
             <div className="p-4 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg flex items-center justify-between">
               <div>
-                <span className="text-[10px] text-[#7B8798] uppercase font-bold block">Physical Verified Progress</span>
-                <span className="text-xl font-bold font-mono text-[#176B87]">73.0%</span>
+                <span className="text-[11px] text-[#7B8798] uppercase font-semibold block">Physical Verified Progress</span>
+                <span className="text-[26px] sm:text-[28px] font-bold font-mono text-[#176B87] leading-none">73.0%</span>
               </div>
               <div>
-                <span className="text-[10px] text-[#7B8798] uppercase font-bold block">Baseline Target</span>
-                <span className="text-xl font-bold font-mono text-[#172033]">80.0%</span>
+                <span className="text-[11px] text-[#7B8798] uppercase font-semibold block">Baseline Target</span>
+                <span className="text-[26px] sm:text-[28px] font-bold font-mono text-[#172033] leading-none">80.0%</span>
               </div>
               <div>
-                <span className="text-[10px] text-[#7B8798] uppercase font-bold block">CPM Critical Variance</span>
-                <span className="text-xl font-bold font-mono text-[#9E332A]">-7.0% (-2d)</span>
+                <span className="text-[11px] text-[#7B8798] uppercase font-semibold block">CPM Critical Variance</span>
+                <span className="text-[26px] sm:text-[28px] font-bold font-mono text-[#9E332A] leading-none">-7.0% (-2d)</span>
               </div>
               <div>
-                <span className="text-[10px] text-[#7B8798] uppercase font-bold block">Evidence Dossier</span>
-                <span className="text-xl font-bold font-mono text-[#2E7D5B]">100% Traceable</span>
+                <span className="text-[11px] text-[#7B8798] uppercase font-semibold block">Evidence Dossier</span>
+                <span className="text-[26px] sm:text-[28px] font-bold font-mono text-[#2E7D5B] leading-none">100% Traceable</span>
               </div>
             </div>
 
@@ -1020,14 +1020,14 @@ export default function ReportsAndMemoryPage() {
             <div className="space-y-5 text-xs p-1">
               <div>
                 <div className="flex items-center gap-2">
-                  <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0]">
+                  <span className="px-2 py-0.5 rounded text-[11px] font-semibold uppercase bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0]">
                     {selectedMemoryRecord.section}
                   </span>
-                  <span className="text-[10px] font-mono text-[#7B8798]">
+                  <span className="text-[11px] font-mono text-[#7B8798]">
                     {selectedMemoryRecord.category}
                   </span>
                 </div>
-                <h3 className="font-bold text-base text-[#172033] mt-1.5">
+                <h3 className="font-semibold text-base text-[#172033] mt-1.5">
                   {selectedMemoryRecord.title}
                 </h3>
                 <p className="text-[11px] text-[#596579] font-mono mt-0.5">
@@ -1037,10 +1037,10 @@ export default function ReportsAndMemoryPage() {
 
               {/* Source link card */}
               <div className="p-3.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg space-y-1.5">
-                <span className="text-[10px] font-bold uppercase text-[#7B8798] block">
+                <span className="text-[11px] font-semibold uppercase text-[#7B8798] block">
                   Verified Source Record
                 </span>
-                <div className="font-bold text-xs text-[#172033]">
+                <div className="font-semibold text-sm text-[#172033]">
                   {selectedMemoryRecord.sourceVerifiedRecord.title}
                 </div>
                 <div className="font-mono text-[11px] text-[#176B87]">
@@ -1054,10 +1054,10 @@ export default function ReportsAndMemoryPage() {
               {/* Evidence link card */}
               <div className="p-3.5 bg-[#EDF7F2] border border-[#B8DCC9] rounded-lg flex items-center justify-between">
                 <div>
-                  <span className="text-[10px] font-bold uppercase text-[#2E7D5B] block">
+                  <span className="text-[11px] font-semibold uppercase text-[#2E7D5B] block">
                     Linked Evidence Proof
                   </span>
-                  <div className="font-bold text-xs text-[#172033] mt-0.5">
+                  <div className="font-semibold text-sm text-[#172033] mt-0.5">
                     {selectedMemoryRecord.evidenceLink.title}
                   </div>
                   <div className="font-mono text-[11px] text-[#2E7D5B]">
@@ -1067,7 +1067,7 @@ export default function ReportsAndMemoryPage() {
 
                 <Link
                   href={selectedMemoryRecord.evidenceLink.linkUrl}
-                  className="px-3 py-1.5 text-xs font-bold text-white bg-[#2E7D5B] hover:bg-[#25664A] rounded-lg shadow-xs flex items-center gap-1"
+                  className="px-3 py-1.5 text-xs font-semibold text-white bg-[#2E7D5B] hover:bg-[#25664A] rounded-lg shadow-xs flex items-center gap-1"
                 >
                   <span>Open Evidence</span>
                   <ExternalLink className="w-3 h-3" />

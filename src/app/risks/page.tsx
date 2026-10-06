@@ -981,7 +981,7 @@ export default function DelayDependencyImpactPage() {
                 {/* 2. Delay Duration (Actual Delay) */}
                 <div className="p-3.5 rounded-lg bg-[#FBEFEE] border border-[#E4B0AA]">
                   <div className="flex items-center justify-between mb-0.5">
-                    <span className="text-[10px] uppercase font-bold text-[#B5473C] tracking-wider block">
+                    <span className="text-[11px] uppercase font-semibold text-[#B5473C] tracking-wider block">
                       Delay Duration (Actual Delay)
                     </span>
                     <WhyButton
@@ -989,7 +989,7 @@ export default function DelayDependencyImpactPage() {
                       title={`Why is ${selectedDelay.sourceActivityName} delayed by ${selectedDelay.delayDays} days?`}
                     />
                   </div>
-                  <div className="font-black font-mono text-2xl text-[#B5473C]">
+                  <div className="font-bold font-mono text-[28px] text-[#B5473C] leading-none">
                     +{selectedDelay.delayDays.toFixed(0)} days
                   </div>
                   <span className="text-[11px] text-[#596579]">
@@ -1000,10 +1000,10 @@ export default function DelayDependencyImpactPage() {
 
               {/* 3. Cause */}
               <div className="p-3.5 rounded-lg bg-white border border-[#D9DEE5] text-xs space-y-1">
-                <span className="text-[10px] uppercase font-bold text-[#7B8798] tracking-wider block">
+                <span className="text-[11px] uppercase font-semibold text-[#7B8798] tracking-wider block">
                   Cause (Physical Site Root Cause)
                 </span>
-                <p className="text-[#172033] font-semibold leading-relaxed">
+                <p className="text-[#172033] text-sm leading-relaxed">
                   {selectedDelay.cause}
                 </p>
                 <div className="pt-2 border-t border-[#D9DEE5]/60 flex items-center gap-1.5 text-[11px] text-[#596579]">
@@ -1015,10 +1015,10 @@ export default function DelayDependencyImpactPage() {
               {/* 4. Dependent Activities */}
               <div className="p-3.5 rounded-lg bg-[#F7F8FA] border border-[#D9DEE5] text-xs">
                 <div className="flex items-center justify-between mb-1.5">
-                  <span className="text-[10px] uppercase font-bold text-[#7B8798] tracking-wider block">
+                  <span className="text-[11px] uppercase font-semibold text-[#7B8798] tracking-wider block">
                     Dependent Activities ({selectedDelay.affectedActivities.length} Predecessor Ties)
                   </span>
-                  <span className="text-[10px] font-mono font-bold text-[#176B87] bg-white px-2 py-0.5 rounded border border-[#D9DEE5]">
+                  <span className="text-[11px] font-mono font-semibold text-[#176B87] bg-white px-2 py-0.5 rounded border border-[#D9DEE5]">
                     Dependency: {selectedDelay.dependency}
                   </span>
                 </div>
@@ -1263,8 +1263,8 @@ export default function DelayDependencyImpactPage() {
         <div className="bg-white border border-[#D9DEE5] rounded-lg overflow-hidden shadow-xs">
           <div className="p-4 bg-[#F7F8FA] border-b border-[#D9DEE5] flex items-center justify-between">
             <div>
-              <h3 className="font-bold text-xs uppercase tracking-wider text-[#172033]">
-                Schedule Delay & Dependency Impact Register
+              <h3 className="font-semibold text-xs uppercase tracking-wider text-[#172033]">
+                Schedule Delay &amp; Dependency Impact Register
               </h3>
               <p className="text-[11px] text-[#596579] mt-0.5">
                 Every record corresponds to verified field deviations propagated through CPM schedule logic.
@@ -1276,9 +1276,9 @@ export default function DelayDependencyImpactPage() {
           </div>
 
           <div className="overflow-x-auto">
-            <table className="w-full min-w-[1100px] text-left text-xs border-collapse">
+            <table className="w-full min-w-[1100px] text-left text-sm border-collapse">
               <thead>
-                <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[11px] font-bold uppercase tracking-wider text-[#596579]">
+                <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-[#596579]">
                   <th className="p-3.5 min-w-[190px]">Delayed Activity (Source Activity)</th>
                   <th className="p-3.5 whitespace-nowrap text-center">Delay Duration (Actual Delay)</th>
                   <th className="p-3.5 min-w-[200px]">Cause</th>
@@ -1323,10 +1323,10 @@ export default function DelayDependencyImpactPage() {
                       >
                         {/* 1. Delayed Activity */}
                         <td className="p-3.5">
-                          <div className="font-bold text-[#172033]">
+                          <div className="font-semibold text-[#172033]">
                             {item.sourceActivityName}
                           </div>
-                          <div className="font-mono text-[11px] text-[#176B87] mt-0.5 font-bold">
+                          <div className="font-mono text-[11px] text-[#176B87] mt-0.5 font-semibold">
                             {item.sourceActivityId} · WBS {item.sourceWbs} · {item.sourceDiscipline}
                           </div>
                         </td>
@@ -1347,7 +1347,7 @@ export default function DelayDependencyImpactPage() {
 
                         {/* 3. Cause */}
                         <td className="p-3.5 text-[#596579]">
-                          <p className="text-[11px] leading-relaxed line-clamp-2" title={item.cause}>
+                          <p className="text-[13px] leading-relaxed line-clamp-2" title={item.cause}>
                             {item.cause}
                           </p>
                         </td>
@@ -1368,7 +1368,7 @@ export default function DelayDependencyImpactPage() {
                         {/* 5. Downstream Impact */}
                         <td className="p-3.5">
                           <div className="flex items-center justify-between mb-1">
-                            <span className="text-[10px] font-bold uppercase text-[#7B8798]">Impact Cascade</span>
+                            <span className="text-[11px] font-semibold uppercase text-[#7B8798]">Impact Cascade</span>
                             <WhyButton
                               onClick={(e) => {
                                 e.stopPropagation();
@@ -1384,7 +1384,7 @@ export default function DelayDependencyImpactPage() {
                               </div>
                             ))}
                           </div>
-                          <span className="text-[10px] text-[#7B8798] mt-1 block font-sans">
+                          <span className="text-[11px] text-[#7B8798] mt-1 block font-sans">
                             Dependency: {item.dependency}
                           </span>
                         </td>
@@ -1392,7 +1392,7 @@ export default function DelayDependencyImpactPage() {
                         {/* 6. Critical Path Impact */}
                         <td className="p-3.5">
                           <div className="flex items-center gap-1.5">
-                            <span className={`inline-block px-2 py-0.5 rounded text-[10px] font-bold border ${critStyle.bg} ${critStyle.border} ${critStyle.text}`}>
+                            <span className={`inline-block px-2 py-0.5 rounded text-[11px] font-semibold border ${critStyle.bg} ${critStyle.border} ${critStyle.text}`}>
                               {critStyle.badge}
                             </span>
                             <WhyButton
@@ -1403,10 +1403,10 @@ export default function DelayDependencyImpactPage() {
                               title="Why is this activity on the critical path?"
                             />
                           </div>
-                          <div className="mt-1 font-mono text-[11px] text-[#172033] font-bold">
-                            {item.criticalPathSlipDays > 0 ? `+${item.criticalPathSlipDays}d Critical Path Slip` : '0d Project Slip'}
+                          <div className="mt-1 font-mono text-[11px] text-[#172033] font-semibold">
+                            {item.criticalPathSlipDays > 0 ? `+{item.criticalPathSlipDays}d Critical Path Slip` : '0d Project Slip'}
                           </div>
-                          <span className="text-[10px] text-[#596579] block">
+                          <span className="text-[11px] text-[#596579] block">
                             Remaining Float: {item.remainingFloatDays}d
                           </span>
                         </td>
@@ -1419,7 +1419,7 @@ export default function DelayDependencyImpactPage() {
                               {item.evidence}
                             </span>
                           </div>
-                          <span className="text-[10px] text-[#7B8798] block mt-0.5">
+                          <span className="text-[11px] text-[#7B8798] block mt-0.5">
                             {item.evidenceItems.length} files attached
                           </span>
                         </td>

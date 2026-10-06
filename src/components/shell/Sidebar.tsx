@@ -124,7 +124,7 @@ export function Sidebar({ collapsed, onToggle, mobileMenuOpen, onCloseMobile }: 
         {NAV_GROUPS.map((group) => (
           <div key={group.group} className="space-y-0.5">
             {!collapsed && (
-              <h4 className="px-3 pt-2 pb-1 text-[10px] font-bold uppercase tracking-wider text-[#7B8798] select-none">
+              <h4 className="px-3 pt-2 pb-1 text-[11px] font-semibold uppercase tracking-wider text-[#7B8798] select-none">
                 {group.group}
               </h4>
             )}
