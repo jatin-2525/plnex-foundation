@@ -8,6 +8,7 @@ import { Breadcrumbs } from '../../components/shell/Breadcrumbs';
 import { StateWrapper } from '../../components/shared/StateWrapper';
 import { Modal } from '../../components/shared/Modal';
 import { Drawer } from '../../components/shared/Drawer';
+import { StatusBadge } from '../../components/shared/StatusBadge';
 import {
   COMPREHENSIVE_EVIDENCE_ITEMS,
   COMPREHENSIVE_AUDIT_LOGS,
@@ -19,7 +20,6 @@ import {
   Image as ImageIcon,
   FileSpreadsheet,
   FileCheck,
-  FileWarning,
   StickyNote,
   HelpCircle,
   MapPin,
@@ -28,40 +28,34 @@ import {
   History,
   Search,
   Filter,
-  ExternalLink,
-  Download,
   Eye,
   CheckCircle2,
-  XCircle,
   AlertTriangle,
   RotateCcw,
-  Sparkles,
   Lock,
   Layers,
-  Calendar,
-  Hash,
   Copy,
   Check,
-  Cpu,
   ArrowRight,
   ArrowDown,
   FolderKanban,
-  FileCode,
   Shield,
   Activity,
   SlidersHorizontal,
   ChevronDown,
-  ChevronRight,
+  ChevronUp,
   Database,
   Key,
+  Calendar,
+  ExternalLink,
 } from 'lucide-react';
 
 export default function EvidenceAndAuditPage() {
   const { activeProject, openActivityDrawer } = useApp();
   const { addToast } = useToast();
 
-  // Primary Navigation: Evidence vs Audit Trail (History)
-  const [activeTab, setActiveTab] = useState<'evidence' | 'history'>('evidence');
+  // Primary 3 Canonical Tabs: Evidence | Audit History | Verification History
+  const [activeTab, setActiveTab] = useState<'evidence' | 'audit_history' | 'verification_history'>('evidence');
 
   // =========================================================================
   // EVIDENCE FILTERS STATE
@@ -74,6 +68,16 @@ export default function EvidenceAndAuditPage() {
   const [selectedDate, setSelectedDate] = useState<string>('');
   const [evidenceSearch, setEvidenceSearch] = useState<string>('');
 
+  // Expandable Technical Metadata per Evidence item
+  const [expandedMetadataIds, setExpandedMetadataIds] = useState<Record<string, boolean>>({});
+
+  const toggleExpandMetadata = (id: string) => {
+    setExpandedMetadataIds((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
+  };
+
   // =========================================================================
   // AUDIT FILTERS STATE
   // =========================================================================
@@ -81,21 +85,27 @@ export default function EvidenceAndAuditPage() {
   const [auditActorFilter, setAuditActorFilter] = useState<string>('ALL');
   const [auditSearch, setAuditSearch] = useState<string>('');
 
+  // =========================================================================
+  // VERIFICATION HISTORY FILTERS STATE
+  // =========================================================================
+  const [verificationStatusFilter, setVerificationStatusFilter] = useState<string>('ALL');
+  const [verificationSearch, setVerificationSearch] = useState<string>('');
+
   // Modals & Drawers
   const [previewEvidence, setPreviewEvidence] = useState<EvidenceItem | null>(null);
   const [selectedAuditEntry, setSelectedAuditEntry] = useState<AuditEntry | null>(null);
-  const [copiedHash, setCopiedHash] = useState<boolean>(false);
+  const [copiedHash, setCopiedHash] = useState<string | null>(null);
 
   // Copy Hash Helper
   const handleCopyHash = (hash: string) => {
     navigator.clipboard.writeText(hash);
-    setCopiedHash(true);
+    setCopiedHash(hash);
     addToast({
       type: 'info',
       title: 'SHA-256 Digest Copied',
       description: 'Cryptographic hash copied to clipboard.',
     });
-    setTimeout(() => setCopiedHash(false), 2000);
+    setTimeout(() => setCopiedHash(null), 2000);
   };
 
   // Reset Evidence Filters
@@ -126,36 +136,40 @@ export default function EvidenceAndAuditPage() {
     });
   };
 
+  // Reset Verification Filters
+  const handleResetVerificationFilters = () => {
+    setVerificationStatusFilter('ALL');
+    setVerificationSearch('');
+    addToast({
+      type: 'info',
+      title: 'Verification Filters Reset',
+      description: 'Displaying all verification history records.',
+    });
+  };
+
   // =========================================================================
   // FILTERED EVIDENCE ITEMS
   // =========================================================================
   const filteredEvidence = useMemo(() => {
     return COMPREHENSIVE_EVIDENCE_ITEMS.filter((item) => {
-      // Type filter
       if (selectedType !== 'ALL' && item.type.toLowerCase() !== selectedType.toLowerCase()) {
         return false;
       }
-      // Activity filter
       if (selectedActivity !== 'ALL' && item.activityId !== selectedActivity) {
         return false;
       }
-      // Execution Event filter
       if (selectedExecutionEvent !== 'ALL' && item.executionEventId !== selectedExecutionEvent) {
         return false;
       }
-      // Uploaded By filter
       if (selectedUploader !== 'ALL' && item.uploader !== selectedUploader) {
         return false;
       }
-      // Verification Status filter
       if (selectedVerificationStatus !== 'ALL' && item.status !== selectedVerificationStatus) {
         return false;
       }
-      // Date filter
       if (selectedDate && !item.timestamp.includes(selectedDate)) {
         return false;
       }
-      // Text Search
       if (evidenceSearch.trim()) {
         const q = evidenceSearch.toLowerCase();
         const matchesId = item.id.toLowerCase().includes(q);
@@ -209,6 +223,43 @@ export default function EvidenceAndAuditPage() {
       return true;
     });
   }, [auditActionFilter, auditActorFilter, auditSearch]);
+
+  // =========================================================================
+  // FILTERED VERIFICATION HISTORY ITEMS
+  // =========================================================================
+  const filteredVerificationHistory = useMemo(() => {
+    return COMPREHENSIVE_EVIDENCE_ITEMS.filter((item) => {
+      if (verificationStatusFilter !== 'ALL' && item.status !== verificationStatusFilter) {
+        return false;
+      }
+      if (verificationSearch.trim()) {
+        const q = verificationSearch.toLowerCase();
+        const matchesId = item.id.toLowerCase().includes(q);
+        const matchesTitle = item.title.toLowerCase().includes(q);
+        const matchesVerifier = item.verificationBy?.toLowerCase().includes(q) || false;
+        const matchesAct = item.activityId?.toLowerCase().includes(q) || false;
+        const matchesEvt = item.executionEventId?.toLowerCase().includes(q) || false;
+        const matchesNotes = item.notes?.toLowerCase().includes(q) || false;
+        if (!matchesId && !matchesTitle && !matchesVerifier && !matchesAct && !matchesEvt && !matchesNotes) {
+          return false;
+        }
+      }
+      return true;
+    });
+  }, [verificationStatusFilter, verificationSearch]);
+
+  // Verification Summary Counts
+  const verifiedCount = useMemo(() => {
+    return COMPREHENSIVE_EVIDENCE_ITEMS.filter((i) => i.status === 'Verified').length;
+  }, []);
+
+  const pendingCount = useMemo(() => {
+    return COMPREHENSIVE_EVIDENCE_ITEMS.filter((i) => i.status === 'Pending QC').length;
+  }, []);
+
+  const conflictCount = useMemo(() => {
+    return COMPREHENSIVE_EVIDENCE_ITEMS.filter((i) => i.status === 'Conflict').length;
+  }, []);
 
   // Evidence Type Icon & Badge Helper
   const getEvidenceTypeBadge = (type: EvidenceType) => {
@@ -276,7 +327,7 @@ export default function EvidenceAndAuditPage() {
             HEADER: Evidence & Audit
             Core Goal: Make every important project update traceable to evidence.
             Final Rule: Evidence should answer: "Why should I trust this update?"
-            Technical details (SHA-256, immutable ledger) moved to Audit Integrity section.
+            Technical details moved to collapsible sections to prevent clutter.
             ========================================================================= */}
         <div className="bg-white border border-[#D9DEE5] rounded-lg p-5 md:p-6 shadow-xs">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-[#D9DEE5]/60">
@@ -333,13 +384,16 @@ export default function EvidenceAndAuditPage() {
             </div>
           </div>
 
-          {/* PRIMARY NAVIGATION TABS: Evidence vs Audit Trail */}
+          {/* =====================================================================
+              PRIMARY NAVIGATION TABS: Evidence | Audit History | Verification History
+              ===================================================================== */}
           <div className="flex items-center justify-between pt-4 flex-wrap gap-3">
-            <div className="flex items-center bg-[#F1F3F5] p-1 rounded-lg border border-[#D9DEE5]">
+            <div className="flex items-center bg-[#F1F3F5] p-1 rounded-lg border border-[#D9DEE5] flex-wrap gap-1">
+              {/* Tab 1: Evidence */}
               <button
                 type="button"
                 onClick={() => setActiveTab('evidence')}
-                className={`flex items-center gap-2 px-5 py-2 text-xs font-bold rounded-lg transition-all ${
+                className={`flex items-center gap-2 px-4 py-2 text-xs font-bold rounded-lg transition-all ${
                   activeTab === 'evidence'
                     ? 'bg-white text-[#176B87] shadow-xs'
                     : 'text-[#596579] hover:text-[#172033]'
@@ -358,25 +412,49 @@ export default function EvidenceAndAuditPage() {
                 </span>
               </button>
 
+              {/* Tab 2: Audit History */}
               <button
                 type="button"
-                onClick={() => setActiveTab('history')}
-                className={`flex items-center gap-2 px-5 py-2 text-xs font-bold rounded-lg transition-all ${
-                  activeTab === 'history'
+                onClick={() => setActiveTab('audit_history')}
+                className={`flex items-center gap-2 px-4 py-2 text-xs font-bold rounded-lg transition-all ${
+                  activeTab === 'audit_history'
                     ? 'bg-white text-[#176B87] shadow-xs'
                     : 'text-[#596579] hover:text-[#172033]'
                 }`}
               >
                 <History className="w-4 h-4" />
-                <span>Audit Trail</span>
+                <span>Audit History</span>
                 <span
                   className={`px-2 py-0.2 rounded-full text-[10px] font-mono ${
-                    activeTab === 'history'
+                    activeTab === 'audit_history'
                       ? 'bg-[#EDF5F8] text-[#176B87]'
                       : 'bg-[#D9DEE5] text-[#596579]'
                   }`}
                 >
                   {COMPREHENSIVE_AUDIT_LOGS.length}
+                </span>
+              </button>
+
+              {/* Tab 3: Verification History */}
+              <button
+                type="button"
+                onClick={() => setActiveTab('verification_history')}
+                className={`flex items-center gap-2 px-4 py-2 text-xs font-bold rounded-lg transition-all ${
+                  activeTab === 'verification_history'
+                    ? 'bg-white text-[#176B87] shadow-xs'
+                    : 'text-[#596579] hover:text-[#172033]'
+                }`}
+              >
+                <CheckCircle2 className="w-4 h-4" />
+                <span>Verification History</span>
+                <span
+                  className={`px-2 py-0.2 rounded-full text-[10px] font-mono ${
+                    activeTab === 'verification_history'
+                      ? 'bg-[#EDF5F8] text-[#176B87]'
+                      : 'bg-[#D9DEE5] text-[#596579]'
+                  }`}
+                >
+                  {verifiedCount}
                 </span>
               </button>
             </div>
@@ -389,120 +467,123 @@ export default function EvidenceAndAuditPage() {
         </div>
 
         {/* =========================================================================
-            EVIDENCE RELATIONSHIP: Full 7-Stage Traceability Pipeline Widget
-            Evidence ↓ Field Report ↓ Execution Event ↓ Activity ↓ Progress Update ↓ Variance ↓ Impact
+            MANDATORY VISUAL EVIDENCE CHAIN (THE 7-STAGE PIPELINE)
+            Field Report
+            ↓
+            Execution Event
+            ↓
+            Schedule Activity
+            ↓
+            Verification
+            ↓
+            Progress
+            ↓
+            Variance
+            ↓
+            Impact
             ========================================================================= */}
-        <div className="bg-white border border-[#D9DEE5] rounded-lg p-5 shadow-xs space-y-3">
-          <div className="flex items-center justify-between pb-2 border-b border-[#D9DEE5]/60 flex-wrap gap-2">
+        <div className="bg-white border border-[#D9DEE5] rounded-lg p-5 shadow-xs space-y-4">
+          <div className="flex items-center justify-between pb-3 border-b border-[#D9DEE5]/60 flex-wrap gap-2">
             <div className="flex items-center gap-2">
               <Layers className="w-4 h-4 text-[#176B87]" />
               <h3 className="text-xs font-bold text-[#172033] uppercase tracking-wider">
-                Evidence Relationship Architecture
+                Visual Evidence Relationship Pipeline
               </h3>
             </div>
             <span className="text-[11px] font-mono text-[#596579]">
-              Full Traceability Pipeline: Field Proof $\to$ Schedule Impact
+              Traceability Pipeline: Field Proof → Schedule Impact
             </span>
           </div>
 
           <p className="text-xs text-[#596579]">
-            How physical onsite proof flows through PLnEX to update authoritative schedule progress and project forecasts:
+            How physical onsite proof flows through PLnEX to update authoritative schedule progress, baseline variances, and project forecasts:
           </p>
 
-          {/* 7-STAGE SEQUENTIAL PIPELINE DISPLAY */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2 pt-1">
-            {/* 1. Evidence */}
+          {/* 7-STAGE CONNECTED EVIDENCE CHAIN CARDS */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-2.5 items-stretch pt-1">
+            {/* 1. Field Report */}
             <div className="p-3 rounded-lg bg-[#EDF5F8] border border-[#B3CBE0] flex flex-col justify-between text-xs space-y-2">
               <div>
-                <span className="text-[10px] font-mono font-bold text-[#176B87] uppercase block">
-                  Stage 1
-                </span>
-                <div className="font-bold text-[#172033] text-xs mt-0.5 flex items-center gap-1">
-                  <ImageIcon className="w-3.5 h-3.5 text-[#176B87]" />
-                  <span>Evidence</span>
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-mono font-bold text-[#176B87] uppercase">Stage 1</span>
+                  <span className="text-[9px] font-bold uppercase bg-white/80 text-[#176B87] px-1.5 py-0.2 rounded border border-[#B3CBE0]">Evidence</span>
                 </div>
-              </div>
-              <div className="text-[10px] text-[#596579] pt-1 border-t border-[#B3CBE0]/60">
-                Photos, Lab Reports, Measurement Sheets
-              </div>
-            </div>
-
-            {/* 2. Field Report */}
-            <div className="p-3 rounded-lg bg-[#F7F8FA] border border-[#D9DEE5] flex flex-col justify-between text-xs space-y-2">
-              <div>
-                <span className="text-[10px] font-mono font-bold text-[#7B8798] uppercase block">
-                  Stage 2
-                </span>
-                <div className="font-bold text-[#172033] text-xs mt-0.5 flex items-center gap-1">
-                  <FileText className="w-3.5 h-3.5 text-[#596579]" />
+                <div className="font-bold text-[#172033] text-xs mt-1 flex items-center gap-1.5">
+                  <FileText className="w-3.5 h-3.5 text-[#176B87]" />
                   <span>Field Report</span>
                 </div>
               </div>
-              <div className="text-[10px] text-[#596579] pt-1 border-t border-[#D9DEE5]/60">
-                DPR-014, Daily Logs, Shift Handover
+              <div className="text-[10px] text-[#596579] pt-1.5 border-t border-[#B3CBE0]/60">
+                DPR-014, Site Photos, Lab QC Slips
               </div>
             </div>
 
-            {/* 3. Execution Event */}
+            {/* 2. Execution Event */}
             <div className="p-3 rounded-lg bg-[#F7F8FA] border border-[#D9DEE5] flex flex-col justify-between text-xs space-y-2">
               <div>
-                <span className="text-[10px] font-mono font-bold text-[#7B8798] uppercase block">
-                  Stage 3
-                </span>
-                <div className="font-bold text-[#172033] text-xs mt-0.5 flex items-center gap-1">
+                <span className="text-[10px] font-mono font-bold text-[#7B8798] uppercase block">Stage 2</span>
+                <div className="font-bold text-[#172033] text-xs mt-1 flex items-center gap-1.5">
                   <Activity className="w-3.5 h-3.5 text-[#176B87]" />
                   <span>Execution Event</span>
                 </div>
               </div>
-              <div className="text-[10px] text-[#596579] pt-1 border-t border-[#D9DEE5]/60 font-mono">
+              <div className="text-[10px] text-[#596579] pt-1.5 border-t border-[#D9DEE5]/60 font-mono">
                 EVT-2026-001 (12 Spools Erected)
               </div>
             </div>
 
-            {/* 4. Activity */}
+            {/* 3. Schedule Activity */}
             <div className="p-3 rounded-lg bg-[#F7F8FA] border border-[#D9DEE5] flex flex-col justify-between text-xs space-y-2">
               <div>
-                <span className="text-[10px] font-mono font-bold text-[#7B8798] uppercase block">
-                  Stage 4
-                </span>
-                <div className="font-bold text-[#172033] text-xs mt-0.5 flex items-center gap-1">
+                <span className="text-[10px] font-mono font-bold text-[#7B8798] uppercase block">Stage 3</span>
+                <div className="font-bold text-[#172033] text-xs mt-1 flex items-center gap-1.5">
                   <FolderKanban className="w-3.5 h-3.5 text-[#596579]" />
-                  <span>Activity</span>
+                  <span>Schedule Activity</span>
                 </div>
               </div>
-              <div className="text-[10px] text-[#596579] pt-1 border-t border-[#D9DEE5]/60 font-mono">
-                PIP-24-001 (WBS 3.2.1)
+              <div className="text-[10px] text-[#596579] pt-1.5 border-t border-[#D9DEE5]/60 font-mono">
+                PIP-24-001 (Activity WBS 3.2.1)
               </div>
             </div>
 
-            {/* 5. Progress Update */}
+            {/* 4. Verification */}
             <div className="p-3 rounded-lg bg-[#EDF7F2] border border-[#B8DCC9] flex flex-col justify-between text-xs space-y-2">
               <div>
-                <span className="text-[10px] font-mono font-bold text-[#2E7D5B] uppercase block">
-                  Stage 5
-                </span>
-                <div className="font-bold text-[#172033] text-xs mt-0.5 flex items-center gap-1">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-[#2E7D5B]" />
-                  <span>Progress Update</span>
+                <span className="text-[10px] font-mono font-bold text-[#2E7D5B] uppercase block">Stage 4</span>
+                <div className="font-bold text-[#172033] text-xs mt-1 flex items-center gap-1.5">
+                  <ShieldCheck className="w-3.5 h-3.5 text-[#2E7D5B]" />
+                  <span>Verification</span>
                 </div>
               </div>
-              <div className="text-[10px] text-[#2E7D5B] pt-1 border-t border-[#B8DCC9]/60 font-mono font-bold">
-                53% $\to$ 65% Verified
+              <div className="text-[10px] text-[#2E7D5B] pt-1.5 border-t border-[#B8DCC9]/60 font-medium">
+                Human QC Engineer Sign-Off
+              </div>
+            </div>
+
+            {/* 5. Progress */}
+            <div className="p-3 rounded-lg bg-[#EDF7F2] border border-[#B8DCC9] flex flex-col justify-between text-xs space-y-2">
+              <div>
+                <span className="text-[10px] font-mono font-bold text-[#2E7D5B] uppercase block">Stage 5</span>
+                <div className="font-bold text-[#172033] text-xs mt-1 flex items-center gap-1.5">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-[#2E7D5B]" />
+                  <span>Progress</span>
+                </div>
+              </div>
+              <div className="text-[10px] text-[#2E7D5B] pt-1.5 border-t border-[#B8DCC9]/60 font-mono font-bold">
+                Progress Update: 53% → 65%
               </div>
             </div>
 
             {/* 6. Variance */}
             <div className="p-3 rounded-lg bg-[#FDF6ED] border border-[#F0D4A6] flex flex-col justify-between text-xs space-y-2">
               <div>
-                <span className="text-[10px] font-mono font-bold text-[#D98B32] uppercase block">
-                  Stage 6
-                </span>
-                <div className="font-bold text-[#172033] text-xs mt-0.5 flex items-center gap-1">
+                <span className="text-[10px] font-mono font-bold text-[#D98B32] uppercase block">Stage 6</span>
+                <div className="font-bold text-[#172033] text-xs mt-1 flex items-center gap-1.5">
                   <SlidersHorizontal className="w-3.5 h-3.5 text-[#D98B32]" />
                   <span>Variance</span>
                 </div>
               </div>
-              <div className="text-[10px] text-[#D98B32] pt-1 border-t border-[#F0D4A6]/60 font-mono font-bold">
+              <div className="text-[10px] text-[#D98B32] pt-1.5 border-t border-[#F0D4A6]/60 font-mono font-bold">
                 -7% Slip Cleared
               </div>
             </div>
@@ -510,23 +591,41 @@ export default function EvidenceAndAuditPage() {
             {/* 7. Impact */}
             <div className="p-3 rounded-lg bg-[#FBEFEE] border border-[#E4B0AA] flex flex-col justify-between text-xs space-y-2">
               <div>
-                <span className="text-[10px] font-mono font-bold text-[#B5473C] uppercase block">
-                  Stage 7
-                </span>
-                <div className="font-bold text-[#172033] text-xs mt-0.5 flex items-center gap-1">
+                <span className="text-[10px] font-mono font-bold text-[#B5473C] uppercase block">Stage 7</span>
+                <div className="font-bold text-[#172033] text-xs mt-1 flex items-center gap-1.5">
                   <ArrowRight className="w-3.5 h-3.5 text-[#B5473C]" />
                   <span>Impact</span>
                 </div>
               </div>
-              <div className="text-[10px] text-[#B5473C] pt-1 border-t border-[#E4B0AA]/60">
-                Unblocks Successor Welding
+              <div className="text-[10px] text-[#B5473C] pt-1.5 border-t border-[#E4B0AA]/60 font-medium">
+                Protects Milestone COD Handover
               </div>
             </div>
+          </div>
+
+          {/* DOWNWARD VISUAL ARROW SEQUENCE INDICATOR */}
+          <div className="p-2.5 rounded-lg bg-[#F7F8FA] border border-[#D9DEE5] flex items-center justify-center gap-2 text-xs font-bold text-[#172033] flex-wrap">
+            <span className="text-[#176B87]">Field Report</span>
+            <span className="text-[#7B8798] font-mono">&darr;</span>
+            <span className="text-[#172033]">Execution Event</span>
+            <span className="text-[#7B8798] font-mono">&darr;</span>
+            <span className="text-[#172033]">Schedule Activity</span>
+            <span className="text-[#7B8798] font-mono">&darr;</span>
+            <span className="text-[#2E7D5B]">Verification</span>
+            <span className="text-[#7B8798] font-mono">&darr;</span>
+            <span className="text-[#2E7D5B]">Progress</span>
+            <span className="text-[#7B8798] font-mono">&darr;</span>
+            <span className="text-[#D98B32]">Variance</span>
+            <span className="text-[#7B8798] font-mono">&darr;</span>
+            <span className="text-[#B5473C]">Impact</span>
           </div>
         </div>
 
         {/* =========================================================================
             TAB 1: EVIDENCE VAULT
+            Shows important information first:
+            Evidence proof visually connected to the Execution Event & Activity it supports.
+            Technical audit metadata (SHA-256, storage keys) is expandable.
             ========================================================================= */}
         {activeTab === 'evidence' && (
           <div className="space-y-6">
@@ -660,8 +759,8 @@ export default function EvidenceAndAuditPage() {
             </div>
 
             {/* =========================================================================
-                CANONICAL EVIDENCE TABLE
-                Columns specified by user:
+                CANONICAL EVIDENCE TABLE (WITH EXPANDABLE TECHNICAL METADATA)
+                Columns specified by requirements:
                 - Evidence ID
                 - Type
                 - Source
@@ -681,7 +780,7 @@ export default function EvidenceAndAuditPage() {
                       <th className="py-3 px-4">Type</th>
                       <th className="py-3 px-4 min-w-[160px]">Source</th>
                       <th className="py-3 px-4 min-w-[180px]">Activity</th>
-                      <th className="py-3 px-4">Execution Event</th>
+                      <th className="py-3 px-4 min-w-[150px]">Execution Event</th>
                       <th className="py-3 px-4">Uploaded By</th>
                       <th className="py-3 px-4">Date</th>
                       <th className="py-3 px-4">Verification</th>
@@ -693,120 +792,204 @@ export default function EvidenceAndAuditPage() {
                     {filteredEvidence.map((item) => {
                       const typeBadge = getEvidenceTypeBadge(item.type);
                       const TypeIcon = typeBadge.icon;
+                      const isMetaExpanded = !!expandedMetadataIds[item.id];
 
                       return (
-                        <tr
-                          key={item.id}
-                          className="hover:bg-[#F1F3F5]/60 transition-colors cursor-pointer group"
-                          onClick={() => setPreviewEvidence(item)}
-                        >
-                          {/* 1. Evidence ID */}
-                          <td className="py-3 px-4 font-mono font-bold text-[#176B87]">
-                            <span className="px-2 py-0.5 rounded bg-[#EDF5F8] border border-[#B3CBE0]">
-                              {item.id}
-                            </span>
-                          </td>
+                        <React.Fragment key={item.id}>
+                          <tr
+                            className="hover:bg-[#F1F3F5]/60 transition-colors cursor-pointer group"
+                            onClick={() => setPreviewEvidence(item)}
+                          >
+                            {/* 1. Evidence ID */}
+                            <td className="py-3 px-4 font-mono font-bold text-[#176B87]">
+                              <span className="px-2 py-0.5 rounded bg-[#EDF5F8] border border-[#B3CBE0]">
+                                {item.id}
+                              </span>
+                            </td>
 
-                          {/* 2. Type */}
-                          <td className="py-3 px-4">
-                            <span
-                              className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold uppercase border ${typeBadge.bg} ${typeBadge.border} ${typeBadge.text}`}
-                            >
-                              <TypeIcon className="w-3 h-3" />
-                              <span>{typeBadge.label}</span>
-                            </span>
-                          </td>
+                            {/* 2. Type */}
+                            <td className="py-3 px-4">
+                              <span
+                                className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold uppercase border ${typeBadge.bg} ${typeBadge.border} ${typeBadge.text}`}
+                              >
+                                <TypeIcon className="w-3 h-3" />
+                                <span>{typeBadge.label}</span>
+                              </span>
+                            </td>
 
-                          {/* 3. Source */}
-                          <td className="py-3 px-4 max-w-xs">
-                            <div className="font-semibold text-[#172033] truncate">{item.title}</div>
-                            <div className="text-[11px] text-[#596579] font-mono mt-0.5 truncate">
-                              {item.source || item.filename}
-                            </div>
-                          </td>
+                            {/* 3. Source */}
+                            <td className="py-3 px-4 max-w-xs">
+                              <div className="font-semibold text-[#172033] truncate">{item.title}</div>
+                              <div className="text-[11px] text-[#596579] font-mono mt-0.5 truncate">
+                                {item.source || item.filename}
+                              </div>
+                            </td>
 
-                          {/* 4. Activity */}
-                          <td className="py-3 px-4">
-                            {item.activityId ? (
-                              <div>
+                            {/* 4. Activity (Visually Connected) */}
+                            <td className="py-3 px-4">
+                              {item.activityId ? (
+                                <div className="p-1.5 rounded bg-[#F7F8FA] border border-[#D9DEE5] space-y-0.5">
+                                  <button
+                                    type="button"
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      openActivityDrawer(item.activityId!);
+                                    }}
+                                    className="font-mono font-bold text-xs text-[#176B87] hover:underline inline-flex items-center gap-1 text-left"
+                                    title="Open in Activity Detail Drawer"
+                                  >
+                                    <span>{item.activityId}</span>
+                                    <ArrowRight className="w-3 h-3 text-[#176B87]" />
+                                  </button>
+                                  <p className="text-[11px] text-[#596579] truncate max-w-[160px]">
+                                    {item.activityName}
+                                  </p>
+                                </div>
+                              ) : (
+                                <span className="text-[#7B8798] italic font-mono text-[11px]">Unlinked</span>
+                              )}
+                            </td>
+
+                            {/* 5. Execution Event (Visually Connected) */}
+                            <td className="py-3 px-4">
+                              {item.executionEventId ? (
+                                <div className="p-1.5 rounded bg-[#EDF5F8] border border-[#B3CBE0] space-y-0.5">
+                                  <span className="font-mono text-xs font-bold text-[#176B87] block">
+                                    {item.executionEventId}
+                                  </span>
+                                  <span className="text-[10px] text-[#596579] truncate block max-w-[130px]">
+                                    {item.extractedData?.quantity} {item.extractedData?.unit}
+                                  </span>
+                                </div>
+                              ) : (
+                                <span className="text-[#7B8798] text-[11px] font-mono">None</span>
+                              )}
+                            </td>
+
+                            {/* 6. Uploaded By */}
+                            <td className="py-3 px-4">
+                              <div className="font-medium text-[#172033]">{item.uploader}</div>
+                              <div className="text-[10px] text-[#7B8798]">{item.uploaderRole}</div>
+                            </td>
+
+                            {/* 7. Date */}
+                            <td className="py-3 px-4 font-mono text-[#596579] whitespace-nowrap">
+                              {item.timestamp.split(' ')[0]}
+                            </td>
+
+                            {/* 8. Verification */}
+                            <td className="py-3 px-4">
+                              {item.verificationBy ? (
+                                <div className="text-[11px]">
+                                  <span className="font-semibold text-[#2E7D5B] block">Signed Off</span>
+                                  <span className="text-[#596579] truncate max-w-[120px] block">
+                                    {item.verificationBy.split(' ')[0]}
+                                  </span>
+                                </div>
+                              ) : (
+                                <span className="text-[11px] text-[#D98B32]">Pending QC</span>
+                              )}
+                            </td>
+
+                            {/* 9. Status */}
+                            <td className="py-3 px-4">{getStatusBadge(item.status)}</td>
+
+                            {/* Actions & Expandable Technical Metadata Toggle */}
+                            <td className="py-3 px-4 text-right">
+                              <div
+                                className="flex items-center justify-end gap-1.5"
+                                onClick={(e) => e.stopPropagation()}
+                              >
                                 <button
                                   type="button"
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    openActivityDrawer(item.activityId!);
-                                  }}
-                                  className="font-mono font-bold text-xs text-[#176B87] hover:underline inline-flex items-center gap-1 text-left"
-                                  title="Open in Activity Detail Drawer"
+                                  onClick={() => toggleExpandMetadata(item.id)}
+                                  className="px-2 py-1 rounded border border-[#D9DEE5] hover:bg-[#F1F3F5] text-[#596579] text-[11px] font-medium transition-colors flex items-center gap-1"
+                                  title="Expand/Collapse Technical Metadata"
                                 >
-                                  <span>{item.activityId}</span>
-                                  <ArrowRight className="w-3 h-3 text-[#176B87]" />
+                                  <span>Details</span>
+                                  {isMetaExpanded ? (
+                                    <ChevronUp className="w-3 h-3" />
+                                  ) : (
+                                    <ChevronDown className="w-3 h-3" />
+                                  )}
                                 </button>
-                                <p className="text-[11px] text-[#596579] truncate max-w-[150px]">
-                                  {item.activityName}
-                                </p>
+
+                                <button
+                                  type="button"
+                                  onClick={() => setPreviewEvidence(item)}
+                                  className="px-2.5 py-1 rounded-lg border border-[#B3CBE0] bg-white hover:bg-[#EDF5F8] text-[#176B87] font-bold text-xs transition-colors flex items-center gap-1 shadow-2xs"
+                                  title="Open Preview Modal"
+                                >
+                                  <Eye className="w-3.5 h-3.5" />
+                                  <span>Preview</span>
+                                </button>
                               </div>
-                            ) : (
-                              <span className="text-[#7B8798] italic font-mono text-[11px]">Unlinked</span>
-                            )}
-                          </td>
+                            </td>
+                          </tr>
 
-                          {/* 5. Execution Event */}
-                          <td className="py-3 px-4">
-                            {item.executionEventId ? (
-                              <span className="font-mono text-xs font-semibold text-[#176B87] px-2 py-0.5 rounded bg-[#F1F3F5] border border-[#D9DEE5]">
-                                {item.executionEventId}
-                              </span>
-                            ) : (
-                              <span className="text-[#7B8798] text-[11px] font-mono">None</span>
-                            )}
-                          </td>
+                          {/* EXPANDABLE TECHNICAL METADATA ROW */}
+                          {isMetaExpanded && (
+                            <tr className="bg-[#F7F8FA]/80 border-b border-[#D9DEE5]">
+                              <td colSpan={10} className="p-3.5">
+                                <div className="p-3 bg-white rounded-lg border border-[#D9DEE5] space-y-2 text-xs">
+                                  <div className="flex items-center justify-between border-b border-[#D9DEE5]/60 pb-1.5">
+                                    <span className="font-bold uppercase tracking-wider text-[10px] text-[#176B87] flex items-center gap-1.5">
+                                      <Lock className="w-3.5 h-3.5 text-[#176B87]" />
+                                      Technical Audit Metadata & Cryptographic Integrity
+                                    </span>
+                                    <span className="text-[10px] font-mono text-[#596579]">
+                                      Append-Only Immutable Ledger Record
+                                    </span>
+                                  </div>
 
-                          {/* 6. Uploaded By */}
-                          <td className="py-3 px-4">
-                            <div className="font-medium text-[#172033]">{item.uploader}</div>
-                            <div className="text-[10px] text-[#7B8798]">{item.uploaderRole}</div>
-                          </td>
+                                  <div className="grid grid-cols-1 md:grid-cols-3 gap-3 font-mono text-[11px]">
+                                    <div className="space-y-0.5">
+                                      <span className="text-[10px] uppercase text-[#7B8798] font-bold block">
+                                        SHA-256 Digest
+                                      </span>
+                                      <div className="flex items-center gap-1.5">
+                                        <span className="text-[#172033] truncate max-w-[200px]" title={item.sha256Hash}>
+                                          {item.sha256Hash}
+                                        </span>
+                                        <button
+                                          type="button"
+                                          onClick={() => handleCopyHash(item.sha256Hash || '')}
+                                          className="p-1 hover:bg-[#F1F3F5] rounded text-[#596579] hover:text-[#172033]"
+                                          title="Copy Hash"
+                                        >
+                                          {copiedHash === item.sha256Hash ? (
+                                            <Check className="w-3 h-3 text-[#2E7D5B]" />
+                                          ) : (
+                                            <Copy className="w-3 h-3" />
+                                          )}
+                                        </button>
+                                      </div>
+                                    </div>
 
-                          {/* 7. Date */}
-                          <td className="py-3 px-4 font-mono text-[#596579] whitespace-nowrap">
-                            {item.timestamp.split(' ')[0]}
-                          </td>
+                                    <div className="space-y-0.5">
+                                      <span className="text-[10px] uppercase text-[#7B8798] font-bold block">
+                                        GPS Geolocation
+                                      </span>
+                                      <span className="text-[#172033] flex items-center gap-1">
+                                        <MapPin className="w-3 h-3 text-[#176B87]" />
+                                        {item.gpsCoords}
+                                      </span>
+                                    </div>
 
-                          {/* 8. Verification */}
-                          <td className="py-3 px-4">
-                            {item.verificationBy ? (
-                              <div className="text-[11px]">
-                                <span className="font-semibold text-[#2E7D5B] block">Signed Off</span>
-                                <span className="text-[#596579] truncate max-w-[120px] block">
-                                  {item.verificationBy.split(' ')[0]}
-                                </span>
-                              </div>
-                            ) : (
-                              <span className="text-[11px] text-[#D98B32]">Pending QC</span>
-                            )}
-                          </td>
-
-                          {/* 9. Status */}
-                          <td className="py-3 px-4">{getStatusBadge(item.status)}</td>
-
-                          {/* Actions */}
-                          <td className="py-3 px-4 text-right">
-                            <div
-                              className="flex items-center justify-end gap-1.5"
-                              onClick={(e) => e.stopPropagation()}
-                            >
-                              <button
-                                type="button"
-                                onClick={() => setPreviewEvidence(item)}
-                                className="px-2.5 py-1 rounded-lg border border-[#B3CBE0] bg-white hover:bg-[#EDF5F8] text-[#176B87] font-bold text-xs transition-colors flex items-center gap-1 shadow-2xs"
-                                title="Open Preview Modal"
-                              >
-                                <Eye className="w-3.5 h-3.5" />
-                                <span>Preview</span>
-                              </button>
-                            </div>
-                          </td>
-                        </tr>
+                                    <div className="space-y-0.5">
+                                      <span className="text-[10px] uppercase text-[#7B8798] font-bold block">
+                                        File Size & Storage
+                                      </span>
+                                      <span className="text-[#172033]">
+                                        {item.fileSize} · Bit-for-bit Authenticated
+                                      </span>
+                                    </div>
+                                  </div>
+                                </div>
+                              </td>
+                            </tr>
+                          )}
+                        </React.Fragment>
                       );
                     })}
                   </tbody>
@@ -817,21 +1000,22 @@ export default function EvidenceAndAuditPage() {
         )}
 
         {/* =========================================================================
-            TAB 2: AUDIT TRAIL (HISTORY)
+            TAB 2: AUDIT HISTORY
             Shows:
             - Who
             - What
             - When
             - Before
             - After
+            - Reason
             Examples:
             Progress changed: 53 → 65
             Changed by: User
             Reason: Verified execution event
             ========================================================================= */}
-        {activeTab === 'history' && (
+        {activeTab === 'audit_history' && (
           <div className="space-y-6">
-            {/* AUDIT SPOTLIGHT EXAMPLE CARD */}
+            {/* AUDIT SPOTLIGHT CANONICAL CARD */}
             <div className="p-4 rounded-lg bg-[#EDF7F2] border border-[#B8DCC9] shadow-xs space-y-3">
               <div className="flex items-center justify-between pb-2 border-b border-[#B8DCC9]/60 flex-wrap gap-2">
                 <span className="text-xs font-bold uppercase tracking-wider text-[#2E7D5B] flex items-center gap-1.5">
@@ -852,7 +1036,7 @@ export default function EvidenceAndAuditPage() {
                     Progress changed:
                   </div>
                   <div className="text-base font-black font-mono text-[#2E7D5B] mt-0.5">
-                    53% $\rightarrow$ 65%
+                    53% → 65%
                   </div>
                 </div>
 
@@ -1051,6 +1235,196 @@ export default function EvidenceAndAuditPage() {
                           <p className="text-[11px] line-clamp-2 leading-relaxed">
                             {log.details}
                           </p>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* =========================================================================
+            TAB 3: VERIFICATION HISTORY
+            Dedicated view of all human QC sign-offs, verification decisions, and QA gates.
+            ========================================================================= */}
+        {activeTab === 'verification_history' && (
+          <div className="space-y-6">
+            {/* VERIFICATION SUMMARY CARDS */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div className="bg-white border-2 border-[#B8DCC9] rounded-lg p-4 shadow-xs">
+                <div className="flex items-center justify-between mb-1.5">
+                  <span className="text-[10px] uppercase font-bold text-[#2E7D5B] tracking-wider">
+                    Verified Sign-Offs
+                  </span>
+                  <CheckCircle2 className="w-4 h-4 text-[#2E7D5B]" />
+                </div>
+                <div className="text-2xl font-black font-mono text-[#2E7D5B]">
+                  {verifiedCount} Items
+                </div>
+                <span className="text-xs text-[#596579] mt-1 block">
+                  Signed off by human engineering authority
+                </span>
+              </div>
+
+              <div className="bg-white border-2 border-[#F0D4A6] rounded-lg p-4 shadow-xs">
+                <div className="flex items-center justify-between mb-1.5">
+                  <span className="text-[10px] uppercase font-bold text-[#D98B32] tracking-wider">
+                    Pending QC Review
+                  </span>
+                  <Clock className="w-4 h-4 text-[#D98B32]" />
+                </div>
+                <div className="text-2xl font-black font-mono text-[#D98B32]">
+                  {pendingCount} Items
+                </div>
+                <span className="text-xs text-[#596579] mt-1 block">
+                  Awaiting project controls inspection sign-off
+                </span>
+              </div>
+
+              <div className="bg-white border-2 border-[#E4B0AA] rounded-lg p-4 shadow-xs">
+                <div className="flex items-center justify-between mb-1.5">
+                  <span className="text-[10px] uppercase font-bold text-[#B5473C] tracking-wider">
+                    Disputed / Conflicts
+                  </span>
+                  <AlertTriangle className="w-4 h-4 text-[#B5473C]" />
+                </div>
+                <div className="text-2xl font-black font-mono text-[#B5473C]">
+                  {conflictCount} Items
+                </div>
+                <span className="text-xs text-[#596579] mt-1 block">
+                  Discrepancy flagged between field & schedule
+                </span>
+              </div>
+            </div>
+
+            {/* VERIFICATION FILTERS */}
+            <div className="bg-white border border-[#D9DEE5] rounded-lg p-5 shadow-xs space-y-4">
+              <div className="flex items-center justify-between flex-wrap gap-2">
+                <div className="flex items-center gap-2">
+                  <ShieldCheck className="w-4 h-4 text-[#176B87]" />
+                  <h3 className="text-xs font-bold text-[#172033] uppercase tracking-wider">
+                    Verification History Filters
+                  </h3>
+                </div>
+                <button
+                  type="button"
+                  onClick={handleResetVerificationFilters}
+                  className="text-xs text-[#596579] hover:text-[#172033] flex items-center gap-1 font-medium transition-colors"
+                >
+                  <RotateCcw className="w-3.5 h-3.5" />
+                  <span>Reset Filters</span>
+                </button>
+              </div>
+
+              <div className="flex items-center gap-3 flex-wrap">
+                <div className="flex items-center gap-1.5">
+                  <span className="text-[10px] font-bold uppercase text-[#7B8798]">Status:</span>
+                  {['ALL', 'Verified', 'Pending QC', 'Conflict'].map((st) => (
+                    <button
+                      key={st}
+                      type="button"
+                      onClick={() => setVerificationStatusFilter(st)}
+                      className={`px-3 py-1 rounded-lg text-xs font-semibold transition-all ${
+                        verificationStatusFilter === st
+                          ? 'bg-[#176B87] text-white shadow-xs'
+                          : 'bg-white border border-[#D9DEE5] text-[#596579] hover:bg-[#F1F3F5]'
+                      }`}
+                    >
+                      {st === 'ALL' ? 'All Decisions' : st}
+                    </button>
+                  ))}
+                </div>
+
+                <div className="relative flex-1 max-w-md ml-auto">
+                  <Search className="w-3.5 h-3.5 text-[#7B8798] absolute left-3 top-2.5" />
+                  <input
+                    type="text"
+                    value={verificationSearch}
+                    onChange={(e) => setVerificationSearch(e.target.value)}
+                    placeholder="Search verifier, activity, or execution event..."
+                    className="w-full pl-8 pr-3 py-1.5 text-xs bg-white border border-[#D9DEE5] rounded-lg text-[#172033] outline-hidden focus:border-[#176B87]"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* VERIFICATION DECISIONS TABLE */}
+            <div className="bg-white border border-[#D9DEE5] rounded-lg shadow-xs overflow-hidden">
+              <div className="overflow-x-auto">
+                <table className="w-full min-w-[880px] text-left border-collapse text-xs">
+                  <thead>
+                    <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[10px] uppercase font-bold text-[#7B8798] tracking-wider">
+                      <th className="py-3 px-4">Evidence Artifact</th>
+                      <th className="py-3 px-4">Decision Status</th>
+                      <th className="py-3 px-4 min-w-[160px]">Verified By</th>
+                      <th className="py-3 px-4">Verification Date</th>
+                      <th className="py-3 px-4 min-w-[180px]">Linked Activity</th>
+                      <th className="py-3 px-4">Execution Event</th>
+                      <th className="py-3 px-4 min-w-[200px]">Verification Notes</th>
+                      <th className="py-3 px-4 text-right">Preview</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-[#D9DEE5]">
+                    {filteredVerificationHistory.map((item) => (
+                      <tr
+                        key={item.id}
+                        className="hover:bg-[#F1F3F5]/60 transition-colors cursor-pointer group"
+                        onClick={() => setPreviewEvidence(item)}
+                      >
+                        <td className="py-3 px-4">
+                          <div className="font-semibold text-[#172033]">{item.title}</div>
+                          <span className="font-mono text-[11px] text-[#176B87]">{item.id} · {item.type}</span>
+                        </td>
+
+                        <td className="py-3 px-4">
+                          {getStatusBadge(item.status)}
+                        </td>
+
+                        <td className="py-3 px-4">
+                          {item.verificationBy ? (
+                            <div>
+                              <div className="font-bold text-[#172033]">{item.verificationBy}</div>
+                              <span className="text-[10px] text-[#7B8798]">Sign-Off Authority</span>
+                            </div>
+                          ) : (
+                            <span className="text-[#D98B32] italic text-[11px]">Awaiting Sign-Off</span>
+                          )}
+                        </td>
+
+                        <td className="py-3 px-4 font-mono text-[#596579]">
+                          {item.verificationTimestamp || 'Pending'}
+                        </td>
+
+                        <td className="py-3 px-4">
+                          <span className="font-mono font-bold text-[#176B87] block">{item.activityId}</span>
+                          <span className="text-[11px] text-[#596579] truncate block max-w-[160px]">{item.activityName}</span>
+                        </td>
+
+                        <td className="py-3 px-4">
+                          <span className="font-mono font-semibold text-[#172033] px-2 py-0.5 rounded bg-[#F7F8FA] border border-[#D9DEE5]">
+                            {item.executionEventId || 'None'}
+                          </span>
+                        </td>
+
+                        <td className="py-3 px-4 text-[#596579]">
+                          <p className="text-[11px] line-clamp-2 leading-relaxed">
+                            {item.notes}
+                          </p>
+                        </td>
+
+                        <td className="py-3 px-4 text-right">
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setPreviewEvidence(item);
+                            }}
+                            className="px-2.5 py-1 rounded-lg border border-[#B3CBE0] bg-white hover:bg-[#EDF5F8] text-[#176B87] font-bold text-xs transition-colors shadow-2xs"
+                          >
+                            Inspect &rarr;
+                          </button>
                         </td>
                       </tr>
                     ))}
@@ -1467,7 +1841,7 @@ export default function EvidenceAndAuditPage() {
               {/* Before vs After */}
               <div className="space-y-2">
                 <span className="text-[10px] uppercase font-bold text-[#7B8798] tracking-wider block">
-                  State Change (Before $\to$ After)
+                  State Change (Before → After)
                 </span>
                 <div className="p-3 rounded-lg bg-[#FBEFEE]/60 border border-[#E4B0AA] space-y-1">
                   <span className="text-[10px] uppercase font-bold text-[#B5473C] block">
