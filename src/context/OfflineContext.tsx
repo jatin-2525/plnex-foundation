@@ -14,6 +14,7 @@ import {
   SyncItemStatus,
   CanonicalSyncState,
   INITIAL_SYNC_QUEUE_ITEMS,
+  getClearStatus,
 } from '../lib/domain/syncEngine';
 import { formatProjectDateTime, PROJECT_REPORT_DATE } from '../lib/domain/dateUtils';
 
@@ -190,8 +191,12 @@ export function OfflineProvider({ children }: { children: ReactNode }) {
 
   // Synchronize queue state helper
   const updateQueueItemInStateAndDB = async (item: SyncQueueItem) => {
-    await plnexOfflineDB.saveSyncQueueItem(item);
-    setSyncQueue((prev) => prev.map((q) => (q.id === item.id ? item : q)));
+    const itemWithClearStatus: SyncQueueItem = {
+      ...item,
+      clearStatus: item.clearStatus || getClearStatus(item.status),
+    };
+    await plnexOfflineDB.saveSyncQueueItem(itemWithClearStatus);
+    setSyncQueue((prev) => prev.map((q) => (q.id === item.id ? itemWithClearStatus : q)));
   };
 
   // PRIMARY ACTION: Sync Now
@@ -378,6 +383,7 @@ export function OfflineProvider({ children }: { children: ReactNode }) {
       title: `${data.activityName || data.activityId} (${data.quantity} ${data.unit})`,
       localCreatedAt: formatProjectDateTime(now),
       status: initialItemStatus,
+      clearStatus: getClearStatus(initialItemStatus),
       retryCount: 0,
       lastAttempt: isOfflineOperation ? null : formatProjectDateTime(now),
       error: null,
@@ -437,6 +443,7 @@ export function OfflineProvider({ children }: { children: ReactNode }) {
       title: `Daily Progress Report (${data.dprCode}) - ${data.shift}`,
       localCreatedAt: formatProjectDateTime(now),
       status: initialItemStatus,
+      clearStatus: getClearStatus(initialItemStatus),
       retryCount: 0,
       lastAttempt: isOfflineOperation ? null : formatProjectDateTime(now),
       error: null,
@@ -487,6 +494,7 @@ export function OfflineProvider({ children }: { children: ReactNode }) {
       title: `${data.filename} (${data.fileSize})`,
       localCreatedAt: formatProjectDateTime(now),
       status: initialItemStatus,
+      clearStatus: getClearStatus(initialItemStatus),
       retryCount: 0,
       lastAttempt: isOfflineOperation ? null : formatProjectDateTime(now),
       error: null,
@@ -589,6 +597,7 @@ export function OfflineProvider({ children }: { children: ReactNode }) {
           title: 'Simulation: Server Failure Test Item',
           localCreatedAt: formatProjectDateTime(now),
           status: 'Queued',
+          clearStatus: 'Queued',
           retryCount: 0,
           lastAttempt: null,
           error: null,
@@ -611,6 +620,7 @@ export function OfflineProvider({ children }: { children: ReactNode }) {
           title: 'Simulation: Version Conflict Item',
           localCreatedAt: formatProjectDateTime(now),
           status: 'Queued',
+          clearStatus: 'Queued',
           retryCount: 0,
           lastAttempt: null,
           error: null,

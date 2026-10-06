@@ -15,6 +15,7 @@ import {
   HISTORICAL_MEMORY_RECORDS,
   ReportTemplate,
   HistoricalMemoryRecord,
+  ProjectMemorySection,
   MemoryCategory,
 } from '../../lib/domain/reportsAndMemory';
 import { CANONICAL_SCHEDULE_VERSION_LABEL } from '../../lib/domain/canonicalModels';
@@ -40,6 +41,9 @@ import {
   Check,
   Building2,
   SlidersHorizontal,
+  Compass,
+  Lightbulb,
+  FileCheck2,
 } from 'lucide-react';
 
 export default function ReportsAndMemoryPage() {
@@ -51,22 +55,19 @@ export default function ReportsAndMemoryPage() {
 
   // =========================================================================
   // REPORT BUILDER STATE
-  // 6 Canonical Reports:
+  // Canonical Reports:
   // - Daily Progress
-  // - Progress Summary
-  // - Delay Report
-  // - Risk Report
-  // - Exception Report
-  // - Evidence-linked Activity Report
+  // - Weekly Progress
+  // - Schedule Performance
+  // - Variance
+  // - Delay Summary
   // =========================================================================
   const [selectedReportId, setSelectedReportId] = useState<string>('REP-DPR');
   const [builderProject, setBuilderProject] = useState<string>('PRJ-OIL-2026-01');
   const [startDate, setStartDate] = useState<string>('2026-09-01');
   const [endDate, setEndDate] = useState<string>('2026-09-18');
   const [scheduleVersion] = useState<string>(CANONICAL_SCHEDULE_VERSION_LABEL);
-  const [builderArea, setBuilderArea] = useState<string>('ALL');
   const [builderDiscipline, setBuilderDiscipline] = useState<string>('ALL');
-  const [builderStatus, setBuilderStatus] = useState<string>('ALL');
   const [includeEvidence, setIncludeEvidence] = useState<boolean>(true);
   const [includeSignatures, setIncludeSignatures] = useState<boolean>(true);
   const [includeCpmPath, setIncludeCpmPath] = useState<boolean>(true);
@@ -77,17 +78,16 @@ export default function ReportsAndMemoryPage() {
 
   // =========================================================================
   // PROJECT MEMORY STATE
-  // Strict rule: Empirical engineering repository without conversational chatbot
-  // Instead provide: Search, Filters, Historical records, Source links, Evidence links
-  // Categories:
-  // - Historical Execution
-  // - Actual Durations
-  // - Delay Causes
-  // - Verified Progress
-  // - Past Decisions
-  // - Evidence
+  // Structured Sections (No Chatbot / No AI Avatars):
+  // - Decisions
+  // - Lessons
+  // - Recurring Issues
+  // - Important Events
+  //
+  // Audit Facets:
+  // Historical Execution | Actual Durations | Delay Causes | Verified Progress | Past Decisions | Evidence
   // =========================================================================
-  const [memoryCategoryFilter, setMemoryCategoryFilter] = useState<'ALL' | MemoryCategory>('ALL');
+  const [selectedMemorySection, setSelectedMemorySection] = useState<'ALL' | ProjectMemorySection>('ALL');
   const [memoryProjectFilter, setMemoryProjectFilter] = useState<string>('ALL');
   const [memoryDisciplineFilter, setMemoryDisciplineFilter] = useState<string>('ALL');
   const [memoryYearFilter, setMemoryYearFilter] = useState<string>('ALL');
@@ -104,8 +104,8 @@ export default function ReportsAndMemoryPage() {
   // Filtered Project Memory Records
   const filteredMemoryRecords = useMemo(() => {
     return HISTORICAL_MEMORY_RECORDS.filter((rec) => {
-      // Category filter
-      if (memoryCategoryFilter !== 'ALL' && rec.category !== memoryCategoryFilter) {
+      // Section filter (Decisions | Lessons | Recurring Issues | Important Events)
+      if (selectedMemorySection !== 'ALL' && rec.section !== selectedMemorySection) {
         return false;
       }
       // Project filter
@@ -120,23 +120,36 @@ export default function ReportsAndMemoryPage() {
       if (memoryYearFilter !== 'ALL' && rec.year !== memoryYearFilter) {
         return false;
       }
-      // Text search
+      // Text search across structured information
       if (memorySearch.trim()) {
         const q = memorySearch.toLowerCase();
         const matchesTitle = rec.title.toLowerCase().includes(q);
+        const matchesSection = rec.section.toLowerCase().includes(q);
         const matchesCode = rec.projectCode.toLowerCase().includes(q);
         const matchesDiscipline = rec.discipline.toLowerCase().includes(q);
-        const matchesPattern = rec.disciplinePattern.toLowerCase().includes(q);
-        const matchesCauses = rec.delayCauses.some((c) => c.toLowerCase().includes(q));
-        const matchesDecision = rec.pastDecision?.summary.toLowerCase().includes(q) || false;
-        if (!matchesTitle && !matchesCode && !matchesDiscipline && !matchesPattern && !matchesCauses && !matchesDecision) {
+        const matchesDecision = rec.decisionDetails?.decision.toLowerCase().includes(q) || false;
+        const matchesLesson = rec.lessonDetails?.bestPracticeLearned.toLowerCase().includes(q) || false;
+        const matchesIssue = rec.recurringIssueDetails?.chronicSymptom.toLowerCase().includes(q) || false;
+        const matchesEvent = rec.eventDetails?.milestoneSignificance.toLowerCase().includes(q) || false;
+        const matchesSource = rec.sourceVerifiedRecord.recordId.toLowerCase().includes(q);
+        if (
+          !matchesTitle &&
+          !matchesSection &&
+          !matchesCode &&
+          !matchesDiscipline &&
+          !matchesDecision &&
+          !matchesLesson &&
+          !matchesIssue &&
+          !matchesEvent &&
+          !matchesSource
+        ) {
           return false;
         }
       }
       return true;
     });
   }, [
-    memoryCategoryFilter,
+    selectedMemorySection,
     memoryProjectFilter,
     memoryDisciplineFilter,
     memoryYearFilter,
@@ -144,7 +157,7 @@ export default function ReportsAndMemoryPage() {
   ]);
 
   const handleResetMemoryFilters = () => {
-    setMemoryCategoryFilter('ALL');
+    setSelectedMemorySection('ALL');
     setMemoryProjectFilter('ALL');
     setMemoryDisciplineFilter('ALL');
     setMemoryYearFilter('ALL');
@@ -156,7 +169,7 @@ export default function ReportsAndMemoryPage() {
     addToast({
       type: 'info',
       title: 'Compiling Report Dossier',
-      description: `Assembling verified progress, baseline CPM variance, and signed evidence links.`,
+      description: `Assembling verified progress, baseline variance, and signed evidence links.`,
     });
 
     setTimeout(() => {
@@ -167,7 +180,7 @@ export default function ReportsAndMemoryPage() {
         title: 'Report Dossier Generated',
         description: `${activeReportTemplate.name} compiled with authoritative data for ${builderProject}.`,
       });
-    }, 700);
+    }, 600);
   };
 
   const handleExportReport = (format: 'PDF' | 'XLSX' | 'CSV') => {
@@ -195,9 +208,9 @@ export default function ReportsAndMemoryPage() {
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
             <div>
               <div className="flex items-center gap-2 mb-1.5 flex-wrap">
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-[11px] font-bold tracking-wider uppercase bg-[#176B87]/10 text-[#176B87]">
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-[11px] font-bold tracking-wider uppercase bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0]">
                   <BookOpen className="w-3.5 h-3.5" />
-                  Project Knowledge
+                  Engineering Documentation
                 </span>
                 <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-[11px] font-medium bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]">
                   <CheckCircle2 className="w-3 h-3 text-[#2E7D5B]" />
@@ -212,7 +225,7 @@ export default function ReportsAndMemoryPage() {
                 Reports &amp; Project Memory
               </h1>
               <p className="text-sm text-[#596579] mt-1 max-w-3xl">
-                Statutory baseline progress reporting and empirical engineering memory repository. Every record is grounded in verified physical evidence.
+                Structured project reporting and empirical engineering memory repository. Searchable, factual knowledge grounded in verified evidence.
               </p>
             </div>
 
@@ -223,45 +236,45 @@ export default function ReportsAndMemoryPage() {
           </div>
 
           {/* =========================================================================
-              PRIMARY TABS: REPORTS vs PROJECT MEMORY (Clearly Separated)
+              PRIMARY TABS: Reports vs Project Memory
               ========================================================================= */}
           <div className="flex items-center justify-between pt-3 border-t border-[#D9DEE5]/60 flex-wrap gap-3">
             <div className="flex items-center bg-[#F1F3F5] p-1 rounded-lg border border-[#D9DEE5]">
               <button
                 type="button"
                 onClick={() => setActiveTab('reports')}
-                className={`flex items-center gap-2 px-6 py-2 text-xs font-bold rounded-lg transition-all ${
+                className={`flex items-center gap-2.5 px-6 py-2 text-xs font-bold rounded-md transition-all ${
                   activeTab === 'reports'
-                    ? 'bg-white text-[#176B87] shadow-xs'
+                    ? 'bg-white text-[#172033] shadow-xs border border-[#D9DEE5]'
                     : 'text-[#596579] hover:text-[#172033]'
                 }`}
               >
-                <FileText className="w-4 h-4" />
+                <FileText className="w-4 h-4 text-[#176B87]" />
                 <span>Reports</span>
                 <span
-                  className={`px-2 py-0.2 rounded-full text-[10px] font-mono ${
+                  className={`px-2 py-0.2 rounded text-[10px] font-mono font-bold ${
                     activeTab === 'reports'
                       ? 'bg-[#EDF5F8] text-[#176B87]'
                       : 'bg-[#D9DEE5] text-[#596579]'
                   }`}
                 >
-                  6 Available
+                  5 Canonical
                 </span>
               </button>
 
               <button
                 type="button"
                 onClick={() => setActiveTab('memory')}
-                className={`flex items-center gap-2 px-6 py-2 text-xs font-bold rounded-lg transition-all ${
+                className={`flex items-center gap-2.5 px-6 py-2 text-xs font-bold rounded-md transition-all ${
                   activeTab === 'memory'
-                    ? 'bg-white text-[#176B87] shadow-xs'
+                    ? 'bg-white text-[#172033] shadow-xs border border-[#D9DEE5]'
                     : 'text-[#596579] hover:text-[#172033]'
                 }`}
               >
-                <History className="w-4 h-4" />
+                <History className="w-4 h-4 text-[#176B87]" />
                 <span>Project Memory</span>
                 <span
-                  className={`px-2 py-0.2 rounded-full text-[10px] font-mono ${
+                  className={`px-2 py-0.2 rounded text-[10px] font-mono font-bold ${
                     activeTab === 'memory'
                       ? 'bg-[#EDF5F8] text-[#176B87]'
                       : 'bg-[#D9DEE5] text-[#596579]'
@@ -273,71 +286,78 @@ export default function ReportsAndMemoryPage() {
             </div>
 
             <div className="text-xs text-[#596579] font-mono">
-              Mode: <strong className="text-[#172033]">{activeTab === 'reports' ? 'Statutory Dossiers' : 'Historical Memory Vault'}</strong>
+              Mode: <strong className="text-[#172033]">{activeTab === 'reports' ? 'Structured Reports' : 'Empirical Memory Vault'}</strong>
             </div>
           </div>
         </div>
 
         {/* =========================================================================
             SECTION 1: REPORTS
-            6 Canonical Reports:
+            Canonical 5 Reports:
             - Daily Progress
-            - Progress Summary
-            - Delay Report
-            - Risk Report
-            - Exception Report
-            - Evidence-linked Activity Report
+            - Weekly Progress
+            - Schedule Performance
+            - Variance
+            - Delay Summary
             ========================================================================= */}
         {activeTab === 'reports' && (
           <div className="space-y-6">
-            {/* 6 REPORT CARDS GRID */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {REPORT_TEMPLATES.map((tmpl) => {
-                const isSelected = tmpl.id === selectedReportId;
-                return (
-                  <button
-                    key={tmpl.id}
-                    type="button"
-                    onClick={() => setSelectedReportId(tmpl.id)}
-                    className={`p-5 rounded-lg border text-left transition-all relative flex flex-col justify-between space-y-3 ${
-                      isSelected
-                        ? 'border-[#176B87] bg-white shadow-xs ring-2 ring-[#176B87]'
-                        : 'border-[#D9DEE5] bg-white hover:border-[#176B87]/50 hover:bg-[#FAFAFA]'
-                    }`}
-                  >
-                    <div>
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0]">
-                          {tmpl.badge}
-                        </span>
-                        <div className="flex items-center gap-1 text-[10px] font-mono text-[#7B8798]">
-                          {tmpl.formatsSupported.join(' · ')}
+            {/* 5 CANONICAL REPORT CARDS GRID */}
+            <div className="space-y-2">
+              <div className="flex items-center justify-between pb-1">
+                <span className="text-xs font-bold text-[#172033] uppercase tracking-wider">
+                  Available Structured Reports (5 Standard Formats):
+                </span>
+                <span className="text-[11px] text-[#596579]">
+                  Select a report type to configure parameters
+                </span>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3">
+                {REPORT_TEMPLATES.slice(0, 5).map((tmpl) => {
+                  const isSelected = tmpl.id === selectedReportId;
+                  return (
+                    <button
+                      key={tmpl.id}
+                      type="button"
+                      onClick={() => setSelectedReportId(tmpl.id)}
+                      className={`p-4 rounded-lg border text-left transition-all relative flex flex-col justify-between space-y-3 ${
+                        isSelected
+                          ? 'border-[#176B87] bg-white shadow-xs ring-2 ring-[#176B87]'
+                          : 'border-[#D9DEE5] bg-white hover:border-[#176B87]/50 hover:bg-[#FAFAFA]'
+                      }`}
+                    >
+                      <div>
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="px-2 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0]">
+                            {tmpl.badge}
+                          </span>
                         </div>
+
+                        <h3 className="font-bold text-sm text-[#172033] mb-1">
+                          {tmpl.name}
+                        </h3>
+                        <p className="text-[11px] text-[#596579] line-clamp-2">
+                          {tmpl.description}
+                        </p>
                       </div>
 
-                      <h3 className="font-bold text-base text-[#172033] mb-1">
-                        {tmpl.name}
-                      </h3>
-                      <p className="text-xs text-[#596579] line-clamp-2">
-                        {tmpl.description}
-                      </p>
-                    </div>
-
-                    <div className="pt-3 border-t border-[#D9DEE5] flex items-center justify-between text-xs">
-                      <span className="text-[#7B8798] font-mono text-[11px]">
-                        {tmpl.defaultTimeframe}
-                      </span>
-                      <span
-                        className={`font-bold flex items-center gap-1 ${
-                          isSelected ? 'text-[#176B87]' : 'text-[#596579]'
-                        }`}
-                      >
-                        {isSelected ? '✓ Selected' : 'Configure →'}
-                      </span>
-                    </div>
-                  </button>
-                );
-              })}
+                      <div className="pt-2 border-t border-[#D9DEE5] flex items-center justify-between text-[11px]">
+                        <span className="text-[#7B8798] font-mono text-[10px]">
+                          {tmpl.defaultTimeframe}
+                        </span>
+                        <span
+                          className={`font-bold ${
+                            isSelected ? 'text-[#176B87]' : 'text-[#596579]'
+                          }`}
+                        >
+                          {isSelected ? '✓ Selected' : 'Select'}
+                        </span>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
 
             {/* REPORT BUILDER CONFIGURATION PANEL */}
@@ -366,7 +386,7 @@ export default function ReportsAndMemoryPage() {
                   >
                     <option value="PRJ-OIL-2026-01">OIL-DUL-01 (Duliajan Gas Processing)</option>
                     <option value="PRJ-OIL-2026-02">OIL-OGS-2025 (OGS-3 Revamp)</option>
-                    <option value="PRJ-OIL-2026-03">OIL-NHK-2024 (Naharkatiya Pipeline)</option>
+                    <option value="PRJ-OIL-2026-03">OIL-NHK-2024 (Naharkatiya Trunk)</option>
                   </select>
                 </div>
 
@@ -421,7 +441,7 @@ export default function ReportsAndMemoryPage() {
                     onChange={(e) => setIncludeEvidence(e.target.checked)}
                     className="rounded accent-[#176B87]"
                   />
-                  <span>Include Verified Evidence Thumbnails &amp; Hashes</span>
+                  <span>Include Verified Evidence Proofs</span>
                 </label>
 
                 <label className="flex items-center gap-2 cursor-pointer text-[#172033]">
@@ -431,7 +451,7 @@ export default function ReportsAndMemoryPage() {
                     onChange={(e) => setIncludeSignatures(e.target.checked)}
                     className="rounded accent-[#176B87]"
                   />
-                  <span>Include Lead Engineer Sign-off Digital Seal</span>
+                  <span>Include Engineer Sign-off Seals</span>
                 </label>
 
                 <label className="flex items-center gap-2 cursor-pointer text-[#172033]">
@@ -441,14 +461,14 @@ export default function ReportsAndMemoryPage() {
                     onChange={(e) => setIncludeCpmPath(e.target.checked)}
                     className="rounded accent-[#176B87]"
                   />
-                  <span>Highlight Zero-Float Critical Path</span>
+                  <span>Highlight Critical Path Activities</span>
                 </label>
               </div>
 
               {/* Action Buttons */}
               <div className="pt-4 border-t border-[#D9DEE5]/60 flex items-center justify-between flex-wrap gap-3">
                 <div className="text-xs text-[#596579]">
-                  Generating report: <strong className="text-[#172033]">{activeReportTemplate.name}</strong>
+                  Configured: <strong className="text-[#172033]">{activeReportTemplate.title}</strong>
                 </div>
 
                 <div className="flex items-center gap-2 flex-wrap">
@@ -498,11 +518,11 @@ export default function ReportsAndMemoryPage() {
               </div>
             </div>
 
-            {/* Live Progress S-Curve Preview for Progress Summary Template */}
+            {/* Performance S-Curve Preview */}
             <div className="mt-4">
               <SCurveChart
                 variant="compact"
-                title="Progress Summary Dossier — Cumulative Physical S-Curve"
+                title="Schedule Performance Baseline vs Verified Trajectory"
                 subtitle="Baseline target vs actual site execution trajectory for statutory reporting"
               />
             </div>
@@ -511,39 +531,136 @@ export default function ReportsAndMemoryPage() {
 
         {/* =========================================================================
             SECTION 2: PROJECT MEMORY
-            Strict Rule: Empirical engineering repository without conversational chatbot
-            Instead provide: Search, Filters, Historical records, Source links, Evidence links
-            Categories:
-            - Historical Execution
-            - Actual Durations
-            - Delay Causes
-            - Verified Progress
-            - Past Decisions
-            - Evidence
-            Every memory record points to a verified source.
+            Structured Sections (NO CHATBOT / NO CHAT BUBBLES / NO AI AVATARS):
+            - Decisions
+            - Lessons
+            - Recurring Issues
+            - Important Events
+            Searchable structured information grounded in verified sources and evidence.
             ========================================================================= */}
         {activeTab === 'memory' && (
           <div className="space-y-6">
-            {/* EMPIRICAL REPOSITORY BANNER */}
-            <div className="p-4 rounded-lg bg-[#EDF5F8] border border-[#B3CBE0] flex items-start gap-3.5 text-xs">
-              <BookOpen className="w-5 h-5 text-[#176B87] shrink-0 mt-0.5" />
-              <div className="space-y-1">
-                <h3 className="font-bold text-[#172033] uppercase tracking-wider text-[11px]">
-                  Empirical Engineering Memory Repository
-                </h3>
-                <p className="text-[#596579] leading-relaxed">
-                  Project Memory archives verified historical execution, actual durations, delay root causes, verified progress milestones, past decisions, and evidence links across Oil India Limited projects. Every memory record is anchored to an immutable verified source.
-                </p>
+            {/* STRUCTURED MEMORY SECTION HEADER TABS */}
+            <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 shadow-xs space-y-3">
+              <div className="flex items-center justify-between pb-2 border-b border-[#D9DEE5]/60 flex-wrap gap-2">
+                <span className="text-xs font-bold text-[#172033] uppercase tracking-wider">
+                  Project Memory Sections:
+                </span>
+                <span className="text-[11px] text-[#596579]">
+                  Structured empirical repository across project lifecycles
+                </span>
+              </div>
+
+              {/* 4 Primary Structured Section Tabs */}
+              <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
+                <button
+                  type="button"
+                  onClick={() => setSelectedMemorySection('ALL')}
+                  className={`p-2.5 rounded-lg border text-left transition-all ${
+                    selectedMemorySection === 'ALL'
+                      ? 'border-[#176B87] bg-[#EDF5F8] ring-1 ring-[#176B87]'
+                      : 'border-[#D9DEE5] bg-[#F7F8FA] hover:bg-white hover:border-[#176B87]/40'
+                  }`}
+                >
+                  <div className="text-[10px] uppercase font-bold text-[#7B8798]">All Sections</div>
+                  <div className="text-xs font-bold text-[#172033] mt-0.5">
+                    {HISTORICAL_MEMORY_RECORDS.length} Records
+                  </div>
+                </button>
+
+                {/* 1. Decisions */}
+                <button
+                  type="button"
+                  onClick={() => setSelectedMemorySection('Decisions')}
+                  className={`p-2.5 rounded-lg border text-left transition-all ${
+                    selectedMemorySection === 'Decisions'
+                      ? 'border-[#176B87] bg-[#EDF5F8] ring-1 ring-[#176B87]'
+                      : 'border-[#D9DEE5] bg-[#F7F8FA] hover:bg-white hover:border-[#176B87]/40'
+                  }`}
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] uppercase font-bold text-[#7B8798]">Section</span>
+                    <span className="text-[9px] font-mono px-1.5 py-0.2 rounded bg-white text-[#176B87] font-bold border border-[#B3CBE0]">
+                      {HISTORICAL_MEMORY_RECORDS.filter((r) => r.section === 'Decisions').length}
+                    </span>
+                  </div>
+                  <div className="text-xs font-bold text-[#172033] mt-0.5">
+                    Decisions
+                  </div>
+                </button>
+
+                {/* 2. Lessons */}
+                <button
+                  type="button"
+                  onClick={() => setSelectedMemorySection('Lessons')}
+                  className={`p-2.5 rounded-lg border text-left transition-all ${
+                    selectedMemorySection === 'Lessons'
+                      ? 'border-[#176B87] bg-[#EDF5F8] ring-1 ring-[#176B87]'
+                      : 'border-[#D9DEE5] bg-[#F7F8FA] hover:bg-white hover:border-[#176B87]/40'
+                  }`}
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] uppercase font-bold text-[#7B8798]">Section</span>
+                    <span className="text-[9px] font-mono px-1.5 py-0.2 rounded bg-white text-[#176B87] font-bold border border-[#B3CBE0]">
+                      {HISTORICAL_MEMORY_RECORDS.filter((r) => r.section === 'Lessons').length}
+                    </span>
+                  </div>
+                  <div className="text-xs font-bold text-[#172033] mt-0.5">
+                    Lessons
+                  </div>
+                </button>
+
+                {/* 3. Recurring Issues */}
+                <button
+                  type="button"
+                  onClick={() => setSelectedMemorySection('Recurring Issues')}
+                  className={`p-2.5 rounded-lg border text-left transition-all ${
+                    selectedMemorySection === 'Recurring Issues'
+                      ? 'border-[#176B87] bg-[#EDF5F8] ring-1 ring-[#176B87]'
+                      : 'border-[#D9DEE5] bg-[#F7F8FA] hover:bg-white hover:border-[#176B87]/40'
+                  }`}
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] uppercase font-bold text-[#7B8798]">Section</span>
+                    <span className="text-[9px] font-mono px-1.5 py-0.2 rounded bg-white text-[#176B87] font-bold border border-[#B3CBE0]">
+                      {HISTORICAL_MEMORY_RECORDS.filter((r) => r.section === 'Recurring Issues').length}
+                    </span>
+                  </div>
+                  <div className="text-xs font-bold text-[#172033] mt-0.5">
+                    Recurring Issues
+                  </div>
+                </button>
+
+                {/* 4. Important Events */}
+                <button
+                  type="button"
+                  onClick={() => setSelectedMemorySection('Important Events')}
+                  className={`p-2.5 rounded-lg border text-left transition-all ${
+                    selectedMemorySection === 'Important Events'
+                      ? 'border-[#176B87] bg-[#EDF5F8] ring-1 ring-[#176B87]'
+                      : 'border-[#D9DEE5] bg-[#F7F8FA] hover:bg-white hover:border-[#176B87]/40'
+                  }`}
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] uppercase font-bold text-[#7B8798]">Section</span>
+                    <span className="text-[9px] font-mono px-1.5 py-0.2 rounded bg-white text-[#176B87] font-bold border border-[#B3CBE0]">
+                      {HISTORICAL_MEMORY_RECORDS.filter((r) => r.section === 'Important Events').length}
+                    </span>
+                  </div>
+                  <div className="text-xs font-bold text-[#172033] mt-0.5">
+                    Important Events
+                  </div>
+                </button>
               </div>
             </div>
 
             {/* SEARCH & FILTERS BAR */}
-            <div className="bg-white border border-[#D9DEE5] rounded-lg p-5 shadow-xs space-y-4">
+            <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 shadow-xs space-y-3">
               <div className="flex items-center justify-between flex-wrap gap-2">
                 <div className="flex items-center gap-2">
                   <Filter className="w-4 h-4 text-[#176B87]" />
                   <h3 className="text-xs font-bold text-[#172033] uppercase tracking-wider">
-                    Memory Repository Search &amp; Filters
+                    Search &amp; Filters: Project Memory
                   </h3>
                 </div>
                 <button
@@ -563,34 +680,13 @@ export default function ReportsAndMemoryPage() {
                   type="text"
                   value={memorySearch}
                   onChange={(e) => setMemorySearch(e.target.value)}
-                  placeholder="Search historical memory records by scope, past decisions, delay root causes, or discipline..."
+                  placeholder="Search decisions, lessons, recurring issues, or important events..."
                   className="w-full pl-9 pr-4 py-2 text-xs bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg text-[#172033] outline-none focus:border-[#176B87] focus:bg-white transition-colors"
                 />
               </div>
 
-              {/* Categorical Filters Row */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 text-xs pt-1">
-                {/* 1. Category Facet (The 6 required categories) */}
-                <div>
-                  <label className="block text-[10px] font-bold uppercase text-[#7B8798] mb-1">
-                    Memory Facet
-                  </label>
-                  <select
-                    value={memoryCategoryFilter}
-                    onChange={(e) => setMemoryCategoryFilter(e.target.value as any)}
-                    className="w-full px-2.5 py-1.5 bg-white border border-[#D9DEE5] rounded-lg text-[#172033] font-medium outline-none focus:border-[#176B87]"
-                  >
-                    <option value="ALL">All Categories (6 Facets)</option>
-                    <option value="Historical Execution">Historical Execution</option>
-                    <option value="Actual Durations">Actual Durations</option>
-                    <option value="Delay Causes">Delay Causes</option>
-                    <option value="Verified Progress">Verified Progress</option>
-                    <option value="Past Decisions">Past Decisions</option>
-                    <option value="Evidence">Evidence</option>
-                  </select>
-                </div>
-
-                {/* 2. Project Filter */}
+              {/* Structured Filters Row */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs pt-1">
                 <div>
                   <label className="block text-[10px] font-bold uppercase text-[#7B8798] mb-1">
                     Project
@@ -600,14 +696,13 @@ export default function ReportsAndMemoryPage() {
                     onChange={(e) => setMemoryProjectFilter(e.target.value)}
                     className="w-full px-2.5 py-1.5 bg-white border border-[#D9DEE5] rounded-lg text-[#172033] font-medium outline-none focus:border-[#176B87]"
                   >
-                    <option value="ALL">All Historic Projects</option>
+                    <option value="ALL">All Projects</option>
                     <option value="OIL-DUL-01">OIL-DUL-01 (Duliajan Gas Processing)</option>
                     <option value="OIL-OGS-2025">OIL-OGS-2025 (OGS-3 Revamp)</option>
                     <option value="OIL-NHK-2024">OIL-NHK-2024 (Naharkatiya Trunk)</option>
                   </select>
                 </div>
 
-                {/* 3. Discipline Filter */}
                 <div>
                   <label className="block text-[10px] font-bold uppercase text-[#7B8798] mb-1">
                     Discipline
@@ -624,10 +719,9 @@ export default function ReportsAndMemoryPage() {
                   </select>
                 </div>
 
-                {/* 4. Year Filter */}
                 <div>
                   <label className="block text-[10px] font-bold uppercase text-[#7B8798] mb-1">
-                    Year / Era
+                    Year
                   </label>
                   <select
                     value={memoryYearFilter}
@@ -653,7 +747,7 @@ export default function ReportsAndMemoryPage() {
               </div>
             </div>
 
-            {/* HISTORICAL MEMORY RECORDS LIST */}
+            {/* STRUCTURED MEMORY RECORDS LIST */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {filteredMemoryRecords.map((rec) => (
                 <div
@@ -667,7 +761,10 @@ export default function ReportsAndMemoryPage() {
                         <span className="font-mono text-xs font-bold text-[#176B87] bg-[#EDF5F8] px-2 py-0.5 rounded border border-[#B3CBE0]">
                           {rec.id}
                         </span>
-                        <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-[#F1F3F5] text-[#596579]">
+                        <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-[#F1F3F5] text-[#172033] border border-[#D9DEE5]">
+                          {rec.section}
+                        </span>
+                        <span className="text-[10px] font-mono text-[#7B8798]">
                           {rec.category}
                         </span>
                       </div>
@@ -685,8 +782,78 @@ export default function ReportsAndMemoryPage() {
                       </p>
                     </div>
 
+                    {/* STRUCTURED CONTENT PER SECTION */}
+                    {/* Section 1: Decisions */}
+                    {rec.section === 'Decisions' && rec.decisionDetails && (
+                      <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg space-y-1.5 text-xs">
+                        <div>
+                          <span className="text-[10px] font-bold uppercase text-[#7B8798] block">Decision</span>
+                          <p className="text-[#172033] font-medium">{rec.decisionDetails.decision}</p>
+                        </div>
+                        <div>
+                          <span className="text-[10px] font-bold uppercase text-[#7B8798] block">Rationale</span>
+                          <p className="text-[#596579]">{rec.decisionDetails.rationale}</p>
+                        </div>
+                        <div className="pt-1 border-t border-[#D9DEE5]/60 text-[11px] text-[#596579] flex items-center justify-between">
+                          <span>Authorized by: <strong className="text-[#172033]">{rec.decisionDetails.authorizedBy}</strong></span>
+                          <span className="text-[#2E7D5B] font-mono font-bold">{rec.decisionDetails.impactOnSchedule}</span>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Section 2: Lessons */}
+                    {rec.section === 'Lessons' && rec.lessonDetails && (
+                      <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg space-y-1.5 text-xs">
+                        <div>
+                          <span className="text-[10px] font-bold uppercase text-[#7B8798] block">Observation</span>
+                          <p className="text-[#596579]">{rec.lessonDetails.whatHappened}</p>
+                        </div>
+                        <div>
+                          <span className="text-[10px] font-bold uppercase text-[#2E7D5B] block">Best Practice Learned</span>
+                          <p className="text-[#172033] font-medium">{rec.lessonDetails.bestPracticeLearned}</p>
+                        </div>
+                        <div className="pt-1 border-t border-[#D9DEE5]/60 text-[11px] text-[#176B87] font-mono">
+                          Benchmark: {rec.lessonDetails.productivityBenchmark}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Section 3: Recurring Issues */}
+                    {rec.section === 'Recurring Issues' && rec.recurringIssueDetails && (
+                      <div className="p-3 bg-[#FDF6ED] border border-[#F0D4A6] rounded-lg space-y-1.5 text-xs">
+                        <div>
+                          <span className="text-[10px] font-bold uppercase text-[#8C5311] block">Chronic Root Cause</span>
+                          <p className="text-[#172033] font-medium">{rec.recurringIssueDetails.chronicSymptom}</p>
+                        </div>
+                        <div>
+                          <span className="text-[10px] font-bold uppercase text-[#8C5311] block">Preemptive Countermeasure</span>
+                          <p className="text-[#596579]">{rec.recurringIssueDetails.preemptiveCountermeasure}</p>
+                        </div>
+                        <div className="pt-1 border-t border-[#F0D4A6]/60 text-[11px] text-[#8C5311] font-mono">
+                          Frequency: {rec.recurringIssueDetails.historicalFrequency}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Section 4: Important Events */}
+                    {rec.section === 'Important Events' && rec.eventDetails && (
+                      <div className="p-3 bg-[#EDF7F2] border border-[#B8DCC9] rounded-lg space-y-1.5 text-xs">
+                        <div>
+                          <span className="text-[10px] font-bold uppercase text-[#2E7D5B] block">Milestone Significance</span>
+                          <p className="text-[#172033] font-medium">{rec.eventDetails.milestoneSignificance}</p>
+                        </div>
+                        <div>
+                          <span className="text-[10px] font-bold uppercase text-[#2E7D5B] block">Scope Completed</span>
+                          <p className="text-[#596579]">{rec.eventDetails.scopeCompleted}</p>
+                        </div>
+                        <div className="pt-1 border-t border-[#B8DCC9]/60 text-[11px] text-[#2E7D5B] font-mono">
+                          Authority: {rec.eventDetails.verificationAuthority}
+                        </div>
+                      </div>
+                    )}
+
                     {/* DURATION & PRODUCTIVITY METRICS */}
-                    <div className="grid grid-cols-2 gap-2 text-xs bg-[#F7F8FA] p-3 rounded-lg border border-[#D9DEE5]/80">
+                    <div className="grid grid-cols-2 gap-2 text-xs bg-[#F7F8FA] p-2.5 rounded-lg border border-[#D9DEE5]/80">
                       <div>
                         <span className="text-[10px] uppercase font-bold text-[#7B8798] block">
                           Actual Duration
@@ -707,34 +874,9 @@ export default function ReportsAndMemoryPage() {
                         </span>
                       </div>
                     </div>
-
-                    {/* PAST DECISION IF APPLICABLE */}
-                    {rec.pastDecision && (
-                      <div className="p-3 bg-[#FDF6ED] border border-[#F0D4A6] rounded-lg space-y-1 text-xs">
-                        <span className="text-[10px] font-bold uppercase text-[#D98B32] block">
-                          Past Decision Record
-                        </span>
-                        <p className="text-[#172033] font-medium">{rec.pastDecision.summary}</p>
-                        <p className="text-[11px] text-[#596579] italic">Authorized by {rec.pastDecision.authorizedBy}</p>
-                      </div>
-                    )}
-
-                    {/* DELAY ROOT CAUSES IF APPLICABLE */}
-                    {rec.delayCauses.length > 0 && rec.delayCategory !== 'None (Ahead)' && (
-                      <div className="space-y-1">
-                        <span className="text-[10px] uppercase font-bold text-[#B5473C] tracking-wider block">
-                          Recorded Delay Causes
-                        </span>
-                        <ul className="text-xs text-[#596579] list-disc list-inside space-y-0.5">
-                          {rec.delayCauses.map((dc, idx) => (
-                            <li key={idx} className="truncate">{dc}</li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
                   </div>
 
-                  {/* SOURCE LINKS & EVIDENCE LINKS (Mandatory per Prompt) */}
+                  {/* MANDATORY SOURCE LINKS & EVIDENCE LINKS */}
                   <div className="pt-3 border-t border-[#D9DEE5]/60 flex items-center justify-between text-xs flex-wrap gap-2">
                     {/* Source link */}
                     <div className="flex items-center gap-1.5 text-[#596579] truncate max-w-[240px]">
@@ -825,7 +967,7 @@ export default function ReportsAndMemoryPage() {
               </div>
               <div>
                 <span className="text-[10px] text-[#7B8798] uppercase font-bold block">CPM Critical Variance</span>
-                <span className="text-xl font-bold font-mono text-[#B5473C]">-7.0% (-2d)</span>
+                <span className="text-xl font-bold font-mono text-[#9E332A]">-7.0% (-2d)</span>
               </div>
               <div>
                 <span className="text-[10px] text-[#7B8798] uppercase font-bold block">Evidence Dossier</span>
@@ -849,15 +991,20 @@ export default function ReportsAndMemoryPage() {
           isOpen={Boolean(selectedMemoryRecord)}
           onClose={() => setSelectedMemoryRecord(null)}
           title={`Memory Record: ${selectedMemoryRecord?.id || ''}`}
-          subtitle={`${selectedMemoryRecord?.category || ''} · ${selectedMemoryRecord?.projectName || ''}`}
+          subtitle={`${selectedMemoryRecord?.section || ''} · ${selectedMemoryRecord?.projectName || ''}`}
           width="lg"
         >
           {selectedMemoryRecord && (
             <div className="space-y-5 text-xs p-1">
               <div>
-                <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0]">
-                  {selectedMemoryRecord.category}
-                </span>
+                <div className="flex items-center gap-2">
+                  <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0]">
+                    {selectedMemoryRecord.section}
+                  </span>
+                  <span className="text-[10px] font-mono text-[#7B8798]">
+                    {selectedMemoryRecord.category}
+                  </span>
+                </div>
                 <h3 className="font-bold text-base text-[#172033] mt-1.5">
                   {selectedMemoryRecord.title}
                 </h3>

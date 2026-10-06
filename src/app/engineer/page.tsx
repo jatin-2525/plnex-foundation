@@ -505,7 +505,7 @@ export default function EngineerDashboardPage() {
                 OFFLINE MODE
               </span>
               <span className="font-semibold">
-                You are working offline. Site logs and photos are saved safely in your browser.
+                You are working offline. Updates will be synchronized when online mode is restored.
               </span>
             </div>
             <Link

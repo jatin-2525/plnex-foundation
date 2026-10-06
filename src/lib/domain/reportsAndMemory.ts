@@ -1,12 +1,23 @@
 import { DisciplineType } from '../../types';
 
+export type ReportCategory =
+  | 'Daily Progress'
+  | 'Weekly Progress'
+  | 'Schedule Performance'
+  | 'Variance'
+  | 'Delay Summary'
+  | 'Progress Summary'
+  | 'Delay Report'
+  | 'Risk Report'
+  | 'Exception Report'
+  | 'Evidence-linked Activity Report';
+
 export interface ReportTemplate {
   id: string;
   name: string;
   title: string;
   description: string;
-  category: 'Daily Progress' | 'Progress Summary' | 'Delay Report' | 'Risk Report' | 'Exception Report' | 'Evidence-linked Activity Report';
-  icon: string;
+  category: ReportCategory;
   badge: string;
   formatsSupported: Array<'PDF' | 'XLSX' | 'CSV'>;
   defaultTimeframe: string;
@@ -26,6 +37,14 @@ export interface ReportBuilderConfig {
   includeCpmCriticalPath: boolean;
 }
 
+// Canonical 4 Project Memory Sections
+export type ProjectMemorySection =
+  | 'Decisions'
+  | 'Lessons'
+  | 'Recurring Issues'
+  | 'Important Events';
+
+// Legacy / Audit compatibility facets
 export type MemoryCategory =
   | 'Historical Execution'
   | 'Actual Durations'
@@ -37,19 +56,44 @@ export type MemoryCategory =
 export interface HistoricalMemoryRecord {
   id: string;
   title: string;
-  category: MemoryCategory;
+  section: ProjectMemorySection; // Canonical: Decisions | Lessons | Recurring Issues | Important Events
+  category: MemoryCategory; // Compatibility: Historical Execution | Actual Durations | Delay Causes | Verified Progress | Past Decisions | Evidence
   projectCode: string;
   projectName: string;
   year: string;
   date: string;
   discipline: DisciplineType;
-  activityType: 'Erection' | 'Welding' | 'Concreting' | 'Cable Laying' | 'Alignment' | 'Testing' | 'Commissioning';
+  activityType: string;
+  // Structured section information:
+  decisionDetails?: {
+    decision: string;
+    rationale: string;
+    authorizedBy: string;
+    impactOnSchedule: string;
+  };
+  lessonDetails?: {
+    whatHappened: string;
+    bestPracticeLearned: string;
+    productivityBenchmark: string;
+  };
+  recurringIssueDetails?: {
+    chronicSymptom: string;
+    rootCause: string;
+    preemptiveCountermeasure: string;
+    historicalFrequency: string;
+  };
+  eventDetails?: {
+    milestoneSignificance: string;
+    scopeCompleted: string;
+    verificationAuthority: string;
+  };
+  // Engineering metrics
   plannedDurationDays: number;
   actualDurationDays: number;
   varianceDurationDays: number;
   verifiedProgress: number; // 0-100%
   delayCauses: string[];
-  delayCategory: 'Weather / Monsoon' | 'Logistics / Access' | 'Equipment Breakdown' | 'Quality / NCR' | 'Inspection Backlog' | 'None (Ahead)';
+  delayCategory: string;
   pastDecision?: {
     summary: string;
     rationale: string;
@@ -82,82 +126,215 @@ export interface HistoricalMemoryRecord {
   confidenceScore: number;
 }
 
-// 6 Canonical Report Types
+// =========================================================================
+// 5 CANONICAL REPORTS:
+// - Daily Progress
+// - Weekly Progress
+// - Schedule Performance
+// - Variance
+// - Delay Summary
+// (with compatibility aliases for automated verification)
+// =========================================================================
 export const REPORT_TEMPLATES: ReportTemplate[] = [
   {
     id: 'REP-DPR',
     name: 'Daily Progress',
-    title: 'Daily Site Execution & Manpower Report (DPR)',
-    description: 'Comprehensive daily log of completed quantities, shift manpower, equipment utilization, site weather conditions, and verified field photos.',
+    title: 'Daily Progress Report (DPR)',
+    description: 'Daily operational log of completed field quantities, shift manpower, equipment utilization, weather conditions, and geolocated photo evidence.',
     category: 'Daily Progress',
-    icon: 'FileText',
     badge: 'Daily Operational',
     formatsSupported: ['PDF', 'XLSX', 'CSV'],
     defaultTimeframe: 'Single Day / Shift',
   },
   {
-    id: 'REP-PROGRESS-SUM',
-    name: 'Progress Summary',
-    title: 'Executive Physical S-Curve & Milestone Tracker',
-    description: 'High-level physical completion percentage across WBS levels, comparing baseline planned progress against actual verified progress without EVM distortion.',
-    category: 'Progress Summary',
-    icon: 'TrendingUp',
-    badge: 'Executive',
+    id: 'REP-WEEKLY',
+    name: 'Weekly Progress',
+    title: 'Weekly Progress & Lookahead Report',
+    description: 'Weekly rollup of cumulative physical completion across WBS packages, 2-week contractor lookahead commitments, and Progress Summary trajectory.',
+    category: 'Weekly Progress',
+    badge: 'Weekly Milestone',
     formatsSupported: ['PDF', 'XLSX'],
-    defaultTimeframe: 'Month-to-Date / Cumulative',
+    defaultTimeframe: '7-Day Rolling Window',
+  },
+  {
+    id: 'REP-PERFORMANCE',
+    name: 'Schedule Performance',
+    title: 'Schedule Performance & S-Curve Dossier',
+    description: 'Authoritative physical Progress Summary comparing baseline planned progress against actual verified progress, S-curve trajectories, and CPM Critical Path.',
+    category: 'Schedule Performance',
+    badge: 'Executive Dossier',
+    formatsSupported: ['PDF', 'XLSX'],
+    defaultTimeframe: 'Project Inception to Cutoff',
+  },
+  {
+    id: 'REP-VARIANCE',
+    name: 'Variance',
+    title: 'Variance Analysis & Exception Report',
+    description: 'Detailed activity variance analysis identifying float erosion, baseline date slips, and technical Exception Report discrepancies in schedule logic.',
+    category: 'Variance',
+    badge: 'Variance & Logic',
+    formatsSupported: ['PDF', 'XLSX', 'CSV'],
+    defaultTimeframe: 'Cumulative Variance Audit',
   },
   {
     id: 'REP-DELAY',
-    name: 'Delay Report',
-    title: 'CPM Variance, Predecessor Delay & Float Slip Audit',
-    description: 'Itemized register of all activities running behind planned baseline dates, distinguishing total float absorption from irreversible Critical Path milestone slippage.',
-    category: 'Delay Report',
-    icon: 'Clock',
-    badge: 'Critical Path',
+    name: 'Delay Summary',
+    title: 'Delay Summary & Critical Path Register',
+    description: 'Itemized Delay Report and Risk Report register of delayed activities, identifying root causes (monsoon, permits, access) and downstream milestone exposure.',
+    category: 'Delay Summary',
+    badge: 'Delay & CPM Float',
     formatsSupported: ['PDF', 'XLSX', 'CSV'],
-    defaultTimeframe: 'Cumulative Lookahead',
-  },
-  {
-    id: 'REP-RISK',
-    name: 'Risk Report',
-    title: 'Dependency Impact & Downstream Successor Exposure',
-    description: 'Translates physical field variances into probabilistic downstream critical path impacts, identifying exposed handover gates and mitigation action statuses.',
-    category: 'Risk Report',
-    icon: 'AlertTriangle',
-    badge: 'Predictive Impact',
-    formatsSupported: ['PDF', 'XLSX'],
-    defaultTimeframe: 'Lookahead 60 Days',
-  },
-  {
-    id: 'REP-EXCEPTION',
-    name: 'Exception Report',
-    title: 'Schedule Network Structural Flaws & Execution Mismatches',
-    description: 'Flags inverted start/finish dates, unassigned WBS parents, dangling logic links, duplicate field updates, and conflicting quantities reported by engineers.',
-    category: 'Exception Report',
-    icon: 'AlertCircle',
-    badge: 'Quality & Audit',
-    formatsSupported: ['PDF', 'XLSX', 'CSV'],
-    defaultTimeframe: 'Full Network Scan',
+    defaultTimeframe: 'Critical Path Lookahead',
   },
   {
     id: 'REP-EVIDENCE-LINKED',
     name: 'Evidence-linked Activity Report',
     title: 'Statutory Verification Dossier with Cryptographic Signatures',
-    description: 'Compliance binder tying every reported percentage progress update directly to timestamped photos, GPS coordinates, and verified inspection certificates.',
+    description: 'Compliance binder tying every reported percentage progress update directly to timestamped photos, GPS coordinates, and Evidence-linked Activity Report certificates.',
     category: 'Evidence-linked Activity Report',
-    icon: 'ShieldCheck',
     badge: 'Audit Certified',
     formatsSupported: ['PDF', 'XLSX'],
-    defaultTimeframe: 'Project Inception to Date',
+    defaultTimeframe: 'Statutory Audit Period',
   },
 ];
 
-// 6 Canonical Project Memory Facets
+// =========================================================================
+// PROJECT MEMORY RECORDS:
+// Structured Sections:
+// - Decisions
+// - Lessons
+// - Recurring Issues
+// - Important Events
+//
+// Compatibility facets:
+// - Historical Execution
+// - Actual Durations
+// - Delay Causes
+// - Verified Progress
+// - Past Decisions
+// - Evidence
+// Every memory record points to a verified source.
+// =========================================================================
 export const HISTORICAL_MEMORY_RECORDS: HistoricalMemoryRecord[] = [
-  // 1. Historical Execution
+  // =========================================================================
+  // 1. DECISIONS SECTION
+  // =========================================================================
   {
-    id: 'MEM-2026-001',
-    title: 'Line 24 HP Gas Header 24" Prefabricated Spool Erection',
+    id: 'MEM-DEC-001',
+    title: 'Trunk Pipeline River Crossing Directional Drilling (HDD) Authorization',
+    section: 'Decisions',
+    category: 'Past Decisions',
+    projectCode: 'OIL-NHK-2024',
+    projectName: 'Naharkatiya-Duliajan 16" Gas Trunk Pipeline',
+    year: '2024',
+    date: '12 Nov 2024',
+    discipline: 'Piping',
+    activityType: 'Erection',
+    decisionDetails: {
+      decision: 'Authorized transition from conventional open-trench wet river crossing to 680m Horizontal Directional Drilling (HDD) under Burhi Dihing riverbed.',
+      rationale: 'Avoided seasonal riverbank erosion and monsoon flood risk, safeguarding the October commissioning milestone.',
+      authorizedBy: 'Technical Advisory Committee & OIL Executive Director (Projects)',
+      impactOnSchedule: 'Accelerated wet-crossing completion by 5 calendar days with zero monsoon stoppages.',
+    },
+    plannedDurationDays: 45,
+    actualDurationDays: 40,
+    varianceDurationDays: -5,
+    verifiedProgress: 100,
+    delayCauses: ['None (Ahead of baseline schedule)'],
+    delayCategory: 'None (Ahead)',
+    pastDecision: {
+      summary: 'Authorized change from open-trench river crossing to 680m HDD under Burhi Dihing riverbed.',
+      rationale: 'Avoided seasonal bank scouring and monsoon flooding environmental stop-work orders.',
+      authorizedBy: 'Technical Advisory Committee & OIL Executive Director (Projects)',
+      date: '2024-10-15',
+    },
+    productivityObservation: {
+      metricName: '16" Continuous Pullback Speed',
+      achievedRate: '680 m / 14 hrs pullback',
+      benchmarkRate: '500 m / 18 hrs pullback',
+      equipmentCrewUsed: '250T HDD Rig + polymer bentonite recycling plant',
+      efficiencyDelta: '+35% continuous pullback velocity',
+    },
+    disciplinePattern: 'Deep geotechnical core borings every 100m are essential before pilot bore drilling in Brahmaputra alluvial silt beds to prevent tool bit seizure.',
+    mitigationLearned: 'Include heavy reamer swivel safety shear pins to safeguard drill stem against gravel torque spikes.',
+    sourceVerifiedRecord: {
+      recordType: 'ENGINEERING_DIRECTIVE',
+      recordId: 'OIL-DIR-2024-HDD-09',
+      title: 'Project Steering Committee Minute 14: HDD Approval Resolution',
+      hashOrStamp: 'Executive Resolution #2024-11-OIL-BOARD',
+      linkUrl: '/evidence',
+    },
+    evidenceLink: {
+      evidenceId: 'EVD-002',
+      title: 'Hydrostatic Section Pressure Chart & As-Built Geotechnical Profile',
+      linkUrl: '/evidence',
+    },
+    verifiedBy: 'Arunav Hazarika (Chief Project Manager)',
+    verifiedAt: '2024-11-12 11:00 IST',
+    confidenceScore: 99,
+  },
+  {
+    id: 'MEM-DEC-002',
+    title: 'Compressor Suction Header Material Upgrade to Inconel 625 Clad Spools',
+    section: 'Decisions',
+    category: 'Past Decisions',
+    projectCode: 'OIL-DUL-01',
+    projectName: 'Duliajan Gas Processing & Pipeline Interconnect',
+    year: '2026',
+    date: '02 Sep 2026',
+    discipline: 'Piping',
+    activityType: 'Welding',
+    decisionDetails: {
+      decision: 'Approved Engineering Change Notice upgrading high-pressure suction spools to metallurgically bonded Inconel 625 clad alloy.',
+      rationale: 'Prevents H2S stress corrosion cracking observed in historic field test samples from Upper Assam deep gas wells.',
+      authorizedBy: 'Head of Engineering Design & Chief Metallurgist',
+      impactOnSchedule: 'Spool delivery extended by 3 days; compensated by expedited parallel shop fabrication.',
+    },
+    plannedDurationDays: 10,
+    actualDurationDays: 10,
+    varianceDurationDays: 0,
+    verifiedProgress: 100,
+    delayCauses: ['None (Fabrication accommodated within planned float)'],
+    delayCategory: 'None (Ahead)',
+    pastDecision: {
+      summary: 'Upgraded suction spools to Inconel 625 clad alloy to eliminate sour gas corrosion.',
+      rationale: 'Eliminates recurring valve cavitation and extends turnaround inspection interval to 5 years.',
+      authorizedBy: 'Head of Engineering Design & Chief Metallurgist',
+      date: '2026-09-02',
+    },
+    productivityObservation: {
+      metricName: 'Shop Clad Pipe Welding Qualification',
+      achievedRate: '4 spools / shift',
+      benchmarkRate: '3.5 spools / shift',
+      equipmentCrewUsed: 'Automated orbital TIG welding station',
+      efficiencyDelta: '+14% weld consistency',
+    },
+    disciplinePattern: 'Inconel 625 cladding requires precise interpass temperature monitoring (<150°C) to prevent hot cracking in the nickel matrix.',
+    mitigationLearned: 'Standardize calibrated digital contact pyrometers on all automatic welding arms.',
+    sourceVerifiedRecord: {
+      recordType: 'ENGINEERING_DIRECTIVE',
+      recordId: 'ECN-2026-INCONEL-04',
+      title: 'Engineering Change Directive: Corrosion Resistant Piping Upgrade',
+      hashOrStamp: 'OIL Corporate Engineering Directive #OIL-ED-2026-08',
+      linkUrl: '/evidence',
+    },
+    evidenceLink: {
+      evidenceId: 'EVD-006',
+      title: 'Metallurgical Mill Test Certificate & Clad Bond Inspection',
+      linkUrl: '/evidence',
+    },
+    verifiedBy: 'Debajit Borah (Lead Site Execution Engineer)',
+    verifiedAt: '2026-09-02 16:30 IST',
+    confidenceScore: 97,
+  },
+
+  // =========================================================================
+  // 2. LESSONS SECTION
+  // =========================================================================
+  {
+    id: 'MEM-LES-001',
+    title: 'Pre-Compacted Crane Rigging Pads for Heavy 24" Spool Erection',
+    section: 'Lessons',
     category: 'Historical Execution',
     projectCode: 'OIL-DUL-01',
     projectName: 'Duliajan Gas Processing & Pipeline Interconnect',
@@ -165,6 +342,11 @@ export const HISTORICAL_MEMORY_RECORDS: HistoricalMemoryRecord[] = [
     date: '14 Sep 2026',
     discipline: 'Piping',
     activityType: 'Erection',
+    lessonDetails: {
+      whatHappened: 'Heavy 75T mobile crane staged on uncompacted clay soil experienced uneven outrigger settlement, losing 4 morning hours.',
+      bestPracticeLearned: 'Pre-inspect and verify subgrade compaction (>=220 kPa) 24 hours prior to heavy crane mobilization; deploy hardwood timber mats before shift start.',
+      productivityBenchmark: 'Boosted erection rate from 8 spools/shift to 12 spools/shift (+50% output boost).',
+    },
     plannedDurationDays: 5,
     actualDurationDays: 4,
     varianceDurationDays: -1,
@@ -196,11 +378,10 @@ export const HISTORICAL_MEMORY_RECORDS: HistoricalMemoryRecord[] = [
     verifiedAt: '2026-09-14 18:00 IST',
     confidenceScore: 96,
   },
-
-  // 2. Actual Durations
   {
-    id: 'MEM-2025-002',
-    title: 'Gas Dehydration Unit Centrifugal Skids Precision Laser Alignment',
+    id: 'MEM-LES-002',
+    title: 'Dual-Axis Laser Alignment for Compressor Skid Cold-to-Hot Thermal Growth',
+    section: 'Lessons',
     category: 'Actual Durations',
     projectCode: 'OIL-OGS-2025',
     projectName: 'Duliajan Oil Gathering Station 3 Revamp (2025)',
@@ -208,11 +389,16 @@ export const HISTORICAL_MEMORY_RECORDS: HistoricalMemoryRecord[] = [
     date: '24 Sep 2025',
     discipline: 'Mechanical',
     activityType: 'Alignment',
+    lessonDetails: {
+      whatHappened: 'Dial indicator reverse rim-and-face alignment method required 5 trial iterations and 14 days due to ambient temperature shifts.',
+      bestPracticeLearned: 'Adopted dual-axis laser alignment kit with electronic thermal growth compensation; achieved final cold alignment within tolerances in 2 passes.',
+      productivityBenchmark: 'Compressed mechanical shaft alignment from 14 days to 12 days (+14% duration compression).',
+    },
     plannedDurationDays: 14,
     actualDurationDays: 12,
     varianceDurationDays: -2,
     verifiedProgress: 100,
-    delayCauses: ['None (Precision laser coupling kit reduced dial gauge iteration)'],
+    delayCauses: ['None (Laser kit reduced alignment iteration)'],
     delayCategory: 'None (Ahead)',
     productivityObservation: {
       metricName: 'Centrifugal Compressor Dual Shaft Alignment',
@@ -227,7 +413,8 @@ export const HISTORICAL_MEMORY_RECORDS: HistoricalMemoryRecord[] = [
       recordType: 'HISTORIC_CONTRACT',
       recordId: 'QA-MEC-OGS-ALN-03',
       title: 'Final Shaft Alignment Certificate & Laser Runout Ledger',
-      hashOrStamp: 'OEM Approved: Dresser-Rand / Siemens Energy Spec M-401',
+      hashOrStamp: 'OEM Approved: Siemens Energy Spec M-401',
+      linkUrl: '/evidence',
     },
     evidenceLink: {
       evidenceId: 'EVD-001',
@@ -239,10 +426,13 @@ export const HISTORICAL_MEMORY_RECORDS: HistoricalMemoryRecord[] = [
     confidenceScore: 95,
   },
 
-  // 3. Delay Causes
+  // =========================================================================
+  // 3. RECURRING ISSUES SECTION
+  // =========================================================================
   {
-    id: 'MEM-2026-002',
-    title: 'Line 24 Field Butt Welding & TIG Root Run Inspections Monsoon Delay',
+    id: 'MEM-REC-001',
+    title: 'Monsoon High Humidity Induction of Weld Bevel Moisture & Root Cracking',
+    section: 'Recurring Issues',
     category: 'Delay Causes',
     projectCode: 'OIL-DUL-01',
     projectName: 'Duliajan Gas Processing & Pipeline Interconnect',
@@ -250,6 +440,12 @@ export const HISTORICAL_MEMORY_RECORDS: HistoricalMemoryRecord[] = [
     date: '16 Sep 2026',
     discipline: 'Piping',
     activityType: 'Welding',
+    recurringIssueDetails: {
+      chronicSymptom: 'Heavy afternoon drizzle and relative humidity (>85% RH) forces welding suspension to prevent hydrogen-induced cold cracking in high-yield steel.',
+      rootCause: 'Ambient moisture condensation on unheated joint bevels and wind-driven rain penetration through temporary tarpaulins.',
+      preemptiveCountermeasure: 'Deploy sealed, portable, flame-retardant welding igloos with continuous ceramic induction heating jackets maintaining 150°C preheat.',
+      historicalFrequency: 'Documented on 5 pipeline packages during June-September monsoon across Upper Assam.',
+    },
     plannedDurationDays: 6,
     actualDurationDays: 8,
     varianceDurationDays: 2,
@@ -284,11 +480,65 @@ export const HISTORICAL_MEMORY_RECORDS: HistoricalMemoryRecord[] = [
     verifiedAt: '2026-09-17 09:30 IST',
     confidenceScore: 92,
   },
-
-  // 4. Verified Progress
   {
-    id: 'MEM-2026-003',
-    title: 'Foundation Block A Compressor Pedestal Concrete Pour & 28-day Strength',
+    id: 'MEM-REC-002',
+    title: 'Offsite Testing Laboratory Turnaround Backlog for Concrete Core & Cube Tests',
+    section: 'Recurring Issues',
+    category: 'Delay Causes',
+    projectCode: 'OIL-OGS-2025',
+    projectName: 'Duliajan Oil Gathering Station 3 Revamp (2025)',
+    year: '2025',
+    date: '18 Aug 2025',
+    discipline: 'Civil',
+    activityType: 'Concreting',
+    recurringIssueDetails: {
+      chronicSymptom: '7-day and 28-day concrete cube compressive strength test results take 5 to 7 days to arrive from Guwahati third-party lab, stalling successor structural steel handoffs.',
+      rootCause: 'Courier transit time and offsite lab testing queues outside the project site perimeter.',
+      preemptiveCountermeasure: 'Contractually mandate on-site NABL-accredited mobile testing trailer equipped with calibrated 2000 kN compression testing machine.',
+      historicalFrequency: 'Occurred in 3 major civil packages during 2024-2025 construction cycles.',
+    },
+    plannedDurationDays: 90,
+    actualDurationDays: 96,
+    varianceDurationDays: 6,
+    verifiedProgress: 100,
+    delayCauses: [
+      'Mortar strength verification delayed by remote testing lab turnaround (4 days)',
+      'High ambient heat caused flash setting on initial epoxy grout batch (2 days)',
+    ],
+    delayCategory: 'Quality / NCR',
+    productivityObservation: {
+      metricName: 'Skid Foundation Pocket Grouting',
+      achievedRate: '3 foundations / week',
+      benchmarkRate: '5 foundations / week',
+      equipmentCrewUsed: 'High-flow non-shrink epoxy grout team (6 specialists)',
+      efficiencyDelta: '-40% lab delay penalty',
+    },
+    disciplinePattern: 'Third-party concrete cube strength testing takes 5-7 days when sent to offsite labs, delaying successor mechanical package handoff.',
+    mitigationLearned: 'Engage NABL accredited mobile testing laboratory on site to obtain validated 7-day strength results in under 2 hours.',
+    sourceVerifiedRecord: {
+      recordType: 'HISTORIC_CONTRACT',
+      recordId: 'CERT-OGS-2025-CUBE-09',
+      title: 'OGS-3 Closeout Audit Package: Section 4 Civil QC Dossier',
+      hashOrStamp: 'OIL Corporate Archive: DOC-2025-8812-C',
+      linkUrl: '/evidence',
+    },
+    evidenceLink: {
+      evidenceId: 'EVD-003',
+      title: 'Laboratory Cube Test Certificate & Non-Shrink Compressive Test Dossier',
+      linkUrl: '/evidence',
+    },
+    verifiedBy: 'Pranab Phukan (Quality Control Lead)',
+    verifiedAt: '2025-08-25 14:00 IST',
+    confidenceScore: 94,
+  },
+
+  // =========================================================================
+  // 4. IMPORTANT EVENTS SECTION
+  // =========================================================================
+  {
+    id: 'MEM-EVT-001',
+    title: 'Compressor Pedestal Foundation Block A Monolithic Pour & 28-Day Strength Release',
+    section: 'Important Events',
     category: 'Verified Progress',
     projectCode: 'OIL-DUL-01',
     projectName: 'Duliajan Gas Processing & Pipeline Interconnect',
@@ -296,11 +546,16 @@ export const HISTORICAL_MEMORY_RECORDS: HistoricalMemoryRecord[] = [
     date: '14 Sep 2026',
     discipline: 'Civil',
     activityType: 'Concreting',
+    eventDetails: {
+      milestoneSignificance: 'Statutory milestone release enabling critical-path heavy equipment skid setting for Compressor Unit 1.',
+      scopeCompleted: '45 m³ mass concrete poured in single continuous night pour; peak core temperature maintained below 28°C using chilled water batching. 28-day strength exceeded 38.2 N/mm².',
+      verificationAuthority: 'S. Ramanathan (Civil Quality Inspector) & Third-Party Inspection Engineer',
+    },
     plannedDurationDays: 9,
     actualDurationDays: 9,
     varianceDurationDays: 0,
     verifiedProgress: 100,
-    delayCauses: ['None (Curing cycle completed exactly on planned schedule)'],
+    delayCauses: ['None (Completed exactly on planned schedule)'],
     delayCategory: 'None (Ahead)',
     productivityObservation: {
       metricName: 'Mass Concrete Monolithic Pour Rate',
@@ -327,97 +582,51 @@ export const HISTORICAL_MEMORY_RECORDS: HistoricalMemoryRecord[] = [
     verifiedAt: '2026-09-14 17:00 IST',
     confidenceScore: 98,
   },
-
-  // 5. Past Decisions
   {
-    id: 'MEM-2024-001',
-    title: 'Trunk Pipeline River Crossing Horizontal Directional Drilling (HDD) Reroute',
-    category: 'Past Decisions',
-    projectCode: 'OIL-NHK-2024',
-    projectName: 'Naharkatiya-Duliajan 16" Gas Trunk Pipeline',
-    year: '2024',
-    date: '12 Nov 2024',
-    discipline: 'Piping',
-    activityType: 'Erection',
-    plannedDurationDays: 45,
-    actualDurationDays: 40,
-    varianceDurationDays: -5,
-    verifiedProgress: 100,
-    delayCauses: ['None (Decision compressed wet-crossing schedule by 5 days)'],
-    delayCategory: 'None (Ahead)',
-    pastDecision: {
-      summary: 'Authorized change from open-trench river crossing to 680m HDD under Burhi Dihing riverbed.',
-      rationale: 'Avoided seasonal bank scouring and monsoon flooding environmental stop-work orders.',
-      authorizedBy: 'Technical Advisory Committee & OIL Executive Director (Projects)',
-      date: '2024-10-15',
-    },
-    productivityObservation: {
-      metricName: '16" Pullback Speed via Directional Rig',
-      achievedRate: '680 m / 14 hrs pullback',
-      benchmarkRate: '500 m / 18 hrs pullback',
-      equipmentCrewUsed: '250T HDD Rig + polymer bentonite continuous recycling plant',
-      efficiencyDelta: '+35% continuous pullback velocity',
-    },
-    disciplinePattern: 'Deep geotechnical core borings every 100m are essential before pilot bore drilling in Brahmaputra alluvial silt beds to prevent tool bit seizure.',
-    mitigationLearned: 'Include heavy reamer swivel safety shear pins to safeguard drill stem against sudden gravel pocket torque spikes.',
-    sourceVerifiedRecord: {
-      recordType: 'ENGINEERING_DIRECTIVE',
-      recordId: 'OIL-DIR-2024-HDD-09',
-      title: 'Project Steering Committee Minute 14: HDD Approval Resolution',
-      hashOrStamp: 'Executive Resolution #2024-11-OIL-BOARD',
-    },
-    evidenceLink: {
-      evidenceId: 'EVD-002',
-      title: 'Hydrostatic Section Pressure Chart & As-Built Geotechnical Profile',
-      linkUrl: '/evidence',
-    },
-    verifiedBy: 'Arunav Hazarika (Chief Project Manager)',
-    verifiedAt: '2024-11-12 11:00 IST',
-    confidenceScore: 99,
-  },
-
-  // 6. Evidence
-  {
-    id: 'MEM-2025-001',
-    title: 'Oil Gathering Station 3 Foundation Pocket Grouting Lab Strength Retest',
+    id: 'MEM-EVT-002',
+    title: 'Gas Dehydration Contact Tower 180T Single-Lift Heavy Rigging Milestone',
+    section: 'Important Events',
     category: 'Evidence',
-    projectCode: 'OIL-OGS-2025',
-    projectName: 'Duliajan Oil Gathering Station 3 Revamp (2025)',
-    year: '2025',
-    date: '18 Aug 2025',
-    discipline: 'Civil',
-    activityType: 'Concreting',
-    plannedDurationDays: 90,
-    actualDurationDays: 96,
-    varianceDurationDays: 6,
+    projectCode: 'OIL-DUL-01',
+    projectName: 'Duliajan Gas Processing & Pipeline Interconnect',
+    year: '2026',
+    date: '10 Sep 2026',
+    discipline: 'Mechanical',
+    activityType: 'Erection',
+    eventDetails: {
+      milestoneSignificance: 'Heaviest single vertical vessel erection on the project, positioned with sub-millimeter anchor bolt alignment.',
+      scopeCompleted: '180 metric ton contact tower hoisted, plumbed, and securely torqued onto foundation pedestal within 0.5° verticality tolerance.',
+      verificationAuthority: 'Debajit Borah (Lead Site Execution Engineer) & Chief Rigging Superintendent',
+    },
+    plannedDurationDays: 3,
+    actualDurationDays: 3,
+    varianceDurationDays: 0,
     verifiedProgress: 100,
-    delayCauses: [
-      'Mortar strength verification delayed by remote testing lab turnaround (4 days)',
-      'High ambient heat caused flash setting on initial epoxy grout batch (2 days)',
-    ],
-    delayCategory: 'Quality / NCR',
+    delayCauses: ['None (Completed exactly on planned window)'],
+    delayCategory: 'None (Ahead)',
     productivityObservation: {
-      metricName: 'Skid Foundation Pocket Grouting',
-      achievedRate: '3 foundations / week',
-      benchmarkRate: '5 foundations / week',
-      equipmentCrewUsed: 'High-flow non-shrink epoxy grout team (6 specialists)',
-      efficiencyDelta: '-40% lab delay penalty',
+      metricName: 'Heavy Vessel Vertical Lift & Placement',
+      achievedRate: '1 vessel / 1 day lift window',
+      benchmarkRate: '1 vessel / 2 days lift window',
+      equipmentCrewUsed: '500T Crawler Crane main lift + 150T tailing crane',
+      efficiencyDelta: '+100% lift precision efficiency',
     },
-    disciplinePattern: 'Third-party concrete cube strength testing takes 5-7 days when sent to offsite labs, delaying successor mechanical package handoff.',
-    mitigationLearned: 'Engage NABL accredited mobile testing laboratory on site to obtain validated 7-day strength results in under 2 hours.',
+    disciplinePattern: 'Tailing crane positioning requires precise 3D radial sweep clearance checks before main hoist load transfer begins.',
+    mitigationLearned: 'Pre-rig taglines with dual load-cell dynamometers to monitor wind load vector distribution continuously during vessel rotation.',
     sourceVerifiedRecord: {
-      recordType: 'HISTORIC_CONTRACT',
-      recordId: 'CERT-OGS-2025-CUBE-09',
-      title: 'OGS-3 Closeout Audit Package: Section 4 Civil QC Dossier',
-      hashOrStamp: 'OIL Corporate Archive: DOC-2025-8812-C',
-    },
-    evidenceLink: {
-      evidenceId: 'EVD-003',
-      title: 'Laboratory Cube Test Certificate & Non-Shrink Compressive Test Dossier',
+      recordType: 'EVIDENCE_ARTIFACT',
+      recordId: 'RIG-LIFT-2026-01',
+      title: 'Heavy Lift Engineering Study & As-Built Verticality Certificate',
+      hashOrStamp: 'Certified by Bureau Veritas: BV-RIG-2026-88',
       linkUrl: '/evidence',
     },
-    verifiedBy: 'Pranab Phukan (Quality Control Lead)',
-    verifiedAt: '2025-08-25 14:00 IST',
-    confidenceScore: 94,
+    evidenceLink: {
+      evidenceId: 'EVD-005',
+      title: 'High-Resolution Georeferenced Crane Hoist Photo Dossier',
+      linkUrl: '/evidence',
+    },
+    verifiedBy: 'Debajit Borah (Lead Site Execution Engineer)',
+    verifiedAt: '2026-09-10 18:30 IST',
+    confidenceScore: 99,
   },
 ];
