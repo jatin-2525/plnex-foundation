@@ -58,6 +58,10 @@ export default function ScheduleHealthPage() {
 
   // Filters State
   const [selectedRuleFilter, setSelectedRuleFilter] = useState<string>('ALL');
+
+  // Rule Audit Reference Mappings for Schedule Health and Execution Data Quality:
+  // Schedule Health: 'Missing Activity IDs', 'Duplicate IDs', 'Invalid Dates', 'Missing Dependencies', 'Invalid Hierarchy', 'Missing WBS'
+  // Execution Data Quality: 'Unmatched Events', 'Duplicate Events', 'Missing Values', 'Conflicting Reports', 'Low Confidence', 'Stale Events'
   const [severityFilter, setSeverityFilter] = useState<'ALL' | HealthSeverity>('ALL');
   const [statusFilter, setStatusFilter] = useState<'ALL' | IssueStatus>('ALL');
   const [searchQuery, setSearchQuery] = useState<string>('');
@@ -67,15 +71,15 @@ export default function ScheduleHealthPage() {
   const [fixingIssue, setFixingIssue] = useState<HealthIssue | null>(null);
   const [fixedValue, setFixedValue] = useState<string>('');
 
-  // Active rules depending on tab
+  // Active rules strictly isolated per tab (Do not mix categories)
   const currentRules = useMemo(() => {
     return activeTab === 'Schedule Health' ? SCHEDULE_HEALTH_RULES : EXECUTION_DATA_QUALITY_RULES;
   }, [activeTab]);
 
-  // Filtered Issues for Current Tab
+  // Filtered Issues strictly isolated for the active category
   const filteredIssues = useMemo(() => {
     return issues.filter((iss) => {
-      // Must match active tab
+      // Must match active category (Strict isolation)
       if (iss.category !== activeTab) {
         return false;
       }
@@ -84,8 +88,11 @@ export default function ScheduleHealthPage() {
         return false;
       }
       // Severity filter
-      if (severityFilter !== 'ALL' && iss.severity !== severityFilter) {
-        return false;
+      if (severityFilter !== 'ALL') {
+        const mappedSeverity = iss.severity === 'Needs Attention' ? 'Warning' : iss.severity;
+        if (mappedSeverity !== severityFilter) {
+          return false;
+        }
       }
       // Status filter
       if (statusFilter !== 'ALL' && iss.status !== statusFilter) {
@@ -97,7 +104,7 @@ export default function ScheduleHealthPage() {
         const matchesId = iss.id.toLowerCase().includes(q);
         const matchesObj = iss.objectId.toLowerCase().includes(q) || iss.objectName.toLowerCase().includes(q);
         const matchesDesc = iss.description.toLowerCase().includes(q);
-        const matchesRule = iss.rule.toLowerCase().includes(q);
+        const matchesRule = iss.rule.toLowerCase().includes(q) || iss.canonicalCategory.toLowerCase().includes(q);
         if (!matchesId && !matchesObj && !matchesDesc && !matchesRule) {
           return false;
         }
@@ -106,21 +113,30 @@ export default function ScheduleHealthPage() {
     });
   }, [issues, activeTab, selectedRuleFilter, severityFilter, statusFilter, searchQuery]);
 
-  // Metrics
+  // Category Metrics (Isolated to current active tab)
   const metrics = useMemo(() => {
     const tabIssues = issues.filter((i) => i.category === activeTab);
     const criticalCount = tabIssues.filter((i) => i.severity === 'Critical' && i.status === 'Open').length;
-    const attentionCount = tabIssues.filter((i) => i.severity === 'Needs Attention' && i.status === 'Open').length;
+    const warningCount = tabIssues.filter(
+      (i) => (i.severity === 'Warning' || i.severity === 'Needs Attention') && i.status === 'Open'
+    ).length;
     const resolvedCount = tabIssues.filter((i) => i.status === 'Resolved').length;
+
+    // Rules where all open issues count is 0 are considered healthy
+    const healthyRulesCount = currentRules.filter((r) => {
+      const openForRule = tabIssues.filter((i) => i.rule === r.rule && i.status === 'Open').length;
+      return openForRule === 0;
+    }).length;
 
     return {
       total: tabIssues.length,
       criticalCount,
-      attentionCount,
+      warningCount,
       resolvedCount,
-      openCount: criticalCount + attentionCount,
+      healthyCount: healthyRulesCount,
+      openCount: criticalCount + warningCount,
     };
-  }, [issues, activeTab]);
+  }, [issues, activeTab, currentRules]);
 
   // Run Health Scan Simulation
   const handleRunHealthScan = () => {
@@ -138,7 +154,7 @@ export default function ScheduleHealthPage() {
         title: `${activeTab} Audit Complete`,
         description: `Evaluated schedule network. Detected ${metrics.openCount} open items requiring resolution.`,
       });
-    }, 800);
+    }, 700);
   };
 
   // Action 1: View
@@ -231,24 +247,24 @@ export default function ScheduleHealthPage() {
         <Breadcrumbs
           items={[
             { label: 'Trust & Governance' },
-            { label: 'Schedule Health & Data Quality', current: true },
+            { label: 'Schedule Health', current: true },
           ]}
         />
 
         {/* =========================================================================
-            HEADER: SCHEDULE HEALTH & DATA QUALITY
+            HEADER & AUDIT ENGINE
             ========================================================================= */}
         <div className="bg-white border border-[#D9DEE5] rounded-lg p-5 shadow-xs space-y-4">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
             <div>
               <div className="flex items-center gap-2 mb-1.5 flex-wrap">
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-[11px] font-bold tracking-wider uppercase bg-[#176B87]/10 text-[#176B87]">
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-[11px] font-bold tracking-wider uppercase bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0]">
                   <Activity className="w-3.5 h-3.5" />
                   Audit Engine
                 </span>
                 <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-[11px] font-medium bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]">
                   <CheckCircle2 className="w-3 h-3 text-[#2E7D5B]" />
-                  Continuous Quality Guard
+                  Quality Guard Active
                 </span>
                 <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-[11px] text-[#596579] bg-[#F7F8FA] border border-[#D9DEE5]">
                   {activeProject?.code || 'OIL-DUL-01'} · V3 · Rev 3.2
@@ -256,10 +272,10 @@ export default function ScheduleHealthPage() {
               </div>
 
               <h1 className="text-[28px] sm:text-3xl font-bold text-[#172033] tracking-tight">
-                Schedule Health &amp; Execution Data Quality
+                Schedule Health
               </h1>
               <p className="text-sm text-[#596579] mt-1 max-w-3xl">
-                Continuous automated audit of baseline CPM network integrity, WBS hierarchy rules, and daily execution data ingestion hygiene.
+                Independent audit engine separating baseline CPM schedule logic from field execution data quality.
               </p>
             </div>
 
@@ -278,98 +294,136 @@ export default function ScheduleHealthPage() {
           </div>
 
           {/* =========================================================================
-              PRIMARY TABS: Schedule Health vs Execution Data Quality
+              PRIMARY TABS: Schedule Health | Execution Data Quality
+              Strict Category Separation - Do Not Mix
               ========================================================================= */}
-          <div className="flex items-center justify-between pt-3 border-t border-[#D9DEE5]/60 flex-wrap gap-3">
-            <div className="flex items-center bg-[#F1F3F5] p-1 rounded-lg border border-[#D9DEE5]">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between pt-3 border-t border-[#D9DEE5]/60 gap-3">
+            <div className="flex items-center bg-[#F1F3F5] p-1 rounded-lg border border-[#D9DEE5] self-start">
+              {/* Tab 1: Schedule Health */}
               <button
                 type="button"
                 onClick={() => {
                   setActiveTab('Schedule Health');
                   setSelectedRuleFilter('ALL');
                 }}
-                className={`flex items-center gap-2 px-5 py-2 text-xs font-bold rounded-lg transition-all ${
+                className={`flex items-center gap-2.5 px-5 py-2 text-xs font-bold rounded-md transition-all ${
                   activeTab === 'Schedule Health'
-                    ? 'bg-white text-[#176B87] shadow-xs'
+                    ? 'bg-white text-[#172033] shadow-xs border border-[#D9DEE5]'
                     : 'text-[#596579] hover:text-[#172033]'
                 }`}
               >
-                <Calendar className="w-4 h-4" />
+                <Calendar className="w-4 h-4 text-[#176B87]" />
                 <span>Schedule Health</span>
                 <span
-                  className={`px-2 py-0.2 rounded-full text-[10px] font-mono ${
+                  className={`px-2 py-0.2 rounded text-[10px] font-mono font-bold ${
                     activeTab === 'Schedule Health'
                       ? 'bg-[#EDF5F8] text-[#176B87]'
                       : 'bg-[#D9DEE5] text-[#596579]'
                   }`}
                 >
-                  {issues.filter((i) => i.category === 'Schedule Health').length}
+                  {issues.filter((i) => i.category === 'Schedule Health' && i.status === 'Open').length} Open
                 </span>
               </button>
 
+              {/* Tab 2: Execution Data Quality */}
               <button
                 type="button"
                 onClick={() => {
                   setActiveTab('Execution Data Quality');
                   setSelectedRuleFilter('ALL');
                 }}
-                className={`flex items-center gap-2 px-5 py-2 text-xs font-bold rounded-lg transition-all ${
+                className={`flex items-center gap-2.5 px-5 py-2 text-xs font-bold rounded-md transition-all ${
                   activeTab === 'Execution Data Quality'
-                    ? 'bg-white text-[#176B87] shadow-xs'
+                    ? 'bg-white text-[#172033] shadow-xs border border-[#D9DEE5]'
                     : 'text-[#596579] hover:text-[#172033]'
                 }`}
               >
-                <FileText className="w-4 h-4" />
+                <FileText className="w-4 h-4 text-[#176B87]" />
                 <span>Execution Data Quality</span>
                 <span
-                  className={`px-2 py-0.2 rounded-full text-[10px] font-mono ${
+                  className={`px-2 py-0.2 rounded text-[10px] font-mono font-bold ${
                     activeTab === 'Execution Data Quality'
                       ? 'bg-[#EDF5F8] text-[#176B87]'
                       : 'bg-[#D9DEE5] text-[#596579]'
                   }`}
                 >
-                  {issues.filter((i) => i.category === 'Execution Data Quality').length}
+                  {issues.filter((i) => i.category === 'Execution Data Quality' && i.status === 'Open').length} Open
                 </span>
               </button>
             </div>
 
-            {/* Quick Metrics */}
-            <div className="flex items-center gap-3 text-xs font-mono">
-              <div className="px-3 py-1.5 rounded-lg bg-[#FBEFEE] border border-[#E4B0AA] text-[#B5473C] font-bold">
-                {metrics.criticalCount} Critical
+            {/* Severity Breakdown: Healthy | Warning | Critical */}
+            <div className="flex items-center gap-2 text-xs font-mono">
+              <div
+                className="px-2.5 py-1.5 rounded bg-[#EDF7F2] border border-[#B8DCC9] text-[#2E7D5B] font-bold flex items-center gap-1.5"
+                title="Checks in healthy state with zero open violations"
+              >
+                <CheckCircle2 className="w-3.5 h-3.5 text-[#2E7D5B]" />
+                <span>Healthy</span>
               </div>
-              <div className="px-3 py-1.5 rounded-lg bg-[#FDF6ED] border border-[#F0D4A6] text-[#D98B32] font-bold">
-                {metrics.attentionCount} Warning
+              <div
+                className="px-2.5 py-1.5 rounded bg-[#FDF6ED] border border-[#F0D4A6] text-[#8C5311] font-bold flex items-center gap-1.5"
+                title="Moderate risk or data hygiene warning requiring review"
+              >
+                <AlertCircle className="w-3.5 h-3.5 text-[#8C5311]" />
+                <span>{metrics.warningCount} Warning</span>
               </div>
-              <div className="px-3 py-1.5 rounded-lg bg-[#EDF7F2] border border-[#B8DCC9] text-[#2E7D5B] font-bold">
-                {metrics.resolvedCount} Resolved
+              <div
+                className="px-2.5 py-1.5 rounded bg-[#FBEFEE] border border-[#E4B0AA] text-[#9E332A] font-bold flex items-center gap-1.5"
+                title="Critical CPM logic breakdown or severe data integrity failure"
+              >
+                <AlertTriangle className="w-3.5 h-3.5 text-[#9E332A]" />
+                <span>{metrics.criticalCount} Critical</span>
               </div>
             </div>
           </div>
         </div>
 
         {/* =========================================================================
-            CHECK PILLS / CATEGORIES STRIP
-            Schedule Health (6): Missing Activity IDs, Duplicate IDs, Invalid Dates, Missing Dependencies, Invalid Hierarchy, Missing WBS
-            Execution Data Quality (6): Unmatched Events, Duplicate Events, Missing Values, Conflicting Reports, Low Confidence, Stale Events
+            CHECK CARDS STRIP (6 Categories Strictly Per Tab)
+            Schedule Health:
+              - broken hierarchy
+              - invalid dates
+              - missing dependencies
+              - duplicate activities
+              - WBS issues
+              - schedule conflicts
+            Execution Data Quality:
+              - missing quantity
+              - missing unit
+              - ambiguous field event
+              - missing evidence
+              - unmatched event
+              - duplicate event
             ========================================================================= */}
         <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 shadow-xs space-y-3">
           <div className="flex items-center justify-between pb-2 border-b border-[#D9DEE5]/60 flex-wrap gap-2">
-            <span className="text-xs font-bold text-[#172033] uppercase tracking-wider">
-              {activeTab} Rule Audits (6 Checks Configured):
-            </span>
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-bold text-[#172033] uppercase tracking-wider">
+                {activeTab} Checks (6 Categories):
+              </span>
+              <span className="text-[11px] text-[#596579]">
+                {activeTab === 'Schedule Health'
+                  ? 'CPM network logic, calendar constraints & WBS structure'
+                  : 'Field diary completeness, measurement units & matching hygiene'}
+              </span>
+            </div>
             <span className="text-[11px] text-[#596579]">
-              Click any rule to filter the Issue Table
+              Click any check to filter the Issue Table
             </span>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5">
             {currentRules.map((ruleItem) => {
               const ruleIssues = issues.filter(
                 (i) => i.category === activeTab && i.rule === ruleItem.rule && i.status === 'Open'
               );
               const isSelected = selectedRuleFilter === ruleItem.rule;
               const hasCritical = ruleIssues.some((i) => i.severity === 'Critical');
+              const hasWarning = ruleIssues.some((i) => i.severity === 'Warning' || i.severity === 'Needs Attention');
+
+              // Determine severity badge: Healthy | Warning | Critical
+              const ruleSeverity = ruleIssues.length === 0 ? 'Healthy' : hasCritical ? 'Critical' : 'Warning';
 
               return (
                 <button
@@ -378,27 +432,39 @@ export default function ScheduleHealthPage() {
                   onClick={() =>
                     setSelectedRuleFilter(isSelected ? 'ALL' : ruleItem.rule)
                   }
-                  className={`p-2.5 rounded-lg border text-left transition-all ${
+                  className={`p-3 rounded-lg border text-left transition-all flex flex-col justify-between ${
                     isSelected
                       ? 'border-[#176B87] bg-[#EDF5F8] ring-1 ring-[#176B87]'
                       : 'border-[#D9DEE5] bg-[#F7F8FA] hover:bg-white hover:border-[#176B87]/40'
                   }`}
                 >
-                  <div className="flex items-center justify-between mb-1">
+                  <div className="flex items-center justify-between mb-2">
                     <span
-                      className={`text-[9px] font-mono px-1.5 py-0.2 rounded font-bold uppercase ${
-                        ruleIssues.length === 0
+                      className={`text-[9px] font-mono px-1.5 py-0.5 rounded font-bold uppercase flex items-center gap-1 ${
+                        ruleSeverity === 'Healthy'
                           ? 'bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]'
-                          : hasCritical
-                          ? 'bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]'
-                          : 'bg-[#FDF6ED] text-[#D98B32] border border-[#F0D4A6]'
+                          : ruleSeverity === 'Critical'
+                          ? 'bg-[#FBEFEE] text-[#9E332A] border border-[#E4B0AA]'
+                          : 'bg-[#FDF6ED] text-[#8C5311] border border-[#F0D4A6]'
                       }`}
                     >
-                      {ruleIssues.length === 0 ? 'Passed' : `${ruleIssues.length} Open`}
+                      {ruleSeverity === 'Healthy' && <CheckCircle2 className="w-2.5 h-2.5" />}
+                      {ruleSeverity === 'Critical' && <AlertTriangle className="w-2.5 h-2.5" />}
+                      {ruleSeverity === 'Warning' && <AlertCircle className="w-2.5 h-2.5" />}
+                      {ruleSeverity}
+                    </span>
+                    <span className="text-[10px] font-mono text-[#596579]">
+                      {ruleIssues.length} open
                     </span>
                   </div>
-                  <div className="text-xs font-bold text-[#172033] truncate" title={ruleItem.name}>
-                    {ruleItem.name}
+
+                  <div>
+                    <div className="text-xs font-bold text-[#172033] line-clamp-1" title={ruleItem.name}>
+                      {ruleItem.name}
+                    </div>
+                    <div className="text-[10px] font-mono text-[#596579] mt-0.5">
+                      {ruleItem.canonicalTerm}
+                    </div>
                   </div>
                 </button>
               );
@@ -423,7 +489,7 @@ export default function ScheduleHealthPage() {
             </div>
 
             <div className="flex items-center gap-2 flex-wrap text-xs">
-              {/* Severity Filter */}
+              {/* Severity Filter: Healthy | Warning | Critical */}
               <select
                 value={severityFilter}
                 onChange={(e) => setSeverityFilter(e.target.value as any)}
@@ -431,7 +497,8 @@ export default function ScheduleHealthPage() {
               >
                 <option value="ALL">All Severities</option>
                 <option value="Critical">Critical</option>
-                <option value="Needs Attention">Needs Attention</option>
+                <option value="Warning">Warning</option>
+                <option value="Healthy">Healthy</option>
               </select>
 
               {/* Status Filter */}
@@ -450,7 +517,7 @@ export default function ScheduleHealthPage() {
                 <button
                   type="button"
                   onClick={handleResetFilters}
-                  className="px-2.5 py-1 text-xs text-[#B5473C] hover:bg-[#FBEFEE] border border-[#E4B0AA] rounded-lg transition-colors flex items-center gap-1"
+                  className="px-2.5 py-1 text-xs text-[#9E332A] hover:bg-[#FBEFEE] border border-[#E4B0AA] rounded-lg transition-colors flex items-center gap-1"
                 >
                   <RotateCcw className="w-3 h-3" />
                   <span>Reset</span>
@@ -482,136 +549,146 @@ export default function ScheduleHealthPage() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-[#D9DEE5]">
-                {filteredIssues.map((issue) => (
-                  <tr
-                    key={issue.id}
-                    className="hover:bg-[#F9FAFC] transition-colors group"
-                  >
-                    {/* 1. Issue (Rule + Issue ID) */}
-                    <td className="py-3.5 px-4 align-top whitespace-nowrap">
-                      <div className="space-y-0.5">
-                        <span className="font-bold text-[#172033] block">
-                          {issue.rule}
-                        </span>
-                        <span className="font-mono text-[10px] text-[#176B87] bg-[#EDF5F8] px-1.5 py-0.2 rounded border border-[#B3CBE0] inline-block">
-                          {issue.id}
-                        </span>
-                      </div>
-                    </td>
+                {filteredIssues.map((issue) => {
+                  const effectiveSeverity =
+                    issue.severity === 'Needs Attention' ? 'Warning' : issue.severity;
 
-                    {/* 2. Severity */}
-                    <td className="py-3.5 px-3 align-top whitespace-nowrap">
-                      {issue.severity === 'Critical' ? (
-                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
-                          <AlertTriangle className="w-3 h-3" />
-                          Critical
-                        </span>
-                      ) : (
-                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-[#FDF6ED] text-[#D98B32] border border-[#F0D4A6]">
-                          <AlertCircle className="w-3 h-3" />
-                          Needs Attention
-                        </span>
-                      )}
-                    </td>
+                  return (
+                    <tr
+                      key={issue.id}
+                      className="hover:bg-[#F9FAFC] transition-colors group"
+                    >
+                      {/* 1. Issue (Rule + Issue ID) */}
+                      <td className="py-3.5 px-4 align-top whitespace-nowrap">
+                        <div className="space-y-0.5">
+                          <span className="font-bold text-[#172033] block">
+                            {issue.rule}
+                          </span>
+                          <span className="font-mono text-[10px] text-[#176B87] bg-[#EDF5F8] px-1.5 py-0.2 rounded border border-[#B3CBE0] inline-block">
+                            {issue.id}
+                          </span>
+                        </div>
+                      </td>
 
-                    {/* 3. Object */}
-                    <td className="py-3.5 px-4 align-top max-w-[200px]">
-                      <div>
-                        <span className="font-mono font-bold text-[#176B87] block truncate">
-                          {issue.objectId}
-                        </span>
-                        <span className="text-[11px] text-[#596579] line-clamp-1">
-                          {issue.objectName}
-                        </span>
-                      </div>
-                    </td>
-
-                    {/* 4. Description */}
-                    <td className="py-3.5 px-4 align-top">
-                      <p className="text-xs text-[#172033] leading-relaxed">
-                        {issue.description}
-                      </p>
-                      <p className="text-[11px] text-[#596579] mt-0.5 italic">
-                        Impact: {issue.impactExplanation}
-                      </p>
-                    </td>
-
-                    {/* 5. Detected */}
-                    <td className="py-3.5 px-3 align-top whitespace-nowrap font-mono text-[11px] text-[#596579]">
-                      {issue.detected || issue.detectedAt}
-                    </td>
-
-                    {/* 6. Status */}
-                    <td className="py-3.5 px-3 align-top whitespace-nowrap">
-                      <span
-                        className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold uppercase ${
-                          issue.status === 'Resolved'
-                            ? 'bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]'
-                            : issue.status === 'Open'
-                            ? 'bg-[#FDF6ED] text-[#D98B32] border border-[#F0D4A6]'
-                            : 'bg-[#F1F3F5] text-[#596579] border border-[#D9DEE5]'
-                        }`}
-                      >
-                        {issue.status}
-                      </span>
-                    </td>
-
-                    {/* 7. Action: View | Fix | Review | Resolve */}
-                    <td className="py-3.5 px-4 align-top text-right whitespace-nowrap">
-                      <div className="inline-flex items-center gap-1">
-                        {/* Action: View */}
-                        <button
-                          type="button"
-                          onClick={() => handleViewIssue(issue)}
-                          className="px-2 py-1 text-[11px] font-bold text-[#596579] hover:text-[#172033] hover:bg-[#F1F3F5] border border-[#D9DEE5] rounded transition-colors"
-                          title="View complete issue details"
-                        >
-                          View
-                        </button>
-
-                        {/* Action: Fix */}
-                        {issue.fixPayload && issue.status !== 'Resolved' && (
-                          <button
-                            type="button"
-                            onClick={() => handleOpenFixModal(issue)}
-                            className="px-2 py-1 text-[11px] font-bold text-[#176B87] hover:bg-[#EDF5F8] border border-[#B3CBE0] rounded transition-colors"
-                            title="Apply suggested data repair"
-                          >
-                            Fix
-                          </button>
-                        )}
-
-                        {/* Action: Review */}
-                        {issue.status !== 'Resolved' && (
-                          <button
-                            type="button"
-                            onClick={() => handleReviewIssue(issue)}
-                            className="px-2 py-1 text-[11px] font-bold text-[#D98B32] hover:bg-[#FDF6ED] border border-[#F0D4A6] rounded transition-colors"
-                            title="Inspect in review queue"
-                          >
-                            Review
-                          </button>
-                        )}
-
-                        {/* Action: Resolve */}
-                        {issue.status !== 'Resolved' ? (
-                          <button
-                            type="button"
-                            onClick={() => handleResolveIssue(issue)}
-                            className="px-2 py-1 text-[11px] font-bold text-[#2E7D5B] hover:bg-[#EDF7F2] border border-[#B8DCC9] rounded transition-colors"
-                            title="Mark issue resolved"
-                          >
-                            Resolve
-                          </button>
+                      {/* 2. Severity: Healthy | Warning | Critical */}
+                      <td className="py-3.5 px-3 align-top whitespace-nowrap">
+                        {effectiveSeverity === 'Critical' ? (
+                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-[#FBEFEE] text-[#9E332A] border border-[#E4B0AA]">
+                            <AlertTriangle className="w-3 h-3" />
+                            Critical
+                          </span>
+                        ) : effectiveSeverity === 'Warning' ? (
+                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-[#FDF6ED] text-[#8C5311] border border-[#F0D4A6]">
+                            <AlertCircle className="w-3 h-3" />
+                            Warning
+                          </span>
                         ) : (
-                          <span className="text-[10px] text-[#2E7D5B] font-mono font-bold px-1.5 py-0.5">
-                            ✓ Done
+                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]">
+                            <CheckCircle2 className="w-3 h-3" />
+                            Healthy
                           </span>
                         )}
-                      </div>
-                    </td>
-                  </tr>
-                ))}
+                      </td>
+
+                      {/* 3. Object */}
+                      <td className="py-3.5 px-4 align-top max-w-[200px]">
+                        <div>
+                          <span className="font-mono font-bold text-[#176B87] block truncate">
+                            {issue.objectId}
+                          </span>
+                          <span className="text-[11px] text-[#596579] line-clamp-1">
+                            {issue.objectName}
+                          </span>
+                        </div>
+                      </td>
+
+                      {/* 4. Description */}
+                      <td className="py-3.5 px-4 align-top">
+                        <p className="text-xs text-[#172033] leading-relaxed">
+                          {issue.description}
+                        </p>
+                        <p className="text-[11px] text-[#596579] mt-0.5 italic">
+                          Impact: {issue.impactExplanation}
+                        </p>
+                      </td>
+
+                      {/* 5. Detected */}
+                      <td className="py-3.5 px-3 align-top whitespace-nowrap font-mono text-[11px] text-[#596579]">
+                        {issue.detected || issue.detectedAt}
+                      </td>
+
+                      {/* 6. Status */}
+                      <td className="py-3.5 px-3 align-top whitespace-nowrap">
+                        <span
+                          className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold uppercase ${
+                            issue.status === 'Resolved'
+                              ? 'bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]'
+                              : issue.status === 'Open'
+                              ? 'bg-[#FDF6ED] text-[#8C5311] border border-[#F0D4A6]'
+                              : 'bg-[#F1F3F5] text-[#596579] border border-[#D9DEE5]'
+                          }`}
+                        >
+                          {issue.status}
+                        </span>
+                      </td>
+
+                      {/* 7. Action: View | Fix | Review | Resolve */}
+                      <td className="py-3.5 px-4 align-top text-right whitespace-nowrap">
+                        <div className="inline-flex items-center gap-1">
+                          {/* Action: View */}
+                          <button
+                            type="button"
+                            onClick={() => handleViewIssue(issue)}
+                            className="px-2 py-1 text-[11px] font-bold text-[#596579] hover:text-[#172033] hover:bg-[#F1F3F5] border border-[#D9DEE5] rounded transition-colors"
+                            title="View complete issue details"
+                          >
+                            View
+                          </button>
+
+                          {/* Action: Fix */}
+                          {issue.fixPayload && issue.status !== 'Resolved' && (
+                            <button
+                              type="button"
+                              onClick={() => handleOpenFixModal(issue)}
+                              className="px-2 py-1 text-[11px] font-bold text-[#176B87] hover:bg-[#EDF5F8] border border-[#B3CBE0] rounded transition-colors"
+                              title="Apply suggested data repair"
+                            >
+                              Fix
+                            </button>
+                          )}
+
+                          {/* Action: Review */}
+                          {issue.status !== 'Resolved' && (
+                            <button
+                              type="button"
+                              onClick={() => handleReviewIssue(issue)}
+                              className="px-2 py-1 text-[11px] font-bold text-[#8C5311] hover:bg-[#FDF6ED] border border-[#F0D4A6] rounded transition-colors"
+                              title="Inspect in review queue"
+                            >
+                              Review
+                            </button>
+                          )}
+
+                          {/* Action: Resolve */}
+                          {issue.status !== 'Resolved' ? (
+                            <button
+                              type="button"
+                              onClick={() => handleResolveIssue(issue)}
+                              className="px-2 py-1 text-[11px] font-bold text-[#2E7D5B] hover:bg-[#EDF7F2] border border-[#B8DCC9] rounded transition-colors"
+                              title="Mark issue resolved"
+                            >
+                              Resolve
+                            </button>
+                          ) : (
+                            <span className="text-[10px] text-[#2E7D5B] font-mono font-bold px-1.5 py-0.5">
+                              ✓ Done
+                            </span>
+                          )}
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>
@@ -658,7 +735,7 @@ export default function ScheduleHealthPage() {
 
               <div className="space-y-1">
                 <span className="text-[10px] font-bold uppercase text-[#7B8798]">Project CPM / EVM Impact</span>
-                <p className="text-xs text-[#B5473C] leading-relaxed p-3 bg-[#FBEFEE] border border-[#E4B0AA] rounded-lg">
+                <p className="text-xs text-[#9E332A] leading-relaxed p-3 bg-[#FBEFEE] border border-[#E4B0AA] rounded-lg">
                   {selectedIssueForDetail.impactExplanation}
                 </p>
               </div>
@@ -670,7 +747,7 @@ export default function ScheduleHealthPage() {
                   </span>
                   <div className="text-xs space-y-1">
                     <div>Field: <strong className="font-mono">{selectedIssueForDetail.fixPayload.fieldToFix}</strong></div>
-                    <div>Current: <span className="font-mono text-[#B5473C]">{selectedIssueForDetail.fixPayload.currentValue}</span></div>
+                    <div>Current: <span className="font-mono text-[#9E332A]">{selectedIssueForDetail.fixPayload.currentValue}</span></div>
                     <div>Suggested: <span className="font-mono text-[#2E7D5B] font-bold">{selectedIssueForDetail.fixPayload.suggestedValue}</span></div>
                   </div>
                   <button
