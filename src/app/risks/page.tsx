@@ -763,54 +763,54 @@ export default function DelayDependencyImpactPage() {
             </div>
           </div>
 
-          {/* Explicit Compact Header Info Matrix */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-4 text-xs">
-            <div className="flex items-center gap-3 p-3 rounded-lg bg-[#F7F8FA] border border-[#D9DEE5]/80">
-              <div className="w-8 h-8 rounded-lg bg-white border border-[#D9DEE5] flex items-center justify-center text-[#176B87] shrink-0 font-bold">
+          {/* Explicit Compact Header Info Metadata Strip */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-[#D9DEE5] pt-3 text-xs border-t border-[#D9DEE5]">
+            <div className="py-2 sm:py-0 sm:pr-4 flex items-center gap-3">
+              <div className="w-8 h-8 rounded bg-[#F7F8FA] border border-[#D9DEE5] flex items-center justify-center text-[#176B87] shrink-0 font-medium">
                 <GitBranch className="w-4 h-4" />
               </div>
               <div className="min-w-0">
-                <span className="text-[10px] uppercase font-bold text-[#7B8798] tracking-wider block">
+                <span className="text-[11px] uppercase font-semibold text-[#596579] tracking-wider block">
                   Project & WBS
                 </span>
-                <span className="font-mono font-bold text-[#172033] block truncate">
+                <span className="font-mono font-medium text-[#172033] text-sm block truncate">
                   {activeProject?.code || 'OIL-DUL-01'} · WBS 1.1.3
                 </span>
-                <span className="text-[11px] text-[#596579] truncate block">
+                <span className="text-[12px] text-[#596579] truncate block">
                   {activeProject?.name || 'Duliajan Gas Processing & Pipeline Interconnect'}
                 </span>
               </div>
             </div>
 
-            <div className="flex items-center gap-3 p-3 rounded-lg bg-[#F7F8FA] border border-[#D9DEE5]/80">
-              <div className="w-8 h-8 rounded-lg bg-white border border-[#D9DEE5] flex items-center justify-center text-[#176B87] shrink-0 font-bold">
+            <div className="py-2 sm:py-0 sm:px-4 flex items-center gap-3">
+              <div className="w-8 h-8 rounded bg-[#F7F8FA] border border-[#D9DEE5] flex items-center justify-center text-[#176B87] shrink-0 font-medium">
                 <Calendar className="w-4 h-4" />
               </div>
               <div className="min-w-0">
-                <span className="text-[10px] uppercase font-bold text-[#7B8798] tracking-wider block">
+                <span className="text-[11px] uppercase font-semibold text-[#596579] tracking-wider block">
                   Schedule Network Version
                 </span>
-                <span className="font-bold text-[#172033] block truncate">
+                <span className="font-medium text-[#172033] text-sm block truncate">
                   V3 · Rev 3.2 (Approved CPM Baseline)
                 </span>
-                <span className="text-[11px] text-[#596579] block">
+                <span className="text-[12px] text-[#596579] block">
                   184 Activities · Hard FS/SS Network Relationships
                 </span>
               </div>
             </div>
 
-            <div className="flex items-center gap-3 p-3 rounded-lg bg-[#F7F8FA] border border-[#D9DEE5]/80">
-              <div className="w-8 h-8 rounded-lg bg-white border border-[#D9DEE5] flex items-center justify-center text-[#176B87] shrink-0 font-bold">
+            <div className="py-2 sm:py-0 sm:pl-4 flex items-center gap-3">
+              <div className="w-8 h-8 rounded bg-[#F7F8FA] border border-[#D9DEE5] flex items-center justify-center text-[#176B87] shrink-0 font-medium">
                 <Clock className="w-4 h-4" />
               </div>
               <div className="min-w-0">
-                <span className="text-[10px] uppercase font-bold text-[#7B8798] tracking-wider block">
+                <span className="text-[11px] uppercase font-semibold text-[#596579] tracking-wider block">
                   Reporting Cutoff (Data Date)
                 </span>
-                <span className="font-bold text-[#172033] block">
+                <span className="font-medium text-[#172033] text-sm block">
                   18 Sept 2026, 17:30 IST
                 </span>
-                <span className="text-[11px] text-[#596579] block">
+                <span className="text-[12px] text-[#596579] block">
                   Site Verified Progress Cutoff · 4 Delays Active
                 </span>
               </div>
@@ -825,27 +825,30 @@ export default function DelayDependencyImpactPage() {
             TOP SUMMARY SCHEDULE METRICS
             Strictly schedule-focused: Delayed Activities, Critical Path Slips, Float
             ========================================================================= */}
-        <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
+        {/* Summary Delay & Impact Metric Strip */}
+        <div className="bg-white border border-[#D9DEE5] rounded-lg shadow-xs overflow-hidden grid grid-cols-2 sm:grid-cols-5 divide-y sm:divide-y-0 sm:divide-x divide-[#D9DEE5]">
           {/* 1. Delayed Activities */}
           <button
             type="button"
             onClick={() => setSelectedCriticalityFilter('ALL')}
-            className={`p-4 rounded-lg border text-left transition-all ${
+            className={`p-4 text-left transition-all flex flex-col justify-between ${
               selectedCriticalityFilter === 'ALL'
-                ? 'bg-[#EDF5F8] border-[#176B87] shadow-2xs'
-                : 'bg-white border-[#D9DEE5] hover:bg-[#F7F8FA]'
+                ? 'bg-[#EDF5F8]'
+                : 'hover:bg-[#F7F8FA]'
             }`}
           >
-            <span className="text-[10px] font-bold uppercase tracking-wider text-[#7B8798] block">
-              Delayed Activities
-            </span>
-            <div className="flex items-baseline gap-1 mt-1">
-              <span className="text-2xl font-bold text-[#172033] font-mono">
-                {summaryMetrics.totalDelays}
+            <div>
+              <span className="text-[11px] font-semibold uppercase tracking-wider text-[#596579] block">
+                Delayed Activities
               </span>
-              <span className="text-[11px] text-[#596579]">activities</span>
+              <div className="flex items-baseline gap-1 mt-1">
+                <span className="text-2xl font-bold text-[#172033] font-mono">
+                  {summaryMetrics.totalDelays}
+                </span>
+                <span className="text-[11px] text-[#596579]">activities</span>
+              </div>
             </div>
-            <span className="text-[11px] text-[#176B87] mt-1 block font-medium">
+            <span className="text-[12px] text-[#176B87] mt-1 block font-medium">
               Verified physical delays
             </span>
           </button>
@@ -854,70 +857,78 @@ export default function DelayDependencyImpactPage() {
           <button
             type="button"
             onClick={() => setSelectedCriticalityFilter(selectedCriticalityFilter === 'Critical Path' ? 'ALL' : 'Critical Path')}
-            className={`p-4 rounded-lg border text-left transition-all ${
+            className={`p-4 text-left transition-all flex flex-col justify-between ${
               selectedCriticalityFilter === 'Critical Path'
-                ? 'bg-[#FBEFEE] border-[#B5473C] shadow-2xs'
-                : 'bg-white border-[#D9DEE5] hover:bg-[#F7F8FA]'
+                ? 'bg-[#FBEFEE]'
+                : 'hover:bg-[#F7F8FA]'
             }`}
           >
-            <span className="text-[10px] font-bold uppercase tracking-wider text-[#7B8798] block">
-              Critical Path Delays
-            </span>
-            <div className="flex items-baseline gap-1 mt-1">
-              <span className="text-2xl font-bold text-[#B5473C] font-mono">
-                {summaryMetrics.criticalDelays}
+            <div>
+              <span className="text-[11px] font-semibold uppercase tracking-wider text-[#7B8798] block">
+                Critical Path Delays
               </span>
-              <span className="text-[11px] text-[#596579]">driving</span>
+              <div className="flex items-baseline gap-1 mt-1">
+                <span className="text-2xl font-bold text-[#B5473C] font-mono">
+                  {summaryMetrics.criticalDelays}
+                </span>
+                <span className="text-[11px] text-[#596579]">driving</span>
+              </div>
             </div>
-            <span className="text-[11px] text-[#B5473C] mt-1 block font-medium">
+            <span className="text-[12px] text-[#B5473C] mt-1 block font-medium">
               Zero float driving path
             </span>
           </button>
 
           {/* 3. Max Critical Path Slip */}
-          <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 shadow-2xs">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-[#7B8798] block">
-              Max Critical Path Slip
-            </span>
-            <div className="flex items-baseline gap-1 mt-1">
-              <span className="text-2xl font-bold text-[#B5473C] font-mono">
-                +{summaryMetrics.maxCriticalSlip}d
+          <div className="p-4 flex flex-col justify-between">
+            <div>
+              <span className="text-[11px] font-semibold uppercase tracking-wider text-[#7B8798] block">
+                Max Critical Path Slip
               </span>
-              <span className="text-[11px] text-[#596579]">net</span>
+              <div className="flex items-baseline gap-1 mt-1">
+                <span className="text-2xl font-bold text-[#B5473C] font-mono">
+                  +{summaryMetrics.maxCriticalSlip}d
+                </span>
+                <span className="text-[11px] text-[#596579]">net</span>
+              </div>
             </div>
-            <span className="text-[11px] text-[#B5473C] mt-1 block font-medium">
+            <span className="text-[12px] text-[#B5473C] mt-1 block font-medium">
               Milestone MS-02 shifted
             </span>
           </div>
 
           {/* 4. Dependent Activities Impacted */}
-          <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 shadow-2xs">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-[#7B8798] block">
-              Dependent Activities
-            </span>
-            <div className="flex items-baseline gap-1 mt-1">
-              <span className="text-2xl font-bold text-[#176B87] font-mono">
-                {summaryMetrics.impactedDependencies}
+          <div className="p-4 flex flex-col justify-between">
+            <div>
+              <span className="text-[11px] font-semibold uppercase tracking-wider text-[#7B8798] block">
+                Dependent Activities
               </span>
-              <span className="text-[11px] text-[#596579]">successors</span>
+              <div className="flex items-baseline gap-1 mt-1">
+                <span className="text-2xl font-bold text-[#176B87] font-mono">
+                  {summaryMetrics.impactedDependencies}
+                </span>
+                <span className="text-[11px] text-[#596579]">successors</span>
+              </div>
             </div>
-            <span className="text-[11px] text-[#596579] mt-1 block">
+            <span className="text-[12px] text-[#596579] mt-1 block">
               Downstream handoffs exposed
             </span>
           </div>
 
           {/* 5. Float Consumed */}
-          <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 shadow-2xs col-span-2 sm:col-span-1">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-[#7B8798] block">
-              Critical Float Consumed
-            </span>
-            <div className="flex items-baseline gap-1 mt-1">
-              <span className="text-2xl font-bold text-[#D98B32] font-mono">
-                100%
+          <div className="p-4 flex flex-col justify-between col-span-2 sm:col-span-1">
+            <div>
+              <span className="text-[11px] font-semibold uppercase tracking-wider text-[#7B8798] block">
+                Critical Float Consumed
               </span>
-              <span className="text-[11px] text-[#596579]">Path 1</span>
+              <div className="flex items-baseline gap-1 mt-1">
+                <span className="text-2xl font-bold text-[#D98B32] font-mono">
+                  100%
+                </span>
+                <span className="text-[11px] text-[#596579]">Path 1</span>
+              </div>
             </div>
-            <span className="text-[11px] text-[#D98B32] mt-1 block font-medium">
+            <span className="text-[12px] text-[#D98B32] mt-1 block font-medium">
               0d float buffer remaining
             </span>
           </div>

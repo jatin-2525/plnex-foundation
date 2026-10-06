@@ -499,30 +499,30 @@ export default function EvidenceAndAuditPage() {
             How physical onsite proof flows through PLnEX to update authoritative schedule progress, baseline variances, and project forecasts:
           </p>
 
-          {/* 7-STAGE CONNECTED EVIDENCE CHAIN CARDS */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-2.5 items-stretch pt-1">
+          {/* 7-STAGE CONNECTED EVIDENCE CHAIN PIPELINE STRIP */}
+          <div className="border border-[#D9DEE5] rounded-md bg-white overflow-hidden grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-7 divide-y sm:divide-y-0 sm:divide-x divide-[#D9DEE5] pt-1">
             {/* 1. Field Report */}
-            <div className="p-3 rounded-lg bg-[#EDF5F8] border border-[#B3CBE0] flex flex-col justify-between text-xs space-y-2">
+            <div className="p-3 bg-[#EDF5F8]/40 flex flex-col justify-between text-xs space-y-2">
               <div>
                 <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-mono font-bold text-[#176B87] uppercase">Stage 1</span>
-                  <span className="text-[9px] font-bold uppercase bg-white/80 text-[#176B87] px-1.5 py-0.2 rounded border border-[#B3CBE0]">Evidence</span>
+                  <span className="text-[10px] font-mono font-medium text-[#176B87] uppercase">Stage 1</span>
+                  <span className="text-[9px] font-semibold uppercase bg-white/80 text-[#176B87] px-1.5 py-0.2 rounded border border-[#B3CBE0]">Evidence</span>
                 </div>
-                <div className="font-bold text-[#172033] text-xs mt-1 flex items-center gap-1.5">
+                <div className="font-medium text-[#172033] text-xs mt-1 flex items-center gap-1.5">
                   <FileText className="w-3.5 h-3.5 text-[#176B87]" />
                   <span>Field Report</span>
                 </div>
               </div>
-              <div className="text-[10px] text-[#596579] pt-1.5 border-t border-[#B3CBE0]/60">
+              <div className="text-[10px] text-[#596579] pt-1.5 border-t border-[#D9DEE5]/60">
                 DPR-014, Site Photos, Lab QC Slips
               </div>
             </div>
 
             {/* 2. Execution Event */}
-            <div className="p-3 rounded-lg bg-[#F7F8FA] border border-[#D9DEE5] flex flex-col justify-between text-xs space-y-2">
+            <div className="p-3 flex flex-col justify-between text-xs space-y-2">
               <div>
-                <span className="text-[10px] font-mono font-bold text-[#7B8798] uppercase block">Stage 2</span>
-                <div className="font-bold text-[#172033] text-xs mt-1 flex items-center gap-1.5">
+                <span className="text-[10px] font-mono font-medium text-[#7B8798] uppercase block">Stage 2</span>
+                <div className="font-medium text-[#172033] text-xs mt-1 flex items-center gap-1.5">
                   <Activity className="w-3.5 h-3.5 text-[#176B87]" />
                   <span>Execution Event</span>
                 </div>
@@ -533,10 +533,10 @@ export default function EvidenceAndAuditPage() {
             </div>
 
             {/* 3. Schedule Activity */}
-            <div className="p-3 rounded-lg bg-[#F7F8FA] border border-[#D9DEE5] flex flex-col justify-between text-xs space-y-2">
+            <div className="p-3 flex flex-col justify-between text-xs space-y-2">
               <div>
-                <span className="text-[10px] font-mono font-bold text-[#7B8798] uppercase block">Stage 3</span>
-                <div className="font-bold text-[#172033] text-xs mt-1 flex items-center gap-1.5">
+                <span className="text-[10px] font-mono font-medium text-[#7B8798] uppercase block">Stage 3</span>
+                <div className="font-medium text-[#172033] text-xs mt-1 flex items-center gap-1.5">
                   <FolderKanban className="w-3.5 h-3.5 text-[#596579]" />
                   <span>Schedule Activity</span>
                 </div>
@@ -547,77 +547,60 @@ export default function EvidenceAndAuditPage() {
             </div>
 
             {/* 4. Verification */}
-            <div className="p-3 rounded-lg bg-[#EDF7F2] border border-[#B8DCC9] flex flex-col justify-between text-xs space-y-2">
+            <div className="p-3 bg-[#EDF7F2]/40 flex flex-col justify-between text-xs space-y-2">
               <div>
-                <span className="text-[10px] font-mono font-bold text-[#2E7D5B] uppercase block">Stage 4</span>
-                <div className="font-bold text-[#172033] text-xs mt-1 flex items-center gap-1.5">
+                <span className="text-[10px] font-mono font-medium text-[#2E7D5B] uppercase block">Stage 4</span>
+                <div className="font-medium text-[#172033] text-xs mt-1 flex items-center gap-1.5">
                   <ShieldCheck className="w-3.5 h-3.5 text-[#2E7D5B]" />
                   <span>Verification</span>
                 </div>
               </div>
-              <div className="text-[10px] text-[#2E7D5B] pt-1.5 border-t border-[#B8DCC9]/60 font-medium">
+              <div className="text-[10px] text-[#2E7D5B] pt-1.5 border-t border-[#D9DEE5]/60 font-medium">
                 Human QC Engineer Sign-Off
               </div>
             </div>
 
             {/* 5. Progress */}
-            <div className="p-3 rounded-lg bg-[#EDF7F2] border border-[#B8DCC9] flex flex-col justify-between text-xs space-y-2">
+            <div className="p-3 bg-[#EDF7F2]/40 flex flex-col justify-between text-xs space-y-2">
               <div>
-                <span className="text-[10px] font-mono font-bold text-[#2E7D5B] uppercase block">Stage 5</span>
-                <div className="font-bold text-[#172033] text-xs mt-1 flex items-center gap-1.5">
+                <span className="text-[10px] font-mono font-medium text-[#2E7D5B] uppercase block">Stage 5</span>
+                <div className="font-medium text-[#172033] text-xs mt-1 flex items-center gap-1.5">
                   <CheckCircle2 className="w-3.5 h-3.5 text-[#2E7D5B]" />
-                  <span>Progress</span>
+                  <span>Progress Update</span>
                 </div>
               </div>
-              <div className="text-[10px] text-[#2E7D5B] pt-1.5 border-t border-[#B8DCC9]/60 font-mono font-bold">
+              <div className="text-[10px] text-[#2E7D5B] pt-1.5 border-t border-[#D9DEE5]/60 font-mono font-medium">
                 Progress Update: 53% → 65%
               </div>
             </div>
 
             {/* 6. Variance */}
-            <div className="p-3 rounded-lg bg-[#FDF6ED] border border-[#F0D4A6] flex flex-col justify-between text-xs space-y-2">
+            <div className="p-3 bg-[#FDF6ED]/40 flex flex-col justify-between text-xs space-y-2">
               <div>
-                <span className="text-[10px] font-mono font-bold text-[#D98B32] uppercase block">Stage 6</span>
-                <div className="font-bold text-[#172033] text-xs mt-1 flex items-center gap-1.5">
+                <span className="text-[10px] font-mono font-medium text-[#D98B32] uppercase block">Stage 6</span>
+                <div className="font-medium text-[#172033] text-xs mt-1 flex items-center gap-1.5">
                   <SlidersHorizontal className="w-3.5 h-3.5 text-[#D98B32]" />
                   <span>Variance</span>
                 </div>
               </div>
-              <div className="text-[10px] text-[#D98B32] pt-1.5 border-t border-[#F0D4A6]/60 font-mono font-bold">
+              <div className="text-[10px] text-[#D98B32] pt-1.5 border-t border-[#D9DEE5]/60 font-mono font-medium">
                 -7% Slip Cleared
               </div>
             </div>
 
             {/* 7. Impact */}
-            <div className="p-3 rounded-lg bg-[#FBEFEE] border border-[#E4B0AA] flex flex-col justify-between text-xs space-y-2">
+            <div className="p-3 bg-[#FBEFEE]/40 flex flex-col justify-between text-xs space-y-2">
               <div>
-                <span className="text-[10px] font-mono font-bold text-[#B5473C] uppercase block">Stage 7</span>
-                <div className="font-bold text-[#172033] text-xs mt-1 flex items-center gap-1.5">
+                <span className="text-[10px] font-mono font-medium text-[#B5473C] uppercase block">Stage 7</span>
+                <div className="font-medium text-[#172033] text-xs mt-1 flex items-center gap-1.5">
                   <ArrowRight className="w-3.5 h-3.5 text-[#B5473C]" />
                   <span>Impact</span>
                 </div>
               </div>
-              <div className="text-[10px] text-[#B5473C] pt-1.5 border-t border-[#E4B0AA]/60 font-medium">
+              <div className="text-[10px] text-[#B5473C] pt-1.5 border-t border-[#D9DEE5]/60 font-medium">
                 Protects Milestone COD Handover
               </div>
             </div>
-          </div>
-
-          {/* DOWNWARD VISUAL ARROW SEQUENCE INDICATOR */}
-          <div className="p-2.5 rounded-lg bg-[#F7F8FA] border border-[#D9DEE5] flex items-center justify-center gap-2 text-xs font-bold text-[#172033] flex-wrap">
-            <span className="text-[#176B87]">Field Report</span>
-            <span className="text-[#7B8798] font-mono">&darr;</span>
-            <span className="text-[#172033]">Execution Event</span>
-            <span className="text-[#7B8798] font-mono">&darr;</span>
-            <span className="text-[#172033]">Schedule Activity</span>
-            <span className="text-[#7B8798] font-mono">&darr;</span>
-            <span className="text-[#2E7D5B]">Verification</span>
-            <span className="text-[#7B8798] font-mono">&darr;</span>
-            <span className="text-[#2E7D5B]">Progress</span>
-            <span className="text-[#7B8798] font-mono">&darr;</span>
-            <span className="text-[#D98B32]">Variance</span>
-            <span className="text-[#7B8798] font-mono">&darr;</span>
-            <span className="text-[#B5473C]">Impact</span>
           </div>
         </div>
 

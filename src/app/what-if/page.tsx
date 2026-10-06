@@ -563,32 +563,32 @@ export default function WhatIfSimulatorPage() {
                     The live schedule records approved baseline dates, actual field completions, and official contractual milestones. Values in this panel are permanently protected and cannot be changed here.
                   </p>
 
-                  {/* Master Schedule Source Details Card */}
-                  <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 space-y-3.5 shadow-2xs">
+                  {/* Master Schedule Source Details Section */}
+                  <div className="pt-3 border-t border-[#D9DEE5] space-y-3">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
-                        <span className="font-mono text-xs font-bold text-[#172033]">
+                        <span className="font-mono text-xs font-semibold text-[#172033]">
                           {selectedActivity.id}
                         </span>
-                        <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-[#F1F3F5] text-[#596579] border border-[#D9DEE5]">
+                        <span className="px-2 py-0.5 rounded text-[11px] font-mono font-semibold uppercase bg-[#F1F3F5] text-[#596579] border border-[#D9DEE5]">
                           {selectedActivity.discipline}
                         </span>
                       </div>
-                      <span className="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
+                      <span className="px-2 py-0.5 rounded-full text-[11px] font-semibold uppercase bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
                         Critical Path (0d Float)
                       </span>
                     </div>
 
                     <div>
-                      <h3 className="text-sm font-bold text-[#172033]">{selectedActivity.name}</h3>
+                      <h3 className="text-sm font-semibold text-[#172033]">{selectedActivity.name}</h3>
                       <p className="text-xs text-[#596579] mt-0.5">
                         {selectedActivity.description}
                       </p>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-3 pt-3 border-t border-[#D9DEE5]/80 text-xs">
+                    <div className="grid grid-cols-2 gap-3 pt-2 text-xs">
                       <div>
-                        <span className="text-[10px] uppercase font-bold text-[#7B8798] block">
+                        <span className="text-[11px] uppercase font-semibold text-[#596579] block">
                           Current Planned Start
                         </span>
                         <span className="font-mono text-[#172033] font-medium">
@@ -596,15 +596,15 @@ export default function WhatIfSimulatorPage() {
                         </span>
                       </div>
                       <div>
-                        <span className="text-[10px] uppercase font-bold text-[#7B8798] block">
+                        <span className="text-[11px] uppercase font-semibold text-[#596579] block">
                           Current Planned Finish
                         </span>
-                        <span className="font-mono font-bold text-[#172033]">
+                        <span className="font-mono font-medium text-[#172033]">
                           {formatFriendlyDate(selectedActivity.plannedFinish)}
                         </span>
                       </div>
                       <div>
-                        <span className="text-[10px] uppercase font-bold text-[#7B8798] block">
+                        <span className="text-[11px] uppercase font-semibold text-[#596579] block">
                           Area / WBS Location
                         </span>
                         <span className="text-[#596579] truncate block">
@@ -612,7 +612,7 @@ export default function WhatIfSimulatorPage() {
                         </span>
                       </div>
                       <div>
-                        <span className="text-[10px] uppercase font-bold text-[#7B8798] block">
+                        <span className="text-[11px] uppercase font-semibold text-[#596579] block">
                           Assigned Lead Engineer
                         </span>
                         <span className="text-[#596579] truncate block">
@@ -622,19 +622,19 @@ export default function WhatIfSimulatorPage() {
                     </div>
                   </div>
 
-                  {/* Contractual Milestones Baseline Card */}
-                  <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 space-y-2.5 shadow-2xs">
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#7B8798] block">
+                  {/* Contractual Milestones Baseline Section */}
+                  <div className="pt-3 border-t border-[#D9DEE5] space-y-2">
+                    <span className="text-[11px] font-semibold uppercase tracking-wider text-[#596579] block">
                       Approved Key Milestones (Baseline V3)
                     </span>
-                    <div className="space-y-2 text-xs">
-                      <div className="flex items-center justify-between p-2 rounded bg-[#F7F8FA] border border-[#D9DEE5]/80">
+                    <div className="divide-y divide-[#D9DEE5] border border-[#D9DEE5] rounded bg-white text-xs">
+                      <div className="flex items-center justify-between p-2.5">
                         <span className="font-medium text-[#172033]">Mechanical Completion</span>
-                        <span className="font-mono font-semibold text-[#172033]">15 Nov 2026</span>
+                        <span className="font-mono font-medium text-[#172033]">15 Nov 2026</span>
                       </div>
-                      <div className="flex items-center justify-between p-2 rounded bg-[#F7F8FA] border border-[#D9DEE5]/80">
+                      <div className="flex items-center justify-between p-2.5">
                         <span className="font-medium text-[#172033]">Commercial Operation Date (COD)</span>
-                        <span className="font-mono font-bold text-[#172033]">15 Dec 2026</span>
+                        <span className="font-mono font-semibold text-[#172033]">15 Dec 2026</span>
                       </div>
                     </div>
                   </div>

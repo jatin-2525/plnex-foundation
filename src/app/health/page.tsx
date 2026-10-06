@@ -418,7 +418,8 @@ export default function ScheduleHealthPage() {
             </span>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5">
+          {/* Segmented Check Category Strip */}
+          <div className="border border-[#D9DEE5] rounded-md bg-white overflow-hidden grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 divide-y sm:divide-y-0 sm:divide-x divide-[#D9DEE5]">
             {currentRules.map((ruleItem) => {
               const ruleIssues = issues.filter(
                 (i) => i.category === activeTab && i.rule === ruleItem.rule && i.status === 'Open'
@@ -437,15 +438,15 @@ export default function ScheduleHealthPage() {
                   onClick={() =>
                     setSelectedRuleFilter(isSelected ? 'ALL' : ruleItem.rule)
                   }
-                  className={`p-3 rounded-lg border text-left transition-all flex flex-col justify-between ${
+                  className={`p-3 text-left transition-all flex flex-col justify-between ${
                     isSelected
-                      ? 'border-[#176B87] bg-[#EDF5F8] ring-1 ring-[#176B87]'
-                      : 'border-[#D9DEE5] bg-[#F7F8FA] hover:bg-white hover:border-[#176B87]/40'
+                      ? 'bg-[#EDF5F8]'
+                      : 'hover:bg-[#F7F8FA]'
                   }`}
                 >
                   <div className="flex items-center justify-between mb-2">
                     <span
-                      className={`text-[11px] font-mono px-1.5 py-0.5 rounded font-semibold uppercase flex items-center gap-1 ${
+                      className={`text-[11px] font-mono px-1.5 py-0.5 rounded font-medium uppercase flex items-center gap-1 ${
                         ruleSeverity === 'Healthy'
                           ? 'bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]'
                           : ruleSeverity === 'Critical'
@@ -464,7 +465,7 @@ export default function ScheduleHealthPage() {
                   </div>
 
                   <div>
-                    <div className="text-xs font-semibold text-[#172033] line-clamp-1" title={ruleItem.name}>
+                    <div className="text-xs font-medium text-[#172033] line-clamp-1" title={ruleItem.name}>
                       {ruleItem.name}
                     </div>
                     <div className="text-[11px] font-mono text-[#596579] mt-0.5">

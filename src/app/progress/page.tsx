@@ -887,54 +887,54 @@ export default function ProgressVariancePage() {
             </div>
           </div>
 
-          {/* Explicit Header Info Matrix */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-4 text-xs">
-            <div className="flex items-center gap-3 p-3 rounded-lg bg-[#F7F8FA] border border-[#D9DEE5]/80">
-              <div className="w-8 h-8 rounded-lg bg-white border border-[#D9DEE5] flex items-center justify-center text-[#176B87] shrink-0 font-bold">
+          {/* Explicit Header Info Metadata Strip */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-[#D9DEE5] pt-3 text-xs border-t border-[#D9DEE5]">
+            <div className="py-2 sm:py-0 sm:pr-4 flex items-center gap-3">
+              <div className="w-8 h-8 rounded bg-[#F7F8FA] border border-[#D9DEE5] flex items-center justify-center text-[#176B87] shrink-0 font-medium">
                 <Folder className="w-4 h-4" />
               </div>
               <div className="min-w-0">
-                <span className="text-[10px] uppercase font-bold text-[#7B8798] tracking-wider block">
+                <span className="text-[11px] uppercase font-semibold text-[#596579] tracking-wider block">
                   Project
                 </span>
-                <span className="font-mono font-bold text-[#172033] block truncate">
+                <span className="font-mono font-medium text-[#172033] text-sm block truncate">
                   {projectCode}
                 </span>
-                <span className="text-[11px] text-[#596579] truncate block" title={projectName}>
+                <span className="text-[12px] text-[#596579] truncate block" title={projectName}>
                   {projectName}
                 </span>
               </div>
             </div>
 
-            <div className="flex items-center gap-3 p-3 rounded-lg bg-[#F7F8FA] border border-[#D9DEE5]/80">
-              <div className="w-8 h-8 rounded-lg bg-white border border-[#D9DEE5] flex items-center justify-center text-[#176B87] shrink-0 font-bold">
+            <div className="py-2 sm:py-0 sm:px-4 flex items-center gap-3">
+              <div className="w-8 h-8 rounded bg-[#F7F8FA] border border-[#D9DEE5] flex items-center justify-center text-[#176B87] shrink-0 font-medium">
                 <Calendar className="w-4 h-4" />
               </div>
               <div className="min-w-0">
-                <span className="text-[10px] uppercase font-bold text-[#7B8798] tracking-wider block">
+                <span className="text-[11px] uppercase font-semibold text-[#596579] tracking-wider block">
                   Schedule Version
                 </span>
-                <span className="font-bold text-[#172033] block truncate">
+                <span className="font-medium text-[#172033] text-sm block truncate">
                   {scheduleVersion}
                 </span>
-                <span className="text-[11px] text-[#596579] block">
+                <span className="text-[12px] text-[#596579] block">
                   184 Physical Activities · CPM Baseline
                 </span>
               </div>
             </div>
 
-            <div className="flex items-center gap-3 p-3 rounded-lg bg-[#F7F8FA] border border-[#D9DEE5]/80">
-              <div className="w-8 h-8 rounded-lg bg-white border border-[#D9DEE5] flex items-center justify-center text-[#176B87] shrink-0 font-bold">
+            <div className="py-2 sm:py-0 sm:pl-4 flex items-center gap-3">
+              <div className="w-8 h-8 rounded bg-[#F7F8FA] border border-[#D9DEE5] flex items-center justify-center text-[#176B87] shrink-0 font-medium">
                 <Clock className="w-4 h-4" />
               </div>
               <div className="min-w-0">
-                <span className="text-[10px] uppercase font-bold text-[#7B8798] tracking-wider block">
+                <span className="text-[11px] uppercase font-semibold text-[#596579] tracking-wider block">
                   Reporting Date (Data Date)
                 </span>
-                <span className="font-bold text-[#172033] block">
+                <span className="font-medium text-[#172033] text-sm block">
                   {reportingDate}
                 </span>
-                <span className="text-[11px] text-[#596579] block">
+                <span className="text-[12px] text-[#596579] block">
                   Cutoff: 17:30 IST · Verified Progress Ingested
                 </span>
               </div>
@@ -953,17 +953,20 @@ export default function ProgressVariancePage() {
             Planned Progress | Actual Verified Progress | Variance | Forecast at Completion
             ========================================================================= */}
         <div className="space-y-3">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {/* Performance Summary Metric Row */}
+          <div className="bg-white border border-[#D9DEE5] rounded-lg shadow-xs overflow-hidden grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-[#D9DEE5]">
             {/* 1. Planned Progress */}
-            <div className="bg-white border border-[#D9DEE5] rounded-lg p-5 shadow-xs">
-              <span className="text-xs font-semibold uppercase tracking-wider text-[#596579] block">
-                Planned Progress
-              </span>
-              <div className="flex items-baseline gap-2 mt-2">
-                <span className="text-[28px] sm:text-3xl font-bold text-[#172033] font-mono leading-none">
-                  {summaryMetrics.plannedProgress.toFixed(1)}%
+            <div className="p-5 flex flex-col justify-between">
+              <div>
+                <span className="text-xs font-semibold uppercase tracking-wider text-[#596579] block">
+                  Planned Progress
                 </span>
-                <span className="text-xs text-[#596579] font-medium">CPM Baseline</span>
+                <div className="flex items-baseline gap-2 mt-2">
+                  <span className="text-[28px] sm:text-3xl font-bold text-[#172033] font-mono leading-none">
+                    {summaryMetrics.plannedProgress.toFixed(1)}%
+                  </span>
+                  <span className="text-xs text-[#596579] font-medium">CPM Baseline</span>
+                </div>
               </div>
               <p className="text-[13px] text-[#596579] mt-2">
                 Cumulative baseline target as of {reportingDate.split(' ')[0]} (Data Date).
@@ -971,21 +974,23 @@ export default function ProgressVariancePage() {
             </div>
 
             {/* 2. Actual Verified Progress */}
-            <div className="bg-white border border-[#B8DCC9] rounded-lg p-5 shadow-xs">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-semibold uppercase tracking-wider text-[#2E7D5B] block">
-                  Actual Verified Progress
-                </span>
-                <WhyButton
-                  onClick={() => openWhyExplanation('progress:verified')}
-                  title="Why is verified progress 73.0%?"
-                />
-              </div>
-              <div className="flex items-baseline gap-2 mt-2">
-                <span className="text-[28px] sm:text-3xl font-bold text-[#176B87] font-mono leading-none">
-                  {summaryMetrics.actualProgress.toFixed(1)}%
-                </span>
-                <span className="text-xs text-[#2E7D5B] font-bold">100% Traceable</span>
+            <div className="p-5 flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-semibold uppercase tracking-wider text-[#2E7D5B] block">
+                    Actual Verified Progress
+                  </span>
+                  <WhyButton
+                    onClick={() => openWhyExplanation('progress:verified')}
+                    title="Why is verified progress 73.0%?"
+                  />
+                </div>
+                <div className="flex items-baseline gap-2 mt-2">
+                  <span className="text-[28px] sm:text-3xl font-bold text-[#176B87] font-mono leading-none">
+                    {summaryMetrics.actualProgress.toFixed(1)}%
+                  </span>
+                  <span className="text-xs text-[#2E7D5B] font-medium">100% Traceable</span>
+                </div>
               </div>
               <p className="text-[13px] text-[#596579] mt-2">
                 Physically verified field output substantiated by engineering inspection records.
@@ -993,23 +998,25 @@ export default function ProgressVariancePage() {
             </div>
 
             {/* 3. Variance */}
-            <div className="bg-white border border-[#E4B0AA] rounded-lg p-5 shadow-xs">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-semibold uppercase tracking-wider text-[#B5473C] block">
-                  Variance
-                </span>
-                <WhyButton
-                  onClick={() => openWhyExplanation('variance:portfolio')}
-                  title="Why is variance -7.0%?"
-                />
-              </div>
-              <div className="flex items-baseline gap-2 mt-2">
-                <span className="text-[28px] sm:text-3xl font-bold text-[#B5473C] font-mono leading-none">
-                  {summaryMetrics.variance.toFixed(1)}%
-                </span>
-                <span className="text-xs font-semibold px-2 py-0.5 rounded bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
-                  Negative (- Behind)
-                </span>
+            <div className="p-5 flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-semibold uppercase tracking-wider text-[#B5473C] block">
+                    Variance
+                  </span>
+                  <WhyButton
+                    onClick={() => openWhyExplanation('variance:portfolio')}
+                    title="Why is variance -7.0%?"
+                  />
+                </div>
+                <div className="flex items-baseline gap-2 mt-2">
+                  <span className="text-[28px] sm:text-3xl font-bold text-[#B5473C] font-mono leading-none">
+                    {summaryMetrics.variance.toFixed(1)}%
+                  </span>
+                  <span className="text-xs font-semibold px-2 py-0.5 rounded bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
+                    Negative (- Behind)
+                  </span>
+                </div>
               </div>
               <p className="text-[13px] text-[#596579] mt-2">
                 Physical lag driven by Line 24 field butt welding and monsoon stoppages.
@@ -1017,21 +1024,23 @@ export default function ProgressVariancePage() {
             </div>
 
             {/* 4. Forecast at Completion */}
-            <div className="bg-white border border-[#F0D4A6] rounded-lg p-5 shadow-xs">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-semibold uppercase tracking-wider text-[#D98B32] block">
-                  Forecast at Completion
-                </span>
-                <WhyButton
-                  onClick={() => openWhyExplanation('impact:forecast')}
-                  title="Why is forecast completion delayed by +4 days?"
-                />
-              </div>
-              <div className="flex items-baseline gap-2 mt-2">
-                <span className="text-[28px] sm:text-3xl font-bold text-[#D98B32] font-mono leading-none">
-                  100.0%
-                </span>
-                <span className="text-xs text-[#D98B32] font-semibold">+4 Days Slip</span>
+            <div className="p-5 flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-semibold uppercase tracking-wider text-[#D98B32] block">
+                    Forecast at Completion
+                  </span>
+                  <WhyButton
+                    onClick={() => openWhyExplanation('impact:forecast')}
+                    title="Why is forecast completion delayed by +4 days?"
+                  />
+                </div>
+                <div className="flex items-baseline gap-2 mt-2">
+                  <span className="text-[28px] sm:text-3xl font-bold text-[#D98B32] font-mono leading-none">
+                    100.0%
+                  </span>
+                  <span className="text-xs text-[#D98B32] font-semibold">+4 Days Slip</span>
+                </div>
               </div>
               <p className="text-[13px] text-[#596579] mt-2">
                 Target completion shifted to 15 Dec 2026 (contractual baseline 11 Dec 2026).
@@ -1085,85 +1094,83 @@ export default function ProgressVariancePage() {
           {/* Bar Chart: Progress by Discipline */}
           <BarChart variant="discipline" className="border-0 p-0 shadow-none" />
 
-          {/* Discipline Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5 pt-2 border-t border-[#D9DEE5]/60">
-            {DISCIPLINE_PROGRESS_DATA.map((d) => {
-              const isBehind = d.variance < 0;
-              const isAhead = d.variance > 0;
-              return (
-                <div
-                  key={d.discipline}
-                  className={`p-3.5 rounded-lg border transition-all ${
-                    isBehind
-                      ? 'bg-[#FCFDFD] border-[#E4B0AA]/80'
-                      : isAhead
-                      ? 'bg-[#FCFDFD] border-[#B8DCC9]/80'
-                      : 'bg-[#FCFDFD] border-[#D9DEE5]'
-                  }`}
-                >
-                  <div className="flex items-center justify-between gap-2">
-                    <div className="flex items-center gap-2">
-                      <span className="font-bold text-xs text-[#172033]">{d.discipline}</span>
-                      <span className="text-[10px] font-mono text-[#7B8798] bg-[#F1F3F5] px-1.5 py-0.2 rounded border border-[#D9DEE5]">
-                        {d.weight}% Scope
-                      </span>
-                    </div>
-                    <span
-                      className={`text-[10px] font-mono font-bold px-1.5 py-0.5 rounded border ${
-                        isBehind
-                          ? 'bg-[#FBEFEE] text-[#B5473C] border-[#E4B0AA]'
-                          : isAhead
-                          ? 'bg-[#EDF7F2] text-[#2E7D5B] border-[#B8DCC9]'
-                          : 'bg-[#F1F3F5] text-[#596579] border-[#D9DEE5]'
-                      }`}
-                    >
-                      {isAhead ? `+${d.variance.toFixed(1)}%` : `${d.variance.toFixed(1)}%`}
-                    </span>
-                  </div>
-
-                  {/* Planned vs Actual Metrics */}
-                  <div className="grid grid-cols-2 gap-2 mt-2.5 text-[11px] font-mono">
-                    <div className="p-1.5 bg-[#F7F8FA] rounded border border-[#E5E9EF]">
-                      <span className="text-[#7B8798] block text-[10px] font-sans">Planned Target</span>
-                      <span className="font-bold text-[#176B87]">{d.planned.toFixed(1)}%</span>
-                    </div>
-                    <div className="p-1.5 bg-[#F7F8FA] rounded border border-[#E5E9EF]">
-                      <span className="text-[#7B8798] block text-[10px] font-sans">Verified Actual</span>
-                      <span className={`font-bold ${isBehind ? 'text-[#B5473C]' : 'text-[#2E7D5B]'}`}>
-                        {d.actual.toFixed(1)}%
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Visual Dual Progress Bar */}
-                  <div className="mt-2.5 space-y-1">
-                    <div className="relative w-full h-2.5 bg-[#E5E9EF] rounded-full overflow-hidden">
-                      <div
-                        className={`h-full transition-all ${isBehind ? 'bg-[#D98B32]' : 'bg-[#2E7D5B]'}`}
-                        style={{ width: `${d.actual}%` }}
-                        title={`Actual: ${d.actual}%`}
-                      />
-                      <div
-                        className="absolute top-0 bottom-0 w-0.5 bg-[#172033] z-10"
-                        style={{ left: `${d.planned}%` }}
-                        title={`Planned Target: ${d.planned}%`}
-                      />
-                    </div>
-                    <div className="flex justify-between text-[9px] text-[#7B8798] font-mono">
-                      <span>0%</span>
-                      <span className="text-[#172033] font-semibold">Planned Marker: {d.planned}%</span>
-                      <span>100%</span>
-                    </div>
-                  </div>
-
-                  {/* Critical Driver */}
-                  <div className="mt-2 pt-2 border-t border-[#D9DEE5]/60 text-[10px] text-[#596579] leading-snug">
-                    <strong className="text-[#172033] font-medium">Driver: </strong>
-                    {d.criticalLagDriver}
-                  </div>
-                </div>
-              );
-            })}
+          {/* Discipline Progress Table */}
+          <div className="border border-[#D9DEE5] rounded-md bg-white overflow-x-auto">
+            <table className="w-full text-left border-collapse text-sm">
+              <thead>
+                <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[11px] font-semibold uppercase text-[#596579] tracking-wider">
+                  <th className="py-2.5 px-3">Discipline</th>
+                  <th className="py-2.5 px-3 text-right">Planned Target</th>
+                  <th className="py-2.5 px-3 text-right">Verified Actual</th>
+                  <th className="py-2.5 px-3 text-center">Variance</th>
+                  <th className="py-2.5 px-3 w-44">Trajectory vs Baseline</th>
+                  <th className="py-2.5 px-3">Schedule Lag Driver</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-[#D9DEE5]">
+                {DISCIPLINE_PROGRESS_DATA.map((d) => {
+                  const isBehind = d.variance < 0;
+                  const isAhead = d.variance > 0;
+                  return (
+                    <tr key={d.discipline} className="hover:bg-[#F7F8FA]/60 transition-colors">
+                      <td className="py-2.5 px-3">
+                        <div className="flex items-center gap-2">
+                          <span className="font-medium text-[#172033]">{d.discipline}</span>
+                          <span className="text-[11px] font-mono text-[#596579] bg-[#F1F3F5] px-1.5 py-0.5 rounded border border-[#D9DEE5]">
+                            {d.weight}% Scope
+                          </span>
+                        </div>
+                      </td>
+                      <td className="py-2.5 px-3 text-right font-mono text-[#176B87] font-medium">
+                        {d.planned.toFixed(1)}%
+                      </td>
+                      <td className="py-2.5 px-3 text-right font-mono font-medium">
+                        <span className={isBehind ? 'text-[#B5473C]' : 'text-[#2E7D5B]'}>
+                          {d.actual.toFixed(1)}%
+                        </span>
+                      </td>
+                      <td className="py-2.5 px-3 text-center">
+                        <span
+                          className={`text-[11px] font-mono font-medium px-2 py-0.5 rounded border ${
+                            isBehind
+                              ? 'bg-[#FBEFEE] text-[#B5473C] border-[#E4B0AA]'
+                              : isAhead
+                              ? 'bg-[#EDF7F2] text-[#2E7D5B] border-[#B8DCC9]'
+                              : 'bg-[#F1F3F5] text-[#596579] border-[#D9DEE5]'
+                          }`}
+                        >
+                          {isAhead ? `+${d.variance.toFixed(1)}%` : `${d.variance.toFixed(1)}%`}
+                        </span>
+                      </td>
+                      <td className="py-2.5 px-3">
+                        <div className="space-y-1">
+                          <div className="relative w-full h-2.5 bg-[#E5E9EF] rounded-full overflow-hidden">
+                            <div
+                              className={`h-full ${isBehind ? 'bg-[#D98B32]' : 'bg-[#2E7D5B]'}`}
+                              style={{ width: `${d.actual}%` }}
+                              title={`Actual: ${d.actual}%`}
+                            />
+                            <div
+                              className="absolute top-0 bottom-0 w-0.5 bg-[#172033] z-10"
+                              style={{ left: `${d.planned}%` }}
+                              title={`Planned Target: ${d.planned}%`}
+                            />
+                          </div>
+                          <div className="flex justify-between text-[10px] text-[#7B8798] font-mono">
+                            <span>0%</span>
+                            <span className="text-[#172033]">Marker: {d.planned}%</span>
+                            <span>100%</span>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="py-2.5 px-3 text-xs text-[#596579]">
+                        {d.criticalLagDriver}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
           </div>
 
           {/* Concise Engineering Interpretation */}
@@ -1196,83 +1203,84 @@ export default function ProgressVariancePage() {
           {/* Bar Chart: Progress by Area */}
           <BarChart variant="area" className="border-0 p-0 shadow-none" />
 
-          {/* Area Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3.5 pt-2 border-t border-[#D9DEE5]/60">
-            {AREA_PROGRESS_DATA.map((area) => {
-              const isBehind = area.variance < 0;
-              const isAhead = area.variance > 0;
-              return (
-                <div
-                  key={area.code}
-                  className={`p-3.5 rounded-lg border flex flex-col justify-between transition-all ${
-                    area.isCriticalPath && isBehind
-                      ? 'bg-[#FFFDFD] border-[#E4B0AA] ring-1 ring-[#E4B0AA]/40'
-                      : 'bg-[#FCFDFD] border-[#D9DEE5]'
-                  }`}
-                >
-                  <div>
-                    <div className="flex items-center justify-between gap-1 mb-1">
-                      <span className="font-mono text-[10px] text-[#7B8798]">{area.code}</span>
-                      {area.isCriticalPath ? (
-                        <span className="text-[9px] font-bold px-1.5 py-0.2 rounded bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
-                          Critical Path
-                        </span>
-                      ) : (
-                        <span className="text-[9px] font-mono font-medium px-1.5 py-0.2 rounded bg-[#F1F3F5] text-[#596579]">
-                          Float: {area.totalFloatDays}d
-                        </span>
-                      )}
-                    </div>
-
-                    <h4 className="font-bold text-xs text-[#172033] leading-snug">{area.area}</h4>
-
-                    {/* Metrics */}
-                    <div className="grid grid-cols-3 gap-1 mt-2.5 text-[10px] font-mono text-center">
-                      <div className="p-1 bg-[#F7F8FA] rounded border border-[#E5E9EF]">
-                        <span className="text-[#7B8798] block text-[9px] font-sans">Planned</span>
-                        <span className="font-bold text-[#176B87]">{area.planned.toFixed(0)}%</span>
-                      </div>
-                      <div className="p-1 bg-[#F7F8FA] rounded border border-[#E5E9EF]">
-                        <span className="text-[#7B8798] block text-[9px] font-sans">Actual</span>
-                        <span className={`font-bold ${isBehind ? 'text-[#B5473C]' : 'text-[#2E7D5B]'}`}>
+          {/* Area Performance Table */}
+          <div className="border border-[#D9DEE5] rounded-md bg-white overflow-x-auto">
+            <table className="w-full text-left border-collapse text-sm">
+              <thead>
+                <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[11px] font-semibold uppercase text-[#596579] tracking-wider">
+                  <th className="py-2.5 px-3">Area & Battery Limit</th>
+                  <th className="py-2.5 px-3">CPM Path / Float</th>
+                  <th className="py-2.5 px-3 text-right">Planned</th>
+                  <th className="py-2.5 px-3 text-right">Actual</th>
+                  <th className="py-2.5 px-3 text-center">Variance</th>
+                  <th className="py-2.5 px-3 w-36">Progress</th>
+                  <th className="py-2.5 px-3">Operational Status & Constraints</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-[#D9DEE5]">
+                {AREA_PROGRESS_DATA.map((area) => {
+                  const isBehind = area.variance < 0;
+                  const isAhead = area.variance > 0;
+                  return (
+                    <tr key={area.code} className="hover:bg-[#F7F8FA]/60 transition-colors">
+                      <td className="py-2.5 px-3">
+                        <div>
+                          <span className="font-mono text-[11px] text-[#7B8798] block">{area.code}</span>
+                          <span className="font-medium text-[#172033]">{area.area}</span>
+                        </div>
+                      </td>
+                      <td className="py-2.5 px-3">
+                        {area.isCriticalPath ? (
+                          <span className="text-[11px] font-semibold px-2 py-0.5 rounded bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA] inline-block">
+                            Critical Path
+                          </span>
+                        ) : (
+                          <span className="text-[11px] font-mono font-medium px-2 py-0.5 rounded bg-[#F1F3F5] text-[#596579] inline-block">
+                            Float: {area.totalFloatDays}d
+                          </span>
+                        )}
+                      </td>
+                      <td className="py-2.5 px-3 text-right font-mono text-[#176B87] font-medium">
+                        {area.planned.toFixed(0)}%
+                      </td>
+                      <td className="py-2.5 px-3 text-right font-mono font-medium">
+                        <span className={isBehind ? 'text-[#B5473C]' : 'text-[#2E7D5B]'}>
                           {area.actual.toFixed(0)}%
                         </span>
-                      </div>
-                      <div
-                        className={`p-1 rounded border ${
-                          isBehind
-                            ? 'bg-[#FBEFEE] text-[#B5473C] border-[#E4B0AA]'
-                            : isAhead
-                            ? 'bg-[#EDF7F2] text-[#2E7D5B] border-[#B8DCC9]'
-                            : 'bg-[#F1F3F5] text-[#596579] border-[#D9DEE5]'
-                        }`}
-                      >
-                        <span className="text-[#7B8798] block text-[9px] font-sans">Var</span>
-                        <span className="font-bold">
+                      </td>
+                      <td className="py-2.5 px-3 text-center">
+                        <span
+                          className={`text-[11px] font-mono font-medium px-2 py-0.5 rounded border ${
+                            isBehind
+                              ? 'bg-[#FBEFEE] text-[#B5473C] border-[#E4B0AA]'
+                              : isAhead
+                              ? 'bg-[#EDF7F2] text-[#2E7D5B] border-[#B8DCC9]'
+                              : 'bg-[#F1F3F5] text-[#596579] border-[#D9DEE5]'
+                          }`}
+                        >
                           {isAhead ? `+${area.variance.toFixed(0)}%` : `${area.variance.toFixed(0)}%`}
                         </span>
-                      </div>
-                    </div>
-
-                    {/* Progress bar */}
-                    <div className="mt-2.5 relative w-full h-2 bg-[#E5E9EF] rounded-full overflow-hidden">
-                      <div
-                        className={`h-full ${isBehind ? 'bg-[#D98B32]' : 'bg-[#2E7D5B]'}`}
-                        style={{ width: `${area.actual}%` }}
-                      />
-                      <div
-                        className="absolute top-0 bottom-0 w-0.5 bg-[#172033]"
-                        style={{ left: `${area.planned}%` }}
-                      />
-                    </div>
-                  </div>
-
-                  <p className="mt-3 pt-2 border-t border-[#D9DEE5]/60 text-[10px] text-[#596579] leading-relaxed">
-                    {area.summary}
-                  </p>
-                </div>
-              );
-            })}
+                      </td>
+                      <td className="py-2.5 px-3">
+                        <div className="relative w-full h-2 bg-[#E5E9EF] rounded-full overflow-hidden">
+                          <div
+                            className={`h-full ${isBehind ? 'bg-[#D98B32]' : 'bg-[#2E7D5B]'}`}
+                            style={{ width: `${area.actual}%` }}
+                          />
+                          <div
+                            className="absolute top-0 bottom-0 w-0.5 bg-[#172033]"
+                            style={{ left: `${area.planned}%` }}
+                          />
+                        </div>
+                      </td>
+                      <td className="py-2.5 px-3 text-xs text-[#596579]">
+                        {area.summary}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
           </div>
 
           {/* Concise Engineering Interpretation */}
@@ -1418,67 +1426,63 @@ export default function ProgressVariancePage() {
           {/* Horizontal Bar Chart: Top Variances */}
           <HorizontalBarChart variant="top-variances" className="border-0 border-b border-[#D9DEE5]/60 rounded-none shadow-none" />
 
-          {/* Activity Category Filter Pills */}
-          <div className="p-4 bg-[#F7F8FA] border-b border-[#D9DEE5]/60 grid grid-cols-1 sm:grid-cols-3 gap-3">
+          {/* Activity Category Filter Bar */}
+          <div className="p-3 bg-[#F7F8FA] border-b border-[#D9DEE5]/60 flex flex-wrap items-center gap-2">
+            <span className="text-xs font-semibold text-[#596579] mr-1">Filter by Status:</span>
             <button
               type="button"
               onClick={() => setSelectedSemanticFilter(selectedSemanticFilter === 'Positive' ? 'ALL' : 'Positive')}
-              className={`p-3 rounded-lg border text-left transition-all ${
+              className={`px-3 py-1.5 rounded-md border text-xs font-medium transition-all inline-flex items-center gap-2 ${
                 selectedSemanticFilter === 'Positive'
-                  ? 'bg-[#EDF7F2] border-[#2E7D5B] shadow-2xs'
-                  : 'bg-white border-[#D9DEE5] hover:bg-[#F7F8FA]'
+                  ? 'bg-[#EDF7F2] border-[#2E7D5B] text-[#2E7D5B] shadow-2xs font-semibold'
+                  : 'bg-white border-[#D9DEE5] text-[#596579] hover:bg-[#F7F8FA]'
               }`}
             >
-              <span className="text-[10px] font-bold uppercase tracking-wider text-[#7B8798] block">
-                Ahead of Schedule
+              <span>Ahead of Schedule</span>
+              <span className="font-mono font-bold text-[#2E7D5B] bg-[#EDF7F2] px-1.5 py-0.5 rounded text-[11px]">
+                {summaryMetrics.activitiesAhead}
               </span>
-              <div className="flex items-baseline gap-1.5 mt-0.5">
-                <span className="text-lg font-bold text-[#2E7D5B] font-mono">
-                  {summaryMetrics.activitiesAhead}
-                </span>
-                <span className="text-[11px] text-[#596579]">activities (+ Variance)</span>
-              </div>
             </button>
 
             <button
               type="button"
               onClick={() => setSelectedSemanticFilter(selectedSemanticFilter === 'Neutral' ? 'ALL' : 'Neutral')}
-              className={`p-3 rounded-lg border text-left transition-all ${
+              className={`px-3 py-1.5 rounded-md border text-xs font-medium transition-all inline-flex items-center gap-2 ${
                 selectedSemanticFilter === 'Neutral'
-                  ? 'bg-[#EDF5F8] border-[#176B87] shadow-2xs'
-                  : 'bg-white border-[#D9DEE5] hover:bg-[#F7F8FA]'
+                  ? 'bg-[#EDF5F8] border-[#176B87] text-[#176B87] shadow-2xs font-semibold'
+                  : 'bg-white border-[#D9DEE5] text-[#596579] hover:bg-[#F7F8FA]'
               }`}
             >
-              <span className="text-[10px] font-bold uppercase tracking-wider text-[#7B8798] block">
-                On Track
+              <span>On Track</span>
+              <span className="font-mono font-bold text-[#172033] bg-[#F1F3F5] px-1.5 py-0.5 rounded text-[11px]">
+                {summaryMetrics.activitiesOnTrack}
               </span>
-              <div className="flex items-baseline gap-1.5 mt-0.5">
-                <span className="text-lg font-bold text-[#172033] font-mono">
-                  {summaryMetrics.activitiesOnTrack}
-                </span>
-                <span className="text-[11px] text-[#596579]">activities (0.0% Variance)</span>
-              </div>
             </button>
 
             <button
               type="button"
               onClick={() => setSelectedSemanticFilter(selectedSemanticFilter === 'Negative' ? 'ALL' : 'Negative')}
-              className={`p-3 rounded-lg border text-left transition-all ${
+              className={`px-3 py-1.5 rounded-md border text-xs font-medium transition-all inline-flex items-center gap-2 ${
                 selectedSemanticFilter === 'Negative'
-                  ? 'bg-[#FBEFEE] border-[#B5473C] shadow-2xs'
-                  : 'bg-white border-[#D9DEE5] hover:bg-[#F7F8FA]'
+                  ? 'bg-[#FBEFEE] border-[#B5473C] text-[#B5473C] shadow-2xs font-semibold'
+                  : 'bg-white border-[#D9DEE5] text-[#596579] hover:bg-[#F7F8FA]'
               }`}
             >
-              <span className="text-[10px] font-bold uppercase tracking-wider text-[#7B8798] block">
-                Behind Schedule
+              <span>Behind Schedule</span>
+              <span className="font-mono font-bold text-[#B5473C] bg-[#FBEFEE] px-1.5 py-0.5 rounded text-[11px]">
+                {summaryMetrics.activitiesBehind}
               </span>
-              <div className="flex items-baseline gap-1.5 mt-0.5">
-                <span className="text-lg font-bold text-[#B5473C] font-mono">
-                  {summaryMetrics.activitiesBehind}
-                </span>
-                <span className="text-[11px] text-[#596579]">activities (- Variance)</span>
-              </div>
             </button>
+
+            {selectedSemanticFilter !== 'ALL' && (
+              <button
+                type="button"
+                onClick={() => setSelectedSemanticFilter('ALL')}
+                className="text-xs text-[#176B87] hover:underline font-medium ml-auto"
+              >
+                Clear Filter
+              </button>
+            )}
           </div>
           <div className="p-4 border-b border-[#D9DEE5]/60 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
             <div className="relative flex-1 max-w-md">

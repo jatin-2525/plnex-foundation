@@ -467,15 +467,15 @@ export default function OfflineSyncCenterPage() {
             </div>
 
             {/* 7 Clear Status States Quick-Filter Strip */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2">
+            <div className="border border-[#D9DEE5] rounded-md bg-white overflow-hidden grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 divide-y sm:divide-y-0 sm:divide-x divide-[#D9DEE5]">
               {/* 1. Saved Locally */}
               <button
                 type="button"
                 onClick={() => setStatusFilter(statusFilter === 'Saved Locally' ? 'ALL' : 'Saved Locally')}
-                className={`p-2.5 rounded-lg border text-left transition-all ${
+                className={`p-2.5 text-left transition-all ${
                   statusFilter === 'Saved Locally'
-                    ? 'border-[#7B8798] bg-[#F1F3F5] ring-2 ring-[#7B8798]/20'
-                    : 'border-[#D9DEE5] bg-[#F7F8FA] hover:bg-white'
+                    ? 'bg-[#F1F3F5]'
+                    : 'hover:bg-[#F7F8FA]'
                 }`}
               >
                 <div className="flex items-center gap-1.5 mb-1">
@@ -491,10 +491,10 @@ export default function OfflineSyncCenterPage() {
               <button
                 type="button"
                 onClick={() => setStatusFilter(statusFilter === 'Queued' ? 'ALL' : 'Queued')}
-                className={`p-2.5 rounded-lg border text-left transition-all ${
+                className={`p-2.5 text-left transition-all ${
                   statusFilter === 'Queued'
-                    ? 'border-[#D98B32] bg-[#FDF6ED] ring-2 ring-[#D98B32]/20'
-                    : 'border-[#D9DEE5] bg-[#F7F8FA] hover:bg-white'
+                    ? 'bg-[#FDF6ED]'
+                    : 'hover:bg-[#F7F8FA]'
                 }`}
               >
                 <div className="flex items-center gap-1.5 mb-1">
@@ -510,10 +510,10 @@ export default function OfflineSyncCenterPage() {
               <button
                 type="button"
                 onClick={() => setStatusFilter(statusFilter === 'Uploading' ? 'ALL' : 'Uploading')}
-                className={`p-2.5 rounded-lg border text-left transition-all ${
+                className={`p-2.5 text-left transition-all ${
                   statusFilter === 'Uploading'
-                    ? 'border-[#176B87] bg-[#EDF5F8] ring-2 ring-[#176B87]/20'
-                    : 'border-[#D9DEE5] bg-[#F7F8FA] hover:bg-white'
+                    ? 'bg-[#EDF5F8]'
+                    : 'hover:bg-[#F7F8FA]'
                 }`}
               >
                 <div className="flex items-center gap-1.5 mb-1">
@@ -529,10 +529,10 @@ export default function OfflineSyncCenterPage() {
               <button
                 type="button"
                 onClick={() => setStatusFilter(statusFilter === 'Uploaded' ? 'ALL' : 'Uploaded')}
-                className={`p-2.5 rounded-lg border text-left transition-all ${
+                className={`p-2.5 text-left transition-all ${
                   statusFilter === 'Uploaded'
-                    ? 'border-[#3B6EA8] bg-[#EDF5F8] ring-2 ring-[#3B6EA8]/20'
-                    : 'border-[#D9DEE5] bg-[#F7F8FA] hover:bg-white'
+                    ? 'bg-[#EDF5F8]'
+                    : 'hover:bg-[#F7F8FA]'
                 }`}
               >
                 <div className="flex items-center gap-1.5 mb-1">
@@ -548,10 +548,10 @@ export default function OfflineSyncCenterPage() {
               <button
                 type="button"
                 onClick={() => setStatusFilter(statusFilter === 'Processing' ? 'ALL' : 'Processing')}
-                className={`p-2.5 rounded-lg border text-left transition-all ${
+                className={`p-2.5 text-left transition-all ${
                   statusFilter === 'Processing'
-                    ? 'border-[#6366F1] bg-[#EEF2FF] ring-2 ring-[#6366F1]/20'
-                    : 'border-[#D9DEE5] bg-[#F7F8FA] hover:bg-white'
+                    ? 'bg-[#EEF2FF]'
+                    : 'hover:bg-[#F7F8FA]'
                 }`}
               >
                 <div className="flex items-center gap-1.5 mb-1">
@@ -567,10 +567,10 @@ export default function OfflineSyncCenterPage() {
               <button
                 type="button"
                 onClick={() => setStatusFilter(statusFilter === 'Confirmed' ? 'ALL' : 'Confirmed')}
-                className={`p-2.5 rounded-lg border text-left transition-all ${
+                className={`p-2.5 text-left transition-all ${
                   statusFilter === 'Confirmed'
-                    ? 'border-[#2E7D5B] bg-[#EDF7F2] ring-2 ring-[#2E7D5B]/20'
-                    : 'border-[#D9DEE5] bg-[#F7F8FA] hover:bg-white'
+                    ? 'bg-[#EDF7F2]'
+                    : 'hover:bg-[#F7F8FA]'
                 }`}
               >
                 <div className="flex items-center gap-1.5 mb-1">
@@ -586,10 +586,10 @@ export default function OfflineSyncCenterPage() {
               <button
                 type="button"
                 onClick={() => setStatusFilter(statusFilter === 'Needs Attention' ? 'ALL' : 'Needs Attention')}
-                className={`p-2.5 rounded-lg border text-left transition-all ${
+                className={`p-2.5 text-left transition-all ${
                   statusFilter === 'Needs Attention'
-                    ? 'border-[#B5473C] bg-[#FBEFEE] ring-2 ring-[#B5473C]/20'
-                    : 'border-[#D9DEE5] bg-[#F7F8FA] hover:bg-white'
+                    ? 'bg-[#FBEFEE]'
+                    : 'hover:bg-[#F7F8FA]'
                 }`}
               >
                 <div className="flex items-center gap-1.5 mb-1">
