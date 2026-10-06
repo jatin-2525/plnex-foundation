@@ -8,7 +8,6 @@ import { Breadcrumbs } from '../../components/shell/Breadcrumbs';
 import { StateWrapper } from '../../components/shared/StateWrapper';
 import { EmptyState } from '../../components/shared/EmptyState';
 import { ErrorState } from '../../components/shared/ErrorState';
-import { ProcessingState } from '../../components/shared/ProcessingState';
 import { Modal } from '../../components/shared/Modal';
 import { Drawer } from '../../components/shared/Drawer';
 import {
@@ -31,31 +30,19 @@ import {
   GitCompare,
   Plus,
   AlertTriangle,
-  CheckCircle2,
-  Clock,
-  Calendar,
-  ArrowRight,
-  Search,
-  Filter,
-  Layers,
-  Activity,
   Lock,
-  Sparkles,
-  Info,
-  ChevronRight,
-  TrendingDown,
-  TrendingUp,
-  Folder,
+  ArrowRight,
+  Layers,
   ShieldCheck,
   Zap,
-  BookmarkCheck,
   Trash2,
-  ExternalLink,
-  HelpCircle,
   BarChart3,
-  Check,
-  AlertCircle,
-  FileSpreadsheet,
+  CheckCircle2,
+  Calendar,
+  Clock,
+  ChevronRight,
+  Activity,
+  Info,
 } from 'lucide-react';
 
 export default function WhatIfSimulatorPage() {
@@ -77,12 +64,8 @@ export default function WhatIfSimulatorPage() {
 
   // Simulation Execution State
   const [simulationResult, setSimulationResult] = useState<SimulationResult | null>(null);
-  const [isCalculating, setIsCalculating] = useState<boolean>(false);
-  const [calculationStep, setCalculationStep] = useState<string>('Initializing...');
-  const [calculationProgress, setCalculationProgress] = useState<number>(0);
-  const [hasRunInitialSim, setHasRunInitialSim] = useState<boolean>(false);
 
-  // Error Simulation State
+  // Error State
   const [simulateError, setSimulateError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
 
@@ -110,11 +93,19 @@ export default function WhatIfSimulatorPage() {
 
   // Run simulation on initial mount with default scenario
   useEffect(() => {
-    if (!hasRunInitialSim) {
-      handleRunScenario(false);
-      setHasRunInitialSim(true);
+    try {
+      const res = executeWhatIfSimulation(
+        scenarioName,
+        selectedActivityId,
+        delayDays,
+        optionalDateChange
+      );
+      setSimulationResult(res);
+    } catch (err: any) {
+      setSimulateError(true);
+      setErrorMessage(err.message || 'Failed to compute CPM simulation.');
     }
-  }, [hasRunInitialSim]);
+  }, []);
 
   // Handle Date input change (bidirectional sync with delayDays)
   const handleDateChange = (newDateStr: string) => {
@@ -127,8 +118,8 @@ export default function WhatIfSimulatorPage() {
     }
   };
 
-  // ACTION 1: RUN SCENARIO
-  const handleRunScenario = (animate: boolean = true) => {
+  // ACTION 1: RUN SCENARIO (Instantaneous calculation, no animated graphics)
+  const handleRunScenario = () => {
     if (simulateError) {
       setErrorMessage('Critical CPM Graph Loop Detected: Predecessor cycle discovered during topological sort.');
       return;
@@ -143,57 +134,22 @@ export default function WhatIfSimulatorPage() {
       return;
     }
 
-    if (animate) {
-      setIsCalculating(true);
-      setCalculationProgress(15);
-      setCalculationStep('Loading schedule baseline network...');
-
-      setTimeout(() => {
-        setCalculationProgress(45);
-        setCalculationStep(`Injecting +${delayDays}d variance on source activity ${selectedActivityId}...`);
-      }, 150);
-
-      setTimeout(() => {
-        setCalculationProgress(80);
-        setCalculationStep('Recalculating forward passes & total float consumption...');
-      }, 300);
-
-      setTimeout(() => {
-        setCalculationProgress(100);
-        setCalculationStep('Completed simulation pass.');
-        try {
-          const res = executeWhatIfSimulation(
-            scenarioName,
-            selectedActivityId,
-            delayDays,
-            optionalDateChange
-          );
-          setSimulationResult(res);
-          setIsCalculating(false);
-          addToast({
-            type: 'info',
-            title: 'Simulation Run Completed',
-            description: `Scenario computed in isolated sandbox. Baseline schedule remains read-only.`,
-          });
-        } catch (err: any) {
-          setIsCalculating(false);
-          setSimulateError(true);
-          setErrorMessage(err.message || 'Failed to compute CPM simulation.');
-        }
-      }, 450);
-    } else {
-      try {
-        const res = executeWhatIfSimulation(
-          scenarioName,
-          selectedActivityId,
-          delayDays,
-          optionalDateChange
-        );
-        setSimulationResult(res);
-      } catch (err: any) {
-        setSimulateError(true);
-        setErrorMessage(err.message || 'Failed to compute CPM simulation.');
-      }
+    try {
+      const res = executeWhatIfSimulation(
+        scenarioName,
+        selectedActivityId,
+        delayDays,
+        optionalDateChange
+      );
+      setSimulationResult(res);
+      addToast({
+        type: 'info',
+        title: 'Simulation Run Completed',
+        description: `Scenario computed in isolated sandbox. Live schedule remains read-only.`,
+      });
+    } catch (err: any) {
+      setSimulateError(true);
+      setErrorMessage(err.message || 'Failed to compute CPM simulation.');
     }
   };
 
@@ -267,7 +223,7 @@ export default function WhatIfSimulatorPage() {
     setActiveTab('simulator');
     setSimulateError(false);
 
-    setTimeout(() => {
+    try {
       const res = executeWhatIfSimulation(sc.name, sc.sourceActivityId, sc.delayDays, sc.optionalDateChange);
       setSimulationResult(res);
       addToast({
@@ -275,7 +231,10 @@ export default function WhatIfSimulatorPage() {
         title: `Loaded: ${sc.name}`,
         description: `Source activity ${sc.sourceActivityId} configured with ${sc.delayDays >= 0 ? `+${sc.delayDays}` : sc.delayDays} days delay.`,
       });
-    }, 50);
+    } catch (err: any) {
+      setSimulateError(true);
+      setErrorMessage(err.message || 'Failed to compute CPM simulation.');
+    }
   };
 
   // Action: Delete Saved Scenario
@@ -287,6 +246,27 @@ export default function WhatIfSimulatorPage() {
       description: `Scenario "${name}" removed from vault.`,
     });
   };
+
+  // Canonical Scenario Label e.g. "Foundation +4 days"
+  const scenarioDisplay = useMemo(() => {
+    const shortName = selectedActivity.name.includes('Foundation')
+      ? 'Foundation'
+      : selectedActivity.name.split(' ')[0];
+    const sign = delayDays >= 0 ? '+' : '';
+    return `${shortName} ${sign}${delayDays} days`;
+  }, [selectedActivity.name, delayDays]);
+
+  // Projected Finish Date & Impact display
+  const projectedFinishDate = useMemo(() => {
+    if (!selectedActivity) return '2026-10-19';
+    return addDaysToDateString(selectedActivity.plannedFinish, delayDays);
+  }, [selectedActivity, delayDays]);
+
+  const impactDisplay = useMemo(() => {
+    if (delayDays > 0) return `+${delayDays} days`;
+    if (delayDays < 0) return `${delayDays} days`;
+    return '0 days';
+  }, [delayDays]);
 
   const breadcrumbs = [
     { label: 'Control' },
@@ -300,25 +280,37 @@ export default function WhatIfSimulatorPage() {
         <Breadcrumbs items={breadcrumbs} />
 
         {/* =========================================================================
-            HEADER: Isolated What-If Simulator Sandbox
-            Prominent SIMULATION badge & Non-Destructive isolation guarantee
+            STATIC BANNER: MANDATORY SIMULATION ISOLATION GUARANTEE
+            "SIMULATION — DOES NOT CHANGE THE LIVE SCHEDULE"
+            No animation. No moving graphics. No 3D.
+            ========================================================================= */}
+        <div className="bg-amber-50 border-2 border-amber-600 rounded-lg p-3.5 sm:p-4 shadow-xs text-center">
+          <div className="flex items-center justify-center gap-2.5">
+            <span className="px-2.5 py-0.5 rounded text-xs font-black uppercase tracking-wider bg-amber-600 text-white shrink-0">
+              SIMULATION
+            </span>
+            <h2 className="text-sm sm:text-base font-black tracking-wide text-amber-950 uppercase">
+              SIMULATION — DOES NOT CHANGE THE LIVE SCHEDULE
+            </h2>
+          </div>
+          <p className="text-xs text-amber-900 mt-1.5 leading-relaxed max-w-3xl mx-auto">
+            Calculations performed here are isolated scenario projections. This tool <strong>NEVER</strong> modifies the baseline schedule, live project records, or verified actual progress.
+          </p>
+        </div>
+
+        {/* =========================================================================
+            HEADER: Isolated What-If Simulator Workspace
             ========================================================================= */}
         <div className="bg-white border border-[#D9DEE5] rounded-lg p-5 md:p-6 shadow-xs">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-[#D9DEE5]/60">
             <div>
               <div className="flex items-center gap-2 mb-1.5 flex-wrap">
-                {/* PROMINENT MANDATORY SIMULATION LABEL */}
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-black uppercase tracking-widest bg-amber-500 text-white shadow-xs">
-                  SIMULATION
+                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-[11px] font-bold uppercase bg-[#F1F3F5] text-[#596579] border border-[#D9DEE5]">
+                  <Lock className="w-3 h-3 text-[#596579]" />
+                  Master Schedule Baseline Locked
                 </span>
-
-                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-[11px] font-medium bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]">
-                  <Lock className="w-3 h-3 text-[#2E7D5B]" />
-                  Master Schedule Baseline Locked (Read-Only)
-                </span>
-
-                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-[11px] font-medium bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0]">
-                  Non-Destructive Scenario Sandbox
+                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-[11px] font-bold uppercase bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0]">
+                  Predictive CPM Engine
                 </span>
               </div>
 
@@ -335,9 +327,8 @@ export default function WhatIfSimulatorPage() {
               {/* 1. Run Scenario */}
               <button
                 type="button"
-                onClick={() => handleRunScenario(true)}
-                disabled={isCalculating}
-                className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] disabled:opacity-50 rounded-lg transition-colors shadow-xs"
+                onClick={handleRunScenario}
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] rounded-lg transition-colors shadow-xs"
               >
                 <Play className="w-3.5 h-3.5 fill-white" />
                 <span>Run Scenario</span>
@@ -377,21 +368,8 @@ export default function WhatIfSimulatorPage() {
             </div>
           </div>
 
-          {/* ISOLATED SANDBOX NOTICE BANNER */}
-          <div className="mt-4 p-3.5 rounded-lg bg-amber-500/10 border-2 border-amber-500/30 flex items-start gap-3">
-            <span className="px-2.5 py-0.5 rounded text-[10px] font-black uppercase tracking-wider bg-amber-600 text-white shrink-0 mt-0.5">
-              SIMULATION
-            </span>
-            <div className="text-xs text-amber-900 leading-relaxed">
-              <span className="font-bold">
-                Isolated Scenario Sandbox:
-              </span>{' '}
-              Calculations performed on this page are strictly experimental predictive models. Running a scenario <strong>NEVER</strong> modifies the actual master schedule baseline, verified actual progress, active risks, or field update records.
-            </div>
-          </div>
-
           {/* Quick Tab Switcher */}
-          <div className="mt-4 flex items-center justify-between flex-wrap gap-2 pt-2 border-t border-[#D9DEE5]/60">
+          <div className="mt-4 flex items-center justify-between flex-wrap gap-2 pt-2">
             <div className="flex items-center bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg p-0.5 text-xs">
               <button
                 onClick={() => setActiveTab('simulator')}
@@ -432,7 +410,7 @@ export default function WhatIfSimulatorPage() {
             code="ERR_PLNEX_SIM_TOPOLOGY"
             onRetry={() => {
               setSimulateError(false);
-              handleRunScenario(true);
+              handleRunScenario();
             }}
           />
         )}
@@ -442,31 +420,245 @@ export default function WhatIfSimulatorPage() {
             ========================================================================= */}
         {activeTab === 'simulator' && !simulateError && (
           <div className="space-y-6">
-            {/* SCENARIO BUILDER CARD */}
-            <div className="bg-white border border-[#D9DEE5] rounded-lg shadow-xs overflow-hidden">
-              <div className="px-5 py-4 border-b border-[#D9DEE5] bg-[#F7F8FA] flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <Sliders className="w-4 h-4 text-[#176B87]" />
-                  <h2 className="text-sm font-bold text-[#172033] uppercase tracking-wider">
-                    Scenario Builder
-                  </h2>
+
+            {/* =====================================================================
+                4-METRIC KEY COMPARISON CARDS (MANDATED FORMAT)
+                Current Finish: 15 Oct
+                Scenario: Foundation +4 days
+                Projected Finish: 19 Oct
+                Impact: +4 days
+                ===================================================================== */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+              {/* Card 1: Current Finish */}
+              <div className="bg-white border-2 border-[#D9DEE5] rounded-lg p-4 shadow-xs">
+                <div className="flex items-center justify-between mb-1.5">
+                  <span className="text-[10px] uppercase font-bold text-[#596579] tracking-wider">
+                    Current Finish
+                  </span>
+                  <span className="px-1.5 py-0.5 rounded text-[9px] font-bold uppercase bg-[#F1F3F5] text-[#596579] border border-[#D9DEE5]">
+                    Actual Baseline
+                  </span>
                 </div>
-                <div className="flex items-center gap-2 text-xs font-mono text-[#596579]">
-                  <span>Mode:</span>
-                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-white border border-[#D9DEE5] font-semibold text-amber-700">
-                    Simulation Only
+                <div className="text-2xl sm:text-3xl font-black font-mono text-[#172033]">
+                  {formatShortDate(selectedActivity.plannedFinish)}
+                </div>
+                <div className="mt-2 pt-2 border-t border-[#D9DEE5]/60 text-xs text-[#596579] flex items-center justify-between">
+                  <span>Current baseline date:</span>
+                  <span className="font-mono font-medium text-[#172033]">
+                    {formatFriendlyDate(selectedActivity.plannedFinish)}
                   </span>
                 </div>
               </div>
 
-              <div className="p-5 md:p-6 space-y-6">
-                {/* Top Row: Scenario Name & Description */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div className="md:col-span-2 space-y-1.5">
-                    <label className="text-xs font-bold text-[#172033] uppercase tracking-wider flex items-center justify-between">
-                      <span>Scenario Name *</span>
-                      <span className="text-[11px] font-normal text-[#7B8798]">Identifies this run</span>
-                    </label>
+              {/* Card 2: Scenario */}
+              <div className="bg-white border-2 border-[#B3CBE0] rounded-lg p-4 shadow-xs">
+                <div className="flex items-center justify-between mb-1.5">
+                  <span className="text-[10px] uppercase font-bold text-[#176B87] tracking-wider">
+                    Scenario
+                  </span>
+                  <span className="px-1.5 py-0.5 rounded text-[9px] font-bold uppercase bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0]">
+                    Simulation Input
+                  </span>
+                </div>
+                <div className="text-xl sm:text-2xl font-black font-mono text-[#176B87] truncate" title={scenarioDisplay}>
+                  {scenarioDisplay}
+                </div>
+                <div className="mt-2 pt-2 border-t border-[#B3CBE0]/60 text-xs text-[#596579] flex items-center justify-between">
+                  <span>Hypothetical shift:</span>
+                  <span className="font-mono font-bold text-[#176B87]">
+                    {delayDays >= 0 ? `+${delayDays} days` : `${delayDays} days`}
+                  </span>
+                </div>
+              </div>
+
+              {/* Card 3: Projected Finish */}
+              <div className="bg-white border-2 border-[#E4B0AA] rounded-lg p-4 shadow-xs">
+                <div className="flex items-center justify-between mb-1.5">
+                  <span className="text-[10px] uppercase font-bold text-[#B5473C] tracking-wider">
+                    Projected Finish
+                  </span>
+                  <span className="px-1.5 py-0.5 rounded text-[9px] font-bold uppercase bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
+                    Simulated Date
+                  </span>
+                </div>
+                <div className="text-2xl sm:text-3xl font-black font-mono text-[#B5473C]">
+                  {formatShortDate(projectedFinishDate)}
+                </div>
+                <div className="mt-2 pt-2 border-t border-[#E4B0AA]/60 text-xs text-[#596579] flex items-center justify-between">
+                  <span>Simulated finish:</span>
+                  <span className="font-mono font-medium text-[#172033]">
+                    {formatFriendlyDate(projectedFinishDate)}
+                  </span>
+                </div>
+              </div>
+
+              {/* Card 4: Impact */}
+              <div className="bg-white border-2 border-[#E4B0AA] rounded-lg p-4 shadow-xs">
+                <div className="flex items-center justify-between mb-1.5">
+                  <span className="text-[10px] uppercase font-bold text-[#B5473C] tracking-wider">
+                    Impact
+                  </span>
+                  <span className="px-1.5 py-0.5 rounded text-[9px] font-bold uppercase bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
+                    Critical Path
+                  </span>
+                </div>
+                <div className="text-2xl sm:text-3xl font-black font-mono text-[#B5473C]">
+                  {impactDisplay}
+                </div>
+                <div className="mt-2 pt-2 border-t border-[#E4B0AA]/60 text-xs text-[#596579] flex items-center justify-between">
+                  <span>Schedule slip:</span>
+                  <span className="font-mono font-bold text-[#B5473C]">
+                    {impactDisplay}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* =====================================================================
+                CLEAR ARCHITECTURAL SEPARATION:
+                ACTUAL PROJECT STATE
+                vs.
+                SIMULATION
+                Do not visually mix simulated values with actual values.
+                ===================================================================== */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
+              {/* ===================================================================
+                  COLUMN 1: ACTUAL PROJECT STATE (Read-Only Master Baseline)
+                  =================================================================== */}
+              <div className="bg-[#F7F8FA] border-2 border-[#D9DEE5] rounded-lg p-5 md:p-6 shadow-xs flex flex-col justify-between">
+                <div className="space-y-5">
+                  {/* Actual Section Header */}
+                  <div className="flex items-center justify-between pb-3.5 border-b border-[#D9DEE5]">
+                    <div className="flex items-center gap-2">
+                      <Lock className="w-4 h-4 text-[#596579]" />
+                      <h2 className="text-sm font-bold text-[#172033] uppercase tracking-wider">
+                        ACTUAL PROJECT STATE
+                      </h2>
+                    </div>
+                    <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-[11px] font-bold uppercase bg-white border border-[#D9DEE5] text-[#596579]">
+                      Live Schedule (Read-Only)
+                    </span>
+                  </div>
+
+                  <p className="text-xs text-[#596579] leading-relaxed">
+                    The live schedule records approved baseline dates, actual field completions, and official contractual milestones. Values in this panel are permanently protected and cannot be changed here.
+                  </p>
+
+                  {/* Master Schedule Source Details Card */}
+                  <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 space-y-3.5 shadow-2xs">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <span className="font-mono text-xs font-bold text-[#172033]">
+                          {selectedActivity.id}
+                        </span>
+                        <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-[#F1F3F5] text-[#596579] border border-[#D9DEE5]">
+                          {selectedActivity.discipline}
+                        </span>
+                      </div>
+                      <span className="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
+                        Critical Path (0d Float)
+                      </span>
+                    </div>
+
+                    <div>
+                      <h3 className="text-sm font-bold text-[#172033]">{selectedActivity.name}</h3>
+                      <p className="text-xs text-[#596579] mt-0.5">
+                        {selectedActivity.description}
+                      </p>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-3 pt-3 border-t border-[#D9DEE5]/80 text-xs">
+                      <div>
+                        <span className="text-[10px] uppercase font-bold text-[#7B8798] block">
+                          Current Planned Start
+                        </span>
+                        <span className="font-mono text-[#172033] font-medium">
+                          {formatFriendlyDate(selectedActivity.plannedStart)}
+                        </span>
+                      </div>
+                      <div>
+                        <span className="text-[10px] uppercase font-bold text-[#7B8798] block">
+                          Current Planned Finish
+                        </span>
+                        <span className="font-mono font-bold text-[#172033]">
+                          {formatFriendlyDate(selectedActivity.plannedFinish)}
+                        </span>
+                      </div>
+                      <div>
+                        <span className="text-[10px] uppercase font-bold text-[#7B8798] block">
+                          Area / WBS Location
+                        </span>
+                        <span className="text-[#596579] truncate block">
+                          {selectedActivity.area} ({selectedActivity.wbs})
+                        </span>
+                      </div>
+                      <div>
+                        <span className="text-[10px] uppercase font-bold text-[#7B8798] block">
+                          Assigned Lead Engineer
+                        </span>
+                        <span className="text-[#596579] truncate block">
+                          {selectedActivity.assignedEngineer}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Contractual Milestones Baseline Card */}
+                  <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 space-y-2.5 shadow-2xs">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#7B8798] block">
+                      Approved Key Milestones (Baseline V3)
+                    </span>
+                    <div className="space-y-2 text-xs">
+                      <div className="flex items-center justify-between p-2 rounded bg-[#F7F8FA] border border-[#D9DEE5]/80">
+                        <span className="font-medium text-[#172033]">Mechanical Completion</span>
+                        <span className="font-mono font-semibold text-[#172033]">15 Nov 2026</span>
+                      </div>
+                      <div className="flex items-center justify-between p-2 rounded bg-[#F7F8FA] border border-[#D9DEE5]/80">
+                        <span className="font-medium text-[#172033]">Commercial Operation Date (COD)</span>
+                        <span className="font-mono font-bold text-[#172033]">15 Dec 2026</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Bottom Isolation Guarantee */}
+                <div className="mt-5 pt-3 border-t border-[#D9DEE5] flex items-center gap-2 text-xs text-[#596579]">
+                  <CheckCircle2 className="w-4 h-4 text-[#2E7D5B] shrink-0" />
+                  <span>Master schedule locked · Field records protected against simulation writes.</span>
+                </div>
+              </div>
+
+              {/* ===================================================================
+                  COLUMN 2: SIMULATION (Isolated Scenario Sandbox)
+                  =================================================================== */}
+              <div className="bg-white border-2 border-amber-500/70 rounded-lg p-5 md:p-6 shadow-xs flex flex-col justify-between">
+                <div className="space-y-5">
+                  {/* Simulation Section Header */}
+                  <div className="flex items-center justify-between pb-3.5 border-b border-[#D9DEE5]">
+                    <div className="flex items-center gap-2">
+                      <Sliders className="w-4 h-4 text-amber-700" />
+                      <h2 className="text-sm font-bold text-[#172033] uppercase tracking-wider">
+                        SIMULATION
+                      </h2>
+                    </div>
+                    <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-[11px] font-black uppercase tracking-wider bg-amber-500 text-white shadow-xs">
+                      Isolated Sandbox
+                    </span>
+                  </div>
+
+                  <p className="text-xs text-[#596579] leading-relaxed">
+                    Adjust hypothetical duration shifts and examine projected cascading impacts. Changes made in this panel stay strictly within the sandbox.
+                  </p>
+
+                  {/* Scenario Presets & Title */}
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between">
+                      <label className="text-xs font-bold text-[#172033] uppercase tracking-wider">
+                        Scenario Title *
+                      </label>
+                      <span className="text-[11px] text-[#7B8798]">Experimental run label</span>
+                    </div>
+
                     <input
                       type="text"
                       value={scenarioName}
@@ -474,9 +666,10 @@ export default function WhatIfSimulatorPage() {
                       placeholder="e.g. Foundation Block A Curing Hold (+4d)"
                       className="w-full px-3 py-2 text-xs bg-white border border-[#D9DEE5] rounded-lg text-[#172033] font-medium outline-hidden focus:border-[#176B87] focus:ring-1 focus:ring-[#176B87]"
                     />
-                    {/* Quick Preset Scenario Chips */}
-                    <div className="flex items-center gap-1.5 pt-1 flex-wrap text-[11px]">
-                      <span className="text-[#7B8798]">Quick presets:</span>
+
+                    {/* Quick Presets */}
+                    <div className="flex items-center gap-1.5 flex-wrap text-[11px]">
+                      <span className="text-[#7B8798]">Presets:</span>
                       <button
                         type="button"
                         onClick={() => {
@@ -486,7 +679,7 @@ export default function WhatIfSimulatorPage() {
                         }}
                         className="px-2.5 py-0.5 rounded bg-[#EDF5F8] hover:bg-[#D4E8F0] text-[#176B87] text-[10px] font-bold transition-colors border border-[#B3CBE0]"
                       >
-                        Foundation Block A (+4d)
+                        Foundation +4d
                       </button>
                       <button
                         type="button"
@@ -495,387 +688,175 @@ export default function WhatIfSimulatorPage() {
                           setSelectedActivityId('PIP-24-001');
                           setDelayDays(7);
                         }}
-                        className="px-2 py-0.5 rounded bg-[#F1F3F5] hover:bg-[#D9DEE5] text-[#172033] text-[10px] font-medium transition-colors"
+                        className="px-2.5 py-0.5 rounded bg-[#F1F3F5] hover:bg-[#D9DEE5] text-[#172033] text-[10px] font-medium transition-colors"
                       >
                         Monsoon Surge (+7d)
                       </button>
                       <button
                         type="button"
                         onClick={() => {
-                          setScenarioName('Double-Shift Welding Crash Acceleration (-3d)');
+                          setScenarioName('Double-Shift Welding Acceleration (-3d)');
                           setSelectedActivityId('PIP-24-002');
                           setDelayDays(-3);
                         }}
-                        className="px-2 py-0.5 rounded bg-[#EDF7F2] hover:bg-[#D5EEDB] text-[#2E7D5B] text-[10px] font-bold transition-colors"
+                        className="px-2.5 py-0.5 rounded bg-[#EDF7F2] hover:bg-[#D5EEDB] text-[#2E7D5B] text-[10px] font-bold transition-colors"
                       >
                         Welding Acceleration (-3d)
                       </button>
                     </div>
                   </div>
 
+                  {/* Target Activity Selection */}
                   <div className="space-y-1.5">
                     <label className="text-xs font-bold text-[#172033] uppercase tracking-wider block">
-                      Scenario Notes (Optional)
+                      Target Activity to Vary *
                     </label>
-                    <textarea
-                      rows={2}
-                      value={scenarioDescription}
-                      onChange={(e) => setScenarioDescription(e.target.value)}
-                      placeholder="Engineering justification or assumptions..."
-                      className="w-full px-3 py-1.5 text-xs bg-white border border-[#D9DEE5] rounded-lg text-[#172033] outline-hidden focus:border-[#176B87] resize-none"
+                    <select
+                      value={selectedActivityId}
+                      onChange={(e) => setSelectedActivityId(e.target.value)}
+                      className="w-full px-3 py-2 text-xs bg-white border border-[#D9DEE5] rounded-lg font-medium text-[#172033] outline-hidden focus:border-[#176B87] shadow-xs"
+                    >
+                      {SIMULATION_ACTIVITIES.map((act) => (
+                        <option key={act.id} value={act.id}>
+                          {act.id} — {act.name} ({act.discipline})
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  {/* Schedule Shift Stepper & Slider */}
+                  <div className="p-4 rounded-lg bg-[#F7F8FA] border border-[#D9DEE5] space-y-3">
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-bold text-[#172033]">Hypothetical Schedule Shift</span>
+                      <span
+                        className={`px-2 py-0.5 rounded font-mono text-xs font-bold ${
+                          delayDays > 0
+                            ? 'bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]'
+                            : delayDays < 0
+                            ? 'bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]'
+                            : 'bg-white text-[#596579] border border-[#D9DEE5]'
+                        }`}
+                      >
+                        {delayDays > 0 ? `+${delayDays} days delay` : delayDays < 0 ? `${delayDays} days acceleration` : '0 days (Baseline)'}
+                      </span>
+                    </div>
+
+                    <div className="space-y-1">
+                      <input
+                        type="range"
+                        min="-14"
+                        max="45"
+                        value={delayDays}
+                        onChange={(e) => setDelayDays(parseInt(e.target.value, 10))}
+                        className="w-full accent-[#176B87] cursor-pointer"
+                      />
+                      <div className="flex justify-between text-[10px] text-[#7B8798] font-mono">
+                        <span>-14d (Crashing)</span>
+                        <span>0d (Baseline)</span>
+                        <span>+45d (Major Slip)</span>
+                      </div>
+                    </div>
+
+                    {/* Quick Buttons */}
+                    <div className="flex items-center gap-1 pt-1 flex-wrap">
+                      {[-3, 0, 1, 3, 4, 5, 7, 14].map((d) => (
+                        <button
+                          key={d}
+                          type="button"
+                          onClick={() => setDelayDays(d)}
+                          className={`px-2 py-1 rounded text-[10px] font-mono font-semibold transition-colors ${
+                            delayDays === d
+                              ? 'bg-[#176B87] text-white shadow-xs'
+                              : 'bg-white border border-[#D9DEE5] text-[#596579] hover:bg-[#F1F3F5]'
+                          }`}
+                        >
+                          {d > 0 ? `+${d}d` : `${d}d`}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Optional Date Change Override */}
+                  <div className="space-y-1">
+                    <label className="text-xs font-bold text-[#172033] uppercase tracking-wider block">
+                      Optional Projected Date Override
+                    </label>
+                    <input
+                      type="date"
+                      value={optionalDateChange}
+                      onChange={(e) => handleDateChange(e.target.value)}
+                      className="w-full px-3 py-2 text-xs bg-white border border-[#D9DEE5] rounded-lg text-[#172033] font-mono font-medium outline-hidden focus:border-[#176B87]"
                     />
                   </div>
                 </div>
 
-                <div className="border-t border-[#D9DEE5]/60 pt-5">
-                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                    {/* LEFT (Cols 1-5): SOURCE ACTIVITY SELECTOR */}
-                    <div className="lg:col-span-5 space-y-4">
-                      <div>
-                        <label className="text-xs font-bold text-[#172033] uppercase tracking-wider block mb-1.5">
-                          1. Select Source Activity *
-                        </label>
-                        <select
-                          value={selectedActivityId}
-                          onChange={(e) => setSelectedActivityId(e.target.value)}
-                          className="w-full px-3 py-2.5 text-xs bg-white border border-[#D9DEE5] rounded-lg font-medium text-[#172033] outline-hidden focus:border-[#176B87] shadow-xs"
-                        >
-                          {SIMULATION_ACTIVITIES.map((act) => (
-                            <option key={act.id} value={act.id}>
-                              {act.id} — {act.name} ({act.discipline})
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-
-                      {/* Source Activity Card */}
-                      <div className="p-4 rounded-lg bg-[#F7F8FA] border border-[#D9DEE5] space-y-3">
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-2">
-                            <span className="font-mono text-xs font-bold text-[#176B87]">
-                              {selectedActivity.id}
-                            </span>
-                            <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-white border border-[#D9DEE5] text-[#596579]">
-                              {selectedActivity.discipline}
-                            </span>
-                          </div>
-                          {selectedActivity.isCritical ? (
-                            <span className="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
-                              Critical Path (0d Float)
-                            </span>
-                          ) : (
-                            <span className="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]">
-                              Float Available ({selectedActivity.totalFloat}d Buffer)
-                            </span>
-                          )}
-                        </div>
-
-                        <div>
-                          <h3 className="text-xs font-bold text-[#172033]">{selectedActivity.name}</h3>
-                          <p className="text-[11px] text-[#596579] mt-0.5 line-clamp-2">
-                            {selectedActivity.description}
-                          </p>
-                        </div>
-
-                        <div className="grid grid-cols-2 gap-2 text-xs pt-2 border-t border-[#D9DEE5]/80">
-                          <div>
-                            <span className="text-[10px] uppercase font-bold text-[#7B8798] block">
-                              Planned Start
-                            </span>
-                            <span className="font-mono text-[#172033]">
-                              {formatFriendlyDate(selectedActivity.plannedStart)}
-                            </span>
-                          </div>
-                          <div>
-                            <span className="text-[10px] uppercase font-bold text-[#7B8798] block">
-                              Planned Finish (Current)
-                            </span>
-                            <span className="font-mono font-semibold text-[#172033]">
-                              {formatFriendlyDate(selectedActivity.plannedFinish)}
-                            </span>
-                          </div>
-                          <div>
-                            <span className="text-[10px] uppercase font-bold text-[#7B8798] block">
-                              Area / WBS
-                            </span>
-                            <span className="text-[#596579] truncate block">
-                              {selectedActivity.area} ({selectedActivity.wbs})
-                            </span>
-                          </div>
-                          <div>
-                            <span className="text-[10px] uppercase font-bold text-[#7B8798] block">
-                              Assigned Engineer
-                            </span>
-                            <span className="text-[#596579] truncate block">
-                              {selectedActivity.assignedEngineer}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* CENTER (Cols 6-8): DELAY / CHANGE CONTROLS */}
-                    <div className="lg:col-span-4 space-y-4">
-                      <div>
-                        <label className="text-xs font-bold text-[#172033] uppercase tracking-wider block mb-1.5">
-                          2. Delay / Schedule Change *
-                        </label>
-
-                        {/* Numeric Stepper + Slider */}
-                        <div className="p-4 rounded-lg bg-[#F7F8FA] border border-[#D9DEE5] space-y-3">
-                          <div className="flex items-center justify-between">
-                            <span className="text-xs font-bold text-[#172033]">Delay Days</span>
-                            <div className="flex items-center gap-1.5">
-                              <span
-                                className={`px-2 py-0.5 rounded font-mono text-xs font-bold ${
-                                  delayDays > 0
-                                    ? 'bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]'
-                                    : delayDays < 0
-                                    ? 'bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]'
-                                    : 'bg-white text-[#596579] border border-[#D9DEE5]'
-                                }`}
-                              >
-                                {delayDays > 0 ? `+${delayDays} days delay` : delayDays < 0 ? `${delayDays} days acceleration` : '0 days (No change)'}
-                              </span>
-                            </div>
-                          </div>
-
-                          {/* Interactive Range Slider */}
-                          <div className="space-y-1">
-                            <input
-                              type="range"
-                              min="-14"
-                              max="45"
-                              value={delayDays}
-                              onChange={(e) => setDelayDays(parseInt(e.target.value, 10))}
-                              className="w-full accent-[#176B87] cursor-pointer"
-                            />
-                            <div className="flex justify-between text-[10px] text-[#7B8798] font-mono">
-                              <span>-14d (Crashing)</span>
-                              <span>0d (Baseline)</span>
-                              <span>+45d (Major Slip)</span>
-                            </div>
-                          </div>
-
-                          {/* Quick Step Buttons */}
-                          <div className="flex items-center gap-1 pt-1 flex-wrap">
-                            {[-3, 0, 1, 3, 4, 5, 7, 14].map((d) => (
-                              <button
-                                key={d}
-                                type="button"
-                                onClick={() => setDelayDays(d)}
-                                className={`px-2 py-1 rounded text-[10px] font-mono font-semibold transition-colors ${
-                                  delayDays === d
-                                    ? 'bg-[#176B87] text-white shadow-xs'
-                                    : 'bg-white border border-[#D9DEE5] text-[#596579] hover:bg-[#F1F3F5]'
-                                }`}
-                              >
-                                {d > 0 ? `+${d}d` : `${d}d`}
-                              </button>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Optional Date Change */}
-                      <div>
-                        <label className="text-xs font-bold text-[#172033] uppercase tracking-wider block mb-1.5 flex items-center justify-between">
-                          <span>Optional Simulated Date Override</span>
-                          <span className="text-[10px] font-normal text-[#7B8798]">Auto-syncs with days</span>
-                        </label>
-                        <div className="relative">
-                          <input
-                            type="date"
-                            value={optionalDateChange}
-                            onChange={(e) => handleDateChange(e.target.value)}
-                            className="w-full px-3 py-2 text-xs bg-white border border-[#D9DEE5] rounded-lg text-[#172033] font-mono font-medium outline-hidden focus:border-[#176B87]"
-                          />
-                        </div>
-                        <p className="text-[11px] text-[#7B8798] mt-1">
-                          Current Planned Finish: <span className="font-semibold text-[#172033]">{formatFriendlyDate(selectedActivity.plannedFinish)}</span>.
-                        </p>
-                      </div>
-                    </div>
-
-                    {/* RIGHT (Cols 9-12): RUN CTA & SIMULATION SUMMARY */}
-                    <div className="lg:col-span-3 flex flex-col justify-between p-4 rounded-lg bg-[#EDF5F8] border border-[#B3CBE0] space-y-4">
-                      <div className="space-y-2">
-                        <div className="flex items-center gap-2">
-                          <Zap className="w-4 h-4 text-[#176B87]" />
-                          <h3 className="text-xs font-bold text-[#176B87] uppercase tracking-wider">
-                            Execute Simulation
-                          </h3>
-                        </div>
-                        <p className="text-xs text-[#596579] leading-relaxed">
-                          Computes forward CPM network passes, recalculates total float absorption, and tests downstream milestones in an isolated sandbox.
-                        </p>
-                      </div>
-
-                      <div className="space-y-3 pt-2">
-                        <div className="p-3 rounded-lg bg-white/80 border border-[#B3CBE0] text-xs space-y-1">
-                          <div className="flex justify-between">
-                            <span className="text-[#7B8798]">Source Activity:</span>
-                            <span className="font-mono font-bold text-[#172033]">{selectedActivity.id}</span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-[#7B8798]">Simulated Delta:</span>
-                            <span className="font-mono font-bold text-[#176B87]">
-                              {delayDays >= 0 ? `+${delayDays} days` : `${delayDays} days`}
-                            </span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-[#7B8798]">Simulated Finish:</span>
-                            <span className="font-mono font-bold text-[#172033]">
-                              {formatFriendlyDate(optionalDateChange)}
-                            </span>
-                          </div>
-                        </div>
-
-                        {/* PRIMARY ACTION: RUN SCENARIO */}
-                        <button
-                          type="button"
-                          onClick={() => handleRunScenario(true)}
-                          disabled={isCalculating}
-                          className="w-full py-3 px-4 bg-[#176B87] hover:bg-[#135A72] text-white font-bold text-xs uppercase tracking-wider rounded-lg shadow-sm flex items-center justify-center gap-2 transition-all disabled:opacity-50"
-                        >
-                          <Play className="w-4 h-4 fill-white" />
-                          <span>Run Scenario</span>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
+                {/* Run CTA Button */}
+                <div className="mt-5 pt-3 border-t border-[#D9DEE5]">
+                  <button
+                    type="button"
+                    onClick={handleRunScenario}
+                    className="w-full py-2.5 px-4 bg-[#176B87] hover:bg-[#135A72] text-white font-bold text-xs uppercase tracking-wider rounded-lg shadow-xs flex items-center justify-center gap-2 transition-colors"
+                  >
+                    <Play className="w-4 h-4 fill-white" />
+                    <span>Run Scenario</span>
+                  </button>
                 </div>
               </div>
             </div>
 
-            {/* PROCESSING STATE (During Run Scenario) */}
-            {isCalculating && (
-              <ProcessingState
-                title="Simulating Critical Path Scenarios"
-                currentStep={calculationStep}
-                progressPercent={calculationProgress}
-                notes="Traversing predecessor-successor graph. Calculating float consumption and milestone exposure in isolated sandbox."
-              />
-            )}
-
-            {/* =========================================================================
-                RESULTS SECTION:
-                PROMINENT CANONICAL SIMULATION COMPARISON CARD
-                Shows:
-                SIMULATION
-                Current: 15 Oct
-                Scenario: +4 days
-                Simulated: 19 Oct
-                Affected activities: ...
-                ========================================================================= */}
-            {!isCalculating && simulationResult && (
-              <div className="space-y-6 animate-in fade-in duration-300">
-                {/* 1. CANONICAL SIMULATION DISPLAY CARD */}
-                <div className="bg-white border-2 border-amber-500/40 rounded-lg p-5 md:p-6 shadow-sm space-y-5">
-                  <div className="flex items-center justify-between pb-3 border-b border-[#D9DEE5]/60 flex-wrap gap-2">
-                    <div className="flex items-center gap-2">
-                      <span className="px-3 py-1 rounded text-xs font-black uppercase tracking-widest bg-amber-500 text-white shadow-xs">
-                        SIMULATION
-                      </span>
+            {/* =====================================================================
+                AFFECTED ACTIVITIES & DOWNSTREAM IMPACT SCHEDULE
+                Includes: Affected activities heading, Downstream Chain, and Table
+                ===================================================================== */}
+            {simulationResult && (
+              <div className="space-y-6">
+                {/* 1. Affected Activities Summary Banner */}
+                <div className="bg-white border border-[#D9DEE5] rounded-lg p-5 shadow-xs space-y-3">
+                  <div className="flex items-center justify-between flex-wrap gap-2 pb-2 border-b border-[#D9DEE5]/60">
+                    <div>
                       <h3 className="text-sm font-bold text-[#172033] uppercase tracking-wider">
-                        Scenario Impact Summary
-                      </h3>
-                    </div>
-                    <span className="text-[11px] font-mono text-[#596579] bg-[#F7F8FA] px-2.5 py-1 rounded border border-[#D9DEE5]">
-                      Isolated Sandbox Run · Master Records Untouched
-                    </span>
-                  </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                    {/* Current */}
-                    <div className="p-4 rounded-lg bg-[#F7F8FA] border border-[#D9DEE5]">
-                      <span className="text-[10px] uppercase font-bold text-[#7B8798] tracking-wider block mb-1">
-                        Current
-                      </span>
-                      <div className="text-2xl font-black font-mono text-[#172033]">
-                        {formatShortDate(simulationResult.sourceActivity.plannedFinish)}
-                      </div>
-                      <span className="text-xs text-[#596579] mt-1 block">
-                        Baseline Finish: {formatFriendlyDate(simulationResult.sourceActivity.plannedFinish)}
-                      </span>
-                    </div>
-
-                    {/* Scenario */}
-                    <div className="p-4 rounded-lg bg-[#EDF5F8] border border-[#B3CBE0]">
-                      <span className="text-[10px] uppercase font-bold text-[#176B87] tracking-wider block mb-1">
-                        Scenario
-                      </span>
-                      <div className="text-2xl font-black font-mono text-[#176B87]">
-                        {delayDays >= 0 ? `+${delayDays} days` : `${delayDays} days`}
-                      </div>
-                      <span className="text-xs text-[#596579] mt-1 block">
-                        Simulated Schedule Shift
-                      </span>
-                    </div>
-
-                    {/* Simulated */}
-                    <div className="p-4 rounded-lg bg-[#FBEFEE] border border-[#E4B0AA]">
-                      <span className="text-[10px] uppercase font-bold text-[#B5473C] tracking-wider block mb-1">
-                        Simulated
-                      </span>
-                      <div className="text-2xl font-black font-mono text-[#B5473C]">
-                        {formatShortDate(addDaysToDateString(simulationResult.sourceActivity.plannedFinish, delayDays))}
-                      </div>
-                      <span className="text-xs text-[#596579] mt-1 block">
-                        Simulated Finish: {formatFriendlyDate(addDaysToDateString(simulationResult.sourceActivity.plannedFinish, delayDays))}
-                      </span>
-                    </div>
-
-                    {/* Affected activities */}
-                    <div className="p-4 rounded-lg bg-[#F7F8FA] border border-[#D9DEE5]">
-                      <span className="text-[10px] uppercase font-bold text-[#7B8798] tracking-wider block mb-1">
                         Affected activities
-                      </span>
-                      <div className="text-2xl font-black font-mono text-[#172033]">
-                        {simulationResult.affectedActivities.filter((a) => a.activityId !== selectedActivityId).length} Activities
-                      </div>
-                      <span className="text-xs text-[#596579] mt-1 block">
-                        Downstream handoffs impacted
-                      </span>
+                      </h3>
+                      <p className="text-xs text-[#596579] mt-0.5">
+                        Downstream handoffs and work packages shifted by the simulated {delayDays >= 0 ? `+${delayDays}d` : `${delayDays}d`} variance on {selectedActivityId}.
+                      </p>
                     </div>
+                    <span className="px-2.5 py-1 rounded text-xs font-mono font-bold bg-[#F7F8FA] border border-[#D9DEE5] text-[#172033]">
+                      {simulationResult.affectedActivities.filter((a) => a.activityId !== selectedActivityId).length} Downstream Handoffs Impacted
+                    </span>
                   </div>
 
-                  {/* Explicit List of Affected Activities */}
-                  <div className="pt-2">
-                    <span className="text-xs font-bold text-[#172033] uppercase tracking-wider block mb-2">
-                      Affected activities:
-                    </span>
-                    <div className="flex flex-wrap gap-2">
-                      {simulationResult.affectedActivities
-                        .filter((a) => a.activityId !== selectedActivityId)
-                        .map((act) => (
-                          <span
-                            key={act.activityId}
-                            className="px-2.5 py-1 rounded-md text-xs font-medium bg-[#F7F8FA] text-[#172033] border border-[#D9DEE5] inline-flex items-center gap-1.5"
-                          >
-                            <span className="w-1.5 h-1.5 rounded-full bg-[#B5473C]" />
-                            <strong className="font-mono text-[#176B87]">{act.activityId}</strong>
-                            <span>{act.name}</span>
-                            <span className="font-mono text-[11px] text-[#B5473C] font-bold">
-                              (+{act.shiftDays}d)
-                            </span>
+                  {/* Explicit Badges of Affected Activities */}
+                  <div className="flex flex-wrap gap-2 pt-1">
+                    {simulationResult.affectedActivities
+                      .filter((a) => a.activityId !== selectedActivityId)
+                      .map((act) => (
+                        <span
+                          key={act.activityId}
+                          className="px-2.5 py-1 rounded-md text-xs font-medium bg-[#F7F8FA] text-[#172033] border border-[#D9DEE5] inline-flex items-center gap-1.5"
+                        >
+                          <span className="w-1.5 h-1.5 rounded-full bg-[#B5473C]" />
+                          <strong className="font-mono text-[#176B87]">{act.activityId}</strong>
+                          <span>{act.name}</span>
+                          <span className="font-mono text-[11px] text-[#B5473C] font-bold">
+                            (+{act.shiftDays}d)
                           </span>
-                        ))}
-                    </div>
+                        </span>
+                      ))}
                   </div>
                 </div>
 
-                {/* 2. AFFECTED DEPENDENCY CHAIN PREVIEW */}
+                {/* 2. Downstream Dependency Chain Visualization (Static 2D Gantt/Timeline nodes) */}
                 <div className="bg-white border border-[#D9DEE5] rounded-lg p-5 shadow-xs space-y-3">
                   <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center gap-2">
                       <Layers className="w-4 h-4 text-[#176B87]" />
                       <h3 className="text-xs font-bold text-[#172033] uppercase tracking-wider">
-                        Affected Dependency Chain
+                        Downstream Critical Path Cascade
                       </h3>
                     </div>
                     <span className="text-[11px] font-mono text-[#7B8798]">
-                      CPM Logic: Finish-to-Start (FS +0d Lag)
+                      Precedence Logic: Finish-to-Start (FS +0d Lag)
                     </span>
                   </div>
 
@@ -888,11 +869,11 @@ export default function WhatIfSimulatorPage() {
                         return (
                           <React.Fragment key={node.id}>
                             <div
-                              className={`p-3 rounded-lg border flex-1 min-w-[190px] text-xs transition-all ${
+                              className={`p-3 rounded-lg border flex-1 min-w-[190px] text-xs transition-colors ${
                                 isSource
-                                  ? 'bg-[#EDF5F8] border-[#176B87] shadow-xs ring-1 ring-[#176B87]'
+                                  ? 'bg-[#EDF5F8] border-[#176B87] shadow-xs'
                                   : node.shiftDays > 0
-                                  ? 'bg-[#FBEFEE]/40 border-[#E4B0AA]'
+                                  ? 'bg-[#FBEFEE]/50 border-[#E4B0AA]'
                                   : 'bg-[#F7F8FA] border-[#D9DEE5]'
                               }`}
                             >
@@ -946,7 +927,7 @@ export default function WhatIfSimulatorPage() {
                   </div>
                 </div>
 
-                {/* 3. AFFECTED ACTIVITIES TABLE */}
+                {/* 3. Affected Activities Table */}
                 <div className="bg-white border border-[#D9DEE5] rounded-lg shadow-xs overflow-hidden">
                   <div className="px-5 py-4 border-b border-[#D9DEE5] bg-[#F7F8FA] flex items-center justify-between">
                     <div>
@@ -1047,7 +1028,7 @@ export default function WhatIfSimulatorPage() {
                   </div>
                 </div>
 
-                {/* 4. IMPACT SUMMARY & KEY MILESTONE EXPOSURE */}
+                {/* 4. Downstream Milestone Exposure */}
                 <div className="bg-white border border-[#D9DEE5] rounded-lg p-5 md:p-6 shadow-xs space-y-4">
                   <div className="flex items-center justify-between pb-3 border-b border-[#D9DEE5]/60 flex-wrap gap-2">
                     <div className="flex items-center gap-2">
@@ -1117,8 +1098,8 @@ export default function WhatIfSimulatorPage() {
               </div>
             )}
 
-            {/* EMPTY STATE (When no scenario is currently run) */}
-            {!isCalculating && !simulationResult && (
+            {/* EMPTY STATE (When no simulation result computed) */}
+            {!simulationResult && (
               <EmptyState
                 icon={Sliders}
                 title="No Simulation Result Computed"
@@ -1126,7 +1107,7 @@ export default function WhatIfSimulatorPage() {
                 action={{
                   label: 'Run Default Scenario (Foundation Block A +4d)',
                   icon: Play,
-                  onClick: () => handleRunScenario(true),
+                  onClick: handleRunScenario,
                 }}
               />
             )}
@@ -1158,7 +1139,7 @@ export default function WhatIfSimulatorPage() {
               {savedScenarios.map((sc) => (
                 <div
                   key={sc.id}
-                  className="bg-white border border-[#D9DEE5] rounded-lg p-5 shadow-xs hover:border-[#176B87] transition-all flex flex-col justify-between space-y-4"
+                  className="bg-white border border-[#D9DEE5] rounded-lg p-5 shadow-xs hover:border-[#176B87] transition-colors flex flex-col justify-between space-y-4"
                 >
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
