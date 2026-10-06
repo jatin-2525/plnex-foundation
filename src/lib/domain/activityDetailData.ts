@@ -20,11 +20,12 @@ import { CANONICAL_SCHEDULE_VERSION_LABEL } from './canonicalModels';
 
 export type ActivityDrawerTab =
   | 'overview'
-  | 'plan-vs-actual'
+  | 'progress'
   | 'execution'
   | 'evidence'
   | 'dependencies'
-  | 'history';
+  | 'history'
+  | 'plan-vs-actual';
 
 export interface WBSHierarchyStep {
   level: WBSLevel;
