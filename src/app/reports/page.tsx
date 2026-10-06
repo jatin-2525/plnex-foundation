@@ -9,6 +9,7 @@ import { Breadcrumbs } from '../../components/shell/Breadcrumbs';
 import { Modal } from '../../components/shared/Modal';
 import { Drawer } from '../../components/shared/Drawer';
 import { SCurveChart } from '../../components/shared/SCurveChart';
+import { BarChart, LineChart, HorizontalBarChart } from '../../components/shared/charts';
 import { ConfidenceBadge } from '../../components/shared/ConfidenceBadge';
 import {
   REPORT_TEMPLATES,
@@ -518,13 +519,34 @@ export default function ReportsAndMemoryPage() {
               </div>
             </div>
 
-            {/* Performance S-Curve Preview */}
-            <div className="mt-4">
-              <SCurveChart
-                variant="compact"
-                title="Schedule Performance Baseline vs Verified Trajectory"
-                subtitle="Baseline target vs actual site execution trajectory for statutory reporting"
-              />
+            {/* Contextual Canonical Chart Preview for Selected Report */}
+            <div className="mt-4 space-y-4">
+              {selectedReportId === 'REP-VARIANCE' ? (
+                <>
+                  <LineChart variant="variance-trend" />
+                  <HorizontalBarChart variant="top-variances" />
+                </>
+              ) : selectedReportId === 'REP-DELAY' ? (
+                <HorizontalBarChart variant="delayed-activities" />
+              ) : selectedReportId === 'REP-DPR' ? (
+                <>
+                  <LineChart variant="progress-over-time" />
+                  <SCurveChart
+                    variant="compact"
+                    title="Daily Progress S-Curve Tracking"
+                    subtitle="Cutoff progress compared to P6 baseline envelope"
+                  />
+                </>
+              ) : (
+                <>
+                  <SCurveChart
+                    variant="compact"
+                    title="Schedule Performance Baseline vs Verified Trajectory"
+                    subtitle="Baseline target vs actual site execution trajectory for statutory reporting"
+                  />
+                  <BarChart variant="discipline" />
+                </>
+              )}
             </div>
           </div>
         )}

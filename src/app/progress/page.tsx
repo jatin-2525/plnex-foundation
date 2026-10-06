@@ -10,6 +10,7 @@ import { Drawer } from '../../components/shared/Drawer';
 import { Modal } from '../../components/shared/Modal';
 import { ProgressBar } from '../../components/shared/ProgressBar';
 import { SCurveChart } from '../../components/shared/SCurveChart';
+import { BarChart, LineChart, HorizontalBarChart } from '../../components/shared/charts';
 import { DisciplineType } from '../../types';
 import { WhyButton } from '../../components/shared/WhyButton';
 import { CANONICAL_SCHEDULE_VERSION_LABEL } from '../../lib/domain/canonicalModels';
@@ -1081,8 +1082,11 @@ export default function ProgressVariancePage() {
             </div>
           </div>
 
+          {/* Bar Chart: Progress by Discipline */}
+          <BarChart variant="discipline" className="border-0 p-0 shadow-none" />
+
           {/* Discipline Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5 pt-2 border-t border-[#D9DEE5]/60">
             {DISCIPLINE_PROGRESS_DATA.map((d) => {
               const isBehind = d.variance < 0;
               const isAhead = d.variance > 0;
@@ -1189,8 +1193,11 @@ export default function ProgressVariancePage() {
             </div>
           </div>
 
+          {/* Bar Chart: Progress by Area */}
+          <BarChart variant="area" className="border-0 p-0 shadow-none" />
+
           {/* Area Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3.5">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3.5 pt-2 border-t border-[#D9DEE5]/60">
             {AREA_PROGRESS_DATA.map((area) => {
               const isBehind = area.variance < 0;
               const isAhead = area.variance > 0;
@@ -1295,8 +1302,11 @@ export default function ProgressVariancePage() {
             </div>
           </div>
 
+          {/* Line Chart: Variance Trend */}
+          <LineChart variant="variance-trend" className="border-0 p-0 shadow-none" />
+
           {/* 3-Part Analysis Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 pt-2 border-t border-[#D9DEE5]/60">
             {/* Part 1: Causal Factors Ledger */}
             <div className="lg:col-span-2 space-y-2.5">
               <span className="text-[11px] font-bold uppercase tracking-wider text-[#7B8798] block">
@@ -1404,6 +1414,9 @@ export default function ProgressVariancePage() {
               Project Question: Which specific activities deviate most from baseline, and how is each verified?
             </div>
           </div>
+
+          {/* Horizontal Bar Chart: Top Variances */}
+          <HorizontalBarChart variant="top-variances" className="border-0 border-b border-[#D9DEE5]/60 rounded-none shadow-none" />
 
           {/* Activity Category Filter Pills */}
           <div className="p-4 bg-[#F7F8FA] border-b border-[#D9DEE5]/60 grid grid-cols-1 sm:grid-cols-3 gap-3">

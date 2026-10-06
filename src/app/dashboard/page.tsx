@@ -12,6 +12,7 @@ import { ConfidenceBadge } from '../../components/shared/ConfidenceBadge';
 import { VarianceBadge } from '../../components/shared/VarianceBadge';
 import { ProgressBar } from '../../components/shared/ProgressBar';
 import { SCurveChart } from '../../components/shared/SCurveChart';
+import { BarChart, HorizontalBarChart, StatusDonutChart } from '../../components/shared/charts';
 import { Modal } from '../../components/shared/Modal';
 import { WhyButton } from '../../components/shared/WhyButton';
 import { projectService } from '../../lib/api/projectService';
@@ -355,6 +356,9 @@ export default function ManagerDashboardPage() {
             </div>
           </div>
 
+          {/* Limited Status Distribution Donut Chart */}
+          <StatusDonutChart />
+
           {/* 6 Prominent Decision Cards (Each with exactly one primary action) */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5">
             {/* ITEM 1: Review Match */}
@@ -598,8 +602,11 @@ export default function ManagerDashboardPage() {
             </Link>
           </div>
 
+          {/* Bar Chart: Progress by Discipline */}
+          <BarChart variant="discipline" className="border-0 p-0 shadow-none" />
+
           {/* Discipline Breakdown Bars */}
-          <div className="space-y-2.5">
+          <div className="space-y-2.5 pt-2 border-t border-[#D9DEE5]/60">
             {disciplineBreakdown.map((item) => (
               <div key={item.name} className="p-3 border border-[#D9DEE5] rounded bg-white text-xs">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-1.5">
@@ -667,7 +674,10 @@ export default function ManagerDashboardPage() {
             </Link>
           </div>
 
-          <div className="space-y-3.5">
+          {/* Horizontal Bar Chart: Delayed Activities */}
+          <HorizontalBarChart variant="delayed-activities" className="border-0 p-0 shadow-none mb-4" />
+
+          <div className="space-y-3.5 pt-2 border-t border-[#D9DEE5]/60">
             {/* Delay Case 1: Line 24-XX Header */}
             <div className="border border-[#E4B0AA] rounded-lg p-4 bg-[#FFF9F8] space-y-3">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-[#E4B0AA]/60">

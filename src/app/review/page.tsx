@@ -13,6 +13,7 @@ import { MatchCard, MatchFactorItem, MatchAlternativeItem } from '../../componen
 import { ConfidenceBadge } from '../../components/shared/ConfidenceBadge';
 import { WhyButton } from '../../components/shared/WhyButton';
 import { CoreFlowBanner } from '../../components/shared/CoreFlowBanner';
+import { HorizontalBarChart, StatusDonutChart } from '../../components/shared/charts';
 import { DisciplineType } from '../../types';
 import { MOCK_ACTIVITIES } from '../../lib/api/mockData';
 import {
@@ -857,6 +858,16 @@ export default function ReviewQueuePage() {
 
         {/* CORE FLOW PIPELINE: Field Input -> Extraction -> Execution Event -> Candidate Match -> Confidence -> Human Verification -> Verified Update */}
         <CoreFlowBanner currentStage="HUMAN_VERIFICATION" />
+
+        {/* Operational Review Backlog & Verification Status Charts */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <HorizontalBarChart variant="review-backlog" />
+          <StatusDonutChart
+            title="Review Queue Verification Breakdown"
+            subtitle="Current disposition of incoming field execution items across confidence states"
+            projectQuestion="Where are unverified execution items accumulating across review categories?"
+          />
+        </div>
 
         {/* SUMMARY TABS */}
         <div className="bg-white border border-[#D9DEE5] rounded-lg overflow-hidden shadow-xs">

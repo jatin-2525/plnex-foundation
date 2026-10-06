@@ -39,11 +39,11 @@ export function SCurveChart({
 
   // SVG Dimensions & Margins
   const width = variant === 'compact' ? 640 : 760;
-  const height = variant === 'compact' ? 220 : 280;
-  const padLeft = 48;
+  const height = variant === 'compact' ? 230 : 290;
+  const padLeft = 56;
   const padRight = 36;
-  const padTop = 26;
-  const padBottom = 44;
+  const padTop = 32;
+  const padBottom = 52;
 
   const plotW = width - padLeft - padRight;
   const plotH = height - padTop - padBottom;
@@ -114,8 +114,11 @@ export function SCurveChart({
       {/* ========================================================= */}
       <div className="p-4 border-b border-[#D9DEE5] flex flex-col lg:flex-row lg:items-center justify-between gap-3">
         <div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 flex-wrap">
             <h3 className="text-base font-bold text-[#172033] tracking-tight">{title}</h3>
+            <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0]">
+              Unit: %
+            </span>
             <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-mono font-medium bg-[#F1F3F5] text-[#596579] border border-[#D9DEE5]">
               Cutoff: {summary.dataDateLabel}
             </span>
@@ -123,6 +126,14 @@ export function SCurveChart({
           {!isCompact && (
             <p className="text-xs text-[#596579] mt-0.5">{subtitle}</p>
           )}
+        </div>
+
+        {/* Real Project-Control Question Banner */}
+        <div className="px-3 py-1.5 rounded bg-[#EDF5F8] border border-[#B3CBE0] text-xs font-mono text-[#176B87] font-semibold self-start lg:self-auto max-w-md">
+          <span className="font-sans font-bold text-[#172033] block text-[10px] uppercase tracking-wide">
+            Project-Control Question:
+          </span>
+          Is cumulative physical progress tracking ahead or behind the approved baseline curve?
         </div>
 
         {/* Summary values above / beside chart */}
@@ -180,6 +191,18 @@ export function SCurveChart({
             preserveAspectRatio="xMidYMid meet"
             onMouseLeave={() => setHoveredPointIndex(null)}
           >
+            {/* Explicit Y-axis Title */}
+            <text
+              x={padLeft - 40}
+              y={padTop - 14}
+              textAnchor="start"
+              fontSize="10"
+              fontWeight="bold"
+              fill="#172033"
+            >
+              Cumulative Progress (%)
+            </text>
+
             {/* Horizontal Grid lines & Y-axis Progress Percentage */}
             {[0, 25, 50, 75, 100].map((pct) => {
               const y = getY(pct);
@@ -394,6 +417,18 @@ export function SCurveChart({
                 </g>
               );
             })}
+
+            {/* Explicit X-axis Title */}
+            <text
+              x={padLeft + plotW / 2}
+              y={height - 6}
+              textAnchor="middle"
+              fontSize="10"
+              fontWeight="bold"
+              fill="#596579"
+            >
+              Timeline (Project Reporting Periods • Baseline Rev 3.2 • Cutoff: 18 Sep 2026)
+            </text>
 
             {/* ========================================================= */}
             {/* STATIC TOOLTIP ON HOVER (NO ANIMATION) */}

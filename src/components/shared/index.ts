@@ -24,3 +24,4 @@ export * from './NotificationCenterPanel';
 export * from './GlobalSearchPanel';
 export * from './Button';
 export * from './SCurveChart';
+export * from './charts';

@@ -8,6 +8,7 @@ import { Breadcrumbs } from '../../components/shell/Breadcrumbs';
 import { StateWrapper } from '../../components/shared/StateWrapper';
 import { Drawer } from '../../components/shared/Drawer';
 import { WhyButton } from '../../components/shared/WhyButton';
+import { HorizontalBarChart } from '../../components/shared/charts';
 import { DisciplineType } from '../../types';
 import {
   AlertTriangle,
@@ -816,6 +817,9 @@ export default function DelayDependencyImpactPage() {
             </div>
           </div>
         </div>
+
+        {/* Operational Schedule Delay & Critical Path Chart */}
+        <HorizontalBarChart variant="delayed-activities" />
 
         {/* =========================================================================
             TOP SUMMARY SCHEDULE METRICS
