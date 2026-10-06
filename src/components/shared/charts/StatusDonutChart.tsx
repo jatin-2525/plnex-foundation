@@ -1,12 +1,14 @@
 'use client';
 
 import React from 'react';
+import { CHART_TOKENS } from '@/tokens';
 
 export interface StatusSliceItem {
   id: string;
   label: string; // e.g. "Verified / Approved"
   count: number;
-  color: string; // e.g. "#2E7D5B"
+  color: string; // e.g. CHART_TOKENS.positive.fill
+  glyph?: string; // Multi-channel indicator e.g. "✓", "●", "▲"
   description?: string;
 }
 
@@ -27,21 +29,24 @@ const DEFAULT_EXECUTION_STATUS_SLICES: StatusSliceItem[] = [
     id: 'verified',
     label: 'Verified & Committed',
     count: 12,
-    color: '#2E7D5B', // Green
+    color: CHART_TOKENS.positive.fill, // Green #2E7D5B
+    glyph: '✓',
     description: 'Signed off with cryptographic audit hash and evidence proof',
   },
   {
     id: 'pending',
     label: 'Pending Engineering Review',
     count: 4,
-    color: '#176B87', // Primary Teal
+    color: CHART_TOKENS.planned.stroke, // Primary Teal #176B87
+    glyph: '●',
     description: 'Matched by engine; awaiting Lead Engineer confirmation',
   },
   {
     id: 'attention',
     label: 'Unmatched / Attention Required',
     count: 2,
-    color: '#D98B32', // Amber
+    color: CHART_TOKENS.warning.fill, // Amber #D98B32
+    glyph: '▲',
     description: 'Ambiguous field statement or low confidence score (<70%)',
   },
 ];
@@ -121,7 +126,7 @@ export function StatusDonutChart({
               cy={size / 2}
               r={radius}
               fill="transparent"
-              stroke="#E5E9EF"
+              stroke={CHART_TOKENS.neutral.border}
               strokeWidth={strokeWidth}
             />
 
@@ -153,7 +158,7 @@ export function StatusDonutChart({
           </div>
         </div>
 
-        {/* Legend Table with Exact Counts and Percentages */}
+        {/* Legend Table with Exact Counts, Multi-Channel Glyphs, and Percentages */}
         <div className="flex-1 w-full space-y-2">
           {sliceArcs.map((slice) => (
             <div
@@ -162,11 +167,16 @@ export function StatusDonutChart({
             >
               <div className="flex items-center gap-2">
                 <span
-                  className="w-3 h-3 rounded-xs flex-shrink-0"
+                  className="w-4 h-4 rounded-xs flex-shrink-0 inline-flex items-center justify-center text-[10px] text-white font-bold leading-none"
                   style={{ backgroundColor: slice.color }}
-                />
+                >
+                  {slice.glyph || '●'}
+                </span>
                 <div>
-                  <span className="font-bold text-[#172033] block">{slice.label}</span>
+                  <div className="flex items-center gap-1.5">
+                    <span className="font-bold text-[#172033] block">{slice.label}</span>
+                    <span className="font-mono text-[10px] text-[#596579]">[{slice.glyph || '●'}]</span>
+                  </div>
                   {slice.description && (
                     <span className="text-[10px] text-[#596579] block">
                       {slice.description}

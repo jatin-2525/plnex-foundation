@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { CHART_TOKENS } from '@/tokens';
 
 export interface HorizontalBarItem {
   id: string; // e.g. "CIV-11-001" or "PIP-24-002"
@@ -306,14 +307,34 @@ export function HorizontalBarChart({
               const y = padTop + idx * rowSpacing;
               const barLen = Math.max(6, (item.value / maxVal) * plotW);
 
-              // Colors based on variant & criticality
-              let barColor = '#176B87';
+              // Colors and multi-channel descriptors based on variant & criticality
+              let barColor: string = CHART_TOKENS.planned.stroke;
+              let statusBadge = '';
+
               if (variant === 'delayed-activities') {
-                barColor = item.isCritical ? '#B5473C' : '#D98B32';
+                if (item.isCritical) {
+                  barColor = CHART_TOKENS.critical.fill;
+                  statusBadge = '[✕ Critical Path]';
+                } else {
+                  barColor = CHART_TOKENS.warning.fill;
+                  statusBadge = `[▲ Float: ${item.totalFloat ?? 0}d]`;
+                }
               } else if (variant === 'top-variances') {
-                barColor = item.value >= 12 ? '#B5473C' : '#D98B32';
+                if (item.value >= 12) {
+                  barColor = CHART_TOKENS.critical.fill;
+                  statusBadge = '[✕ Critical Slip]';
+                } else {
+                  barColor = CHART_TOKENS.warning.fill;
+                  statusBadge = '[▲ Warning Slip]';
+                }
               } else if (variant === 'review-backlog') {
-                barColor = item.value >= 6 ? '#B5473C' : '#176B87';
+                if (item.value >= 6) {
+                  barColor = CHART_TOKENS.critical.fill;
+                  statusBadge = '[✕ High Priority]';
+                } else {
+                  barColor = CHART_TOKENS.planned.stroke;
+                  statusBadge = '[● Standard Queue]';
+                }
               }
 
               return (
@@ -324,7 +345,7 @@ export function HorizontalBarChart({
                     y={y - 4}
                     width={width - 8}
                     height={rowSpacing - 6}
-                    fill="#F7F8FA"
+                    fill={CHART_TOKENS.neutral.bg}
                     opacity="0.4"
                     rx={4}
                   />
@@ -336,7 +357,7 @@ export function HorizontalBarChart({
                     textAnchor="end"
                     fontSize="11"
                     fontWeight="bold"
-                    fill="#172033"
+                    fill={CHART_TOKENS.neutral.text}
                   >
                     {item.label}
                   </text>
@@ -348,10 +369,10 @@ export function HorizontalBarChart({
                     textAnchor="end"
                     fontSize="9"
                     fontFamily="monospace"
-                    fill={item.isCritical ? '#B5473C' : '#7B8798'}
+                    fill={item.isCritical ? CHART_TOKENS.critical.text : CHART_TOKENS.neutral.axis}
                   >
                     {item.id} • {item.subLabel || ''}
-                    {item.isCritical ? ' [CRITICAL PATH]' : ''}
+                    {item.isCritical ? ' [CRITICAL PATH ✕]' : ''}
                   </text>
 
                   {/* Background Track */}
@@ -360,7 +381,7 @@ export function HorizontalBarChart({
                     y={y + 4}
                     width={plotW}
                     height={barHeight - 6}
-                    fill="#E5E9EF"
+                    fill={CHART_TOKENS.neutral.border}
                     rx={3}
                   />
 
@@ -374,7 +395,7 @@ export function HorizontalBarChart({
                     rx={3}
                   />
 
-                  {/* Readable Value Label */}
+                  {/* Readable Value Label with Multi-Channel Indicator */}
                   <text
                     x={padLeft + barLen + 8}
                     y={y + 16}
@@ -383,7 +404,7 @@ export function HorizontalBarChart({
                     fontWeight="bold"
                     fill={barColor}
                   >
-                    {item.valueDisplay || `${item.value} ${effectiveUnit}`}
+                    {item.valueDisplay || `${item.value} ${effectiveUnit}`} {statusBadge}
                   </text>
                 </g>
               );
@@ -392,39 +413,69 @@ export function HorizontalBarChart({
         </div>
       </div>
 
-      {/* Legend & Summary */}
+      {/* Legend & Summary with Multi-Channel Symbols */}
       <div className="flex flex-wrap items-center justify-between gap-4 mt-3 pt-3 border-t border-[#F1F3F5] text-xs text-[#596579]">
         <div className="flex items-center gap-4 flex-wrap">
           {variant === 'delayed-activities' ? (
             <>
               <div className="flex items-center gap-1.5">
-                <span className="w-3.5 h-3.5 bg-[#B5473C] inline-block rounded-xs" />
-                <span className="font-medium text-[#172033]">Critical Path Delay (Zero Float)</span>
+                <span
+                  className="w-4 h-4 inline-flex items-center justify-center rounded-xs text-[10px] text-white font-bold leading-none"
+                  style={{ backgroundColor: CHART_TOKENS.critical.fill }}
+                >
+                  ✕
+                </span>
+                <span className="font-semibold text-[#172033]">Critical Path Delay (Zero Float)</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <span className="w-3.5 h-3.5 bg-[#D98B32] inline-block rounded-xs" />
+                <span
+                  className="w-4 h-4 inline-flex items-center justify-center rounded-xs text-[10px] text-white font-bold leading-none"
+                  style={{ backgroundColor: CHART_TOKENS.warning.fill }}
+                >
+                  ▲
+                </span>
                 <span>Secondary Float Delay</span>
               </div>
             </>
           ) : variant === 'top-variances' ? (
             <>
               <div className="flex items-center gap-1.5">
-                <span className="w-3.5 h-3.5 bg-[#B5473C] inline-block rounded-xs" />
-                <span className="font-medium text-[#172033]">Severe Variance (&ge; 12% Slip)</span>
+                <span
+                  className="w-4 h-4 inline-flex items-center justify-center rounded-xs text-[10px] text-white font-bold leading-none"
+                  style={{ backgroundColor: CHART_TOKENS.critical.fill }}
+                >
+                  ✕
+                </span>
+                <span className="font-semibold text-[#172033]">Severe Variance (&ge; 12% Slip)</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <span className="w-3.5 h-3.5 bg-[#D98B32] inline-block rounded-xs" />
+                <span
+                  className="w-4 h-4 inline-flex items-center justify-center rounded-xs text-[10px] text-white font-bold leading-none"
+                  style={{ backgroundColor: CHART_TOKENS.warning.fill }}
+                >
+                  ▲
+                </span>
                 <span>Moderate Variance (&lt; 12% Slip)</span>
               </div>
             </>
           ) : (
             <>
               <div className="flex items-center gap-1.5">
-                <span className="w-3.5 h-3.5 bg-[#B5473C] inline-block rounded-xs" />
-                <span className="font-medium text-[#172033]">High Priority Backlog (&ge; 6 Items)</span>
+                <span
+                  className="w-4 h-4 inline-flex items-center justify-center rounded-xs text-[10px] text-white font-bold leading-none"
+                  style={{ backgroundColor: CHART_TOKENS.critical.fill }}
+                >
+                  ✕
+                </span>
+                <span className="font-semibold text-[#172033]">High Priority Backlog (&ge; 6 Items)</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <span className="w-3.5 h-3.5 bg-[#176B87] inline-block rounded-xs" />
+                <span
+                  className="w-4 h-4 inline-flex items-center justify-center rounded-xs text-[10px] text-white font-bold leading-none"
+                  style={{ backgroundColor: CHART_TOKENS.planned.stroke }}
+                >
+                  ●
+                </span>
                 <span>Standard Review Queue</span>
               </div>
             </>

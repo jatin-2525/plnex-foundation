@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { CHART_TOKENS } from '../../../tokens/chartColors';
 
 export interface BarChartItem {
   label: string; // e.g. "Piping" or "Unit A - Gas Processing"
@@ -280,8 +281,8 @@ export function BarChart({
                     y={plannedY}
                     width={barW}
                     height={Math.max(2, plannedH)}
-                    fill="#E0EEF2"
-                    stroke="#176B87"
+                    fill={CHART_TOKENS.planned.fill}
+                    stroke={CHART_TOKENS.planned.stroke}
                     strokeWidth="1.5"
                     rx={2}
                   />
@@ -293,18 +294,18 @@ export function BarChart({
                     textAnchor="middle"
                     fontSize="9"
                     fontWeight="bold"
-                    fill="#176B87"
+                    fill={CHART_TOKENS.planned.text}
                   >
                     {item.planned.toFixed(0)}%
                   </text>
 
-                  {/* Actual Earned Bar (Green if on track, Rose if lagging) */}
+                  {/* Actual Earned Bar (Green if on track, Rose/Red if lagging) */}
                   <rect
                     x={actualX}
                     y={actualY}
                     width={barW}
                     height={Math.max(2, actualH)}
-                    fill={isBehind ? '#B5473C' : '#2E7D5B'}
+                    fill={isBehind ? CHART_TOKENS.critical.fill : CHART_TOKENS.positive.fill}
                     rx={2}
                   />
 
@@ -315,20 +316,20 @@ export function BarChart({
                     textAnchor="middle"
                     fontSize="9"
                     fontWeight="bold"
-                    fill={isBehind ? '#B5473C' : '#2E7D5B'}
+                    fill={isBehind ? CHART_TOKENS.critical.text : CHART_TOKENS.positive.text}
                   >
                     {item.actual.toFixed(0)}%
                   </text>
 
-                  {/* Variance Delta Pill above group */}
+                  {/* Variance Delta Pill above group with multi-channel glyph */}
                   <rect
-                    x={groupCenterX - 22}
+                    x={groupCenterX - 28}
                     y={padTop - 18}
-                    width={44}
+                    width={56}
                     height={16}
                     rx={3}
-                    fill={isBehind ? '#FBEFEE' : isAhead ? '#EDF7F2' : '#F1F3F5'}
-                    stroke={isBehind ? '#E4B0AA' : isAhead ? '#B8DCC9' : '#D9DEE5'}
+                    fill={isBehind ? CHART_TOKENS.critical.bg : isAhead ? CHART_TOKENS.positive.bg : CHART_TOKENS.neutral.bg}
+                    stroke={isBehind ? CHART_TOKENS.critical.border : isAhead ? CHART_TOKENS.positive.border : CHART_TOKENS.neutral.border}
                     strokeWidth="1"
                   />
                   <text
@@ -337,9 +338,9 @@ export function BarChart({
                     textAnchor="middle"
                     fontSize="9"
                     fontWeight="bold"
-                    fill={isBehind ? '#B5473C' : isAhead ? '#2E7D5B' : '#596579'}
+                    fill={isBehind ? CHART_TOKENS.critical.text : isAhead ? CHART_TOKENS.positive.text : CHART_TOKENS.neutral.text}
                   >
-                    {varianceVal > 0 ? `+${varianceVal}%` : `${varianceVal}%`}
+                    {varianceVal > 0 ? `+${varianceVal}% [✓]` : `${varianceVal}% [✕]`}
                   </text>
 
                   {/* X-axis Category Label */}

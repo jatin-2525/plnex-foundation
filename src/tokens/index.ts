@@ -4,3 +4,4 @@ export * from './typography';
 export * from './borders';
 export * from './shadows';
 export * from './status';
+export * from './chartColors';

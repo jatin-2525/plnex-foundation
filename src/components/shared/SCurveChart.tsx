@@ -7,6 +7,7 @@ import {
   getSCurveSummary,
   getSCurveInterpretation,
 } from '@/lib/domain/sCurveData';
+import { CHART_TOKENS } from '@/tokens/chartColors';
 
 export interface SCurveChartProps {
   data?: TimeSeriesPoint[];
@@ -273,52 +274,52 @@ export function SCurveChart({
             />
             <rect
               x={ddX + 6}
-              y={(ddPlannedY + ddActualY) / 2 - 9}
-              width={54}
-              height={18}
+              y={(ddPlannedY + ddActualY) / 2 - 10}
+              width={100}
+              height={20}
               rx={3}
-              fill="#FDF2F1"
-              stroke="#B5473C"
+              fill={CHART_TOKENS.critical.bg}
+              stroke={CHART_TOKENS.critical.border}
               strokeWidth="1"
             />
             <text
-              x={ddX + 33}
-              y={(ddPlannedY + ddActualY) / 2 + 3}
+              x={ddX + 56}
+              y={(ddPlannedY + ddActualY) / 2 + 4}
               textAnchor="middle"
               fontSize="10"
               fontWeight="bold"
-              fill="#B5473C"
+              fill={CHART_TOKENS.critical.text}
             >
-              -7.0% Var
+              -7.0% Var [✕ Critical]
             </text>
 
-            {/* LINE 1: Planned Progress (Primary neutral/teal line) */}
+            {/* LINE 1: Planned Progress (Neutral/Primary solid line) */}
             <path
               d={plannedPathD}
               fill="none"
-              stroke="#176B87"
-              strokeWidth="2.5"
+              stroke={CHART_TOKENS.planned.stroke}
+              strokeWidth={CHART_TOKENS.planned.strokeWidth}
               strokeLinecap="round"
               strokeLinejoin="round"
             />
 
-            {/* LINE 3: Forecast Progress (Dashed line from data date onwards) */}
+            {/* LINE 3: Forecast Progress (Dashed Neutral/Secondary line from data date onwards) */}
             <path
               d={forecastPathD}
               fill="none"
-              stroke="#D98B32"
-              strokeWidth="2.5"
-              strokeDasharray="6,4"
+              stroke={CHART_TOKENS.forecast.stroke}
+              strokeWidth={CHART_TOKENS.forecast.strokeWidth}
+              strokeDasharray={CHART_TOKENS.forecast.dashArray}
               strokeLinecap="round"
               strokeLinejoin="round"
             />
 
-            {/* LINE 2: Actual Progress (Strong contrasting semantic line) */}
+            {/* LINE 2: Actual Progress (Semantic contrast solid line) */}
             <path
               d={actualPathD}
               fill="none"
-              stroke="#2E7D5B"
-              strokeWidth="3.5"
+              stroke={CHART_TOKENS.actual.stroke}
+              strokeWidth={CHART_TOKENS.actual.strokeWidth}
               strokeLinecap="round"
               strokeLinejoin="round"
             />
@@ -514,26 +515,26 @@ export function SCurveChart({
           <div className="flex items-center gap-4 flex-wrap">
             {/* Planned Line Legend */}
             <div className="flex items-center gap-1.5">
-              <span className="w-4 h-0.5 bg-[#176B87] inline-block" />
-              <span>Planned Baseline</span>
+              <span className="w-3.5 h-1 bg-[#176B87] inline-block rounded-xs" />
+              <span className="font-semibold text-[#172033]">■ Planned (Neutral/Primary)</span>
             </div>
 
             {/* Actual Line Legend */}
             <div className="flex items-center gap-1.5">
-              <span className="w-4 h-1 bg-[#2E7D5B] inline-block rounded-xs" />
-              <span className="font-medium text-[#172033]">Actual Earned</span>
+              <span className="w-3.5 h-1.5 bg-[#2E7D5B] inline-block rounded-xs" />
+              <span className="font-semibold text-[#172033]">● Actual (Semantic Contrast)</span>
             </div>
 
             {/* Forecast Line Legend */}
             <div className="flex items-center gap-1.5">
-              <span className="w-4 h-0.5 border-t border-dashed border-[#D98B32] inline-block" />
-              <span>Forecast</span>
+              <span className="w-4 h-0.5 border-t-2 border-dashed border-[#7B8798] inline-block" />
+              <span className="font-semibold text-[#596579]">▲ Forecast (Dashed Secondary)</span>
             </div>
 
             {/* Data Date Marker Legend */}
             <div className="flex items-center gap-1.5">
-              <span className="w-2.5 h-2.5 rounded-full border border-[#172033] inline-block" />
-              <span>Data Date (18 Sep 2026)</span>
+              <span className="w-2.5 h-2.5 rounded-full border-2 border-[#172033] inline-block" />
+              <span className="font-semibold text-[#172033]">Cutoff Data Date</span>
             </div>
           </div>
 

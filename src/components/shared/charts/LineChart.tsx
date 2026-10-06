@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { CHART_TOKENS } from '../../../tokens/chartColors';
 
 export interface LineChartDataPoint {
   period: string;
@@ -318,13 +319,13 @@ export function LineChart({
                   strokeWidth="2.5"
                   strokeLinecap="round"
                 />
-                {/* Forecast Line */}
+                {/* Forecast Line (Dashed Neutral/Secondary) */}
                 <path
                   d={forecastPath}
                   fill="none"
-                  stroke="#D98B32"
-                  strokeWidth="2.5"
-                  strokeDasharray="5,4"
+                  stroke={CHART_TOKENS.forecast.stroke}
+                  strokeWidth={CHART_TOKENS.forecast.strokeWidth}
+                  strokeDasharray={CHART_TOKENS.forecast.dashArray}
                   strokeLinecap="round"
                 />
                 {/* Verified Actual Line */}
@@ -456,37 +457,37 @@ export function LineChart({
           {!isVariance ? (
             <>
               <div className="flex items-center gap-1.5">
-                <span className="w-4 h-0.5 bg-[#176B87] inline-block" />
-                <span>Planned Baseline</span>
+                <span className="w-3.5 h-1 bg-[#176B87] inline-block rounded-xs" />
+                <span className="font-semibold text-[#172033]">■ Planned (Neutral/Primary)</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <span className="w-4 h-1 bg-[#2E7D5B] inline-block rounded-xs" />
-                <span className="font-medium text-[#172033]">Verified Actual</span>
+                <span className="w-3.5 h-1.5 bg-[#2E7D5B] inline-block rounded-xs" />
+                <span className="font-semibold text-[#172033]">● Actual (Semantic Contrast)</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <span className="w-4 h-0.5 border-t border-dashed border-[#D98B32] inline-block" />
-                <span>Forecast Path</span>
+                <span className="w-4 h-0.5 border-t-2 border-dashed border-[#7B8798] inline-block" />
+                <span className="font-semibold text-[#596579]">▲ Forecast (Dashed Secondary)</span>
               </div>
             </>
           ) : (
             <>
               <div className="flex items-center gap-1.5">
                 <span className="w-4 h-0.5 bg-[#172033] inline-block" />
-                <span>Baseline (0.0% Variance)</span>
+                <span className="font-semibold text-[#172033]">— Baseline (0.0% Variance)</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <span className="w-4 h-1 bg-[#B5473C] inline-block rounded-xs" />
-                <span className="font-medium text-[#172033]">Schedule Slip Trend</span>
+                <span className="w-3.5 h-1.5 bg-[#B5473C] inline-block rounded-xs" />
+                <span className="font-semibold text-[#172033]">✕ Schedule Slip Trend [Critical Red]</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <span className="w-4 h-1 bg-[#2E7D5B] inline-block rounded-xs" />
-                <span>Schedule Gain Ahead</span>
+                <span className="w-3.5 h-1.5 bg-[#2E7D5B] inline-block rounded-xs" />
+                <span className="font-semibold text-[#172033]">✓ Schedule Gain Ahead [Green]</span>
               </div>
             </>
           )}
           <div className="flex items-center gap-1.5">
-            <span className="w-2.5 h-2.5 rounded-full border border-[#172033] inline-block" />
-            <span>Data Date (18 Sep 2026)</span>
+            <span className="w-2.5 h-2.5 rounded-full border-2 border-[#172033] inline-block" />
+            <span className="font-semibold text-[#172033]">Cutoff Data Date</span>
           </div>
         </div>
 
