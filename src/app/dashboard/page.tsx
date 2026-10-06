@@ -176,15 +176,20 @@ export default function ManagerDashboardPage() {
 
           <div className="grid grid-cols-2 lg:grid-cols-5 gap-3.5">
             {/* 1. Schedule Health */}
-            <Link
-              href="/health"
+            <div
               className="p-4 bg-white border border-[#D9DEE5] hover:border-[#176B87] rounded-lg shadow-xs transition-colors flex flex-col justify-between group"
             >
               <div className="flex items-center justify-between">
                 <span className="text-xs font-bold uppercase tracking-wider text-[#596579]">
                   Schedule Health
                 </span>
-                <Activity className="w-4 h-4 text-[#2E7D5B] flex-shrink-0" />
+                <div className="flex items-center gap-1.5">
+                  <WhyButton
+                    onClick={() => openWhyExplanation('health:PRJ-OIL-2026-01')}
+                    title="Why is schedule health 94%?"
+                  />
+                  <Activity className="w-4 h-4 text-[#2E7D5B] flex-shrink-0" />
+                </div>
               </div>
               <div className="my-2">
                 <div className="flex items-baseline gap-1.5">
@@ -197,21 +202,26 @@ export default function ManagerDashboardPage() {
                   DCMA 14-Point • 5 Minor Flags
                 </p>
               </div>
-              <span className="text-[10px] text-[#176B87] group-hover:underline font-semibold flex items-center gap-1">
+              <Link href="/health" className="text-[10px] text-[#176B87] group-hover:underline font-semibold flex items-center gap-1">
                 Inspect Health &rarr;
-              </span>
-            </Link>
+              </Link>
+            </div>
 
             {/* 2. Verified Progress */}
-            <Link
-              href="/progress"
+            <div
               className="p-4 bg-white border border-[#D9DEE5] hover:border-[#176B87] rounded-lg shadow-xs transition-colors flex flex-col justify-between group"
             >
               <div className="flex items-center justify-between">
                 <span className="text-xs font-bold uppercase tracking-wider text-[#596579]">
                   Verified Progress
                 </span>
-                <CheckCircle2 className="w-4 h-4 text-[#176B87] flex-shrink-0" />
+                <div className="flex items-center gap-1.5">
+                  <WhyButton
+                    onClick={() => openWhyExplanation('progress:verified')}
+                    title="Why is verified progress 68.4%?"
+                  />
+                  <CheckCircle2 className="w-4 h-4 text-[#176B87] flex-shrink-0" />
+                </div>
               </div>
               <div className="my-2">
                 <div className="flex items-baseline gap-1.5">
@@ -224,10 +234,10 @@ export default function ManagerDashboardPage() {
                   Target: {activeProject.plannedProgress}% (P6 Target)
                 </p>
               </div>
-              <span className="text-[10px] text-[#176B87] group-hover:underline font-semibold flex items-center gap-1">
+              <Link href="/progress" className="text-[10px] text-[#176B87] group-hover:underline font-semibold flex items-center gap-1">
                 Progress Matrix &rarr;
-              </span>
-            </Link>
+              </Link>
+            </div>
 
             {/* 3. Activities At Risk */}
             <Link
@@ -442,7 +452,13 @@ export default function ManagerDashboardPage() {
                   <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase bg-[#FDF6ED] text-[#D98B32] border border-[#F0D4A6]">
                     Dependency Impact
                   </span>
-                  <span className="text-[10px] font-mono font-bold text-[#D98B32]">3 Downstream</span>
+                  <div className="flex items-center gap-1.5">
+                    <WhyButton
+                      onClick={() => openWhyExplanation('impact:CIV-11-001')}
+                      title="Why does this delay impact downstream activities?"
+                    />
+                    <span className="text-[10px] font-mono font-bold text-[#D98B32]">3 Downstream</span>
+                  </div>
                 </div>
                 <h3 className="text-xs font-bold text-[#172033]">
                   Critical Path Ripple: Hydro-test & Loop Tubing

@@ -9,6 +9,7 @@ import { StateWrapper } from '../../components/shared/StateWrapper';
 import { Breadcrumbs } from '../../components/shell/Breadcrumbs';
 import { Modal } from '../../components/shared/Modal';
 import { Drawer } from '../../components/shared/Drawer';
+import { WhyButton } from '../../components/shared/WhyButton';
 import {
   INITIAL_HEALTH_ISSUES,
   SCHEDULE_HEALTH_RULES,
@@ -46,7 +47,7 @@ import {
 
 export default function ScheduleHealthPage() {
   const router = useRouter();
-  const { activeProject } = useApp();
+  const { activeProject, openWhyExplanation } = useApp();
   const { addToast } = useToast();
 
   // Primary Tabs: 'Schedule Health' vs 'Execution Data Quality'
@@ -354,6 +355,10 @@ export default function ScheduleHealthPage() {
 
             {/* Severity Breakdown: Healthy | Warning | Critical */}
             <div className="flex items-center gap-2 text-xs font-mono">
+              <WhyButton
+                onClick={() => openWhyExplanation('health:PRJ-OIL-2026-01')}
+                title="Why is schedule health in Warning state?"
+              />
               <div
                 className="px-2.5 py-1.5 rounded bg-[#EDF7F2] border border-[#B8DCC9] text-[#2E7D5B] font-bold flex items-center gap-1.5"
                 title="Checks in healthy state with zero open violations"
@@ -572,22 +577,28 @@ export default function ScheduleHealthPage() {
 
                       {/* 2. Severity: Healthy | Warning | Critical */}
                       <td className="py-3.5 px-3 align-top whitespace-nowrap">
-                        {effectiveSeverity === 'Critical' ? (
-                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-[#FBEFEE] text-[#9E332A] border border-[#E4B0AA]">
-                            <AlertTriangle className="w-3 h-3" />
-                            Critical
-                          </span>
-                        ) : effectiveSeverity === 'Warning' ? (
-                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-[#FDF6ED] text-[#8C5311] border border-[#F0D4A6]">
-                            <AlertCircle className="w-3 h-3" />
-                            Warning
-                          </span>
-                        ) : (
-                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]">
-                            <CheckCircle2 className="w-3 h-3" />
-                            Healthy
-                          </span>
-                        )}
+                        <div className="flex items-center gap-1.5">
+                          {effectiveSeverity === 'Critical' ? (
+                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-[#FBEFEE] text-[#9E332A] border border-[#E4B0AA]">
+                              <AlertTriangle className="w-3 h-3" />
+                              Critical
+                            </span>
+                          ) : effectiveSeverity === 'Warning' ? (
+                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-[#FDF6ED] text-[#8C5311] border border-[#F0D4A6]">
+                              <AlertCircle className="w-3 h-3" />
+                              Warning
+                            </span>
+                          ) : (
+                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]">
+                              <CheckCircle2 className="w-3 h-3" />
+                              Healthy
+                            </span>
+                          )}
+                          <WhyButton
+                            onClick={() => openWhyExplanation(`health:${issue.objectId}`, issue.objectId)}
+                            title={`Why is this check marked ${effectiveSeverity}?`}
+                          />
+                        </div>
                       </td>
 
                       {/* 3. Object */}

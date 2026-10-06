@@ -3,6 +3,7 @@
 import React from 'react';
 import { Check, AlertTriangle, HelpCircle, ArrowRight, XCircle } from 'lucide-react';
 import { ConfidenceBadge } from './ConfidenceBadge';
+import { WhyButton } from './WhyButton';
 
 export interface ConfidenceAlternativeItem {
   activityId: string;
@@ -140,14 +141,7 @@ export function ConfidenceBlock({
         </div>
 
         {onOpenWhy && (
-          <button
-            type="button"
-            onClick={onOpenWhy}
-            className="text-[11px] font-semibold text-[#176B87] hover:underline inline-flex items-center gap-1"
-          >
-            <HelpCircle className="w-3.5 h-3.5 text-[#176B87]" />
-            <span>Why this match?</span>
-          </button>
+          <WhyButton onClick={onOpenWhy} title="Why this match?" />
         )}
       </div>
 

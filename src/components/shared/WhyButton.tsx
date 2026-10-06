@@ -54,15 +54,17 @@ export function WhyButton({
   }
 
   // Default 'badge' variant
+  const displayLabel = label.startsWith('[') ? label : `[${label}]`;
+
   return (
     <button
       type="button"
       onClick={handleClick}
       title={title}
-      className={`inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-mono font-semibold bg-[#EDF5F8] hover:bg-[#E0EFF5] text-[#176B87] border border-[#B3CBE0] transition-colors cursor-pointer shadow-xs ${className}`}
+      className={`inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-mono font-semibold bg-[#EDF5F8] hover:bg-[#E0EFF5] text-[#176B87] border border-[#B3CBE0] transition-colors cursor-pointer shadow-2xs ${className}`}
     >
       <HelpCircle className="w-2.5 h-2.5" />
-      <span>{label}</span>
+      <span>{displayLabel}</span>
     </button>
   );
 }

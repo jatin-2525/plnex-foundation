@@ -2133,6 +2133,14 @@ export default function SchedulePage() {
                             <div className="space-y-1 w-28">
                               <div className="flex items-center justify-between text-[11px] font-mono">
                                 <span className="font-bold text-[#172033]">{row.actualProgress}%</span>
+                                <WhyButton
+                                  variant="subtle"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    openWhyExplanation(`progress:${row.id}`, row.id);
+                                  }}
+                                  title={`Why is progress ${row.actualProgress}%?`}
+                                />
                                 <span className="text-[#596579]">T: {row.plannedProgress}%</span>
                               </div>
                               <ProgressBar

@@ -9,6 +9,7 @@ import { StatusBadge } from './StatusBadge';
 import { VarianceBadge } from './VarianceBadge';
 import { ProgressBar } from './ProgressBar';
 import { ConfidenceBadge } from './ConfidenceBadge';
+import { WhyButton } from './WhyButton';
 import { MatchExplanation } from './MatchExplanation';
 import {
   getEnrichedActivityDetail,
@@ -55,6 +56,7 @@ export function ActivityDetailDrawer({
     activityDrawerTab,
     closeActivityDrawer,
     openActivityDrawer,
+    openWhyExplanation,
   } = useApp();
 
   // Determine effective control mode
@@ -476,9 +478,15 @@ export function ActivityDetailDrawer({
                 <div className="p-4 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg space-y-3">
                   <div className="flex items-center justify-between">
                     <div>
-                      <span className="text-[10px] uppercase font-bold text-[#7B8798] tracking-wider block">
-                        Physical Progress
-                      </span>
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-[10px] uppercase font-bold text-[#7B8798] tracking-wider block">
+                          Physical Progress
+                        </span>
+                        <WhyButton
+                          onClick={() => openWhyExplanation(`progress:${activity.id}`)}
+                          title={`Why is physical progress ${activity.actualProgress}%?`}
+                        />
+                      </div>
                       <div className="flex items-baseline gap-2 mt-0.5">
                         <span className="text-2xl font-black text-[#172033] font-mono">
                           {activity.actualProgress}%
@@ -490,7 +498,13 @@ export function ActivityDetailDrawer({
                     </div>
 
                     <div className="text-right">
-                      <VarianceBadge daysDelay={activity.delayDays} />
+                      <div className="flex items-center justify-end gap-1.5">
+                        <VarianceBadge daysDelay={activity.delayDays} />
+                        <WhyButton
+                          onClick={() => openWhyExplanation(`variance:${activity.id}`)}
+                          title="Why is this activity delayed?"
+                        />
+                      </div>
                       {activity.delayDays > 0 && (
                         <span className="text-[11px] font-mono font-bold text-[#B5473C] block mt-0.5">
                           +{activity.delayDays}d Slippage
@@ -630,8 +644,12 @@ export function ActivityDetailDrawer({
 
                         {/* Standardized Confidence visualization */}
                         <div className="flex items-center justify-between text-xs pt-0.5">
-                          <div>
+                          <div className="flex items-center gap-1.5">
                             <ConfidenceBadge score={evt.confidence} />
+                            <WhyButton
+                              onClick={() => openWhyExplanation(`confidence:${evt.id}`)}
+                              title={`Why is match confidence ${evt.confidence}%?`}
+                            />
                           </div>
                           <span className="font-mono font-semibold text-[#172033]">
                             {evt.quantity} {evt.unit}
@@ -833,11 +851,17 @@ export function ActivityDetailDrawer({
                       Total Float: {impactData.totalFloatDays}d
                     </strong>
                   </div>
-                  <span className={`px-2 py-1 rounded text-xs font-bold uppercase ${
-                    activity.isCritical ? 'bg-[#FBEFEE] text-[#B5473C]' : 'bg-[#EDF7F2] text-[#2E7D5B]'
-                  }`}>
-                    {activity.isCritical ? 'Critical Path' : 'Non-Critical'}
-                  </span>
+                  <div className="flex items-center gap-1.5">
+                    <span className={`px-2 py-1 rounded text-xs font-bold uppercase ${
+                      activity.isCritical ? 'bg-[#FBEFEE] text-[#B5473C]' : 'bg-[#EDF7F2] text-[#2E7D5B]'
+                    }`}>
+                      {activity.isCritical ? 'Critical Path' : 'Non-Critical'}
+                    </span>
+                    <WhyButton
+                      onClick={() => openWhyExplanation(`impact:${activity.id}`)}
+                      title="Why does this activity impact the critical path?"
+                    />
+                  </div>
                 </div>
 
                 {/* Predecessors List */}

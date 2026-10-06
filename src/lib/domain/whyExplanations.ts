@@ -8,11 +8,18 @@
  * 4. Why is this activity/schedule unhealthy? (DCMA 14-point schedule health)
  */
 
-export type WhyExplanationType = 'delay' | 'confidence' | 'health' | 'variance' | 'custom';
+export type WhyExplanationType =
+  | 'progress'
+  | 'confidence'
+  | 'health'
+  | 'variance'
+  | 'delay'
+  | 'impact'
+  | 'custom';
 
 export interface WhyExplanationFactor {
   factor: string;
-  contribution: string; // e.g., "+35%", "-7%", "Primary Driver"
+  contribution: string; // e.g., "+35%", "-7%", "Primary Driver", "+28.5%"
   reason: string;
   status?: 'positive' | 'negative' | 'neutral';
 }
@@ -32,6 +39,47 @@ export interface WhyExplanationData {
 }
 
 export const WHY_EXPLANATION_PRESETS: Record<string, WhyExplanationData> = {
+  // 0. PROGRESS EXPLANATION (Verified Progress 68.4% / 73.0%)
+  'progress:verified': {
+    type: 'progress',
+    title: 'Verified Progress Breakdown',
+    subjectId: 'PRJ-OIL-2026-01',
+    subjectName: 'Oil India Duliajan Gas Plant Expansion',
+    metricLabel: 'Verified Progress',
+    metricValue: '68.4% (Actual Verified)',
+    summary:
+      'Verified physical progress has reached 68.4% substantiated by 14 signed-off daily execution reports and field inspections, against the CPM baseline target of 75.4%.',
+    factors: [
+      {
+        factor: 'Piping Erection & Field Welds (WBS 1.1.3)',
+        contribution: '+28.5% Scope Contribution',
+        reason: '8.4 of 12 planned spool packages erected on Piperack Section B with 75T crane support.',
+        status: 'positive',
+      },
+      {
+        factor: 'Civil Foundations & Pedestals (WBS 1.1.1)',
+        contribution: '+24.0% Scope Contribution',
+        reason: 'Compressor foundation block and equipment pedestals 100% completed and QA signed-off.',
+        status: 'positive',
+      },
+      {
+        factor: 'Electrical Cable Tray Galleries (WBS 1.1.4)',
+        contribution: '+9.2% Scope Contribution',
+        reason: '120 meters of overhead cantilever ladder tray mounted along column line 4.',
+        status: 'positive',
+      },
+      {
+        factor: 'Mechanical Skid Alignment (WBS 1.1.2)',
+        contribution: '+6.7% Scope Contribution',
+        reason: 'Compressor skid C-101 positioned and anchored; preliminary laser alignment verified.',
+        status: 'positive',
+      },
+    ],
+    algorithmOrRule: 'Physical Work Breakdown Earned Value (Weighted Sum of Verified Milestones)',
+    timestamp: '18 Sep 2026, 17:30 IST',
+    recommendation:
+      'Complete radiography testing clearance on remaining Line 24 joints to convert 3.6 units into verified progress.',
+  },
   // 1. DELAY EXPLANATION (Line 24 Critical Path)
   'delay:PIP-24-002': {
     type: 'delay',
@@ -193,6 +241,156 @@ export const WHY_EXPLANATION_PRESETS: Record<string, WhyExplanationData> = {
     recommendation:
       'Link INS-02-005 to Pre-Commissioning package and relax hard constraints to restore natural schedule float.',
   },
+
+  // 5. IMPACT EXPLANATIONS (Downstream & Critical Path Cascade)
+  'impact:CIV-11-001': {
+    type: 'impact',
+    title: 'Downstream Schedule Impact Assessment',
+    subjectId: 'CIV-11-001',
+    subjectName: 'Foundation Block A',
+    metricLabel: 'Critical Path Impact',
+    metricValue: '+5 Days Downstream Delay',
+    summary:
+      'A 5-day execution slip on Foundation Block A propagates directly along Critical Path 1, postponing structural steel and mechanical placement milestones by 5 days.',
+    factors: [
+      {
+        factor: 'Activity A: Column Baseplate Preparation',
+        contribution: '+2 Days Successor Lag',
+        reason: 'Direct Finish-to-Start successor held until curing reaches 28-day target strength.',
+        status: 'negative',
+      },
+      {
+        factor: 'Activity B: Column Installation',
+        contribution: '+3 Days Crane Re-slotting',
+        reason: 'Structural erection crane mobilization shifted to accommodate delayed foundation handover.',
+        status: 'negative',
+      },
+      {
+        factor: 'Activity C: Equipment Installation',
+        contribution: '+5 Days Net Project Slip',
+        reason: 'Heavy compressor placement delayed day-for-day because total float is 0.',
+        status: 'negative',
+      },
+      {
+        factor: 'Critical Path Float Buffer',
+        contribution: '0 Days (Driving Chain)',
+        reason: 'Zero total float available along Path CP-01; no absorption possible.',
+        status: 'negative',
+      },
+    ],
+    algorithmOrRule: 'CPM Forward Pass & Successor Cascade Matrix',
+    timestamp: '18 Sep 2026, 17:30 IST',
+    recommendation:
+      'Mobilize rapid-curing accelerator mix and double-shift column rigger crew to recover 2 days.',
+  },
+  'impact:DLY-CIV-01': {
+    type: 'impact',
+    title: 'Downstream Schedule Impact Assessment',
+    subjectId: 'CIV-11-001',
+    subjectName: 'Foundation Block A',
+    metricLabel: 'Critical Path Impact',
+    metricValue: '+5 Days Downstream Delay',
+    summary:
+      'A 5-day execution slip on Foundation Block A propagates directly along Critical Path 1, postponing structural steel and mechanical placement milestones by 5 days.',
+    factors: [
+      {
+        factor: 'Activity A: Column Baseplate Preparation',
+        contribution: '+2 Days Successor Lag',
+        reason: 'Direct Finish-to-Start successor held until curing reaches 28-day target strength.',
+        status: 'negative',
+      },
+      {
+        factor: 'Activity B: Column Installation',
+        contribution: '+3 Days Crane Re-slotting',
+        reason: 'Structural erection crane mobilization shifted to accommodate delayed foundation handover.',
+        status: 'negative',
+      },
+      {
+        factor: 'Activity C: Equipment Installation',
+        contribution: '+5 Days Net Project Slip',
+        reason: 'Heavy compressor placement delayed day-for-day because total float is 0.',
+        status: 'negative',
+      },
+      {
+        factor: 'Critical Path Float Buffer',
+        contribution: '0 Days (Driving Chain)',
+        reason: 'Zero total float available along Path CP-01; no absorption possible.',
+        status: 'negative',
+      },
+    ],
+    algorithmOrRule: 'CPM Forward Pass & Successor Cascade Matrix',
+    timestamp: '18 Sep 2026, 17:30 IST',
+    recommendation:
+      'Mobilize rapid-curing accelerator mix and double-shift column rigger crew to recover 2 days.',
+  },
+  'impact:what-if': {
+    type: 'impact',
+    title: 'Simulated Schedule Impact Analysis',
+    subjectId: 'SIM-SCENARIO-01',
+    subjectName: 'Foundation +4 Days Simulation',
+    metricLabel: 'Simulated Impact',
+    metricValue: '+4 Days Critical Path Slip',
+    summary:
+      'Injecting a hypothetical +4 days delay into Foundation Block A propagates through the critical chain, moving projected completion from 15 Oct to 19 Oct.',
+    factors: [
+      {
+        factor: 'Hypothetical Delay Source',
+        contribution: '+4 Days Direct Driver',
+        reason: 'User simulated a 4-day slippage on Foundation Block A execution.',
+        status: 'negative',
+      },
+      {
+        factor: 'Critical Predecessor Succession',
+        contribution: '+4 Days Cascade',
+        reason: 'Successor column installation and equipment setting inherit the delay day-for-day.',
+        status: 'negative',
+      },
+      {
+        factor: 'Available Float Absorption',
+        contribution: '0 Days Absorbed',
+        reason: 'Zero total float along Path CP-01 prevents schedule buffer absorption.',
+        status: 'negative',
+      },
+    ],
+    algorithmOrRule: 'Interactive CPM Forward Simulation (Isolated Sandbox)',
+    timestamp: '18 Sep 2026, 17:30 IST',
+    recommendation:
+      'Explore crashing downstream piping spools to pull the 19 Oct simulated date back to 15 Oct.',
+  },
+  'impact:forecast': {
+    type: 'impact',
+    title: 'Projected Completion Impact',
+    subjectId: 'PROJECT-COMPLETION',
+    subjectName: 'Commercial Handover Milestone',
+    metricLabel: 'Forecast Variance',
+    metricValue: '+4 Days Slip (15 Dec 2026)',
+    summary:
+      'Current cumulative execution delays on critical piping and civil packages indicate an unmitigated 4-day forecast delay to overall project handover.',
+    factors: [
+      {
+        factor: 'Critical Piping Line 24',
+        contribution: '+2.5 Days Drag',
+        reason: 'Welding and NDT testing pace lagging behind baseline.',
+        status: 'negative',
+      },
+      {
+        factor: 'Civil Foundation Handoff',
+        contribution: '+1.5 Days Drag',
+        reason: 'Curing hold delayed mechanical skid positioning.',
+        status: 'negative',
+      },
+      {
+        factor: 'Schedule Compression Option',
+        contribution: '-2.0 Days Potential Recovery',
+        reason: 'Fast-tracking electrical instrumentation testing can recover 2 days.',
+        status: 'positive',
+      },
+    ],
+    algorithmOrRule: 'CPM Completion Forecast Ledger',
+    timestamp: '18 Sep 2026, 17:30 IST',
+    recommendation:
+      'Execute recovery shifts on Line 24 field butt joints before monsoon window intensifies.',
+  },
 };
 
 export function getWhyExplanation(key: string, fallbackSubjectId?: string): WhyExplanationData {
@@ -201,6 +399,42 @@ export function getWhyExplanation(key: string, fallbackSubjectId?: string): WhyE
   }
 
   // Derive dynamic explanation if key is typed
+  if (key.startsWith('progress:')) {
+    const id = key.replace('progress:', '');
+    return {
+      type: 'progress',
+      title: 'Verified Progress Breakdown',
+      subjectId: id || 'PROGRESS',
+      subjectName: id ? `Activity ${id}` : 'Physical Progress Metric',
+      metricLabel: 'Verified Progress',
+      metricValue: '68.4% Verified',
+      summary: `Verified progress is calculated by aggregating engineer-attested field logs, survey measurements, and physical deliverables against baseline scope.`,
+      factors: [
+        {
+          factor: 'Attested Field Quantities',
+          contribution: 'Primary Driver',
+          reason: 'Substantiated by verified daily progress reports and QC sign-offs.',
+          status: 'positive',
+        },
+        {
+          factor: 'WBS Scope Weighting',
+          contribution: 'Baseline Weighted',
+          reason: 'Aggregated proportionally across civil, mechanical, and electrical deliverables.',
+          status: 'positive',
+        },
+        {
+          factor: 'Pending Review Holdbacks',
+          contribution: '-3.2% Unverified Buffer',
+          reason: 'Field updates pending planner review are excluded until approved.',
+          status: 'neutral',
+        },
+      ],
+      algorithmOrRule: 'Physical Work Breakdown Earned Value Ledger',
+      timestamp: '18 Sep 2026, 17:30 IST',
+      recommendation: 'Review items in Review Queue to convert attested work to verified progress.',
+    };
+  }
+
   if (key.startsWith('delay:')) {
     const id = key.replace('delay:', '');
     return {
@@ -231,6 +465,114 @@ export function getWhyExplanation(key: string, fallbackSubjectId?: string): WhyE
     };
   }
 
+  if (key.startsWith('impact:')) {
+    const id = key.replace('impact:', '');
+    return {
+      type: 'impact',
+      title: 'Downstream Schedule Impact',
+      subjectId: id,
+      subjectName: `Activity ${id}`,
+      metricLabel: 'Downstream Impact',
+      metricValue: '+2 Days Critical Path Impact',
+      summary: `The delay on ${id} directly impacts successor activities along the critical path due to zero available float buffer.`,
+      factors: [
+        {
+          factor: 'Downstream Finish-to-Start Ties',
+          contribution: 'Direct Cascade',
+          reason: 'Successor work package cannot mobilize until preceding scope is certified.',
+          status: 'negative',
+        },
+        {
+          factor: 'Critical Float Buffer Exhaustion',
+          contribution: '0d Total Float',
+          reason: 'Activity is on Critical Path CP-01 with no buffer to absorb slippage.',
+          status: 'negative',
+        },
+      ],
+      algorithmOrRule: 'CPM Network Forward Pass',
+      timestamp: '18 Sep 2026, 17:30 IST',
+      recommendation: 'Deploy double-shift recovery crew to prevent downstream milestone shift.',
+    };
+  }
+
+  if (key.startsWith('confidence:')) {
+    const id = key.replace('confidence:', '');
+    return {
+      type: 'confidence',
+      title: 'Match Confidence Scoring Factors',
+      subjectId: id,
+      subjectName: `Event ${id}`,
+      metricLabel: 'Match Confidence',
+      metricValue: '94% High Confidence',
+      summary: `Field observation statement matched against schedule activity based on multi-factor semantic and spatial concordance.`,
+      factors: [
+        {
+          factor: 'Activity Match',
+          contribution: '+35% Weight',
+          reason: 'Exact terminology match between field observation and activity scope.',
+          status: 'positive',
+        },
+        {
+          factor: 'Area Match',
+          contribution: '+25% Weight',
+          reason: 'Site location coordinates align with schedule work breakdown structure.',
+          status: 'positive',
+        },
+        {
+          factor: 'Discipline Match',
+          contribution: '+20% Weight',
+          reason: 'Trade discipline (Piping, Civil, Electrical) matches assigned work package.',
+          status: 'positive',
+        },
+        {
+          factor: 'Context Match',
+          contribution: '+10% Weight',
+          reason: 'Execution date falls directly within scheduled activity calendar window.',
+          status: 'positive',
+        },
+      ],
+      algorithmOrRule: 'Multi-factor Heuristic Engine v2.4',
+      timestamp: '18 Sep 2026, 17:30 IST',
+      recommendation: 'High confidence exceeds threshold for 1-click planner approval.',
+    };
+  }
+
+  if (key.startsWith('health:')) {
+    const id = key.replace('health:', '');
+    return {
+      type: 'health',
+      title: 'Schedule Health Breakdown',
+      subjectId: id || 'PRJ-OIL-2026-01',
+      subjectName: 'Schedule Logic Assessment',
+      metricLabel: 'Schedule Health',
+      metricValue: '78 / 100 (Warning)',
+      summary: `Schedule integrity evaluated against industry-standard DCMA 14-point CPM logic rules and data quality standards.`,
+      factors: [
+        {
+          factor: 'Missing Successor Ties',
+          contribution: '-10 Points',
+          reason: '1 activity has dangling finish logic without a driving successor.',
+          status: 'negative',
+        },
+        {
+          factor: 'Negative Total Float',
+          contribution: '-8 Points',
+          reason: 'Line 24 critical path slipped by 2 days, causing negative total float.',
+          status: 'negative',
+        },
+        {
+          factor: 'Hard Constraints',
+          contribution: '-4 Points',
+          reason: '2 activities contain mandatory finish constraints that distort float.',
+          status: 'negative',
+        },
+      ],
+      algorithmOrRule: 'DCMA 14-Point Assessment Protocol',
+      timestamp: '18 Sep 2026, 17:30 IST',
+      recommendation: 'Link open successor logic and relax hard date constraints.',
+    };
+  }
+
   if (key.startsWith('variance:')) {
     const id = key.replace('variance:', '');
     return {
@@ -239,19 +581,25 @@ export function getWhyExplanation(key: string, fallbackSubjectId?: string): WhyE
       subjectId: id,
       subjectName: `Activity ${id}`,
       metricLabel: 'Progress Variance',
-      metricValue: '-15% Variance',
-      summary: `Physical verified progress is behind planned schedule baseline due to open inspection sign-offs.`,
+      metricValue: '-7.0% Variance',
+      summary: `Physical verified progress is behind planned schedule baseline due to open inspection sign-offs and weather holds.`,
       factors: [
         {
-          factor: 'Planned Work Pace',
-          contribution: '85% Baseline Target',
-          reason: 'Required finish pace according to Primavera P6 Rev 3.2 baseline.',
+          factor: 'Planned Baseline Pace',
+          contribution: '80.0% Baseline Target',
+          reason: 'Required finish pace according to CPM Rev 3.2 baseline schedule.',
           status: 'neutral',
         },
         {
           factor: 'Verified Actual Progress',
-          contribution: '70% Actual Measured',
+          contribution: '73.0% Actual Measured',
           reason: 'Earned value confirmed through field measurements and weld logs.',
+          status: 'negative',
+        },
+        {
+          factor: 'Net Schedule Variance',
+          contribution: '-7.0% Variance Drag',
+          reason: 'Critical piping butt welding holds partially offset by civil foundations.',
           status: 'negative',
         },
       ],

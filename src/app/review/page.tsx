@@ -11,6 +11,7 @@ import { Modal } from '../../components/shared/Modal';
 import { ConfirmationDialog } from '../../components/shared/ConfirmationDialog';
 import { MatchCard, MatchFactorItem, MatchAlternativeItem } from '../../components/shared/MatchCard';
 import { ConfidenceBadge } from '../../components/shared/ConfidenceBadge';
+import { WhyButton } from '../../components/shared/WhyButton';
 import { CoreFlowBanner } from '../../components/shared/CoreFlowBanner';
 import { DisciplineType } from '../../types';
 import { MOCK_ACTIVITIES } from '../../lib/api/mockData';
@@ -416,7 +417,7 @@ const INITIAL_REVIEW_EVENTS: ReviewEvent[] = [
 ];
 
 export default function ReviewQueuePage() {
-  const { activeProject, openActivityDrawer } = useApp();
+  const { activeProject, openActivityDrawer, openWhyExplanation } = useApp();
   const { addToast } = useToast();
 
   const [events, setEvents] = useState<ReviewEvent[]>(INITIAL_REVIEW_EVENTS);
@@ -1345,7 +1346,13 @@ export default function ReviewQueuePage() {
                       <div className="p-2 bg-[#F7F8FA] border border-[#D9DEE5] rounded space-y-1">
                         <div className="flex items-center justify-between">
                           <span className="text-[10px] font-bold text-[#596579]">Confidence:</span>
-                          <span className="font-mono font-bold text-xs text-[#172033]">{evt.confidence}%</span>
+                          <div className="flex items-center gap-1.5">
+                            <span className="font-mono font-bold text-xs text-[#172033]">{evt.confidence}%</span>
+                            <WhyButton
+                              onClick={() => openWhyExplanation(`confidence:${evt.id}`)}
+                              title={`Why is match confidence ${evt.confidence}%?`}
+                            />
+                          </div>
                         </div>
                         <div className="text-[11px] font-semibold text-[#172033]">
                           {evt.confidence >= 90
@@ -1358,8 +1365,15 @@ export default function ReviewQueuePage() {
 
                       {/* Deterministic Signals Checklist */}
                       <div className="space-y-1 text-[11px] pt-1">
-                        <div className="text-[10px] font-bold uppercase tracking-wider text-[#7B8798]">
-                          Why was it suggested?
+                        <div className="flex items-center justify-between">
+                          <span className="text-[10px] font-bold uppercase tracking-wider text-[#7B8798]">
+                            Why was it suggested?
+                          </span>
+                          <WhyButton
+                            onClick={() => openWhyExplanation(`confidence:${evt.id}`)}
+                            title="Open detailed factors"
+                            variant="subtle"
+                          />
                         </div>
                         <div className="flex items-center gap-1.5 text-[#2E7D5B] font-medium">
                           <Check className="w-3.5 h-3.5 stroke-[2.5]" />

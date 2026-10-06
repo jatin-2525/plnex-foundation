@@ -11,6 +11,7 @@ import { Modal } from '../../components/shared/Modal';
 import { ProgressBar } from '../../components/shared/ProgressBar';
 import { SCurveChart } from '../../components/shared/SCurveChart';
 import { DisciplineType } from '../../types';
+import { WhyButton } from '../../components/shared/WhyButton';
 import { CANONICAL_SCHEDULE_VERSION_LABEL } from '../../lib/domain/canonicalModels';
 import { formatProjectDateTime, PROJECT_REPORT_DATE } from '../../lib/domain/dateUtils';
 import {
@@ -658,7 +659,7 @@ const MOCK_PROGRESS_ACTIVITIES: ProgressActivityRow[] = [
 ];
 
 export default function ProgressVariancePage() {
-  const { activeProject, userSession, openActivityDrawer } = useApp();
+  const { activeProject, userSession, openActivityDrawer, openWhyExplanation } = useApp();
   const { addToast } = useToast();
 
   const [activities, setActivities] = useState<ProgressActivityRow[]>(MOCK_PROGRESS_ACTIVITIES);
@@ -970,9 +971,15 @@ export default function ProgressVariancePage() {
 
             {/* 2. Actual Verified Progress */}
             <div className="bg-white border border-[#B8DCC9] rounded-lg p-5 shadow-xs">
-              <span className="text-xs font-bold uppercase tracking-wider text-[#2E7D5B] block">
-                Actual Verified Progress
-              </span>
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold uppercase tracking-wider text-[#2E7D5B] block">
+                  Actual Verified Progress
+                </span>
+                <WhyButton
+                  onClick={() => openWhyExplanation('progress:verified')}
+                  title="Why is verified progress 73.0%?"
+                />
+              </div>
               <div className="flex items-baseline gap-2 mt-2">
                 <span className="text-3xl font-extrabold text-[#176B87] font-mono">
                   {summaryMetrics.actualProgress.toFixed(1)}%
@@ -986,9 +993,15 @@ export default function ProgressVariancePage() {
 
             {/* 3. Variance */}
             <div className="bg-white border border-[#E4B0AA] rounded-lg p-5 shadow-xs">
-              <span className="text-xs font-bold uppercase tracking-wider text-[#B5473C] block">
-                Variance
-              </span>
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold uppercase tracking-wider text-[#B5473C] block">
+                  Variance
+                </span>
+                <WhyButton
+                  onClick={() => openWhyExplanation('variance:portfolio')}
+                  title="Why is variance -7.0%?"
+                />
+              </div>
               <div className="flex items-baseline gap-2 mt-2">
                 <span className="text-3xl font-extrabold text-[#B5473C] font-mono">
                   {summaryMetrics.variance.toFixed(1)}%
@@ -1004,9 +1017,15 @@ export default function ProgressVariancePage() {
 
             {/* 4. Forecast at Completion */}
             <div className="bg-white border border-[#F0D4A6] rounded-lg p-5 shadow-xs">
-              <span className="text-xs font-bold uppercase tracking-wider text-[#D98B32] block">
-                Forecast at Completion
-              </span>
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold uppercase tracking-wider text-[#D98B32] block">
+                  Forecast at Completion
+                </span>
+                <WhyButton
+                  onClick={() => openWhyExplanation('impact:forecast')}
+                  title="Why is forecast completion delayed by +4 days?"
+                />
+              </div>
               <div className="flex items-baseline gap-2 mt-2">
                 <span className="text-3xl font-extrabold text-[#D98B32] font-mono">
                   100.0%
@@ -1567,14 +1586,20 @@ export default function ProgressVariancePage() {
 
                         {/* 4. Variance */}
                         <td className="p-3.5 whitespace-nowrap text-center">
-                          <span
-                            className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-[11px] font-mono font-bold border ${varStyle.bg} ${varStyle.border} ${varStyle.text}`}
-                          >
-                            {act.varianceSemantic === 'Positive' && <TrendingUp className="w-3 h-3" />}
-                            {act.varianceSemantic === 'Negative' && <TrendingDown className="w-3 h-3" />}
-                            {act.varianceSemantic === 'Neutral' && <Check className="w-3 h-3" />}
-                            <span>{varStyle.label}</span>
-                          </span>
+                          <div className="inline-flex items-center gap-1.5 justify-center">
+                            <span
+                              className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-[11px] font-mono font-bold border ${varStyle.bg} ${varStyle.border} ${varStyle.text}`}
+                            >
+                              {act.varianceSemantic === 'Positive' && <TrendingUp className="w-3 h-3" />}
+                              {act.varianceSemantic === 'Negative' && <TrendingDown className="w-3 h-3" />}
+                              {act.varianceSemantic === 'Neutral' && <Check className="w-3 h-3" />}
+                              <span>{varStyle.label}</span>
+                            </span>
+                            <WhyButton
+                              onClick={() => openWhyExplanation(`variance:${act.id}`)}
+                              title={`Why is variance ${varStyle.label}?`}
+                            />
+                          </div>
                         </td>
 
                         {/* 5. Forecast Finish */}

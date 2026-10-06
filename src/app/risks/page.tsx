@@ -7,6 +7,7 @@ import { useToast } from '../../context/ToastContext';
 import { Breadcrumbs } from '../../components/shell/Breadcrumbs';
 import { StateWrapper } from '../../components/shared/StateWrapper';
 import { Drawer } from '../../components/shared/Drawer';
+import { WhyButton } from '../../components/shared/WhyButton';
 import { DisciplineType } from '../../types';
 import {
   AlertTriangle,
@@ -620,7 +621,7 @@ export const MOCK_SCHEDULE_DELAYS: ScheduleDelayItem[] = [
 ];
 
 export default function DelayDependencyImpactPage() {
-  const { activeProject } = useApp();
+  const { activeProject, openWhyExplanation } = useApp();
   const { addToast } = useToast();
 
   const [delays, setDelays] = useState<ScheduleDelayItem[]>(MOCK_SCHEDULE_DELAYS);
@@ -975,9 +976,15 @@ export default function DelayDependencyImpactPage() {
 
                 {/* 2. Delay Duration (Actual Delay) */}
                 <div className="p-3.5 rounded-lg bg-[#FBEFEE] border border-[#E4B0AA]">
-                  <span className="text-[10px] uppercase font-bold text-[#B5473C] tracking-wider block mb-0.5">
-                    Delay Duration (Actual Delay)
-                  </span>
+                  <div className="flex items-center justify-between mb-0.5">
+                    <span className="text-[10px] uppercase font-bold text-[#B5473C] tracking-wider block">
+                      Delay Duration (Actual Delay)
+                    </span>
+                    <WhyButton
+                      onClick={() => openWhyExplanation(`delay:${selectedDelay.id}`)}
+                      title={`Why is ${selectedDelay.sourceActivityName} delayed by ${selectedDelay.delayDays} days?`}
+                    />
+                  </div>
                   <div className="font-black font-mono text-2xl text-[#B5473C]">
                     +{selectedDelay.delayDays.toFixed(0)} days
                   </div>
@@ -1028,9 +1035,15 @@ export default function DelayDependencyImpactPage() {
                     <AlertTriangle className="w-3.5 h-3.5" />
                     Critical Path Impact & Float Consumption
                   </span>
-                  <span className="font-mono text-[10px] font-bold text-[#B5473C] bg-white px-2 py-0.5 rounded border border-[#E4B0AA]">
-                    {selectedDelay.criticalPathSlipDays > 0 ? `+${selectedDelay.criticalPathSlipDays}d Net Milestone Slip` : '0d Project Slip (Float Absorbed)'}
-                  </span>
+                  <div className="flex items-center gap-1.5">
+                    <span className="font-mono text-[10px] font-bold text-[#B5473C] bg-white px-2 py-0.5 rounded border border-[#E4B0AA]">
+                      {selectedDelay.criticalPathSlipDays > 0 ? `+${selectedDelay.criticalPathSlipDays}d Net Milestone Slip` : '0d Project Slip (Float Absorbed)'}
+                    </span>
+                    <WhyButton
+                      onClick={() => openWhyExplanation(`impact:${selectedDelay.id}`)}
+                      title="Why does this delay impact the critical path?"
+                    />
+                  </div>
                 </div>
                 <p className="text-[#172033] font-semibold leading-relaxed">
                   Current Impact: {selectedDelay.currentImpact}
@@ -1075,9 +1088,15 @@ export default function DelayDependencyImpactPage() {
                     <GitBranch className="w-3.5 h-3.5" />
                     Downstream Impact Cascade
                   </h3>
-                  <span className="text-[10px] font-mono text-[#7B8798]">
-                    Predecessor → Successor Ties
-                  </span>
+                  <div className="flex items-center gap-1.5">
+                    <WhyButton
+                      onClick={() => openWhyExplanation(`impact:${selectedDelay.id}`)}
+                      title="Why are these downstream activities impacted?"
+                    />
+                    <span className="text-[10px] font-mono text-[#7B8798]">
+                      Predecessor → Successor Ties
+                    </span>
+                  </div>
                 </div>
 
                 <div className="p-2.5 my-2 rounded bg-white border border-[#D9DEE5] text-[11px]">
@@ -1086,8 +1105,14 @@ export default function DelayDependencyImpactPage() {
                     <div>{selectedDelay.sourceActivityName} <span className="text-[#B5473C] font-bold">+{selectedDelay.delayDays.toFixed(0)} days</span></div>
                     <div className="text-[10px] uppercase font-bold text-[#7B8798] pt-1">Downstream Cascade:</div>
                     {selectedDelay.downstreamImpacts.map((d, i) => (
-                      <div key={i} className="pl-2">
-                        {d.stepLabel} <span className="text-[#B5473C] font-bold">+{d.downstreamDelayDays} days</span> ({d.name})
+                      <div key={i} className="pl-2 flex items-center justify-between">
+                        <span>
+                          {d.stepLabel} <span className="text-[#B5473C] font-bold">+{d.downstreamDelayDays} days</span> ({d.name})
+                        </span>
+                        <WhyButton
+                          onClick={() => openWhyExplanation(`impact:${d.activityId}`)}
+                          title={`Why is ${d.stepLabel} delayed by +${d.downstreamDelayDays} days?`}
+                        />
                       </div>
                     ))}
                   </div>
@@ -1304,7 +1329,16 @@ export default function DelayDependencyImpactPage() {
 
                         {/* 2. Delay Duration */}
                         <td className="p-3.5 whitespace-nowrap text-center font-mono font-bold text-[#B5473C] text-sm">
-                          +{item.delayDays.toFixed(0)} days
+                          <div className="inline-flex items-center gap-1.5 justify-center">
+                            <span>+{item.delayDays.toFixed(0)} days</span>
+                            <WhyButton
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                openWhyExplanation(`delay:${item.id}`);
+                              }}
+                              title={`Why is this activity delayed by +${item.delayDays} days?`}
+                            />
+                          </div>
                         </td>
 
                         {/* 3. Cause */}
@@ -1329,6 +1363,16 @@ export default function DelayDependencyImpactPage() {
 
                         {/* 5. Downstream Impact */}
                         <td className="p-3.5">
+                          <div className="flex items-center justify-between mb-1">
+                            <span className="text-[10px] font-bold uppercase text-[#7B8798]">Impact Cascade</span>
+                            <WhyButton
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                openWhyExplanation(`impact:${item.id}`);
+                              }}
+                              title="Why does this activity impact downstream successors?"
+                            />
+                          </div>
                           <div className="space-y-0.5 font-mono text-[11px]">
                             {item.downstreamImpacts.map((d, i) => (
                               <div key={i} className="text-[#B5473C] font-semibold">
@@ -1343,9 +1387,18 @@ export default function DelayDependencyImpactPage() {
 
                         {/* 6. Critical Path Impact */}
                         <td className="p-3.5">
-                          <span className={`inline-block px-2 py-0.5 rounded text-[10px] font-bold border ${critStyle.bg} ${critStyle.border} ${critStyle.text}`}>
-                            {critStyle.badge}
-                          </span>
+                          <div className="flex items-center gap-1.5">
+                            <span className={`inline-block px-2 py-0.5 rounded text-[10px] font-bold border ${critStyle.bg} ${critStyle.border} ${critStyle.text}`}>
+                              {critStyle.badge}
+                            </span>
+                            <WhyButton
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                openWhyExplanation(`impact:${item.id}`);
+                              }}
+                              title="Why is this activity on the critical path?"
+                            />
+                          </div>
                           <div className="mt-1 font-mono text-[11px] text-[#172033] font-bold">
                             {item.criticalPathSlipDays > 0 ? `+${item.criticalPathSlipDays}d Critical Path Slip` : '0d Project Slip'}
                           </div>

@@ -10,6 +10,7 @@ import { EmptyState } from '../../components/shared/EmptyState';
 import { ErrorState } from '../../components/shared/ErrorState';
 import { Modal } from '../../components/shared/Modal';
 import { Drawer } from '../../components/shared/Drawer';
+import { WhyButton } from '../../components/shared/WhyButton';
 import {
   SIMULATION_ACTIVITIES,
   DEFAULT_SAVED_SCENARIOS,
@@ -46,7 +47,7 @@ import {
 } from 'lucide-react';
 
 export default function WhatIfSimulatorPage() {
-  const { activeProject } = useApp();
+  const { activeProject, openWhyExplanation } = useApp();
   const { addToast } = useToast();
 
   // State Management - Default to Foundation Block A (+4d delay) matching canonical prompt example
@@ -456,9 +457,15 @@ export default function WhatIfSimulatorPage() {
                   <span className="text-[10px] uppercase font-bold text-[#176B87] tracking-wider">
                     Scenario
                   </span>
-                  <span className="px-1.5 py-0.5 rounded text-[9px] font-bold uppercase bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0]">
-                    Simulation Input
-                  </span>
+                  <div className="flex items-center gap-1.5">
+                    <span className="px-1.5 py-0.5 rounded text-[9px] font-bold uppercase bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0]">
+                      Simulation Input
+                    </span>
+                    <WhyButton
+                      onClick={() => openWhyExplanation(`delay:${selectedActivityId}`)}
+                      title="Why simulate this delay duration?"
+                    />
+                  </div>
                 </div>
                 <div className="text-xl sm:text-2xl font-black font-mono text-[#176B87] truncate" title={scenarioDisplay}>
                   {scenarioDisplay}
@@ -477,9 +484,15 @@ export default function WhatIfSimulatorPage() {
                   <span className="text-[10px] uppercase font-bold text-[#B5473C] tracking-wider">
                     Projected Finish
                   </span>
-                  <span className="px-1.5 py-0.5 rounded text-[9px] font-bold uppercase bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
-                    Simulated Date
-                  </span>
+                  <div className="flex items-center gap-1.5">
+                    <span className="px-1.5 py-0.5 rounded text-[9px] font-bold uppercase bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
+                      Simulated Date
+                    </span>
+                    <WhyButton
+                      onClick={() => openWhyExplanation('impact:what-if')}
+                      title="Why does the simulated finish date shift?"
+                    />
+                  </div>
                 </div>
                 <div className="text-2xl sm:text-3xl font-black font-mono text-[#B5473C]">
                   {formatShortDate(projectedFinishDate)}
@@ -498,9 +511,15 @@ export default function WhatIfSimulatorPage() {
                   <span className="text-[10px] uppercase font-bold text-[#B5473C] tracking-wider">
                     Impact
                   </span>
-                  <span className="px-1.5 py-0.5 rounded text-[9px] font-bold uppercase bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
-                    Critical Path
-                  </span>
+                  <div className="flex items-center gap-1.5">
+                    <span className="px-1.5 py-0.5 rounded text-[9px] font-bold uppercase bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
+                      Critical Path
+                    </span>
+                    <WhyButton
+                      onClick={() => openWhyExplanation('impact:what-if')}
+                      title="Why is the simulated impact +4 days?"
+                    />
+                  </div>
                 </div>
                 <div className="text-2xl sm:text-3xl font-black font-mono text-[#B5473C]">
                   {impactDisplay}
