@@ -1131,23 +1131,23 @@ export default function DPRPage() {
 
             {/* Quantity Table with horizontal scroll min-width */}
             <div className="border border-[#D9DEE5] rounded-lg overflow-x-auto">
-              <table className="w-full min-w-[700px] text-left text-xs border-collapse">
-                <thead>
-                  <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[11px] font-bold uppercase tracking-wider text-[#596579]">
-                    <th className="p-3">Activity ID</th>
-                    <th className="p-3">Work Item Description</th>
-                    <th className="p-3">Discipline</th>
-                    <th className="p-3 text-center">Baseline Plan</th>
-                    <th className="p-3 text-center">Actual Today</th>
-                    <th className="p-3">Unit</th>
-                    <th className="p-3 text-center">Cumul / Total</th>
-                    <th className="p-3 text-center">Status</th>
-                    <th className="p-3 text-right">Action</th>
+              <table className="w-full min-w-[700px] text-left text-sm border-collapse">
+                <thead className="sticky top-0 z-10 bg-[#F7F8FA]">
+                  <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[11px] font-bold uppercase tracking-wider text-[#596579] h-11">
+                    <th className="py-3 px-4">Activity ID</th>
+                    <th className="py-3 px-4">Work Item Description</th>
+                    <th className="py-3 px-4">Discipline</th>
+                    <th className="py-3 px-4 text-center">Baseline Plan</th>
+                    <th className="py-3 px-4 text-center">Actual Today</th>
+                    <th className="py-3 px-4">Unit</th>
+                    <th className="py-3 px-4 text-center">Cumul / Total</th>
+                    <th className="py-3 px-4 text-center">Status</th>
+                    <th className="py-3 px-4 text-right">Action</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#D9DEE5]">
+                <tbody className="divide-y divide-[#D9DEE5]/60">
                   {quantityItems.map((q) => (
-                    <tr key={q.id} className="hover:bg-[#F7F8FA]/60 transition-colors">
+                    <tr key={q.id} className="h-11 sm:h-12 hover:bg-[#F7F8FA]/60 transition-colors">
                       <td className="p-3">
                         <div className="font-mono font-bold text-[#176B87]">{q.activityId}</div>
                         {q.isCriticalPath && (
@@ -1414,45 +1414,45 @@ export default function DPRPage() {
             </div>
 
             {/* Structured Table: Audited Shift Deliverables */}
-            <div className="border border-[#D9DEE5] rounded-lg overflow-hidden text-xs">
+            <div className="border border-[#D9DEE5] rounded-lg overflow-hidden text-sm">
               <table className="w-full border-collapse">
-                <tbody className="divide-y divide-[#D9DEE5]">
-                  <tr className="bg-[#FAFAFA]">
-                    <td className="p-3 font-semibold text-[#596579] w-1/3">Document Reference</td>
-                    <td className="p-3 font-mono font-bold text-[#172033]">
+                <tbody className="divide-y divide-[#D9DEE5]/60">
+                  <tr className="bg-[#FAFAFA] h-11 sm:h-12">
+                    <td className="py-3 px-4 font-semibold text-[#596579] w-1/3">Document Reference</td>
+                    <td className="py-3 px-4 font-mono font-bold text-[#172033]">
                       {dprDocumentNo} • {dprRevision}
                     </td>
                   </tr>
-                  <tr>
-                    <td className="p-3 font-semibold text-[#596579]">Reporting Window</td>
-                    <td className="p-3 text-[#172033]">
+                  <tr className="h-11 sm:h-12">
+                    <td className="py-3 px-4 font-semibold text-[#596579]">Reporting Window</td>
+                    <td className="py-3 px-4 text-[#172033]">
                       {reportingDate} ({reportingShift}) • <strong>{summaryMetrics.totalManHours} Productive Man-Hours</strong> ({totalHeadcount} pax)
                     </td>
                   </tr>
-                  <tr className="bg-[#FAFAFA]">
-                    <td className="p-3 font-semibold text-[#596579]">Activities Progressed</td>
-                    <td className="p-3 text-[#172033]">
+                  <tr className="bg-[#FAFAFA] h-11 sm:h-12">
+                    <td className="py-3 px-4 font-semibold text-[#596579]">Activities Progressed</td>
+                    <td className="py-3 px-4 text-[#172033]">
                       <span className="font-bold text-[#2E7D5B]">{summaryMetrics.completedTasks} Completed</span>,{' '}
                       <span className="font-bold text-[#176B87]">{summaryMetrics.inProgressTasks} In Progress</span>,{' '}
                       <span className="font-bold text-[#B5473C]">{summaryMetrics.blockedTasks} Blocked</span> (Total: {summaryMetrics.plannedTasks} activities worked)
                     </td>
                   </tr>
-                  <tr>
-                    <td className="p-3 font-semibold text-[#596579]">Schedule Twin Impact</td>
-                    <td className="p-3 text-[#172033]">
+                  <tr className="h-11 sm:h-12">
+                    <td className="py-3 px-4 font-semibold text-[#596579]">Schedule Twin Impact</td>
+                    <td className="py-3 px-4 text-[#172033]">
                       Advances project cumulative progress by <strong>+{summaryMetrics.scheduleDeltaPercent}%</strong>.
                       Line 24-XX critical path remains on baseline (0 days float deviation).
                     </td>
                   </tr>
-                  <tr className="bg-[#FAFAFA]">
-                    <td className="p-3 font-semibold text-[#596579]">Physical Evidence Audit</td>
-                    <td className="p-3 text-[#172033]">
+                  <tr className="bg-[#FAFAFA] h-11 sm:h-12">
+                    <td className="py-3 px-4 font-semibold text-[#596579]">Physical Evidence Audit</td>
+                    <td className="py-3 px-4 text-[#172033]">
                       <span className="font-bold text-[#2E7D5B]">{summaryMetrics.verifiedProofsCount} Verified Attachments</span> (Photographs with GPS coordinates, Crane lift tickets, Weld QC inspection sheets).
                     </td>
                   </tr>
-                  <tr>
-                    <td className="p-3 font-semibold text-[#596579]">Variance / Stoppage Governance</td>
-                    <td className="p-3 text-[#172033]">
+                  <tr className="h-11 sm:h-12">
+                    <td className="py-3 px-4 font-semibold text-[#596579]">Variance / Stoppage Governance</td>
+                    <td className="py-3 px-4 text-[#172033]">
                       Activity <strong>PIP-24-003 Hydrostatic Testing</strong> variance flagged due to monsoon squall & flange requisition hold.
                       Routed to Manager Review Queue (/matching).
                     </td>

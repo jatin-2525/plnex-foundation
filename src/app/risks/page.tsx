@@ -1288,8 +1288,8 @@ export default function DelayDependencyImpactPage() {
 
           <div className="overflow-x-auto">
             <table className="w-full min-w-[1100px] text-left text-sm border-collapse">
-              <thead>
-                <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-[#596579]">
+              <thead className="sticky top-0 z-10 bg-[#F7F8FA]">
+                <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-[#596579] h-11">
                   <th className="p-4 min-w-[190px]">Delayed Activity (Source Activity)</th>
                   <th className="p-4 whitespace-nowrap text-center">Delay Duration (Actual Delay)</th>
                   <th className="p-4 min-w-[200px]">Cause</th>
@@ -1300,7 +1300,7 @@ export default function DelayDependencyImpactPage() {
                   <th className="p-4 whitespace-nowrap text-right">Action</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#D9DEE5]">
+              <tbody className="divide-y divide-[#D9DEE5]/60">
                 {filteredDelays.length === 0 ? (
                   <tr>
                     <td colSpan={8} className="p-8 text-center text-[#596579]">
@@ -1328,7 +1328,7 @@ export default function DelayDependencyImpactPage() {
                       <tr
                         key={item.id}
                         onClick={() => setSelectedDelay(item)}
-                        className={`transition-colors cursor-pointer group ${
+                        className={`h-11 sm:h-12 transition-colors cursor-pointer group ${
                           isSelected ? 'bg-[#EDF5F8]/70 ring-1 ring-[#176B87]/30' : 'hover:bg-[#F7F8FA]'
                         }`}
                       >

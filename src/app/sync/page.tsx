@@ -829,8 +829,8 @@ export default function OfflineSyncCenterPage() {
         <div className="bg-white border border-[#D9DEE5] rounded-lg shadow-xs overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full min-w-[880px] text-left border-collapse text-sm">
-              <thead>
-                <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[11px] sm:text-xs uppercase font-semibold text-[#596579] tracking-wider">
+              <thead className="sticky top-0 z-10 bg-[#F7F8FA]">
+                <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[11px] sm:text-xs uppercase font-semibold text-[#596579] tracking-wider h-11">
                   <th className="py-3 px-4">Sync Item ID</th>
                   <th className="py-3 px-4">Type</th>
                   <th className="py-3 px-4">Payload Scope / Title</th>
@@ -842,7 +842,7 @@ export default function OfflineSyncCenterPage() {
                   <th className="py-3 px-4 text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#D9DEE5]">
+              <tbody className="divide-y divide-[#D9DEE5]/60">
                 {filteredItems.map((item) => {
                   const typeBadge = getTypeBadge(item.type);
                   const TypeIcon = typeBadge.icon;
@@ -851,7 +851,7 @@ export default function OfflineSyncCenterPage() {
                     <tr
                       key={item.id}
                       onClick={() => setInspectItem(item)}
-                      className="hover:bg-[#F1F3F5]/60 transition-colors cursor-pointer group"
+                      className="h-11 sm:h-12 hover:bg-[#F1F3F5]/60 transition-colors cursor-pointer group"
                     >
                       {/* Sync Item ID */}
                       <td className="py-3 px-4 font-mono font-bold text-[#176B87]">

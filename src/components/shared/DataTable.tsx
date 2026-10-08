@@ -93,8 +93,8 @@ export function DataTable<T>({
     <div className={`bg-white border border-[#D9DEE5] rounded-lg overflow-hidden flex flex-col ${className}`}>
       <div className="overflow-x-auto">
         <table className="w-full text-left border-collapse text-sm">
-          <thead>
-            <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[#596579] font-semibold uppercase tracking-wider text-[11px] sm:text-xs">
+          <thead className="sticky top-0 z-10 bg-[#F7F8FA]">
+            <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[#596579] font-semibold uppercase tracking-wider text-[11px] sm:text-xs h-11">
               {selectable && (
                 <th className="w-10 px-4 py-3 text-center">
                   <input
@@ -149,7 +149,7 @@ export function DataTable<T>({
                 <tr
                   key={rowKey}
                   onClick={() => onRowClick && onRowClick(row)}
-                  className={`transition-colors ${
+                  className={`h-11 sm:h-12 transition-colors ${
                     isSelected ? 'bg-[#EDF5F8]' : 'hover:bg-[#F1F3F5]/60'
                   } ${onRowClick ? 'cursor-pointer' : ''}`}
                 >

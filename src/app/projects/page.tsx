@@ -573,9 +573,9 @@ export default function ProjectsPage() {
           /* Projects Portfolio Data Table */
           <div className="bg-white border border-[#D9DEE5] rounded-lg overflow-hidden">
             <div className="overflow-x-auto">
-              <table className="w-full min-w-[980px] text-left text-xs border-collapse">
-                <thead>
-                  <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[#596579] font-medium">
+              <table className="w-full min-w-[980px] text-left text-sm border-collapse">
+                <thead className="sticky top-0 z-10 bg-[#F7F8FA]">
+                  <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[#596579] font-medium h-11">
                     <th className="py-3 px-4 whitespace-nowrap">Project ID</th>
                     <th className="py-3 px-4 whitespace-nowrap min-w-[240px]">Project Name</th>
                     <th className="py-3 px-4 whitespace-nowrap">Organization</th>
@@ -588,7 +588,7 @@ export default function ProjectsPage() {
                     <th className="py-3 px-4 whitespace-nowrap text-right">Actions</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#D9DEE5]">
+                <tbody className="divide-y divide-[#D9DEE5]/60">
                   {filteredProjects.map((project) => {
                     const varianceDelta = project.overallProgress - project.plannedProgress;
                     const hasNegativeVariance = varianceDelta < 0;
@@ -596,7 +596,7 @@ export default function ProjectsPage() {
                     return (
                       <tr
                         key={project.id}
-                        className="hover:bg-[#F9FAFC] transition-colors group"
+                        className="h-11 sm:h-12 hover:bg-[#F9FAFC] transition-colors group"
                       >
                         {/* 1. Project ID */}
                         <td className="py-3 px-4 align-middle">

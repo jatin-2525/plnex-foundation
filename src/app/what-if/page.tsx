@@ -964,8 +964,8 @@ export default function WhatIfSimulatorPage() {
 
                   <div className="overflow-x-auto">
                     <table className="w-full min-w-[750px] text-left border-collapse text-sm">
-                      <thead>
-                        <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[11px] sm:text-xs uppercase font-semibold text-[#596579] tracking-wider">
+                      <thead className="sticky top-0 z-10 bg-[#F7F8FA]">
+                        <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[11px] sm:text-xs uppercase font-semibold text-[#596579] tracking-wider h-11">
                           <th className="py-3 px-4">Activity</th>
                           <th className="py-3 px-4">Discipline / Area</th>
                           <th className="py-3 px-4">Current Date</th>
@@ -975,12 +975,12 @@ export default function WhatIfSimulatorPage() {
                           <th className="py-3 px-4 text-right">Details</th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-[#D9DEE5]">
+                      <tbody className="divide-y divide-[#D9DEE5]/60">
                         {simulationResult.affectedActivities.map((act) => (
                           <tr
                             key={act.activityId}
                             onClick={() => setSelectedActivityDetail(act)}
-                            className="hover:bg-[#F1F3F5]/60 transition-colors cursor-pointer group"
+                            className="h-11 sm:h-12 hover:bg-[#F1F3F5]/60 transition-colors cursor-pointer group"
                           >
                             <td className="py-3 px-4">
                               <div className="flex items-center gap-2">
@@ -1329,8 +1329,8 @@ export default function WhatIfSimulatorPage() {
           <div className="space-y-4 text-xs">
             <div className="overflow-x-auto">
               <table className="w-full min-w-[650px] text-left border-collapse text-sm">
-                <thead>
-                  <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[11px] sm:text-xs uppercase font-semibold text-[#596579]">
+                <thead className="sticky top-0 z-10 bg-[#F7F8FA]">
+                  <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[11px] sm:text-xs uppercase font-semibold text-[#596579] h-11">
                     <th className="py-3 px-4">Metric / Dimension</th>
                     <th className="py-3 px-4 bg-[#EDF7F2]/40 text-[#2E7D5B]">
                       Baseline (V3 · Rev 3.2)
@@ -1345,13 +1345,13 @@ export default function WhatIfSimulatorPage() {
                     ))}
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#D9DEE5]">
-                  <tr>
-                    <td className="py-2 px-4 font-bold text-[#172033]">Scenario Status</td>
-                    <td className="py-2 px-4 font-semibold text-[#2E7D5B]">Active Baseline</td>
-                    <td className="py-2 px-4 font-bold text-[#176B87]">Current Sandbox</td>
+                <tbody className="divide-y divide-[#D9DEE5]/60">
+                  <tr className="h-11 sm:h-12">
+                    <td className="py-3 px-4 font-bold text-[#172033]">Scenario Status</td>
+                    <td className="py-3 px-4 font-semibold text-[#2E7D5B]">Active Baseline</td>
+                    <td className="py-3 px-4 font-bold text-[#176B87]">Current Sandbox</td>
                     {savedScenarios.slice(0, 2).map((sc) => (
-                      <td key={sc.id} className="py-2 px-4 text-[#596579]">
+                      <td key={sc.id} className="py-3 px-4 text-[#596579]">
                         Saved Vault ({sc.id})
                       </td>
                     ))}

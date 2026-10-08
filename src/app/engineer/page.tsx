@@ -716,9 +716,9 @@ export default function EngineerDashboardPage() {
           {/* DESKTOP TABLE VIEW */}
           <div className="hidden md:block border border-[#D9DEE5] rounded-lg overflow-hidden">
             <div className="overflow-x-auto">
-              <table className="w-full min-w-[700px] text-left text-xs border-collapse">
-                <thead>
-                  <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[#596579] font-medium">
+              <table className="w-full min-w-[700px] text-left text-sm border-collapse">
+                <thead className="sticky top-0 z-10 bg-[#F7F8FA]">
+                  <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[#596579] font-medium h-11">
                     <th className="py-3 px-4 whitespace-nowrap min-w-[220px]">Activity Package</th>
                     <th className="py-3 px-4 whitespace-nowrap">Area / Bay</th>
                     <th className="py-3 px-4 whitespace-nowrap min-w-[160px]">Progress (Actual vs Target)</th>
@@ -727,9 +727,9 @@ export default function EngineerDashboardPage() {
                     <th className="py-3 px-4 whitespace-nowrap text-right">Action</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#D9DEE5]">
+                <tbody className="divide-y divide-[#D9DEE5]/60">
                   {filteredActivities.map((act) => (
-                    <tr key={act.id} className="hover:bg-[#F9FAFC] transition-colors">
+                    <tr key={act.id} className="h-11 sm:h-12 hover:bg-[#F9FAFC] transition-colors">
                       {/* Activity */}
                       <td className="py-3 px-4 align-middle">
                         <div className="flex items-center gap-2">

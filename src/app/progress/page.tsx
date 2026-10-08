@@ -1097,23 +1097,23 @@ export default function ProgressVariancePage() {
           {/* Discipline Progress Table */}
           <div className="border border-[#D9DEE5] rounded-md bg-white overflow-x-auto">
             <table className="w-full text-left border-collapse text-sm">
-              <thead>
-                <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[11px] font-semibold uppercase text-[#596579] tracking-wider">
-                  <th className="py-2 px-3">Discipline</th>
-                  <th className="py-2 px-3 text-right">Planned Target</th>
-                  <th className="py-2 px-3 text-right">Verified Actual</th>
-                  <th className="py-2 px-3 text-center">Variance</th>
-                  <th className="py-2 px-3 w-44">Trajectory vs Baseline</th>
-                  <th className="py-2 px-3">Schedule Lag Driver</th>
+              <thead className="sticky top-0 z-10 bg-[#F7F8FA]">
+                <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[11px] font-semibold uppercase text-[#596579] tracking-wider h-11">
+                  <th className="py-3 px-4">Discipline</th>
+                  <th className="py-3 px-4 text-right">Planned Target</th>
+                  <th className="py-3 px-4 text-right">Verified Actual</th>
+                  <th className="py-3 px-4 text-center">Variance</th>
+                  <th className="py-3 px-4 w-44">Trajectory vs Baseline</th>
+                  <th className="py-3 px-4">Schedule Lag Driver</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#D9DEE5]">
+              <tbody className="divide-y divide-[#D9DEE5]/60">
                 {DISCIPLINE_PROGRESS_DATA.map((d) => {
                   const isBehind = d.variance < 0;
                   const isAhead = d.variance > 0;
                   return (
-                    <tr key={d.discipline} className="hover:bg-[#F7F8FA]/60 transition-colors">
-                      <td className="py-2 px-3">
+                    <tr key={d.discipline} className="h-11 sm:h-12 hover:bg-[#F7F8FA]/60 transition-colors">
+                      <td className="py-3 px-4">
                         <div className="flex items-center gap-2">
                           <span className="font-medium text-[#172033]">{d.discipline}</span>
                           <span className="text-[11px] font-mono text-[#596579] bg-[#F1F3F5] px-1.5 py-0.5 rounded border border-[#D9DEE5]">
@@ -1206,24 +1206,24 @@ export default function ProgressVariancePage() {
           {/* Area Performance Table */}
           <div className="border border-[#D9DEE5] rounded-md bg-white overflow-x-auto">
             <table className="w-full text-left border-collapse text-sm">
-              <thead>
-                <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[11px] font-semibold uppercase text-[#596579] tracking-wider">
-                  <th className="py-2 px-3">Area & Battery Limit</th>
-                  <th className="py-2 px-3">CPM Path / Float</th>
-                  <th className="py-2 px-3 text-right">Planned</th>
-                  <th className="py-2 px-3 text-right">Actual</th>
-                  <th className="py-2 px-3 text-center">Variance</th>
-                  <th className="py-2 px-3 w-36">Progress</th>
-                  <th className="py-2 px-3">Operational Status & Constraints</th>
+              <thead className="sticky top-0 z-10 bg-[#F7F8FA]">
+                <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[11px] font-semibold uppercase text-[#596579] tracking-wider h-11">
+                  <th className="py-3 px-4">Area & Battery Limit</th>
+                  <th className="py-3 px-4">CPM Path / Float</th>
+                  <th className="py-3 px-4 text-right">Planned</th>
+                  <th className="py-3 px-4 text-right">Actual</th>
+                  <th className="py-3 px-4 text-center">Variance</th>
+                  <th className="py-3 px-4 w-36">Progress</th>
+                  <th className="py-3 px-4">Operational Status & Constraints</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#D9DEE5]">
+              <tbody className="divide-y divide-[#D9DEE5]/60">
                 {AREA_PROGRESS_DATA.map((area) => {
                   const isBehind = area.variance < 0;
                   const isAhead = area.variance > 0;
                   return (
-                    <tr key={area.code} className="hover:bg-[#F7F8FA]/60 transition-colors">
-                      <td className="py-2 px-3">
+                    <tr key={area.code} className="h-11 sm:h-12 hover:bg-[#F7F8FA]/60 transition-colors">
+                      <td className="py-3 px-4">
                         <div>
                           <span className="font-mono text-[11px] text-[#7B8798] block">{area.code}</span>
                           <span className="font-medium text-[#172033]">{area.area}</span>
@@ -1540,8 +1540,8 @@ export default function ProgressVariancePage() {
           {/* TABLE CONTAINER WITH MANDATED 7 COLUMNS */}
           <div className="overflow-x-auto">
             <table className="w-full min-w-[850px] text-left text-sm border-collapse">
-              <thead>
-                <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-[#596579]">
+              <thead className="sticky top-0 z-10 bg-[#F7F8FA]">
+                <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-[#596579] h-11">
                   <th className="p-4 min-w-[240px]">Activity</th>
                   <th className="p-4 whitespace-nowrap text-right">Planned %</th>
                   <th className="p-4 whitespace-nowrap text-right">Verified Actual %</th>
@@ -1551,7 +1551,7 @@ export default function ProgressVariancePage() {
                   <th className="p-4 min-w-[260px]">Last Verified Update</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#D9DEE5] text-[14px]">
+              <tbody className="divide-y divide-[#D9DEE5]/60 text-[14px]">
                 {filteredActivities.length === 0 ? (
                   <tr>
                     <td colSpan={7} className="p-8 text-center text-[#596579]">
@@ -1567,7 +1567,7 @@ export default function ProgressVariancePage() {
                       <tr
                         key={act.id}
                         onClick={() => handleSelectActivity(act)}
-                        className="hover:bg-[#EDF5F8]/50 transition-colors cursor-pointer group"
+                        className="h-11 sm:h-12 hover:bg-[#EDF5F8]/50 transition-colors cursor-pointer group"
                       >
                         {/* 1. Activity (ID, Name, WBS, Area) */}
                         <td className="p-4">

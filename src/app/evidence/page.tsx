@@ -757,8 +757,8 @@ export default function EvidenceAndAuditPage() {
             <div className="bg-white border border-[#D9DEE5] rounded-lg shadow-xs overflow-hidden">
               <div className="overflow-x-auto">
                 <table className="w-full min-w-[880px] text-left border-collapse text-sm">
-                  <thead>
-                    <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[11px] sm:text-xs uppercase font-semibold text-[#596579] tracking-wider">
+                  <thead className="sticky top-0 z-10 bg-[#F7F8FA]">
+                    <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[11px] sm:text-xs uppercase font-semibold text-[#596579] tracking-wider h-11">
                       <th className="py-3 px-4">Evidence ID</th>
                       <th className="py-3 px-4">Type</th>
                       <th className="py-3 px-4 min-w-[160px]">Source</th>
@@ -771,7 +771,7 @@ export default function EvidenceAndAuditPage() {
                       <th className="py-3 px-4 text-right">Actions</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-[#D9DEE5]">
+                  <tbody className="divide-y divide-[#D9DEE5]/60">
                     {filteredEvidence.map((item) => {
                       const typeBadge = getEvidenceTypeBadge(item.type);
                       const TypeIcon = typeBadge.icon;
@@ -780,7 +780,7 @@ export default function EvidenceAndAuditPage() {
                       return (
                         <React.Fragment key={item.id}>
                           <tr
-                            className="hover:bg-[#F1F3F5]/60 transition-colors cursor-pointer group"
+                            className="h-11 sm:h-12 hover:bg-[#F1F3F5]/60 transition-colors cursor-pointer group"
                             onClick={() => setPreviewEvidence(item)}
                           >
                             {/* 1. Evidence ID */}
@@ -1137,8 +1137,8 @@ export default function EvidenceAndAuditPage() {
             <div className="bg-white border border-[#D9DEE5] rounded-lg shadow-xs overflow-hidden">
               <div className="overflow-x-auto">
                 <table className="w-full min-w-[880px] text-left border-collapse text-sm">
-                  <thead>
-                    <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[11px] sm:text-xs uppercase font-semibold text-[#596579] tracking-wider">
+                  <thead className="sticky top-0 z-10 bg-[#F7F8FA]">
+                    <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[11px] sm:text-xs uppercase font-semibold text-[#596579] tracking-wider h-11">
                       <th className="py-3 px-4">Audit ID</th>
                       <th className="py-3 px-4 min-w-[140px]">Who (Changed by)</th>
                       <th className="py-3 px-4 min-w-[180px]">What (Action)</th>
@@ -1149,12 +1149,12 @@ export default function EvidenceAndAuditPage() {
                       <th className="py-3 px-4 min-w-[200px]">Details</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-[#D9DEE5]">
+                  <tbody className="divide-y divide-[#D9DEE5]/60">
                     {filteredAuditLogs.map((log) => (
                       <tr
                         key={log.id}
                         onClick={() => setSelectedAuditEntry(log)}
-                        className="hover:bg-[#F1F3F5]/60 transition-colors cursor-pointer group"
+                        className="h-11 sm:h-12 hover:bg-[#F1F3F5]/60 transition-colors cursor-pointer group"
                       >
                         {/* Audit ID */}
                         <td className="py-3 px-4 font-mono font-bold text-[#176B87]">
@@ -1337,8 +1337,8 @@ export default function EvidenceAndAuditPage() {
             <div className="bg-white border border-[#D9DEE5] rounded-lg shadow-xs overflow-hidden">
               <div className="overflow-x-auto">
                 <table className="w-full min-w-[880px] text-left border-collapse text-sm">
-                  <thead>
-                    <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[11px] sm:text-xs uppercase font-semibold text-[#596579] tracking-wider">
+                  <thead className="sticky top-0 z-10 bg-[#F7F8FA]">
+                    <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[11px] sm:text-xs uppercase font-semibold text-[#596579] tracking-wider h-11">
                       <th className="py-3 px-4">Evidence Artifact</th>
                       <th className="py-3 px-4">Decision Status</th>
                       <th className="py-3 px-4 min-w-[160px]">Verified By</th>
@@ -1349,11 +1349,11 @@ export default function EvidenceAndAuditPage() {
                       <th className="py-3 px-4 text-right">Preview</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-[#D9DEE5]">
+                  <tbody className="divide-y divide-[#D9DEE5]/60">
                     {filteredVerificationHistory.map((item) => (
                       <tr
                         key={item.id}
-                        className="hover:bg-[#F1F3F5]/60 transition-colors cursor-pointer group"
+                        className="h-11 sm:h-12 hover:bg-[#F1F3F5]/60 transition-colors cursor-pointer group"
                         onClick={() => setPreviewEvidence(item)}
                       >
                         <td className="py-3 px-4">

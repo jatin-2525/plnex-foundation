@@ -1297,9 +1297,9 @@ export default function ExecutionIntelligencePage() {
         {viewMode === 'table' && (
           <div className="bg-white border border-[#D9DEE5] rounded-lg overflow-hidden shadow-xs">
             <div className="overflow-x-auto">
-              <table className="w-full min-w-[850px] text-left text-xs border-collapse">
-                <thead>
-                  <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[11px] font-bold uppercase tracking-wider text-[#596579]">
+              <table className="w-full min-w-[850px] text-left text-sm border-collapse">
+                <thead className="sticky top-0 z-10 bg-[#F7F8FA]">
+                  <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[11px] font-bold uppercase tracking-wider text-[#596579] h-11">
                     <th className="p-4 whitespace-nowrap">Event ID</th>
                     <th className="p-4 min-w-[280px]">Field Statement</th>
                     <th className="p-4 min-w-[200px]">Activity</th>
@@ -1309,7 +1309,7 @@ export default function ExecutionIntelligencePage() {
                     <th className="p-4 whitespace-nowrap text-right">Action</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#D9DEE5]">
+                <tbody className="divide-y divide-[#D9DEE5]/60">
                   {filteredEvents.length === 0 ? (
                     <tr>
                       <td colSpan={7} className="p-8 text-center text-[#596579]">
@@ -1326,7 +1326,7 @@ export default function ExecutionIntelligencePage() {
                         <tr
                           key={evt.id}
                           onClick={() => setSelectedEventForDrawer(evt)}
-                          className="hover:bg-[#EDF5F8]/50 transition-colors cursor-pointer group"
+                          className="h-11 sm:h-12 hover:bg-[#EDF5F8]/50 transition-colors cursor-pointer group"
                         >
                           {/* 1. Execution Event ID */}
                           <td className="p-4 whitespace-nowrap font-mono font-bold text-[#176B87] group-hover:underline">

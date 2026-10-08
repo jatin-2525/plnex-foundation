@@ -627,30 +627,30 @@ export function SCurveChart({
           </div>
 
           <div className="overflow-x-auto rounded border border-[#D9DEE5]">
-            <table className="w-full text-left text-xs border-collapse">
-              <thead>
-                <tr className="bg-[#F1F3F5] text-[#172033] border-b border-[#D9DEE5]">
-                  <th className="py-2 px-3 font-semibold">Period</th>
-                  <th className="py-2 px-3 font-semibold">Cutoff Date</th>
-                  <th className="py-2 px-3 font-semibold text-right">Planned Cum %</th>
-                  <th className="py-2 px-3 font-semibold text-right">Actual Cum %</th>
-                  <th className="py-2 px-3 font-semibold text-right">Forecast Cum %</th>
-                  <th className="py-2 px-3 font-semibold text-right">Variance %</th>
-                  <th className="py-2 px-3 font-semibold">Work Package / Milestone Notes</th>
+            <table className="w-full text-left text-sm border-collapse">
+              <thead className="sticky top-0 z-10 bg-[#F1F3F5]">
+                <tr className="bg-[#F1F3F5] text-[#172033] border-b border-[#D9DEE5] h-11">
+                  <th className="py-3 px-4 font-semibold">Period</th>
+                  <th className="py-3 px-4 font-semibold">Cutoff Date</th>
+                  <th className="py-3 px-4 font-semibold text-right">Planned Cum %</th>
+                  <th className="py-3 px-4 font-semibold text-right">Actual Cum %</th>
+                  <th className="py-3 px-4 font-semibold text-right">Forecast Cum %</th>
+                  <th className="py-3 px-4 font-semibold text-right">Variance %</th>
+                  <th className="py-3 px-4 font-semibold">Work Package / Milestone Notes</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#E2E8F0]">
+              <tbody className="divide-y divide-[#D9DEE5]/60">
                 {data.map((row) => {
                   const varVal = row.actual !== null ? Number((row.actual - row.planned).toFixed(1)) : null;
                   const isCurrentDD = row.isDataDate;
                   return (
                     <tr
                       key={row.period}
-                      className={`hover:bg-[#F7F8FA] transition-colors ${
+                      className={`h-11 sm:h-12 hover:bg-[#F7F8FA] transition-colors ${
                         isCurrentDD ? 'bg-[#EDF5F8] font-medium' : ''
                       }`}
                     >
-                      <td className="py-2 px-3 whitespace-nowrap">
+                      <td className="py-3 px-4 whitespace-nowrap">
                         {row.period}
                         {isCurrentDD && (
                           <span className="ml-2 inline-block px-1.5 py-0.5 rounded text-[10px] font-semibold bg-[#176B87] text-white">

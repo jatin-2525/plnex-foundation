@@ -543,8 +543,8 @@ export default function ScheduleHealthPage() {
         <div className="bg-white border border-[#D9DEE5] rounded-lg shadow-xs overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full min-w-[800px] text-left border-collapse text-sm">
-              <thead>
-                <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[11px] sm:text-xs uppercase font-semibold text-[#596579] tracking-wider">
+              <thead className="sticky top-0 z-10 bg-[#F7F8FA]">
+                <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[11px] sm:text-xs uppercase font-semibold text-[#596579] tracking-wider h-11">
                   <th className="py-3 px-4 whitespace-nowrap">Issue</th>
                   <th className="py-3 px-3 whitespace-nowrap">Severity</th>
                   <th className="py-3 px-4 whitespace-nowrap">Object</th>
@@ -554,7 +554,7 @@ export default function ScheduleHealthPage() {
                   <th className="py-3 px-4 whitespace-nowrap text-right">Action</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#D9DEE5]">
+              <tbody className="divide-y divide-[#D9DEE5]/60">
                 {filteredIssues.map((issue) => {
                   const effectiveSeverity =
                     issue.severity === 'Needs Attention' ? 'Warning' : issue.severity;
@@ -562,7 +562,7 @@ export default function ScheduleHealthPage() {
                   return (
                     <tr
                       key={issue.id}
-                      className="hover:bg-[#F9FAFC] transition-colors group"
+                      className="h-11 sm:h-12 hover:bg-[#F9FAFC] transition-colors group"
                     >
                       {/* 1. Issue (Rule + Issue ID) */}
                       <td className="py-3 px-4 align-top whitespace-nowrap">

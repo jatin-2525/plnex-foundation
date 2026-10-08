@@ -838,8 +838,8 @@ export default function ManagerDashboardPage() {
           ) : (
             <div className="overflow-x-auto border border-[#D9DEE5] rounded-lg">
               <table className="w-full min-w-[700px] text-left border-collapse text-sm">
-                <thead>
-                  <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[#596579] font-semibold text-[11px] sm:text-xs uppercase tracking-wider">
+                <thead className="sticky top-0 z-10 bg-[#F7F8FA]">
+                  <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[#596579] font-semibold text-[11px] sm:text-xs uppercase tracking-wider h-11">
                     <th className="py-3 px-4 whitespace-nowrap min-w-[220px]">Event</th>
                     <th className="py-3 px-4 whitespace-nowrap min-w-[200px]">Candidate Activity</th>
                     <th className="py-3 px-4 whitespace-nowrap">Confidence</th>
@@ -848,9 +848,9 @@ export default function ManagerDashboardPage() {
                     <th className="py-3 px-4 whitespace-nowrap text-right">Action</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#D9DEE5] text-[#172033]">
+                <tbody className="divide-y divide-[#D9DEE5]/60 text-[#172033]">
                   {reviewEvents.map((evt) => (
-                    <tr key={evt.id} className="hover:bg-[#F9FAFC] transition-colors">
+                    <tr key={evt.id} className="h-11 sm:h-12 hover:bg-[#F9FAFC] transition-colors">
                       {/* 1. Event */}
                       <td className="py-3 px-4 align-middle">
                         <span className="font-mono text-xs font-semibold text-[#176B87] block">{evt.id}</span>

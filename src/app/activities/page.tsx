@@ -689,9 +689,9 @@ export default function MyActivitiesPage() {
         {/* ========================================================= */}
         <div className="hidden md:block bg-white border border-[#D9DEE5] rounded-lg overflow-hidden">
           <div className="overflow-x-auto">
-            <table className="w-full min-w-[760px] text-left text-xs border-collapse">
-              <thead>
-                <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[#596579] font-medium">
+            <table className="w-full min-w-[760px] text-left text-sm border-collapse">
+              <thead className="sticky top-0 z-10 bg-[#F7F8FA]">
+                <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[#596579] font-medium h-11">
                   <th className="py-3 px-4 whitespace-nowrap">Activity ID</th>
                   <th className="py-3 px-4 whitespace-nowrap min-w-[240px]">Activity</th>
                   <th className="py-3 px-4 whitespace-nowrap">Area</th>
@@ -702,7 +702,7 @@ export default function MyActivitiesPage() {
                   <th className="py-3 px-4 whitespace-nowrap text-right">Action</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#D9DEE5]">
+              <tbody className="divide-y divide-[#D9DEE5]/60">
                 {filteredActivities.map((act) => {
                   const isSlipped = act.delayDays > 0;
                   const isBehindProgress = act.actualProgress < act.plannedProgress;
@@ -711,7 +711,7 @@ export default function MyActivitiesPage() {
                     <tr
                       key={act.id}
                       onClick={() => handleOpenDrawer(act)}
-                      className="hover:bg-[#F9FAFC] cursor-pointer transition-colors group"
+                      className="h-11 sm:h-12 hover:bg-[#F9FAFC] cursor-pointer transition-colors group"
                     >
                       {/* 1. Activity ID */}
                       <td className="py-3 px-4 align-middle whitespace-nowrap">

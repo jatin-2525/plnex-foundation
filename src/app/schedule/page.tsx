@@ -1570,22 +1570,22 @@ export default function SchedulePage() {
 
             {/* Error Report Table with Row, Column, Problem, Correction */}
             <div className="bg-white border border-[#E4B0AA] rounded-lg overflow-x-auto">
-              <table className="w-full min-w-[500px] text-left text-xs border-collapse">
-                <thead>
-                  <tr className="bg-[#FAF2F1] border-b border-[#E4B0AA] text-[#B5473C] font-semibold">
-                    <th className="py-2 px-3 whitespace-nowrap">Row</th>
-                    <th className="py-2 px-3 whitespace-nowrap">Column</th>
-                    <th className="py-2 px-3">Problem</th>
-                    <th className="py-2 px-3">Correction</th>
+              <table className="w-full min-w-[500px] text-left text-sm border-collapse">
+                <thead className="sticky top-0 z-10 bg-[#FAF2F1]">
+                  <tr className="bg-[#FAF2F1] border-b border-[#E4B0AA] text-[#B5473C] font-semibold h-11">
+                    <th className="py-3 px-4 whitespace-nowrap">Row</th>
+                    <th className="py-3 px-4 whitespace-nowrap">Column</th>
+                    <th className="py-3 px-4">Problem</th>
+                    <th className="py-3 px-4">Correction</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-[#F0D5D2]">
                   {activeVersion.errors.map((err, idx) => (
-                    <tr key={idx} className="hover:bg-[#FFF9F8]">
-                      <td className="py-2 px-3 font-mono font-bold text-[#172033]">{err.row}</td>
-                      <td className="py-2 px-3 font-semibold text-[#172033]">{err.column || err.field}</td>
-                      <td className="py-2 px-3 text-[#B5473C] font-medium">{err.problem || err.reason}</td>
-                      <td className="py-2 px-3 text-[#2E7D5B] font-mono">{err.correction || 'Correct in source schedule'}</td>
+                    <tr key={idx} className="h-11 sm:h-12 hover:bg-[#FFF9F8]">
+                      <td className="py-3 px-4 font-mono font-bold text-[#172033]">{err.row}</td>
+                      <td className="py-3 px-4 font-semibold text-[#172033]">{err.column || err.field}</td>
+                      <td className="py-3 px-4 text-[#B5473C] font-medium">{err.problem || err.reason}</td>
+                      <td className="py-3 px-4 text-[#2E7D5B] font-mono">{err.correction || 'Correct in source schedule'}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -2701,21 +2701,21 @@ export default function SchedulePage() {
                 {/* Canonical Error Report Table */}
                 <div className="border border-[#E4B0AA] rounded-lg overflow-x-auto bg-white shadow-xs">
                   <table className="w-full min-w-[500px] text-left text-sm border-collapse">
-                    <thead>
-                      <tr className="bg-[#FAF2F1] border-b border-[#E4B0AA] text-[#B5473C] font-semibold text-[11px] sm:text-xs uppercase tracking-wider">
-                        <th className="py-2 px-3 whitespace-nowrap">Row</th>
-                        <th className="py-2 px-3 whitespace-nowrap">Column</th>
-                        <th className="py-2 px-3">Problem</th>
-                        <th className="py-2 px-3">Correction</th>
+                    <thead className="sticky top-0 z-10 bg-[#FAF2F1]">
+                      <tr className="bg-[#FAF2F1] border-b border-[#E4B0AA] text-[#B5473C] font-semibold text-[11px] sm:text-xs uppercase tracking-wider h-11">
+                        <th className="py-3 px-4 whitespace-nowrap">Row</th>
+                        <th className="py-3 px-4 whitespace-nowrap">Column</th>
+                        <th className="py-3 px-4">Problem</th>
+                        <th className="py-3 px-4">Correction</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-[#F0D5D2] text-[14px]">
                       {importErrors.map((err, idx) => (
-                        <tr key={idx} className="hover:bg-[#FFF9F8]">
-                          <td className="py-2 px-3 font-mono font-semibold text-[#172033]">{err.row}</td>
-                          <td className="py-2 px-3 font-medium text-[#172033]">{err.column}</td>
-                          <td className="py-2 px-3 text-[#B5473C]">{err.problem}</td>
-                          <td className="py-2 px-3 text-[#2E7D5B] font-mono text-[12px]">{err.correction}</td>
+                        <tr key={idx} className="h-11 sm:h-12 hover:bg-[#FFF9F8]">
+                          <td className="py-3 px-4 font-mono font-semibold text-[#172033]">{err.row}</td>
+                          <td className="py-3 px-4 font-medium text-[#172033]">{err.column}</td>
+                          <td className="py-3 px-4 text-[#B5473C]">{err.problem}</td>
+                          <td className="py-3 px-4 text-[#2E7D5B] font-mono text-[12px]">{err.correction}</td>
                         </tr>
                       ))}
                     </tbody>
