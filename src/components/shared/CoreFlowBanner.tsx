@@ -5,7 +5,7 @@ import {
   FileText,
   Cpu,
   Layers,
-  Sparkles,
+  Target,
   Percent,
   UserCheck,
   CheckCircle2,
@@ -62,7 +62,7 @@ const FLOW_STEPS = [
     num: 4,
     title: 'CANDIDATE MATCH',
     subtitle: 'Suggested Schedule WBS Activity',
-    icon: Sparkles,
+    icon: Target,
     isAi: true,
     isGate: false,
   },
@@ -117,7 +117,7 @@ export function CoreFlowBanner({
             PLnEX Schedule Linking Core Flow
           </span>
           <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-white border border-[#D9DEE5] text-[#596579]">
-            AI Assistance ≠ Final Authority
+            Candidate Match ≠ Final Authority
           </span>
         </div>
 

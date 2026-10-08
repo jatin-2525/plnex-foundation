@@ -623,7 +623,7 @@ export default function ExecutionIntelligencePage() {
           {/* VISUAL SEPARATION OF CONCEPTS (Pipeline Definition Strip) */}
           <div className="pt-4">
             <div className="text-[10px] font-semibold uppercase tracking-wider text-[#596579] mb-2 flex items-center justify-between">
-              <span>Three Separated Project-Control Stages (No Generic AI Black-Box)</span>
+              <span>Three Separated Project-Control Stages (Auditable Lifecycle Flow)</span>
               <span className="font-mono text-[#176B87]">Canonical Flow: Extraction → Matching → Verification</span>
             </div>
 
@@ -1064,7 +1064,7 @@ export default function ExecutionIntelligencePage() {
                               className="text-[11px] font-bold text-[#176B87] hover:underline inline-flex items-center gap-1 cursor-pointer"
                             >
                               <span>{isWhyExpanded ? 'Hide Why' : 'Why this match?'}</span>
-                              <ChevronDown className={`w-3 h-3 transition-transform ${isWhyExpanded ? 'rotate-180' : ''}`} />
+                              <ChevronDown className={`w-3 h-3 ${isWhyExpanded ? 'rotate-180' : ''}`} />
                             </button>
                           </div>
                           <p className="text-[11px] text-[#596579] line-clamp-2 mt-1 leading-relaxed">
@@ -1264,7 +1264,7 @@ export default function ExecutionIntelligencePage() {
                             className="text-[11px] font-semibold text-[#596579] hover:text-[#172033] inline-flex items-center gap-1 cursor-pointer"
                           >
                             <span>{isTechExpanded ? 'Hide Technical Details' : 'Advanced: Technical Details'}</span>
-                            <ChevronDown className={`w-3 h-3 transition-transform ${isTechExpanded ? 'rotate-180' : ''}`} />
+                            <ChevronDown className={`w-3 h-3 ${isTechExpanded ? 'rotate-180' : ''}`} />
                           </button>
                         </div>
 
@@ -1654,7 +1654,7 @@ export default function ExecutionIntelligencePage() {
                 <details className="text-xs group">
                   <summary className="font-bold text-[#596579] cursor-pointer hover:text-[#172033] flex items-center justify-between">
                     <span>Technical Details</span>
-                    <ChevronDown className="w-3.5 h-3.5 transition-transform group-open:rotate-180" />
+                    <ChevronDown className="w-3.5 h-3.5 group-open:rotate-180" />
                   </summary>
                   <div className="mt-3 border border-[#D9DEE5] rounded-lg overflow-hidden divide-y divide-[#D9DEE5] bg-white">
                     {selectedEventForDrawer.processingHistory.map((h, idx) => (

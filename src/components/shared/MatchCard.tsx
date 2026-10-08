@@ -12,7 +12,7 @@ import {
   ChevronDown,
   ChevronUp,
   Layers,
-  Sparkles,
+  Target,
   GitCompare,
   Check,
   X,
@@ -80,7 +80,7 @@ function getFactorIcon(name: string) {
     case 'Project / WBS':
       return <FolderGit2 className="w-4 h-4 text-[#2E7D5B]" />;
     default:
-      return <Sparkles className="w-4 h-4 text-[#596579]" />;
+      return <Target className="w-4 h-4 text-[#596579]" />;
   }
 }
 
@@ -218,8 +218,8 @@ export function MatchCard({
         <div className="p-4 bg-white border border-[#D9DEE5] rounded-lg shadow-xs space-y-3">
           <div className="flex items-center justify-between flex-wrap gap-2">
             <span className="text-[10px] uppercase font-semibold tracking-wider text-[#596579] flex items-center gap-2">
-              <Sparkles className="w-3.5 h-3.5 text-[#176B87]" />
-              AI Match Suggestion
+              <Target className="w-3.5 h-3.5 text-[#176B87]" />
+              Suggested Match
             </span>
             <span className="text-[11px] font-mono font-medium px-2 py-0.5 rounded bg-[#F7F8FA] text-[#596579] border border-[#D9DEE5]">
               Assistive Suggestion · Not Final Authority

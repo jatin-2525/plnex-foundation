@@ -53,14 +53,14 @@ export function Modal({
     <div className="fixed inset-0 z-50 overflow-y-auto" role="dialog" aria-modal="true">
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-[#172033]/40 transition-opacity animate-in fade-in duration-200"
+        className="fixed inset-0 bg-[#172033]/40"
         onClick={onClose}
         aria-hidden="true"
       />
 
       <div className="flex min-h-full items-center justify-center p-4">
         <div
-          className={`relative w-full ${maxWidthClass} bg-white rounded-lg border border-[#D9DEE5] shadow-lg overflow-hidden transform transition-all animate-in zoom-in-95 duration-200`}
+          className={`relative w-full ${maxWidthClass} bg-white rounded-lg border border-[#D9DEE5] shadow-lg overflow-hidden`}
         >
           {/* Header */}
           <div className="flex items-start justify-between px-6 py-4 border-b border-[#D9DEE5] bg-white">

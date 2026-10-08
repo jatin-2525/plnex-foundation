@@ -1474,7 +1474,7 @@ export default function DelayDependencyImpactPage() {
             </div>
             <div className="flex items-center gap-2 text-[11px] text-[#596579] font-normal">
               <span className="hidden sm:inline">Topological CPM Model Methodology & Math Formulas</span>
-              <ChevronDown className="w-4 h-4 text-[#596579] transition-transform group-open:rotate-180" />
+              <ChevronDown className="w-4 h-4 text-[#596579] group-open:rotate-180" />
             </div>
           </summary>
 

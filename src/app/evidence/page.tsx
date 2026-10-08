@@ -1122,7 +1122,7 @@ export default function EvidenceAndAuditPage() {
                           : 'bg-white border border-[#D9DEE5] text-[#596579] hover:bg-[#F1F3F5]'
                       }`}
                     >
-                      {act === 'ALL' ? 'All Actions' : act}
+                      {act === 'ALL' ? 'All Actions' : act === 'AI Match' ? 'Suggested Match' : act}
                     </button>
                   ))}
                 </div>
@@ -1500,7 +1500,7 @@ export default function EvidenceAndAuditPage() {
             </div>
             <div className="flex items-center gap-2 text-[11px] text-[#596579] font-normal">
               <span className="hidden sm:inline">Audit Trail & Verification Records</span>
-              <ChevronDown className="w-4 h-4 text-[#596579] transition-transform group-open:rotate-180" />
+              <ChevronDown className="w-4 h-4 text-[#596579] group-open:rotate-180" />
             </div>
           </summary>
 

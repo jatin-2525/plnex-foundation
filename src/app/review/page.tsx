@@ -28,7 +28,6 @@ import {
   FileText,
   Camera,
   Layers,
-  Sparkles,
   ArrowRight,
   ArrowUpRight,
   Search,
@@ -853,7 +852,7 @@ export default function ReviewQueuePage() {
                   Schedule Integrity Policy: Human Verification Required
                 </h4>
                 <p className="text-[#596579] leading-relaxed">
-                  A high confidence suggestion (e.g. 94%) is <strong>never treated as verified</strong>. AI candidate matches are assistive only and require conscious human verification. Once approved, events are committed to Schedule Twin and cleared from this queue.
+                  A high confidence suggestion (e.g. 94%) is <strong>never treated as verified</strong>. Suggested candidate matches are assistive only and require conscious human verification. Once approved, events are committed to Schedule Twin and cleared from this queue.
                 </p>
               </div>
             </div>

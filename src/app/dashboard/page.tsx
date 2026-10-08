@@ -822,7 +822,7 @@ export default function ManagerDashboardPage() {
                 </span>
               </div>
               <p className="text-[13px] text-[#596579] mt-0.5">
-                AI Match Policy: <strong className="text-[#2E7D5B]">≥90% Auto-Link</strong>, <strong className="text-[#D98B32]">70%–89% Planner Review</strong>, <strong className="text-[#B5473C]">&lt;70% Unmatched</strong>.
+                Match Policy: <strong className="text-[#2E7D5B]">≥90% Auto-Link</strong>, <strong className="text-[#D98B32]">70%–89% Planner Review</strong>, <strong className="text-[#B5473C]">&lt;70% Unmatched</strong>.
               </p>
             </div>
             <Link
@@ -1099,7 +1099,7 @@ export default function ManagerDashboardPage() {
           isOpen={!!selectedReviewModalEvent}
           onClose={() => setSelectedReviewModalEvent(null)}
           title={`Review Match: ${selectedReviewModalEvent.id}`}
-          subtitle="Validate AI match hypothesis before committing progress to authoritative schedule twin."
+          subtitle="Validate suggested match hypothesis before committing progress to authoritative schedule twin."
           maxWidth="2xl"
           footer={
             <div className="flex items-center justify-between w-full">

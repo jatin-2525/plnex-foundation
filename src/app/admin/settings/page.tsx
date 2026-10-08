@@ -107,7 +107,7 @@ export default function AdminSettingsPage() {
                   Lock Baseline Planned Dates (Zero Implicit Overwrite)
                 </span>
                 <span className="text-[11px] text-[#596579]">
-                  Site engineers and AI matching engines can record actuals, but cannot alter baseline planned start/finish without an approved schedule revision.
+                  Site engineers and automated matching processes can record actuals, but cannot alter baseline planned start/finish without an approved schedule revision.
                 </span>
               </div>
             </label>

@@ -103,7 +103,7 @@ export function ConnectionStatusControl() {
 
       {/* Dropdown Popover */}
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-80 sm:w-96 bg-white border border-[#D9DEE5] rounded-lg shadow-lg z-50 p-4 text-xs space-y-4 animate-in fade-in duration-150">
+        <div className="absolute right-0 mt-2 w-80 sm:w-96 bg-white border border-[#D9DEE5] rounded-lg shadow-lg z-50 p-4 text-xs space-y-4">
           {/* Header */}
           <div className="flex items-center justify-between border-b border-[#D9DEE5]/60 pb-2">
             <div>

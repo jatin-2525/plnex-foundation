@@ -228,7 +228,7 @@ export default function RegisterPage() {
 
         {/* Success State Overlay */}
         {registerState === 'success' ? (
-          <div className="p-8 text-center space-y-4 animate-in fade-in zoom-in-95 duration-200">
+          <div className="p-8 text-center space-y-4">
             <div className="w-12 h-12 rounded-full bg-[#EDF7F2] border border-[#B8DCC9] flex items-center justify-center text-[#2E7D5B] mx-auto">
               <CheckCircle2 className="w-6 h-6" />
             </div>
@@ -251,7 +251,7 @@ export default function RegisterPage() {
           <form onSubmit={handleSubmit} className="p-6 md:p-8 space-y-6">
             {/* Server Failure Alert Banner */}
             {registerState === 'server_failure' && (
-              <div className="p-3 bg-[#FBEFEE] border border-[#E4B0AA] rounded-md flex items-start gap-2 text-xs text-[#B5473C] animate-in fade-in duration-150">
+              <div className="p-3 bg-[#FBEFEE] border border-[#E4B0AA] rounded-md flex items-start gap-2 text-xs text-[#B5473C]">
                 <AlertTriangle className="w-4 h-4 flex-shrink-0 mt-0.5" />
                 <div>
                   <strong className="block font-semibold">User Provisioning Gateway Error (500)</strong>
@@ -264,7 +264,7 @@ export default function RegisterPage() {
 
             {/* Duplicate Email Alert Banner */}
             {registerState === 'duplicate_email' && (
-              <div className="p-3 bg-[#FDF6ED] border border-[#F0D4A6] rounded-md flex items-start gap-2 text-xs text-[#8C5311] animate-in fade-in duration-150">
+              <div className="p-3 bg-[#FDF6ED] border border-[#F0D4A6] rounded-md flex items-start gap-2 text-xs text-[#8C5311]">
                 <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
                 <div>
                   <strong className="block font-semibold">Account Already Registered</strong>

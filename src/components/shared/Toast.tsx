@@ -54,7 +54,7 @@ function ToastItem({ toast, onDismiss }: { toast: ToastMessage; onDismiss: () =>
 
   return (
     <div
-      className={`pointer-events-auto bg-white border ${getBorderColor()} rounded-lg shadow-md p-4 flex items-start gap-3 transition-all transform animate-in slide-in-from-bottom-2 duration-200`}
+      className={`pointer-events-auto bg-white border ${getBorderColor()} rounded-lg shadow-md p-4 flex items-start gap-3`}
     >
       {getIcon()}
       <div className="flex-1 text-xs">

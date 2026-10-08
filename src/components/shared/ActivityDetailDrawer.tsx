@@ -195,14 +195,14 @@ export function ActivityDetailDrawer({
     <div className="fixed inset-0 z-50 overflow-hidden" role="dialog" aria-modal="true">
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-[#172033]/50 transition-opacity animate-in fade-in duration-200"
+        className="fixed inset-0 bg-[#172033]/50"
         onClick={handleClose}
         aria-hidden="true"
       />
 
       {/* Container: Fullscreen sheet on mobile, slide-over drawer (420–520px) on desktop */}
       <div className="fixed inset-0 sm:inset-y-0 sm:right-0 sm:left-auto max-w-full flex z-50">
-        <div className="w-full sm:w-[480px] sm:max-w-[500px] h-full bg-white sm:border-l border-[#D9DEE5] shadow-xl flex flex-col transform transition-transform duration-150">
+        <div className="w-full sm:w-[480px] sm:max-w-[500px] h-full bg-white sm:border-l border-[#D9DEE5] shadow-xl flex flex-col">
           
           {/* =========================================================================
               HEADER:
@@ -329,7 +329,7 @@ export function ActivityDetailDrawer({
                 Secondary Expandable: Full L1-L6 WBS hierarchy, contract metadata
                 --------------------------------------------------------------------- */}
             {activeTab === 'overview' && (
-              <div className="space-y-4 animate-in fade-in duration-150">
+              <div className="space-y-4">
                 {/* Primary: Scope Description */}
                 <div className="p-4 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg space-y-2">
                   <span className="text-[11px] uppercase font-semibold text-[#596579] tracking-wider block">
@@ -473,7 +473,7 @@ export function ActivityDetailDrawer({
                 Secondary Expandable: Historical checkpoints
                 --------------------------------------------------------------------- */}
             {(activeTab === 'progress' || activeTab === 'plan-vs-actual') && (
-              <div className="space-y-4 animate-in fade-in duration-150">
+              <div className="space-y-4">
                 {/* Primary Progress Card */}
                 <div className="p-4 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg space-y-3">
                   <div className="flex items-center justify-between">
@@ -602,7 +602,7 @@ export function ActivityDetailDrawer({
                 Secondary Expandable: Why this match? feature explanation
                 --------------------------------------------------------------------- */}
             {activeTab === 'execution' && (
-              <div className="space-y-4 animate-in fade-in duration-150">
+              <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <span className="text-[11px] uppercase font-semibold text-[#596579] tracking-wider">
                     Execution Events ({linkedExecutionEvents.length})
@@ -735,7 +735,7 @@ export function ActivityDetailDrawer({
                  Secondary Expandable: Cryptographic SHA256, technical metadata
                  --------------------------------------------------------------------- */}
              {activeTab === 'evidence' && (
-               <div className="space-y-4 animate-in fade-in duration-150">
+               <div className="space-y-4">
                  <div className="flex items-center justify-between">
                    <span className="text-[11px] uppercase font-semibold text-[#596579] tracking-wider">
                      Evidence Records ({linkedEvidenceItems.length})
@@ -858,7 +858,7 @@ export function ActivityDetailDrawer({
                 Secondary Expandable: Logic details, lag days, mitigation notes
                 --------------------------------------------------------------------- */}
             {activeTab === 'dependencies' && (
-              <div className="space-y-4 animate-in fade-in duration-150">
+              <div className="space-y-4">
                 {/* Float & Critical Path Summary */}
                 <div className="p-4 bg-[#FDF6ED] border border-[#F0D4A6] rounded-lg flex items-center justify-between text-xs">
                   <div>
@@ -995,7 +995,7 @@ export function ActivityDetailDrawer({
                 Secondary Expandable: Telemetry & Record IDs
                 --------------------------------------------------------------------- */}
             {activeTab === 'history' && (
-              <div className="space-y-4 animate-in fade-in duration-150">
+              <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <span className="text-[11px] uppercase font-semibold text-[#596579] tracking-wider">
                     History &amp; Audit Trail ({auditHistory.length})
@@ -1110,7 +1110,7 @@ export function ActivityDetailDrawer({
                 type="button"
                 onClick={handleReviewMatch}
                 className="min-h-[44px] px-3.5 py-2 text-xs font-semibold bg-white text-[#176B87] border border-[#176B87] hover:bg-[#EDF5F8] rounded-lg transition-colors inline-flex items-center justify-center cursor-pointer"
-                title="Review AI candidate matches"
+                title="Review candidate matches"
               >
                 Review Match
               </button>

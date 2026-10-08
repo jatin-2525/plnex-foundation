@@ -1485,7 +1485,7 @@ export default function ProjectOverviewPage() {
           isOpen={isFieldModalOpen}
           onClose={() => setIsFieldModalOpen(false)}
           title={`Capture Field Execution Update — ${project.code}`}
-          subtitle="Record site daily progress statement for automated AI matching and verification."
+          subtitle="Record site daily progress statement for automated matching and verification."
           maxWidth="lg"
           footer={
             <div className="flex items-center justify-end gap-2 w-full">

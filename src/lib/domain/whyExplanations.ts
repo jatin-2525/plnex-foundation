@@ -3,7 +3,7 @@
  *
  * Provides structured, transparent, non-black-box explanations for computed metrics:
  * 1. Why is this delayed? (Delay & critical path impact)
- * 2. Why is confidence 94%? (Multi-factor AI match scoring)
+ * 2. Why is confidence 94%? (Multi-factor match scoring)
  * 3. Why is variance -7%? (Earned value planned vs actual progress)
  * 4. Why is this activity/schedule unhealthy? (DCMA 14-point schedule health)
  */
@@ -152,10 +152,10 @@ export const WHY_EXPLANATION_PRESETS: Record<string, WhyExplanationData> = {
       'Reconcile 6 pending field events in Review Queue; confirming 3 pending welding reports will immediately recover +4.2% of verified actual progress.',
   },
 
-  // 3. CONFIDENCE EXPLANATION (94% AI Match)
+  // 3. CONFIDENCE EXPLANATION (94% Suggested Match)
   'confidence:EVT-2026-001': {
     type: 'confidence',
-    title: 'AI Match Confidence Scoring Factors',
+    title: 'Confidence Scoring Factors',
     subjectId: 'EVT-2026-001',
     subjectName: 'Line 24-XX Spool Joint Welding Observation',
     metricLabel: 'Match Confidence',

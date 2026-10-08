@@ -51,7 +51,7 @@ export function Drawer({
     <div className="fixed inset-0 z-50 overflow-hidden" role="dialog" aria-modal="true">
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-[#172033]/50 transition-opacity animate-in fade-in duration-200"
+        className="fixed inset-0 bg-[#172033]/50"
         onClick={onClose}
         aria-hidden="true"
       />
@@ -59,7 +59,7 @@ export function Drawer({
       {/* Container: Fullscreen sheet on mobile, slide-over drawer on tablet/desktop */}
       <div className="fixed inset-0 sm:inset-y-0 sm:right-0 sm:left-auto max-w-full flex sm:pl-10 z-10">
         <div
-          className={`w-full sm:w-screen sm:${widthClass} h-full bg-white sm:border-l border-[#D9DEE5] shadow-lg flex flex-col transform transition-transform duration-150`}
+          className={`w-full sm:w-screen sm:${widthClass} h-full bg-white sm:border-l border-[#D9DEE5] shadow-lg flex flex-col`}
         >
           {/* Header */}
           <div className="flex items-start justify-between px-4 sm:px-6 py-3 sm:py-4 border-b border-[#D9DEE5] bg-white flex-shrink-0">

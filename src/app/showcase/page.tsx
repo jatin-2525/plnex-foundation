@@ -30,7 +30,7 @@ import { spacing } from '../../tokens/spacing';
 import { PIPELINE_STAGES } from '../../tokens/status';
 import {
   Layers,
-  Sparkles,
+  Target,
   SlidersHorizontal,
   CheckCircle2,
   AlertTriangle,
@@ -200,7 +200,7 @@ export default function ShowcasePage() {
       {/* 2. Semantic Badges (Status, Confidence, Variance) */}
       <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 space-y-4">
         <h3 className="text-xs font-bold uppercase tracking-wider text-[#172033] mb-1">
-          2. Semantic Status & AI Badges
+          2. Semantic Status & Confidence Badges
         </h3>
 
         <div className="space-y-4 text-xs">
@@ -230,7 +230,7 @@ export default function ShowcasePage() {
 
           <div>
             <h4 className="font-semibold text-[#596579] mb-2">
-              Explainable AI Confidence Thresholds (≥90% High Confidence, 70-89% Review Required, &lt;70% Unmatched):
+              Confidence Thresholds (≥90% High Confidence, 70-89% Review Required, &lt;70% Unmatched):
             </h4>
             <div className="flex flex-wrap gap-2">
               <ConfidenceBadge score={94} />
@@ -442,11 +442,11 @@ export default function ShowcasePage() {
         <div className="flex items-center justify-between flex-wrap gap-2">
           <div>
             <h3 className="text-sm font-bold text-[#172033] flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-[#176B87]" />
+              <Target className="w-4 h-4 text-[#176B87]" />
               <span>Reusable PLnEX Match Explanation Component</span>
             </h3>
             <p className="text-xs text-[#596579]">
-              Strictly auditable explainability model. Never shows an unexplained AI percentage. Decomposes confidence into the 5 explicit signals: Activity keywords, Area / Line, Discipline, Context / Date, and Project / WBS.
+              Strictly auditable explainability model. Never shows an unexplained percentage. Decomposes confidence into the 5 explicit signals: Activity keywords, Area / Line, Discipline, Context / Date, and Project / WBS.
             </p>
           </div>
         </div>

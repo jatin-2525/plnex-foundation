@@ -19,7 +19,8 @@ import {
   Mic,
   Send,
   Layers,
-  Sparkles,
+  Target,
+  CheckSquare,
   CheckCircle2,
   FileSpreadsheet,
   Clock,
@@ -177,7 +178,7 @@ export default function FieldPage() {
               href="/field/capture"
               className="min-h-[44px] inline-flex items-center gap-2 px-4 py-2 bg-white hover:bg-[#F1F3F5] text-[#172033] border border-[#D9DEE5] text-xs font-bold rounded-lg shadow-2xs transition-colors"
             >
-              <Sparkles className="w-3.5 h-3.5 text-[#176B87]" />
+              <Target className="w-3.5 h-3.5 text-[#176B87]" />
               <span>Field Capture</span>
             </Link>
             <Link
@@ -296,7 +297,7 @@ export default function FieldPage() {
                 disabled={isSubmitting}
                 className="w-full sm:w-auto min-h-[44px] inline-flex items-center justify-center gap-2 px-4 py-2 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-semibold rounded-md shadow-xs transition-colors disabled:opacity-50"
               >
-                <Sparkles className="w-3.5 h-3.5" />
+                <CheckSquare className="w-3.5 h-3.5" />
                 {isSubmitting ? 'Extracting & Matching...' : 'Process Field Update & Match Activity'}
               </button>
             </div>

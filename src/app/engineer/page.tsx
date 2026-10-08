@@ -38,7 +38,6 @@ import {
   MapPin,
   FileSpreadsheet,
   Layers,
-  Sparkles,
   ExternalLink,
 } from 'lucide-react';
 

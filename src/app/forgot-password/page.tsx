@@ -102,7 +102,7 @@ export default function ForgotPasswordPage() {
 
         {/* State: request accepted (Success Message) */}
         {pageState === 'request_accepted' ? (
-          <div className="p-6 md:p-8 space-y-6 animate-in fade-in zoom-in-95 duration-200">
+          <div className="p-6 md:p-8 space-y-6">
             <div className="w-12 h-12 rounded-full bg-[#EDF7F2] border border-[#B8DCC9] flex items-center justify-center text-[#2E7D5B] mx-auto">
               <CheckCircle2 className="w-6 h-6" />
             </div>
@@ -162,7 +162,7 @@ export default function ForgotPasswordPage() {
 
             {/* Server Error Alert Banner */}
             {pageState === 'server_error' && (
-              <div className="p-3 bg-[#FBEFEE] border border-[#E4B0AA] rounded-md flex items-start gap-2 text-xs text-[#B5473C] animate-in fade-in duration-150">
+              <div className="p-3 bg-[#FBEFEE] border border-[#E4B0AA] rounded-md flex items-start gap-2 text-xs text-[#B5473C]">
                 <AlertTriangle className="w-4 h-4 flex-shrink-0 mt-0.5" />
                 <div>
                   <strong className="block font-semibold">IAM Dispatch Server Error (500)</strong>

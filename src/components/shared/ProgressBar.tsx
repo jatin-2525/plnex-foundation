@@ -75,7 +75,7 @@ export function ProgressBar({
         )}
         {/* Actual progress fill */}
         <div
-          className="h-full rounded-full transition-all duration-300"
+          className="h-full rounded-full"
           style={{
             width: `${clampedActual}%`,
             backgroundColor: barColor,

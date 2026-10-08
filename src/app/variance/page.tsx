@@ -242,7 +242,7 @@ export default function VariancePage() {
 
           {/* Simulation Output */}
           {simulationResult && (
-            <div className="p-4 border rounded-lg bg-white border-[#D9DEE5] space-y-4 animate-in fade-in duration-150">
+            <div className="p-4 border rounded-lg bg-white border-[#D9DEE5] space-y-4">
               <div className="flex items-center justify-between pb-3 border-b border-[#D9DEE5]">
                 <div>
                   <h4 className="text-xs font-bold uppercase tracking-wider text-[#172033]">

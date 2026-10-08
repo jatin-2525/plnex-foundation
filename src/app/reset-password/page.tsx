@@ -143,7 +143,7 @@ function ResetPasswordForm() {
 
         {/* State 1: Token Invalid */}
         {pageState === 'token_invalid' && (
-          <div className="p-6 md:p-8 space-y-4 text-center animate-in fade-in zoom-in-95 duration-200">
+          <div className="p-6 md:p-8 space-y-4 text-center">
             <div className="w-12 h-12 rounded-full bg-[#FBEFEE] border border-[#E4B0AA] flex items-center justify-center text-[#B5473C] mx-auto">
               <AlertCircle className="w-6 h-6" />
             </div>
@@ -171,7 +171,7 @@ function ResetPasswordForm() {
 
         {/* State 2: Token Expired */}
         {pageState === 'token_expired' && (
-          <div className="p-6 md:p-8 space-y-4 text-center animate-in fade-in zoom-in-95 duration-200">
+          <div className="p-6 md:p-8 space-y-4 text-center">
             <div className="w-12 h-12 rounded-full bg-[#FDF6ED] border border-[#F0D4A6] flex items-center justify-center text-[#8C5311] mx-auto">
               <Clock className="w-6 h-6" />
             </div>
@@ -199,7 +199,7 @@ function ResetPasswordForm() {
 
         {/* State 3: Success State */}
         {pageState === 'success' && (
-          <div className="p-6 md:p-8 space-y-4 text-center animate-in fade-in zoom-in-95 duration-200">
+          <div className="p-6 md:p-8 space-y-4 text-center">
             <div className="w-12 h-12 rounded-full bg-[#EDF7F2] border border-[#B8DCC9] flex items-center justify-center text-[#2E7D5B] mx-auto">
               <CheckCircle2 className="w-6 h-6" />
             </div>

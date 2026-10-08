@@ -21,7 +21,7 @@ import {
   AlertTriangle,
   FileBarChart,
   FolderGit2,
-  Sparkles,
+  CheckSquare,
   ArrowRight,
   Clock,
   AlertCircle,
@@ -41,7 +41,7 @@ function getEntityTypeIcon(type: SearchResultType) {
     case 'Evidence':
       return <Camera className="w-3.5 h-3.5 text-[#2E7D5B]" />;
     case 'Review Item':
-      return <Sparkles className="w-3.5 h-3.5 text-[#D98B32]" />;
+      return <CheckSquare className="w-3.5 h-3.5 text-[#D98B32]" />;
     case 'Risk':
       return <AlertTriangle className="w-3.5 h-3.5 text-[#B5473C]" />;
     case 'Report':

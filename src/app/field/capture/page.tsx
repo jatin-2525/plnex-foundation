@@ -28,7 +28,6 @@ import {
   ArrowLeft,
   Check,
   RefreshCw,
-  Sparkles,
   MapPin,
 } from 'lucide-react';
 

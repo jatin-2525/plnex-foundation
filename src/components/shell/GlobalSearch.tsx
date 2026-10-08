@@ -21,7 +21,7 @@ import {
   AlertTriangle,
   FileBarChart,
   FolderGit2,
-  Sparkles,
+  CheckSquare,
   ArrowRight,
   CornerDownLeft,
   Clock,
@@ -50,7 +50,7 @@ function getEntityTypeIcon(type: SearchResultType) {
     case 'Evidence':
       return <Camera className="w-3.5 h-3.5 text-[#2E7D5B]" />;
     case 'Review Item':
-      return <Sparkles className="w-3.5 h-3.5 text-[#D98B32]" />;
+      return <CheckSquare className="w-3.5 h-3.5 text-[#D98B32]" />;
     case 'Risk':
       return <AlertTriangle className="w-3.5 h-3.5 text-[#B5473C]" />;
     case 'Report':
@@ -274,14 +274,14 @@ export function GlobalSearch() {
     >
       {/* Dark backdrop */}
       <div
-        className="fixed inset-0 bg-[#172033]/50 transition-opacity duration-150"
+        className="fixed inset-0 bg-[#172033]/50"
         onClick={() => setGlobalSearchOpen(false)}
         aria-hidden="true"
       />
 
       <div className="flex min-h-full items-start justify-center pt-16 sm:pt-24 p-3 sm:p-4">
         <div
-          className="relative w-full max-w-3xl bg-white rounded-lg border border-[#D9DEE5] shadow-lg overflow-hidden duration-150 flex flex-col max-h-[80vh]"
+          className="relative w-full max-w-3xl bg-white rounded-lg border border-[#D9DEE5] shadow-lg overflow-hidden flex flex-col max-h-[80vh]"
           onClick={(e) => e.stopPropagation()}
         >
           {/* =========================================================================
@@ -588,9 +588,9 @@ export function GlobalSearch() {
                           {item.status}
                         </span>
 
-                        <span className="text-[11px] font-bold text-[#176B87] inline-flex items-center gap-1 group">
+                        <span className="text-[11px] font-bold text-[#176B87] inline-flex items-center gap-1">
                           <span>Open</span>
-                          <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
+                          <ArrowRight className="w-3 h-3" />
                         </span>
                       </div>
                     </div>

@@ -15,7 +15,7 @@ import {
   AlertCircle,
   Clock,
   X,
-  Sparkles,
+  ClipboardCheck,
   TrendingDown,
   GitBranch,
   FileText,
@@ -41,7 +41,7 @@ import {
 function getNotificationTypeIcon(type: NotificationType) {
   switch (type) {
     case 'New review required':
-      return <Sparkles className="w-4 h-4 text-[#D98B32]" />;
+      return <ClipboardCheck className="w-4 h-4 text-[#D98B32]" />;
     case 'Activity delayed':
       return <TrendingDown className="w-4 h-4 text-[#B5473C]" />;
     case 'Dependency impacted':
@@ -463,7 +463,7 @@ export function NotificationCenter() {
                         {/* Primary Action Button */}
                         <span className="inline-flex items-center gap-1 text-[11px] font-bold text-[#176B87] group-hover:underline">
                           <span>{notification.destination.actionLabel}</span>
-                          <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
+                          <ArrowRight className="w-3 h-3" />
                         </span>
 
                         {/* Mark Read / Unread / Dismiss Actions */}

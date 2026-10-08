@@ -6,7 +6,7 @@ import { WhyExplanationData } from '../../lib/domain/whyExplanations';
 import {
   HelpCircle,
   TrendingDown,
-  Sparkles,
+  Target,
   Activity,
   CheckCircle2,
   AlertTriangle,
@@ -32,7 +32,7 @@ export interface WhyExplanationModalProps {
  *
  * Explains computed project information concisely across 6 dimensions:
  * - Progress (Verified progress breakdown)
- * - Confidence (AI match scoring factors)
+ * - Confidence (Match scoring factors)
  * - Schedule Health (DCMA 14-point CPM integrity)
  * - Variance (Earned value planned vs actual)
  * - Delay (Root causes and predecessor lags)
@@ -60,7 +60,7 @@ export function WhyExplanationModal({
       case 'progress':
         return <Activity className="w-5 h-5 text-[#176B87]" />;
       case 'confidence':
-        return <Sparkles className="w-5 h-5 text-[#176B87]" />;
+        return <Target className="w-5 h-5 text-[#176B87]" />;
       case 'health':
         return <ShieldCheck className="w-5 h-5 text-[#D98B32]" />;
       case 'variance':
@@ -262,7 +262,7 @@ export function WhyExplanationModal({
             </button>
 
             {showTechnicalDetails && (
-              <div className="mt-2 p-3 rounded-lg bg-[#F7F8FA] border border-[#D9DEE5] space-y-2 text-[11px] font-mono animate-in fade-in duration-150">
+              <div className="mt-2 p-3 rounded-lg bg-[#F7F8FA] border border-[#D9DEE5] space-y-2 text-[11px] font-mono">
                 <div className="flex items-start justify-between gap-2">
                   <span className="text-[#7B8798]">Calculation Baseline:</span>
                   <span className="font-bold text-[#172033] text-right">{data.algorithmOrRule}</span>

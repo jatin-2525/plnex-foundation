@@ -9,7 +9,7 @@ import {
   AlertCircle,
   HelpCircle,
   Layers,
-  Sparkles,
+  Target,
   MapPin,
   Calendar,
   FolderGit2,
@@ -102,7 +102,7 @@ function getFactorIcon(factor: ScoringFactorName) {
     case 'Project / WBS':
       return <FolderGit2 className="w-4 h-4 text-[#2E7D5B]" />;
     default:
-      return <Sparkles className="w-4 h-4 text-[#596579]" />;
+      return <Target className="w-4 h-4 text-[#596579]" />;
   }
 }
 
@@ -278,7 +278,7 @@ export function MatchExplanation({
           <div className="flex items-center justify-between flex-wrap gap-2">
             <div className="flex items-center gap-2">
               <div className="w-7 h-7 rounded-lg bg-[#EDF5F8] border border-[#B3CBE0] flex items-center justify-center text-[#176B87]">
-                <Sparkles className="w-4 h-4" />
+                <Target className="w-4 h-4" />
               </div>
               <div>
                 <h3 className="font-bold text-sm text-[#172033] flex items-center gap-2">
@@ -288,7 +288,7 @@ export function MatchExplanation({
                   </span>
                 </h3>
                 <p className="text-[11px] text-[#596579]">
-                  Zero black-box AI percentage. Decomposed across 5 explicit engineering signals.
+                  Decomposed across 5 explicit engineering signals with zero unexplained variance.
                 </p>
               </div>
             </div>
@@ -433,7 +433,7 @@ export function MatchExplanation({
           <div className="flex items-center gap-2">
             <ShieldCheck className="w-4 h-4 text-[#176B87]" />
             <h4 className="font-bold text-xs uppercase tracking-wider text-[#596579]">
-              Deterministic Score Decomposition (No Black-Box AI)
+              Deterministic Score Factor Breakdown
             </h4>
           </div>
           <button
@@ -850,7 +850,7 @@ export function MatchExplanation({
               <Binary className="w-3.5 h-3.5 text-[#7B8798]" />
               <span>Technical Details</span>
             </span>
-            <span className="text-[11px] text-[#7B8798] group-open:rotate-180 transition-transform">▼</span>
+            <span className="text-[11px] text-[#7B8798] group-open:rotate-180">▼</span>
           </summary>
           <div className="p-4 sm:px-6 pt-0 text-[11px] text-[#596579] space-y-2">
             <div className="flex items-center justify-between flex-wrap gap-2">

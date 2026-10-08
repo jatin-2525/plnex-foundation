@@ -41,7 +41,6 @@ import {
   HardHat,
   SlidersHorizontal,
   RotateCcw,
-  Sparkles,
   User,
   Hash,
   Lock,
