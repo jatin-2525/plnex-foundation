@@ -1209,8 +1209,22 @@ export default function ScheduleTwinPage() {
               />
 
               {filteredActivities.length === 0 ? (
-                <div className="p-8 text-center text-xs text-[#596579]">
-                  No activities match the current filters.
+                <div className="p-8 text-center bg-white">
+                  <p className="font-semibold text-sm text-[#172033]">No activities match your filters</p>
+                  <p className="text-xs text-[#596579] mt-1 max-w-sm mx-auto">
+                    None of the schedule twin activities match the current search query, WBS level, or critical path filter.
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSearchQuery('');
+                      setLevelFilter('all');
+                      setCriticalOnly(false);
+                    }}
+                    className="mt-3 text-xs font-semibold text-[#176B87] hover:underline cursor-pointer"
+                  >
+                    Reset All Filters
+                  </button>
                 </div>
               ) : (
                 filteredActivities.map((act) => {

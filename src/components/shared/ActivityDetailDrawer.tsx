@@ -616,8 +616,17 @@ export function ActivityDetailDrawer({
                 </div>
 
                 {linkedExecutionEvents.length === 0 ? (
-                  <div className="p-6 text-center border border-dashed border-[#D9DEE5] rounded-lg bg-[#F7F8FA]">
-                    <p className="text-xs font-semibold text-[#596579]">No execution events matched yet</p>
+                  <div className="p-6 text-center border border-dashed border-[#D9DEE5] rounded-lg bg-[#F7F8FA] space-y-1">
+                    <p className="text-xs font-semibold text-[#172033]">No execution events matched yet</p>
+                    <p className="text-[11px] text-[#596579] max-w-xs mx-auto">
+                      Field reports submitted for this project will appear here after automated matching and verification.
+                    </p>
+                    <Link
+                      href="/execution"
+                      className="inline-block mt-2 text-xs font-semibold text-[#176B87] hover:underline"
+                    >
+                      Open Execution Intel Feed →
+                    </Link>
                   </div>
                 ) : (
                   <div className="space-y-3">
@@ -740,8 +749,17 @@ export function ActivityDetailDrawer({
                  </div>
 
                  {linkedEvidenceItems.length === 0 ? (
-                   <div className="p-6 text-center border border-dashed border-[#D9DEE5] rounded-lg bg-[#F7F8FA]">
-                     <p className="text-xs font-semibold text-[#596579]">No physical evidence linked</p>
+                   <div className="p-6 text-center border border-dashed border-[#D9DEE5] rounded-lg bg-[#F7F8FA] space-y-1">
+                     <p className="text-xs font-semibold text-[#172033]">No physical evidence linked</p>
+                     <p className="text-[11px] text-[#596579] max-w-xs mx-auto">
+                       Photographic logs and QA/QC certificates linked to this activity will appear here after verification.
+                     </p>
+                     <Link
+                       href={`/evidence?activityId=${encodeURIComponent(activity.id)}`}
+                       className="inline-block mt-2 text-xs font-semibold text-[#176B87] hover:underline"
+                     >
+                       Open Evidence &amp; Audit →
+                     </Link>
                    </div>
                  ) : (
                    <div className="space-y-3">
@@ -986,9 +1004,12 @@ export function ActivityDetailDrawer({
                 </div>
 
                 {auditHistory.length === 0 ? (
-                  <p className="p-6 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg text-center text-xs text-[#7B8798]">
-                    No historical modifications recorded yet.
-                  </p>
+                  <div className="p-6 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg text-center space-y-1">
+                    <p className="font-semibold text-xs text-[#172033]">No historical modifications recorded yet</p>
+                    <p className="text-[11px] text-[#596579]">
+                      Baseline revisions and verified actual modifications for this activity will be logged here.
+                    </p>
+                  </div>
                 ) : (
                   <div className="space-y-3 relative before:absolute before:inset-y-0 before:left-3 before:w-0.5 before:bg-[#D9DEE5]">
                     {auditHistory.map((log) => (

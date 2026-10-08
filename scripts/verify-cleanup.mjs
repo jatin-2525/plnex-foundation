@@ -128,14 +128,14 @@ assert(fs.existsSync(emptyStatePath), 'EmptyState.tsx exists');
 const reviewPagePath = path.resolve('src/app/review/page.tsx');
 const reviewPageContent = fs.readFileSync(reviewPagePath, 'utf8');
 
-assert(reviewPageContent.includes('No review items'), 'Review page includes "No review items" empty state title');
-assert(reviewPageContent.includes('Nothing requires your attention right now'), 'Review page includes "Nothing requires your attention right now" empty state description');
+assert(reviewPageContent.includes('No pending review items'), 'Review page includes "No pending review items" empty state title');
+assert(reviewPageContent.includes('All incoming execution events have been matched and verified'), 'Review page includes informative empty state description explaining why');
 
 // 7. LOADING STATES
 const loadingStatePath = path.resolve('src/components/shared/LoadingState.tsx');
 assert(fs.existsSync(loadingStatePath), 'LoadingState.tsx exists');
 const loadingStateContent = fs.readFileSync(loadingStatePath, 'utf8');
-assert(loadingStateContent.includes('skeleton') && loadingStateContent.includes('spinner'), 'LoadingState provides skeleton and spinner states');
+assert(loadingStateContent.includes('Loading schedule...') && !loadingStateContent.includes('animate-pulse'), 'LoadingState provides restrained loading indicator without pulse animation');
 
 // 8. ERROR STATES
 const errorStatePath = path.resolve('src/components/shared/ErrorState.tsx');

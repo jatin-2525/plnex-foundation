@@ -555,7 +555,27 @@ export default function ScheduleHealthPage() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-[#D9DEE5]/60">
-                {filteredIssues.map((issue) => {
+                {filteredIssues.length === 0 ? (
+                  <tr>
+                    <td colSpan={7} className="py-8 px-4 text-center text-[#596579]">
+                      <CheckCircle2 className="w-8 h-8 text-[#2E7D5B] mx-auto mb-2" />
+                      <p className="font-semibold text-sm text-[#172033]">No health integrity issues found</p>
+                      <p className="text-xs text-[#596579] mt-1 max-w-sm mx-auto">
+                        All schedule activities satisfy the active health rule criteria, or no issues match your filter.
+                      </p>
+                      {(severityFilter !== 'ALL' || statusFilter !== 'ALL' || selectedRuleFilter !== 'ALL' || searchQuery) && (
+                        <button
+                          type="button"
+                          onClick={handleResetFilters}
+                          className="mt-3 text-xs font-semibold text-[#176B87] hover:underline cursor-pointer"
+                        >
+                          Reset Filters
+                        </button>
+                      )}
+                    </td>
+                  </tr>
+                ) : (
+                  filteredIssues.map((issue) => {
                   const effectiveSeverity =
                     issue.severity === 'Needs Attention' ? 'Warning' : issue.severity;
 
@@ -700,7 +720,8 @@ export default function ScheduleHealthPage() {
                       </td>
                     </tr>
                   );
-                })}
+                })
+              )}
               </tbody>
             </table>
           </div>

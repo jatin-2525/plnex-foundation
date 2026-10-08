@@ -772,7 +772,29 @@ export default function EvidenceAndAuditPage() {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-[#D9DEE5]/60">
-                    {filteredEvidence.map((item) => {
+                    {filteredEvidence.length === 0 ? (
+                      <tr>
+                        <td colSpan={9} className="py-8 px-4 text-center text-[#596579]">
+                          <FolderKanban className="w-8 h-8 text-[#7B8798] mx-auto mb-2" />
+                          <p className="font-semibold text-sm text-[#172033]">No evidence documents match your filters</p>
+                          <p className="text-xs text-[#596579] mt-1 max-w-sm mx-auto">
+                            No photographic records, inspection tickets, or test certificates match your active filter settings.
+                          </p>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setEvidenceSearch('');
+                              setSelectedType('ALL');
+                              setSelectedVerificationStatus('ALL');
+                            }}
+                            className="mt-3 text-xs font-semibold text-[#176B87] hover:underline cursor-pointer"
+                          >
+                            Reset All Filters
+                          </button>
+                        </td>
+                      </tr>
+                    ) : (
+                      filteredEvidence.map((item) => {
                       const typeBadge = getEvidenceTypeBadge(item.type);
                       const TypeIcon = typeBadge.icon;
                       const isMetaExpanded = !!expandedMetadataIds[item.id];
@@ -974,7 +996,8 @@ export default function EvidenceAndAuditPage() {
                           )}
                         </React.Fragment>
                       );
-                    })}
+                    })
+                  )}
                   </tbody>
                 </table>
               </div>
@@ -1150,7 +1173,29 @@ export default function EvidenceAndAuditPage() {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-[#D9DEE5]/60">
-                    {filteredAuditLogs.map((log) => (
+                    {filteredAuditLogs.length === 0 ? (
+                      <tr>
+                        <td colSpan={7} className="py-8 px-4 text-center text-[#596579]">
+                          <Clock className="w-8 h-8 text-[#7B8798] mx-auto mb-2" />
+                          <p className="font-semibold text-sm text-[#172033]">No audit log entries found</p>
+                          <p className="text-xs text-[#596579] mt-1 max-w-sm mx-auto">
+                            No tamper-evident baseline modifications match the current search or filter parameters.
+                          </p>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setAuditSearch('');
+                              setAuditActionFilter('ALL');
+                              setAuditActorFilter('ALL');
+                            }}
+                            className="mt-3 text-xs font-semibold text-[#176B87] hover:underline cursor-pointer"
+                          >
+                            Reset All Filters
+                          </button>
+                        </td>
+                      </tr>
+                    ) : (
+                      filteredAuditLogs.map((log) => (
                       <tr
                         key={log.id}
                         onClick={() => setSelectedAuditEntry(log)}
@@ -1220,7 +1265,8 @@ export default function EvidenceAndAuditPage() {
                           </p>
                         </td>
                       </tr>
-                    ))}
+                    ))
+                  )}
                   </tbody>
                 </table>
               </div>
@@ -1350,7 +1396,25 @@ export default function EvidenceAndAuditPage() {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-[#D9DEE5]/60">
-                    {filteredVerificationHistory.map((item) => (
+                    {filteredVerificationHistory.length === 0 ? (
+                      <tr>
+                        <td colSpan={8} className="py-8 px-4 text-center text-[#596579]">
+                          <CheckCircle2 className="w-8 h-8 text-[#2E7D5B] mx-auto mb-2" />
+                          <p className="font-semibold text-sm text-[#172033]">No verification records found</p>
+                          <p className="text-xs text-[#596579] mt-1 max-w-sm mx-auto">
+                            No human engineering sign-offs match your active search or verification filter.
+                          </p>
+                          <button
+                            type="button"
+                            onClick={() => setVerificationSearch('')}
+                            className="mt-3 text-xs font-semibold text-[#176B87] hover:underline cursor-pointer"
+                          >
+                            Clear Search Query
+                          </button>
+                        </td>
+                      </tr>
+                    ) : (
+                      filteredVerificationHistory.map((item) => (
                       <tr
                         key={item.id}
                         className="h-11 sm:h-12 hover:bg-[#F1F3F5]/60 transition-colors cursor-pointer group"
@@ -1410,7 +1474,8 @@ export default function EvidenceAndAuditPage() {
                           </button>
                         </td>
                       </tr>
-                    ))}
+                    ))
+                  )}
                   </tbody>
                 </table>
               </div>

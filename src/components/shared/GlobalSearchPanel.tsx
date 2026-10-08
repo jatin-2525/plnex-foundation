@@ -272,9 +272,11 @@ export function GlobalSearchPanel({
         )}
 
         {isLoading && !hasError && (
-          <div className="p-6 text-center space-y-2">
-            <Loader2 className="w-5 h-5 text-[#176B87] animate-spin mx-auto" />
-            <p className="text-xs text-[#596579]">Searching master index...</p>
+          <div className="p-6 text-center" role="status" aria-live="polite">
+            <div className="inline-flex items-center gap-2 text-xs text-[#596579]">
+              <Loader2 className="w-4 h-4 animate-spin text-[#176B87] flex-shrink-0" />
+              <span className="font-medium text-[#172033]">Searching master index...</span>
+            </div>
           </div>
         )}
 

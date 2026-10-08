@@ -11,8 +11,10 @@ export interface DataTableProps<T> {
   columns: ColumnDef<T>[];
   keyExtractor: (row: T, index: number) => string;
   isLoading?: boolean;
+  loadingMessage?: string;
   emptyTitle?: string;
   emptyDescription?: string;
+  emptyAction?: { label: string; onClick: () => void };
   selectable?: boolean;
   selectedIds?: string[];
   onSelectRow?: (id: string, selected: boolean) => void;
@@ -27,8 +29,10 @@ export function DataTable<T>({
   columns,
   keyExtractor,
   isLoading = false,
-  emptyTitle = 'No records found',
-  emptyDescription = 'There are no items matching the current query criteria.',
+  loadingMessage = 'Loading table records...',
+  emptyTitle = 'No records found in this view',
+  emptyDescription = 'No table records match the current filter or query criteria. Adjust your filters or reset to view all entries.',
+  emptyAction,
   selectable = false,
   selectedIds = [],
   onSelectRow,
@@ -42,11 +46,11 @@ export function DataTable<T>({
   const [currentPage, setCurrentPage] = useState<number>(1);
 
   if (isLoading) {
-    return <LoadingState message="Loading table records..." rows={5} />;
+    return <LoadingState message={loadingMessage} rows={5} />;
   }
 
   if (data.length === 0) {
-    return <EmptyState title={emptyTitle} description={emptyDescription} />;
+    return <EmptyState title={emptyTitle} description={emptyDescription} action={emptyAction} />;
   }
 
   const handleSort = (colId: string) => {

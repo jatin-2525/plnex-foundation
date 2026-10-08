@@ -22,9 +22,9 @@ export interface StateWrapperProps {
 export function StateWrapper({
   children,
   state,
-  loadingMessage = 'Loading schedule data from Oil India WBS repository...',
-  emptyTitle = 'No activities recorded',
-  emptyDescription = 'There are no items matching this view or schedule filter.',
+  loadingMessage = 'Loading schedule...',
+  emptyTitle = 'No schedule activities found in this view',
+  emptyDescription = 'No activities match the current filters or baseline selection. Adjust your filter criteria or reset to view all project activities.',
   onRetry,
   requiredPermission,
 }: StateWrapperProps) {

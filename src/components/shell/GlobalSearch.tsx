@@ -376,20 +376,12 @@ export function GlobalSearch() {
               </div>
             )}
 
-            {/* STATE 2: LOADING SKELETON */}
+            {/* STATE 2: LOADING INDICATOR */}
             {isLoading && !hasError && (
-              <div className="p-6 space-y-3">
-                <div className="flex items-center justify-center gap-2 text-xs text-[#596579]">
-                  <Loader2 className="w-4 h-4 animate-spin text-[#176B87]" />
-                  <span>Scanning multi-entity project index...</span>
-                </div>
-                <div className="space-y-2 opacity-50">
-                  {[1, 2, 3].map((i) => (
-                    <div
-                      key={i}
-                      className="p-3 bg-[#F7F8FA] rounded-lg border border-[#D9DEE5] animate-pulse h-16"
-                    />
-                  ))}
+              <div className="p-8 text-center" role="status" aria-live="polite">
+                <div className="inline-flex items-center gap-2 text-xs text-[#596579]">
+                  <Loader2 className="w-4 h-4 animate-spin text-[#176B87] flex-shrink-0" />
+                  <span className="font-medium text-[#172033]">Scanning master index...</span>
                 </div>
               </div>
             )}

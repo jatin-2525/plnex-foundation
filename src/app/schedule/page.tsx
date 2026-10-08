@@ -1875,12 +1875,12 @@ export default function SchedulePage() {
             </div>
             <h3 className="text-sm font-bold text-[#172033] mb-1">No activities match current filters</h3>
             <p className="text-xs text-[#596579] max-w-sm mx-auto mb-4">
-              Try adjusting your WBS level, search query, area, or discipline filter criteria.
+              No activities in the active baseline match your current search query, WBS level, or discipline selection. Reset filters to view all schedule activities.
             </p>
             <button
               type="button"
               onClick={clearAllFilters}
-              className="px-4 py-1.5 text-xs font-medium text-[#176B87] bg-[#EDF5F8] hover:bg-[#D9EAF0] rounded-lg transition-colors"
+              className="px-4 py-1.5 text-xs font-medium text-[#176B87] bg-[#EDF5F8] hover:bg-[#D9EAF0] rounded-lg transition-colors cursor-pointer"
             >
               Clear All Filters
             </button>

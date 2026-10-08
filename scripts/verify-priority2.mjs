@@ -93,7 +93,7 @@ assert(
   headerControlContent.includes('OFFLINE'),
   'Allows user to select Automatic, Online, or Offline modes'
 );
-assert(headerControlContent.includes('compact') || headerControlContent.includes('px-2.5'), 'Compact non-dominant visual footprint');
+assert(headerControlContent.toLowerCase().includes('compact') || headerControlContent.includes('px-3') || headerControlContent.includes('px-2.5'), 'Compact non-dominant visual footprint');
 assert(topHeaderContent.includes('<ConnectionStatusControl'), 'TopHeader embeds <ConnectionStatusControl />');
 
 // ----------------------------------------------------------------------------

@@ -91,7 +91,17 @@ export function ProjectSelector() {
               );
             })}
             {filtered.length === 0 && (
-              <p className="p-4 text-center text-xs text-[#596579]">No matching projects found</p>
+              <div className="p-4 text-center space-y-1">
+                <p className="text-xs font-semibold text-[#172033]">No projects match your search</p>
+                <p className="text-[11px] text-[#596579]">Check the project ID or name, or clear your query.</p>
+                <button
+                  type="button"
+                  onClick={() => setSearch('')}
+                  className="mt-1 text-[11px] font-semibold text-[#176B87] hover:underline cursor-pointer"
+                >
+                  Clear Search
+                </button>
+              </div>
             )}
           </div>
 

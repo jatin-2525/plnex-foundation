@@ -832,8 +832,17 @@ export default function ManagerDashboardPage() {
           {reviewEvents.length === 0 ? (
             <div className="p-8 text-center bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg">
               <CheckCircle2 className="w-8 h-8 text-[#2E7D5B] mx-auto mb-2" />
-              <p className="text-sm font-semibold text-[#172033]">All Review Items Cleared</p>
-              <p className="text-[13px] text-[#596579]">No execution events require planner match confirmation.</p>
+              <p className="text-sm font-semibold text-[#172033]">No pending review items</p>
+              <p className="text-[13px] text-[#596579] max-w-md mx-auto mb-3">
+                All execution events have been matched and verified against the schedule baseline.
+              </p>
+              <Link
+                href="/execution"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-[#176B87] bg-white border border-[#D9DEE5] hover:border-[#176B87] rounded-md transition-colors"
+              >
+                <span>View Execution Feed</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
             </div>
           ) : (
             <div className="overflow-x-auto border border-[#D9DEE5] rounded-lg">

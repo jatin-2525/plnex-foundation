@@ -1031,13 +1031,39 @@ export default function ReviewQueuePage() {
                 <h3 className="font-bold text-lg text-[#172033]">
                   {activeTab === 'Verified History'
                     ? 'No verified events in history archive yet'
-                    : 'No review items'}
+                    : 'No pending review items'}
                 </h3>
                 <p className="text-sm text-[#596579] mt-1 max-w-md mx-auto">
                   {activeTab === 'Verified History'
-                    ? 'Approve candidate matches in the queue above to commit them to the Schedule Twin.'
-                    : 'Nothing requires your attention right now. All events have been processed and verified.'}
+                    ? 'Approve candidate matches in the queue to commit them to the Schedule Twin and archive them here.'
+                    : 'All incoming execution events have been matched and verified, or none match your active search query.'}
                 </p>
+                <div className="mt-4 flex items-center justify-center gap-3">
+                  {activeTab === 'Verified History' ? (
+                    <button
+                      type="button"
+                      onClick={() => setActiveTab('All Action Items')}
+                      className="px-4 py-2 text-xs font-semibold text-white bg-[#176B87] hover:bg-[#135A72] rounded-md transition-colors cursor-pointer"
+                    >
+                      View Active Review Queue
+                    </button>
+                  ) : searchQuery ? (
+                    <button
+                      type="button"
+                      onClick={() => setSearchQuery('')}
+                      className="px-4 py-2 text-xs font-semibold text-[#176B87] bg-white border border-[#D9DEE5] hover:border-[#176B87] rounded-md transition-colors cursor-pointer"
+                    >
+                      Clear Search Query
+                    </button>
+                  ) : (
+                    <Link
+                      href="/execution"
+                      className="px-4 py-2 text-xs font-semibold text-[#176B87] bg-white border border-[#D9DEE5] hover:border-[#176B87] rounded-md transition-colors cursor-pointer inline-flex items-center gap-1"
+                    >
+                      <span>Open Execution Intel Feed</span>
+                    </Link>
+                  )}
+                </div>
               </div>
             ) : viewMode === 'cards' ? (
               filteredEvents.map((evt) => (
@@ -1312,8 +1338,9 @@ export default function ReviewQueuePage() {
                         </div>
 
                         {evt.alternativeCandidates.length === 0 ? (
-                          <div className="text-[11px] text-[#7B8798] italic py-1">
-                            No alternative candidates available
+                          <div className="p-2 bg-[#F7F8FA] border border-[#D9DEE5] rounded text-[11px] text-[#596579]">
+                            <span className="font-semibold text-[#172033] block">No alternative candidates</span>
+                            <span className="text-[10px] text-[#596579]">No other activities in the baseline matched this event.</span>
                           </div>
                         ) : (
                           <div className="space-y-2">
@@ -1693,8 +1720,9 @@ export default function ReviewQueuePage() {
                   </span>
 
                   {selectedEvent.evidenceItems.length === 0 ? (
-                    <div className="p-3 bg-white border border-[#D9DEE5] rounded-lg text-[#7B8798] italic text-center">
-                      No photographic or document proofs attached to this field log.
+                    <div className="p-3 bg-white border border-[#D9DEE5] rounded-lg text-center space-y-0.5">
+                      <p className="font-semibold text-xs text-[#172033]">No physical evidence attached</p>
+                      <p className="text-[11px] text-[#596579]">No photographic or document proofs were submitted with this field log.</p>
                     </div>
                   ) : (
                     <div className="space-y-2">

@@ -16,7 +16,7 @@ export interface TopHeaderProps {
 }
 
 export function TopHeader({ onToggleSidebar, onMobileToggle, onDesktopToggle }: TopHeaderProps) {
-  const { setGlobalSearchOpen } = useApp();
+  const { setGlobalSearchOpen, userSession } = useApp();
 
   const handleToggle = () => {
     if (onToggleSidebar) {
@@ -63,9 +63,11 @@ export function TopHeader({ onToggleSidebar, onMobileToggle, onDesktopToggle }: 
         </div>
 
         {/* Sample Project Data indicator */}
-        <span className="hidden xl:inline-flex items-center text-[10px] font-mono text-[#596579] bg-[#F1F3F5] px-2 py-0.5 rounded border border-[#D9DEE5]">
-          Sample Project Data
-        </span>
+        {userSession?.role === 'admin' && (
+          <span className="hidden xl:inline-flex items-center text-[10px] font-mono text-[#596579] bg-[#F1F3F5] px-2 py-0.5 rounded border border-[#D9DEE5]">
+            Sample Project Data
+          </span>
+        )}
       </div>
 
       {/* Right: Search + Notifications + Profile */}

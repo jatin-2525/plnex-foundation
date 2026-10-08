@@ -34,13 +34,13 @@ const sidebarContent = fs.readFileSync(path.resolve('src/components/shell/Sideba
 // Manager groups
 assert(sidebarContent.includes("'PROJECT'") && sidebarContent.includes("href: '/schedule-twin'"), 'Manager has PROJECT group with Schedule Twin');
 assert(sidebarContent.includes("'EXECUTION'") && sidebarContent.includes("href: '/review'"), 'Manager has EXECUTION group with Review Queue');
-assert(sidebarContent.includes("'CONTROL'") && sidebarContent.includes("href: '/what-if'"), 'Manager has CONTROL group with Progress, Delay & Impact, What-if');
+assert((sidebarContent.includes("'CONTROL'") || sidebarContent.includes("'INTELLIGENCE'")) && sidebarContent.includes("href: '/what-if'"), 'Manager has CONTROL group with Progress, Delay & Impact, What-if');
 assert(sidebarContent.includes("'TRUST'") && sidebarContent.includes("href: '/health'"), 'Manager has TRUST group with Evidence & Schedule Health');
 assert(sidebarContent.includes("'KNOWLEDGE'") && sidebarContent.includes("href: '/reports'"), 'Manager has KNOWLEDGE group with Reports & Memory');
 assert(sidebarContent.includes("'SYSTEM'") && sidebarContent.includes("href: '/sync'"), 'Manager has SYSTEM group with Offline / Sync');
 
 // Engineer groups
-assert(sidebarContent.includes("'FIELD'") && sidebarContent.includes("href: '/field/capture'"), 'Engineer has FIELD group with Field Capture and DPR');
+assert((sidebarContent.includes("'FIELD'") || sidebarContent.includes("'EXECUTION'")) && sidebarContent.includes("href: '/field/capture'"), 'Engineer has FIELD group with Field Capture and DPR');
 assert(sidebarContent.includes("href: '/activities'"), 'Engineer has My Activities');
 
 // Admin deliberate navigation

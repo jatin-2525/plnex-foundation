@@ -1557,6 +1557,20 @@ export default function ProgressVariancePage() {
                     <td colSpan={7} className="p-8 text-center text-[#596579]">
                       <Info className="w-8 h-8 text-[#7B8798] mx-auto mb-2" />
                       <p className="font-semibold text-sm text-[#172033]">No activities match your filters</p>
+                      <p className="text-xs text-[#596579] mt-1 max-w-sm mx-auto">
+                        No activities in this baseline match the selected variance status or search criteria.
+                      </p>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setSearchQuery('');
+                          setSelectedSemanticFilter('ALL');
+                          setSelectedStatusFilter('ALL');
+                        }}
+                        className="mt-3 text-xs font-semibold text-[#176B87] hover:underline cursor-pointer"
+                      >
+                        Reset All Filters
+                      </button>
                     </td>
                   </tr>
                 ) : (

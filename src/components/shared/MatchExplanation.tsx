@@ -703,8 +703,11 @@ export function MatchExplanation({
           </div>
 
           {alternativeCandidates.length === 0 ? (
-            <div className="p-4 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg text-xs text-[#7B8798] italic">
-              No alternative candidates met the minimum candidate threshold (&gt; 25%) in this plant area.
+            <div className="p-4 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg text-center space-y-1">
+              <p className="font-semibold text-xs text-[#172033]">No alternative candidates evaluated</p>
+              <p className="text-[11px] text-[#596579]">
+                No secondary baseline activities met the minimum candidate threshold (&gt; 25%) in this plant area.
+              </p>
             </div>
           ) : (
             <div className="space-y-2">

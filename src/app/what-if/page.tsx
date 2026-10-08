@@ -1154,7 +1154,18 @@ export default function WhatIfSimulatorPage() {
               </button>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {savedScenarios.length === 0 ? (
+              <EmptyState
+                icon={Sliders}
+                title="No saved scenarios in the vault"
+                description="Save simulations from the Scenario Sandbox to compare baseline variants and contingency options over time."
+                action={{
+                  label: 'Switch to Simulator',
+                  onClick: () => setActiveTab('simulator'),
+                }}
+              />
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {savedScenarios.map((sc) => (
                 <div
                   key={sc.id}
@@ -1237,7 +1248,8 @@ export default function WhatIfSimulatorPage() {
                 </div>
               ))}
             </div>
-          </div>
+          )}
+        </div>
         )}
 
         {/* =========================================================================

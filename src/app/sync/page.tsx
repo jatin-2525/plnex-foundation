@@ -843,7 +843,27 @@ export default function OfflineSyncCenterPage() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-[#D9DEE5]/60">
-                {filteredItems.map((item) => {
+                {filteredItems.length === 0 ? (
+                  <tr>
+                    <td colSpan={9} className="py-8 px-4 text-center text-[#596579]">
+                      <CheckCircle2 className="w-8 h-8 text-[#2E7D5B] mx-auto mb-2" />
+                      <p className="font-semibold text-sm text-[#172033]">No items in sync queue</p>
+                      <p className="text-xs text-[#596579] mt-1 max-w-sm mx-auto">
+                        All offline payloads have been synchronized with the central database, or no items match your active filter.
+                      </p>
+                      {statusFilter !== 'ALL' && (
+                        <button
+                          type="button"
+                          onClick={() => setStatusFilter('ALL')}
+                          className="mt-3 text-xs font-semibold text-[#176B87] hover:underline cursor-pointer"
+                        >
+                          Reset Status Filter
+                        </button>
+                      )}
+                    </td>
+                  </tr>
+                ) : (
+                  filteredItems.map((item) => {
                   const typeBadge = getTypeBadge(item.type);
                   const TypeIcon = typeBadge.icon;
 
@@ -966,7 +986,8 @@ export default function OfflineSyncCenterPage() {
                       </td>
                     </tr>
                   );
-                })}
+                })
+              )}
               </tbody>
             </table>
           </div>

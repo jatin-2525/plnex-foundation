@@ -314,6 +314,19 @@ export function NotificationCenterPanel({
                 ? 'All notifications have been addressed.'
                 : 'No alerts match your filter criteria.'}
             </p>
+            {(searchQuery || selectedType !== 'ALL' || showUnreadOnly) && (
+              <button
+                type="button"
+                onClick={() => {
+                  setSearchQuery('');
+                  setSelectedType('ALL');
+                  setShowUnreadOnly(false);
+                }}
+                className="text-xs text-[#176B87] font-semibold hover:underline mt-1 inline-block cursor-pointer"
+              >
+                Reset all filters
+              </button>
+            )}
           </div>
         ) : (
           filteredNotifications.map((notification) => {

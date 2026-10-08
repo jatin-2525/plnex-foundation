@@ -103,6 +103,10 @@ export const engineerNav: SidebarGroup[] = NAV_GROUPS;
 export const adminNav: SidebarGroup[] = [
   ...NAV_GROUPS,
   {
+    group: 'FOUNDATION',
+    items: [{ label: 'Foundation & Showcase', href: '/showcase', icon: Layers }],
+  },
+  {
     group: 'MANAGER VIEW',
     items: [{ label: 'Manager Dashboard', href: '/dashboard', icon: LayoutDashboard }],
   },

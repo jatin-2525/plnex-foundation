@@ -1305,7 +1305,10 @@ export default function DelayDependencyImpactPage() {
                   <tr>
                     <td colSpan={8} className="p-8 text-center text-[#596579]">
                       <CheckCircle2 className="w-8 h-8 text-[#2E7D5B] mx-auto mb-2" />
-                      <p className="font-semibold text-sm text-[#172033]">No delays match your filter parameters</p>
+                      <p className="font-semibold text-sm text-[#172033]">No delays match your filter criteria</p>
+                      <p className="text-xs text-[#596579] mt-1 max-w-sm mx-auto">
+                        No delay events in the project register match the active criticality level, discipline, or search text.
+                      </p>
                       <button
                         type="button"
                         onClick={() => {
@@ -1313,7 +1316,7 @@ export default function DelayDependencyImpactPage() {
                           setSelectedDisciplineFilter('ALL');
                           setSearchQuery('');
                         }}
-                        className="mt-2 text-xs font-semibold text-[#176B87] hover:underline"
+                        className="mt-3 text-xs font-semibold text-[#176B87] hover:underline cursor-pointer"
                       >
                         Reset All Filters
                       </button>
