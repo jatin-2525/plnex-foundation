@@ -99,7 +99,7 @@ export const SIMULATION_ACTIVITIES: SimulatorActivity[] = [
   {
     id: 'PIP-24-001',
     name: 'Erect Line 24-XX High Pressure Gas Header',
-    wbs: '3.2.1',
+    wbs: '1.1.3.2.1',
     discipline: 'Piping',
     area: 'Unit A - Gas Processing',
     line: 'Line 24-XX',
@@ -115,8 +115,8 @@ export const SIMULATION_ACTIVITIES: SimulatorActivity[] = [
   },
   {
     id: 'PIP-24-002',
-    name: 'Weld Line 24-XX Field Joints & NDT Inspection',
-    wbs: '3.2.2',
+    name: 'Weld Line 24-XX Field Joints & NDT Clearance',
+    wbs: '1.1.3.2.2',
     discipline: 'Piping',
     area: 'Unit A - Gas Processing',
     line: 'Line 24-XX',
@@ -133,7 +133,7 @@ export const SIMULATION_ACTIVITIES: SimulatorActivity[] = [
   {
     id: 'PIP-24-003',
     name: 'Hydrostatic Test Section Line 24-XX (150 bar)',
-    wbs: '3.2.3',
+    wbs: '1.1.3.2.3',
     discipline: 'Piping',
     area: 'Unit A - Gas Processing',
     line: 'Line 24-XX',
@@ -150,7 +150,7 @@ export const SIMULATION_ACTIVITIES: SimulatorActivity[] = [
   {
     id: 'PIP-24-004',
     name: 'Chemical Cleaning, De-greasing & Nitrogen Purging',
-    wbs: '3.2.4',
+    wbs: '1.1.3.2.4',
     discipline: 'Piping',
     area: 'Unit A - Gas Processing',
     line: 'Line 24-XX',
@@ -166,8 +166,8 @@ export const SIMULATION_ACTIVITIES: SimulatorActivity[] = [
   },
   {
     id: 'CIV-11-001',
-    name: 'Foundation Block A',
-    wbs: '2.1.1',
+    name: 'Foundation Block A - Compressor Pedestal Pour',
+    wbs: '1.1.1.1.1',
     discipline: 'Civil',
     area: 'Unit A - Compressor House',
     plannedStart: '2026-10-01',
@@ -183,7 +183,7 @@ export const SIMULATION_ACTIVITIES: SimulatorActivity[] = [
   {
     id: 'STR-02-004',
     name: 'Column Installation',
-    wbs: '2.2.1',
+    wbs: '1.1.1.2.1',
     discipline: 'Civil',
     area: 'Unit A - Compressor House',
     plannedStart: '2026-10-16',
@@ -199,7 +199,7 @@ export const SIMULATION_ACTIVITIES: SimulatorActivity[] = [
   {
     id: 'MEC-03-010',
     name: 'Equipment Installation',
-    wbs: '4.1.2',
+    wbs: '1.1.2.4.1',
     discipline: 'Mechanical',
     area: 'Unit A - Compressor House',
     plannedStart: '2026-10-26',
@@ -215,9 +215,9 @@ export const SIMULATION_ACTIVITIES: SimulatorActivity[] = [
   {
     id: 'ELE-11-032',
     name: 'Cable Tray Installation - Substation to Compressor Bay',
-    wbs: '5.1.1',
+    wbs: '1.1.4.1.2',
     discipline: 'Electrical',
-    area: 'Unit A - Overhead Gallery',
+    area: 'Unit A - Substation',
     plannedStart: '2026-09-15',
     plannedFinish: '2026-09-23',
     totalFloat: 3,
@@ -230,8 +230,8 @@ export const SIMULATION_ACTIVITIES: SimulatorActivity[] = [
   },
   {
     id: 'INS-04-015',
-    name: 'Mount Pressure & Temperature Transmitters Unit A',
-    wbs: '6.2.1',
+    name: 'Calibrate Pressure Transmitter PT-2401 & Loop Check',
+    wbs: '1.1.5.2.1',
     discipline: 'Instrumentation',
     area: 'Unit A - Gas Processing',
     line: 'Line 24-XX',
@@ -248,7 +248,7 @@ export const SIMULATION_ACTIVITIES: SimulatorActivity[] = [
   {
     id: 'COM-99-001',
     name: 'Integrated Loop Checks & Gas-In Commissioning',
-    wbs: '7.1.0',
+    wbs: '1.1.6.1.1',
     discipline: 'Instrumentation',
     area: 'Unit A - Gas Processing',
     plannedStart: '2026-09-29',
@@ -264,7 +264,7 @@ export const SIMULATION_ACTIVITIES: SimulatorActivity[] = [
   {
     id: 'MLS-100-COD',
     name: 'Key Project Milestone: Commercial Operation Date (COD)',
-    wbs: '8.0.0',
+    wbs: '1.0.0.0.1',
     discipline: 'Mechanical',
     area: 'Entire Facility',
     plannedStart: '2026-12-15',
@@ -584,7 +584,7 @@ export function executeWhatIfSimulation(
     mitigations.push(`Lock in subcontractor incentive agreements for sustaining accelerated double-shift productivity.`);
   } else {
     headline = 'Neutral Baseline Scenario: No variance applied';
-    downstreamNarrative = 'Parameters match baseline schedule V3 · Rev 3.2. All downstream activities remain at planned baseline dates.';
+    downstreamNarrative = 'Parameters match baseline schedule Rev 3.2 (P6 XML). All downstream activities remain at planned baseline dates.';
     criticalAssessment = 'Critical path remains stable.';
     floatNote = 'No float consumed.';
   }

@@ -459,7 +459,7 @@ export function ActivityDetailDrawer({
                       </div>
                       <div className="flex justify-between">
                         <span className="text-[#596579]">Baseline Spec:</span>
-                        <span className="font-mono text-[#596579]">V3 · Rev 3.2 (Primavera P6 XML)</span>
+                        <span className="font-mono text-[#596579]">Rev 3.2 (P6 XML)</span>
                       </div>
                     </div>
                   )}

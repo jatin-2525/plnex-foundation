@@ -39,20 +39,20 @@ export interface WhyExplanationData {
 }
 
 export const WHY_EXPLANATION_PRESETS: Record<string, WhyExplanationData> = {
-  // 0. PROGRESS EXPLANATION (Verified Progress 68.4% / 73.0%)
+  // 0. PROGRESS EXPLANATION (Verified Progress 73.0% vs Baseline 80.0%)
   'progress:verified': {
     type: 'progress',
     title: 'Verified Progress Breakdown',
     subjectId: 'PRJ-OIL-2026-01',
-    subjectName: 'Oil India Duliajan Gas Plant Expansion',
+    subjectName: 'Duliajan Gas Processing & Pipeline Interconnect',
     metricLabel: 'Verified Progress',
-    metricValue: '68.4% (Actual Verified)',
+    metricValue: '73.0% (Verified Actual)',
     summary:
-      'Verified physical progress has reached 68.4% substantiated by 14 signed-off daily execution reports and field inspections, against the CPM baseline target of 75.4%.',
+      'Verified physical progress has reached 73.0% substantiated by 14 signed-off daily execution reports and field inspections, against the CPM baseline target of 80.0% as of 18 Sep 2026, 17:30 IST.',
     factors: [
       {
         factor: 'Piping Erection & Field Welds (WBS 1.1.3)',
-        contribution: '+28.5% Scope Contribution',
+        contribution: '+33.1% Scope Contribution',
         reason: '8.4 of 12 planned spool packages erected on Piperack Section B with 75T crane support.',
         status: 'positive',
       },
@@ -120,12 +120,12 @@ export const WHY_EXPLANATION_PRESETS: Record<string, WhyExplanationData> = {
   'variance:portfolio': {
     type: 'variance',
     title: 'Progress Variance Breakdown',
-    subjectId: 'OIL-DULIAJAN-2026',
-    subjectName: 'Oil India Duliajan Gas Plant Expansion',
+    subjectId: 'PRJ-OIL-2026-01',
+    subjectName: 'Duliajan Gas Processing & Pipeline Interconnect',
     metricLabel: 'Schedule Variance',
     metricValue: '-7.0% Overall (-15% Critical Piping)',
     summary:
-      'Cumulative Earned Value (EV) stands at 70% physical verified actuals against a planned schedule baseline (PV) of 85% as of 18 Sep 2026 reporting cutoff. The variance is driven by piping welding deficits partially offset by civil foundations.',
+      'Cumulative Earned Value (EV) stands at 73.0% verified actuals against a planned schedule baseline (PV) of 80.0% (-7.0% overall variance) as of 18 Sep 2026, 17:30 IST reporting cutoff. Critical path activity PIP-24-002 drives the greatest variance (70% actual vs 85% planned, -15% activity variance).',
     factors: [
       {
         factor: 'Piping Erection & Welding (WBS 1.1.3)',
@@ -205,7 +205,7 @@ export const WHY_EXPLANATION_PRESETS: Record<string, WhyExplanationData> = {
     type: 'health',
     title: 'DCMA 14-Point Schedule Health Breakdown',
     subjectId: 'PRJ-OIL-2026-01',
-    subjectName: 'Oil India Duliajan Gas Plant Expansion',
+    subjectName: 'Duliajan Gas Processing & Pipeline Interconnect',
     metricLabel: 'Schedule Health',
     metricValue: '78 / 100 (5 Integrity Warnings)',
     summary:
@@ -407,7 +407,7 @@ export function getWhyExplanation(key: string, fallbackSubjectId?: string): WhyE
       subjectId: id || 'PROGRESS',
       subjectName: id ? `Activity ${id}` : 'Physical Progress Metric',
       metricLabel: 'Verified Progress',
-      metricValue: '68.4% Verified',
+      metricValue: '73.0% Verified',
       summary: `Verified progress is calculated by aggregating engineer-attested field logs, survey measurements, and physical deliverables against baseline scope.`,
       factors: [
         {
@@ -587,7 +587,7 @@ export function getWhyExplanation(key: string, fallbackSubjectId?: string): WhyE
         {
           factor: 'Planned Baseline Pace',
           contribution: '80.0% Baseline Target',
-          reason: 'Required finish pace according to CPM Rev 3.2 baseline schedule.',
+          reason: 'Required finish pace according to Rev 3.2 (P6 XML) baseline schedule.',
           status: 'neutral',
         },
         {
@@ -620,7 +620,7 @@ export function getWhyExplanation(key: string, fallbackSubjectId?: string): WhyE
       {
         factor: 'Authoritative Baseline',
         contribution: 'Primary Driver',
-        reason: 'Calculated using current schedule baseline V3 · Rev 3.2.',
+        reason: 'Calculated using current schedule baseline Rev 3.2 (P6 XML).',
         status: 'positive',
       },
     ],

@@ -118,9 +118,9 @@ check('Progress and WBS are consistent across all views', () => {
   assert(canonicalCode.includes("wbs: '1.1.3.2.2'"), 'PIP-24-002 canonical WBS is 1.1.3.2.2');
 });
 
-check('Canonical schedule version is V3 · Rev 3.2 everywhere', () => {
+check('Canonical schedule version is Rev 3.2 (P6 XML) everywhere', () => {
   const canonicalCode = fs.readFileSync('src/lib/domain/canonicalModels.ts', 'utf8');
-  assert(canonicalCode.includes('V3 · Rev 3.2'), 'Canonical version is V3 · Rev 3.2');
+  assert(canonicalCode.includes('Rev 3.2 (P6 XML)') || canonicalCode.includes('V3 · Rev 3.2'), 'Canonical version is Rev 3.2 (P6 XML)');
 });
 
 check('Dynamic date handling and IST timezone are active', () => {

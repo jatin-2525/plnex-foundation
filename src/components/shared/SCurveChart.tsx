@@ -428,7 +428,7 @@ export function SCurveChart({
               fontWeight="bold"
               fill="#596579"
             >
-              Timeline (Project Reporting Periods • Baseline Rev 3.2 • Cutoff: 18 Sep 2026)
+              Timeline (Project Reporting Periods • Rev 3.2 (P6 XML) • Cutoff: 18 Sep 2026)
             </text>
 
             {/* ========================================================= */}
@@ -567,7 +567,7 @@ export function SCurveChart({
           </p>
         </div>
         <span className="text-[11px] font-mono text-[#596579] shrink-0">
-          Cutoff: {summary.dataDateLabel} (Primavera P6 Rev 3.2)
+          Cutoff: {summary.dataDateLabel} (Rev 3.2 (P6 XML))
         </span>
       </div>
 
@@ -623,7 +623,7 @@ export function SCurveChart({
             <h4 className="text-xs font-semibold uppercase text-[#596579] tracking-wider">
               Level 3 — Cumulative Physical Progress Ledger (Audit Trail)
             </h4>
-            <span className="text-[11px] text-[#7B8798]">Source: Primavera P6 Baseline Rev 3.2</span>
+            <span className="text-[11px] text-[#7B8798]">Source: Rev 3.2 (P6 XML)</span>
           </div>
 
           <div className="overflow-x-auto rounded border border-[#D9DEE5]">

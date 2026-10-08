@@ -573,7 +573,7 @@ export default function ManagerDashboardPage() {
           <SCurveChart
             variant="full"
             title="Project S-Curve — Baseline vs. Actual Earned vs. Forecast"
-            subtitle="Primavera P6 Baseline Rev 3.2 Physical Earned Progress (Data Date: 18 Sep 2026)"
+            subtitle="Rev 3.2 (P6 XML) Physical Earned Progress (Data Date: 18 Sep 2026)"
           />
         </section>
 

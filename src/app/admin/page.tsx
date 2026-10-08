@@ -186,7 +186,7 @@ export default function AdminDashboardPage() {
             <Lock className="w-4 h-4 text-[#2E7D5B]" />
           </div>
           <span className="text-2xl font-bold font-mono text-[#2E7D5B] block">Active</span>
-          <span className="text-[11px] text-[#596579]">V3 · Rev 3.2 (Primavera P6)</span>
+          <span className="text-[11px] text-[#596579]">Rev 3.2 (P6 XML)</span>
         </div>
 
         <div className="bg-white border border-[#D9DEE5] rounded-lg p-4">

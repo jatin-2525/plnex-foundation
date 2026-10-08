@@ -199,11 +199,11 @@ export default function WhatIfSimulatorPage() {
   const handleReset = () => {
     setSelectedActivityId('CIV-11-001');
     setDelayDays(0);
-    setScenarioName('Baseline Schedule V3 · Rev 3.2 (No Delay)');
+    setScenarioName('Baseline Schedule Rev 3.2 (P6 XML) (No Delay)');
     setScenarioDescription('Baseline schedule state with 0 days variance applied.');
     setSimulateError(false);
     setErrorMessage('');
-    const res = executeWhatIfSimulation('Baseline Schedule V3 · Rev 3.2', 'CIV-11-001', 0);
+    const res = executeWhatIfSimulation('Baseline Schedule Rev 3.2 (P6 XML)', 'CIV-11-001', 0);
     setSimulationResult(res);
     addToast({
       type: 'info',
@@ -1346,7 +1346,7 @@ export default function WhatIfSimulatorPage() {
                   <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[11px] sm:text-xs uppercase font-semibold text-[#596579] h-11">
                     <th className="py-3 px-4">Metric / Dimension</th>
                     <th className="py-3 px-4 bg-[#EDF7F2]/40 text-[#2E7D5B]">
-                      Baseline (V3 · Rev 3.2)
+                      Baseline (Rev 3.2 (P6 XML))
                     </th>
                     <th className="py-3 px-4 bg-[#EDF5F8]/60 text-[#176B87]">
                       Active Simulation

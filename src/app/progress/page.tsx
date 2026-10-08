@@ -203,7 +203,7 @@ export const AREA_PROGRESS_DATA: AreaProgressItem[] = [
     summary: 'Directly on project critical path. Drives 85% of net project schedule lag due to Line 24 piping.',
   },
   {
-    area: 'Unit A - Compressor Station',
+    area: 'Unit A - Compressor House',
     code: 'AREA-02',
     planned: 92.0,
     actual: 95.0,
@@ -412,7 +412,7 @@ const MOCK_PROGRESS_ACTIVITIES: ProgressActivityRow[] = [
     wbs: '1.1.1.1.1',
     wbsLevel: 'L5',
     discipline: 'Civil',
-    area: 'Unit A - Compressor Station',
+    area: 'Unit A - Compressor House',
     plannedPercent: 100,
     actualPercent: 100,
     variancePercent: 0,
@@ -1289,7 +1289,7 @@ export default function ProgressVariancePage() {
           {/* Concise Engineering Interpretation */}
           <div className="p-3 bg-[#F7F8FA] border-l-4 border-[#176B87] rounded-r-lg text-xs text-[#172033] leading-relaxed">
             <strong className="text-[#176B87]">Area Analytics Interpretation: </strong>
-            <strong>Unit A - Gas Processing</strong> contains 85% of total schedule slippage and is the sole battery limit on the zero-float critical path. By contrast, Unit A Compressor Station is ahead (+3.0%), and offsite drainage/flare packages carry healthy float buffers (14 to 20 days) that insulate the milestone completion date.
+            <strong>Unit A - Gas Processing</strong> contains 85% of total schedule slippage and is the sole battery limit on the zero-float critical path. By contrast, Unit A - Compressor House is ahead (+3.0%), and offsite drainage/flare packages carry healthy float buffers (14 to 20 days) that insulate the milestone completion date.
           </div>
         </div>
 
@@ -1685,7 +1685,7 @@ export default function ProgressVariancePage() {
         {/* =========================================================================
             PROGRESS DETAIL DRAWER:
             Previous Progress ↓ Execution Event ↓ Evidence ↓ Verification ↓ New Progress
-            History Progression: 53% → 65% → 72% with dates and source evidence
+            History Progression: 20% → 65% → 70% with dates and source evidence
             Important: Prohibit arbitrary edits without reason, source, user, timestamp, audit record
             ========================================================================= */}
         <Drawer
@@ -1893,7 +1893,7 @@ export default function ProgressVariancePage() {
 
               {/* =====================================================================
                   MANDATED PROGRESS HISTORY:
-                  Show: 53% → 65% → 72% with dates and source evidence
+                  Show: 20% → 65% → 70% with dates and source evidence
                   ===================================================================== */}
               <div className="p-4 sm:p-6 bg-white border border-[#D9DEE5] rounded-lg space-y-4 shadow-xs">
                 <div className="flex items-center justify-between border-b border-[#D9DEE5]/60 pb-2">

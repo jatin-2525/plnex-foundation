@@ -268,7 +268,7 @@ export default function ScheduleHealthPage() {
                   Quality Guard Active
                 </span>
                 <span className="inline-flex items-center gap-1 px-3 py-0.5 rounded text-[11px] text-[#596579] bg-[#F7F8FA] border border-[#D9DEE5]">
-                  {activeProject?.code || 'OIL-DUL-01'} · V3 · Rev 3.2
+                  {activeProject?.code || 'OIL-DUL-01'} · Rev 3.2 (P6 XML)
                 </span>
               </div>
 

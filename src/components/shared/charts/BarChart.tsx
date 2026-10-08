@@ -89,7 +89,7 @@ const DEFAULT_AREA_ITEMS: BarChartItem[] = [
     driver: 'On zero-float critical path; drives 85% of net lag',
   },
   {
-    label: 'Unit A - Compressor',
+    label: 'Unit A - Compressor House',
     subLabel: 'AREA-02 • 25% WBS',
     planned: 92.0,
     actual: 95.0,
@@ -405,7 +405,7 @@ export function BarChart({
         </div>
 
         <div className="text-[11px] text-[#596579] font-mono">
-          Total Analyzed: <strong className="text-[#172033]">{effectiveItems.length} {isDiscipline ? 'Disciplines' : 'Areas'}</strong> • Primavera P6 Baseline Rev 3.2
+          Total Analyzed: <strong className="text-[#172033]">{effectiveItems.length} {isDiscipline ? 'Disciplines' : 'Areas'}</strong> • Rev 3.2 (P6 XML)
         </div>
       </div>
     </div>

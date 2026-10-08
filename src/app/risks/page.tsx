@@ -724,7 +724,7 @@ export default function DelayDependencyImpactPage() {
                   Schedule Execution Impact
                 </span>
                 <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-mono text-[#596579] bg-[#F7F8FA] border border-[#D9DEE5]">
-                  CPM Baseline V3 · Rev 3.2
+                  Rev 3.2 (P6 XML)
                 </span>
                 <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]">
                   100% Predecessor-Successor Traceability
@@ -791,7 +791,7 @@ export default function DelayDependencyImpactPage() {
                   Schedule Network Version
                 </span>
                 <span className="font-medium text-[#172033] text-sm block truncate">
-                  V3 · Rev 3.2 (Approved CPM Baseline)
+                  Rev 3.2 (P6 XML)
                 </span>
                 <span className="text-[12px] text-[#596579] block">
                   184 Activities · Hard FS/SS Network Relationships
@@ -1485,7 +1485,7 @@ export default function DelayDependencyImpactPage() {
                   1. Deterministic Network Model
                 </h5>
                 <p className="leading-relaxed">
-                  Evaluates the Critical Path Method (CPM Network Model V3 · Rev 3.2). Activity relationships adhere to directed acyclic graph (DAG) topological constraints.
+                  Evaluates the Critical Path Method (CPM Network Model Rev 3.2 (P6 XML)). Activity relationships adhere to directed acyclic graph (DAG) topological constraints.
                 </p>
               </div>
 

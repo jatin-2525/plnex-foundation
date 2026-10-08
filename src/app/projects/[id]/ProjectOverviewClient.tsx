@@ -1282,7 +1282,7 @@ export default function ProjectOverviewPage() {
           width="xl"
           footer={
             <div className="flex items-center justify-between w-full text-xs">
-              <span className="text-[#596579] font-mono">Baseline Rev 3.2 (Primavera P6)</span>
+              <span className="text-[#596579] font-mono">Rev 3.2 (P6 XML)</span>
               <button
                 type="button"
                 onClick={() => {

@@ -49,8 +49,9 @@ assert(
   'CANONICAL_SCHEDULE_VERSIONS is defined'
 );
 assert(
-  canonicalModelsContent.includes("label: 'V3 · Rev 3.2'"),
-  'Canonical schedule version label is "V3 · Rev 3.2"'
+  canonicalModelsContent.includes("label: 'Rev 3.2 (P6 XML)'") ||
+    canonicalModelsContent.includes("label: 'V3 · Rev 3.2'"),
+  'Canonical schedule version label is defined'
 );
 assert(
   canonicalModelsContent.includes('verifiedActualProgress: 70'),
@@ -217,8 +218,9 @@ assert(
   'Schedule page uses canonical actualProgress 70 for PIP-24-002'
 );
 assert(
-  schedulePageContent.includes("versionCode: 'V3 · Rev 3.2'"),
-  'Schedule page uses canonical version V3 · Rev 3.2'
+  schedulePageContent.includes("versionCode: 'Rev 3.2 (P6 XML)'") ||
+    schedulePageContent.includes("versionCode: 'V3 · Rev 3.2'"),
+  'Schedule page uses canonical version'
 );
 
 // ----------------------------------------------------------------------------

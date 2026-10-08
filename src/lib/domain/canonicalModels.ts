@@ -2,7 +2,7 @@
  * PLnEX Canonical Shared Data Models & Single Source of Truth
  *
  * Provides authoritative definitions for:
- * 1. Schedule Version (V3 · Rev 3.2 with traceability)
+ * 1. Schedule Version (Rev 3.2 (P6 XML) with traceability)
  * 2. Progress Snapshots (verifiedActualProgress with historical timestamps)
  * 3. Canonical Activities (identical ID, WBS, Progress, Start/Finish, Status across all views)
  * 4. Canonical Data States (DRAFT, PROCESSING, PENDING_REVIEW, VERIFIED, etc.)
@@ -111,7 +111,7 @@ export interface ScheduleVersion {
   revision: string;
   source: string;
   status: 'Current' | 'Baseline' | 'Superseded' | 'Draft';
-  label: string; // e.g. "V3 · Rev 3.2"
+  label: string; // e.g. "Rev 3.2 (P6 XML)"
   importedAt: string;
   activityCount: number;
   fileName: string;
@@ -124,7 +124,7 @@ export const CANONICAL_SCHEDULE_VERSIONS: ScheduleVersion[] = [
     revision: '3.2',
     source: 'Primavera P6 XML',
     status: 'Current',
-    label: 'V3 · Rev 3.2',
+    label: 'Rev 3.2 (P6 XML)',
     importedAt: '2026-09-15T11:00:00+05:30',
     activityCount: 146,
     fileName: 'OIL_GAS_PROC_FACILITY_REV3.2.xer',
@@ -135,7 +135,7 @@ export const CANONICAL_SCHEDULE_VERSIONS: ScheduleVersion[] = [
     revision: '3.1',
     source: 'Primavera P6 XML',
     status: 'Superseded',
-    label: 'V3 · Rev 3.1',
+    label: 'Rev 3.1 (P6 XML)',
     importedAt: '2026-09-01T09:30:00+05:30',
     activityCount: 142,
     fileName: 'OIL_GAS_PROC_FACILITY_REV3.1.xer',
@@ -146,7 +146,7 @@ export const CANONICAL_SCHEDULE_VERSIONS: ScheduleVersion[] = [
     revision: '2.0',
     source: 'Primavera P6 XML',
     status: 'Baseline',
-    label: 'V2 · Rev 2.0',
+    label: 'Rev 2.0 (P6 XML)',
     importedAt: '2026-08-15T14:00:00+05:30',
     activityCount: 138,
     fileName: 'OIL_GAS_PROC_FACILITY_REV2.0.xer',
@@ -157,7 +157,7 @@ export const CANONICAL_SCHEDULE_VERSIONS: ScheduleVersion[] = [
     revision: '1.0',
     source: 'Primavera P6 XML',
     status: 'Superseded',
-    label: 'V1 · Rev 1.0',
+    label: 'Rev 1.0 (P6 XML)',
     importedAt: '2026-07-01T10:00:00+05:30',
     activityCount: 120,
     fileName: 'OIL_GAS_PROC_FACILITY_REV1.0.xer',
@@ -166,7 +166,7 @@ export const CANONICAL_SCHEDULE_VERSIONS: ScheduleVersion[] = [
 ];
 
 export const CURRENT_SCHEDULE_VERSION: ScheduleVersion = CANONICAL_SCHEDULE_VERSIONS[0];
-export const CANONICAL_SCHEDULE_VERSION_LABEL = CURRENT_SCHEDULE_VERSION.label; // "V3 · Rev 3.2"
+export const CANONICAL_SCHEDULE_VERSION_LABEL = CURRENT_SCHEDULE_VERSION.label; // "Rev 3.2 (P6 XML)"
 
 // ============================================================================
 // 3. PROGRESS SNAPSHOT (TIME-ANCHORED PROGRESS)
@@ -197,7 +197,7 @@ export interface CanonicalActivity {
   discipline: DisciplineType;
   area: string;
   line?: string;
-  scheduleVersion: string; // "V3 · Rev 3.2"
+  scheduleVersion: string; // "Rev 3.2 (P6 XML)"
   plannedStart: string; // "2026-09-16"
   plannedFinish: string; // "2026-09-20"
   actualStart?: string; // "2026-09-16"

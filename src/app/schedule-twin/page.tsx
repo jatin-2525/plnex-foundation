@@ -997,7 +997,7 @@ export default function ScheduleTwinPage() {
               </div>
             </div>
             <div className="p-2 bg-[#F7F8FA] border border-[#D9DEE5] rounded text-[11px] text-[#596579] space-y-0.5">
-              <div>• Frozen Baseline: <strong>V3 · Rev 3.2</strong></div>
+              <div>• Frozen Baseline: <strong>Rev 3.2 (P6 XML)</strong></div>
               <div>• Critical Path Duration: <strong>137 calendar days</strong></div>
             </div>
           </div>

@@ -408,7 +408,7 @@ export function MatchExplanation({
             reasons: c.reasons,
           }))}
           onSelectAlternative={onSelectAlternative}
-          unmatchedExplanation={`No sufficiently strong match exists. The confidence score of ${confidence}% falls below the 70% threshold required for automated schedule association. No direct WBS activity corresponds to this field submission in current schedule V3 · Rev 3.2. Manual WBS assignment is required.`}
+          unmatchedExplanation={`No sufficiently strong match exists. The confidence score of ${confidence}% falls below the 70% threshold required for automated schedule association. No direct WBS activity corresponds to this field submission in current schedule Rev 3.2 (P6 XML). Manual WBS assignment is required.`}
         />
 
         {/* Raw Field Observation Snippet if available */}

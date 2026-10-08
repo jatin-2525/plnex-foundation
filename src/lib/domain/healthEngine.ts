@@ -422,7 +422,7 @@ export const INITIAL_HEALTH_ISSUES: HealthIssue[] = [
     objectName: 'Pipe installation near Unit B drain line',
     objectType: 'EXECUTION_EVENT',
     description: 'Unmatched event: Field observation cannot be correlated to any schedule activity in master baseline (Unmatched Events).',
-    impactExplanation: 'Work is being executed on site that has no baseline representation in P6 V3 · Rev 3.2. Potential scope creep or non-schedule work order.',
+    impactExplanation: 'Work is being executed on site that has no baseline representation in Rev 3.2 (P6 XML). Potential scope creep or non-schedule work order.',
     detectedAt: '17 Sep 2026, 17:30 IST',
     detected: '17 Sep 2026, 17:30 IST',
     status: 'Open',

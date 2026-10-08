@@ -579,10 +579,10 @@ const INITIAL_SCHEDULE_ACTIVITIES: ScheduleActivity[] = [
     id: 'WP-ELE-01',
     projectId: 'PRJ-OIL-2026-01',
     name: 'Cable Tray & Substation Infrastructure',
-    wbs: '1.1.5.1',
+    wbs: '1.1.4.1',
     wbsLevel: 'L4',
     discipline: 'Electrical',
-    area: 'Unit A - Overhead Gallery',
+    area: 'Unit A - Substation',
     plannedStart: '2026-09-14',
     plannedFinish: '2026-09-30',
     actualStart: '2026-09-14',
@@ -609,10 +609,10 @@ const INITIAL_SCHEDULE_ACTIVITIES: ScheduleActivity[] = [
     id: 'ELE-11-032',
     projectId: 'PRJ-OIL-2026-01',
     name: 'Cable Tray Installation - Substation to Compressor Bay',
-    wbs: '1.1.5.1.1',
+    wbs: '1.1.4.1.2',
     wbsLevel: 'L5',
     discipline: 'Electrical',
-    area: 'Unit A - Overhead Gallery',
+    area: 'Unit A - Substation',
     plannedStart: '2026-09-15',
     plannedFinish: '2026-09-23',
     actualStart: '2026-09-15',
@@ -701,8 +701,8 @@ const INITIAL_SCHEDULE_ACTIVITIES: ScheduleActivity[] = [
 const DEFAULT_VERSIONS: ScheduleVersionItem[] = [
   {
     id: 'V3',
-    label: 'V3 · Rev 3.2',
-    versionCode: 'V3 · Rev 3.2',
+    label: 'Rev 3.2 (P6 XML)',
+    versionCode: 'Rev 3.2 (P6 XML)',
     status: 'current',
     source: 'Primavera P6 XML',
     sourceFile: 'OIL_DUL_BASELINE_REV3.2.xml',
@@ -715,8 +715,8 @@ const DEFAULT_VERSIONS: ScheduleVersionItem[] = [
   },
   {
     id: 'V2',
-    label: 'V2 · Rev 2.0',
-    versionCode: 'V2 · Rev 2.0',
+    label: 'Rev 2.0 (P6 XML)',
+    versionCode: 'Rev 2.0 (P6 XML)',
     status: 'previous',
     source: 'Primavera P6 XML',
     sourceFile: 'OIL_DUL_BASELINE_REV2.0.xml',
@@ -729,8 +729,8 @@ const DEFAULT_VERSIONS: ScheduleVersionItem[] = [
   },
   {
     id: 'V1',
-    label: 'V1 · Rev 1.0',
-    versionCode: 'V1 · Rev 1.0',
+    label: 'Rev 1.0 (P6 XML)',
+    versionCode: 'Rev 1.0 (P6 XML)',
     status: 'previous',
     source: 'Primavera P6 XML',
     sourceFile: 'OIL_DUL_CONTRACT_BASE_REV1.xml',
@@ -1466,7 +1466,7 @@ export default function SchedulePage() {
                     Schedule Version:
                   </span>
                   <span className="font-mono font-bold text-base text-[#172033]">
-                    V3 · Rev 3.2
+                    Rev 3.2 (P6 XML)
                   </span>
                   <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]">
                     Status: Current
@@ -2503,7 +2503,7 @@ export default function SchedulePage() {
             {/* Table Footer with Summary & Drawer Guidance */}
             <div className="px-4 py-3 bg-[#F7F8FA] border-t border-[#D9DEE5] flex flex-col sm:flex-row sm:items-center justify-between text-xs text-[#596579] gap-2">
               <div className="flex items-center gap-2 flex-wrap">
-                <span>Version: <strong className="font-mono text-[#172033]">V3 · Rev 3.2 (Primavera P6 XML)</strong></span>
+                <span>Version: <strong className="font-mono text-[#172033]">Rev 3.2 (P6 XML)</strong></span>
                 <span>•</span>
                 <span>Visible Nodes: <strong className="text-[#172033] font-mono">{displayActivities.length}</strong></span>
                 <span>•</span>

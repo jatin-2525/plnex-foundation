@@ -831,7 +831,7 @@ export default function ReviewQueuePage() {
 
             <div className="flex items-center gap-2 flex-wrap">
               <span className="text-xs px-3 py-1 rounded bg-[#F7F8FA] border border-[#D9DEE5] text-[#596579] font-mono">
-                {activeProject?.code || 'OIL-DUL-01'} · V3 · Rev 3.2
+                {activeProject?.code || 'OIL-DUL-01'} · Rev 3.2 (P6 XML)
               </span>
               <Link
                 href="/matching"

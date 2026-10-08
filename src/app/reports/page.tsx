@@ -219,7 +219,7 @@ export default function ReportsAndMemoryPage() {
                   Verified Evidence Links Active
                 </span>
                 <span className="inline-flex items-center gap-1 px-3 py-0.5 rounded text-[11px] text-[#596579] bg-[#F7F8FA] border border-[#D9DEE5]">
-                  {activeProject?.code || 'OIL-DUL-01'} · V3 · Rev 3.2
+                  {activeProject?.code || 'OIL-DUL-01'} · Rev 3.2 (P6 XML)
                 </span>
               </div>
 
@@ -947,7 +947,7 @@ export default function ReportsAndMemoryPage() {
             <div className="flex items-center justify-between w-full text-xs">
               <div className="flex items-center gap-2 text-[#596579] font-mono">
                 <ShieldCheck className="w-3.5 h-3.5 text-[#2E7D5B]" />
-                <span>Statutory Compliance Certified: V3 · Rev 3.2 Non-EVM Standard</span>
+                <span>Statutory Compliance Certified: Rev 3.2 (P6 XML) Non-EVM Standard</span>
               </div>
               <div className="flex items-center gap-2">
                 <button

@@ -613,11 +613,11 @@ export function getEnrichedActivityDetail(activityId: string): EnrichedActivityD
         objectType: 'SCHEDULE_ACTIVITY',
         objectId: base.id,
         objectTitle: base.name,
-        whatChanged: 'Activity created in V3 · Rev 3.2 (Primavera P6 XML) Baseline Schedule',
+        whatChanged: 'Activity created in Rev 3.2 (P6 XML) Baseline Schedule',
         previousValue: 'None',
         newValue: `WBS ${base.wbs} (${base.plannedQuantity} ${base.unit})`,
         before: 'Draft Schedule',
-        after: 'Baseline V3 · Rev 3.2 Activated',
+        after: 'Baseline Rev 3.2 (P6 XML) Activated',
         details: 'Imported from Primavera P6 XML master export with full CPM predecessor logic intact.',
       }
     );

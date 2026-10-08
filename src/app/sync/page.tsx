@@ -1176,7 +1176,7 @@ export default function OfflineSyncCenterPage() {
           footer={
             <div className="flex items-center justify-between w-full text-xs">
               <span className="text-[#596579] font-mono text-[11px] hidden sm:inline">
-                Schedule Baseline: V3 · Rev 3.2
+                Schedule Baseline: Rev 3.2 (P6 XML)
               </span>
               <div className="flex items-center gap-2 flex-wrap justify-end w-full sm:w-auto">
                 <button

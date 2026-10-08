@@ -137,7 +137,7 @@ export default function DPRPage() {
   const [contractorName, setContractorName] = useState('Brahmaputra Engineering & Construction Consortium');
   const [siteEngineer, setSiteEngineer] = useState('Debajit Borah');
   const [siteRole, setSiteRole] = useState('Lead Site Execution Engineer (PE #88412)');
-  const [scheduleBaseline, setScheduleBaseline] = useState('Schedule V3 · Rev 3.2 (Approved)');
+  const [scheduleBaseline, setScheduleBaseline] = useState('Rev 3.2 (P6 XML)');
 
   // SECTION 4: Area State
   const [selectedArea, setSelectedArea] = useState('Unit A - Gas Processing Area');
