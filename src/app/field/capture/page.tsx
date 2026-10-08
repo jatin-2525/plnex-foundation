@@ -233,7 +233,7 @@ export default function FieldCapturePage() {
       emptyTitle="No field capture activities found in this view"
       emptyDescription="Activities available for rapid physical progress recording and evidence upload will appear here. Select an active work area or reset filters to continue."
     >
-      <div className="space-y-4 pb-12 max-w-2xl mx-auto">
+      <div className="space-y-4 pb-24 md:pb-12 max-w-2xl mx-auto">
         <Breadcrumbs items={breadcrumbs} />
 
         {/* OFFLINE MODE BANNER */}
@@ -274,7 +274,7 @@ export default function FieldCapturePage() {
 
             <Link
               href="/engineer"
-              className="px-3 py-1.5 text-xs text-[#596579] hover:text-[#172033] bg-[#F7F8FA] hover:bg-[#F1F3F5] border border-[#D9DEE5] rounded-lg transition-colors font-medium shrink-0"
+              className="min-h-[44px] px-3.5 py-2 text-xs text-[#596579] hover:text-[#172033] bg-[#F7F8FA] hover:bg-[#F1F3F5] border border-[#D9DEE5] rounded-lg transition-colors font-semibold shrink-0 inline-flex items-center justify-center"
             >
               Dashboard
             </Link>
@@ -403,7 +403,7 @@ export default function FieldCapturePage() {
                       key={idx}
                       type="button"
                       onClick={() => setWhatHappened(chip)}
-                      className="min-h-[36px] py-1.5 px-3 text-xs rounded-full bg-[#F1F3F5] hover:bg-[#EDF5F8] text-[#172033] hover:text-[#176B87] border border-[#D9DEE5] transition-colors text-left"
+                      className="min-h-[44px] py-2 px-4 text-xs rounded-full bg-[#F1F3F5] hover:bg-[#EDF5F8] text-[#172033] hover:text-[#176B87] border border-[#D9DEE5] transition-colors text-left inline-flex items-center"
                     >
                       + {chip}
                     </button>
@@ -415,7 +415,7 @@ export default function FieldCapturePage() {
             {/* ========================================================= */}
             {/* 2. QUANTITY (Large, Thumb-Friendly Stepper) */}
             {/* ========================================================= */}
-            <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-4 sm:p-6 space-y-3">
+            <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 space-y-3">
               <label className="text-base font-bold text-[#172033] block">
                 2. Quantity
               </label>
@@ -459,7 +459,7 @@ export default function FieldCapturePage() {
                     key={num}
                     type="button"
                     onClick={() => setQuantity(num)}
-                    className={`min-h-[36px] px-3 text-xs font-mono font-bold rounded-md border transition-colors ${
+                    className={`min-h-[44px] px-4 text-xs font-mono font-bold rounded-md border transition-colors inline-flex items-center justify-center ${
                       quantity === num
                         ? 'bg-[#176B87] text-white border-[#176B87]'
                         : 'bg-[#F7F8FA] text-[#172033] border-[#D9DEE5] hover:bg-[#F1F3F5]'
@@ -696,7 +696,7 @@ export default function FieldCapturePage() {
                 <select
                   value={verificationState}
                   onChange={(e) => setVerificationState(e.target.value as FieldVerificationState)}
-                  className="px-3 py-1 text-xs font-semibold bg-white border border-[#D9DEE5] rounded-md text-[#172033] outline-none"
+                  className="min-h-[44px] px-3 py-2 text-xs font-semibold bg-white border border-[#D9DEE5] rounded-md text-[#172033] outline-none"
                 >
                   <option value="Confirmed">Confirmed</option>
                   <option value="Needs Confirmation">Needs Confirmation</option>

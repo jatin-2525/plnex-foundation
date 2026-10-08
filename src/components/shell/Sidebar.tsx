@@ -154,7 +154,7 @@ export function Sidebar({ collapsed, onToggle, mobileMenuOpen, onCloseMobile }: 
                   key={item.href}
                   href={item.href}
                   onClick={onCloseMobile}
-                  className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-xs transition-colors relative group ${
+                  className={`flex items-center gap-2 px-3 py-2.5 md:py-1.5 min-h-[44px] md:min-h-0 rounded-md text-xs transition-colors relative group ${
                     isActive
                       ? 'bg-[#EDF5F8] text-[#176B87] font-semibold'
                       : 'text-[#596579] hover:bg-[#F1F3F5] hover:text-[#172033] font-normal'

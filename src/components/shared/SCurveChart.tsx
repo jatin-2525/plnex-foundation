@@ -627,7 +627,7 @@ export function SCurveChart({
           </div>
 
           <div className="overflow-x-auto rounded border border-[#D9DEE5]">
-            <table className="w-full text-left text-sm border-collapse">
+            <table className="w-full min-w-[720px] text-left text-sm border-collapse">
               <thead className="sticky top-0 z-10 bg-[#F1F3F5]">
                 <tr className="bg-[#F1F3F5] text-[#172033] border-b border-[#D9DEE5] h-11">
                   <th className="py-3 px-4 font-semibold">Period</th>

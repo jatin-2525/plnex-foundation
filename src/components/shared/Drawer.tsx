@@ -83,7 +83,7 @@ export function Drawer({
 
           {/* Footer */}
           {footer && (
-            <div className="flex items-center justify-end gap-2 sm:gap-3 px-4 sm:px-6 py-3 sm:py-3 border-t border-[#D9DEE5] bg-[#F7F8FA] flex-shrink-0">
+            <div className="flex items-center justify-end gap-2 sm:gap-3 px-4 sm:px-6 py-3 border-t border-[#D9DEE5] bg-[#F7F8FA] flex-shrink-0 flex-wrap">
               {footer}
             </div>
           )}

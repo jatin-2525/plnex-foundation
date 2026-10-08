@@ -154,7 +154,7 @@ export function AppShell({ children }: AppShellProps) {
 
   // Fully authenticated and authorized workspace shell
   return (
-    <div className="min-h-screen bg-[#F7F8FA] text-[#172033] flex flex-col font-sans">
+    <div className="min-h-screen bg-[#F7F8FA] text-[#172033] flex flex-col font-sans overflow-x-hidden">
       {/* Top Header */}
       <TopHeader
         onToggleSidebar={() => {
@@ -195,7 +195,7 @@ export function AppShell({ children }: AppShellProps) {
       )}
 
       {/* Main Container */}
-      <div className="flex flex-1 pt-14">
+      <div className="flex flex-1 pt-14 min-w-0">
         {/* Role-Specific Sidebar */}
         <Sidebar
           collapsed={sidebarCollapsed}
@@ -206,7 +206,7 @@ export function AppShell({ children }: AppShellProps) {
 
         {/* Content Area */}
         <main
-          className={`flex-1 transition-all duration-200 p-4 md:p-6 max-w-[1440px] w-full mx-auto ${
+          className={`flex-1 min-w-0 overflow-x-hidden transition-all duration-200 p-4 md:p-6 max-w-[1440px] w-full mx-auto ${
             sidebarCollapsed ? 'md:ml-16' : 'md:ml-[248px]'
           }`}
         >

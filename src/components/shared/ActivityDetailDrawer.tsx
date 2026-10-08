@@ -294,7 +294,7 @@ export function ActivityDetailDrawer({
                   key={tab.id}
                   type="button"
                   onClick={() => setActiveTab(tab.id)}
-                  className={`flex items-center gap-2 py-2 px-3 text-xs font-semibold whitespace-nowrap border-b-2 transition-colors ${
+                  className={`min-h-[44px] flex items-center gap-2 py-2.5 px-3 text-xs font-semibold whitespace-nowrap border-b-2 transition-colors cursor-pointer ${
                     isActive
                       ? 'border-[#176B87] text-[#176B87] bg-white font-bold'
                       : 'border-transparent text-[#596579] hover:text-[#172033] hover:bg-[#F1F3F5]'
@@ -1083,7 +1083,7 @@ export function ActivityDetailDrawer({
               <button
                 type="button"
                 onClick={handleViewDependencyImpact}
-                className={`px-3 py-1.5 text-xs font-semibold rounded-lg border transition-colors ${
+                className={`min-h-[44px] px-3.5 py-2 text-xs font-semibold rounded-lg border transition-colors inline-flex items-center justify-center cursor-pointer ${
                   activeTab === 'dependencies'
                     ? 'bg-[#176B87] text-white border-[#176B87]'
                     : 'bg-white text-[#596579] hover:text-[#172033] border-[#D9DEE5] hover:bg-[#F1F3F5]'
@@ -1096,7 +1096,7 @@ export function ActivityDetailDrawer({
               <button
                 type="button"
                 onClick={handleOpenEvidence}
-                className={`px-3 py-1.5 text-xs font-semibold rounded-lg border transition-colors ${
+                className={`min-h-[44px] px-3.5 py-2 text-xs font-semibold rounded-lg border transition-colors inline-flex items-center justify-center cursor-pointer ${
                   activeTab === 'evidence'
                     ? 'bg-[#176B87] text-white border-[#176B87]'
                     : 'bg-white text-[#596579] hover:text-[#172033] border-[#D9DEE5] hover:bg-[#F1F3F5]'
@@ -1109,7 +1109,7 @@ export function ActivityDetailDrawer({
               <button
                 type="button"
                 onClick={handleReviewMatch}
-                className="px-3 py-1.5 text-xs font-semibold bg-white text-[#176B87] border border-[#176B87] hover:bg-[#EDF5F8] rounded-lg transition-colors"
+                className="min-h-[44px] px-3.5 py-2 text-xs font-semibold bg-white text-[#176B87] border border-[#176B87] hover:bg-[#EDF5F8] rounded-lg transition-colors inline-flex items-center justify-center cursor-pointer"
                 title="Review AI candidate matches"
               >
                 Review Match
@@ -1119,7 +1119,7 @@ export function ActivityDetailDrawer({
             <button
               type="button"
               onClick={handleCaptureUpdate}
-              className="px-3 py-1.5 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] rounded-lg shadow-xs transition-colors inline-flex items-center gap-2 flex-shrink-0"
+              className="min-h-[44px] px-4 py-2 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] rounded-lg shadow-xs transition-colors inline-flex items-center justify-center gap-2 flex-shrink-0 cursor-pointer"
               title="Capture physical site progress"
             >
               <Plus className="w-3.5 h-3.5" />

@@ -37,7 +37,7 @@ export function TopHeader({ onToggleSidebar, onMobileToggle, onDesktopToggle }: 
         {/* [Sidebar Toggle] */}
         <button
           onClick={handleToggle}
-          className="p-2 text-[#596579] hover:text-[#172033] hover:bg-[#F1F3F5] rounded-md transition-colors cursor-pointer flex-shrink-0"
+          className="min-h-[44px] min-w-[44px] flex items-center justify-center p-2 text-[#596579] hover:text-[#172033] hover:bg-[#F1F3F5] rounded-md transition-colors cursor-pointer flex-shrink-0"
           aria-label="Toggle sidebar"
           title="Toggle sidebar"
         >
@@ -91,7 +91,7 @@ export function TopHeader({ onToggleSidebar, onMobileToggle, onDesktopToggle }: 
         {/* Mobile Search Button */}
         <button
           onClick={() => setGlobalSearchOpen(true)}
-          className="sm:hidden p-2 text-[#596579] hover:text-[#172033] hover:bg-[#F1F3F5] rounded-md transition-colors cursor-pointer"
+          className="sm:hidden min-h-[44px] min-w-[44px] flex items-center justify-center p-2 text-[#596579] hover:text-[#172033] hover:bg-[#F1F3F5] rounded-md transition-colors cursor-pointer"
           aria-label="Search"
           title="Search activities (⌘K)"
         >

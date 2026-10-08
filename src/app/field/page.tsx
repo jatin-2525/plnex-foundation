@@ -172,17 +172,17 @@ export default function FieldPage() {
         description="Converts unstructured DPR reports, site diaries, Excel logs, and supervisor voice updates into structured execution events (Activity, Quantity, Area, Date) with confidence scoring."
         stage="FIELD"
         actions={
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 flex-wrap">
             <Link
               href="/field/capture"
-              className="inline-flex items-center gap-2 px-4 py-2 bg-white hover:bg-[#F1F3F5] text-[#172033] border border-[#D9DEE5] text-xs font-bold rounded-lg shadow-2xs transition-colors"
+              className="min-h-[44px] inline-flex items-center gap-2 px-4 py-2 bg-white hover:bg-[#F1F3F5] text-[#172033] border border-[#D9DEE5] text-xs font-bold rounded-lg shadow-2xs transition-colors"
             >
               <Sparkles className="w-3.5 h-3.5 text-[#176B87]" />
               <span>Field Capture</span>
             </Link>
             <Link
               href="/field/dpr"
-              className="inline-flex items-center gap-2 px-4 py-2 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-bold rounded-lg shadow-xs transition-colors"
+              className="min-h-[44px] inline-flex items-center gap-2 px-4 py-2 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-bold rounded-lg shadow-xs transition-colors"
             >
               <FileText className="w-3.5 h-3.5" />
               <span>DPR / Time Agent</span>
@@ -294,7 +294,7 @@ export default function FieldPage() {
               <button
                 onClick={handleIngest}
                 disabled={isSubmitting}
-                className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-semibold rounded-md shadow-xs transition-colors disabled:opacity-50"
+                className="w-full sm:w-auto min-h-[44px] inline-flex items-center justify-center gap-2 px-4 py-2 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-semibold rounded-md shadow-xs transition-colors disabled:opacity-50"
               >
                 <Sparkles className="w-3.5 h-3.5" />
                 {isSubmitting ? 'Extracting & Matching...' : 'Process Field Update & Match Activity'}
@@ -324,11 +324,15 @@ export default function FieldPage() {
             totalResults={filteredEvents.length}
           />
 
-          <DataTable
-            data={filteredEvents}
-            columns={columns}
-            keyExtractor={(row) => row.id}
-          />
+          <div className="overflow-x-auto border border-[#D9DEE5] rounded-lg">
+            <div className="min-w-[700px]">
+              <DataTable
+                data={filteredEvents}
+                columns={columns}
+                keyExtractor={(row) => row.id}
+              />
+            </div>
+          </div>
         </div>
       </StateWrapper>
     </div>

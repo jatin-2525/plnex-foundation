@@ -6,7 +6,6 @@ import { useRouter } from 'next/navigation';
 import { useApp } from '../../../context/AppContext';
 import { useToast } from '../../../context/ToastContext';
 import { useOffline } from '../../../context/OfflineContext';
-import { AppShell } from '../../../components/shell/AppShell';
 import { Breadcrumbs } from '../../../components/shell/Breadcrumbs';
 import { Drawer } from '../../../components/shared/Drawer';
 import { DisciplineType } from '../../../types';
@@ -545,9 +544,8 @@ export default function DPRPage() {
   ];
 
   return (
-    <AppShell>
-      <div className="space-y-6 pb-24 md:pb-12 max-w-7xl mx-auto">
-        {/* Breadcrumb Navigation */}
+    <div className="space-y-6 pb-24 md:pb-12 max-w-7xl mx-auto">
+      {/* Breadcrumb Navigation */}
         <Breadcrumbs items={breadcrumbs} />
 
         {/* OFFLINE MODE BANNER */}
@@ -662,7 +660,7 @@ export default function DPRPage() {
               >
                 <ArrowLeft className="w-4 h-4" />
               </button>
-              <span className="font-mono text-xs px-3 py-1.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-md font-bold text-[#176B87]">
+              <span className="font-mono text-xs px-3 py-1.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-md font-bold text-[#176B87] truncate max-w-[170px] sm:max-w-none">
                 {activeStep} / 7: {stepsConfig[activeStep - 1]?.title}
               </span>
               <button
@@ -1206,7 +1204,7 @@ export default function DPRPage() {
                         <button
                           type="button"
                           onClick={() => setSelectedQuantityForDrawer(q)}
-                          className="text-[#176B87] hover:underline font-semibold text-[11px] cursor-pointer"
+                          className="min-h-[40px] px-2.5 py-1 text-[#176B87] hover:underline font-semibold text-xs inline-flex items-center cursor-pointer"
                         >
                           Inspect
                         </button>
@@ -1483,23 +1481,23 @@ export default function DPRPage() {
 
             {/* Final Action Buttons Bar */}
             <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 border-t border-[#D9DEE5]">
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 w-full sm:w-auto">
                 <button
                   type="button"
                   onClick={handleSaveDraft}
-                  className="px-4 py-2 text-xs font-semibold text-[#172033] bg-white border border-[#D9DEE5] hover:bg-[#F1F3F5] rounded-lg inline-flex items-center justify-center gap-2 transition-colors cursor-pointer shadow-2xs"
+                  className="w-full sm:w-auto min-h-[44px] px-4 py-2 text-xs font-semibold text-[#172033] bg-white border border-[#D9DEE5] hover:bg-[#F1F3F5] rounded-lg inline-flex items-center justify-center gap-2 transition-colors cursor-pointer shadow-2xs"
                 >
                   <Save className="w-4 h-4 text-[#596579]" />
                   <span>Save Draft</span>
                 </button>
               </div>
 
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-3 w-full sm:w-auto">
                 <button
                   type="button"
                   onClick={handleSubmitDPR}
                   disabled={submissionState === 'Processing'}
-                  className="min-h-[48px] px-6 py-2 text-xs sm:text-sm font-bold text-white bg-[#176B87] hover:bg-[#135A72] active:bg-[#135A72] disabled:opacity-50 rounded-lg inline-flex items-center justify-center gap-2 transition-colors cursor-pointer shadow-xs"
+                  className="w-full sm:w-auto min-h-[48px] px-6 py-2 text-xs sm:text-sm font-bold text-white bg-[#176B87] hover:bg-[#135A72] active:bg-[#135A72] disabled:opacity-50 rounded-lg inline-flex items-center justify-center gap-2 transition-colors cursor-pointer shadow-xs"
                 >
                   <Send className="w-4 h-4" />
                   <span>
@@ -1559,6 +1557,5 @@ export default function DPRPage() {
           )}
         </Drawer>
       </div>
-    </AppShell>
   );
 }

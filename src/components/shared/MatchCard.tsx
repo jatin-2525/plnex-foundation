@@ -552,13 +552,13 @@ export function MatchCard({
              Approve Match, Choose Another, Reject, Mark Unmatched
           ========================================================================= */}
       {(onApprove || onChooseAnother || onReject || onMarkUnmatched) && (
-        <div className="p-4 sm:p-4 sm:p-6 bg-[#F7F8FA] flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+        <div className="p-4 sm:p-6 bg-[#F7F8FA] flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
           <div className="flex items-center gap-2 flex-wrap">
             {onReject && (
               <button
                 type="button"
                 onClick={onReject}
-                className="px-4 py-2 text-xs font-semibold text-[#B5473C] hover:bg-[#FBEFEE] border border-[#E4B0AA] rounded-lg transition-colors flex items-center justify-center gap-2"
+                className="min-h-[44px] px-4 py-2 text-xs font-semibold text-[#B5473C] hover:bg-[#FBEFEE] border border-[#E4B0AA] rounded-lg transition-colors flex items-center justify-center gap-2 cursor-pointer"
               >
                 <X className="w-3.5 h-3.5" />
                 <span>Reject</span>
@@ -569,7 +569,7 @@ export function MatchCard({
               <button
                 type="button"
                 onClick={onMarkUnmatched}
-                className="px-4 py-2 text-xs font-semibold text-[#596579] hover:text-[#172033] hover:bg-white border border-[#D9DEE5] rounded-lg transition-colors flex items-center justify-center gap-2"
+                className="min-h-[44px] px-4 py-2 text-xs font-semibold text-[#596579] hover:text-[#172033] hover:bg-white border border-[#D9DEE5] rounded-lg transition-colors flex items-center justify-center gap-2 cursor-pointer"
               >
                 <HelpCircle className="w-3.5 h-3.5" />
                 <span>Mark Unmatched</span>
@@ -582,7 +582,7 @@ export function MatchCard({
               <button
                 type="button"
                 onClick={onChooseAnother}
-                className="px-4 py-2 text-xs font-semibold text-[#172033] bg-white hover:bg-[#F1F3F5] border border-[#D9DEE5] rounded-lg transition-colors flex items-center justify-center gap-2"
+                className="min-h-[44px] px-4 py-2 text-xs font-semibold text-[#172033] bg-white hover:bg-[#F1F3F5] border border-[#D9DEE5] rounded-lg transition-colors flex items-center justify-center gap-2 cursor-pointer"
               >
                 <SlidersHorizontal className="w-3.5 h-3.5" />
                 <span>Choose Another</span>
@@ -593,7 +593,7 @@ export function MatchCard({
               <button
                 type="button"
                 onClick={onApprove}
-                className="px-4 py-2 text-xs font-bold bg-[#176B87] hover:bg-[#135A72] text-white rounded-lg shadow-xs transition-colors flex items-center justify-center gap-2"
+                className="min-h-[44px] px-5 py-2 text-xs font-bold bg-[#176B87] hover:bg-[#135A72] text-white rounded-lg shadow-xs transition-colors flex items-center justify-center gap-2 cursor-pointer"
               >
                 <Check className="w-3.5 h-3.5" />
                 <span>Approve Match</span>
