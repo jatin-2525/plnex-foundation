@@ -205,26 +205,16 @@ export default function ShowcasePage() {
 
         <div className="space-y-4 text-xs">
           <div>
-            <h4 className="font-semibold text-[#596579] mb-2">Schedule Activity Statuses:</h4>
+            <h4 className="font-semibold text-[#596579] mb-2">The 8 Canonical System Statuses:</h4>
             <div className="flex flex-wrap gap-2">
-              <StatusBadge status="on-track" />
-              <StatusBadge status="at-risk" />
-              <StatusBadge status="delayed" />
-              <StatusBadge status="completed" />
-              <StatusBadge status="pending" />
-              <StatusBadge status="not-started" />
-            </div>
-          </div>
-
-          <div>
-            <h4 className="font-semibold text-[#596579] mb-2">Execution Event Review Statuses:</h4>
-            <div className="flex flex-wrap gap-2">
-              <StatusBadge status="auto-linked" type="event" />
-              <StatusBadge status="pending-review" type="event" />
-              <StatusBadge status="pending-verification" type="event" />
-              <StatusBadge status="approved" type="event" />
-              <StatusBadge status="rejected" type="event" />
-              <StatusBadge status="rematched" type="event" />
+              <StatusBadge status="On Track" />
+              <StatusBadge status="At Risk" />
+              <StatusBadge status="Delayed" />
+              <StatusBadge status="Completed" />
+              <StatusBadge status="Blocked" />
+              <StatusBadge status="Pending Review" />
+              <StatusBadge status="Unmatched" />
+              <StatusBadge status="Verified" />
             </div>
           </div>
 

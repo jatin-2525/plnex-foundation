@@ -12,6 +12,7 @@ import {
   executeGlobalSearch,
 } from '../../lib/domain/searchData';
 import { ActivityDrawerTab } from '../../lib/domain/activityDetailData';
+import { StatusBadge } from './StatusBadge';
 import {
   Search,
   X,
@@ -70,39 +71,6 @@ function getEntityTypeBadge(type: SearchResultType) {
     default:
       return 'bg-[#F1F3F5] text-[#596579] border-[#D9DEE5]';
   }
-}
-
-function getStatusBadgeClass(status: string) {
-  const s = status.toLowerCase();
-  if (
-    s.includes('active') ||
-    s.includes('completed') ||
-    s.includes('verified') ||
-    s.includes('auto') ||
-    s.includes('high') ||
-    s.includes('on track')
-  ) {
-    return 'bg-[#EDF7F2] text-[#2E7D5B] border-[#B8DCC9]';
-  }
-  if (
-    s.includes('review') ||
-    s.includes('warning') ||
-    s.includes('moderate') ||
-    s.includes('available') ||
-    s.includes('planning')
-  ) {
-    return 'bg-[#FDF6ED] text-[#8C5311] border-[#F0D4A6]';
-  }
-  if (
-    s.includes('delayed') ||
-    s.includes('critical') ||
-    s.includes('conflict') ||
-    s.includes('unmatched') ||
-    s.includes('failed')
-  ) {
-    return 'bg-[#FBEFEE] text-[#B5473C] border-[#E4B0AA]';
-  }
-  return 'bg-[#F1F3F5] text-[#596579] border-[#D9DEE5]';
 }
 
 export interface GlobalSearchPanelProps {
@@ -379,13 +347,7 @@ export function GlobalSearchPanel({
                 </div>
 
                 <div className="flex flex-col items-end gap-2 shrink-0">
-                  <span
-                    className={`px-2 py-0.5 rounded text-[10px] font-semibold border font-mono capitalize ${getStatusBadgeClass(
-                      item.status
-                    )}`}
-                  >
-                    {item.status}
-                  </span>
+                  <StatusBadge status={item.status} size="xs" />
                   <span className="text-[11px] font-bold text-[#176B87] inline-flex items-center gap-1">
                     <span>Open</span>
                     <ArrowRight className="w-3 h-3" />

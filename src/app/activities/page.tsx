@@ -448,45 +448,9 @@ export default function MyActivitiesPage() {
     }, 600);
   };
 
-  // Render Status Badge for the 5 required statuses
+  // Render Status Badge for activities using canonical StatusBadge component
   const renderStatusBadge = (status: ExtendedActivityStatus) => {
-    switch (status) {
-      case 'not-started':
-        return (
-          <span className="inline-flex items-center gap-2 px-3 py-0.5 rounded text-xs font-medium bg-[#F1F3F5] text-[#596579] border border-[#D9DEE5]">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#7B8798]" />
-            Not Started
-          </span>
-        );
-      case 'in-progress':
-        return (
-          <span className="inline-flex items-center gap-2 px-3 py-0.5 rounded text-xs font-medium bg-[#EDF5F8] text-[#176B87] border border-[#C5DCE6]">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#176B87]" />
-            In Progress
-          </span>
-        );
-      case 'completed':
-        return (
-          <span className="inline-flex items-center gap-2 px-3 py-0.5 rounded text-xs font-medium bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#2E7D5B]" />
-            Completed
-          </span>
-        );
-      case 'blocked':
-        return (
-          <span className="inline-flex items-center gap-2 px-3 py-0.5 rounded text-xs font-medium bg-[#FDF6ED] text-[#8C5311] border border-[#F0D4A6]">
-            <Lock className="w-3 h-3 text-[#D98B32]" />
-            Blocked
-          </span>
-        );
-      case 'delayed':
-        return (
-          <span className="inline-flex items-center gap-2 px-3 py-0.5 rounded text-xs font-medium bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#B5473C]" />
-            Delayed
-          </span>
-        );
-    }
+    return <StatusBadge status={status} size="xs" />;
   };
 
   return (

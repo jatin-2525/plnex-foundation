@@ -62,6 +62,7 @@ export interface StatusBadgeConfig {
 export function getActivityStatusConfig(status: ActivityStatus): StatusBadgeConfig {
   switch (status) {
     case 'on-track':
+    case 'in-progress':
       return {
         label: 'On Track',
         color: colors.status.success,
@@ -85,38 +86,25 @@ export function getActivityStatusConfig(status: ActivityStatus): StatusBadgeConf
     case 'completed':
       return {
         label: 'Completed',
-        color: colors.status.success,
-        bgColor: colors.status.successBg,
-        borderColor: colors.status.successBorder,
-      };
-    case 'pending':
-      return {
-        label: 'Pending',
-        color: colors.status.info,
-        bgColor: colors.status.infoBg,
-        borderColor: colors.status.infoBorder,
-      };
-    case 'in-progress':
-      return {
-        label: 'In Progress',
-        color: colors.status.info,
+        color: colors.status.infoText,
         bgColor: colors.status.infoBg,
         borderColor: colors.status.infoBorder,
       };
     case 'blocked':
       return {
         label: 'Blocked',
-        color: colors.status.warningText,
-        bgColor: colors.status.warningBg,
-        borderColor: colors.status.warningBorder,
+        color: '#9A2D23',
+        bgColor: '#FDF2F2',
+        borderColor: '#EAA29B',
       };
+    case 'pending':
     case 'not-started':
     default:
       return {
-        label: 'Not Started',
-        color: colors.text.secondary,
-        bgColor: colors.bg.surfaceSunken,
-        borderColor: colors.border.default,
+        label: 'Pending Review',
+        color: colors.status.warningText,
+        bgColor: colors.status.warningBg,
+        borderColor: colors.status.warningBorder,
       };
   }
 }
@@ -124,46 +112,28 @@ export function getActivityStatusConfig(status: ActivityStatus): StatusBadgeConf
 export function getEventStatusConfig(status: EventStatus): StatusBadgeConfig {
   switch (status) {
     case 'auto-linked':
+    case 'approved':
       return {
-        label: 'Auto Linked (≥90%)',
+        label: 'Verified',
         color: colors.status.success,
         bgColor: colors.status.successBg,
         borderColor: colors.status.successBorder,
       };
     case 'pending-review':
+    case 'pending-verification':
+    case 'rematched':
       return {
-        label: 'Review Required (70–89%)',
+        label: 'Pending Review',
         color: colors.status.warningText,
         bgColor: colors.status.warningBg,
         borderColor: colors.status.warningBorder,
       };
-    case 'pending-verification':
-      return {
-        label: 'Pending Field Verification',
-        color: colors.status.info,
-        bgColor: colors.status.infoBg,
-        borderColor: colors.status.infoBorder,
-      };
-    case 'approved':
-      return {
-        label: 'Planner Approved',
-        color: colors.status.success,
-        bgColor: colors.status.successBg,
-        borderColor: colors.status.successBorder,
-      };
     case 'rejected':
       return {
-        label: 'Match Rejected',
+        label: 'Blocked',
         color: colors.status.critical,
         bgColor: colors.status.criticalBg,
         borderColor: colors.status.criticalBorder,
-      };
-    case 'rematched':
-      return {
-        label: 'Manually Rematched',
-        color: colors.status.info,
-        bgColor: colors.status.infoBg,
-        borderColor: colors.status.infoBorder,
       };
   }
 }

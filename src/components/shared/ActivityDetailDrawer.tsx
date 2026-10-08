@@ -777,17 +777,10 @@ export function ActivityDetailDrawer({
                                <span className="text-[11px] font-semibold px-1.5 py-0.5 rounded bg-[#F1F3F5] text-[#596579] uppercase">
                                  {item.type}
                                </span>
-                               {item.verifiedStatus ? (
-                                 <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[11px] font-semibold bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]">
-                                   <ShieldCheck className="w-3 h-3" />
-                                   <span>Verified QC</span>
-                                 </span>
-                               ) : (
-                                 <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[11px] font-semibold bg-[#FDF6ED] text-[#8C5311] border border-[#F0D4A6]">
-                                   <Clock className="w-3 h-3" />
-                                   <span>Pending QC</span>
-                                 </span>
-                               )}
+                               <StatusBadge
+                                 status={item.verifiedStatus ? 'Verified' : 'Pending Review'}
+                                 size="xs"
+                               />
                              </div>
                              <h4 className="font-semibold text-sm text-[#172033] pt-0.5 truncate">{item.title}</h4>
                              <span className="text-[11px] text-[#596579] font-mono block">

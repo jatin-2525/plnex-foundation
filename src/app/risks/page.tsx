@@ -9,6 +9,7 @@ import { StateWrapper } from '../../components/shared/StateWrapper';
 import { Drawer } from '../../components/shared/Drawer';
 import { WhyButton } from '../../components/shared/WhyButton';
 import { HorizontalBarChart } from '../../components/shared/charts';
+import { StatusBadge } from '../../components/shared/StatusBadge';
 import { DisciplineType } from '../../types';
 import {
   AlertTriangle,
@@ -1154,17 +1155,7 @@ export default function DelayDependencyImpactPage() {
                             <span className="font-bold text-xs text-[#176B87]">
                               {node.step}
                             </span>
-                            <span
-                              className={`px-2 py-0.5 rounded text-[10px] font-bold ${
-                                node.status === 'Delayed'
-                                  ? 'bg-[#B5473C] text-white'
-                                  : node.status === 'Blocked'
-                                  ? 'bg-[#D98B32] text-white'
-                                  : 'bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0]'
-                              }`}
-                            >
-                              {node.status}
-                            </span>
+                            <StatusBadge status={node.status} size="xs" />
                           </div>
 
                           <div className="font-bold text-sm text-[#172033]">
@@ -1665,19 +1656,7 @@ export default function DelayDependencyImpactPage() {
                       </div>
 
                       <div className="text-right shrink-0">
-                        <span
-                          className={`inline-block px-2 py-0.5 rounded text-[11px] font-bold ${
-                            node.status === 'Completed'
-                              ? 'bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]'
-                              : node.status === 'Delayed'
-                              ? 'bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]'
-                              : node.status === 'Blocked'
-                              ? 'bg-[#FDF6ED] text-[#8C5311] border border-[#F0D4A6]'
-                              : 'bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0]'
-                          }`}
-                        >
-                          {node.delayText || node.status}
-                        </span>
+                        <StatusBadge status={node.status} size="xs" />
                         <span className="text-[10px] text-[#7B8798] block mt-0.5 font-mono">
                           {node.floatRemaining}
                         </span>

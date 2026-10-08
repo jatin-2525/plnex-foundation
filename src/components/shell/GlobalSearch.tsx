@@ -12,6 +12,7 @@ import {
   executeGlobalSearch,
 } from '../../lib/domain/searchData';
 import { ActivityDrawerTab } from '../../lib/domain/activityDetailData';
+import { StatusBadge } from '../shared/StatusBadge';
 import {
   Search,
   X,
@@ -80,40 +81,6 @@ function getEntityTypeBadge(type: SearchResultType) {
     default:
       return 'bg-[#F1F3F5] text-[#596579] border-[#D9DEE5]';
   }
-}
-
-// Status badge styling helper
-function getStatusBadgeClass(status: string) {
-  const s = status.toLowerCase();
-  if (
-    s.includes('active') ||
-    s.includes('completed') ||
-    s.includes('verified') ||
-    s.includes('auto') ||
-    s.includes('high') ||
-    s.includes('on track')
-  ) {
-    return 'bg-[#EDF7F2] text-[#2E7D5B] border-[#B8DCC9]';
-  }
-  if (
-    s.includes('review') ||
-    s.includes('warning') ||
-    s.includes('moderate') ||
-    s.includes('available') ||
-    s.includes('planning')
-  ) {
-    return 'bg-[#FDF6ED] text-[#8C5311] border-[#F0D4A6]';
-  }
-  if (
-    s.includes('delayed') ||
-    s.includes('critical') ||
-    s.includes('conflict') ||
-    s.includes('unmatched') ||
-    s.includes('failed')
-  ) {
-    return 'bg-[#FBEFEE] text-[#B5473C] border-[#E4B0AA]';
-  }
-  return 'bg-[#F1F3F5] text-[#596579] border-[#D9DEE5]';
 }
 
 export function GlobalSearch() {
@@ -531,7 +498,6 @@ export function GlobalSearch() {
                 {results.map((item, idx) => {
                   const isSelected = selectedIndex === idx;
                   const typeBadgeClass = getEntityTypeBadge(item.type);
-                  const statusBadgeClass = getStatusBadgeClass(item.status);
 
                   return (
                     <div
@@ -582,11 +548,7 @@ export function GlobalSearch() {
                       {/* Right Meta: Status Badge + Action Indicator */}
                       <div className="flex flex-col items-end gap-2 shrink-0">
                         {/* 4. STATUS */}
-                        <span
-                          className={`px-2 py-0.5 rounded text-[10px] font-semibold border font-mono capitalize ${statusBadgeClass}`}
-                        >
-                          {item.status}
-                        </span>
+                        <StatusBadge status={item.status} size="xs" />
 
                         <span className="text-[11px] font-bold text-[#176B87] inline-flex items-center gap-1">
                           <span>Open</span>

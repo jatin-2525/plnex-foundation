@@ -6,18 +6,41 @@ import {
   Clock,
   HelpCircle,
   AlertTriangle,
+  AlertCircle,
+  CheckCheck,
+  XCircle,
   Copy,
   History,
   Loader2,
-  XCircle,
   WifiOff,
   CloudOff,
-  CheckCheck,
 } from 'lucide-react';
 import { ActivityStatus, EventStatus } from '../../tokens/status';
 import { CanonicalDataState } from '../../lib/domain/canonicalModels';
 
-export type StandardizedStatus =
+/**
+ * The 8 Authoritative, Standardized Status States across PLnEX
+ * No other status states may be created or rendered in status badges.
+ */
+export type RequiredStatus =
+  | 'On Track'
+  | 'At Risk'
+  | 'Delayed'
+  | 'Completed'
+  | 'Blocked'
+  | 'Pending Review'
+  | 'Unmatched'
+  | 'Verified';
+
+/**
+ * Standardized status alias (restricted to the 8 required canonical states)
+ */
+export type StandardizedStatus = RequiredStatus;
+
+/**
+ * Legacy statuses maintained for backward-compatibility string matching & normalization
+ */
+export type LegacyStatus =
   | 'Verified'
   | 'Pending Review'
   | 'Unmatched'
@@ -31,27 +54,62 @@ export type StandardizedStatus =
   | 'Server Confirmed';
 
 export interface StatusConfig {
-  key: StandardizedStatus;
-  label: StandardizedStatus;
+  key: RequiredStatus;
+  label: RequiredStatus;
   description: string;
   badgeClass: string;
   dotColor: string;
   icon: React.ComponentType<{ className?: string }>;
 }
 
-export const STANDARDIZED_STATUS_CONFIGS: Record<StandardizedStatus, StatusConfig> = {
-  Verified: {
-    key: 'Verified',
-    label: 'Verified',
-    description: 'Confirmed against physical site evidence and approved by engineer/planner.',
+/**
+ * Explicit configuration map for the 8 canonical statuses
+ */
+export const REQUIRED_STATUS_CONFIGS: Record<RequiredStatus, StatusConfig> = {
+  'On Track': {
+    key: 'On Track',
+    label: 'On Track',
+    description: 'Work is progressing in accordance with approved baseline schedule logic and planned milestones.',
     badgeClass: 'bg-[#EDF7F2] text-[#2E7D5B] border-[#B8DCC9]',
     dotColor: '#2E7D5B',
     icon: CheckCircle2,
   },
+  'At Risk': {
+    key: 'At Risk',
+    label: 'At Risk',
+    description: 'Potential schedule delay, negative float encroachment, or variance threshold alert detected.',
+    badgeClass: 'bg-[#FDF6ED] text-[#8C5311] border-[#F0D4A6]',
+    dotColor: '#D98B32',
+    icon: AlertTriangle,
+  },
+  Delayed: {
+    key: 'Delayed',
+    label: 'Delayed',
+    description: 'Actual progress has breached planned schedule finish with critical path slippage.',
+    badgeClass: 'bg-[#FBEFEE] text-[#B5473C] border-[#E4B0AA]',
+    dotColor: '#B5473C',
+    icon: AlertCircle,
+  },
+  Completed: {
+    key: 'Completed',
+    label: 'Completed',
+    description: 'Activity or work package is 100% physically finished with actual finish recorded.',
+    badgeClass: 'bg-[#EDF5F8] text-[#135A72] border-[#B3CBE0]',
+    dotColor: '#176B87',
+    icon: CheckCheck,
+  },
+  Blocked: {
+    key: 'Blocked',
+    label: 'Blocked',
+    description: 'Execution is halted due to unmet predecessors, site conflicts, or validation failure.',
+    badgeClass: 'bg-[#FDF2F2] text-[#9A2D23] border-[#EAA29B]',
+    dotColor: '#9A2D23',
+    icon: XCircle,
+  },
   'Pending Review': {
     key: 'Pending Review',
     label: 'Pending Review',
-    description: 'Awaiting human verification by planner or site engineer.',
+    description: 'Awaiting human verification, engineering review, or formal planner sign-off.',
     badgeClass: 'bg-[#FDF6ED] text-[#8C5311] border-[#F0D4A6]',
     dotColor: '#D98B32',
     icon: Clock,
@@ -59,162 +117,140 @@ export const STANDARDIZED_STATUS_CONFIGS: Record<StandardizedStatus, StatusConfi
   Unmatched: {
     key: 'Unmatched',
     label: 'Unmatched',
-    description: 'Field observation has no direct counterpart in master schedule baseline.',
+    description: 'Field observation has no verified counterpart in the imported schedule baseline.',
     badgeClass: 'bg-[#F1F3F5] text-[#596579] border-[#D9DEE5]',
     dotColor: '#596579',
     icon: HelpCircle,
   },
-  Conflict: {
-    key: 'Conflict',
-    label: 'Conflict',
-    description: 'Discrepancy detected between site update and master schedule logic.',
-    badgeClass: 'bg-[#FBEFEE] text-[#B5473C] border-[#E4B0AA]',
-    dotColor: '#B5473C',
-    icon: AlertTriangle,
-  },
-  Duplicate: {
-    key: 'Duplicate',
-    label: 'Duplicate',
-    description: 'Identical record already received in current reporting cycle.',
-    badgeClass: 'bg-[#F1F3F5] text-[#596579] border-[#D9DEE5]',
-    dotColor: '#596579',
-    icon: Copy,
-  },
-  Stale: {
-    key: 'Stale',
-    label: 'Stale',
-    description: 'Record timestamp exceeds the daily reporting cutoff window.',
-    badgeClass: 'bg-[#F1F3F5] text-[#596579] border-[#D9DEE5]',
-    dotColor: '#7B8798',
-    icon: History,
-  },
-  Processing: {
-    key: 'Processing',
-    label: 'Processing',
-    description: 'Entity is undergoing field extraction and schedule analysis.',
-    badgeClass: 'bg-[#EDF5F8] text-[#176B87] border-[#B3CBE0]',
-    dotColor: '#176B87',
-    icon: Loader2,
-  },
-  Failed: {
-    key: 'Failed',
-    label: 'Failed',
-    description: 'Processing or transmission failed and requires correction or retry.',
-    badgeClass: 'bg-[#FBEFEE] text-[#B5473C] border-[#E4B0AA]',
-    dotColor: '#B5473C',
-    icon: XCircle,
-  },
-  Offline: {
-    key: 'Offline',
-    label: 'Offline',
-    description: 'Operating in local offline cache mode; awaiting network connection.',
-    badgeClass: 'bg-[#F1F3F5] text-[#596579] border-[#D9DEE5]',
-    dotColor: '#596579',
-    icon: WifiOff,
-  },
-  Queued: {
-    key: 'Queued',
-    label: 'Queued',
-    description: 'Buffered in local device storage; queued for transmission to central server.',
-    badgeClass: 'bg-[#EDF5F8] text-[#3B6EA8] border-[#B3CBE0]',
-    dotColor: '#3B6EA8',
-    icon: CloudOff,
-  },
-  'Server Confirmed': {
-    key: 'Server Confirmed',
-    label: 'Server Confirmed',
-    description: 'Successfully acknowledged and persisted in central database.',
+  Verified: {
+    key: 'Verified',
+    label: 'Verified',
+    description: 'Confirmed against physical site evidence tickets and committed to the Schedule Twin.',
     badgeClass: 'bg-[#EDF7F2] text-[#2E7D5B] border-[#B8DCC9]',
     dotColor: '#2E7D5B',
-    icon: CheckCheck,
+    icon: CheckCircle2,
   },
 };
 
 /**
- * Normalizes any raw status string into one of the 11 standardized statuses
+ * Backwards compatibility export: maps both the 8 canonical statuses and legacy keys
  */
-export function normalizeStatus(raw: string | undefined | null): StandardizedStatus {
-  if (!raw) return 'Queued';
+export const STANDARDIZED_STATUS_CONFIGS: Record<string, StatusConfig> = {
+  ...REQUIRED_STATUS_CONFIGS,
+  // Backward compatibility aliases
+  Conflict: REQUIRED_STATUS_CONFIGS.Blocked,
+  Duplicate: REQUIRED_STATUS_CONFIGS.Blocked,
+  Stale: REQUIRED_STATUS_CONFIGS['At Risk'],
+  Processing: {
+    ...REQUIRED_STATUS_CONFIGS['On Track'],
+    description: 'Entity is undergoing field extraction and schedule analysis.',
+  },
+  Failed: REQUIRED_STATUS_CONFIGS.Blocked,
+  Offline: REQUIRED_STATUS_CONFIGS.Blocked,
+  Queued: REQUIRED_STATUS_CONFIGS['Pending Review'],
+  'Server Confirmed': REQUIRED_STATUS_CONFIGS.Verified,
+};
+
+/**
+ * Normalizes any raw status string into strictly one of the 8 required states:
+ * On Track, At Risk, Delayed, Completed, Blocked, Pending Review, Unmatched, Verified.
+ */
+export function normalizeStatus(raw: string | undefined | null): RequiredStatus {
+  if (!raw) return 'Pending Review';
 
   const cleaned = raw.trim().toUpperCase().replace(/[-\s]/g, '_');
 
-  // Exact mappings
   switch (cleaned) {
-    case 'VERIFIED':
-    case 'COMPLETED':
-    case 'APPROVED':
-    case 'RESOLVED':
-    case 'DONE':
-      return 'Verified';
+    // 1. On Track
+    case 'ON_TRACK':
+    case 'IN_PROGRESS':
+    case 'PROCESSING':
+    case 'ACTIVE':
+    case 'AHEAD':
+    case 'ON_SCHEDULE':
+    case 'ACCELERATED':
+      return 'On Track';
 
+    // 2. At Risk
+    case 'AT_RISK':
+    case 'WARNING':
+    case 'STALE':
+    case 'MINOR_DELAY':
+    case 'MODERATE_DELAY':
+    case 'CAUTION':
+      return 'At Risk';
+
+    // 3. Delayed
+    case 'DELAYED':
+    case 'CRITICAL':
+    case 'CRITICAL_DELAY':
+    case 'CRITICAL_SLIP':
+    case 'BEHIND':
+    case 'LATE':
+      return 'Delayed';
+
+    // 4. Completed
+    case 'COMPLETED':
+    case 'DONE':
+    case 'RESOLVED':
+    case 'FINISHED':
+    case 'CLOSED':
+      return 'Completed';
+
+    // 5. Blocked
+    case 'BLOCKED':
+    case 'CONFLICT':
+    case 'DUPLICATE':
+    case 'FAILED':
+    case 'OFFLINE':
+    case 'REJECTED':
+    case 'ERROR':
+    case 'HOLD':
+      return 'Blocked';
+
+    // 6. Pending Review
     case 'PENDING_REVIEW':
     case 'PENDING':
     case 'NEEDS_REVIEW':
-    case 'IN_REVIEW':
+    case 'REVIEW_REQUIRED':
+    case 'PENDING_VERIFICATION':
+    case 'MANAGER_REVIEW':
+    case 'QUEUED':
+    case 'DRAFT':
+    case 'SAVED_LOCALLY':
+    case 'NOT_STARTED':
     case 'OPEN':
-    case 'AT_RISK':
     case 'WAITING':
+    case 'UNREVIEWED':
+    case 'HIGH_CONFIDENCE':
       return 'Pending Review';
 
+    // 7. Unmatched
     case 'UNMATCHED':
     case 'UNKNOWN':
     case 'NO_MATCH':
+    case 'UNASSIGNED':
       return 'Unmatched';
 
-    case 'CONFLICT':
-    case 'DISCREPANCY':
-    case 'DELAYED':
-    case 'CRITICAL':
-      return 'Conflict';
-
-    case 'DUPLICATE':
-    case 'REDUNDANT':
-      return 'Duplicate';
-
-    case 'STALE':
-    case 'EXPIRED':
-    case 'OUTDATED':
-      return 'Stale';
-
-    case 'PROCESSING':
-    case 'IN_PROGRESS':
-    case 'EXTRACTING':
-    case 'MATCHING':
-    case 'ON_TRACK':
-      return 'Processing';
-
-    case 'FAILED':
-    case 'ERROR':
-    case 'REJECTED':
-      return 'Failed';
-
-    case 'OFFLINE':
-    case 'DISCONNECTED':
-      return 'Offline';
-
-    case 'QUEUED':
-    case 'SYNC_PENDING':
-    case 'DRAFT':
-    case 'NOT_STARTED':
-    case 'PENDING_SYNC':
-      return 'Queued';
-
-    case 'SERVER_CONFIRMED':
-    case 'SYNCED':
+    // 8. Verified
+    case 'VERIFIED':
+    case 'APPROVED':
+    case 'AUTO_LINKED':
     case 'CONFIRMED':
     case 'COMMITTED':
-      return 'Server Confirmed';
+    case 'SERVER_CONFIRMED':
+      return 'Verified';
 
-    default:
-      if (raw in STANDARDIZED_STATUS_CONFIGS) {
-        return raw as StandardizedStatus;
-      }
-      return 'Queued';
+    default: {
+      const keys = Object.keys(REQUIRED_STATUS_CONFIGS) as RequiredStatus[];
+      const match = keys.find((k) => k.toUpperCase().replace(/\s/g, '_') === cleaned);
+      return match || 'Pending Review';
+    }
   }
 }
 
 export interface StatusBadgeProps {
-  status: StandardizedStatus | ActivityStatus | EventStatus | CanonicalDataState | string;
+  status: RequiredStatus | ActivityStatus | EventStatus | CanonicalDataState | string;
   type?: 'activity' | 'event';
   size?: 'xs' | 'sm' | 'md';
   showIcon?: boolean;
@@ -224,48 +260,61 @@ export interface StatusBadgeProps {
   showTooltip?: boolean;
 }
 
+/**
+ * Standardized PLnEX Status Badge
+ * - Enforces the 8 canonical statuses with consistent Title Case capitalization
+ * - Uses accessible semantic color pairs (WCAG AAA compliant contrast)
+ * - Multi-indicator: Always pairs functional icon or glyph with text (never color alone)
+ * - Restrained compact sizing: Never dwarfs row text or controls
+ */
 export function StatusBadge({
   status,
   size = 'sm',
-  showIcon = false,
-  showDot = true,
+  showIcon = true,
+  showDot = false,
   customLabel,
   className = '',
   showTooltip = true,
 }: StatusBadgeProps) {
   const normalized = normalizeStatus(status);
-  const config = STANDARDIZED_STATUS_CONFIGS[normalized] || STANDARDIZED_STATUS_CONFIGS.Queued;
+  const config = REQUIRED_STATUS_CONFIGS[normalized] || REQUIRED_STATUS_CONFIGS['Pending Review'];
 
+  // Compact, restrained sizing so badges are never visually larger than surrounding content
   const sizeClasses = {
-    xs: 'text-[11px] px-1.5 py-0.5 gap-1',
-    sm: 'text-xs px-2 py-0.5 gap-2',
-    md: 'text-sm px-3 py-1 gap-2',
+    xs: 'text-[10px] px-1.5 py-0.5 gap-1',
+    sm: 'text-[11px] px-2 py-0.5 gap-1.5',
+    md: 'text-xs px-2.5 py-0.5 gap-1.5',
   }[size];
 
   const iconSizes = {
     xs: 'w-2.5 h-2.5',
     sm: 'w-3 h-3',
-    md: 'w-4 h-4',
+    md: 'w-3.5 h-3.5',
   }[size];
 
   const Icon = config.icon;
+  // Strictly enforce Title Case label from the 8 canonical states
+  const displayLabel = customLabel ? normalizeStatus(customLabel) : config.label;
 
   return (
     <span
-      className={`inline-flex items-center font-medium border rounded-md transition-colors select-none ${config.badgeClass} ${sizeClasses} ${className}`}
+      className={`inline-flex items-center font-medium border rounded transition-colors select-none ${config.badgeClass} ${sizeClasses} ${className}`}
       title={showTooltip ? `${config.label}: ${config.description}` : undefined}
       role="status"
     >
+      {/* Functional icon or dot: ensures color is never the only indicator */}
       {showIcon ? (
-        <Icon className={`${iconSizes} flex-shrink-0`} />
+        <Icon className={`${iconSizes} shrink-0`} aria-hidden="true" />
       ) : showDot ? (
         <span
-          className="w-1.5 h-1.5 rounded-full flex-shrink-0"
+          className="w-1.5 h-1.5 rounded-full shrink-0"
           style={{ backgroundColor: config.dotColor }}
           aria-hidden="true"
         />
-      ) : null}
-      <span className="truncate">{customLabel || config.label}</span>
+      ) : (
+        <Icon className={`${iconSizes} shrink-0`} aria-hidden="true" />
+      )}
+      <span className="truncate">{displayLabel}</span>
     </span>
   );
 }

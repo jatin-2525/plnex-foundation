@@ -11,6 +11,7 @@ import { ErrorState } from '../../components/shared/ErrorState';
 import { Modal } from '../../components/shared/Modal';
 import { Drawer } from '../../components/shared/Drawer';
 import { WhyButton } from '../../components/shared/WhyButton';
+import { StatusBadge } from '../../components/shared/StatusBadge';
 import {
   SIMULATION_ACTIVITIES,
   DEFAULT_SAVED_SCENARIOS,
@@ -1069,17 +1070,10 @@ export default function WhatIfSimulatorPage() {
                           <span className="font-mono text-[10px] font-bold text-[#176B87]">
                             {ms.id}
                           </span>
-                          <span
-                            className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase ${
-                              ms.status === 'Critical Slip'
-                                ? 'bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]'
-                                : ms.status === 'Accelerated'
-                                ? 'bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]'
-                                : 'bg-[#F1F3F5] text-[#596579] border border-[#D9DEE5]'
-                            }`}
-                          >
-                            {ms.status}
-                          </span>
+                          <StatusBadge
+                            status={ms.status === 'Critical Slip' ? 'Delayed' : 'On Track'}
+                            size="xs"
+                          />
                         </div>
 
                         <h5 className="font-semibold text-[#172033] text-xs line-clamp-1">{ms.name}</h5>

@@ -156,7 +156,7 @@ export interface EvidenceItem {
   verifiedStatus: boolean;
   verificationBy?: string;
   verificationTimestamp?: string;
-  status?: 'Verified' | 'Pending QC' | 'Conflict' | 'Under Investigation' | 'Rejected';
+  status?: 'Verified' | 'Pending Review' | 'Blocked' | 'Unmatched' | string;
   notes?: string;
   sha256Hash?: string;
   extractedData?: {

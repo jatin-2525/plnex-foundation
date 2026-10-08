@@ -11,6 +11,7 @@ import { Modal } from '../../components/shared/Modal';
 import { ConfirmationDialog } from '../../components/shared/ConfirmationDialog';
 import { MatchCard, MatchFactorItem, MatchAlternativeItem } from '../../components/shared/MatchCard';
 import { ConfidenceBadge } from '../../components/shared/ConfidenceBadge';
+import { StatusBadge } from '../../components/shared/StatusBadge';
 import { WhyButton } from '../../components/shared/WhyButton';
 import { CoreFlowBanner } from '../../components/shared/CoreFlowBanner';
 import { HorizontalBarChart, StatusDonutChart } from '../../components/shared/charts';
@@ -1121,7 +1122,7 @@ export default function ReviewQueuePage() {
                         ? 'Review Required'
                         : 'Unmatched'
                     }
-                    verificationStatus={evt.isApproved ? 'Verified' : evt.isRejected ? 'Rejected' : 'Pending'}
+                    verificationStatus={evt.isApproved ? 'Verified' : evt.isRejected ? 'Blocked' : 'Pending Review'}
                     wbs={evt.candidateWbs}
                     discipline={evt.discipline}
                     area={evt.area}
@@ -1188,32 +1189,22 @@ export default function ReviewQueuePage() {
                       <ConfidenceBadge score={evt.confidence} size="sm" />
 
                       {/* Status Badge */}
-                      {evt.isApproved ? (
-                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]">
-                          <CheckCircle2 className="w-3 h-3" />
-                          <span>Verified</span>
-                        </span>
-                      ) : evt.isRejected ? (
-                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
-                          <X className="w-3 h-3" />
-                          <span>Rejected</span>
-                        </span>
-                      ) : (
-                        <span
-                          className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-medium border ${
-                            evt.status === 'High Confidence'
-                              ? 'bg-[#EDF7F2] text-[#2E7D5B] border-[#B8DCC9]'
-                              : evt.status === 'Manager Review'
-                              ? 'bg-[#FDF6ED] text-[#8C5311] border-[#F0D4A6]'
-                              : evt.status === 'Conflicts' || evt.status === 'Duplicates'
-                              ? 'bg-[#FDF6ED] text-[#B5473C] border-[#E4B0AA]'
-                              : 'bg-[#F1F3F5] text-[#596579] border-[#D9DEE5]'
-                          }`}
-                        >
-                          <Clock className="w-3 h-3" />
-                          <span>{evt.status}</span>
-                        </span>
-                      )}
+                      <StatusBadge
+                        status={
+                          evt.isApproved
+                            ? 'Verified'
+                            : evt.isRejected
+                            ? 'Blocked'
+                            : evt.status === 'Conflicts' || evt.status === 'Duplicates'
+                            ? 'Blocked'
+                            : evt.status === 'Stale'
+                            ? 'At Risk'
+                            : evt.status === 'Unmatched'
+                            ? 'Unmatched'
+                            : 'Pending Review'
+                        }
+                        size="xs"
+                      />
 
                       {/* Full Inspection Drawer trigger */}
                       <button
@@ -1604,7 +1595,7 @@ export default function ReviewQueuePage() {
                     ? 'Review Required'
                     : 'Unmatched'
                 }
-                verificationStatus={selectedEvent.isApproved ? 'Verified' : selectedEvent.isRejected ? 'Rejected' : 'Pending'}
+                verificationStatus={selectedEvent.isApproved ? 'Verified' : selectedEvent.isRejected ? 'Blocked' : 'Pending Review'}
                 wbs={selectedEvent.candidateWbs}
                 discipline={selectedEvent.discipline}
                 area={selectedEvent.area}

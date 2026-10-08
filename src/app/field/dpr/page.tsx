@@ -8,6 +8,7 @@ import { useToast } from '../../../context/ToastContext';
 import { useOffline } from '../../../context/OfflineContext';
 import { Breadcrumbs } from '../../../components/shell/Breadcrumbs';
 import { Drawer } from '../../../components/shared/Drawer';
+import { StatusBadge } from '../../../components/shared/StatusBadge';
 import { DisciplineType } from '../../../types';
 import {
   FileText,
@@ -1188,17 +1189,7 @@ export default function DPRPage() {
                         {q.cumulativeQty} / {q.targetTotal}
                       </td>
                       <td className="p-3 text-center">
-                        <span
-                          className={`inline-block px-2 py-0.5 rounded text-[10px] font-bold ${
-                            q.status === 'Completed'
-                              ? 'bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]'
-                              : q.status === 'Blocked'
-                              ? 'bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]'
-                              : 'bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0]'
-                          }`}
-                        >
-                          {q.status}
-                        </span>
+                        <StatusBadge status={q.status} size="xs" />
                       </td>
                       <td className="p-3 text-right">
                         <button

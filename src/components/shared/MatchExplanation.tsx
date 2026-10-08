@@ -32,6 +32,7 @@ import {
   Check,
 } from 'lucide-react';
 import { ConfidenceBadge } from './ConfidenceBadge';
+import { StatusBadge } from './StatusBadge';
 import { ConfidenceBlock } from './ConfidenceBlock';
 import {
   MatchExplanationModel,
@@ -250,20 +251,6 @@ export function MatchExplanation({
     };
   }, [confidenceBracket]);
 
-  // Match status badge color helper
-  const getStatusBadgeClass = (status: string) => {
-    const s = status.toLowerCase();
-    if (s.includes('auto') || s.includes('approved')) {
-      return 'bg-[#EDF7F2] text-[#2E7D5B] border-[#B8DCC9]';
-    }
-    if (s.includes('review') || s.includes('pending')) {
-      return 'bg-[#FDF6ED] text-[#8C5311] border-[#F0D4A6]';
-    }
-    if (s.includes('unmatched') || s.includes('reject') || s.includes('conflict')) {
-      return 'bg-[#FBEFEE] text-[#B5473C] border-[#E4B0AA]';
-    }
-    return 'bg-[#F7F8FA] text-[#596579] border-[#D9DEE5]';
-  };
 
   return (
     <div
@@ -298,14 +285,7 @@ export function MatchExplanation({
               <span className="text-[10px] uppercase tracking-wider font-semibold text-[#596579]">
                 Match Status:
               </span>
-              <span
-                className={`inline-flex items-center gap-2 px-3 py-1 rounded-md text-xs font-semibold border ${getStatusBadgeClass(
-                  matchStatus
-                )}`}
-              >
-                <span className="w-1.5 h-1.5 rounded-full bg-current" />
-                {matchStatus}
-              </span>
+              <StatusBadge status={matchStatus} size="sm" />
             </div>
           </div>
         )}

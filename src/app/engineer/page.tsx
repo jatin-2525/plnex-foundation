@@ -67,7 +67,7 @@ export interface PendingVerificationItem {
   submittedAt: string;
   assignedReviewer: string;
   reviewerRole: string;
-  status: 'Pending Review' | 'Verified' | 'Under Review';
+  status: 'Pending Review' | 'Verified';
   notes: string;
 }
 
@@ -281,7 +281,7 @@ export default function EngineerDashboardPage() {
       submittedAt: 'Today, 12:10',
       assignedReviewer: 'V. Verma',
       reviewerRole: 'Lead Mechanical Planner',
-      status: 'Under Review',
+      status: 'Pending Review',
       notes: 'OEM technician co-signature uploaded. Dial gauge runout report attached.',
     },
     {
@@ -1085,9 +1085,7 @@ export default function EngineerDashboardPage() {
             <div className="flex items-center gap-2 font-mono text-xs">
               <span className="text-[#596579]">Draft Completion:</span>
               <span className="font-bold text-[#176B87]">65%</span>
-              <span className="text-[#2E7D5B] font-bold bg-[#EDF7F2] px-2 py-0.5 rounded border border-[#B8DCC9]">
-                On Schedule
-              </span>
+              <StatusBadge status="On Track" size="xs" />
             </div>
           </div>
 
@@ -1214,17 +1212,7 @@ export default function EngineerDashboardPage() {
                 </div>
 
                 <div className="flex items-center gap-3 self-start md:self-center flex-shrink-0">
-                  <span
-                    className={`px-3 py-1 rounded text-[11px] font-mono font-bold border ${
-                      item.status === 'Verified'
-                        ? 'bg-[#EDF7F2] border-[#B8DCC9] text-[#2E7D5B]'
-                        : item.status === 'Under Review'
-                        ? 'bg-[#EDF5F8] border-[#B3CBE0] text-[#176B87]'
-                        : 'bg-[#FDF6ED] border-[#F0D4A6] text-[#8C5311]'
-                    }`}
-                  >
-                    {item.status}
-                  </span>
+                  <StatusBadge status={item.status} size="xs" />
 
                   <Link
                     href="/review"
@@ -1359,15 +1347,7 @@ export default function EngineerDashboardPage() {
                     <span className="font-mono text-[10px] font-bold text-[#176B87] px-1.5 py-0.5 bg-white border border-[#D9DEE5] rounded">
                       {ev.activityId}
                     </span>
-                    <span
-                      className={`text-[10px] font-mono font-bold px-1.5 py-0.5 rounded border ${
-                        ev.verified
-                          ? 'bg-[#EDF7F2] border-[#B8DCC9] text-[#2E7D5B]'
-                          : 'bg-[#FDF6ED] border-[#F0D4A6] text-[#8C5311]'
-                      }`}
-                    >
-                      {ev.verified ? 'QC Verified' : 'QC Pending'}
-                    </span>
+                    <StatusBadge status={ev.verified ? 'Verified' : 'Pending Review'} size="xs" />
                   </div>
 
                   <h3 className="text-xs font-bold text-[#172033] line-clamp-1">

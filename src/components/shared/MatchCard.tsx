@@ -24,6 +24,7 @@ import {
   FolderGit2,
 } from 'lucide-react';
 import { ConfidenceBadge } from './ConfidenceBadge';
+import { StatusBadge, RequiredStatus } from './StatusBadge';
 
 export type ScoringFactorStatus = 'matched' | 'partial' | 'mismatch';
 
@@ -49,7 +50,7 @@ export interface MatchCardProps {
   activityName: string | null;
   confidence: number;
   statusText?: string; // e.g. "High-confidence suggestion"
-  verificationStatus?: 'Pending' | 'Verified' | 'Rejected' | 'Unmatched';
+  verificationStatus?: RequiredStatus | 'Pending' | 'Verified' | 'Rejected' | 'Unmatched';
   wbs?: string | null;
   discipline?: string | null;
   area?: string | null;
@@ -344,23 +345,10 @@ export function MatchCard({
 
             {/* Verification metric */}
             <div>
-              <span className="text-[10px] uppercase font-semibold text-[#596579] tracking-wider block">
+              <span className="text-[10px] uppercase font-semibold text-[#596579] tracking-wider block mb-1">
                 Verification:
               </span>
-              <span
-                className={`inline-flex items-center gap-2 px-3 py-0.5 rounded text-xs font-bold border mt-0.5 ${
-                  verificationStatus === 'Verified'
-                    ? 'bg-[#EDF7F2] text-[#2E7D5B] border-[#B8DCC9]'
-                    : verificationStatus === 'Rejected'
-                    ? 'bg-[#FBEFEE] text-[#B5473C] border-[#E4B0AA]'
-                    : verificationStatus === 'Unmatched'
-                    ? 'bg-[#F1F3F5] text-[#596579] border-[#D9DEE5]'
-                    : 'bg-[#FDF6ED] text-[#8C5311] border-[#F0D4A6]'
-                }`}
-              >
-                <span className="w-1.5 h-1.5 rounded-full bg-current" />
-                <span>{verificationStatus}</span>
-              </span>
+              <StatusBadge status={verificationStatus} size="xs" />
             </div>
           </div>
 

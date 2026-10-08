@@ -9,6 +9,7 @@ import { StateWrapper } from '../../components/shared/StateWrapper';
 import { Drawer } from '../../components/shared/Drawer';
 import { Modal } from '../../components/shared/Modal';
 import { ProgressBar } from '../../components/shared/ProgressBar';
+import { StatusBadge } from '../../components/shared/StatusBadge';
 import { SCurveChart } from '../../components/shared/SCurveChart';
 import { BarChart, LineChart, HorizontalBarChart } from '../../components/shared/charts';
 import { DisciplineType } from '../../types';
@@ -1643,19 +1644,7 @@ export default function ProgressVariancePage() {
 
                         {/* 6. Status */}
                         <td className="p-4 whitespace-nowrap">
-                          <span
-                            className={`px-2 py-0.5 rounded text-[10px] font-bold ${
-                              act.status === 'Completed'
-                                ? 'bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]'
-                                : act.status === 'Ahead'
-                                ? 'bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]'
-                                : act.status === 'Behind'
-                                ? 'bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]'
-                                : 'bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0]'
-                            }`}
-                          >
-                            {act.status}
-                          </span>
+                          <StatusBadge status={act.status} size="xs" />
                         </td>
 
                         {/* 7. Last Verified Update */}

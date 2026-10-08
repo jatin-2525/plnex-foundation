@@ -149,7 +149,7 @@ export const COMPREHENSIVE_EVIDENCE_ITEMS: EvidenceItem[] = [
     executionEventId: 'EVT-2026-002',
     gpsCoords: '27.3487° N, 95.3130° E',
     verifiedStatus: false,
-    status: 'Pending QC',
+    status: 'Pending Review',
     sha256Hash: '11223344556677889900aabbccddeeff11223344556677889900aabbccddeeff',
     notes: 'Reports 8 field butt welds executed. Radiography testing scheduled for tomorrow.',
     extractedData: {
@@ -180,7 +180,7 @@ export const COMPREHENSIVE_EVIDENCE_ITEMS: EvidenceItem[] = [
     executionEventId: 'EVT-2026-002',
     gpsCoords: '27.3487° N, 95.3130° E',
     verifiedStatus: false,
-    status: 'Pending QC',
+    status: 'Pending Review',
     sha256Hash: 'aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899',
     notes: 'TIG root pass visual inspection shows uniform penetration and zero undercut.',
     extractedData: {
@@ -276,7 +276,7 @@ export const COMPREHENSIVE_EVIDENCE_ITEMS: EvidenceItem[] = [
     executionEventId: 'EVT-2026-002',
     gpsCoords: '27.3487° N, 95.3130° E',
     verifiedStatus: false,
-    status: 'Conflict',
+    status: 'Blocked',
     sha256Hash: '77889900aabbccddeeff0011223344556677889900aabbccddeeff0011223344',
     notes: 'Flange face serration on Spool 24-08 requires onsite phonographic re-facing before gasket torqueing.',
     extractedData: {
@@ -306,7 +306,7 @@ export const COMPREHENSIVE_EVIDENCE_ITEMS: EvidenceItem[] = [
     activityName: 'Hydrostatic Test Section Line 24-XX (150 bar)',
     gpsCoords: '27.3485° N, 95.3132° E',
     verifiedStatus: false,
-    status: 'Pending QC',
+    status: 'Pending Review',
     sha256Hash: '889900aabbccddeeff0011223344556677889900aabbccddeeff001122334455',
     notes: 'Pre-hydrotest walkdown punches: 3 items cleared, 1 blind spade tag verified.',
     extractedData: {

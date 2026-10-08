@@ -313,18 +313,10 @@ export default function MatchingPage() {
         const isRejected = row.status === 'rejected';
         return (
           <div>
-            <span
-              className={`inline-flex items-center gap-2 px-2 py-0.5 rounded text-[11px] font-bold border ${
-                isApproved
-                  ? 'bg-[#EDF7F2] text-[#2E7D5B] border-[#B8DCC9]'
-                  : isRejected
-                  ? 'bg-[#FBEFEE] text-[#B5473C] border-[#E4B0AA]'
-                  : 'bg-[#FDF6ED] text-[#8C5311] border-[#F0D4A6]'
-              }`}
-            >
-              <span className="w-1.5 h-1.5 rounded-full bg-current" />
-              <span>{isApproved ? 'Verified' : isRejected ? 'Rejected' : 'Pending'}</span>
-            </span>
+            <StatusBadge
+              status={isApproved ? 'Verified' : isRejected ? 'Blocked' : 'Pending Review'}
+              size="xs"
+            />
             <span className="text-[10px] text-[#7B8798] block mt-0.5">
               {isApproved ? 'Committed to Twin' : 'Awaiting Review'}
             </span>
@@ -439,9 +431,9 @@ export default function MatchingPage() {
               label: 'Verification Status',
               selectedValue: statusFilter,
               options: [
-                { label: 'Pending Verification', value: 'pending-review' },
-                { label: 'Verified & Committed', value: 'approved' },
-                { label: 'Rejected', value: 'rejected' },
+                { label: 'Pending Review', value: 'pending-review' },
+                { label: 'Verified', value: 'approved' },
+                { label: 'Blocked', value: 'rejected' },
               ],
             },
           ]}
@@ -488,8 +480,8 @@ export default function MatchingPage() {
                 activeReviewEvent.status === 'approved'
                   ? 'Verified'
                   : activeReviewEvent.status === 'rejected'
-                  ? 'Rejected'
-                  : 'Pending'
+                  ? 'Blocked'
+                  : 'Pending Review'
               }
               discipline={activeReviewEvent.discipline}
               area={activeReviewEvent.area}

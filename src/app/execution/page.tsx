@@ -8,6 +8,7 @@ import { StateWrapper } from '../../components/shared/StateWrapper';
 import { Breadcrumbs } from '../../components/shell/Breadcrumbs';
 import { Drawer } from '../../components/shared/Drawer';
 import { ConfidenceBadge } from '../../components/shared/ConfidenceBadge';
+import { StatusBadge } from '../../components/shared/StatusBadge';
 import { MatchExplanation } from '../../components/shared/MatchExplanation';
 import { WhyButton } from '../../components/shared/WhyButton';
 import { DisciplineType } from '../../types';
@@ -515,54 +516,6 @@ export default function ExecutionIntelligencePage() {
     });
   }, [events, selectedStatusFilter, selectedSourceFilter, selectedDisciplineFilter, searchQuery]);
 
-  // Status badge styling helper
-  const getStatusBadge = (status: ExecutionIntelligenceStatus) => {
-    switch (status) {
-      case 'Matched':
-        return {
-          bg: 'bg-[#EDF7F2]',
-          border: 'border-[#B8DCC9]',
-          text: 'text-[#2E7D5B]',
-          icon: CheckCircle2,
-        };
-      case 'Needs Review':
-        return {
-          bg: 'bg-[#FDF6ED]',
-          border: 'border-[#F0D4A6]',
-          text: 'text-[#D98B32]',
-          icon: Clock,
-        };
-      case 'Unmatched':
-        return {
-          bg: 'bg-[#F1F3F5]',
-          border: 'border-[#D9DEE5]',
-          text: 'text-[#596579]',
-          icon: HelpCircle,
-        };
-      case 'Conflict':
-        return {
-          bg: 'bg-[#FBEFEE]',
-          border: 'border-[#E4B0AA]',
-          text: 'text-[#B5473C]',
-          icon: AlertCircle,
-        };
-      case 'Duplicate':
-        return {
-          bg: 'bg-[#FDF6ED]',
-          border: 'border-[#F0D4A6]',
-          text: 'text-[#D98B32]',
-          icon: Copy,
-        };
-      case 'Stale':
-      default:
-        return {
-          bg: 'bg-[#F1F3F5]',
-          border: 'border-[#D9DEE5]',
-          text: 'text-[#7B8798]',
-          icon: History,
-        };
-    }
-  };
 
   const breadcrumbs = [
     { label: 'Field Execution', href: '/engineer' },
@@ -920,8 +873,6 @@ export default function ExecutionIntelligencePage() {
               </div>
             ) : (
               filteredEvents.map((evt) => {
-                const statusBadge = getStatusBadge(evt.status);
-                const StatusIcon = statusBadge.icon;
                 const isWhyExpanded = !!expandedWhyIds[evt.id];
                 const isTechExpanded = !!expandedTechIds[evt.id];
 
@@ -948,12 +899,7 @@ export default function ExecutionIntelligencePage() {
                       </div>
 
                       <div className="flex items-center gap-2">
-                        <span
-                          className={`inline-flex items-center gap-2 px-3 py-0.5 rounded text-[11px] font-bold border ${statusBadge.bg} ${statusBadge.border} ${statusBadge.text}`}
-                        >
-                          <StatusIcon className="w-3 h-3" />
-                          <span>{evt.status}</span>
-                        </span>
+                        <StatusBadge status={evt.status} size="xs" />
                       </div>
                     </div>
 
@@ -1348,9 +1294,6 @@ export default function ExecutionIntelligencePage() {
                     </tr>
                   ) : (
                     filteredEvents.map((evt) => {
-                      const statusBadge = getStatusBadge(evt.status);
-                      const StatusIcon = statusBadge.icon;
-
                       return (
                         <tr
                           key={evt.id}
@@ -1414,12 +1357,7 @@ export default function ExecutionIntelligencePage() {
 
                           {/* 5. Status */}
                           <td className="p-4 whitespace-nowrap">
-                            <span
-                              className={`inline-flex items-center gap-2 px-3 py-1 rounded text-[11px] font-bold border ${statusBadge.bg} ${statusBadge.border} ${statusBadge.text}`}
-                            >
-                              <StatusIcon className="w-3 h-3" />
-                              <span>{evt.status}</span>
-                            </span>
+                            <StatusBadge status={evt.status} size="xs" />
                           </td>
 
                           {/* 6. Date */}
@@ -1496,18 +1434,7 @@ export default function ExecutionIntelligencePage() {
               {/* STATUS & CONFIDENCE BANNER */}
               <div className="p-4 rounded-lg border border-[#D9DEE5] bg-[#F7F8FA] flex items-center justify-between flex-wrap gap-2">
                 <div>
-                  {(() => {
-                    const sb = getStatusBadge(selectedEventForDrawer.status);
-                    const SIcon = sb.icon;
-                    return (
-                      <span
-                        className={`inline-flex items-center gap-2 px-3 py-1 rounded-lg text-xs font-bold border ${sb.bg} ${sb.border} ${sb.text}`}
-                      >
-                        <SIcon className="w-3.5 h-3.5" />
-                        <span>Status: {selectedEventForDrawer.status}</span>
-                      </span>
-                    );
-                  })()}
+                  <StatusBadge status={selectedEventForDrawer.status} size="sm" />
                 </div>
 
                 <div className="flex items-center gap-2">

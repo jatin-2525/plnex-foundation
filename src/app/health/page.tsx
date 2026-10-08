@@ -10,6 +10,7 @@ import { Breadcrumbs } from '../../components/shell/Breadcrumbs';
 import { Modal } from '../../components/shared/Modal';
 import { Drawer } from '../../components/shared/Drawer';
 import { WhyButton } from '../../components/shared/WhyButton';
+import { StatusBadge } from '../../components/shared/StatusBadge';
 import {
   INITIAL_HEALTH_ISSUES,
   SCHEDULE_HEALTH_RULES,
@@ -659,17 +660,10 @@ export default function ScheduleHealthPage() {
 
                       {/* 6. Status */}
                       <td className="py-3 px-3 align-top whitespace-nowrap">
-                        <span
-                          className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold uppercase ${
-                            issue.status === 'Resolved'
-                              ? 'bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]'
-                              : issue.status === 'Open'
-                              ? 'bg-[#FDF6ED] text-[#8C5311] border border-[#F0D4A6]'
-                              : 'bg-[#F1F3F5] text-[#596579] border border-[#D9DEE5]'
-                          }`}
-                        >
-                          {issue.status}
-                        </span>
+                        <StatusBadge
+                          status={issue.status === 'Resolved' ? 'Completed' : 'Pending Review'}
+                          size="xs"
+                        />
                       </td>
 
                       {/* 7. Action: View | Fix | Review | Resolve */}

@@ -255,11 +255,11 @@ export default function EvidenceAndAuditPage() {
   }, []);
 
   const pendingCount = useMemo(() => {
-    return COMPREHENSIVE_EVIDENCE_ITEMS.filter((i) => i.status === 'Pending QC').length;
+    return COMPREHENSIVE_EVIDENCE_ITEMS.filter((i) => i.status === 'Pending Review').length;
   }, []);
 
   const conflictCount = useMemo(() => {
-    return COMPREHENSIVE_EVIDENCE_ITEMS.filter((i) => i.status === 'Conflict').length;
+    return COMPREHENSIVE_EVIDENCE_ITEMS.filter((i) => i.status === 'Blocked').length;
   }, []);
 
   // Evidence Type Icon & Badge Helper
@@ -280,37 +280,9 @@ export default function EvidenceAndAuditPage() {
     }
   };
 
-  // Status Badge Helper
+  // Status Badge Helper using canonical shared component
   const getStatusBadge = (status?: string) => {
-    switch (status) {
-      case 'Verified':
-        return (
-          <span className="inline-flex items-center gap-1 text-[11px] font-bold text-[#2E7D5B] bg-[#EDF7F2] border border-[#B8DCC9] px-2 py-0.5 rounded-full">
-            <CheckCircle2 className="w-3 h-3" />
-            Verified
-          </span>
-        );
-      case 'Pending QC':
-        return (
-          <span className="inline-flex items-center gap-1 text-[11px] font-bold text-[#8C5311] bg-[#FDF6ED] border border-[#F0D4A6] px-2 py-0.5 rounded-full">
-            <Clock className="w-3 h-3" />
-            Pending QC
-          </span>
-        );
-      case 'Conflict':
-        return (
-          <span className="inline-flex items-center gap-1 text-[11px] font-bold text-[#B5473C] bg-[#FBEFEE] border border-[#E4B0AA] px-2 py-0.5 rounded-full">
-            <AlertTriangle className="w-3 h-3" />
-            Conflict
-          </span>
-        );
-      default:
-        return (
-          <span className="inline-flex items-center gap-1 text-[11px] font-medium text-[#596579] bg-[#F1F3F5] border border-[#D9DEE5] px-2 py-0.5 rounded-full">
-            Unreviewed
-          </span>
-        );
-    }
+    return <StatusBadge status={status || 'Pending Review'} size="xs" />;
   };
 
   const breadcrumbs = [
@@ -732,8 +704,8 @@ export default function EvidenceAndAuditPage() {
                   >
                     <option value="ALL">All Statuses</option>
                     <option value="Verified">Verified</option>
-                    <option value="Pending QC">Pending QC</option>
-                    <option value="Conflict">Conflict</option>
+                    <option value="Pending Review">Pending Review</option>
+                    <option value="Blocked">Blocked</option>
                   </select>
                 </div>
 
@@ -919,7 +891,7 @@ export default function EvidenceAndAuditPage() {
                                   </span>
                                 </div>
                               ) : (
-                                <span className="text-[11px] text-[#D98B32]">Pending QC</span>
+                                <span className="text-[11px] text-[#D98B32]">Pending Review</span>
                               )}
                             </td>
 
@@ -1377,7 +1349,7 @@ export default function EvidenceAndAuditPage() {
               <div className="flex items-center gap-3 flex-wrap">
                 <div className="flex items-center gap-2">
                   <span className="text-[11px] font-semibold uppercase text-[#596579]">Status:</span>
-                  {['ALL', 'Verified', 'Pending QC', 'Conflict'].map((st) => (
+                  {['ALL', 'Verified', 'Pending Review', 'Blocked'].map((st) => (
                     <button
                       key={st}
                       type="button"
@@ -1851,7 +1823,7 @@ export default function EvidenceAndAuditPage() {
                     <div className="flex justify-between">
                       <span className="text-[#7B8798]">Verifier:</span>
                       <span className="font-semibold text-[#172033]">
-                        {previewEvidence.verificationBy || 'Pending QC Sign-Off'}
+                        {previewEvidence.verificationBy || 'Pending Sign-Off'}
                       </span>
                     </div>
                     <div className="flex justify-between">
