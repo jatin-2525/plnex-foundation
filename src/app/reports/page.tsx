@@ -45,6 +45,7 @@ import {
   Compass,
   Lightbulb,
   FileCheck2,
+  Loader2,
 } from 'lucide-react';
 
 export default function ReportsAndMemoryPage() {
@@ -169,7 +170,7 @@ export default function ReportsAndMemoryPage() {
     setIsGenerating(true);
     addToast({
       type: 'info',
-      title: 'Compiling Report Dossier',
+      title: 'Preparing report...',
       description: `Assembling verified progress, baseline variance, and signed evidence links.`,
     });
 
@@ -488,8 +489,17 @@ export default function ReportsAndMemoryPage() {
                     disabled={isGenerating}
                     className="px-4 py-2 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-semibold rounded-lg shadow-xs transition-colors flex items-center gap-2 disabled:opacity-50"
                   >
-                    <FileText className="w-3.5 h-3.5" />
-                    <span>{isGenerating ? 'Compiling Dossier...' : 'Generate Report'}</span>
+                    {isGenerating ? (
+                      <>
+                        <Loader2 className="w-3.5 h-3.5 animate-spin shrink-0" />
+                        <span>Preparing report...</span>
+                      </>
+                    ) : (
+                      <>
+                        <FileText className="w-3.5 h-3.5" />
+                        <span>Generate Report</span>
+                      </>
+                    )}
                   </button>
 
                   <div className="flex items-center border border-[#D9DEE5] rounded-lg overflow-hidden bg-white">

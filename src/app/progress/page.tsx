@@ -831,7 +831,11 @@ export default function ProgressVariancePage() {
   ];
 
   return (
-    <StateWrapper>
+    <StateWrapper
+      loadingMessage="Loading progress telemetry..."
+      emptyTitle="No progress records found in this view"
+      emptyDescription="Progress telemetry for activities with physical percent complete will appear here. Adjust your filters or record physical progress to see activity tracking."
+    >
       <div className="space-y-6 pb-12 max-w-7xl mx-auto">
         {/* Breadcrumb Navigation */}
         <Breadcrumbs items={breadcrumbs} />

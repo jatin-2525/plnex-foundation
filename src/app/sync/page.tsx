@@ -334,7 +334,11 @@ export default function OfflineSyncCenterPage() {
   ];
 
   return (
-    <StateWrapper>
+    <StateWrapper
+      loadingMessage="Loading synchronization queue..."
+      emptyTitle="No synchronization records found in this view"
+      emptyDescription="Records queued for two-way synchronization between field tablets and enterprise Primavera P6 will appear here. Reset your queue status filter to view all events."
+    >
       <div className="space-y-6 pb-12 max-w-7xl mx-auto">
         {/* Breadcrumb Navigation */}
         <Breadcrumbs items={breadcrumbs} />

@@ -39,6 +39,7 @@ import {
   FileCheck,
   Check,
   ChevronDown,
+  Loader2,
 } from 'lucide-react';
 
 export default function ProjectsPage() {
@@ -325,7 +326,11 @@ export default function ProjectsPage() {
   };
 
   return (
-    <StateWrapper>
+    <StateWrapper
+      loadingMessage="Loading project portfolio..."
+      emptyTitle="No project records found in this view"
+      emptyDescription="No projects match the current search or status filter. Reset filters to view all active capital infrastructure projects."
+    >
       <div className="space-y-6 pb-12">
         <Breadcrumbs items={breadcrumbs} />
 
@@ -825,7 +830,7 @@ export default function ProjectsPage() {
               >
                 {isSubmitting ? (
                   <>
-                    <span className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                    <Loader2 className="w-3.5 h-3.5 animate-spin shrink-0" />
                     <span>Creating Project...</span>
                   </>
                 ) : (

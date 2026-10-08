@@ -228,7 +228,11 @@ export default function FieldCapturePage() {
   ];
 
   return (
-    <StateWrapper>
+    <StateWrapper
+      loadingMessage="Loading field capture workspace..."
+      emptyTitle="No field capture activities found in this view"
+      emptyDescription="Activities available for rapid physical progress recording and evidence upload will appear here. Select an active work area or reset filters to continue."
+    >
       <div className="space-y-4 pb-12 max-w-2xl mx-auto">
         <Breadcrumbs items={breadcrumbs} />
 
@@ -714,7 +718,7 @@ export default function FieldCapturePage() {
               >
                 {isSubmitting ? (
                   <>
-                    <RefreshCw className="w-5 h-5 animate-spin" />
+                    <RefreshCw className="w-4 h-4 animate-spin" />
                     <span>Saving Report...</span>
                   </>
                 ) : (
@@ -743,7 +747,7 @@ export default function FieldCapturePage() {
             >
               {isSubmitting ? (
                 <>
-                  <RefreshCw className="w-5 h-5 animate-spin" />
+                  <RefreshCw className="w-4 h-4 animate-spin" />
                   <span>Saving...</span>
                 </>
               ) : (

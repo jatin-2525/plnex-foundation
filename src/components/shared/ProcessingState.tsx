@@ -27,13 +27,15 @@ export function ProcessingState({
 }: ProcessingStateProps) {
   return (
     <div
-      className={`bg-white border border-[#D9DEE5] rounded-lg p-6 md:p-8 flex flex-col items-center text-center max-w-lg mx-auto ${className}`}
+      className={`bg-white border border-[#D9DEE5] rounded-lg p-6 flex flex-col items-center text-center max-w-lg mx-auto ${className}`}
+      role="status"
+      aria-live="polite"
     >
-      <div className="w-12 h-12 rounded-lg bg-[#EDF2F8] border border-[#B3CBE0] flex items-center justify-center text-[#176B87] mb-4">
-        <Loader2 className="w-6 h-6 animate-spin" />
+      <div className="flex items-center gap-2 mb-1.5">
+        <Loader2 className="w-4 h-4 animate-spin text-[#176B87] shrink-0" />
+        <h3 className="text-sm font-semibold text-[#172033]">{title}</h3>
       </div>
-      <h3 className="text-base font-semibold text-[#172033] mb-1">{title}</h3>
-      <p className="text-sm font-medium text-[#176B87] mb-4">
+      <p className="text-xs font-medium text-[#596579] mb-4">
         {stepIndex && totalSteps ? `Step ${stepIndex} of ${totalSteps}: ` : ''}
         {currentStep}
       </p>

@@ -318,7 +318,11 @@ export default function EvidenceAndAuditPage() {
   ];
 
   return (
-    <StateWrapper>
+    <StateWrapper
+      loadingMessage="Loading evidence records..."
+      emptyTitle="No physical evidence found in this view"
+      emptyDescription="Time-stamped photos, inspection logs, and calibration certificates linked to activities will appear here. Upload evidence files or adjust your filter selection."
+    >
       <div className="space-y-6 pb-12 max-w-7xl mx-auto">
         {/* Breadcrumb Navigation */}
         <Breadcrumbs items={breadcrumbs} />

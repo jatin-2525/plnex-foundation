@@ -490,7 +490,11 @@ export default function MyActivitiesPage() {
   };
 
   return (
-    <StateWrapper>
+    <StateWrapper
+      loadingMessage="Loading activity register..."
+      emptyTitle="No activities found in this view"
+      emptyDescription="Activities imported from the Primavera P6 schedule baseline will appear here with WBS hierarchy and dates. Adjust filters or import a schedule to populate the register."
+    >
       <div className="space-y-6 pb-12">
         <Breadcrumbs items={breadcrumbs} />
 

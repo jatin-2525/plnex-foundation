@@ -379,7 +379,11 @@ export default function MatchingPage() {
         }
       />
 
-      <StateWrapper>
+      <StateWrapper
+        loadingMessage="Loading matching records..."
+        emptyTitle="No matching records found in this view"
+        emptyDescription="Automated AI matches between daily field reports and schedule activities will appear here for review. Adjust confidence filters or process incoming DPRs to view matches."
+      >
         {/* Core Flow Pipeline Visualization: Field Input -> Extraction -> Execution Event -> Candidate Match -> Confidence -> Human Verification -> Verified Update */}
         <CoreFlowBanner currentStage="CANDIDATE_MATCH" />
 

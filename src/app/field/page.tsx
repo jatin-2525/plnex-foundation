@@ -200,7 +200,11 @@ export default function FieldPage() {
         }
       />
 
-      <StateWrapper>
+      <StateWrapper
+        loadingMessage="Loading field operations..."
+        emptyTitle="No field activities assigned in this view"
+        emptyDescription="Activities assigned to your discipline crew for today will appear here for status reporting. Check your assigned package or reset filters to view all tasks."
+      >
         {/* Ingestion Console */}
         <div className="bg-white border border-[#D9DEE5] rounded-lg overflow-hidden">
           {/* Method Tabs */}

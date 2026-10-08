@@ -105,7 +105,11 @@ export default function ManagerDashboardPage() {
     <div className="space-y-6 pb-12">
       <Breadcrumbs items={breadcrumbs} />
 
-      <StateWrapper>
+      <StateWrapper
+        loadingMessage="Loading dashboard overview..."
+        emptyTitle="No dashboard metrics found in this view"
+        emptyDescription="Operational KPIs, critical path risks, and pending review events will appear here once project data is loaded. Reset filters or select an active project to view metrics."
+      >
         {/* =========================================================================
             1. PAGE HEADER
             Project context, canonical schedule version, reporting date, connection status

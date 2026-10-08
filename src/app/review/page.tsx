@@ -802,7 +802,11 @@ export default function ReviewQueuePage() {
   ];
 
   return (
-    <StateWrapper>
+    <StateWrapper
+      loadingMessage="Loading review queue..."
+      emptyTitle="No review items found in this view"
+      emptyDescription="Candidate execution events pending engineer verification or manual rematch will appear here. Submit daily field reports or adjust filters to review unlinked records."
+    >
       <div className="space-y-6 pb-12 max-w-7xl mx-auto">
         {/* Breadcrumb Navigation */}
         <Breadcrumbs items={breadcrumbs} />

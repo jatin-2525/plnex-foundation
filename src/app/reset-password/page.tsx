@@ -426,8 +426,9 @@ export default function ResetPasswordPage() {
   return (
     <Suspense
       fallback={
-        <div className="flex items-center justify-center p-12">
-          <Loader2 className="w-6 h-6 animate-spin text-[#176B87]" />
+        <div className="flex items-center justify-center gap-2 p-12 text-sm text-[#596579]" role="status" aria-live="polite">
+          <Loader2 className="w-4 h-4 animate-spin text-[#176B87] shrink-0" />
+          <span className="font-medium text-[#172033]">Loading security verification...</span>
         </div>
       }
     >

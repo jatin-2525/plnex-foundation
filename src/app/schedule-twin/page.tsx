@@ -922,7 +922,11 @@ export default function ScheduleTwinPage() {
   };
 
   return (
-    <StateWrapper>
+    <StateWrapper
+      loadingMessage="Loading schedule twin..."
+      emptyTitle="No schedule twin activities found in this view"
+      emptyDescription="Activities matching the selected WBS level and twin filters will appear here once loaded. Reset your filters to view the full baseline and forecast schedule comparison."
+    >
       <div className="space-y-6 pb-12">
         <Breadcrumbs items={breadcrumbs} />
 

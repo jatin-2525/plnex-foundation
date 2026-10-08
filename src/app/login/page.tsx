@@ -415,8 +415,9 @@ export default function LoginPage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen bg-[#F7F8FA] flex items-center justify-center p-4">
-          <Loader2 className="w-6 h-6 animate-spin text-[#176B87]" />
+        <div className="min-h-screen bg-[#F7F8FA] flex items-center justify-center gap-2 p-4 text-sm text-[#596579]" role="status" aria-live="polite">
+          <Loader2 className="w-4 h-4 animate-spin text-[#176B87] shrink-0" />
+          <span className="font-medium text-[#172033]">Loading session...</span>
         </div>
       }
     >

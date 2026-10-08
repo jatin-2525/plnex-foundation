@@ -570,7 +570,11 @@ export default function ExecutionIntelligencePage() {
   ];
 
   return (
-    <StateWrapper>
+    <StateWrapper
+      loadingMessage="Loading execution events..."
+      emptyTitle="No execution events found in this view"
+      emptyDescription="Field reports submitted for this project will appear here after processing. Adjust your filters or submit a new execution report to populate this feed."
+    >
       <div className="space-y-6 pb-12 max-w-7xl mx-auto">
         {/* Breadcrumb Navigation */}
         <Breadcrumbs items={breadcrumbs} />

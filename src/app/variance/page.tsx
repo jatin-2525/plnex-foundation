@@ -88,7 +88,11 @@ export default function VariancePage() {
         }
       />
 
-      <StateWrapper>
+      <StateWrapper
+        loadingMessage="Loading baseline variance..."
+        emptyTitle="No baseline variance found in this view"
+        emptyDescription="Activities with start or finish date variances relative to the committed baseline will appear here. Reset your filter criteria to inspect all variance bands."
+      >
         {/* Section 1: "Why is this delayed?" Dependency Chain Visualization */}
         <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#D9DEE5]">

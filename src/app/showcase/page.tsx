@@ -40,6 +40,8 @@ import {
   Eye,
   Bell,
   Search,
+  Loader2,
+  Inbox,
 } from 'lucide-react';
 
 export default function ShowcasePage() {
@@ -532,6 +534,76 @@ export default function ShowcasePage() {
 
         {/* Live Embedded Global Search Panel */}
         <GlobalSearchPanel />
+      </div>
+
+      {/* =========================================================================
+          REUSABLE SYSTEM: RESTRAINED LOADING INDICATORS
+          ========================================================================= */}
+      <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 space-y-4">
+        <div>
+          <h3 className="text-sm font-bold text-[#172033] flex items-center gap-2">
+            <Loader2 className="w-4 h-4 text-[#176B87]" />
+            <span>Restrained Loading Indicators (Communicates Status Without Decoration)</span>
+          </h3>
+          <p className="text-xs text-[#596579] mt-1">
+            Simple restrained indicators. Zero animated decorative skeletons, zero pulsing cards, zero animated dashboard elements, and zero unnecessary spinners.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div>
+            <span className="text-[11px] font-semibold text-[#596579] uppercase block mb-1.5 font-mono">
+              Schedule Subsystem
+            </span>
+            <LoadingState message="Loading schedule..." />
+          </div>
+          <div>
+            <span className="text-[11px] font-semibold text-[#596579] uppercase block mb-1.5 font-mono">
+              Execution Subsystem
+            </span>
+            <LoadingState message="Loading execution events..." />
+          </div>
+          <div>
+            <span className="text-[11px] font-semibold text-[#596579] uppercase block mb-1.5 font-mono">
+              Reporting Subsystem
+            </span>
+            <LoadingState message="Preparing report..." />
+          </div>
+        </div>
+      </div>
+
+      {/* =========================================================================
+          REUSABLE SYSTEM: STANDARDIZED EMPTY STATES
+          ========================================================================= */}
+      <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 space-y-4">
+        <div>
+          <h3 className="text-sm font-bold text-[#172033] flex items-center gap-2">
+            <Inbox className="w-4 h-4 text-[#176B87]" />
+            <span>Standardized Empty States (3-Part Explanation + Single Action)</span>
+          </h3>
+          <p className="text-xs text-[#596579] mt-1">
+            Eliminates vague empty messages. Always explains: 1. What is missing? 2. Why? 3. What can the user do? Zero decorative illustrations.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <EmptyState
+            title="No execution events yet"
+            description="Field reports submitted for this project will appear here after processing. Submit a daily field report or adjust active filters."
+            action={{
+              label: 'View Execution Feed',
+              onClick: () => addToast({ type: 'info', title: 'Navigation', description: 'Navigating to execution feed.' }),
+            }}
+          />
+          <EmptyState
+            title="No schedule activities match your filters"
+            description="No activities match the current WBS or status selection. Reset your filter criteria to inspect the full schedule baseline."
+            action={{
+              label: 'Reset All Filters',
+              onClick: () => addToast({ type: 'info', title: 'Filters Reset', description: 'Filters restored to defaults.' }),
+            }}
+          />
+        </div>
       </div>
 
       {/* Modal Preview */}

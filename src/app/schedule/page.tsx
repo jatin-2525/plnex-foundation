@@ -2653,33 +2653,36 @@ export default function SchedulePage() {
 
             {/* STAGE 2: UPLOAD */}
             {importStep === 2 && (
-              <div className="p-8 text-center space-y-3">
-                <Loader2 className="w-8 h-8 text-[#176B87] animate-spin mx-auto" />
-                <h4 className="text-sm font-bold text-[#172033]">Uploading {selectedFile}...</h4>
-                <div className="w-64 mx-auto bg-[#D9DEE5] rounded-full h-2 overflow-hidden">
-                  <div className="bg-[#176B87] h-2 rounded-full w-2/3" />
+              <div className="p-8 flex flex-col items-center justify-center gap-2 text-center" role="status" aria-live="polite">
+                <div className="flex items-center gap-2 text-sm font-medium text-[#172033]">
+                  <Loader2 className="w-4 h-4 text-[#176B87] animate-spin shrink-0" />
+                  <span>Loading schedule...</span>
                 </div>
-                <p className="text-[11px] text-[#596579]">Streaming schedule XML payload to baseline ingestion service...</p>
+                <p className="text-xs text-[#596579]">Streaming {selectedFile} to baseline ingestion service...</p>
               </div>
             )}
 
             {/* STAGE 3: PROCESSING */}
             {importStep === 3 && (
-              <div className="p-8 text-center space-y-3">
-                <Loader2 className="w-8 h-8 text-[#176B87] animate-spin mx-auto" />
-                <h4 className="text-sm font-bold text-[#172033]">Processing WBS Hierarchy &amp; Logic Links</h4>
-                <p className="text-[11px] text-[#596579]">
-                  Parsing L1–L6 WBS tree, inspecting predecessor networks, and reading activity calendars...
+              <div className="p-8 flex flex-col items-center justify-center gap-2 text-center" role="status" aria-live="polite">
+                <div className="flex items-center gap-2 text-sm font-medium text-[#172033]">
+                  <Loader2 className="w-4 h-4 text-[#176B87] animate-spin shrink-0" />
+                  <span>Processing WBS hierarchy...</span>
+                </div>
+                <p className="text-xs text-[#596579]">
+                  Parsing WBS tree, inspecting predecessor networks, and reading activity calendars...
                 </p>
               </div>
             )}
 
             {/* STAGE 4: VALIDATION */}
             {importStep === 4 && (
-              <div className="p-8 text-center space-y-3">
-                <Loader2 className="w-8 h-8 text-[#176B87] animate-spin mx-auto" />
-                <h4 className="text-sm font-bold text-[#172033]">Validating Pre-Commit Schedule Integrity</h4>
-                <p className="text-[11px] text-[#596579]">
+              <div className="p-8 flex flex-col items-center justify-center gap-2 text-center" role="status" aria-live="polite">
+                <div className="flex items-center gap-2 text-sm font-medium text-[#172033]">
+                  <Loader2 className="w-4 h-4 text-[#176B87] animate-spin shrink-0" />
+                  <span>Validating schedule integrity...</span>
+                </div>
+                <p className="text-xs text-[#596579]">
                   Checking date chronological sequences, circular logic loops, and WBS parent resolution...
                 </p>
               </div>

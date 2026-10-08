@@ -493,7 +493,11 @@ export default function EngineerDashboardPage() {
   const updatesRequiredCount = todayActivities.filter((a) => a.status !== 'completed').length;
 
   return (
-    <StateWrapper>
+    <StateWrapper
+      loadingMessage="Loading engineer cockpit..."
+      emptyTitle="No engineer tasks found in this view"
+      emptyDescription="Daily site capture tasks and synchronization queues for your active project area will appear here. Select a different project or reset filters to view tasks."
+    >
       <div className="space-y-6 pb-12 max-w-7xl mx-auto">
         <Breadcrumbs items={breadcrumbs} />
 
