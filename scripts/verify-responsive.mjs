@@ -15,16 +15,21 @@ const projectSelectorCode = fs.readFileSync('src/components/shell/ProjectSelecto
 assert(projectSelectorCode.includes('hidden sm:inline') || projectSelectorCode.includes('truncate'), 'ProjectSelector should be compact on mobile');
 console.log('   ✓ Mobile Header: strictly displays Menu, Project, Connection without overcrowding.\n');
 
-// 2. Check Drawer Full-Screen Sheet on Mobile
-console.log('2. Checking Drawers (Shared Drawer & ActivityDetailDrawer)...');
+// 2. Check Drawer Full-Screen Sheet on Mobile & Modals
+console.log('2. Checking Drawers and Modals (Shared Drawer, Modal & ActivityDetailDrawer)...');
 const sharedDrawerCode = fs.readFileSync('src/components/shared/Drawer.tsx', 'utf8');
 assert(sharedDrawerCode.includes('fixed inset-0 sm:inset-y-0 sm:right-0'), 'Shared Drawer must be full-screen on mobile and slide-over on desktop');
 assert(sharedDrawerCode.includes('min-h-[44px]'), 'Shared Drawer close button must have 44px touch target');
+assert(sharedDrawerCode.includes('sm:max-w-md'), 'Shared Drawer width mapping must contain static sm:max-w-md class');
+
+const modalCode = fs.readFileSync('src/components/shared/Modal.tsx', 'utf8');
+assert(modalCode.includes('min-w-[44px] min-h-[44px]'), 'Modal close button must have 44px touch target');
+assert(modalCode.includes('flex flex-wrap items-center justify-end'), 'Modal footer must wrap on narrow viewports');
 
 const activityDrawerCode = fs.readFileSync('src/components/shared/ActivityDetailDrawer.tsx', 'utf8');
 assert(activityDrawerCode.includes('fixed inset-0 sm:inset-y-0 sm:right-0'), 'ActivityDetailDrawer must be full-screen on mobile and slide-over on desktop');
 assert(activityDrawerCode.includes('min-h-[44px]'), 'ActivityDetailDrawer close button must have 44px touch target');
-console.log('   ✓ Drawers: Full-screen sheet on mobile, slide-over on desktop, 44px close target.\n');
+console.log('   ✓ Drawers & Modals: Full-screen sheet on mobile, slide-over on desktop, 44px close targets, wrapped footer.\n');
 
 // 3. Check AppShell Duplicates Removal & Mobile Layout
 console.log('3. Checking No Duplicate AppShell and Mobile Overflow Protection...');

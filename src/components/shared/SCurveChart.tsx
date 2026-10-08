@@ -585,7 +585,7 @@ export function SCurveChart({
             )}
           </div>
 
-          <div className="flex items-center gap-4 text-[#596579]">
+          <div className="flex items-center flex-wrap gap-x-4 gap-y-1 text-[#596579]">
             <span>
               Plan: <strong className="font-mono text-[#176B87]">{activePoint.planned.toFixed(1)}%</strong>
             </span>

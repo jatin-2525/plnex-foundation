@@ -41,10 +41,10 @@ export function Drawer({
   if (!isOpen) return null;
 
   const widthClass = {
-    sm: 'max-w-md',
-    md: 'max-w-lg',
-    lg: 'max-w-2xl',
-    xl: 'max-w-4xl',
+    sm: 'sm:max-w-md',
+    md: 'sm:max-w-lg',
+    lg: 'sm:max-w-2xl',
+    xl: 'sm:max-w-4xl',
   }[width];
 
   return (
@@ -59,7 +59,7 @@ export function Drawer({
       {/* Container: Fullscreen sheet on mobile, slide-over drawer on tablet/desktop */}
       <div className="fixed inset-0 sm:inset-y-0 sm:right-0 sm:left-auto max-w-full flex sm:pl-10 z-10">
         <div
-          className={`w-full sm:w-screen sm:${widthClass} h-full bg-white sm:border-l border-[#D9DEE5] shadow-lg flex flex-col`}
+          className={`w-full sm:w-screen ${widthClass} h-full bg-white sm:border-l border-[#D9DEE5] shadow-lg flex flex-col`}
         >
           {/* Header */}
           <div className="flex items-start justify-between px-4 sm:px-6 py-3 sm:py-4 border-b border-[#D9DEE5] bg-white flex-shrink-0">

@@ -197,9 +197,9 @@ export default function ManagerDashboardPage() {
             </span>
           </div>
 
-          <div className="bg-white border border-[#D9DEE5] rounded-lg shadow-xs overflow-hidden grid grid-cols-2 lg:grid-cols-5 divide-y lg:divide-y-0 lg:divide-x divide-[#D9DEE5]">
+          <div className="border border-[#D9DEE5] rounded-lg shadow-xs overflow-hidden grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-px bg-[#D9DEE5]">
             {/* 1. Schedule Health */}
-            <div className="p-4 sm:p-4 sm:p-6 hover:bg-[#F9FAFC] transition-colors flex flex-col justify-between group">
+            <div className="p-4 lg:p-6 bg-white hover:bg-[#F9FAFC] transition-colors flex flex-col justify-between group">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-semibold uppercase tracking-wider text-[#596579]">
                   Schedule Health
@@ -229,7 +229,7 @@ export default function ManagerDashboardPage() {
             </div>
 
             {/* 2. Verified Progress */}
-            <div className="p-4 sm:p-4 sm:p-6 hover:bg-[#F9FAFC] transition-colors flex flex-col justify-between group">
+            <div className="p-4 lg:p-6 bg-white hover:bg-[#F9FAFC] transition-colors flex flex-col justify-between group">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-semibold uppercase tracking-wider text-[#596579]">
                   Verified Progress
@@ -261,7 +261,7 @@ export default function ManagerDashboardPage() {
             {/* 3. Activities At Risk */}
             <Link
               href="/risks"
-              className="p-4 sm:p-4 sm:p-6 hover:bg-[#F9FAFC] transition-colors flex flex-col justify-between group"
+              className="p-4 lg:p-6 bg-white hover:bg-[#F9FAFC] transition-colors flex flex-col justify-between group"
             >
               <div className="flex items-center justify-between">
                 <span className="text-xs font-semibold uppercase tracking-wider text-[#596579]">
@@ -288,7 +288,7 @@ export default function ManagerDashboardPage() {
             {/* 4. Pending Review */}
             <Link
               href="/review"
-              className="p-4 sm:p-4 sm:p-6 hover:bg-[#F9FAFC] transition-colors flex flex-col justify-between group"
+              className="p-4 lg:p-6 bg-white hover:bg-[#F9FAFC] transition-colors flex flex-col justify-between group"
             >
               <div className="flex items-center justify-between">
                 <span className="text-xs font-semibold uppercase tracking-wider text-[#596579]">
@@ -313,7 +313,7 @@ export default function ManagerDashboardPage() {
             </Link>
 
             {/* 5. Schedule Variance */}
-            <div className="p-4 sm:p-4 sm:p-6 bg-[#FFFDFD] hover:bg-[#FFF8F8] transition-colors flex flex-col justify-between col-span-2 lg:col-span-1">
+            <div className="p-4 lg:p-6 bg-[#FFFDFD] hover:bg-[#FFF8F8] transition-colors flex flex-col justify-between sm:col-span-2 lg:col-span-1">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-semibold uppercase tracking-wider text-[#B5473C]">
                   Schedule Variance
@@ -750,7 +750,7 @@ export default function ManagerDashboardPage() {
                 </div>
 
                 {/* 5. Action */}
-                <div className="flex flex-col justify-end">
+                <div className="flex flex-col justify-end md:col-span-2 lg:col-span-1">
                   <span className="text-[10px] uppercase font-bold text-[#596579] block mb-1">Action</span>
                   <Link
                     href="/what-if"
@@ -812,7 +812,7 @@ export default function ManagerDashboardPage() {
                 </div>
 
                 {/* 5. Action */}
-                <div className="flex flex-col justify-end">
+                <div className="flex flex-col justify-end md:col-span-2 lg:col-span-1">
                   <span className="text-[10px] uppercase font-bold text-[#596579] block mb-1">Action</span>
                   <button
                     type="button"

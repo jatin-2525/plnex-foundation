@@ -499,9 +499,9 @@ export default function EvidenceAndAuditPage() {
           </p>
 
           {/* 7-STAGE CONNECTED EVIDENCE CHAIN PIPELINE STRIP */}
-          <div className="border border-[#D9DEE5] rounded-md bg-white overflow-hidden grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-7 divide-y sm:divide-y-0 sm:divide-x divide-[#D9DEE5] pt-1">
+          <div className="border border-[#D9DEE5] rounded-md overflow-hidden grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-px bg-[#D9DEE5]">
             {/* 1. Field Report */}
-            <div className="p-3 bg-[#EDF5F8]/40 flex flex-col justify-between text-xs space-y-2">
+            <div className="p-3 bg-[#F4F9FB] flex flex-col justify-between text-xs space-y-2">
               <div>
                 <div className="flex items-center justify-between">
                   <span className="text-[10px] font-mono font-medium text-[#176B87] uppercase">Stage 1</span>
@@ -518,7 +518,7 @@ export default function EvidenceAndAuditPage() {
             </div>
 
             {/* 2. Execution Event */}
-            <div className="p-3 flex flex-col justify-between text-xs space-y-2">
+            <div className="p-3 bg-white flex flex-col justify-between text-xs space-y-2">
               <div>
                 <span className="text-[10px] font-mono font-semibold text-[#596579] uppercase block">Stage 2</span>
                 <div className="font-medium text-[#172033] text-xs mt-1 flex items-center gap-2">
@@ -532,7 +532,7 @@ export default function EvidenceAndAuditPage() {
             </div>
 
             {/* 3. Schedule Activity */}
-            <div className="p-3 flex flex-col justify-between text-xs space-y-2">
+            <div className="p-3 bg-white flex flex-col justify-between text-xs space-y-2">
               <div>
                 <span className="text-[10px] font-mono font-semibold text-[#596579] uppercase block">Stage 3</span>
                 <div className="font-medium text-[#172033] text-xs mt-1 flex items-center gap-2">
@@ -546,7 +546,7 @@ export default function EvidenceAndAuditPage() {
             </div>
 
             {/* 4. Verification */}
-            <div className="p-3 bg-[#EDF7F2]/40 flex flex-col justify-between text-xs space-y-2">
+            <div className="p-3 bg-[#F4FAF6] flex flex-col justify-between text-xs space-y-2">
               <div>
                 <span className="text-[10px] font-mono font-medium text-[#2E7D5B] uppercase block">Stage 4</span>
                 <div className="font-medium text-[#172033] text-xs mt-1 flex items-center gap-2">
@@ -560,7 +560,7 @@ export default function EvidenceAndAuditPage() {
             </div>
 
             {/* 5. Progress */}
-            <div className="p-3 bg-[#EDF7F2]/40 flex flex-col justify-between text-xs space-y-2">
+            <div className="p-3 bg-[#F4FAF6] flex flex-col justify-between text-xs space-y-2">
               <div>
                 <span className="text-[10px] font-mono font-medium text-[#2E7D5B] uppercase block">Stage 5</span>
                 <div className="font-medium text-[#172033] text-xs mt-1 flex items-center gap-2">
@@ -574,7 +574,7 @@ export default function EvidenceAndAuditPage() {
             </div>
 
             {/* 6. Variance */}
-            <div className="p-3 bg-[#FDF6ED]/40 flex flex-col justify-between text-xs space-y-2">
+            <div className="p-3 bg-[#FEFAF5] flex flex-col justify-between text-xs space-y-2">
               <div>
                 <span className="text-[10px] font-mono font-medium text-[#D98B32] uppercase block">Stage 6</span>
                 <div className="font-medium text-[#172033] text-xs mt-1 flex items-center gap-2">
@@ -588,7 +588,7 @@ export default function EvidenceAndAuditPage() {
             </div>
 
             {/* 7. Impact */}
-            <div className="p-3 bg-[#FBEFEE]/40 flex flex-col justify-between text-xs space-y-2">
+            <div className="p-3 bg-[#FCF5F4] flex flex-col justify-between text-xs space-y-2 sm:col-span-2 md:col-span-1 lg:col-span-1">
               <div>
                 <span className="text-[10px] font-mono font-medium text-[#B5473C] uppercase block">Stage 7</span>
                 <div className="font-medium text-[#172033] text-xs mt-1 flex items-center gap-2">

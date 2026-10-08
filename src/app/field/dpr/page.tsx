@@ -605,11 +605,11 @@ export default function DPRPage() {
             </div>
 
             {/* Top Primary Actions */}
-            <div className="flex items-center gap-2 shrink-0">
+            <div className="flex flex-wrap sm:flex-nowrap items-stretch sm:items-center gap-2 shrink-0 w-full sm:w-auto">
               <button
                 type="button"
                 onClick={handleSaveDraft}
-                className="px-4 py-2 text-xs font-semibold text-[#172033] bg-white border border-[#D9DEE5] hover:bg-[#F1F3F5] rounded-lg inline-flex items-center gap-2 transition-colors cursor-pointer shadow-2xs"
+                className="flex-1 sm:flex-none justify-center min-h-[44px] px-4 py-2 text-xs font-semibold text-[#172033] bg-white border border-[#D9DEE5] hover:bg-[#F1F3F5] rounded-lg inline-flex items-center gap-2 transition-colors cursor-pointer shadow-2xs"
               >
                 <Save className="w-4 h-4 text-[#596579]" />
                 <span>Save DPR Draft</span>
@@ -619,7 +619,7 @@ export default function DPRPage() {
                 type="button"
                 onClick={handleSubmitDPR}
                 disabled={submissionState === 'Processing'}
-                className="px-4 py-2 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] border border-[#176B87] disabled:opacity-50 rounded-lg inline-flex items-center gap-2 transition-colors cursor-pointer shadow-xs"
+                className="flex-1 sm:flex-none justify-center min-h-[48px] px-4 py-2 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] border border-[#176B87] disabled:opacity-50 rounded-lg inline-flex items-center gap-2 transition-colors cursor-pointer shadow-xs"
               >
                 <Send className="w-4 h-4" />
                 <span>Sign & Submit Daily Report</span>

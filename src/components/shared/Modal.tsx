@@ -58,19 +58,19 @@ export function Modal({
         aria-hidden="true"
       />
 
-      <div className="flex min-h-full items-center justify-center p-4">
+      <div className="flex min-h-full items-center justify-center p-3 sm:p-4">
         <div
           className={`relative w-full ${maxWidthClass} bg-white rounded-lg border border-[#D9DEE5] shadow-lg overflow-hidden`}
         >
           {/* Header */}
-          <div className="flex items-start justify-between px-6 py-4 border-b border-[#D9DEE5] bg-white">
-            <div>
+          <div className="flex items-start justify-between px-4 sm:px-6 py-3 sm:py-4 border-b border-[#D9DEE5] bg-white">
+            <div className="min-w-0 pr-2">
               <h2 className="text-base font-semibold text-[#172033] leading-snug">{title}</h2>
               {subtitle && <p className="text-xs text-[#596579] mt-0.5">{subtitle}</p>}
             </div>
             <button
               onClick={onClose}
-              className="text-[#596579] hover:text-[#172033] p-1 rounded-md hover:bg-[#F1F3F5] transition-colors -mr-1"
+              className="min-w-[44px] min-h-[44px] flex items-center justify-center p-2 text-[#596579] hover:text-[#172033] hover:bg-[#F1F3F5] rounded-md transition-colors -mr-1 flex-shrink-0 cursor-pointer"
               aria-label="Close dialog"
             >
               <X className="w-5 h-5" />
@@ -78,13 +78,13 @@ export function Modal({
           </div>
 
           {/* Body */}
-          <div className="px-6 py-4 max-h-[75vh] overflow-y-auto text-[#172033] text-sm">
+          <div className="px-4 sm:px-6 py-3 sm:py-4 max-h-[75vh] overflow-y-auto text-[#172033] text-sm">
             {children}
           </div>
 
           {/* Footer */}
           {footer && (
-            <div className="flex items-center justify-end gap-3 px-6 py-3 border-t border-[#D9DEE5] bg-[#F7F8FA]">
+            <div className="flex flex-wrap items-center justify-end gap-2 sm:gap-3 px-4 sm:px-6 py-3 border-t border-[#D9DEE5] bg-[#F7F8FA]">
               {footer}
             </div>
           )}
