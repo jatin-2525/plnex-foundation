@@ -315,7 +315,7 @@ export default function MatchingPage() {
         return (
           <div>
             <span
-              className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[11px] font-bold border ${
+              className={`inline-flex items-center gap-2 px-2 py-0.5 rounded text-[11px] font-bold border ${
                 isApproved
                   ? 'bg-[#EDF7F2] text-[#2E7D5B] border-[#B8DCC9]'
                   : isRejected
@@ -339,10 +339,10 @@ export default function MatchingPage() {
       width: '130px',
       align: 'right',
       cell: ({ row }) => (
-        <div className="flex items-center justify-end gap-1.5" onClick={(e) => e.stopPropagation()}>
+        <div className="flex items-center justify-end gap-2" onClick={(e) => e.stopPropagation()}>
           <button
             onClick={() => setActiveReviewEvent(row)}
-            className="px-2.5 py-1 bg-[#F1F3F5] hover:bg-[#D9DEE5] text-[#172033] rounded text-xs font-semibold transition-colors"
+            className="px-3 py-1 bg-[#F1F3F5] hover:bg-[#D9DEE5] text-[#172033] rounded text-xs font-semibold transition-colors"
           >
             Review Match
           </button>
@@ -352,7 +352,7 @@ export default function MatchingPage() {
   ];
 
   return (
-    <div className="space-y-6 pb-16">
+    <div className="space-y-6 pb-12">
       <Breadcrumbs items={breadcrumbs} />
 
       <PageHeader
@@ -362,7 +362,7 @@ export default function MatchingPage() {
         actions={
           <Link
             href="/review"
-            className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-bold rounded-lg shadow-xs transition-colors"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-bold rounded-lg shadow-xs transition-colors"
           >
             <ShieldCheck className="w-4 h-4" />
             <span>Open Review Queue</span>
@@ -385,7 +385,7 @@ export default function MatchingPage() {
 
         {/* Verification Policy Summary Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-          <div className="bg-white border border-[#B8DCC9] rounded-lg p-3.5 flex items-start gap-3">
+          <div className="bg-white border border-[#B8DCC9] rounded-lg p-4 flex items-start gap-3">
             <div className="w-8 h-8 rounded bg-[#EDF7F2] text-[#2E7D5B] flex items-center justify-center flex-shrink-0">
               <CheckCircle2 className="w-4 h-4" />
             </div>
@@ -398,7 +398,7 @@ export default function MatchingPage() {
             </div>
           </div>
 
-          <div className="bg-white border border-[#F0D4A6] rounded-lg p-3.5 flex items-start gap-3">
+          <div className="bg-white border border-[#F0D4A6] rounded-lg p-4 flex items-start gap-3">
             <div className="w-8 h-8 rounded bg-[#FDF6ED] text-[#8C5311] flex items-center justify-center flex-shrink-0">
               <AlertTriangle className="w-4 h-4" />
             </div>
@@ -411,7 +411,7 @@ export default function MatchingPage() {
             </div>
           </div>
 
-          <div className="bg-white border border-[#E4B0AA] rounded-lg p-3.5 flex items-start gap-3">
+          <div className="bg-white border border-[#E4B0AA] rounded-lg p-4 flex items-start gap-3">
             <div className="w-8 h-8 rounded bg-[#FBEFEE] text-[#B5473C] flex items-center justify-center flex-shrink-0">
               <XCircle className="w-4 h-4" />
             </div>
@@ -531,7 +531,7 @@ export default function MatchingPage() {
           <>
             <button
               onClick={() => setIsRematchModalOpen(false)}
-              className="px-3.5 py-2 text-xs font-semibold text-[#596579] hover:text-[#172033] rounded border border-[#D9DEE5]"
+              className="px-4 py-2 text-xs font-semibold text-[#596579] hover:text-[#172033] rounded border border-[#D9DEE5]"
             >
               Cancel
             </button>
@@ -551,7 +551,7 @@ export default function MatchingPage() {
             <select
               value={selectedRematchTarget}
               onChange={(e) => setSelectedRematchTarget(e.target.value)}
-              className="w-full p-2.5 text-xs bg-white border border-[#D9DEE5] rounded-lg outline-none focus:border-[#176B87]"
+              className="w-full p-3 text-xs bg-white border border-[#D9DEE5] rounded-lg outline-none focus:border-[#176B87]"
             >
               <option value="">-- Choose activity from WBS --</option>
               {MOCK_ACTIVITIES.map((act) => (
@@ -569,7 +569,7 @@ export default function MatchingPage() {
               onChange={(e) => setRematchReason(e.target.value)}
               placeholder="State reason for manual reassignment (e.g., spool scope corresponds to line tie-in)..."
               rows={3}
-              className="w-full p-2.5 text-xs bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg outline-none focus:border-[#176B87]"
+              className="w-full p-3 text-xs bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg outline-none focus:border-[#176B87]"
             />
           </div>
         </div>

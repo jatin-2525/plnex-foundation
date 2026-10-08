@@ -923,7 +923,7 @@ export default function ScheduleTwinPage() {
 
   return (
     <StateWrapper>
-      <div className="space-y-4">
+      <div className="space-y-6 pb-12">
         <Breadcrumbs items={breadcrumbs} />
 
         {/* 1. TOP HEADER & METADATA BAR */}
@@ -946,13 +946,13 @@ export default function ScheduleTwinPage() {
             </div>
 
             <div className="flex items-center gap-2 text-xs flex-wrap">
-              <span className="font-mono text-[#596579] bg-[#F7F8FA] px-2.5 py-1 rounded border border-[#D9DEE5]">
+              <span className="font-mono text-[#596579] bg-[#F7F8FA] px-3 py-1 rounded border border-[#D9DEE5]">
                 BASELINE: {CANONICAL_SCHEDULE_VERSION_LABEL}
               </span>
-              <span className="font-mono text-[#B5473C] font-semibold bg-[#FBEFEE] px-2.5 py-1 rounded border border-[#E4B0AA]">
+              <span className="font-mono text-[#B5473C] font-semibold bg-[#FBEFEE] px-3 py-1 rounded border border-[#E4B0AA]">
                 DATA DATE: 18 Sep 2026
               </span>
-              <span className="font-mono text-[#172033] bg-[#F7F8FA] px-2.5 py-1 rounded border border-[#D9DEE5]">
+              <span className="font-mono text-[#172033] bg-[#F7F8FA] px-3 py-1 rounded border border-[#D9DEE5]">
                 PROJECT: {activeProject.code}
               </span>
               <button
@@ -970,9 +970,9 @@ export default function ScheduleTwinPage() {
         {/* 2. THREE CORE PROJECT-CONTROL SUMMARY CARDS (Planned, Actual, Forecast) */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
           {/* Card 1: What was planned? */}
-          <div className="bg-white border border-[#D9DEE5] rounded-lg p-3.5 space-y-2">
+          <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 space-y-2">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-2">
                 <span className="w-2.5 h-2.5 rounded-sm bg-[#176B87]" />
                 <h3 className="text-xs font-bold uppercase tracking-wider text-[#172033]">
                   1. What Was Planned?
@@ -999,9 +999,9 @@ export default function ScheduleTwinPage() {
           </div>
 
           {/* Card 2: What actually happened? */}
-          <div className="bg-white border border-[#D9DEE5] rounded-lg p-3.5 space-y-2">
+          <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 space-y-2">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-2">
                 <span className="w-2.5 h-2.5 rounded-sm bg-[#2E7D5B]" />
                 <h3 className="text-xs font-bold uppercase tracking-wider text-[#172033]">
                   2. What Actually Happened?
@@ -1028,9 +1028,9 @@ export default function ScheduleTwinPage() {
           </div>
 
           {/* Card 3: What is forecast? */}
-          <div className="bg-white border border-[#D9DEE5] rounded-lg p-3.5 space-y-2">
+          <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 space-y-2">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-2">
                 <span className="w-2.5 h-2.5 rounded-sm bg-[#D98B32] border border-[#B5473C]" />
                 <h3 className="text-xs font-bold uppercase tracking-wider text-[#172033]">
                   3. What Is Forecast?
@@ -1075,7 +1075,7 @@ export default function ScheduleTwinPage() {
             <select
               value={levelFilter}
               onChange={(e) => setLevelFilter(e.target.value as any)}
-              className="px-2.5 py-1 bg-[#F7F8FA] border border-[#D9DEE5] rounded text-xs text-[#172033] outline-none"
+              className="px-3 py-1 bg-[#F7F8FA] border border-[#D9DEE5] rounded text-xs text-[#172033] outline-none"
             >
               <option value="all">All WBS Levels</option>
               <option value="L1-L2">L1 &amp; L2 Summary</option>
@@ -1084,7 +1084,7 @@ export default function ScheduleTwinPage() {
               <option value="L5-L6">L5 &amp; L6 Activities</option>
             </select>
 
-            <label className="flex items-center gap-1.5 cursor-pointer text-[#172033] select-none">
+            <label className="flex items-center gap-2 cursor-pointer text-[#172033] select-none">
               <input
                 type="checkbox"
                 checked={criticalOnly}
@@ -1101,7 +1101,7 @@ export default function ScheduleTwinPage() {
               <button
                 type="button"
                 onClick={() => setTimeScaleMode('execution')}
-                className={`px-2.5 py-1 text-xs font-medium transition-colors ${
+                className={`px-3 py-1 text-xs font-medium transition-colors ${
                   timeScaleMode === 'execution'
                     ? 'bg-[#176B87] text-white'
                     : 'bg-[#F7F8FA] text-[#596579] hover:bg-[#D9DEE5]'
@@ -1112,7 +1112,7 @@ export default function ScheduleTwinPage() {
               <button
                 type="button"
                 onClick={() => setTimeScaleMode('full')}
-                className={`px-2.5 py-1 text-xs font-medium transition-colors ${
+                className={`px-3 py-1 text-xs font-medium transition-colors ${
                   timeScaleMode === 'full'
                     ? 'bg-[#176B87] text-white'
                     : 'bg-[#F7F8FA] text-[#596579] hover:bg-[#D9DEE5]'
@@ -1150,7 +1150,7 @@ export default function ScheduleTwinPage() {
             {/* TIMELINE HEADER */}
             <div className="flex border-b border-[#D9DEE5] bg-[#F7F8FA] select-none">
               {/* Left Column Header: WBS & Activity info */}
-              <div className="w-[370px] flex-shrink-0 p-2.5 border-r border-[#D9DEE5] flex items-center justify-between text-xs font-bold text-[#172033]">
+              <div className="w-[370px] flex-shrink-0 p-3 border-r border-[#D9DEE5] flex items-center justify-between text-xs font-bold text-[#172033]">
                 <span>Activity &amp; WBS Hierarchy</span>
                 <span className="text-[10px] font-mono text-[#596579]">
                   {filteredActivities.length} items
@@ -1192,7 +1192,7 @@ export default function ScheduleTwinPage() {
                   {/* Top Data Date Badge - positioned right at Data Date */}
                   <div
                     style={{ left: `${dataDatePct}%` }}
-                    className="absolute top-0.5 -translate-x-1/2 bg-[#B5473C] text-white font-mono text-[9px] font-bold px-1.5 py-0.2 rounded shadow-xs z-20 pointer-events-none whitespace-nowrap"
+                    className="absolute top-0.5 -translate-x-1/2 bg-[#B5473C] text-white font-mono text-[9px] font-bold px-1.5 py-0.5 rounded shadow-xs z-20 pointer-events-none whitespace-nowrap"
                   >
                     Data Date
                   </div>
@@ -1248,7 +1248,7 @@ export default function ScheduleTwinPage() {
                     >
                       {/* Left Side: Activity Details */}
                       <div
-                        className="w-[370px] flex-shrink-0 p-2 border-r border-[#D9DEE5] flex items-start gap-1.5 min-w-0"
+                        className="w-[370px] flex-shrink-0 p-2 border-r border-[#D9DEE5] flex items-start gap-2 min-w-0"
                         style={{ paddingLeft: `${Math.max(6, (act.levelNum - 1) * 12 + 6)}px` }}
                       >
                         {/* Expand/Collapse or Leaf marker */}
@@ -1284,7 +1284,7 @@ export default function ScheduleTwinPage() {
 
                         {/* Activity ID & Name */}
                         <div className="flex-1 min-w-0 pr-1">
-                          <div className="flex items-center gap-1.5 flex-wrap">
+                          <div className="flex items-center gap-2 flex-wrap">
                             <span className="font-mono text-[11px] font-bold text-[#172033]">
                               {act.id}
                             </span>
@@ -1298,7 +1298,7 @@ export default function ScheduleTwinPage() {
                           <div className="text-xs text-[#172033] font-medium truncate" title={act.name}>
                             {act.name}
                           </div>
-                          <div className="flex items-center gap-1.5 font-mono text-[10px] text-[#596579] mt-0.5">
+                          <div className="flex items-center gap-2 font-mono text-[10px] text-[#596579] mt-0.5">
                             <span>WBS {act.wbs}</span>
                             <span>•</span>
                             <span className="truncate max-w-[140px]">{act.area}</span>
@@ -1439,11 +1439,11 @@ export default function ScheduleTwinPage() {
         </div>
 
         {/* 5. SELECTED ACTIVITY TWIN DEEP-DIVE CORRELATION PANEL */}
-        <div className="bg-white border border-[#D9DEE5] rounded-lg p-5 space-y-4">
+        <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D9DEE5] gap-2">
             <div>
               <div className="flex items-center gap-2">
-                <span className="font-mono text-base font-bold text-[#176B87] bg-[#EDF5F8] px-2.5 py-0.5 rounded border border-[#C5DCE6]">
+                <span className="font-mono text-base font-bold text-[#176B87] bg-[#EDF5F8] px-3 py-0.5 rounded border border-[#C5DCE6]">
                   {selectedActivity.id}
                 </span>
                 <span className="font-mono text-xs text-[#596579] bg-[#F1F3F5] px-2 py-0.5 rounded border border-[#D9DEE5]">
@@ -1466,7 +1466,7 @@ export default function ScheduleTwinPage() {
                 <button
                   type="button"
                   onClick={() => openWhyExplanation('DELAY', selectedActivity.id)}
-                  className="px-2.5 py-1 text-xs text-[#B5473C] bg-[#FBEFEE] hover:bg-[#F5DBD8] border border-[#E4B0AA] rounded font-semibold inline-flex items-center gap-1 transition-colors"
+                  className="px-3 py-1 text-xs text-[#B5473C] bg-[#FBEFEE] hover:bg-[#F5DBD8] border border-[#E4B0AA] rounded font-semibold inline-flex items-center gap-1 transition-colors"
                 >
                   <HelpCircle className="w-3.5 h-3.5" />
                   <span>Why Slipping?</span>
@@ -1486,14 +1486,14 @@ export default function ScheduleTwinPage() {
           {/* 3 Side-by-Side Deep-Dive Panels */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
             {/* Panel 1: What was planned? */}
-            <div className="p-3.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg space-y-2.5">
-              <div className="flex items-center justify-between pb-1.5 border-b border-[#D9DEE5]">
+            <div className="p-4 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg space-y-2">
+              <div className="flex items-center justify-between pb-2 border-b border-[#D9DEE5]">
                 <span className="font-bold uppercase tracking-wider text-[#172033]">
                   1. What Was Planned?
                 </span>
                 <span className="font-mono text-[10px] text-[#176B87] font-semibold">P6 Baseline</span>
               </div>
-              <div className="space-y-1.5 font-mono">
+              <div className="space-y-2 font-mono">
                 <div className="flex justify-between">
                   <span className="text-[#596579]">Planned Dates:</span>
                   <span className="font-bold text-[#172033]">
@@ -1523,14 +1523,14 @@ export default function ScheduleTwinPage() {
             </div>
 
             {/* Panel 2: What actually happened? */}
-            <div className="p-3.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg space-y-2.5">
-              <div className="flex items-center justify-between pb-1.5 border-b border-[#D9DEE5]">
+            <div className="p-4 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg space-y-2">
+              <div className="flex items-center justify-between pb-2 border-b border-[#D9DEE5]">
                 <span className="font-bold uppercase tracking-wider text-[#172033]">
                   2. What Actually Happened?
                 </span>
                 <span className="font-mono text-[10px] text-[#2E7D5B] font-semibold">Field As-Built</span>
               </div>
-              <div className="space-y-1.5 font-mono">
+              <div className="space-y-2 font-mono">
                 <div className="flex justify-between">
                   <span className="text-[#596579]">Actual Start:</span>
                   <span className="font-bold text-[#172033]">
@@ -1556,7 +1556,7 @@ export default function ScheduleTwinPage() {
               </div>
 
               {/* Linked Evidence Count */}
-              <div className="pt-2 border-t border-[#D9DEE5] space-y-1.5">
+              <div className="pt-2 border-t border-[#D9DEE5] space-y-2">
                 <div className="flex items-center justify-between text-[11px]">
                   <span className="text-[#596579]">Linked QA/QC Evidence:</span>
                   <span className="font-mono font-bold text-[#172033]">
@@ -1568,7 +1568,7 @@ export default function ScheduleTwinPage() {
                     {linkedEvidence.slice(0, 2).map((item) => (
                       <div
                         key={item.id}
-                        className="p-1.5 bg-white border border-[#D9DEE5] rounded flex items-center justify-between text-[10px]"
+                        className="p-2 bg-white border border-[#D9DEE5] rounded flex items-center justify-between text-[10px]"
                       >
                         <span className="truncate max-w-[170px] text-[#172033] font-medium">
                           {item.title}
@@ -1588,14 +1588,14 @@ export default function ScheduleTwinPage() {
             </div>
 
             {/* Panel 3: What is forecast? */}
-            <div className="p-3.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg space-y-2.5">
-              <div className="flex items-center justify-between pb-1.5 border-b border-[#D9DEE5]">
+            <div className="p-4 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg space-y-2">
+              <div className="flex items-center justify-between pb-2 border-b border-[#D9DEE5]">
                 <span className="font-bold uppercase tracking-wider text-[#172033]">
                   3. What Is Forecast?
                 </span>
                 <span className="font-mono text-[10px] text-[#B5473C] font-semibold">Projected EAC</span>
               </div>
-              <div className="space-y-1.5 font-mono">
+              <div className="space-y-2 font-mono">
                 <div className="flex justify-between">
                   <span className="text-[#596579]">Forecast Finish:</span>
                   <span className={`font-bold ${selectedActivity.delayDays > 0 ? 'text-[#B5473C]' : 'text-[#172033]'}`}>
@@ -1652,7 +1652,7 @@ export default function ScheduleTwinPage() {
             }
           >
             <div className="space-y-3 text-xs">
-              <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded space-y-1.5">
+              <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded space-y-2">
                 <div className="flex justify-between">
                   <span className="text-[#596579]">File Size:</span>
                   <span className="font-mono">{selectedEvidenceForModal.fileSize}</span>

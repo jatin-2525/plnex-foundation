@@ -52,7 +52,7 @@ export default function VariancePage() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 pb-12">
       <Breadcrumbs items={breadcrumbs} />
 
       <PageHeader
@@ -63,14 +63,14 @@ export default function VariancePage() {
           <div className="flex items-center gap-2">
             <Link
               href="/risks"
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-[#FBEFEE] hover:bg-[#FBEFEE]/80 border border-[#E4B0AA] text-[#B5473C] text-xs font-bold rounded-lg shadow-xs transition-colors"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-[#FBEFEE] hover:bg-[#FBEFEE]/80 border border-[#E4B0AA] text-[#B5473C] text-xs font-bold rounded-lg shadow-xs transition-colors"
             >
               <AlertTriangle className="w-3.5 h-3.5" />
               <span>Risks & Dependencies</span>
             </Link>
             <Link
               href="/progress"
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-bold rounded-lg shadow-xs transition-colors"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-bold rounded-lg shadow-xs transition-colors"
             >
               <TrendingDown className="w-3.5 h-3.5 rotate-180" />
               <span>Progress & Variance</span>
@@ -90,7 +90,7 @@ export default function VariancePage() {
 
       <StateWrapper>
         {/* Section 1: "Why is this delayed?" Dependency Chain Visualization */}
-        <div className="bg-white border border-[#D9DEE5] rounded-lg p-5 space-y-4">
+        <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#D9DEE5]">
             <div>
               <div className="flex items-center gap-2">
@@ -109,7 +109,7 @@ export default function VariancePage() {
               <select
                 value={selectedActivityId}
                 onChange={(e) => setSelectedActivityId(e.target.value)}
-                className="px-2.5 py-1 text-xs bg-white border border-[#D9DEE5] rounded-md font-mono text-[#172033] outline-none"
+                className="px-3 py-1 text-xs bg-white border border-[#D9DEE5] rounded-md font-mono text-[#172033] outline-none"
               >
                 {MOCK_ACTIVITIES.map((act) => (
                   <option key={act.id} value={act.id}>
@@ -168,7 +168,7 @@ export default function VariancePage() {
         </div>
 
         {/* Section 2: Deterministic What-If Simulator */}
-        <div className="bg-white border border-[#D9DEE5] rounded-lg p-5 space-y-4">
+        <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 space-y-4">
           <div className="pb-3 border-b border-[#D9DEE5] flex items-center justify-between flex-wrap gap-2">
             <div>
               <div className="flex items-center gap-2">
@@ -183,7 +183,7 @@ export default function VariancePage() {
             </div>
             <Link
               href="/what-if"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#EDF5F8] hover:bg-[#EDF5F8]/80 border border-[#B3CBE0] text-[#176B87] text-xs font-bold rounded-lg transition-colors"
+              className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#EDF5F8] hover:bg-[#EDF5F8]/80 border border-[#B3CBE0] text-[#176B87] text-xs font-bold rounded-lg transition-colors"
             >
               <span>Full What-If Simulator Studio</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -250,11 +250,11 @@ export default function VariancePage() {
                 </div>
                 <div className="flex items-center gap-2">
                   {simulationResult.criticalPathImpacted ? (
-                    <span className="px-2.5 py-1 bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA] text-xs font-mono font-bold rounded">
+                    <span className="px-3 py-1 bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA] text-xs font-mono font-bold rounded">
                       CRITICAL PATH DELAY: +{simulationResult.projectCompletionDelayDays} DAYS
                     </span>
                   ) : (
-                    <span className="px-2.5 py-1 bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9] text-xs font-mono font-bold rounded">
+                    <span className="px-3 py-1 bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9] text-xs font-mono font-bold rounded">
                       ABSORBED BY FLOAT
                     </span>
                   )}
@@ -266,11 +266,11 @@ export default function VariancePage() {
                   Affected Downstream Activities ({simulationResult.affectedActivities.length}):
                 </span>
                 {simulationResult.affectedActivities.length > 0 ? (
-                  <div className="space-y-1.5 text-xs">
+                  <div className="space-y-2 text-xs">
                     {simulationResult.affectedActivities.map((aff) => (
                       <div
                         key={aff.activityId}
-                        className="p-2.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded flex items-center justify-between"
+                        className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded flex items-center justify-between"
                       >
                         <div>
                           <div className="flex items-center gap-2">
@@ -303,7 +303,7 @@ export default function VariancePage() {
         </div>
 
         {/* Section 3: Project Memory — Institutional Knowledge */}
-        <div className="bg-white border border-[#D9DEE5] rounded-lg p-5 space-y-4">
+        <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 space-y-4">
           <div className="flex items-center gap-2 pb-3 border-b border-[#D9DEE5]">
             <BookOpen className="w-4 h-4 text-[#176B87]" />
             <div>
@@ -346,7 +346,7 @@ export default function VariancePage() {
                   </ul>
                 </div>
 
-                <div className="p-2.5 bg-white border border-[#B8DCC9] rounded text-xs text-[#2E7D5B]">
+                <div className="p-3 bg-white border border-[#B8DCC9] rounded text-xs text-[#2E7D5B]">
                   <strong className="block text-[11px] uppercase mb-0.5">Recommended Mitigation Rule:</strong>
                   <span>{mem.recommendedMitigation}</span>
                 </div>

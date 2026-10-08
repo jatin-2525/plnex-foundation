@@ -155,7 +155,7 @@ export function LineChart({
   const activePoint = hoveredIdx !== null ? effectiveData[hoveredIdx] : effectiveData[dataDateIndex];
 
   return (
-    <div className={`bg-white rounded-lg border border-[#D9DEE5] p-5 shadow-xs text-[#172033] ${className}`}>
+    <div className={`bg-white rounded-lg border border-[#D9DEE5] p-4 sm:p-6 shadow-xs text-[#172033] ${className}`}>
       {/* Header */}
       <div className="flex flex-col lg:flex-row lg:items-center justify-between pb-3 border-b border-[#D9DEE5] gap-3">
         <div>
@@ -181,7 +181,7 @@ export function LineChart({
       </div>
 
       {/* Summary KPI Strip */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 my-3.5 text-xs font-mono">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 my-4 text-xs font-mono">
         {!isVariance ? (
           <>
             <div className="p-2 bg-[#F7F8FA] rounded border border-[#D9DEE5]">
@@ -456,36 +456,36 @@ export function LineChart({
         <div className="flex items-center gap-4 flex-wrap">
           {!isVariance ? (
             <>
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-2">
                 <span className="w-3.5 h-1 bg-[#176B87] inline-block rounded-xs" />
                 <span className="font-semibold text-[#172033]">■ Planned (Neutral/Primary)</span>
               </div>
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-2">
                 <span className="w-3.5 h-1.5 bg-[#2E7D5B] inline-block rounded-xs" />
                 <span className="font-semibold text-[#172033]">● Actual (Semantic Contrast)</span>
               </div>
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-2">
                 <span className="w-4 h-0.5 border-t-2 border-dashed border-[#7B8798] inline-block" />
                 <span className="font-semibold text-[#596579]">▲ Forecast (Dashed Secondary)</span>
               </div>
             </>
           ) : (
             <>
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-2">
                 <span className="w-4 h-0.5 bg-[#172033] inline-block" />
                 <span className="font-semibold text-[#172033]">— Baseline (0.0% Variance)</span>
               </div>
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-2">
                 <span className="w-3.5 h-1.5 bg-[#B5473C] inline-block rounded-xs" />
                 <span className="font-semibold text-[#172033]">✕ Schedule Slip Trend [Critical Red]</span>
               </div>
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-2">
                 <span className="w-3.5 h-1.5 bg-[#2E7D5B] inline-block rounded-xs" />
                 <span className="font-semibold text-[#172033]">✓ Schedule Gain Ahead [Green]</span>
               </div>
             </>
           )}
-          <div className="flex items-center gap-1.5">
+          <div className="flex items-center gap-2">
             <span className="w-2.5 h-2.5 rounded-full border-2 border-[#172033] inline-block" />
             <span className="font-semibold text-[#172033]">Cutoff Data Date</span>
           </div>

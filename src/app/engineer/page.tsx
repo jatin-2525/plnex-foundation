@@ -494,13 +494,13 @@ export default function EngineerDashboardPage() {
 
   return (
     <StateWrapper>
-      <div className="space-y-6 pb-24 md:pb-10 max-w-7xl mx-auto">
+      <div className="space-y-6 pb-12 max-w-7xl mx-auto">
         <Breadcrumbs items={breadcrumbs} />
 
         {/* OFFLINE MODE BANNER */}
         {isOffline && (
-          <div className="p-3.5 rounded-lg bg-[#FDF6ED] border border-[#F0D4A6] flex items-center justify-between gap-3 text-xs text-[#8C5311]">
-            <div className="flex items-center gap-2.5">
+          <div className="p-4 rounded-lg bg-[#FDF6ED] border border-[#F0D4A6] flex items-center justify-between gap-3 text-xs text-[#8C5311]">
+            <div className="flex items-center gap-2">
               <span className="px-2 py-0.5 rounded bg-[#D98B32] text-white font-mono font-bold text-[10px] uppercase">
                 OFFLINE MODE
               </span>
@@ -510,7 +510,7 @@ export default function EngineerDashboardPage() {
             </div>
             <Link
               href="/sync"
-              className="px-2.5 py-1 bg-white border border-[#F0D4A6] rounded text-[#8C5311] hover:bg-[#FDF6ED] font-mono font-bold text-[11px] whitespace-nowrap"
+              className="px-3 py-1 bg-white border border-[#F0D4A6] rounded text-[#8C5311] hover:bg-[#FDF6ED] font-mono font-bold text-[11px] whitespace-nowrap"
             >
               {metrics.pendingUploads} Queued for Sync
             </Link>
@@ -521,11 +521,11 @@ export default function EngineerDashboardPage() {
         {/* HEADER & PRACTICAL FIELD CONTEXT */}
         {/* Site Engineer Greeting, Shift, Location & Primary Action Triggers */}
         {/* ========================================================= */}
-        <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-5 shadow-xs">
+        <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-4 sm:p-6 shadow-xs">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
             <div>
               {/* Engineer identity & connection indicator */}
-              <div className="flex items-center gap-2 mb-1.5 flex-wrap">
+              <div className="flex items-center gap-2 mb-2 flex-wrap">
                 <span className="text-sm sm:text-base font-bold text-[#172033]">
                   {greeting}, <strong className="text-[#176B87]">{currentUserName}</strong>
                 </span>
@@ -535,7 +535,7 @@ export default function EngineerDashboardPage() {
                 </span>
                 <span className="text-[#7B8798] hidden sm:inline">•</span>
                 <div
-                  className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md text-[11px] font-mono font-bold border ${
+                  className={`inline-flex items-center gap-2 px-2 py-0.5 rounded-md text-[11px] font-mono font-bold border ${
                     effectiveStatus === 'OFFLINE'
                       ? 'bg-[#FBEFEE] border-[#E4B0AA] text-[#B5473C]'
                       : 'bg-[#EDF7F2] border-[#B8DCC9] text-[#2E7D5B]'
@@ -556,7 +556,7 @@ export default function EngineerDashboardPage() {
               </h1>
 
               {/* Practical site context */}
-              <div className="flex items-center gap-3 text-xs text-[#596579] mt-1.5 flex-wrap">
+              <div className="flex items-center gap-3 text-xs text-[#596579] mt-2 flex-wrap">
                 <span className="inline-flex items-center gap-1">
                   <MapPin className="w-3.5 h-3.5 text-[#176B87]" />
                   <span>Area: <strong className="text-[#172033]">Unit A & Compressor Bay</strong></span>
@@ -572,14 +572,14 @@ export default function EngineerDashboardPage() {
             </div>
 
             {/* Fast Action Buttons (Touch-friendly >= 44px) */}
-            <div className="flex items-center gap-2.5 self-stretch sm:self-start lg:self-center">
+            <div className="flex items-center gap-2 self-stretch sm:self-start lg:self-center">
               <button
                 type="button"
                 onClick={() => {
                   setSelectedActivityForCapture('PIP-24-002');
                   setIsCaptureModalOpen(true);
                 }}
-                className="flex-1 sm:flex-initial min-h-[44px] px-4 py-2.5 text-xs sm:text-sm font-bold text-white bg-[#176B87] hover:bg-[#135A72] active:scale-98 rounded-lg shadow-xs transition-all inline-flex items-center justify-center gap-2 cursor-pointer"
+                className="flex-1 sm:flex-initial min-h-[44px] px-4 py-2 text-xs sm:text-sm font-bold text-white bg-[#176B87] hover:bg-[#135A72] active:scale-98 rounded-lg shadow-xs transition-all inline-flex items-center justify-center gap-2 cursor-pointer"
               >
                 <Plus className="w-4 h-4 stroke-[2.5]" />
                 <span>CAPTURE UPDATE</span>
@@ -587,7 +587,7 @@ export default function EngineerDashboardPage() {
 
               <Link
                 href="/field/dpr"
-                className="flex-1 sm:flex-initial min-h-[44px] px-4 py-2.5 text-xs sm:text-sm font-bold text-[#172033] bg-white hover:bg-[#F1F3F5] active:scale-98 border border-[#D9DEE5] rounded-lg transition-all inline-flex items-center justify-center gap-2 cursor-pointer"
+                className="flex-1 sm:flex-initial min-h-[44px] px-4 py-2 text-xs sm:text-sm font-bold text-[#172033] bg-white hover:bg-[#F1F3F5] active:scale-98 border border-[#D9DEE5] rounded-lg transition-all inline-flex items-center justify-center gap-2 cursor-pointer"
               >
                 <FileText className="w-4 h-4 text-[#596579]" />
                 <span>CONTINUE DPR</span>
@@ -602,7 +602,7 @@ export default function EngineerDashboardPage() {
         {/* ========================================================= */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
           {/* 1. Today's Assigned Packages */}
-          <div className="p-3.5 bg-white border border-[#D9DEE5] rounded-lg shadow-2xs">
+          <div className="p-4 bg-white border border-[#D9DEE5] rounded-lg shadow-2xs">
             <span className="text-[11px] font-bold uppercase tracking-wider text-[#596579] block">
               Assigned Packages
             </span>
@@ -617,7 +617,7 @@ export default function EngineerDashboardPage() {
           </div>
 
           {/* 2. Updates Needed */}
-          <div className="p-3.5 bg-white border border-[#F0D4A6] rounded-lg shadow-2xs">
+          <div className="p-4 bg-white border border-[#F0D4A6] rounded-lg shadow-2xs">
             <span className="text-[11px] font-bold uppercase tracking-wider text-[#D98B32] block">
               Updates Awaiting Log
             </span>
@@ -630,7 +630,7 @@ export default function EngineerDashboardPage() {
           </div>
 
           {/* 3. Daily Shift DPR */}
-          <div className="p-3.5 bg-white border border-[#D9DEE5] rounded-lg shadow-2xs">
+          <div className="p-4 bg-white border border-[#D9DEE5] rounded-lg shadow-2xs">
             <span className="text-[11px] font-bold uppercase tracking-wider text-[#176B87] block">
               Daily Report Status
             </span>
@@ -643,7 +643,7 @@ export default function EngineerDashboardPage() {
           </div>
 
           {/* 4. Verification Queue */}
-          <div className="p-3.5 bg-white border border-[#D9DEE5] rounded-lg shadow-2xs">
+          <div className="p-4 bg-white border border-[#D9DEE5] rounded-lg shadow-2xs">
             <span className="text-[11px] font-bold uppercase tracking-wider text-[#596579] block">
               Pending QC Stamp
             </span>
@@ -661,7 +661,7 @@ export default function EngineerDashboardPage() {
         {/* Highest priority: Tactical cards/list with planned vs actual, */}
         {/* status, area, discipline, and direct capture triggers */}
         {/* ========================================================= */}
-        <section aria-labelledby="todays-work-heading" className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-5 shadow-xs space-y-4">
+        <section aria-labelledby="todays-work-heading" className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-4 sm:p-6 shadow-xs space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D9DEE5] gap-3">
             <div>
               <div className="flex items-center gap-2">
@@ -676,11 +676,11 @@ export default function EngineerDashboardPage() {
             </div>
 
             {/* Practical filter pills */}
-            <div className="flex items-center gap-1.5 self-start sm:self-center">
+            <div className="flex items-center gap-2 self-start sm:self-center">
               <button
                 type="button"
                 onClick={() => setActivityFilter('all')}
-                className={`px-2.5 py-1 text-xs font-semibold rounded ${
+                className={`px-3 py-1 text-xs font-semibold rounded ${
                   activityFilter === 'all'
                     ? 'bg-[#176B87] text-white'
                     : 'bg-[#F1F3F5] text-[#596579] hover:bg-[#E5E9EE]'
@@ -691,7 +691,7 @@ export default function EngineerDashboardPage() {
               <button
                 type="button"
                 onClick={() => setActivityFilter('needs-update')}
-                className={`px-2.5 py-1 text-xs font-semibold rounded ${
+                className={`px-3 py-1 text-xs font-semibold rounded ${
                   activityFilter === 'needs-update'
                     ? 'bg-[#D98B32] text-white'
                     : 'bg-[#F1F3F5] text-[#596579] hover:bg-[#E5E9EE]'
@@ -702,7 +702,7 @@ export default function EngineerDashboardPage() {
               <button
                 type="button"
                 onClick={() => setActivityFilter('completed')}
-                className={`px-2.5 py-1 text-xs font-semibold rounded ${
+                className={`px-3 py-1 text-xs font-semibold rounded ${
                   activityFilter === 'completed'
                     ? 'bg-[#2E7D5B] text-white'
                     : 'bg-[#F1F3F5] text-[#596579] hover:bg-[#E5E9EE]'
@@ -719,20 +719,20 @@ export default function EngineerDashboardPage() {
               <table className="w-full min-w-[700px] text-left text-xs border-collapse">
                 <thead>
                   <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[#596579] font-medium">
-                    <th className="py-3 px-3.5 whitespace-nowrap min-w-[220px]">Activity Package</th>
-                    <th className="py-3 px-3.5 whitespace-nowrap">Area / Bay</th>
-                    <th className="py-3 px-3.5 whitespace-nowrap min-w-[160px]">Progress (Actual vs Target)</th>
-                    <th className="py-3 px-3.5 whitespace-nowrap">Status</th>
-                    <th className="py-3 px-3.5 whitespace-nowrap">Last Observation</th>
-                    <th className="py-3 px-3.5 whitespace-nowrap text-right">Action</th>
+                    <th className="py-3 px-4 whitespace-nowrap min-w-[220px]">Activity Package</th>
+                    <th className="py-3 px-4 whitespace-nowrap">Area / Bay</th>
+                    <th className="py-3 px-4 whitespace-nowrap min-w-[160px]">Progress (Actual vs Target)</th>
+                    <th className="py-3 px-4 whitespace-nowrap">Status</th>
+                    <th className="py-3 px-4 whitespace-nowrap">Last Observation</th>
+                    <th className="py-3 px-4 whitespace-nowrap text-right">Action</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-[#D9DEE5]">
                   {filteredActivities.map((act) => (
                     <tr key={act.id} className="hover:bg-[#F9FAFC] transition-colors">
                       {/* Activity */}
-                      <td className="py-3 px-3.5 align-middle">
-                        <div className="flex items-center gap-1.5">
+                      <td className="py-3 px-4 align-middle">
+                        <div className="flex items-center gap-2">
                           <span className="font-mono font-bold text-[#176B87]">{act.id}</span>
                           <span className="font-semibold text-[#172033]">{act.name}</span>
                         </div>
@@ -742,12 +742,12 @@ export default function EngineerDashboardPage() {
                       </td>
 
                       {/* Area */}
-                      <td className="py-3 px-3.5 align-middle whitespace-nowrap text-[#596579]">
+                      <td className="py-3 px-4 align-middle whitespace-nowrap text-[#596579]">
                         {act.area}
                       </td>
 
                       {/* Progress */}
-                      <td className="py-3 px-3.5 align-middle">
+                      <td className="py-3 px-4 align-middle">
                         <div className="space-y-1">
                           <div className="flex items-center justify-between text-[11px] font-mono">
                             <span className="font-bold text-[#172033]">{act.actualProgress}%</span>
@@ -764,17 +764,17 @@ export default function EngineerDashboardPage() {
                       </td>
 
                       {/* Status */}
-                      <td className="py-3 px-3.5 align-middle whitespace-nowrap">
+                      <td className="py-3 px-4 align-middle whitespace-nowrap">
                         <StatusBadge status={act.status} size="sm" />
                       </td>
 
                       {/* Last Update */}
-                      <td className="py-3 px-3.5 align-middle whitespace-nowrap font-mono text-[11px] text-[#596579]">
+                      <td className="py-3 px-4 align-middle whitespace-nowrap font-mono text-[11px] text-[#596579]">
                         {act.lastUpdateText}
                       </td>
 
                       {/* Action */}
-                      <td className="py-3 px-3.5 align-middle text-right whitespace-nowrap">
+                      <td className="py-3 px-4 align-middle text-right whitespace-nowrap">
                         <button
                           type="button"
                           onClick={() => handleOpenCaptureForActivity(act.id)}
@@ -796,7 +796,7 @@ export default function EngineerDashboardPage() {
             {filteredActivities.map((act) => (
               <div
                 key={act.id}
-                className="p-3.5 rounded-lg border border-[#D9DEE5] bg-white space-y-2.5 shadow-2xs"
+                className="p-4 rounded-lg border border-[#D9DEE5] bg-white space-y-2 shadow-2xs"
               >
                 <div className="flex items-start justify-between gap-2">
                   <div>
@@ -828,7 +828,7 @@ export default function EngineerDashboardPage() {
                   <button
                     type="button"
                     onClick={() => handleOpenCaptureForActivity(act.id)}
-                    className="min-h-[44px] px-3.5 py-2 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] active:bg-[#135A72] rounded-lg transition-colors inline-flex items-center gap-1.5 shadow-xs cursor-pointer"
+                    className="min-h-[44px] px-4 py-2 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] active:bg-[#135A72] rounded-lg transition-colors inline-flex items-center gap-2 shadow-xs cursor-pointer"
                   >
                     <Plus className="w-4 h-4 stroke-[2.5]" />
                     <span>Capture Update</span>
@@ -843,7 +843,7 @@ export default function EngineerDashboardPage() {
         {/* 2. FIELD CAPTURE (PRACTICAL FAST INPUT) */}
         {/* Direct on-page fast logger with voice note & photo triggers */}
         {/* ========================================================= */}
-        <section aria-labelledby="field-capture-heading" className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-5 shadow-xs space-y-4">
+        <section aria-labelledby="field-capture-heading" className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-4 sm:p-6 shadow-xs space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D9DEE5] gap-2">
             <div>
               <div className="flex items-center gap-2">
@@ -869,7 +869,7 @@ export default function EngineerDashboardPage() {
           </div>
 
           {/* Quick inline capture form */}
-          <div className="bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg p-3.5 sm:p-4 space-y-3.5">
+          <div className="bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg p-4 sm:p-4 space-y-4">
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               {/* Activity selector */}
               <div>
@@ -945,7 +945,7 @@ export default function EngineerDashboardPage() {
                         description: 'Embedded site coordinates: 27.348° N, 95.313° E',
                       });
                     }}
-                    className={`flex-1 min-h-[38px] px-2.5 py-1.5 text-xs font-semibold rounded border transition-colors inline-flex items-center justify-center gap-1.5 cursor-pointer ${
+                    className={`flex-1 min-h-[38px] px-3 py-1.5 text-xs font-semibold rounded border transition-colors inline-flex items-center justify-center gap-2 cursor-pointer ${
                       attachedPhotoName
                         ? 'bg-[#EDF7F2] border-[#B8DCC9] text-[#2E7D5B]'
                         : 'bg-white border-[#D9DEE5] text-[#176B87] hover:bg-[#EDF5F8]'
@@ -967,7 +967,7 @@ export default function EngineerDashboardPage() {
                         description: 'Simulated voice memo parsed into observation.',
                       });
                     }}
-                    className="min-h-[38px] px-2.5 py-1.5 text-xs font-semibold bg-white border border-[#D9DEE5] hover:bg-[#EDF5F8] text-[#176B87] rounded inline-flex items-center justify-center gap-1 cursor-pointer"
+                    className="min-h-[38px] px-3 py-1.5 text-xs font-semibold bg-white border border-[#D9DEE5] hover:bg-[#EDF5F8] text-[#176B87] rounded inline-flex items-center justify-center gap-1 cursor-pointer"
                     title="Simulate Voice Dictation"
                   >
                     <Mic className="w-3.5 h-3.5" />
@@ -982,7 +982,7 @@ export default function EngineerDashboardPage() {
               <span className="text-[11px] font-bold text-[#596579] block mb-1">
                 Quick Observation Presets:
               </span>
-              <div className="flex flex-wrap gap-1.5">
+              <div className="flex flex-wrap gap-2">
                 {[
                   'Welding completed 4 joints on Header 24-XX.',
                   'Root pass done with TIG; preheat 120°C verified.',
@@ -1002,7 +1002,7 @@ export default function EngineerDashboardPage() {
             </div>
 
             {/* Statement text area & submit */}
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-end gap-2.5">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-end gap-2">
               <div className="flex-1">
                 <input
                   type="text"
@@ -1017,7 +1017,7 @@ export default function EngineerDashboardPage() {
                 type="button"
                 onClick={() => handleSubmitFastCapture()}
                 disabled={isSubmittingCapture || !customStatement.trim()}
-                className="min-h-[44px] px-5 py-2 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] disabled:opacity-50 rounded-lg transition-all inline-flex items-center justify-center gap-1.5 shadow-xs cursor-pointer whitespace-nowrap"
+                className="min-h-[44px] px-4 sm:px-6 py-2 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] disabled:opacity-50 rounded-lg transition-all inline-flex items-center justify-center gap-2 shadow-xs cursor-pointer whitespace-nowrap"
               >
                 {isSubmittingCapture ? (
                   <>
@@ -1039,7 +1039,7 @@ export default function EngineerDashboardPage() {
         {/* 3. DAILY PROGRESS REPORT (DPR / SHIFT DIARY) */}
         {/* Shift status, manpower count, equipment active, weather & draft actions */}
         {/* ========================================================= */}
-        <section aria-labelledby="dpr-heading" className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-5 shadow-xs space-y-4">
+        <section aria-labelledby="dpr-heading" className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-4 sm:p-6 shadow-xs space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D9DEE5] gap-2">
             <div>
               <div className="flex items-center gap-2">
@@ -1056,7 +1056,7 @@ export default function EngineerDashboardPage() {
             <div className="flex items-center gap-2 self-start sm:self-center">
               <Link
                 href="/field/dpr"
-                className="min-h-[38px] px-3.5 py-1.5 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] rounded-lg inline-flex items-center gap-1.5 shadow-xs transition-colors cursor-pointer"
+                className="min-h-[38px] px-4 py-1.5 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] rounded-lg inline-flex items-center gap-2 shadow-xs transition-colors cursor-pointer"
               >
                 <span>Continue DPR Draft</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -1065,9 +1065,9 @@ export default function EngineerDashboardPage() {
           </div>
 
           {/* Shift Overview Bar */}
-          <div className="p-3.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg flex flex-col md:flex-row md:items-center justify-between gap-3 text-xs">
+          <div className="p-4 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg flex flex-col md:flex-row md:items-center justify-between gap-3 text-xs">
             <div className="flex items-center gap-3 flex-wrap">
-              <span className="px-2.5 py-1 rounded bg-[#EDF5F8] text-[#176B87] font-mono font-bold text-[11px] border border-[#B3CBE0]">
+              <span className="px-3 py-1 rounded bg-[#EDF5F8] text-[#176B87] font-mono font-bold text-[11px] border border-[#B3CBE0]">
                 DPR-2026-09-18-A
               </span>
               <span className="font-semibold text-[#172033]">
@@ -1091,9 +1091,9 @@ export default function EngineerDashboardPage() {
           {/* Manpower & Equipment Snapshot */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             {/* Manpower card */}
-            <div className="p-3.5 bg-white border border-[#D9DEE5] rounded-lg space-y-2">
+            <div className="p-4 bg-white border border-[#D9DEE5] rounded-lg space-y-2">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-[#172033] flex items-center gap-1.5">
+                <span className="text-xs font-bold text-[#172033] flex items-center gap-2">
                   <Users className="w-4 h-4 text-[#176B87]" />
                   <span>Trade Manpower</span>
                 </span>
@@ -1116,9 +1116,9 @@ export default function EngineerDashboardPage() {
             </div>
 
             {/* Equipment card */}
-            <div className="p-3.5 bg-white border border-[#D9DEE5] rounded-lg space-y-2">
+            <div className="p-4 bg-white border border-[#D9DEE5] rounded-lg space-y-2">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-[#172033] flex items-center gap-1.5">
+                <span className="text-xs font-bold text-[#172033] flex items-center gap-2">
                   <Wrench className="w-4 h-4 text-[#176B87]" />
                   <span>Equipment Active</span>
                 </span>
@@ -1141,9 +1141,9 @@ export default function EngineerDashboardPage() {
             </div>
 
             {/* Safety & Pre-Start card */}
-            <div className="p-3.5 bg-white border border-[#D9DEE5] rounded-lg space-y-2">
+            <div className="p-4 bg-white border border-[#D9DEE5] rounded-lg space-y-2">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-[#172033] flex items-center gap-1.5">
+                <span className="text-xs font-bold text-[#172033] flex items-center gap-2">
                   <ShieldCheck className="w-4 h-4 text-[#2E7D5B]" />
                   <span>HSE & Pre-Start</span>
                 </span>
@@ -1171,7 +1171,7 @@ export default function EngineerDashboardPage() {
         {/* 4. PENDING VERIFICATION (PENDING REVIEW) */}
         {/* Items submitted from site awaiting QC / Lead Inspector sign-off */}
         {/* ========================================================= */}
-        <section aria-labelledby="pending-verification-heading" className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-5 shadow-xs space-y-4">
+        <section aria-labelledby="pending-verification-heading" className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-4 sm:p-6 shadow-xs space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D9DEE5] gap-2">
             <div>
               <div className="flex items-center gap-2">
@@ -1212,7 +1212,7 @@ export default function EngineerDashboardPage() {
 
                 <div className="flex items-center gap-3 self-start md:self-center flex-shrink-0">
                   <span
-                    className={`px-2.5 py-1 rounded text-[11px] font-mono font-bold border ${
+                    className={`px-3 py-1 rounded text-[11px] font-mono font-bold border ${
                       item.status === 'Verified'
                         ? 'bg-[#EDF7F2] border-[#B8DCC9] text-[#2E7D5B]'
                         : item.status === 'Under Review'
@@ -1225,7 +1225,7 @@ export default function EngineerDashboardPage() {
 
                   <Link
                     href="/review"
-                    className="px-2.5 py-1 text-xs font-semibold text-[#176B87] hover:bg-[#EDF5F8] border border-[#B3CBE0] rounded transition-colors inline-flex items-center gap-1 cursor-pointer"
+                    className="px-3 py-1 text-xs font-semibold text-[#176B87] hover:bg-[#EDF5F8] border border-[#B3CBE0] rounded transition-colors inline-flex items-center gap-1 cursor-pointer"
                   >
                     <span>Track</span>
                     <ChevronRight className="w-3.5 h-3.5" />
@@ -1240,7 +1240,7 @@ export default function EngineerDashboardPage() {
         {/* 5. RECENT EXECUTION EVENTS (SITE EVENT LOG) */}
         {/* Chronological site observations, logs, and sync states */}
         {/* ========================================================= */}
-        <section aria-labelledby="recent-events-heading" className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-5 shadow-xs space-y-4">
+        <section aria-labelledby="recent-events-heading" className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-4 sm:p-6 shadow-xs space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D9DEE5] gap-2">
             <div>
               <div className="flex items-center gap-2">
@@ -1259,7 +1259,7 @@ export default function EngineerDashboardPage() {
                 type="button"
                 onClick={handleSyncNow}
                 disabled={isSyncing || metrics.pendingUploads === 0}
-                className="px-3 py-1.5 text-xs font-bold text-[#172033] bg-white border border-[#D9DEE5] hover:bg-[#F1F3F5] disabled:opacity-50 rounded transition-colors inline-flex items-center gap-1.5 shadow-2xs cursor-pointer"
+                className="px-3 py-1.5 text-xs font-bold text-[#172033] bg-white border border-[#D9DEE5] hover:bg-[#F1F3F5] disabled:opacity-50 rounded transition-colors inline-flex items-center gap-2 shadow-2xs cursor-pointer"
               >
                 <RefreshCw className={`w-3.5 h-3.5 ${isSyncing ? 'animate-spin' : ''}`} />
                 <span>{isSyncing ? 'Syncing...' : `Sync Queue (${metrics.pendingUploads})`}</span>
@@ -1271,7 +1271,7 @@ export default function EngineerDashboardPage() {
             {todaySubmissions.map((sub) => (
               <div
                 key={sub.id}
-                className="py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 text-xs"
+                className="py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs"
               >
                 <div className="min-w-0 flex-1 space-y-0.5">
                   <div className="flex items-center gap-2 flex-wrap">
@@ -1293,7 +1293,7 @@ export default function EngineerDashboardPage() {
                         Server confirmed
                       </span>
                     ) : (
-                      <span className="text-[#8C5311] font-bold bg-[#FDF6ED] px-1.5 py-0.2 rounded border border-[#F0D4A6]">
+                      <span className="text-[#8C5311] font-bold bg-[#FDF6ED] px-1.5 py-0.5 rounded border border-[#F0D4A6]">
                         Saved locally
                       </span>
                     )}
@@ -1304,7 +1304,7 @@ export default function EngineerDashboardPage() {
                   <button
                     type="button"
                     onClick={() => setSelectedDetailUpdate(sub)}
-                    className="px-2.5 py-1 text-xs font-medium text-[#176B87] hover:bg-[#EDF5F8] border border-[#B3CBE0] rounded transition-colors inline-flex items-center gap-1 cursor-pointer"
+                    className="px-3 py-1 text-xs font-medium text-[#176B87] hover:bg-[#EDF5F8] border border-[#B3CBE0] rounded transition-colors inline-flex items-center gap-1 cursor-pointer"
                   >
                     <Eye className="w-3.5 h-3.5" />
                     <span>View Details</span>
@@ -1319,7 +1319,7 @@ export default function EngineerDashboardPage() {
         {/* 6. EVIDENCE (GEOTAGGED PHOTOS & TEST CERTIFICATES) */}
         {/* Visual gallery grid of site photos and inspection proofs */}
         {/* ========================================================= */}
-        <section aria-labelledby="evidence-heading" className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-5 shadow-xs space-y-4">
+        <section aria-labelledby="evidence-heading" className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-4 sm:p-6 shadow-xs space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D9DEE5] gap-2">
             <div>
               <div className="flex items-center gap-2">
@@ -1344,7 +1344,7 @@ export default function EngineerDashboardPage() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {fieldEvidence.map((ev) => (
               <div
                 key={ev.id}
@@ -1352,12 +1352,12 @@ export default function EngineerDashboardPage() {
                 className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] hover:border-[#176B87] rounded-lg transition-all cursor-pointer space-y-2 flex flex-col justify-between"
               >
                 <div>
-                  <div className="flex items-center justify-between mb-1.5">
+                  <div className="flex items-center justify-between mb-2">
                     <span className="font-mono text-[10px] font-bold text-[#176B87] px-1.5 py-0.5 bg-white border border-[#D9DEE5] rounded">
                       {ev.activityId}
                     </span>
                     <span
-                      className={`text-[10px] font-mono font-bold px-1.5 py-0.2 rounded border ${
+                      className={`text-[10px] font-mono font-bold px-1.5 py-0.5 rounded border ${
                         ev.verified
                           ? 'bg-[#EDF7F2] border-[#B8DCC9] text-[#2E7D5B]'
                           : 'bg-[#FDF6ED] border-[#F0D4A6] text-[#8C5311]'
@@ -1400,7 +1400,7 @@ export default function EngineerDashboardPage() {
               setSelectedActivityForCapture('PIP-24-002');
               setIsCaptureModalOpen(true);
             }}
-            className="flex-1 min-h-[44px] py-3 px-4 text-xs font-bold text-white bg-[#176B87] active:bg-[#135A72] rounded-lg shadow-sm flex items-center justify-center gap-1.5 cursor-pointer"
+            className="flex-1 min-h-[44px] py-3 px-4 text-xs font-bold text-white bg-[#176B87] active:bg-[#135A72] rounded-lg shadow-sm flex items-center justify-center gap-2 cursor-pointer"
           >
             <Plus className="w-4 h-4 stroke-[2.5]" />
             <span>CAPTURE UPDATE</span>
@@ -1434,7 +1434,7 @@ export default function EngineerDashboardPage() {
                   type="button"
                   onClick={() => setIsCaptureModalOpen(false)}
                   disabled={isSubmittingCapture}
-                  className="px-3.5 py-2 text-xs font-medium text-[#596579] hover:text-[#172033] border border-[#D9DEE5] rounded cursor-pointer"
+                  className="px-4 py-2 text-xs font-medium text-[#596579] hover:text-[#172033] border border-[#D9DEE5] rounded cursor-pointer"
                 >
                   Cancel
                 </button>
@@ -1442,7 +1442,7 @@ export default function EngineerDashboardPage() {
                   type="button"
                   onClick={handleSubmitFastCapture}
                   disabled={isSubmittingCapture || !customStatement.trim()}
-                  className="px-4 py-2 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] rounded transition-all inline-flex items-center gap-1.5 shadow-xs disabled:opacity-50 cursor-pointer"
+                  className="px-4 py-2 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] rounded transition-all inline-flex items-center gap-2 shadow-xs disabled:opacity-50 cursor-pointer"
                 >
                   {isSubmittingCapture ? (
                     <>
@@ -1485,10 +1485,10 @@ export default function EngineerDashboardPage() {
 
             {/* Quick Observation Chips */}
             <div>
-              <label className="block text-[11px] font-bold text-[#596579] mb-1.5">
+              <label className="block text-[11px] font-bold text-[#596579] mb-2">
                 Quick Observation Chips (Tap to Insert):
               </label>
-              <div className="flex flex-wrap gap-1.5">
+              <div className="flex flex-wrap gap-2">
                 {[
                   'Welding completed 4 joints on Header 24-XX.',
                   'Root pass done with TIG; NDT scheduled tonight.',
@@ -1499,7 +1499,7 @@ export default function EngineerDashboardPage() {
                     key={idx}
                     type="button"
                     onClick={() => setCustomStatement(chip)}
-                    className="px-2.5 py-1 text-[11px] rounded bg-[#F1F3F5] hover:bg-[#EDF5F8] hover:text-[#176B87] text-[#596579] border border-[#D9DEE5] transition-colors text-left cursor-pointer"
+                    className="px-3 py-1 text-[11px] rounded bg-[#F1F3F5] hover:bg-[#EDF5F8] hover:text-[#176B87] text-[#596579] border border-[#D9DEE5] transition-colors text-left cursor-pointer"
                   >
                     + {chip}
                   </button>
@@ -1536,7 +1536,7 @@ export default function EngineerDashboardPage() {
                 value={customStatement}
                 onChange={(e) => setCustomStatement(e.target.value)}
                 placeholder="Type or dictate what was completed on site today..."
-                className="w-full p-2.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded focus:border-[#176B87] focus:bg-white text-[#172033] outline-none"
+                className="w-full p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded focus:border-[#176B87] focus:bg-white text-[#172033] outline-none"
                 required
               />
             </div>
@@ -1579,13 +1579,13 @@ export default function EngineerDashboardPage() {
                   type="text"
                   value={quantityUnit}
                   onChange={(e) => setQuantityUnit(e.target.value)}
-                  className="w-full px-2.5 py-1 text-xs bg-white border border-[#D9DEE5] rounded font-mono"
+                  className="w-full px-3 py-1 text-xs bg-white border border-[#D9DEE5] rounded font-mono"
                 />
               </div>
             </div>
 
             {/* Photo Attachment */}
-            <div className="flex items-center justify-between p-2.5 bg-[#F1F3F5] border border-[#D9DEE5] rounded">
+            <div className="flex items-center justify-between p-3 bg-[#F1F3F5] border border-[#D9DEE5] rounded">
               <div className="flex items-center gap-2">
                 <Camera className="w-4 h-4 text-[#176B87]" />
                 <span className="text-[11px] text-[#172033] font-medium">
@@ -1603,7 +1603,7 @@ export default function EngineerDashboardPage() {
                     description: 'Captured image with embedded field coordinates.',
                   });
                 }}
-                className="px-2.5 py-1 text-[11px] font-semibold text-[#176B87] bg-white border border-[#D9DEE5] hover:bg-[#EDF5F8] rounded transition-colors cursor-pointer"
+                className="px-3 py-1 text-[11px] font-semibold text-[#176B87] bg-white border border-[#D9DEE5] hover:bg-[#EDF5F8] rounded transition-colors cursor-pointer"
               >
                 {attachedPhotoName ? 'Replace Photo' : 'Capture Photo'}
               </button>
@@ -1657,7 +1657,7 @@ export default function EngineerDashboardPage() {
                 </div>
               </div>
 
-              <div className="p-2.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded flex items-center justify-between text-xs">
+              <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded flex items-center justify-between text-xs">
                 <span className="text-[#596579]">Sync Status:</span>
                 {selectedDetailUpdate.isSynced ? (
                   <span className="text-[#2E7D5B] font-bold font-mono">Server confirmed</span>
@@ -1667,7 +1667,7 @@ export default function EngineerDashboardPage() {
               </div>
 
               {selectedDetailUpdate.photoUrl && (
-                <div className="p-2.5 bg-[#EDF7F2] border border-[#B8DCC9] rounded text-xs text-[#2E7D5B] flex items-center gap-2">
+                <div className="p-3 bg-[#EDF7F2] border border-[#B8DCC9] rounded text-xs text-[#2E7D5B] flex items-center gap-2">
                   <Camera className="w-4 h-4" />
                   <span>Attached Photo: <strong>{selectedDetailUpdate.photoUrl}</strong></span>
                 </div>
@@ -1722,7 +1722,7 @@ export default function EngineerDashboardPage() {
                 </div>
               </div>
 
-              <div className="p-2.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded flex items-center justify-between text-xs">
+              <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded flex items-center justify-between text-xs">
                 <span className="text-[#596579]">QC Sign-off:</span>
                 {selectedEvidence.verified ? (
                   <span className="text-[#2E7D5B] font-bold font-mono">QC Verified & Stamped</span>

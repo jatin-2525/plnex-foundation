@@ -102,7 +102,7 @@ export default function ManagerDashboardPage() {
   const unmatchedEvent = MOCK_EXECUTION_EVENTS.find((e) => e.id === 'EVT-2026-004') || MOCK_EXECUTION_EVENTS[2];
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 pb-12">
       <Breadcrumbs items={breadcrumbs} />
 
       <StateWrapper>
@@ -110,7 +110,7 @@ export default function ManagerDashboardPage() {
             1. PAGE HEADER
             Project context, canonical schedule version, reporting date, connection status
             ========================================================================= */}
-        <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-5 shadow-xs">
+        <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-4 sm:p-6 shadow-xs">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
             <div className="space-y-1">
               <div className="flex items-center gap-2 flex-wrap">
@@ -160,7 +160,7 @@ export default function ManagerDashboardPage() {
             2. PROJECT HEALTH (4–5 Primary KPI Cards)
             Recommended: Schedule Health, Verified Progress, Activities At Risk, Pending Review, Schedule Variance
             ========================================================================= */}
-        <section aria-labelledby="kpi-heading" className="space-y-2.5">
+        <section aria-labelledby="kpi-heading" className="space-y-2">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <h2 id="kpi-heading" className="text-xs font-semibold uppercase tracking-wider text-[#596579]">
@@ -177,12 +177,12 @@ export default function ManagerDashboardPage() {
 
           <div className="bg-white border border-[#D9DEE5] rounded-lg shadow-xs overflow-hidden grid grid-cols-2 lg:grid-cols-5 divide-y lg:divide-y-0 lg:divide-x divide-[#D9DEE5]">
             {/* 1. Schedule Health */}
-            <div className="p-4 sm:p-5 hover:bg-[#F9FAFC] transition-colors flex flex-col justify-between group">
+            <div className="p-4 sm:p-4 sm:p-6 hover:bg-[#F9FAFC] transition-colors flex flex-col justify-between group">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-semibold uppercase tracking-wider text-[#596579]">
                   Schedule Health
                 </span>
-                <div className="flex items-center gap-1.5">
+                <div className="flex items-center gap-2">
                   <WhyButton
                     onClick={() => openWhyExplanation('health:PRJ-OIL-2026-01')}
                     title="Why is schedule health 94%?"
@@ -191,7 +191,7 @@ export default function ManagerDashboardPage() {
                 </div>
               </div>
               <div className="my-2">
-                <div className="flex items-baseline gap-1.5">
+                <div className="flex items-baseline gap-2">
                   <span className="text-2xl sm:text-3xl font-bold font-mono text-[#2E7D5B] leading-none">
                     94%
                   </span>
@@ -207,12 +207,12 @@ export default function ManagerDashboardPage() {
             </div>
 
             {/* 2. Verified Progress */}
-            <div className="p-4 sm:p-5 hover:bg-[#F9FAFC] transition-colors flex flex-col justify-between group">
+            <div className="p-4 sm:p-4 sm:p-6 hover:bg-[#F9FAFC] transition-colors flex flex-col justify-between group">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-semibold uppercase tracking-wider text-[#596579]">
                   Verified Progress
                 </span>
-                <div className="flex items-center gap-1.5">
+                <div className="flex items-center gap-2">
                   <WhyButton
                     onClick={() => openWhyExplanation('progress:verified')}
                     title="Why is verified progress 68.4%?"
@@ -221,7 +221,7 @@ export default function ManagerDashboardPage() {
                 </div>
               </div>
               <div className="my-2">
-                <div className="flex items-baseline gap-1.5">
+                <div className="flex items-baseline gap-2">
                   <span className="text-2xl sm:text-3xl font-bold font-mono text-[#176B87] leading-none">
                     {activeProject.overallProgress}%
                   </span>
@@ -239,7 +239,7 @@ export default function ManagerDashboardPage() {
             {/* 3. Activities At Risk */}
             <Link
               href="/risks"
-              className="p-4 sm:p-5 hover:bg-[#F9FAFC] transition-colors flex flex-col justify-between group"
+              className="p-4 sm:p-4 sm:p-6 hover:bg-[#F9FAFC] transition-colors flex flex-col justify-between group"
             >
               <div className="flex items-center justify-between">
                 <span className="text-xs font-semibold uppercase tracking-wider text-[#596579]">
@@ -248,7 +248,7 @@ export default function ManagerDashboardPage() {
                 <AlertTriangle className="w-4 h-4 text-[#B5473C] flex-shrink-0" />
               </div>
               <div className="my-2">
-                <div className="flex items-baseline gap-1.5">
+                <div className="flex items-baseline gap-2">
                   <span className="text-2xl sm:text-3xl font-bold font-mono text-[#B5473C] leading-none">
                     3
                   </span>
@@ -266,7 +266,7 @@ export default function ManagerDashboardPage() {
             {/* 4. Pending Review */}
             <Link
               href="/review"
-              className="p-4 sm:p-5 hover:bg-[#F9FAFC] transition-colors flex flex-col justify-between group"
+              className="p-4 sm:p-4 sm:p-6 hover:bg-[#F9FAFC] transition-colors flex flex-col justify-between group"
             >
               <div className="flex items-center justify-between">
                 <span className="text-xs font-semibold uppercase tracking-wider text-[#596579]">
@@ -275,7 +275,7 @@ export default function ManagerDashboardPage() {
                 <Clock className="w-4 h-4 text-[#D98B32] flex-shrink-0" />
               </div>
               <div className="my-2">
-                <div className="flex items-baseline gap-1.5">
+                <div className="flex items-baseline gap-2">
                   <span className="text-2xl sm:text-3xl font-bold font-mono text-[#D98B32] leading-none">
                     {reviewEvents.length}
                   </span>
@@ -291,7 +291,7 @@ export default function ManagerDashboardPage() {
             </Link>
 
             {/* 5. Schedule Variance */}
-            <div className="p-4 sm:p-5 bg-[#FFFDFD] hover:bg-[#FFF8F8] transition-colors flex flex-col justify-between col-span-2 lg:col-span-1">
+            <div className="p-4 sm:p-4 sm:p-6 bg-[#FFFDFD] hover:bg-[#FFF8F8] transition-colors flex flex-col justify-between col-span-2 lg:col-span-1">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-semibold uppercase tracking-wider text-[#B5473C]">
                   Schedule Variance
@@ -302,7 +302,7 @@ export default function ManagerDashboardPage() {
                 />
               </div>
               <div className="my-2">
-                <div className="flex items-baseline gap-1.5">
+                <div className="flex items-baseline gap-2">
                   <span className="text-2xl sm:text-3xl font-bold font-mono text-[#B5473C] leading-none">
                     {activeProject.variance}%
                   </span>
@@ -324,7 +324,7 @@ export default function ManagerDashboardPage() {
             Executive priority queue: Answers "What needs attention?" with immediate
             decision pathways answering "What should I do?".
             ========================================================================= */}
-        <section aria-labelledby="attention-heading" className="bg-[#FFFDF7] border-2 border-[#D98B32] rounded-lg p-5 shadow-sm space-y-4">
+        <section aria-labelledby="attention-heading" className="bg-[#FFFDF7] border-2 border-[#D98B32] rounded-lg p-4 sm:p-6 shadow-sm space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#F0D4A6] gap-2">
             <div>
               <div className="flex items-center gap-2">
@@ -344,7 +344,7 @@ export default function ManagerDashboardPage() {
             <div className="flex items-center gap-2">
               <Link
                 href="/review"
-                className="px-3 py-1.5 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-semibold rounded shadow-xs transition-colors inline-flex items-center gap-1.5"
+                className="px-3 py-1.5 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-semibold rounded shadow-xs transition-colors inline-flex items-center gap-2"
               >
                 <span>Full Review Queue</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -356,10 +356,10 @@ export default function ManagerDashboardPage() {
           <StatusDonutChart />
 
           {/* 6 Prominent Decision Cards (Each with exactly one primary action) */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {/* ITEM 1: Review Match */}
             <div className="p-4 rounded-lg bg-white border border-[#F0D4A6] hover:border-[#D98B32] transition-all shadow-xs flex flex-col justify-between space-y-3">
-              <div className="space-y-1.5">
+              <div className="space-y-2">
                 <div className="flex items-center justify-between">
                   <span className="px-2 py-0.5 rounded text-[11px] font-mono font-semibold uppercase bg-[#FDF6ED] text-[#8C5311] border border-[#F0D4A6]">
                     Review Match
@@ -389,7 +389,7 @@ export default function ManagerDashboardPage() {
 
             {/* ITEM 2: Unmatched Event */}
             <div className="p-4 rounded-lg bg-white border border-[#E4B0AA] hover:border-[#B5473C] transition-all shadow-xs flex flex-col justify-between space-y-3">
-              <div className="space-y-1.5">
+              <div className="space-y-2">
                 <div className="flex items-center justify-between">
                   <span className="px-2 py-0.5 rounded text-[11px] font-mono font-semibold uppercase bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
                     Unmatched Event
@@ -417,7 +417,7 @@ export default function ManagerDashboardPage() {
 
             {/* ITEM 3: Delayed Activity */}
             <div className="p-4 rounded-lg bg-white border border-[#E4B0AA] hover:border-[#B5473C] transition-all shadow-xs flex flex-col justify-between space-y-3">
-              <div className="space-y-1.5">
+              <div className="space-y-2">
                 <div className="flex items-center justify-between">
                   <span className="px-2 py-0.5 rounded text-[11px] font-mono font-semibold uppercase bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
                     Delayed Activity
@@ -447,12 +447,12 @@ export default function ManagerDashboardPage() {
 
             {/* ITEM 4: Dependency Impact */}
             <div className="p-4 rounded-lg bg-white border border-[#F0D4A6] hover:border-[#D98B32] transition-all shadow-xs flex flex-col justify-between space-y-3">
-              <div className="space-y-1.5">
+              <div className="space-y-2">
                 <div className="flex items-center justify-between">
                   <span className="px-2 py-0.5 rounded text-[11px] font-mono font-semibold uppercase bg-[#FDF6ED] text-[#8C5311] border border-[#F0D4A6]">
                     Dependency Impact
                   </span>
-                  <div className="flex items-center gap-1.5">
+                  <div className="flex items-center gap-2">
                     <WhyButton
                       onClick={() => openWhyExplanation('impact:CIV-11-001')}
                       title="Why does this delay impact downstream activities?"
@@ -480,7 +480,7 @@ export default function ManagerDashboardPage() {
 
             {/* ITEM 5: Evidence Conflict */}
             <div className="p-4 rounded-lg bg-white border border-[#F0D4A6] hover:border-[#D98B32] transition-all shadow-xs flex flex-col justify-between space-y-3">
-              <div className="space-y-1.5">
+              <div className="space-y-2">
                 <div className="flex items-center justify-between">
                   <span className="px-2 py-0.5 rounded text-[11px] font-mono font-semibold uppercase bg-[#FDF6ED] text-[#8C5311] border border-[#F0D4A6]">
                     Evidence Conflict
@@ -507,7 +507,7 @@ export default function ManagerDashboardPage() {
 
             {/* ITEM 6: Data Quality Issue */}
             <div className="p-4 rounded-lg bg-white border border-[#D9DEE5] hover:border-[#176B87] transition-all shadow-xs flex flex-col justify-between space-y-3">
-              <div className="space-y-1.5">
+              <div className="space-y-2">
                 <div className="flex items-center justify-between">
                   <span className="px-2 py-0.5 rounded text-[11px] font-mono font-semibold uppercase bg-[#F1F3F5] text-[#596579] border border-[#D9DEE5]">
                     Data Quality Issue
@@ -539,7 +539,7 @@ export default function ManagerDashboardPage() {
             The S-curve is one of the most visually important elements on the page.
             Baseline Plan vs. Actual Earned vs. Forecast.
             ========================================================================= */}
-        <section aria-labelledby="scurve-heading" className="bg-white border border-[#D9DEE5] rounded-lg p-5 shadow-xs space-y-4">
+        <section aria-labelledby="scurve-heading" className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 shadow-xs space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D9DEE5] gap-2">
             <div>
               <span className="text-[11px] font-mono font-medium uppercase text-[#596579] tracking-wider">
@@ -577,7 +577,7 @@ export default function ManagerDashboardPage() {
             5. EXECUTION PROGRESS
             Discipline Performance Comparison and Contextual Operational Summary
             ========================================================================= */}
-        <section aria-labelledby="progress-heading" className="bg-white border border-[#D9DEE5] rounded-lg p-5 shadow-xs space-y-4">
+        <section aria-labelledby="progress-heading" className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 shadow-xs space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D9DEE5] gap-2">
             <div>
               <span className="text-[11px] font-mono font-medium uppercase text-[#596579] tracking-wider">
@@ -605,7 +605,7 @@ export default function ManagerDashboardPage() {
           <div className="border border-[#D9DEE5] rounded-md bg-white divide-y divide-[#D9DEE5] overflow-hidden">
             {disciplineBreakdown.map((item) => (
               <div key={item.name} className="p-3 text-xs">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-1.5">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-2">
                   <span className="font-medium text-[#172033]">{item.name}</span>
                   <div className="flex items-center gap-3 font-mono">
                     <span className="text-[#596579]">Actual: <strong className="text-[#172033]">{item.actual}%</strong></span>
@@ -649,7 +649,7 @@ export default function ManagerDashboardPage() {
             6. SCHEDULE VARIANCE
             Delay & Dependency Impact Analysis, Critical Path Propagation, and Review Queue
             ========================================================================= */}
-        <section id="schedule-variance" aria-labelledby="delay-heading" className="bg-white border border-[#D9DEE5] rounded-lg p-5 shadow-xs space-y-4">
+        <section id="schedule-variance" aria-labelledby="delay-heading" className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 shadow-xs space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D9DEE5] gap-2">
             <div>
               <span className="text-[11px] font-mono font-medium uppercase text-[#596579] tracking-wider">
@@ -673,7 +673,7 @@ export default function ManagerDashboardPage() {
           {/* Horizontal Bar Chart: Delayed Activities */}
           <HorizontalBarChart variant="delayed-activities" className="border-0 p-0 shadow-none mb-4" />
 
-          <div className="space-y-3.5 pt-2 border-t border-[#D9DEE5]/60">
+          <div className="space-y-4 pt-2 border-t border-[#D9DEE5]/60">
             {/* Delay Case 1: Line 24-XX Header */}
             <div className="border border-[#E4B0AA] rounded-lg p-4 bg-[#FFF9F8] space-y-3">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-[#E4B0AA]/60">
@@ -806,7 +806,7 @@ export default function ManagerDashboardPage() {
         </section>
 
         {/* REVIEW REQUIRED TABLE (Integrated within Schedule Variance domain) */}
-        <section id="review-required" aria-labelledby="review-heading" className="bg-white border border-[#D9DEE5] rounded-lg p-5 shadow-xs space-y-4">
+        <section id="review-required" aria-labelledby="review-heading" className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 shadow-xs space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D9DEE5] gap-2">
             <div>
               <div className="flex items-center gap-2">
@@ -840,19 +840,19 @@ export default function ManagerDashboardPage() {
               <table className="w-full min-w-[700px] text-left border-collapse text-sm">
                 <thead>
                   <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[#596579] font-semibold text-[11px] sm:text-xs uppercase tracking-wider">
-                    <th className="py-3 px-3.5 whitespace-nowrap min-w-[220px]">Event</th>
-                    <th className="py-3 px-3.5 whitespace-nowrap min-w-[200px]">Candidate Activity</th>
-                    <th className="py-3 px-3.5 whitespace-nowrap">Confidence</th>
-                    <th className="py-3 px-3.5 whitespace-nowrap">Evidence</th>
-                    <th className="py-3 px-3.5 whitespace-nowrap">Status</th>
-                    <th className="py-3 px-3.5 whitespace-nowrap text-right">Action</th>
+                    <th className="py-3 px-4 whitespace-nowrap min-w-[220px]">Event</th>
+                    <th className="py-3 px-4 whitespace-nowrap min-w-[200px]">Candidate Activity</th>
+                    <th className="py-3 px-4 whitespace-nowrap">Confidence</th>
+                    <th className="py-3 px-4 whitespace-nowrap">Evidence</th>
+                    <th className="py-3 px-4 whitespace-nowrap">Status</th>
+                    <th className="py-3 px-4 whitespace-nowrap text-right">Action</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-[#D9DEE5] text-[#172033]">
                   {reviewEvents.map((evt) => (
                     <tr key={evt.id} className="hover:bg-[#F9FAFC] transition-colors">
                       {/* 1. Event */}
-                      <td className="py-3 px-3.5 align-middle">
+                      <td className="py-3 px-4 align-middle">
                         <span className="font-mono text-xs font-semibold text-[#176B87] block">{evt.id}</span>
                         <p className="text-[14px] font-normal text-[#172033] mt-0.5 leading-snug">{evt.rawText}</p>
                         <span className="text-[11px] text-[#7B8798] font-mono mt-0.5 block">
@@ -861,7 +861,7 @@ export default function ManagerDashboardPage() {
                       </td>
 
                       {/* 2. Candidate Activity */}
-                      <td className="py-3 px-3.5 align-middle">
+                      <td className="py-3 px-4 align-middle">
                         {evt.matchedActivityId ? (
                           <>
                             <span className="font-mono text-xs font-semibold text-[#176B87] block">
@@ -879,8 +879,8 @@ export default function ManagerDashboardPage() {
                       </td>
 
                       {/* 3. Confidence */}
-                      <td className="py-3 px-3.5 align-middle whitespace-nowrap">
-                        <div className="flex items-center gap-1.5">
+                      <td className="py-3 px-4 align-middle whitespace-nowrap">
+                        <div className="flex items-center gap-2">
                           <ConfidenceBadge score={evt.confidence} size="sm" />
                           <WhyButton
                             onClick={() => openWhyExplanation(`confidence:${evt.id}`, evt.id)}
@@ -890,7 +890,7 @@ export default function ManagerDashboardPage() {
                       </td>
 
                       {/* 4. Evidence */}
-                      <td className="py-3 px-3.5 align-middle whitespace-nowrap">
+                      <td className="py-3 px-4 align-middle whitespace-nowrap">
                         {evt.evidenceIds.length > 0 ? (
                           <Link
                             href="/evidence"
@@ -905,12 +905,12 @@ export default function ManagerDashboardPage() {
                       </td>
 
                       {/* 5. Status */}
-                      <td className="py-3 px-3.5 align-middle whitespace-nowrap">
+                      <td className="py-3 px-4 align-middle whitespace-nowrap">
                         <StatusBadge status={evt.status} type="event" size="sm" />
                       </td>
 
                       {/* 6. Action: Review */}
-                      <td className="py-3 px-3.5 align-middle text-right whitespace-nowrap">
+                      <td className="py-3 px-4 align-middle text-right whitespace-nowrap">
                         <button
                           type="button"
                           onClick={() => setSelectedReviewModalEvent(evt)}
@@ -931,7 +931,7 @@ export default function ManagerDashboardPage() {
             7. RECENT ACTIVITY
             Stream of verified and processing field updates with progressive disclosure
             ========================================================================= */}
-        <section aria-labelledby="execution-heading" className="bg-white border border-[#D9DEE5] rounded-lg p-5 shadow-xs space-y-4">
+        <section aria-labelledby="execution-heading" className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 shadow-xs space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D9DEE5] gap-2">
             <div>
               <span className="text-[11px] font-mono font-medium uppercase text-[#596579] tracking-wider">
@@ -957,7 +957,7 @@ export default function ManagerDashboardPage() {
               const isTechnicalOpen = openedTechnicalEventId === evt.id;
 
               return (
-                <div key={evt.id} className="py-3.5 space-y-2">
+                <div key={evt.id} className="py-3 space-y-2">
                   <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
                     <div className="min-w-0 flex-1 space-y-1">
                       <div className="flex items-center gap-2 flex-wrap">
@@ -994,7 +994,7 @@ export default function ManagerDashboardPage() {
                       <button
                         type="button"
                         onClick={() => setOpenedTechnicalEventId(isTechnicalOpen ? null : evt.id)}
-                        className="px-2.5 py-1 text-xs text-[#176B87] hover:bg-[#EDF5F8] border border-[#B3CBE0] rounded font-medium transition-colors inline-flex items-center gap-1 cursor-pointer"
+                        className="px-3 py-1 text-xs text-[#176B87] hover:bg-[#EDF5F8] border border-[#B3CBE0] rounded font-medium transition-colors inline-flex items-center gap-1 cursor-pointer"
                       >
                         {isTechnicalOpen ? (
                           <>
@@ -1013,7 +1013,7 @@ export default function ManagerDashboardPage() {
 
                   {/* PROGRESSIVE DISCLOSURE: Raw technical payload hidden until opened */}
                   {isTechnicalOpen && (
-                    <div className="mt-2 p-3.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg text-xs space-y-3">
+                    <div className="mt-2 p-4 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg text-xs space-y-3">
                       <div className="flex items-center justify-between pb-2 border-b border-[#D9DEE5]">
                         <span className="font-mono font-bold text-[11px] text-[#172033] uppercase">
                           Technical Processing Payload • {evt.id}
@@ -1045,7 +1045,7 @@ export default function ManagerDashboardPage() {
                       </div>
 
                       {evt.extractedFields?.confidenceSignals && (
-                        <div className="space-y-1.5 pt-1">
+                        <div className="space-y-2 pt-1">
                           <span className="text-[11px] uppercase font-semibold text-[#596579] block">
                             Confidence Scoring Factors
                           </span>
@@ -1153,7 +1153,7 @@ export default function ManagerDashboardPage() {
 
             {/* Evidence Link */}
             {selectedReviewModalEvent.evidenceIds.length > 0 && (
-              <div className="p-2.5 bg-[#EDF7F2] border border-[#B8DCC9] rounded-md text-xs text-[#2E7D5B] flex items-center justify-between">
+              <div className="p-3 bg-[#EDF7F2] border border-[#B8DCC9] rounded-md text-xs text-[#2E7D5B] flex items-center justify-between">
                 <span className="font-medium">Attached Audit Evidence: {selectedReviewModalEvent.evidenceIds.join(', ')}</span>
                 <Link href="/evidence" className="underline font-bold text-[11px]">
                   View Evidence &rarr;
@@ -1199,7 +1199,7 @@ export default function ManagerDashboardPage() {
               onChange={(e) => setRejectReason(e.target.value)}
               placeholder="e.g. Activity does not belong to active package scope..."
               rows={3}
-              className="w-full p-2.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded outline-none focus:border-[#176B87]"
+              className="w-full p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded outline-none focus:border-[#176B87]"
             />
           </div>
         </Modal>

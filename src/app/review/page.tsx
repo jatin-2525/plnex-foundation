@@ -803,16 +803,16 @@ export default function ReviewQueuePage() {
 
   return (
     <StateWrapper>
-      <div className="space-y-6 pb-24 md:pb-12 max-w-7xl mx-auto">
+      <div className="space-y-6 pb-12 max-w-7xl mx-auto">
         {/* Breadcrumb Navigation */}
         <Breadcrumbs items={breadcrumbs} />
 
         {/* HEADER */}
-        <div className="bg-white border border-[#D9DEE5] rounded-lg p-5 md:p-6 shadow-xs">
+        <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 md:p-6 shadow-xs">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-[#D9DEE5]/60">
             <div>
               <div className="flex items-center gap-2 mb-1">
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-[11px] font-bold tracking-wider uppercase bg-[#176B87]/10 text-[#176B87]">
+                <span className="inline-flex items-center gap-2 px-3 py-0.5 rounded text-[11px] font-bold tracking-wider uppercase bg-[#176B87]/10 text-[#176B87]">
                   <ShieldCheck className="w-3.5 h-3.5" />
                   Human-in-the-Loop Verification
                 </span>
@@ -827,12 +827,12 @@ export default function ReviewQueuePage() {
             </div>
 
             <div className="flex items-center gap-2 flex-wrap">
-              <span className="text-xs px-2.5 py-1 rounded bg-[#F7F8FA] border border-[#D9DEE5] text-[#596579] font-mono">
+              <span className="text-xs px-3 py-1 rounded bg-[#F7F8FA] border border-[#D9DEE5] text-[#596579] font-mono">
                 {activeProject?.code || 'OIL-DUL-01'} · V3 · Rev 3.2
               </span>
               <Link
                 href="/matching"
-                className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-[#176B87] hover:text-[#135A72] hover:bg-[#EDF5F8] border border-transparent rounded-lg transition-colors"
+                className="inline-flex items-center gap-2 px-3 py-2 text-xs font-semibold text-[#176B87] hover:text-[#135A72] hover:bg-[#EDF5F8] border border-transparent rounded-lg transition-colors"
               >
                 <span>Matching Engine</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -842,7 +842,7 @@ export default function ReviewQueuePage() {
 
           {/* GOVERNANCE POLICY BANNER */}
           <div className="pt-4">
-            <div className="p-3.5 bg-[#EDF5F8] border border-[#B3CBE0] rounded-lg flex items-start gap-3 text-xs">
+            <div className="p-4 bg-[#EDF5F8] border border-[#B3CBE0] rounded-lg flex items-start gap-3 text-xs">
               <ShieldCheck className="w-5 h-5 text-[#176B87] shrink-0 mt-0.5" />
               <div className="space-y-0.5">
                 <h4 className="font-bold text-[#172033]">
@@ -882,7 +882,7 @@ export default function ReviewQueuePage() {
                   key={tab}
                   type="button"
                   onClick={() => setActiveTab(tab)}
-                  className={`flex items-center gap-2 px-5 py-3.5 text-xs font-semibold border-b-2 whitespace-nowrap transition-colors min-h-[48px] ${
+                  className={`flex items-center gap-2 px-4 sm:px-6 py-3 text-xs font-semibold border-b-2 whitespace-nowrap transition-colors min-h-[48px] ${
                     isActive
                       ? 'border-[#176B87] text-[#176B87] bg-white'
                       : 'border-transparent text-[#596579] hover:text-[#172033] hover:bg-[#F1F3F5]'
@@ -959,7 +959,7 @@ export default function ReviewQueuePage() {
                   <button
                     type="button"
                     onClick={() => handleBatchAccept()}
-                    className="px-3 py-1.5 bg-[#2E7D5B] hover:bg-[#25684C] text-white font-bold rounded shadow-xs inline-flex items-center gap-1.5 transition-colors cursor-pointer"
+                    className="px-3 py-1.5 bg-[#2E7D5B] hover:bg-[#25684C] text-white font-bold rounded shadow-xs inline-flex items-center gap-2 transition-colors cursor-pointer"
                   >
                     <Check className="w-3.5 h-3.5 stroke-[2.5]" />
                     <span>Accept Selected ({selectedItemIds.length})</span>
@@ -967,7 +967,7 @@ export default function ReviewQueuePage() {
                   <button
                     type="button"
                     onClick={() => setSelectedItemIds([])}
-                    className="px-2.5 py-1.5 bg-white text-[#596579] hover:text-[#172033] border border-[#D9DEE5] rounded font-medium transition-colors cursor-pointer"
+                    className="px-3 py-1.5 bg-white text-[#596579] hover:text-[#172033] border border-[#D9DEE5] rounded font-medium transition-colors cursor-pointer"
                   >
                     Deselect All
                   </button>
@@ -982,7 +982,7 @@ export default function ReviewQueuePage() {
                         .map((e) => e.id);
                       handleBatchAccept(highConfIds);
                     }}
-                    className="px-3 py-1.5 bg-[#EDF7F2] hover:bg-[#E0F2E9] text-[#2E7D5B] border border-[#B8DCC9] font-bold rounded inline-flex items-center gap-1.5 transition-colors cursor-pointer"
+                    className="px-3 py-1.5 bg-[#EDF7F2] hover:bg-[#E0F2E9] text-[#2E7D5B] border border-[#B8DCC9] font-bold rounded inline-flex items-center gap-2 transition-colors cursor-pointer"
                     title="Fast-track all 90%+ confidence items to Schedule Twin"
                   >
                     <CheckCircle2 className="w-3.5 h-3.5" />
@@ -1000,7 +1000,7 @@ export default function ReviewQueuePage() {
                 <button
                   type="button"
                   onClick={() => setViewMode('hybrid')}
-                  className={`px-2.5 py-1 text-xs font-semibold rounded transition-colors ${
+                  className={`px-3 py-1 text-xs font-semibold rounded transition-colors ${
                     viewMode === 'hybrid'
                       ? 'bg-[#176B87] text-white shadow-xs'
                       : 'text-[#596579] hover:text-[#172033]'
@@ -1011,7 +1011,7 @@ export default function ReviewQueuePage() {
                 <button
                   type="button"
                   onClick={() => setViewMode('cards')}
-                  className={`px-2.5 py-1 text-xs font-semibold rounded transition-colors ${
+                  className={`px-3 py-1 text-xs font-semibold rounded transition-colors ${
                     viewMode === 'cards'
                       ? 'bg-[#176B87] text-white shadow-xs'
                       : 'text-[#596579] hover:text-[#172033]'
@@ -1046,7 +1046,7 @@ export default function ReviewQueuePage() {
                   className="bg-white border border-[#D9DEE5] rounded-lg overflow-hidden shadow-xs hover:border-[#B3CBE0] transition-colors"
                 >
                   {/* Event Top Meta Bar */}
-                  <div className="px-4 py-2.5 bg-[#F7F8FA] border-b border-[#D9DEE5] flex items-center justify-between flex-wrap gap-2 text-xs">
+                  <div className="px-4 py-2 bg-[#F7F8FA] border-b border-[#D9DEE5] flex items-center justify-between flex-wrap gap-2 text-xs">
                     <div className="flex items-center gap-3">
                       <span className="font-mono font-bold text-[#176B87]">{evt.id}</span>
                       <span className="text-[#7B8798]">•</span>
@@ -1129,8 +1129,8 @@ export default function ReviewQueuePage() {
                   }`}
                 >
                   {/* Event Top Meta Bar */}
-                  <div className="px-4 py-2.5 bg-[#F7F8FA] border-b border-[#D9DEE5] flex items-center justify-between flex-wrap gap-2 text-xs">
-                    <div className="flex items-center gap-2.5 flex-wrap">
+                  <div className="px-4 py-2 bg-[#F7F8FA] border-b border-[#D9DEE5] flex items-center justify-between flex-wrap gap-2 text-xs">
+                    <div className="flex items-center gap-2 flex-wrap">
                       {activeTab !== 'Verified History' && (
                         <input
                           type="checkbox"
@@ -1154,7 +1154,7 @@ export default function ReviewQueuePage() {
                       <span className="text-[#596579] font-mono text-[11px] hidden sm:inline">Shift: {evt.shiftTime}</span>
                     </div>
 
-                    <div className="flex items-center gap-2.5 flex-wrap">
+                    <div className="flex items-center gap-2 flex-wrap">
                       {/* Standardized Confidence Badge (Rule: Never show percentage alone) */}
                       <ConfidenceBadge score={evt.confidence} size="sm" />
 
@@ -1214,12 +1214,12 @@ export default function ReviewQueuePage() {
                       </div>
 
                       {/* Raw Field Observation Statement */}
-                      <blockquote className="text-xs text-[#172033] bg-[#F7F8FA] p-2.5 rounded border border-[#E5E9EF] leading-relaxed italic">
+                      <blockquote className="text-xs text-[#172033] bg-[#F7F8FA] p-3 rounded border border-[#E5E9EF] leading-relaxed italic">
                         "{evt.rawFieldStatement}"
                       </blockquote>
 
                       {/* Extracted Scope Attributes */}
-                      <div className="flex flex-wrap gap-1.5 items-center text-[11px]">
+                      <div className="flex flex-wrap gap-2 items-center text-[11px]">
                         <span className="px-2 py-0.5 rounded bg-[#EDF5F8] text-[#176B87] font-semibold">
                           {evt.discipline}
                         </span>
@@ -1237,25 +1237,25 @@ export default function ReviewQueuePage() {
                       </div>
 
                       {/* What Evidence Exists? */}
-                      <div className="pt-2 border-t border-[#D9DEE5]/60 space-y-1.5">
+                      <div className="pt-2 border-t border-[#D9DEE5]/60 space-y-2">
                         <div className="flex items-center justify-between text-[10px] font-semibold uppercase tracking-wider text-[#596579]">
                           <span>What Evidence Exists?</span>
                           <span>{evt.evidenceItems.length} File{evt.evidenceItems.length === 1 ? '' : 's'}</span>
                         </div>
 
                         {evt.evidenceItems.length === 0 ? (
-                          <div className="p-2 bg-[#FDF6ED] border border-[#F0D4A6] rounded text-[#A66D24] text-[11px] flex items-center gap-1.5">
+                          <div className="p-2 bg-[#FDF6ED] border border-[#F0D4A6] rounded text-[#A66D24] text-[11px] flex items-center gap-2">
                             <AlertTriangle className="w-3.5 h-3.5 shrink-0" />
                             <span>No physical evidence attached to this field log</span>
                           </div>
                         ) : (
-                          <div className="flex flex-wrap gap-1.5">
+                          <div className="flex flex-wrap gap-2">
                             {evt.evidenceItems.map((item) => (
                               <button
                                 key={item.id}
                                 type="button"
                                 onClick={() => setPreviewEvidence({ item, event: evt })}
-                                className="inline-flex items-center gap-1.5 px-2 py-1 bg-white hover:bg-[#EDF5F8] border border-[#D9DEE5] hover:border-[#176B87] rounded text-[11px] font-medium text-[#172033] transition-colors group cursor-pointer"
+                                className="inline-flex items-center gap-2 px-2 py-1 bg-white hover:bg-[#EDF5F8] border border-[#D9DEE5] hover:border-[#176B87] rounded text-[11px] font-medium text-[#172033] transition-colors group cursor-pointer"
                                 title={`Click to view ${item.title} in-place preview`}
                               >
                                 {item.type === 'PHOTO' ? (
@@ -1281,7 +1281,7 @@ export default function ReviewQueuePage() {
                       </div>
 
                       {evt.candidateActivityId ? (
-                        <div className="p-2.5 bg-white border border-[#D9DEE5] rounded space-y-1">
+                        <div className="p-3 bg-white border border-[#D9DEE5] rounded space-y-1">
                           <div className="flex items-center justify-between">
                             <span className="font-mono font-bold text-xs text-[#176B87]">
                               {evt.candidateActivityId}
@@ -1306,7 +1306,7 @@ export default function ReviewQueuePage() {
                       )}
 
                       {/* Alternative Matches */}
-                      <div className="pt-2 border-t border-[#D9DEE5]/60 space-y-1.5">
+                      <div className="pt-2 border-t border-[#D9DEE5]/60 space-y-2">
                         <div className="text-[10px] font-semibold uppercase tracking-wider text-[#596579]">
                           Alternative Matches ({evt.alternativeCandidates.length})
                         </div>
@@ -1316,14 +1316,14 @@ export default function ReviewQueuePage() {
                             No alternative candidates available
                           </div>
                         ) : (
-                          <div className="space-y-1.5">
+                          <div className="space-y-2">
                             {evt.alternativeCandidates.map((alt) => (
                               <div
                                 key={alt.activityId}
-                                className="p-1.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded text-[11px] flex items-center justify-between gap-1.5 hover:bg-[#F1F3F5] transition-colors"
+                                className="p-2 bg-[#F7F8FA] border border-[#D9DEE5] rounded text-[11px] flex items-center justify-between gap-2 hover:bg-[#F1F3F5] transition-colors"
                               >
                                 <div className="min-w-0 flex-1">
-                                  <div className="flex items-center gap-1.5">
+                                  <div className="flex items-center gap-2">
                                     <span className="font-mono font-semibold text-[#172033]">{alt.activityId}</span>
                                     <span className="text-[10px] font-mono font-bold text-[#D98B32]">{alt.confidence}%</span>
                                   </div>
@@ -1349,7 +1349,7 @@ export default function ReviewQueuePage() {
                     </div>
 
                     {/* COL 3: 3. HOW CONFIDENT IS THE MATCH? & WHY WAS IT SUGGESTED? (2 cols) */}
-                    <div className="lg:col-span-2 p-4 space-y-2.5">
+                    <div className="lg:col-span-2 p-4 space-y-2">
                       <div className="text-[10px] font-semibold uppercase tracking-wider text-[#596579]">
                         3. Confidence & Why?
                       </div>
@@ -1357,7 +1357,7 @@ export default function ReviewQueuePage() {
                       <div className="p-2 bg-[#F7F8FA] border border-[#D9DEE5] rounded space-y-1">
                         <div className="flex items-center justify-between">
                           <span className="text-[10px] font-bold text-[#596579]">Confidence:</span>
-                          <div className="flex items-center gap-1.5">
+                          <div className="flex items-center gap-2">
                             <span className="font-mono font-bold text-xs text-[#172033]">{evt.confidence}%</span>
                             <WhyButton
                               onClick={() => openWhyExplanation(`confidence:${evt.id}`)}
@@ -1386,19 +1386,19 @@ export default function ReviewQueuePage() {
                             variant="subtle"
                           />
                         </div>
-                        <div className="flex items-center gap-1.5 text-[#2E7D5B] font-medium">
+                        <div className="flex items-center gap-2 text-[#2E7D5B] font-medium">
                           <Check className="w-3.5 h-3.5 stroke-[2.5]" />
                           <span>Activity match</span>
                         </div>
-                        <div className="flex items-center gap-1.5 text-[#2E7D5B] font-medium">
+                        <div className="flex items-center gap-2 text-[#2E7D5B] font-medium">
                           <Check className="w-3.5 h-3.5 stroke-[2.5]" />
                           <span>Area match</span>
                         </div>
-                        <div className="flex items-center gap-1.5 text-[#2E7D5B] font-medium">
+                        <div className="flex items-center gap-2 text-[#2E7D5B] font-medium">
                           <Check className="w-3.5 h-3.5 stroke-[2.5]" />
                           <span>Discipline match</span>
                         </div>
-                        <div className={`flex items-center gap-1.5 font-medium ${evt.confidence >= 70 ? 'text-[#2E7D5B]' : 'text-[#D98B32]'}`}>
+                        <div className={`flex items-center gap-2 font-medium ${evt.confidence >= 70 ? 'text-[#2E7D5B]' : 'text-[#D98B32]'}`}>
                           {evt.confidence >= 70 ? (
                             <Check className="w-3.5 h-3.5 stroke-[2.5]" />
                           ) : (
@@ -1442,7 +1442,7 @@ export default function ReviewQueuePage() {
                                   ? 'Verify match and commit to Schedule Twin'
                                   : 'Cannot accept without assigned schedule activity'
                               }
-                              className="w-full py-2 px-3 bg-[#2E7D5B] hover:bg-[#25684C] disabled:opacity-40 disabled:cursor-not-allowed text-white font-bold text-xs rounded shadow-xs inline-flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                              className="w-full py-2 px-3 bg-[#2E7D5B] hover:bg-[#25684C] disabled:opacity-40 disabled:cursor-not-allowed text-white font-bold text-xs rounded shadow-xs inline-flex items-center justify-center gap-2 transition-colors cursor-pointer"
                             >
                               <Check className="w-4 h-4 stroke-[2.5]" />
                               <span>Accept</span>
@@ -1456,7 +1456,7 @@ export default function ReviewQueuePage() {
                                 setSelectedAlternativeId(evt.candidateActivityId || '');
                                 setIsActivityPickerOpen(true);
                               }}
-                              className="w-full py-2 px-3 bg-white hover:bg-[#EDF5F8] text-[#176B87] hover:text-[#135A72] border border-[#B3CBE0] font-semibold text-xs rounded inline-flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                              className="w-full py-2 px-3 bg-white hover:bg-[#EDF5F8] text-[#176B87] hover:text-[#135A72] border border-[#B3CBE0] font-semibold text-xs rounded inline-flex items-center justify-center gap-2 transition-colors cursor-pointer"
                             >
                               <Edit3 className="w-3.5 h-3.5" />
                               <span>Change Match</span>
@@ -1469,7 +1469,7 @@ export default function ReviewQueuePage() {
                                 setSelectedEvent(evt);
                                 setIsRejectModalOpen(true);
                               }}
-                              className="w-full py-1.5 px-3 bg-white hover:bg-[#FBEFEE] text-[#B5473C] hover:text-[#9E3B31] border border-[#E4B0AA] font-semibold text-xs rounded inline-flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                              className="w-full py-1.5 px-3 bg-white hover:bg-[#FBEFEE] text-[#B5473C] hover:text-[#9E3B31] border border-[#E4B0AA] font-semibold text-xs rounded inline-flex items-center justify-center gap-2 transition-colors cursor-pointer"
                             >
                               <X className="w-3.5 h-3.5 stroke-[2]" />
                               <span>Reject</span>
@@ -1550,7 +1550,7 @@ export default function ReviewQueuePage() {
                     type="button"
                     onClick={() => handleInitiateApprove(selectedEvent)}
                     disabled={!selectedEvent.candidateActivityId}
-                    className="px-5 py-2 font-bold text-white bg-[#176B87] hover:bg-[#135A72] disabled:opacity-50 active:scale-95 rounded-lg shadow-sm inline-flex items-center gap-2 transition-all"
+                    className="px-4 sm:px-6 py-2 font-bold text-white bg-[#176B87] hover:bg-[#135A72] disabled:opacity-50 active:scale-95 rounded-lg shadow-sm inline-flex items-center gap-2 transition-all"
                   >
                     <Check className="w-4 h-4 stroke-[3]" />
                     <span>Approve Match & Commit</span>
@@ -1701,7 +1701,7 @@ export default function ReviewQueuePage() {
                       {selectedEvent.evidenceItems.map((item) => (
                         <div
                           key={item.id}
-                          className="p-2.5 bg-white border border-[#D9DEE5] rounded-lg flex items-center justify-between text-xs"
+                          className="p-3 bg-white border border-[#D9DEE5] rounded-lg flex items-center justify-between text-xs"
                         >
                           <div className="flex items-center gap-2">
                             {item.type === 'PHOTO' ? (
@@ -1726,12 +1726,12 @@ export default function ReviewQueuePage() {
                     </div>
                   )}
 
-                  <div className="pt-2 border-t border-[#D9DEE5]/60 space-y-1.5">
+                  <div className="pt-2 border-t border-[#D9DEE5]/60 space-y-2">
                     <span className="text-[10px] uppercase font-semibold text-[#596579] block">
                       Deterministic Rules Verified:
                     </span>
                     {selectedEvent.rulesEvaluated.map((rule, idx) => (
-                      <div key={idx} className="flex items-start gap-1.5 text-[11px]">
+                      <div key={idx} className="flex items-start gap-2 text-[11px]">
                         <span className="mt-0.5">
                           {rule.status === 'PASSED' ? (
                             <Check className="w-3.5 h-3.5 text-[#2E7D5B]" />
@@ -1779,7 +1779,7 @@ export default function ReviewQueuePage() {
               <button
                 type="button"
                 onClick={() => setIsRejectModalOpen(false)}
-                className="px-3.5 py-2 font-semibold text-[#596579] hover:text-[#172033] rounded border border-[#D9DEE5]"
+                className="px-4 py-2 font-semibold text-[#596579] hover:text-[#172033] rounded border border-[#D9DEE5]"
               >
                 Cancel
               </button>
@@ -1800,7 +1800,7 @@ export default function ReviewQueuePage() {
               onChange={(e) => setRejectReasonText(e.target.value)}
               placeholder="State reason (e.g., spool scope corresponds to contractor punchlist rather than main header)..."
               rows={3}
-              className="w-full p-2.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg outline-none focus:border-[#176B87]"
+              className="w-full p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg outline-none focus:border-[#176B87]"
             />
           </div>
         </Modal>
@@ -1816,7 +1816,7 @@ export default function ReviewQueuePage() {
               <button
                 type="button"
                 onClick={() => setIsActivityPickerOpen(false)}
-                className="px-3.5 py-2 font-semibold text-[#596579] hover:text-[#172033] rounded border border-[#D9DEE5]"
+                className="px-4 py-2 font-semibold text-[#596579] hover:text-[#172033] rounded border border-[#D9DEE5]"
               >
                 Cancel
               </button>
@@ -1837,7 +1837,7 @@ export default function ReviewQueuePage() {
               <select
                 value={selectedAlternativeId}
                 onChange={(e) => setSelectedAlternativeId(e.target.value)}
-                className="w-full p-2.5 bg-white border border-[#D9DEE5] rounded-lg outline-none focus:border-[#176B87]"
+                className="w-full p-3 bg-white border border-[#D9DEE5] rounded-lg outline-none focus:border-[#176B87]"
               >
                 <option value="">-- Choose activity from WBS --</option>
                 {MOCK_ACTIVITIES.map((act) => (
@@ -1861,14 +1861,14 @@ export default function ReviewQueuePage() {
               <button
                 type="button"
                 onClick={() => setIsClarificationModalOpen(false)}
-                className="px-3.5 py-2 font-semibold text-[#596579] hover:text-[#172033] rounded border border-[#D9DEE5]"
+                className="px-4 py-2 font-semibold text-[#596579] hover:text-[#172033] rounded border border-[#D9DEE5]"
               >
                 Cancel
               </button>
               <button
                 type="button"
                 onClick={handleSendClarification}
-                className="px-4 py-2 font-bold text-white bg-[#D98B32] hover:bg-[#C27A28] rounded shadow-xs inline-flex items-center gap-1.5"
+                className="px-4 py-2 font-bold text-white bg-[#D98B32] hover:bg-[#C27A28] rounded shadow-xs inline-flex items-center gap-2"
               >
                 <Send className="w-3.5 h-3.5" />
                 <span>Dispatch Clarification</span>
@@ -1883,7 +1883,7 @@ export default function ReviewQueuePage() {
               onChange={(e) => setClarificationQueryText(e.target.value)}
               placeholder="e.g. Please clarify if the 12 spools completed include isometric sheet 24-B tie-ins..."
               rows={3}
-              className="w-full p-2.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg outline-none focus:border-[#176B87]"
+              className="w-full p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg outline-none focus:border-[#176B87]"
             />
           </div>
         </Modal>
@@ -1969,7 +1969,7 @@ export default function ReviewQueuePage() {
               </div>
 
               {/* Linked Event Statement */}
-              <div className="p-2.5 bg-[#EDF5F8] border border-[#B3CBE0] rounded-lg">
+              <div className="p-3 bg-[#EDF5F8] border border-[#B3CBE0] rounded-lg">
                 <div className="text-[10px] uppercase font-bold text-[#176B87] mb-1">
                   Referenced Field Report:
                 </div>

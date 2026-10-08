@@ -62,7 +62,7 @@ export function Drawer({
           className={`w-full sm:w-screen sm:${widthClass} h-full bg-white sm:border-l border-[#D9DEE5] shadow-lg flex flex-col transform transition-transform duration-150`}
         >
           {/* Header */}
-          <div className="flex items-start justify-between px-4 sm:px-6 py-3.5 sm:py-4 border-b border-[#D9DEE5] bg-white flex-shrink-0">
+          <div className="flex items-start justify-between px-4 sm:px-6 py-3 sm:py-4 border-b border-[#D9DEE5] bg-white flex-shrink-0">
             <div className="min-w-0 pr-2">
               <h2 className="text-base sm:text-lg font-semibold text-[#172033] truncate">{title}</h2>
               {subtitle && <p className="text-xs text-[#596579] mt-0.5 truncate">{subtitle}</p>}
@@ -77,13 +77,13 @@ export function Drawer({
           </div>
 
           {/* Body */}
-          <div className="flex-1 px-4 sm:px-6 py-4 sm:py-5 overflow-y-auto text-[#172033] text-xs sm:text-sm">
+          <div className="flex-1 px-4 sm:px-6 py-4 sm:py-4 overflow-y-auto text-[#172033] text-xs sm:text-sm">
             {children}
           </div>
 
           {/* Footer */}
           {footer && (
-            <div className="flex items-center justify-end gap-2 sm:gap-3 px-4 sm:px-6 py-3 sm:py-3.5 border-t border-[#D9DEE5] bg-[#F7F8FA] flex-shrink-0">
+            <div className="flex items-center justify-end gap-2 sm:gap-3 px-4 sm:px-6 py-3 sm:py-3 border-t border-[#D9DEE5] bg-[#F7F8FA] flex-shrink-0">
               {footer}
             </div>
           )}

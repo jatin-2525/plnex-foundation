@@ -85,7 +85,7 @@ export function StatusDonutChart({
   });
 
   return (
-    <div className={`bg-white rounded-lg border border-[#D9DEE5] p-5 shadow-xs text-[#172033] ${className}`}>
+    <div className={`bg-white rounded-lg border border-[#D9DEE5] p-4 sm:p-6 shadow-xs text-[#172033] ${className}`}>
       {/* Header */}
       <div className="flex flex-col lg:flex-row lg:items-center justify-between pb-3 border-b border-[#D9DEE5] gap-3">
         <div>
@@ -163,7 +163,7 @@ export function StatusDonutChart({
           {sliceArcs.map((slice) => (
             <div
               key={slice.id}
-              className="p-2.5 rounded-md border border-[#D9DEE5] bg-[#F7F8FA] flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs"
+              className="p-3 rounded-md border border-[#D9DEE5] bg-[#F7F8FA] flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs"
             >
               <div className="flex items-center gap-2">
                 <span
@@ -173,7 +173,7 @@ export function StatusDonutChart({
                   {slice.glyph || '●'}
                 </span>
                 <div>
-                  <div className="flex items-center gap-1.5">
+                  <div className="flex items-center gap-2">
                     <span className="font-bold text-[#172033] block">{slice.label}</span>
                     <span className="font-mono text-[10px] text-[#596579]">[{slice.glyph || '●'}]</span>
                   </div>

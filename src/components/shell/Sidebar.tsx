@@ -97,10 +97,20 @@ export const NAV_GROUPS: SidebarGroup[] = [
   },
 ];
 
-// Compatibility aliases
-export const managerNav = NAV_GROUPS;
-export const engineerNav = NAV_GROUPS;
-export const adminNav = NAV_GROUPS;
+// Role-specific navigation groups and compatibility aliases
+export const managerNav: SidebarGroup[] = NAV_GROUPS;
+export const engineerNav: SidebarGroup[] = NAV_GROUPS;
+export const adminNav: SidebarGroup[] = [
+  ...NAV_GROUPS,
+  {
+    group: 'MANAGER VIEW',
+    items: [{ label: 'Manager Dashboard', href: '/dashboard', icon: LayoutDashboard }],
+  },
+  {
+    group: 'ENGINEER VIEW',
+    items: [{ label: 'Site Engineer', href: '/engineer', icon: Camera }],
+  },
+];
 
 export function Sidebar({ collapsed, onToggle, mobileMenuOpen, onCloseMobile }: SidebarProps) {
   const rawPathname = usePathname();
@@ -108,6 +118,8 @@ export function Sidebar({ collapsed, onToggle, mobileMenuOpen, onCloseMobile }: 
     ? rawPathname.slice(0, -1)
     : (rawPathname || '/');
   const { userSession } = useApp();
+  const role = userSession?.role || 'manager';
+  const activeNavGroups = role === 'admin' ? adminNav : role === 'engineer' ? engineerNav : managerNav;
 
   return (
     <aside
@@ -120,8 +132,8 @@ export function Sidebar({ collapsed, onToggle, mobileMenuOpen, onCloseMobile }: 
       }`}
     >
       {/* Workflow Navigation */}
-      <div className="flex-1 overflow-y-auto py-2.5 px-2 space-y-3">
-        {NAV_GROUPS.map((group) => (
+      <div className="flex-1 overflow-y-auto py-2 px-2 space-y-3">
+        {activeNavGroups.map((group) => (
           <div key={group.group} className="space-y-0.5">
             {!collapsed && (
               <h4 className="px-3 pt-2 pb-1 text-[11px] font-semibold uppercase tracking-wider text-[#596579] select-none">
@@ -138,7 +150,7 @@ export function Sidebar({ collapsed, onToggle, mobileMenuOpen, onCloseMobile }: 
                   key={item.href}
                   href={item.href}
                   onClick={onCloseMobile}
-                  className={`flex items-center gap-2.5 px-2.5 py-1.5 rounded-md text-xs transition-colors relative group ${
+                  className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-xs transition-colors relative group ${
                     isActive
                       ? 'bg-[#EDF5F8] text-[#176B87] font-semibold'
                       : 'text-[#596579] hover:bg-[#F1F3F5] hover:text-[#172033] font-normal'
@@ -182,7 +194,7 @@ export function Sidebar({ collapsed, onToggle, mobileMenuOpen, onCloseMobile }: 
         <button
           onClick={onToggle}
           className={`w-full flex items-center ${
-            collapsed ? 'justify-center p-1.5' : 'justify-between px-2.5 py-1.5'
+            collapsed ? 'justify-center p-2' : 'justify-between px-3 py-1.5'
           } text-xs text-[#596579] hover:text-[#172033] hover:bg-white rounded border border-transparent hover:border-[#D9DEE5] transition-colors cursor-pointer`}
           aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
           title={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}

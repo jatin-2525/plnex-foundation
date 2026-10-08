@@ -164,7 +164,7 @@ export function CoreFlowBanner({
                   }`}
                 >
                   <div>
-                    <div className="flex items-center justify-between mb-1.5">
+                    <div className="flex items-center justify-between mb-2">
                       <span
                         className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-mono font-bold ${
                           isGate
@@ -189,7 +189,7 @@ export function CoreFlowBanner({
                       )}
                     </div>
 
-                    <div className="flex items-center gap-1.5 mb-1">
+                    <div className="flex items-center gap-2 mb-1">
                       <Icon
                         className={`w-3.5 h-3.5 shrink-0 ${
                           isGate
@@ -225,7 +225,7 @@ export function CoreFlowBanner({
           </div>
 
           {/* Core Governance Disclaimer */}
-          <div className="p-3 bg-[#FDF6ED] border border-[#F0D4A6] rounded-lg flex items-start gap-2.5 text-xs">
+          <div className="p-3 bg-[#FDF6ED] border border-[#F0D4A6] rounded-lg flex items-start gap-2 text-xs">
             <ShieldAlert className="w-4 h-4 text-[#D98B32] shrink-0 mt-0.5" />
             <div className="space-y-0.5">
               <span className="font-bold text-[#172033]">

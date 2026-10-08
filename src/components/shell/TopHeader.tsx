@@ -31,13 +31,13 @@ export function TopHeader({ onToggleSidebar, onMobileToggle, onDesktopToggle }: 
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 h-14 bg-white border-b border-[#D9DEE5] z-40 px-2.5 sm:px-4 flex items-center justify-between gap-1.5 sm:gap-3">
+    <header className="fixed top-0 left-0 right-0 h-14 bg-white border-b border-[#D9DEE5] z-40 px-3 sm:px-4 flex items-center justify-between gap-2 sm:gap-3">
       {/* Left: [Sidebar Toggle] + PLnEX + Project Selector */}
-      <div className="flex items-center gap-1.5 sm:gap-2.5 min-w-0">
+      <div className="flex items-center gap-2 sm:gap-2 min-w-0">
         {/* [Sidebar Toggle] */}
         <button
           onClick={handleToggle}
-          className="p-1.5 text-[#596579] hover:text-[#172033] hover:bg-[#F1F3F5] rounded-md transition-colors cursor-pointer flex-shrink-0"
+          className="p-2 text-[#596579] hover:text-[#172033] hover:bg-[#F1F3F5] rounded-md transition-colors cursor-pointer flex-shrink-0"
           aria-label="Toggle sidebar"
           title="Toggle sidebar"
         >
@@ -45,7 +45,7 @@ export function TopHeader({ onToggleSidebar, onMobileToggle, onDesktopToggle }: 
         </button>
 
         {/* PLnEX Brand */}
-        <Link href="/" className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0 hover:opacity-90 transition-opacity">
+        <Link href="/" className="flex items-center gap-2 sm:gap-2 flex-shrink-0 hover:opacity-90 transition-opacity">
           <div className="w-7 h-7 rounded bg-[#176B87] text-white flex items-center justify-center font-bold text-xs tracking-tight">
             PX
           </div>
@@ -61,6 +61,11 @@ export function TopHeader({ onToggleSidebar, onMobileToggle, onDesktopToggle }: 
         <div className="flex-shrink-0 min-w-0">
           <ProjectSelector />
         </div>
+
+        {/* Sample Project Data indicator */}
+        <span className="hidden xl:inline-flex items-center text-[10px] font-mono text-[#596579] bg-[#F1F3F5] px-2 py-0.5 rounded border border-[#D9DEE5]">
+          Sample Project Data
+        </span>
       </div>
 
       {/* Right: Search + Notifications + Profile */}
@@ -68,7 +73,7 @@ export function TopHeader({ onToggleSidebar, onMobileToggle, onDesktopToggle }: 
         {/* Search */}
         <button
           onClick={() => setGlobalSearchOpen(true)}
-          className="hidden sm:flex items-center justify-between px-2.5 py-1.5 bg-[#F7F8FA] hover:bg-[#F1F3F5] border border-[#D9DEE5] rounded-md text-xs text-[#596579] transition-colors cursor-pointer w-44 md:w-56 lg:w-64"
+          className="hidden sm:flex items-center justify-between px-3 py-1.5 bg-[#F7F8FA] hover:bg-[#F1F3F5] border border-[#D9DEE5] rounded-md text-xs text-[#596579] transition-colors cursor-pointer w-44 md:w-56 lg:w-64"
           aria-label="Search"
           title="Search activities, DPRs, evidence (⌘K)"
         >

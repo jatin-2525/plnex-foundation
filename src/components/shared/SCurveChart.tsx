@@ -140,20 +140,20 @@ export function SCurveChart({
         {/* Summary values above / beside chart */}
         <div className="flex items-center flex-wrap gap-2 text-xs font-mono">
           {/* Planned */}
-          <div className="px-3 py-1.5 rounded bg-[#F7F8FA] border border-[#D9DEE5] flex items-center gap-1.5 shadow-2xs">
+          <div className="px-3 py-1.5 rounded bg-[#F7F8FA] border border-[#D9DEE5] flex items-center gap-2 shadow-2xs">
             <span className="text-[#596579] font-sans font-medium text-[11px]">Planned:</span>
             <span className="font-bold text-[#176B87]">{summary.plannedAtDataDate.toFixed(1)}%</span>
           </div>
 
           {/* Actual */}
-          <div className="px-3 py-1.5 rounded bg-[#F7F8FA] border border-[#D9DEE5] flex items-center gap-1.5 shadow-2xs">
+          <div className="px-3 py-1.5 rounded bg-[#F7F8FA] border border-[#D9DEE5] flex items-center gap-2 shadow-2xs">
             <span className="text-[#596579] font-sans font-medium text-[11px]">Actual:</span>
             <span className="font-bold text-[#2E7D5B]">{summary.actualAtDataDate.toFixed(1)}%</span>
           </div>
 
           {/* Variance */}
           <div
-            className={`px-3 py-1.5 rounded border flex items-center gap-1.5 shadow-2xs ${
+            className={`px-3 py-1.5 rounded border flex items-center gap-2 shadow-2xs ${
               summary.varianceAtDataDate < 0
                 ? 'bg-[#FDF6ED] border-[#F0D4A6]'
                 : 'bg-[#EDF7F2] border-[#B8DCC9]'
@@ -172,7 +172,7 @@ export function SCurveChart({
           </div>
 
           {summary.forecastFinishDate && (
-            <div className="px-3 py-1.5 rounded bg-[#F7F8FA] border border-[#D9DEE5] flex items-center gap-1.5 shadow-2xs">
+            <div className="px-3 py-1.5 rounded bg-[#F7F8FA] border border-[#D9DEE5] flex items-center gap-2 shadow-2xs">
               <span className="text-[#596579] font-sans font-medium text-[11px]">Forecast Finish:</span>
               <span className="font-semibold text-[#172033]">{summary.forecastFinishDate}</span>
             </div>
@@ -514,25 +514,25 @@ export function SCurveChart({
         <div className="flex flex-wrap items-center justify-between gap-4 mt-2 pt-3 border-t border-[#F1F3F5] text-xs text-[#596579]">
           <div className="flex items-center gap-4 flex-wrap">
             {/* Planned Line Legend */}
-            <div className="flex items-center gap-1.5">
+            <div className="flex items-center gap-2">
               <span className="w-3.5 h-1 bg-[#176B87] inline-block rounded-xs" />
               <span className="font-semibold text-[#172033]">■ Planned (Neutral/Primary)</span>
             </div>
 
             {/* Actual Line Legend */}
-            <div className="flex items-center gap-1.5">
+            <div className="flex items-center gap-2">
               <span className="w-3.5 h-1.5 bg-[#2E7D5B] inline-block rounded-xs" />
               <span className="font-semibold text-[#172033]">● Actual (Semantic Contrast)</span>
             </div>
 
             {/* Forecast Line Legend */}
-            <div className="flex items-center gap-1.5">
+            <div className="flex items-center gap-2">
               <span className="w-4 h-0.5 border-t-2 border-dashed border-[#7B8798] inline-block" />
               <span className="font-semibold text-[#596579]">▲ Forecast (Dashed Secondary)</span>
             </div>
 
             {/* Data Date Marker Legend */}
-            <div className="flex items-center gap-1.5">
+            <div className="flex items-center gap-2">
               <span className="w-2.5 h-2.5 rounded-full border-2 border-[#172033] inline-block" />
               <span className="font-semibold text-[#172033]">Cutoff Data Date</span>
             </div>
@@ -653,7 +653,7 @@ export function SCurveChart({
                       <td className="py-2 px-3 whitespace-nowrap">
                         {row.period}
                         {isCurrentDD && (
-                          <span className="ml-1.5 inline-block px-1.5 py-0.2 rounded text-[10px] font-semibold bg-[#176B87] text-white">
+                          <span className="ml-2 inline-block px-1.5 py-0.5 rounded text-[10px] font-semibold bg-[#176B87] text-white">
                             Current
                           </span>
                         )}

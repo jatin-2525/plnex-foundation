@@ -546,14 +546,14 @@ export default function DPRPage() {
 
   return (
     <AppShell>
-      <div className="space-y-6 pb-24 md:pb-16 max-w-7xl mx-auto">
+      <div className="space-y-6 pb-24 md:pb-12 max-w-7xl mx-auto">
         {/* Breadcrumb Navigation */}
         <Breadcrumbs items={breadcrumbs} />
 
         {/* OFFLINE MODE BANNER */}
         {isOffline && (
-          <div className="p-3.5 rounded-lg bg-[#FDF6ED] border border-[#F0D4A6] flex items-center justify-between gap-3 text-xs text-[#8C5311]">
-            <div className="flex items-center gap-2.5">
+          <div className="p-4 rounded-lg bg-[#FDF6ED] border border-[#F0D4A6] flex items-center justify-between gap-3 text-xs text-[#8C5311]">
+            <div className="flex items-center gap-2">
               <span className="px-2 py-0.5 rounded bg-[#D98B32] text-white font-mono font-bold text-[10px] uppercase">
                 OFFLINE MODE
               </span>
@@ -570,18 +570,18 @@ export default function DPRPage() {
         {/* =========================================================================
             SECTION 1: DAILY PROGRESS REPORT (Document Header & Top Actions)
             ========================================================================= */}
-        <div className="bg-white border border-[#D9DEE5] rounded-lg p-5 md:p-6 shadow-xs">
-          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-[#D9DEE5] pb-5">
+        <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 md:p-6 shadow-xs">
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-[#D9DEE5] pb-4">
             <div>
-              <div className="flex items-center gap-2 mb-1.5 flex-wrap">
-                <span className="font-mono text-xs font-bold px-2.5 py-0.5 rounded bg-[#F1F3F5] text-[#172033] border border-[#D9DEE5]">
+              <div className="flex items-center gap-2 mb-2 flex-wrap">
+                <span className="font-mono text-xs font-bold px-3 py-0.5 rounded bg-[#F1F3F5] text-[#172033] border border-[#D9DEE5]">
                   {dprDocumentNo}
                 </span>
                 <span className="font-mono text-[11px] text-[#596579] bg-[#FAFAFA] px-2 py-0.5 rounded border border-[#E5E7EB]">
                   {dprRevision}
                 </span>
                 <span
-                  className={`text-xs font-bold px-2.5 py-0.5 rounded border inline-flex items-center gap-1.5 ${
+                  className={`text-xs font-bold px-3 py-0.5 rounded border inline-flex items-center gap-2 ${
                     submissionState === 'Submitted'
                       ? 'bg-[#EDF7F2] text-[#2E7D5B] border-[#B8DCC9]'
                       : submissionState === 'Saved locally'
@@ -606,11 +606,11 @@ export default function DPRPage() {
             </div>
 
             {/* Top Primary Actions */}
-            <div className="flex items-center gap-2.5 shrink-0">
+            <div className="flex items-center gap-2 shrink-0">
               <button
                 type="button"
                 onClick={handleSaveDraft}
-                className="px-4 py-2.5 text-xs font-semibold text-[#172033] bg-white border border-[#D9DEE5] hover:bg-[#F1F3F5] active:bg-[#E5E7EB] rounded-lg inline-flex items-center gap-2 transition-colors cursor-pointer shadow-2xs"
+                className="px-4 py-2 text-xs font-semibold text-[#172033] bg-white border border-[#D9DEE5] hover:bg-[#F1F3F5] active:bg-[#E5E7EB] rounded-lg inline-flex items-center gap-2 transition-colors cursor-pointer shadow-2xs"
               >
                 <Save className="w-4 h-4 text-[#596579]" />
                 <span>Save Draft</span>
@@ -620,7 +620,7 @@ export default function DPRPage() {
                 type="button"
                 onClick={handleSubmitDPR}
                 disabled={submissionState === 'Processing'}
-                className="min-h-[48px] px-5 py-2.5 text-xs sm:text-sm font-bold text-white bg-[#176B87] hover:bg-[#135A72] active:bg-[#135A72] disabled:opacity-50 rounded-lg inline-flex items-center gap-2 transition-colors cursor-pointer shadow-xs"
+                className="min-h-[48px] px-4 sm:px-6 py-2 text-xs sm:text-sm font-bold text-white bg-[#176B87] hover:bg-[#135A72] active:bg-[#135A72] disabled:opacity-50 rounded-lg inline-flex items-center gap-2 transition-colors cursor-pointer shadow-xs"
               >
                 <Send className="w-4 h-4" />
                 <span>Submit DPR</span>
@@ -649,7 +649,7 @@ export default function DPRPage() {
             </div>
 
             {/* Stepper Touch Target Buttons */}
-            <div className="flex items-center gap-1.5 self-start md:self-auto">
+            <div className="flex items-center gap-2 self-start md:self-auto">
               <span className="text-[11px] font-semibold text-[#596579] mr-1 hidden sm:inline">
                 Section Jump:
               </span>
@@ -662,7 +662,7 @@ export default function DPRPage() {
               >
                 <ArrowLeft className="w-4 h-4" />
               </button>
-              <span className="font-mono text-xs px-2.5 py-1.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-md font-bold text-[#176B87]">
+              <span className="font-mono text-xs px-3 py-1.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-md font-bold text-[#176B87]">
                 {activeStep} / 7: {stepsConfig[activeStep - 1]?.title}
               </span>
               <button
@@ -683,7 +683,7 @@ export default function DPRPage() {
           {/* =========================================================================
               SECTION 2: DATE
               ========================================================================= */}
-          <section id="sec-project-date" className="bg-white border border-[#D9DEE5] rounded-lg p-5 md:p-6 shadow-xs space-y-4">
+          <section id="sec-project-date" className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 md:p-6 shadow-xs space-y-4">
             <div className="border-b border-[#D9DEE5] pb-3 flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <span className="w-6 h-6 rounded-md bg-[#EDF5F8] text-[#176B87] font-bold text-xs flex items-center justify-center">
@@ -706,7 +706,7 @@ export default function DPRPage() {
                     type="date"
                     value={reportingDate}
                     onChange={(e) => setReportingDate(e.target.value)}
-                    className="w-full p-2.5 bg-white border border-[#D9DEE5] rounded-lg text-xs font-bold text-[#172033] outline-hidden focus:border-[#176B87]"
+                    className="w-full p-3 bg-white border border-[#D9DEE5] rounded-lg text-xs font-bold text-[#172033] outline-hidden focus:border-[#176B87]"
                   />
                 </div>
               </div>
@@ -718,7 +718,7 @@ export default function DPRPage() {
                 <select
                   value={reportingShift}
                   onChange={(e) => setReportingShift(e.target.value as any)}
-                  className="w-full p-2.5 bg-white border border-[#D9DEE5] rounded-lg text-xs font-semibold text-[#172033] outline-hidden focus:border-[#176B87]"
+                  className="w-full p-3 bg-white border border-[#D9DEE5] rounded-lg text-xs font-semibold text-[#172033] outline-hidden focus:border-[#176B87]"
                 >
                   <option value="Shift A">Shift A (Day: 07:00 – 16:30)</option>
                   <option value="Shift B">Shift B (Evening: 16:30 – 00:00)</option>
@@ -736,7 +736,7 @@ export default function DPRPage() {
                     step="0.5"
                     value={shiftHours}
                     onChange={(e) => setShiftHours(e.target.value)}
-                    className="w-full p-2.5 bg-white border border-[#D9DEE5] rounded-lg text-xs font-bold text-[#172033] outline-hidden focus:border-[#176B87]"
+                    className="w-full p-3 bg-white border border-[#D9DEE5] rounded-lg text-xs font-bold text-[#172033] outline-hidden focus:border-[#176B87]"
                   />
                   <span className="text-[#596579] font-medium shrink-0">Hours</span>
                 </div>
@@ -749,7 +749,7 @@ export default function DPRPage() {
                 <select
                   value={groundCondition}
                   onChange={(e) => setGroundCondition(e.target.value as any)}
-                  className="w-full p-2.5 bg-white border border-[#D9DEE5] rounded-lg text-xs font-semibold text-[#172033] outline-hidden focus:border-[#176B87]"
+                  className="w-full p-3 bg-white border border-[#D9DEE5] rounded-lg text-xs font-semibold text-[#172033] outline-hidden focus:border-[#176B87]"
                 >
                   <option value="Wet / Saturated">Wet / Saturated (Monsoon)</option>
                   <option value="Dry">Dry / Stable</option>
@@ -765,7 +765,7 @@ export default function DPRPage() {
                   type="text"
                   value={weatherCondition}
                   onChange={(e) => setWeatherCondition(e.target.value)}
-                  className="w-full p-2.5 bg-white border border-[#D9DEE5] rounded-lg text-xs font-medium text-[#172033] outline-hidden focus:border-[#176B87]"
+                  className="w-full p-3 bg-white border border-[#D9DEE5] rounded-lg text-xs font-medium text-[#172033] outline-hidden focus:border-[#176B87]"
                   placeholder="e.g. Temperature, rainfall, humidity, wind conditions"
                 />
               </div>
@@ -775,7 +775,7 @@ export default function DPRPage() {
           {/* =========================================================================
               SECTION 3: PROJECT
               ========================================================================= */}
-          <section className="bg-white border border-[#D9DEE5] rounded-lg p-5 md:p-6 shadow-xs space-y-4">
+          <section className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 md:p-6 shadow-xs space-y-4">
             <div className="border-b border-[#D9DEE5] pb-3 flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <span className="w-6 h-6 rounded-md bg-[#EDF5F8] text-[#176B87] font-bold text-xs flex items-center justify-center">
@@ -795,7 +795,7 @@ export default function DPRPage() {
                 <label className="font-semibold text-[#596579] uppercase tracking-wider text-[10px] block">
                   Project Code & Name
                 </label>
-                <div className="p-2.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg">
+                <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg">
                   <span className="font-mono font-bold text-[#172033] block">{projectCode}</span>
                   <span className="text-[#596579] font-medium text-[11px]">{projectName}</span>
                 </div>
@@ -805,7 +805,7 @@ export default function DPRPage() {
                 <label className="font-semibold text-[#596579] uppercase tracking-wider text-[10px] block">
                   Contract / Package
                 </label>
-                <div className="p-2.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg">
+                <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg">
                   <span className="font-bold text-[#172033] block">{contractPackage}</span>
                   <span className="text-[#596579] text-[11px]">Client: {clientOwner}</span>
                 </div>
@@ -815,7 +815,7 @@ export default function DPRPage() {
                 <label className="font-semibold text-[#596579] uppercase tracking-wider text-[10px] block">
                   Executing EPC Contractor
                 </label>
-                <div className="p-2.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg">
+                <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg">
                   <span className="font-bold text-[#172033] block">{contractorName}</span>
                   <span className="text-[#596579] text-[11px]">Consortium Partner: Brahmaputra Infra Ltd</span>
                 </div>
@@ -825,7 +825,7 @@ export default function DPRPage() {
                 <label className="font-semibold text-[#596579] uppercase tracking-wider text-[10px] block">
                   Site Execution Engineer
                 </label>
-                <div className="p-2.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg">
+                <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg">
                   <span className="font-bold text-[#172033] block">{siteEngineer}</span>
                   <span className="text-[#596579] text-[11px]">{siteRole}</span>
                 </div>
@@ -835,7 +835,7 @@ export default function DPRPage() {
                 <label className="font-semibold text-[#596579] uppercase tracking-wider text-[10px] block">
                   Schedule Twin Integration
                 </label>
-                <div className="p-2.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg">
+                <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg">
                   <span className="font-bold text-[#2E7D5B] block">Connected & Synchronized</span>
                   <span className="text-[#596579] text-[11px]">Primavera P6 XML / Level 5 WBS</span>
                 </div>
@@ -845,7 +845,7 @@ export default function DPRPage() {
                 <label className="font-semibold text-[#596579] uppercase tracking-wider text-[10px] block">
                   Contract Status
                 </label>
-                <div className="p-2.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg">
+                <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg">
                   <span className="font-bold text-[#172033] block">Active Execution (Month 7 of 18)</span>
                   <span className="text-[#596579] text-[11px]">Target COD: 31 March 2027</span>
                 </div>
@@ -856,7 +856,7 @@ export default function DPRPage() {
           {/* =========================================================================
               SECTION 4: AREA
               ========================================================================= */}
-          <section id="sec-area" className="bg-white border border-[#D9DEE5] rounded-lg p-5 md:p-6 shadow-xs space-y-4">
+          <section id="sec-area" className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 md:p-6 shadow-xs space-y-4">
             <div className="border-b border-[#D9DEE5] pb-3 flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <span className="w-6 h-6 rounded-md bg-[#EDF5F8] text-[#176B87] font-bold text-xs flex items-center justify-center">
@@ -877,7 +877,7 @@ export default function DPRPage() {
                 <select
                   value={selectedArea}
                   onChange={(e) => setSelectedArea(e.target.value)}
-                  className="w-full p-2.5 bg-white border border-[#D9DEE5] rounded-lg text-xs font-semibold text-[#172033] outline-hidden focus:border-[#176B87]"
+                  className="w-full p-3 bg-white border border-[#D9DEE5] rounded-lg text-xs font-semibold text-[#172033] outline-hidden focus:border-[#176B87]"
                 >
                   <option value="Unit A - Gas Processing Area">Unit A - Gas Processing Area</option>
                   <option value="Unit B - Compressor & Compression Station">Unit B - Compressor & Compression Station</option>
@@ -896,7 +896,7 @@ export default function DPRPage() {
                   type="text"
                   value={specificWorkfront}
                   onChange={(e) => setSpecificWorkfront(e.target.value)}
-                  className="w-full p-2.5 bg-white border border-[#D9DEE5] rounded-lg text-xs font-medium text-[#172033] outline-hidden focus:border-[#176B87]"
+                  className="w-full p-3 bg-white border border-[#D9DEE5] rounded-lg text-xs font-medium text-[#172033] outline-hidden focus:border-[#176B87]"
                 />
               </div>
 
@@ -920,7 +920,7 @@ export default function DPRPage() {
           {/* =========================================================================
               SECTION 5: DISCIPLINE
               ========================================================================= */}
-          <section id="sec-discipline" className="bg-white border border-[#D9DEE5] rounded-lg p-5 md:p-6 shadow-xs space-y-4">
+          <section id="sec-discipline" className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 md:p-6 shadow-xs space-y-4">
             <div className="border-b border-[#D9DEE5] pb-3 flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <span className="w-6 h-6 rounded-md bg-[#EDF5F8] text-[#176B87] font-bold text-xs flex items-center justify-center">
@@ -940,13 +940,13 @@ export default function DPRPage() {
               <label className="font-bold text-[#172033] uppercase tracking-wider text-[11px] block">
                 Disciplines Active Today
               </label>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-xs">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
                 {['Piping', 'Civil / Structural', 'Mechanical', 'Electrical & Instrumentation'].map((d) => {
                   const isChecked = selectedDisciplines.includes(d);
                   return (
                     <label
                       key={d}
-                      className={`p-3 rounded-lg border flex items-center gap-2.5 cursor-pointer transition-colors ${
+                      className={`p-3 rounded-lg border flex items-center gap-2 cursor-pointer transition-colors ${
                         isChecked
                           ? 'border-[#176B87] bg-[#EDF5F8] text-[#176B87] font-bold'
                           : 'border-[#D9DEE5] bg-white text-[#596579] hover:bg-[#F7F8FA]'
@@ -975,7 +975,7 @@ export default function DPRPage() {
                 <span>Discipline Crew Allocation</span>
                 <span className="text-[11px] text-[#596579] font-normal">Direct Labor on Site</span>
               </div>
-              <div className="divide-y divide-[#D9DEE5] p-3 space-y-2.5">
+              <div className="divide-y divide-[#D9DEE5] p-3 space-y-2">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                   <span className="font-bold text-[#172033] w-32 shrink-0">Piping Crew:</span>
                   <input
@@ -1013,7 +1013,7 @@ export default function DPRPage() {
           {/* =========================================================================
               SECTION 6: WORK COMPLETED
               ========================================================================= */}
-          <section id="sec-work-completed" className="bg-white border border-[#D9DEE5] rounded-lg p-5 md:p-6 shadow-xs space-y-4">
+          <section id="sec-work-completed" className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 md:p-6 shadow-xs space-y-4">
             <div className="border-b border-[#D9DEE5] pb-3 flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <span className="w-6 h-6 rounded-md bg-[#EDF5F8] text-[#176B87] font-bold text-xs flex items-center justify-center">
@@ -1048,18 +1048,18 @@ export default function DPRPage() {
                     description: 'Added work completed log for ELE-06-004.',
                   });
                 }}
-                className="px-3 py-1.5 text-xs font-semibold text-[#176B87] bg-[#EDF5F8] border border-[#B3CBE0] hover:bg-[#D6EBF0] rounded-lg inline-flex items-center gap-1.5 transition-colors cursor-pointer"
+                className="px-3 py-1.5 text-xs font-semibold text-[#176B87] bg-[#EDF5F8] border border-[#B3CBE0] hover:bg-[#D6EBF0] rounded-lg inline-flex items-center gap-2 transition-colors cursor-pointer"
               >
                 <Plus className="w-3.5 h-3.5" />
                 <span>Add Activity Narrative</span>
               </button>
             </div>
 
-            <div className="space-y-3.5 text-xs">
+            <div className="space-y-4 text-xs">
               {workCompletedList.map((item, idx) => (
                 <div
                   key={item.id}
-                  className="p-4 rounded-lg border border-[#D9DEE5] bg-[#FAFAFA] space-y-2.5"
+                  className="p-4 rounded-lg border border-[#D9DEE5] bg-[#FAFAFA] space-y-2"
                 >
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#D9DEE5] pb-2">
                     <div className="flex items-center gap-2 flex-wrap">
@@ -1103,7 +1103,7 @@ export default function DPRPage() {
                           prev.map((w) => (w.id === item.id ? { ...w, narrative: val } : w))
                         );
                       }}
-                      className="w-full p-2.5 bg-white border border-[#D9DEE5] rounded-lg text-xs text-[#172033] leading-relaxed outline-hidden focus:border-[#176B87]"
+                      className="w-full p-3 bg-white border border-[#D9DEE5] rounded-lg text-xs text-[#172033] leading-relaxed outline-hidden focus:border-[#176B87]"
                     />
                   </div>
                 </div>
@@ -1114,7 +1114,7 @@ export default function DPRPage() {
           {/* =========================================================================
               SECTION 7: QUANTITY
               ========================================================================= */}
-          <section id="sec-quantity" className="bg-white border border-[#D9DEE5] rounded-lg p-5 md:p-6 shadow-xs space-y-4">
+          <section id="sec-quantity" className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 md:p-6 shadow-xs space-y-4">
             <div className="border-b border-[#D9DEE5] pb-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
               <div className="flex items-center gap-2">
                 <span className="w-6 h-6 rounded-md bg-[#EDF5F8] text-[#176B87] font-bold text-xs flex items-center justify-center">
@@ -1151,7 +1151,7 @@ export default function DPRPage() {
                       <td className="p-3">
                         <div className="font-mono font-bold text-[#176B87]">{q.activityId}</div>
                         {q.isCriticalPath && (
-                          <span className="text-[9px] font-bold px-1.5 py-0.2 rounded bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA] inline-block mt-0.5">
+                          <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA] inline-block mt-0.5">
                             Critical Path
                           </span>
                         )}
@@ -1175,7 +1175,7 @@ export default function DPRPage() {
                           step="any"
                           value={q.actualToday}
                           onChange={(e) => handleUpdateQuantity(q.id, 'actualToday', e.target.value)}
-                          className="w-20 p-1.5 bg-white border border-[#D9DEE5] rounded font-mono font-bold text-xs text-[#172033] text-center focus:border-[#176B87]"
+                          className="w-20 p-2 bg-white border border-[#D9DEE5] rounded font-mono font-bold text-xs text-[#172033] text-center focus:border-[#176B87]"
                         />
                       </td>
                       <td className="p-3 text-[#596579] font-medium">
@@ -1183,7 +1183,7 @@ export default function DPRPage() {
                           type="text"
                           value={q.unit}
                           onChange={(e) => handleUpdateQuantity(q.id, 'unit', e.target.value)}
-                          className="w-20 p-1.5 bg-transparent border-b border-dashed border-[#D9DEE5] text-xs font-medium text-[#172033]"
+                          className="w-20 p-2 bg-transparent border-b border-dashed border-[#D9DEE5] text-xs font-medium text-[#172033]"
                         />
                       </td>
                       <td className="p-3 text-center font-mono text-[11px] text-[#596579]">
@@ -1221,7 +1221,7 @@ export default function DPRPage() {
           {/* =========================================================================
               SECTION 8: ISSUES / BLOCKERS
               ========================================================================= */}
-          <section id="sec-issues" className="bg-white border border-[#D9DEE5] rounded-lg p-5 md:p-6 shadow-xs space-y-4">
+          <section id="sec-issues" className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 md:p-6 shadow-xs space-y-4">
             <div className="border-b border-[#D9DEE5] pb-3 flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <span className="w-6 h-6 rounded-md bg-[#EDF5F8] text-[#176B87] font-bold text-xs flex items-center justify-center">
@@ -1240,7 +1240,7 @@ export default function DPRPage() {
               {issuesList.map((iss) => (
                 <div
                   key={iss.id}
-                  className={`p-4 rounded-lg border space-y-2.5 ${
+                  className={`p-4 rounded-lg border space-y-2 ${
                     iss.severity === 'High'
                       ? 'bg-[#FBEFEE]/50 border-[#E4B0AA]'
                       : 'bg-[#FDF6ED]/50 border-[#F0D4A6]'
@@ -1280,9 +1280,9 @@ export default function DPRPage() {
             </div>
 
             {/* HSE / Safety Box */}
-            <div className="p-3.5 bg-[#EDF7F2] border border-[#B8DCC9] rounded-lg text-xs space-y-1.5">
+            <div className="p-4 bg-[#EDF7F2] border border-[#B8DCC9] rounded-lg text-xs space-y-2">
               <div className="flex items-center justify-between font-bold text-[#2E7D5B]">
-                <span className="flex items-center gap-1.5">
+                <span className="flex items-center gap-2">
                   <ShieldCheck className="w-4 h-4" />
                   Health, Safety & Environment (HSE) Shift Record
                 </span>
@@ -1298,7 +1298,7 @@ export default function DPRPage() {
           {/* =========================================================================
               SECTION 9: EVIDENCE
               ========================================================================= */}
-          <section id="sec-evidence" className="bg-white border border-[#D9DEE5] rounded-lg p-5 md:p-6 shadow-xs space-y-4">
+          <section id="sec-evidence" className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 md:p-6 shadow-xs space-y-4">
             <div className="border-b border-[#D9DEE5] pb-3 flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <span className="w-6 h-6 rounded-md bg-[#EDF5F8] text-[#176B87] font-bold text-xs flex items-center justify-center">
@@ -1317,7 +1317,7 @@ export default function DPRPage() {
               {evidenceList.map((ev) => (
                 <div
                   key={ev.id}
-                  className="p-3 bg-[#FAFAFA] border border-[#D9DEE5] rounded-lg space-y-1.5 hover:bg-white transition-colors"
+                  className="p-3 bg-[#FAFAFA] border border-[#D9DEE5] rounded-lg space-y-2 hover:bg-white transition-colors"
                 >
                   <div className="flex items-center justify-between">
                     <span className="font-mono text-[10px] font-bold text-[#176B87] bg-white px-2 py-0.5 rounded border border-[#D9DEE5]">
@@ -1381,7 +1381,7 @@ export default function DPRPage() {
                     description: `Attached ${newEv.name}`,
                   });
                 }}
-                className="mt-2 px-3 py-1.5 text-xs font-bold text-[#176B87] bg-white border border-[#B3CBE0] hover:bg-[#EDF5F8] rounded-lg inline-flex items-center gap-1.5 transition-colors cursor-pointer"
+                className="mt-2 px-3 py-1.5 text-xs font-bold text-[#176B87] bg-white border border-[#B3CBE0] hover:bg-[#EDF5F8] rounded-lg inline-flex items-center gap-2 transition-colors cursor-pointer"
               >
                 <Plus className="w-3.5 h-3.5" />
                 <span>Upload New File</span>
@@ -1392,7 +1392,7 @@ export default function DPRPage() {
           {/* =========================================================================
               SECTION 10: GENERATED SUMMARY (Structured Generated-Summary Panel)
               ========================================================================= */}
-          <section id="sec-summary" className="bg-white border-2 border-[#176B87]/30 rounded-lg p-5 md:p-6 shadow-xs space-y-5">
+          <section id="sec-summary" className="bg-white border-2 border-[#176B87]/30 rounded-lg p-4 sm:p-6 md:p-6 shadow-xs space-y-6">
             <div className="border-b border-[#D9DEE5] pb-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
               <div className="flex items-center gap-2">
                 <span className="w-6 h-6 rounded-md bg-[#176B87] text-white font-bold text-xs flex items-center justify-center">
@@ -1408,7 +1408,7 @@ export default function DPRPage() {
                 </div>
               </div>
 
-              <span className="font-mono text-xs text-[#176B87] font-bold bg-[#EDF5F8] px-2.5 py-1 rounded border border-[#B3CBE0]">
+              <span className="font-mono text-xs text-[#176B87] font-bold bg-[#EDF5F8] px-3 py-1 rounded border border-[#B3CBE0]">
                 Pre-Submission Audit Dossier
               </span>
             </div>
@@ -1463,7 +1463,7 @@ export default function DPRPage() {
 
             {/* Engineer Formal Attestation & Governance Checkbox */}
             <div className="p-4 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg space-y-2 text-xs">
-              <label className="flex items-start gap-2.5 cursor-pointer">
+              <label className="flex items-start gap-2 cursor-pointer">
                 <input
                   type="checkbox"
                   checked={engineerSignoffConfirmed}
@@ -1487,7 +1487,7 @@ export default function DPRPage() {
                 <button
                   type="button"
                   onClick={handleSaveDraft}
-                  className="px-4 py-2.5 text-xs font-semibold text-[#172033] bg-white border border-[#D9DEE5] hover:bg-[#F1F3F5] rounded-lg inline-flex items-center justify-center gap-2 transition-colors cursor-pointer shadow-2xs"
+                  className="px-4 py-2 text-xs font-semibold text-[#172033] bg-white border border-[#D9DEE5] hover:bg-[#F1F3F5] rounded-lg inline-flex items-center justify-center gap-2 transition-colors cursor-pointer shadow-2xs"
                 >
                   <Save className="w-4 h-4 text-[#596579]" />
                   <span>Save Draft</span>
@@ -1499,7 +1499,7 @@ export default function DPRPage() {
                   type="button"
                   onClick={handleSubmitDPR}
                   disabled={submissionState === 'Processing'}
-                  className="min-h-[48px] px-6 py-2.5 text-xs sm:text-sm font-bold text-white bg-[#176B87] hover:bg-[#135A72] active:bg-[#135A72] disabled:opacity-50 rounded-lg inline-flex items-center justify-center gap-2 transition-colors cursor-pointer shadow-xs"
+                  className="min-h-[48px] px-6 py-2 text-xs sm:text-sm font-bold text-white bg-[#176B87] hover:bg-[#135A72] active:bg-[#135A72] disabled:opacity-50 rounded-lg inline-flex items-center justify-center gap-2 transition-colors cursor-pointer shadow-xs"
                 >
                   <Send className="w-4 h-4" />
                   <span>

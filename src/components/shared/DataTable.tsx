@@ -119,7 +119,7 @@ export function DataTable<T>({
                       } ${col.align === 'right' ? 'text-right' : col.align === 'center' ? 'text-center' : 'text-left'}`}
                       style={{ width: col.width, minWidth: col.minWidth }}
                     >
-                      <div className={`flex items-center gap-1.5 ${col.align === 'right' ? 'justify-end' : col.align === 'center' ? 'justify-center' : 'justify-start'}`}>
+                      <div className={`flex items-center gap-2 ${col.align === 'right' ? 'justify-end' : col.align === 'center' ? 'justify-center' : 'justify-start'}`}>
                         <span>{col.header}</span>
                         {col.sortable && (
                           <span className="text-[#7B8798]">
@@ -204,7 +204,7 @@ export function DataTable<T>({
           <span className="font-mono">
             Page {currentPage} of {totalPages} ({data.length} total)
           </span>
-          <div className="flex items-center gap-1.5">
+          <div className="flex items-center gap-2">
             <button
               onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
               disabled={currentPage === 1}

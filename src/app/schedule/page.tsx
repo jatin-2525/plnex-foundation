@@ -1386,22 +1386,22 @@ export default function SchedulePage() {
 
   return (
     <StateWrapper>
-      <div className="space-y-6">
+      <div className="space-y-6 pb-12">
         <Breadcrumbs items={breadcrumbs} />
 
         {/* =========================================================================
             HEADER: SCHEDULE MANAGEMENT & VERSION METADATA
             ========================================================================= */}
-        <div className="bg-white border border-[#D9DEE5] rounded-lg p-5 shadow-xs space-y-4">
+        <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 shadow-xs space-y-4">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
             <div>
-              <div className="flex items-center gap-2 mb-1.5 flex-wrap">
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-[11px] font-bold tracking-wider uppercase bg-[#176B87]/10 text-[#176B87]">
+              <div className="flex items-center gap-2 mb-2 flex-wrap">
+                <span className="inline-flex items-center gap-2 px-3 py-0.5 rounded text-[11px] font-bold tracking-wider uppercase bg-[#176B87]/10 text-[#176B87]">
                   <Calendar className="w-3.5 h-3.5" />
                   Schedule Controls
                 </span>
 
-                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-[11px] font-medium bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]">
+                <span className="inline-flex items-center gap-1 px-3 py-0.5 rounded text-[11px] font-medium bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]">
                   <CheckCircle2 className="w-3 h-3 text-[#2E7D5B]" />
                   Active Baseline Sync
                 </span>
@@ -1415,7 +1415,7 @@ export default function SchedulePage() {
 
             {/* Header Actions */}
             <div className="flex flex-wrap items-center gap-3">
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-2">
                 <span className="text-xs text-[#596579] font-medium hidden sm:inline">Project:</span>
                 <ProjectSelector />
               </div>
@@ -1424,7 +1424,7 @@ export default function SchedulePage() {
               <button
                 type="button"
                 onClick={handleStartImport}
-                className="px-3.5 py-2 text-xs font-semibold text-white bg-[#176B87] hover:bg-[#135A72] rounded-lg transition-colors inline-flex items-center gap-1.5 shadow-sm"
+                className="px-4 py-2 text-xs font-semibold text-white bg-[#176B87] hover:bg-[#135A72] rounded-lg transition-colors inline-flex items-center gap-2 shadow-sm"
               >
                 <Upload className="w-3.5 h-3.5" />
                 <span>Import Schedule</span>
@@ -1435,7 +1435,7 @@ export default function SchedulePage() {
                 <button
                   type="button"
                   onClick={() => setIsSimulatedEmpty(!isSimulatedEmpty)}
-                  className={`px-2.5 py-2 text-xs rounded-lg border transition-colors ${
+                  className={`px-3 py-2 text-xs rounded-lg border transition-colors ${
                     isSimulatedEmpty
                       ? 'bg-[#B5473C] text-white border-[#B5473C]'
                       : 'bg-white text-[#596579] border-[#D9DEE5] hover:bg-[#F1F3F5]'
@@ -1455,7 +1455,7 @@ export default function SchedulePage() {
               - Rule: Never silently overwrite previous versions.
               ========================================================================= */}
           <div className="p-4 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div className="flex items-start md:items-center gap-3.5">
+            <div className="flex items-start md:items-center gap-4">
               <div className="w-10 h-10 rounded-lg bg-white border border-[#D9DEE5] flex items-center justify-center text-[#176B87] shadow-xs shrink-0">
                 <Layers className="w-5 h-5" />
               </div>
@@ -1486,7 +1486,7 @@ export default function SchedulePage() {
             </div>
 
             {/* Strict Version Protection Notice */}
-            <div className="px-3.5 py-2 bg-white border border-[#B3CBE0] rounded-lg text-xs flex items-center gap-2 max-w-md shrink-0">
+            <div className="px-4 py-2 bg-white border border-[#B3CBE0] rounded-lg text-xs flex items-center gap-2 max-w-md shrink-0">
               <ShieldCheck className="w-4 h-4 text-[#176B87] shrink-0" />
               <div className="text-[11px] leading-tight text-[#172033]">
                 <strong className="text-[#176B87] block">Version Protection Active:</strong>
@@ -1504,7 +1504,7 @@ export default function SchedulePage() {
               <span className="text-[11px]">Click any revision to inspect historical snapshot</span>
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
               {versions.map((ver) => {
                 const isSelected = ver.id === selectedVersionId;
                 return (
@@ -1512,7 +1512,7 @@ export default function SchedulePage() {
                     key={ver.id}
                     type="button"
                     onClick={() => handleSelectVersion(ver)}
-                    className={`p-2.5 rounded-lg border text-left transition-all ${
+                    className={`p-3 rounded-lg border text-left transition-all ${
                       isSelected
                         ? 'border-[#176B87] bg-white shadow-xs ring-1 ring-[#176B87]'
                         : 'border-[#D9DEE5] bg-[#F7F8FA] hover:bg-white hover:border-[#176B87]/40'
@@ -1521,7 +1521,7 @@ export default function SchedulePage() {
                     <div className="flex items-center justify-between mb-1">
                       <span className="font-mono font-bold text-xs text-[#172033]">{ver.id}</span>
                       <span
-                        className={`text-[9px] font-mono px-1.5 py-0.2 rounded border font-bold uppercase ${getVersionBadgeClass(
+                        className={`text-[9px] font-mono px-1.5 py-0.5 rounded border font-bold uppercase ${getVersionBadgeClass(
                           ver.status
                         )}`}
                       >
@@ -1545,7 +1545,7 @@ export default function SchedulePage() {
             SPECIAL DISPLAY: Failed Version Validation Error Report
             ========================================================================= */}
         {activeVersion.status === 'failed' && activeVersion.errors && (
-          <div className="bg-[#FBEFEE] border border-[#E4B0AA] rounded-lg p-5 space-y-3">
+          <div className="bg-[#FBEFEE] border border-[#E4B0AA] rounded-lg p-4 sm:p-6 space-y-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <ShieldAlert className="w-5 h-5 text-[#B5473C]" />
@@ -1573,19 +1573,19 @@ export default function SchedulePage() {
               <table className="w-full min-w-[500px] text-left text-xs border-collapse">
                 <thead>
                   <tr className="bg-[#FAF2F1] border-b border-[#E4B0AA] text-[#B5473C] font-semibold">
-                    <th className="py-2.5 px-3 whitespace-nowrap">Row</th>
-                    <th className="py-2.5 px-3 whitespace-nowrap">Column</th>
-                    <th className="py-2.5 px-3">Problem</th>
-                    <th className="py-2.5 px-3">Correction</th>
+                    <th className="py-2 px-3 whitespace-nowrap">Row</th>
+                    <th className="py-2 px-3 whitespace-nowrap">Column</th>
+                    <th className="py-2 px-3">Problem</th>
+                    <th className="py-2 px-3">Correction</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-[#F0D5D2]">
                   {activeVersion.errors.map((err, idx) => (
                     <tr key={idx} className="hover:bg-[#FFF9F8]">
-                      <td className="py-2.5 px-3 font-mono font-bold text-[#172033]">{err.row}</td>
-                      <td className="py-2.5 px-3 font-semibold text-[#172033]">{err.column || err.field}</td>
-                      <td className="py-2.5 px-3 text-[#B5473C] font-medium">{err.problem || err.reason}</td>
-                      <td className="py-2.5 px-3 text-[#2E7D5B] font-mono">{err.correction || 'Correct in source schedule'}</td>
+                      <td className="py-2 px-3 font-mono font-bold text-[#172033]">{err.row}</td>
+                      <td className="py-2 px-3 font-semibold text-[#172033]">{err.column || err.field}</td>
+                      <td className="py-2 px-3 text-[#B5473C] font-medium">{err.problem || err.reason}</td>
+                      <td className="py-2 px-3 text-[#2E7D5B] font-mono">{err.correction || 'Correct in source schedule'}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -1613,7 +1613,7 @@ export default function SchedulePage() {
               <button
                 type="button"
                 onClick={handleExpandAll}
-                className="px-2.5 py-1 text-xs font-medium text-[#176B87] bg-[#EDF5F8] hover:bg-[#D9EAF0] rounded-md transition-colors inline-flex items-center gap-1"
+                className="px-3 py-1 text-xs font-medium text-[#176B87] bg-[#EDF5F8] hover:bg-[#D9EAF0] rounded-md transition-colors inline-flex items-center gap-1"
               >
                 <Maximize2 className="w-3 h-3" />
                 <span>Expand All</span>
@@ -1621,7 +1621,7 @@ export default function SchedulePage() {
               <button
                 type="button"
                 onClick={handleCollapseAll}
-                className="px-2.5 py-1 text-xs font-medium text-[#596579] bg-[#F1F3F5] hover:bg-[#E5E9EE] rounded-md transition-colors inline-flex items-center gap-1"
+                className="px-3 py-1 text-xs font-medium text-[#596579] bg-[#F1F3F5] hover:bg-[#E5E9EE] rounded-md transition-colors inline-flex items-center gap-1"
               >
                 <Minimize2 className="w-3 h-3" />
                 <span>Collapse All</span>
@@ -1656,17 +1656,17 @@ export default function SchedulePage() {
             ].map((tierItem) => (
               <div
                 key={tierItem.code}
-                className="p-2.5 rounded-lg bg-[#F7F8FA] border border-[#D9DEE5] flex flex-col justify-between"
+                className="p-3 rounded-lg bg-[#F7F8FA] border border-[#D9DEE5] flex flex-col justify-between"
               >
                 <div className="flex items-center justify-between">
-                  <span className="font-mono text-[10px] font-bold text-[#172033] bg-[#E5E9EE] px-1.5 py-0.2 rounded">
+                  <span className="font-mono text-[10px] font-bold text-[#172033] bg-[#E5E9EE] px-1.5 py-0.5 rounded">
                     {tierItem.code}
                   </span>
                   <span className="font-mono text-xs text-[#596579] select-none font-semibold">
                     {tierItem.marker}
                   </span>
                 </div>
-                <div className="font-semibold text-[#172033] mt-1.5 text-xs">
+                <div className="font-semibold text-[#172033] mt-2 text-xs">
                   {tierItem.name}
                 </div>
                 <span className="text-[10px] text-[#596579] mt-0.5 leading-tight truncate">
@@ -1680,7 +1680,7 @@ export default function SchedulePage() {
         {/* =========================================================================
             SEARCH & FILTER BAR
             ========================================================================= */}
-        <div className="bg-white border border-[#D9DEE5] rounded-lg p-3.5 space-y-3 shadow-xs">
+        <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 space-y-3 shadow-xs">
           <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3">
             {/* Search: Activity ID / Activity Name / WBS */}
             <div className="relative flex-1 min-w-[260px]">
@@ -1707,7 +1707,7 @@ export default function SchedulePage() {
             {/* Quick Filter Selectors */}
             <div className="flex flex-wrap items-center gap-2">
               {/* Level Filter */}
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-2">
                 <span className="text-xs text-[#596579] font-medium">Level:</span>
                 <select
                   value={levelFilter}
@@ -1725,7 +1725,7 @@ export default function SchedulePage() {
               </div>
 
               {/* Area Filter */}
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-2">
                 <span className="text-xs text-[#596579] font-medium">Area:</span>
                 <select
                   value={areaFilter}
@@ -1742,7 +1742,7 @@ export default function SchedulePage() {
               </div>
 
               {/* Discipline Filter */}
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-2">
                 <span className="text-xs text-[#596579] font-medium">Discipline:</span>
                 <select
                   value={disciplineFilter}
@@ -1759,7 +1759,7 @@ export default function SchedulePage() {
               </div>
 
               {/* Status Filter */}
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-2">
                 <span className="text-xs text-[#596579] font-medium">Status:</span>
                 <select
                   value={statusFilter}
@@ -1780,7 +1780,7 @@ export default function SchedulePage() {
                 <button
                   type="button"
                   onClick={clearAllFilters}
-                  className="px-2.5 py-1.5 text-xs text-[#B5473C] hover:bg-[#FBEFEE] border border-[#E4B0AA] rounded-lg transition-colors inline-flex items-center gap-1"
+                  className="px-3 py-1.5 text-xs text-[#B5473C] hover:bg-[#FBEFEE] border border-[#E4B0AA] rounded-lg transition-colors inline-flex items-center gap-1"
                 >
                   <X className="w-3.5 h-3.5" />
                   <span>Clear</span>
@@ -1802,7 +1802,7 @@ export default function SchedulePage() {
                 </span>
               )}
               {sortConfig.field && (
-                <span className="inline-flex items-center gap-1 text-[11px] px-2.5 py-0.5 rounded bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9] font-medium">
+                <span className="inline-flex items-center gap-1 text-[11px] px-3 py-0.5 rounded bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9] font-medium">
                   <span>Sorted by: <strong>{getSortLabel(sortConfig.field)}</strong> ({sortConfig.direction === 'asc' ? 'Ascending' : 'Descending'})</span>
                   <button
                     type="button"
@@ -1823,7 +1823,7 @@ export default function SchedulePage() {
                 <button
                   type="button"
                   onClick={() => setViewMode('operational')}
-                  className={`px-2.5 py-1 text-xs rounded-md transition-colors ${
+                  className={`px-3 py-1 text-xs rounded-md transition-colors ${
                     viewMode === 'operational'
                       ? 'bg-white text-[#172033] font-semibold shadow-xs'
                       : 'text-[#596579] hover:text-[#172033]'
@@ -1834,7 +1834,7 @@ export default function SchedulePage() {
                 <button
                   type="button"
                   onClick={() => setViewMode('detailed')}
-                  className={`px-2.5 py-1 text-xs rounded-md transition-colors ${
+                  className={`px-3 py-1 text-xs rounded-md transition-colors ${
                     viewMode === 'detailed'
                       ? 'bg-white text-[#172033] font-semibold shadow-xs'
                       : 'text-[#596579] hover:text-[#172033]'
@@ -1856,7 +1856,7 @@ export default function SchedulePage() {
               <Calendar className="w-6 h-6" />
             </div>
             <h3 className="text-sm font-bold text-[#172033] mb-1">No schedule has been imported.</h3>
-            <p className="text-xs text-[#596579] max-w-md mx-auto mb-5">
+            <p className="text-xs text-[#596579] max-w-md mx-auto mb-4">
               Initialize this project&apos;s schedule baseline by importing a Primavera P6 XML schedule file with complete L1–L6 WBS hierarchy.
             </p>
             <button
@@ -1880,7 +1880,7 @@ export default function SchedulePage() {
             <button
               type="button"
               onClick={clearAllFilters}
-              className="px-3.5 py-1.5 text-xs font-medium text-[#176B87] bg-[#EDF5F8] hover:bg-[#D9EAF0] rounded-lg transition-colors"
+              className="px-4 py-1.5 text-xs font-medium text-[#176B87] bg-[#EDF5F8] hover:bg-[#D9EAF0] rounded-lg transition-colors"
             >
               Clear All Filters
             </button>
@@ -1905,7 +1905,7 @@ export default function SchedulePage() {
                       {/* 1. Activity ID */}
                       <th
                         onClick={() => handleSort('id')}
-                        className="py-3 px-3.5 whitespace-nowrap text-left cursor-pointer hover:bg-[#EAEFF5] transition-colors group"
+                        className="py-3 px-4 whitespace-nowrap text-left cursor-pointer hover:bg-[#EAEFF5] transition-colors group"
                       >
                         <div className="flex items-center gap-1">
                           <span>Activity ID</span>
@@ -1916,7 +1916,7 @@ export default function SchedulePage() {
                       {/* 2. Activity */}
                       <th
                         onClick={() => handleSort('name')}
-                        className="py-3 px-3.5 whitespace-nowrap text-left min-w-[280px] cursor-pointer hover:bg-[#EAEFF5] transition-colors group"
+                        className="py-3 px-4 whitespace-nowrap text-left min-w-[280px] cursor-pointer hover:bg-[#EAEFF5] transition-colors group"
                       >
                         <div className="flex items-center gap-1">
                           <span>Activity</span>
@@ -1938,7 +1938,7 @@ export default function SchedulePage() {
                       {/* 4. Area */}
                       <th
                         onClick={() => handleSort('area')}
-                        className="py-3 px-3.5 whitespace-nowrap text-left cursor-pointer hover:bg-[#EAEFF5] transition-colors group"
+                        className="py-3 px-4 whitespace-nowrap text-left cursor-pointer hover:bg-[#EAEFF5] transition-colors group"
                       >
                         <div className="flex items-center gap-1">
                           <span>Area</span>
@@ -1949,7 +1949,7 @@ export default function SchedulePage() {
                       {/* 5. Discipline */}
                       <th
                         onClick={() => handleSort('discipline')}
-                        className="py-3 px-3.5 whitespace-nowrap text-left cursor-pointer hover:bg-[#EAEFF5] transition-colors group"
+                        className="py-3 px-4 whitespace-nowrap text-left cursor-pointer hover:bg-[#EAEFF5] transition-colors group"
                       >
                         <div className="flex items-center gap-1">
                           <span>Discipline</span>
@@ -1960,7 +1960,7 @@ export default function SchedulePage() {
                       {/* 6. Start */}
                       <th
                         onClick={() => handleSort('plannedStart')}
-                        className="py-3 px-3.5 whitespace-nowrap text-left cursor-pointer hover:bg-[#EAEFF5] transition-colors group"
+                        className="py-3 px-4 whitespace-nowrap text-left cursor-pointer hover:bg-[#EAEFF5] transition-colors group"
                       >
                         <div className="flex items-center gap-1">
                           <span>Start</span>
@@ -1971,7 +1971,7 @@ export default function SchedulePage() {
                       {/* 7. Finish */}
                       <th
                         onClick={() => handleSort('plannedFinish')}
-                        className="py-3 px-3.5 whitespace-nowrap text-left cursor-pointer hover:bg-[#EAEFF5] transition-colors group"
+                        className="py-3 px-4 whitespace-nowrap text-left cursor-pointer hover:bg-[#EAEFF5] transition-colors group"
                       >
                         <div className="flex items-center gap-1">
                           <span>Finish</span>
@@ -1982,7 +1982,7 @@ export default function SchedulePage() {
                       {/* 8. Progress */}
                       <th
                         onClick={() => handleSort('actualProgress')}
-                        className="py-3 px-3.5 whitespace-nowrap text-left min-w-[130px] cursor-pointer hover:bg-[#EAEFF5] transition-colors group"
+                        className="py-3 px-4 whitespace-nowrap text-left min-w-[130px] cursor-pointer hover:bg-[#EAEFF5] transition-colors group"
                       >
                         <div className="flex items-center gap-1">
                           <span>Progress</span>
@@ -1993,7 +1993,7 @@ export default function SchedulePage() {
                       {/* 9. Status */}
                       <th
                         onClick={() => handleSort('status')}
-                        className="py-3 px-3.5 whitespace-nowrap text-left cursor-pointer hover:bg-[#EAEFF5] transition-colors group"
+                        className="py-3 px-4 whitespace-nowrap text-left cursor-pointer hover:bg-[#EAEFF5] transition-colors group"
                       >
                         <div className="flex items-center gap-1">
                           <span>Status</span>
@@ -2004,7 +2004,7 @@ export default function SchedulePage() {
                       {/* 10. Variance */}
                       <th
                         onClick={() => handleSort('delayDays')}
-                        className="py-3 px-3.5 whitespace-nowrap text-left cursor-pointer hover:bg-[#EAEFF5] transition-colors group"
+                        className="py-3 px-4 whitespace-nowrap text-left cursor-pointer hover:bg-[#EAEFF5] transition-colors group"
                       >
                         <div className="flex items-center gap-1">
                           <span>Variance</span>
@@ -2013,7 +2013,7 @@ export default function SchedulePage() {
                       </th>
 
                       {/* 11. Action */}
-                      <th className="py-3 px-3.5 whitespace-nowrap text-right">Action</th>
+                      <th className="py-3 px-4 whitespace-nowrap text-right">Action</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-[#E5E9EE] text-[14px]">
@@ -2036,16 +2036,16 @@ export default function SchedulePage() {
                           }`}
                         >
                           {/* 1. Activity ID */}
-                          <td className="py-2.5 px-3.5 align-middle whitespace-nowrap">
+                          <td className="py-2 px-4 align-middle whitespace-nowrap">
                             <span className="font-mono font-semibold text-xs text-[#176B87] group-hover:underline">
                               {row.id}
                             </span>
                           </td>
 
                           {/* 2. Activity (with expandable tree toggle, bullet, name, critical tag) */}
-                          <td className="py-2.5 px-3.5 align-middle">
+                          <td className="py-2 px-4 align-middle">
                             <div
-                              className="flex items-center gap-1.5"
+                              className="flex items-center gap-2"
                               style={{ paddingLeft: `${indentPx}px` }}
                             >
                               {!sortConfig.field && (
@@ -2087,7 +2087,7 @@ export default function SchedulePage() {
                               </span>
 
                               {row.isCritical && (
-                                <span className="text-[11px] font-mono text-[#B5473C] bg-[#FBEFEE] border border-[#E4B0AA] px-1.5 py-0.2 rounded font-semibold shrink-0">
+                                <span className="text-[11px] font-mono text-[#B5473C] bg-[#FBEFEE] border border-[#E4B0AA] px-1.5 py-0.5 rounded font-semibold shrink-0">
                                   CRITICAL
                                 </span>
                               )}
@@ -2095,7 +2095,7 @@ export default function SchedulePage() {
                           </td>
 
                           {/* 3. Level */}
-                          <td className="py-2.5 px-2 align-middle text-center whitespace-nowrap">
+                          <td className="py-2 px-2 align-middle text-center whitespace-nowrap">
                             <span
                               className={`font-mono text-[11px] px-1.5 py-0.5 rounded border font-semibold inline-block ${getLevelBadgeClass(
                                 row.wbsLevel
@@ -2107,29 +2107,29 @@ export default function SchedulePage() {
                           </td>
 
                           {/* 4. Area */}
-                          <td className="py-2.5 px-3.5 align-middle whitespace-nowrap text-[13px] text-[#596579] truncate max-w-[160px]" title={row.area}>
+                          <td className="py-2 px-4 align-middle whitespace-nowrap text-[13px] text-[#596579] truncate max-w-[160px]" title={row.area}>
                             {row.area}
                           </td>
 
                           {/* 5. Discipline */}
-                          <td className="py-2.5 px-3.5 align-middle whitespace-nowrap">
+                          <td className="py-2 px-4 align-middle whitespace-nowrap">
                             <span className="px-2 py-0.5 bg-[#F1F3F5] border border-[#D9DEE5] rounded text-[11px] text-[#172033] font-medium">
                               {row.discipline}
                             </span>
                           </td>
 
                           {/* 6. Start (Planned Start Date) */}
-                          <td className="py-2.5 px-3.5 align-middle whitespace-nowrap font-mono text-xs text-[#596579]">
+                          <td className="py-2 px-4 align-middle whitespace-nowrap font-mono text-xs text-[#596579]">
                             {row.plannedStart}
                           </td>
 
                           {/* 7. Finish (Planned Finish Date) */}
-                          <td className="py-2.5 px-3.5 align-middle whitespace-nowrap font-mono text-xs text-[#172033] font-medium">
+                          <td className="py-2 px-4 align-middle whitespace-nowrap font-mono text-xs text-[#172033] font-medium">
                             {row.plannedFinish}
                           </td>
 
                           {/* 8. Progress */}
-                          <td className="py-2.5 px-3.5 align-middle">
+                          <td className="py-2 px-4 align-middle">
                             <div className="space-y-1 w-28">
                               <div className="flex items-center justify-between text-[11px] font-mono">
                                 <span className="font-bold text-[#172033]">{row.actualProgress}%</span>
@@ -2154,8 +2154,8 @@ export default function SchedulePage() {
                           </td>
 
                           {/* 9. Status */}
-                          <td className="py-2.5 px-3.5 align-middle whitespace-nowrap">
-                            <div className="flex items-center gap-1.5">
+                          <td className="py-2 px-4 align-middle whitespace-nowrap">
+                            <div className="flex items-center gap-2">
                               <StatusBadge status={row.status} size="sm" />
                               {(row.status === 'delayed' || row.status === 'at-risk') && (
                                 <WhyButton
@@ -2171,8 +2171,8 @@ export default function SchedulePage() {
                           </td>
 
                           {/* 10. Variance */}
-                          <td className="py-2.5 px-3.5 align-middle whitespace-nowrap">
-                            <div className="flex items-center gap-1.5">
+                          <td className="py-2 px-4 align-middle whitespace-nowrap">
+                            <div className="flex items-center gap-2">
                               <VarianceBadge daysDelay={row.delayDays} size="sm" />
                               {isSlipped && (
                                 <WhyButton
@@ -2187,7 +2187,7 @@ export default function SchedulePage() {
                           </td>
 
                           {/* 11. Action: Opens Activity Detail Drawer for secondary information */}
-                          <td className="py-2.5 px-3.5 align-middle text-right whitespace-nowrap">
+                          <td className="py-2 px-4 align-middle text-right whitespace-nowrap">
                             <button
                               type="button"
                               onClick={(e) => {
@@ -2195,7 +2195,7 @@ export default function SchedulePage() {
                                 setActiveActivity(row);
                                 openActivityDrawer(row.id);
                               }}
-                              className="px-2.5 py-1 text-xs font-medium text-[#176B87] hover:bg-[#EDF5F8] border border-[#C5D9E2] rounded-md transition-colors inline-flex items-center gap-1"
+                              className="px-3 py-1 text-xs font-medium text-[#176B87] hover:bg-[#EDF5F8] border border-[#C5D9E2] rounded-md transition-colors inline-flex items-center gap-1"
                               title="Open Activity Detail Drawer for WBS, Actual Dates, Dependencies, Evidence, and Audit History"
                             >
                               <SlidersHorizontal className="w-3 h-3" />
@@ -2328,15 +2328,15 @@ export default function SchedulePage() {
                           }`}
                         >
                           {/* 1. Activity ID */}
-                          <td className="py-2.5 px-3 align-middle whitespace-nowrap">
+                          <td className="py-2 px-3 align-middle whitespace-nowrap">
                             <span className="font-mono font-bold text-xs text-[#176B87] group-hover:underline">
                               {row.id}
                             </span>
                           </td>
 
                           {/* 2. Activity Name */}
-                          <td className="py-2.5 px-3 align-middle">
-                            <div className="flex items-center gap-1.5" style={{ paddingLeft: `${indentPx}px` }}>
+                          <td className="py-2 px-3 align-middle">
+                            <div className="flex items-center gap-2" style={{ paddingLeft: `${indentPx}px` }}>
                               {!sortConfig.field && (
                                 item.hasChildren ? (
                                   <button
@@ -2374,7 +2374,7 @@ export default function SchedulePage() {
                                 {row.name}
                               </span>
                               {row.isCritical && (
-                                <span className="text-[11px] font-mono text-[#B5473C] bg-[#FBEFEE] border border-[#E4B0AA] px-1.5 py-0.2 rounded font-semibold shrink-0">
+                                <span className="text-[11px] font-mono text-[#B5473C] bg-[#FBEFEE] border border-[#E4B0AA] px-1.5 py-0.5 rounded font-semibold shrink-0">
                                   CRITICAL
                                 </span>
                               )}
@@ -2382,7 +2382,7 @@ export default function SchedulePage() {
                           </td>
 
                           {/* 3. Level */}
-                          <td className="py-2.5 px-2 align-middle text-center whitespace-nowrap">
+                          <td className="py-2 px-2 align-middle text-center whitespace-nowrap">
                             <span
                               className={`font-mono text-[11px] px-1.5 py-0.5 rounded border font-semibold inline-block ${getLevelBadgeClass(
                                 row.wbsLevel
@@ -2393,34 +2393,34 @@ export default function SchedulePage() {
                           </td>
 
                           {/* 4. WBS */}
-                          <td className="py-2.5 px-3 align-middle whitespace-nowrap">
+                          <td className="py-2 px-3 align-middle whitespace-nowrap">
                             <span className="font-mono text-xs text-[#596579] font-medium">{row.wbs}</span>
                           </td>
 
                           {/* 5. Area */}
-                          <td className="py-2.5 px-3 align-middle whitespace-nowrap text-[#596579] truncate max-w-[140px]" title={row.area}>
+                          <td className="py-2 px-3 align-middle whitespace-nowrap text-[#596579] truncate max-w-[140px]" title={row.area}>
                             {row.area}
                           </td>
 
                           {/* 6. Discipline */}
-                          <td className="py-2.5 px-3 align-middle whitespace-nowrap">
+                          <td className="py-2 px-3 align-middle whitespace-nowrap">
                             <span className="px-2 py-0.5 bg-[#F1F3F5] border border-[#D9DEE5] rounded text-[11px] text-[#172033] font-medium">
                               {row.discipline}
                             </span>
                           </td>
 
                           {/* 7. Planned Start */}
-                          <td className="py-2.5 px-3 align-middle whitespace-nowrap font-mono text-xs text-[#596579]">
+                          <td className="py-2 px-3 align-middle whitespace-nowrap font-mono text-xs text-[#596579]">
                             {row.plannedStart}
                           </td>
 
                           {/* 8. Planned Finish */}
-                          <td className="py-2.5 px-3 align-middle whitespace-nowrap font-mono text-xs text-[#172033] font-medium">
+                          <td className="py-2 px-3 align-middle whitespace-nowrap font-mono text-xs text-[#172033] font-medium">
                             {row.plannedFinish}
                           </td>
 
                           {/* 9. Actual Start */}
-                          <td className="py-2.5 px-3 align-middle whitespace-nowrap font-mono text-xs">
+                          <td className="py-2 px-3 align-middle whitespace-nowrap font-mono text-xs">
                             {row.actualStart ? (
                               <span className="text-[#172033]">{row.actualStart}</span>
                             ) : (
@@ -2429,7 +2429,7 @@ export default function SchedulePage() {
                           </td>
 
                           {/* 10. Actual Finish */}
-                          <td className="py-2.5 px-3 align-middle whitespace-nowrap font-mono text-xs">
+                          <td className="py-2 px-3 align-middle whitespace-nowrap font-mono text-xs">
                             {row.actualFinish ? (
                               <span className="text-[#2E7D5B] font-semibold">{row.actualFinish}</span>
                             ) : row.actualStart ? (
@@ -2440,7 +2440,7 @@ export default function SchedulePage() {
                           </td>
 
                           {/* 11. Progress */}
-                          <td className="py-2.5 px-3 align-middle">
+                          <td className="py-2 px-3 align-middle">
                             <div className="space-y-1 w-28">
                               <div className="flex items-center justify-between text-[11px] font-mono">
                                 <span className="font-bold text-[#172033]">{row.actualProgress}%</span>
@@ -2457,13 +2457,13 @@ export default function SchedulePage() {
                           </td>
 
                           {/* 12. Status */}
-                          <td className="py-2.5 px-3 align-middle whitespace-nowrap">
+                          <td className="py-2 px-3 align-middle whitespace-nowrap">
                             <StatusBadge status={row.status} size="sm" />
                           </td>
 
                           {/* 13. Variance */}
-                          <td className="py-2.5 px-3 align-middle whitespace-nowrap">
-                            <div className="flex items-center gap-1.5">
+                          <td className="py-2 px-3 align-middle whitespace-nowrap">
+                            <div className="flex items-center gap-2">
                               <VarianceBadge daysDelay={row.delayDays} size="sm" />
                               {row.delayDays > 0 && (
                                 <WhyButton
@@ -2478,7 +2478,7 @@ export default function SchedulePage() {
                           </td>
 
                           {/* 14. Dependencies */}
-                          <td className="py-2.5 px-3 align-middle">
+                          <td className="py-2 px-3 align-middle">
                             <div className="flex flex-col gap-0.5 text-[10px] font-mono">
                               {row.predecessors.length > 0 ? (
                                 <span className="text-[#596579]">
@@ -2566,7 +2566,7 @@ export default function SchedulePage() {
                   <button
                     type="button"
                     onClick={() => setIsImportModalOpen(false)}
-                    className="px-3.5 py-1.5 text-xs text-[#596579] hover:text-[#172033] border border-[#D9DEE5] rounded-lg"
+                    className="px-4 py-1.5 text-xs text-[#596579] hover:text-[#172033] border border-[#D9DEE5] rounded-lg"
                   >
                     Cancel
                   </button>
@@ -2632,14 +2632,14 @@ export default function SchedulePage() {
                     <button
                       type="button"
                       onClick={() => handleFileChosen('OIL_DUL_CORRUPT_SAMPLE.xml', true)}
-                      className="px-3.5 py-2 text-xs font-medium text-[#B5473C] bg-white border border-[#E4B0AA] hover:bg-[#FBEFEE] rounded-lg"
+                      className="px-4 py-2 text-xs font-medium text-[#B5473C] bg-white border border-[#E4B0AA] hover:bg-[#FBEFEE] rounded-lg"
                     >
                       Test with Validation Errors
                     </button>
                   </div>
                 </div>
 
-                <div className="p-3 bg-[#EDF5F8] rounded-lg border border-[#B3CBE0] text-xs text-[#176B87] flex items-start gap-2.5">
+                <div className="p-3 bg-[#EDF5F8] rounded-lg border border-[#B3CBE0] text-xs text-[#176B87] flex items-start gap-2">
                   <Info className="w-4 h-4 shrink-0 mt-0.5" />
                   <div>
                     <strong className="font-semibold">Schedule Lineage Rule:</strong>
@@ -2703,10 +2703,10 @@ export default function SchedulePage() {
                   <table className="w-full min-w-[500px] text-left text-sm border-collapse">
                     <thead>
                       <tr className="bg-[#FAF2F1] border-b border-[#E4B0AA] text-[#B5473C] font-semibold text-[11px] sm:text-xs uppercase tracking-wider">
-                        <th className="py-2.5 px-3 whitespace-nowrap">Row</th>
-                        <th className="py-2.5 px-3 whitespace-nowrap">Column</th>
-                        <th className="py-2.5 px-3">Problem</th>
-                        <th className="py-2.5 px-3">Correction</th>
+                        <th className="py-2 px-3 whitespace-nowrap">Row</th>
+                        <th className="py-2 px-3 whitespace-nowrap">Column</th>
+                        <th className="py-2 px-3">Problem</th>
+                        <th className="py-2 px-3">Correction</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-[#F0D5D2] text-[14px]">
@@ -2729,7 +2729,7 @@ export default function SchedulePage() {
                   <button
                     type="button"
                     onClick={() => handleFileChosen('OIL_DUL_FIXED_BASELINE.xml', false)}
-                    className="px-3.5 py-1.5 text-xs font-semibold text-white bg-[#176B87] hover:bg-[#135A72] rounded-lg shadow-xs"
+                    className="px-4 py-1.5 text-xs font-semibold text-white bg-[#176B87] hover:bg-[#135A72] rounded-lg shadow-xs"
                   >
                     Re-Validate with Corrected File →
                   </button>
@@ -2745,7 +2745,7 @@ export default function SchedulePage() {
                   <span className="font-semibold">Schedule Baseline Analysis Verified &amp; Ready for Preview</span>
                 </div>
 
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 p-3.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 p-4 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg">
                   <div>
                     <span className="text-[11px] text-[#596579] block">Total Activities</span>
                     <span className="text-lg font-bold text-[#172033] font-mono">154</span>
@@ -2802,7 +2802,7 @@ export default function SchedulePage() {
                     required
                   />
                   {versionOverwriteError && (
-                    <div className="p-2.5 bg-[#FBEFEE] border border-[#E4B0AA] rounded-lg text-[11px] text-[#B5473C] mt-2 flex items-start gap-1.5">
+                    <div className="p-3 bg-[#FBEFEE] border border-[#E4B0AA] rounded-lg text-[11px] text-[#B5473C] mt-2 flex items-start gap-2">
                       <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5" />
                       <span>{versionOverwriteError}</span>
                     </div>
@@ -2831,7 +2831,7 @@ export default function SchedulePage() {
                   <button
                     type="button"
                     onClick={() => setImportStep(6)}
-                    className="px-3.5 py-1.5 text-xs text-[#596579] border border-[#D9DEE5] rounded-lg"
+                    className="px-4 py-1.5 text-xs text-[#596579] border border-[#D9DEE5] rounded-lg"
                   >
                     Back to Preview
                   </button>

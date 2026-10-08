@@ -48,7 +48,7 @@ export function UserMenu() {
         <div className="w-6 h-6 rounded bg-[#176B87] text-white flex items-center justify-center text-xs font-semibold flex-shrink-0">
           <User className="w-3.5 h-3.5" />
         </div>
-        <div className="hidden sm:flex items-center gap-1.5 text-left min-w-0">
+        <div className="hidden sm:flex items-center gap-2 text-left min-w-0">
           <div className="flex flex-col">
             <span className="text-xs font-semibold text-[#172033] leading-tight truncate">
               {displayName}
@@ -65,7 +65,7 @@ export function UserMenu() {
       {isOpen && (
         <div className="absolute right-0 mt-2 w-72 bg-white border border-[#D9DEE5] rounded-lg shadow-lg z-50 overflow-hidden">
           {/* User Details */}
-          <div className="p-3.5 border-b border-[#D9DEE5] bg-[#F7F8FA]">
+          <div className="p-4 border-b border-[#D9DEE5] bg-[#F7F8FA]">
             <p className="text-xs font-bold text-[#172033]">{userSession?.name}</p>
             <p className="text-[11px] text-[#596579]">{userSession?.email}</p>
             <p className="text-[11px] text-[#176B87] font-medium mt-1">
@@ -77,7 +77,7 @@ export function UserMenu() {
           {/* Admin Explicit Role View Switcher */}
           {userSession?.role === 'admin' && (
             <div className="p-2 border-b border-[#D9DEE5]">
-              <div className="px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-[#596579] flex items-center gap-1.5">
+              <div className="px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-[#596579] flex items-center gap-2">
                 <Shield className="w-3 h-3 text-[#176B87]" />
                 <span>Admin View Switcher</span>
               </div>
@@ -87,7 +87,7 @@ export function UserMenu() {
                     setIsOpen(false);
                     router.push('/dashboard');
                   }}
-                  className="w-full text-left p-1.5 rounded flex items-center gap-2 hover:bg-[#F1F3F5] text-xs text-[#172033]"
+                  className="w-full text-left p-2 rounded flex items-center gap-2 hover:bg-[#F1F3F5] text-xs text-[#172033]"
                 >
                   <LayoutDashboard className="w-3.5 h-3.5 text-[#176B87]" />
                   <span>Switch to Manager View</span>
@@ -97,7 +97,7 @@ export function UserMenu() {
                     setIsOpen(false);
                     router.push('/engineer');
                   }}
-                  className="w-full text-left p-1.5 rounded flex items-center gap-2 hover:bg-[#F1F3F5] text-xs text-[#172033]"
+                  className="w-full text-left p-2 rounded flex items-center gap-2 hover:bg-[#F1F3F5] text-xs text-[#172033]"
                 >
                   <HardHat className="w-3.5 h-3.5 text-[#2E7D5B]" />
                   <span>Switch to Engineer View</span>
@@ -107,7 +107,7 @@ export function UserMenu() {
                     setIsOpen(false);
                     router.push('/admin');
                   }}
-                  className="w-full text-left p-1.5 rounded flex items-center gap-2 hover:bg-[#F1F3F5] text-xs text-[#176B87]"
+                  className="w-full text-left p-2 rounded flex items-center gap-2 hover:bg-[#F1F3F5] text-xs text-[#176B87]"
                 >
                   <Shield className="w-3.5 h-3.5 text-[#176B87]" />
                   <span>Admin Governance Hub</span>

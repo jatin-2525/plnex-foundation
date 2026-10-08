@@ -78,7 +78,7 @@ export function AppShell({ children }: AppShellProps) {
   if (!isAuthReady) {
     return (
       <div className="min-h-screen bg-[#F7F8FA] flex items-center justify-center p-4">
-        <div className="flex flex-col items-center gap-2.5">
+        <div className="flex flex-col items-center gap-2">
           <div className="w-9 h-9 rounded bg-[#176B87] text-white flex items-center justify-center font-bold text-sm">
             PX
           </div>

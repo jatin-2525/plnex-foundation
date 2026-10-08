@@ -198,7 +198,7 @@ export function GlobalSearchPanel({
       {/* 1. Header Bar */}
       {showHeading && (
         <div className="p-4 border-b border-[#D9DEE5] bg-[#F7F8FA] flex items-center justify-between gap-3">
-          <div className="flex items-center gap-2.5">
+          <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded bg-[#EDF5F8] border border-[#B3CBE0] flex items-center justify-center text-[#176B87]">
               <Search className="w-4 h-4" />
             </div>
@@ -218,7 +218,7 @@ export function GlobalSearchPanel({
       )}
 
       {/* 2. Input Box */}
-      <div className="p-3.5 bg-white border-b border-[#D9DEE5] space-y-2.5">
+      <div className="p-4 bg-white border-b border-[#D9DEE5] space-y-2">
         <div className="relative">
           <Search className="w-4 h-4 text-[#7B8798] absolute left-3 top-2.5" />
           <input
@@ -240,7 +240,7 @@ export function GlobalSearchPanel({
         </div>
 
         {/* Categories */}
-        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-thin text-xs">
+        <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-thin text-xs">
           {categories.map((cat) => {
             const isSelected = activeCategory === cat.id;
             return (
@@ -248,7 +248,7 @@ export function GlobalSearchPanel({
                 key={cat.id}
                 type="button"
                 onClick={() => setActiveCategory(cat.id)}
-                className={`px-2.5 py-1 rounded-md text-[11px] font-medium whitespace-nowrap transition-colors border ${
+                className={`px-3 py-1 rounded-md text-[11px] font-medium whitespace-nowrap transition-colors border ${
                   isSelected
                     ? 'bg-[#176B87] text-white border-[#176B87]'
                     : 'bg-[#F7F8FA] border-[#D9DEE5] text-[#596579] hover:bg-[#F1F3F5]'
@@ -357,7 +357,7 @@ export function GlobalSearchPanel({
                   )}
                 </div>
 
-                <div className="flex flex-col items-end gap-1.5 shrink-0">
+                <div className="flex flex-col items-end gap-2 shrink-0">
                   <span
                     className={`px-2 py-0.5 rounded text-[10px] font-semibold border font-mono capitalize ${getStatusBadgeClass(
                       item.status

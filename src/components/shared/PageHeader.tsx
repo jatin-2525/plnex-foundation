@@ -28,12 +28,12 @@ export function PageHeader({
     >
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <div className="flex items-center gap-3 mb-1.5 flex-wrap">
+          <div className="flex items-center gap-3 mb-2 flex-wrap">
             <h1 className="text-[28px] sm:text-3xl font-bold text-[#172033] tracking-tight leading-tight">
               {title}
             </h1>
             {stageConfig && (
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0] text-xs font-semibold rounded-md font-mono">
+              <span className="inline-flex items-center gap-2 px-3 py-0.5 bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0] text-xs font-semibold rounded-md font-mono">
                 <span>STAGE {stageConfig.stepNumber}:</span>
                 <span className="font-bold">{stageConfig.label}</span>
               </span>

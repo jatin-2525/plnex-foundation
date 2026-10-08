@@ -172,7 +172,7 @@ export function BarChart({
   };
 
   return (
-    <div className={`bg-white rounded-lg border border-[#D9DEE5] p-5 shadow-xs text-[#172033] ${className}`}>
+    <div className={`bg-white rounded-lg border border-[#D9DEE5] p-4 sm:p-6 shadow-xs text-[#172033] ${className}`}>
       {/* Header */}
       <div className="flex flex-col lg:flex-row lg:items-center justify-between pb-3 border-b border-[#D9DEE5] gap-3">
         <div>
@@ -390,15 +390,15 @@ export function BarChart({
       {/* Legend & Concise Drivers */}
       <div className="flex flex-wrap items-center justify-between gap-4 mt-3 pt-3 border-t border-[#F1F3F5] text-xs text-[#596579]">
         <div className="flex items-center gap-4 flex-wrap">
-          <div className="flex items-center gap-1.5">
+          <div className="flex items-center gap-2">
             <span className="w-3.5 h-3.5 bg-[#E0EEF2] border border-[#176B87] inline-block rounded-xs" />
             <span>Planned Target</span>
           </div>
-          <div className="flex items-center gap-1.5">
+          <div className="flex items-center gap-2">
             <span className="w-3.5 h-3.5 bg-[#2E7D5B] inline-block rounded-xs" />
             <span>Actual (On-Track / Ahead)</span>
           </div>
-          <div className="flex items-center gap-1.5">
+          <div className="flex items-center gap-2">
             <span className="w-3.5 h-3.5 bg-[#B5473C] inline-block rounded-xs" />
             <span>Actual (Behind Schedule)</span>
           </div>

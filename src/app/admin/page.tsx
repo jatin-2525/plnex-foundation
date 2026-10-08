@@ -53,7 +53,7 @@ export default function AdminDashboardPage() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 pb-12">
       <Breadcrumbs items={breadcrumbs} />
 
       <PageHeader
@@ -63,14 +63,14 @@ export default function AdminDashboardPage() {
           <div className="flex items-center gap-2">
             <Link
               href="/admin/users"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white hover:bg-[#F1F3F5] text-[#172033] border border-[#D9DEE5] rounded-md text-xs font-semibold transition-colors"
+              className="inline-flex items-center gap-2 px-3 py-1.5 bg-white hover:bg-[#F1F3F5] text-[#172033] border border-[#D9DEE5] rounded-md text-xs font-semibold transition-colors"
             >
               <Users className="w-3.5 h-3.5 text-[#596579]" />
               Users & Roles
             </Link>
             <Link
               href="/admin/settings"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#176B87] hover:bg-[#135A72] text-white rounded-md text-xs font-semibold shadow-xs transition-colors"
+              className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#176B87] hover:bg-[#135A72] text-white rounded-md text-xs font-semibold shadow-xs transition-colors"
             >
               <Settings className="w-3.5 h-3.5" />
               System Settings
@@ -89,7 +89,7 @@ export default function AdminDashboardPage() {
       />
 
       {/* Explicit Role View Switching Section (Mandated by Objective) */}
-      <div className="bg-white border border-[#D9DEE5] rounded-lg p-5">
+      <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6">
         <div className="flex items-center justify-between pb-3 border-b border-[#D9DEE5] mb-4">
           <div>
             <h2 className="text-sm font-bold text-[#172033] flex items-center gap-2">
@@ -110,7 +110,7 @@ export default function AdminDashboardPage() {
           <div className="border border-[#D9DEE5] rounded-lg p-4 bg-[#F7F8FA] hover:border-[#176B87] transition-colors flex flex-col justify-between">
             <div>
               <div className="flex items-center justify-between mb-2">
-                <span className="inline-flex items-center gap-1.5 text-xs font-bold font-mono text-[#176B87] bg-white border border-[#B3CBE0] px-2 py-0.5 rounded">
+                <span className="inline-flex items-center gap-2 text-xs font-bold font-mono text-[#176B87] bg-white border border-[#B3CBE0] px-2 py-0.5 rounded">
                   <LayoutDashboard className="w-3.5 h-3.5" />
                   MANAGER WORKSPACE
                 </span>
@@ -125,7 +125,7 @@ export default function AdminDashboardPage() {
               <span className="text-[11px] font-mono text-[#596579]">Destination: /dashboard</span>
               <Link
                 href="/dashboard"
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#176B87] hover:bg-[#135A72] text-white rounded text-xs font-semibold shadow-xs transition-colors"
+                className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#176B87] hover:bg-[#135A72] text-white rounded text-xs font-semibold shadow-xs transition-colors"
               >
                 Launch Manager View <ArrowRight className="w-3.5 h-3.5" />
               </Link>
@@ -136,7 +136,7 @@ export default function AdminDashboardPage() {
           <div className="border border-[#D9DEE5] rounded-lg p-4 bg-[#F7F8FA] hover:border-[#2E7D5B] transition-colors flex flex-col justify-between">
             <div>
               <div className="flex items-center justify-between mb-2">
-                <span className="inline-flex items-center gap-1.5 text-xs font-bold font-mono text-[#2E7D5B] bg-white border border-[#B8DCC9] px-2 py-0.5 rounded">
+                <span className="inline-flex items-center gap-2 text-xs font-bold font-mono text-[#2E7D5B] bg-white border border-[#B8DCC9] px-2 py-0.5 rounded">
                   <HardHat className="w-3.5 h-3.5" />
                   FIELD EXECUTION WORKSPACE
                 </span>
@@ -151,7 +151,7 @@ export default function AdminDashboardPage() {
               <span className="text-[11px] font-mono text-[#596579]">Destination: /engineer</span>
               <Link
                 href="/engineer"
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#2E7D5B] hover:bg-[#25664A] text-white rounded text-xs font-semibold shadow-xs transition-colors"
+                className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#2E7D5B] hover:bg-[#25664A] text-white rounded text-xs font-semibold shadow-xs transition-colors"
               >
                 Launch Engineer View <ArrowRight className="w-3.5 h-3.5" />
               </Link>
@@ -202,7 +202,7 @@ export default function AdminDashboardPage() {
       {/* Admin Audit & Diagnostics Center */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {/* System Administration Shortcuts */}
-        <div className="bg-white border border-[#D9DEE5] rounded-lg p-5 space-y-4">
+        <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 space-y-4">
           <h3 className="text-xs font-bold uppercase tracking-wider text-[#596579] flex items-center gap-2">
             <Server className="w-4 h-4 text-[#176B87]" />
             Administration Subsystems
@@ -244,7 +244,7 @@ export default function AdminDashboardPage() {
         </div>
 
         {/* Acceptance Test & Session Validator Sandbox */}
-        <div className="bg-white border border-[#D9DEE5] rounded-lg p-5 space-y-4">
+        <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 space-y-4">
           <div className="flex items-center justify-between">
             <h3 className="text-xs font-bold uppercase tracking-wider text-[#596579] flex items-center gap-2">
               <Clock className="w-4 h-4 text-[#D98B32]" />

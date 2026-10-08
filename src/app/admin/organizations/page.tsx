@@ -52,7 +52,7 @@ export default function AdminOrganizationsPage() {
   ];
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 pb-12">
       <Breadcrumbs items={breadcrumbs} />
 
       <PageHeader
@@ -61,7 +61,7 @@ export default function AdminOrganizationsPage() {
         actions={
           <button
             type="button"
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#176B87] hover:bg-[#135A72] text-white rounded-md text-xs font-semibold shadow-xs transition-colors"
+            className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#176B87] hover:bg-[#135A72] text-white rounded-md text-xs font-semibold shadow-xs transition-colors"
           >
             <Plus className="w-3.5 h-3.5" />
             Add Organization
@@ -71,7 +71,7 @@ export default function AdminOrganizationsPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {orgs.map((org) => (
-          <div key={org.id} className="bg-white border border-[#D9DEE5] rounded-lg p-5 flex flex-col justify-between">
+          <div key={org.id} className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 flex flex-col justify-between">
             <div>
               <div className="flex items-center justify-between mb-2">
                 <span className="font-mono text-xs font-bold text-[#176B87] bg-[#EDF5F8] border border-[#B3CBE0] px-2 py-0.5 rounded">
@@ -84,12 +84,12 @@ export default function AdminOrganizationsPage() {
               <h3 className="text-sm font-bold text-[#172033]">{org.name}</h3>
               <p className="text-xs text-[#596579] mt-0.5 font-medium">{org.type}</p>
 
-              <div className="mt-3 space-y-1.5 text-xs text-[#596579]">
-                <div className="flex items-center gap-1.5">
+              <div className="mt-3 space-y-2 text-xs text-[#596579]">
+                <div className="flex items-center gap-2">
                   <MapPin className="w-3.5 h-3.5 text-[#7B8798]" />
                   <span>{org.locations}</span>
                 </div>
-                <div className="flex items-center gap-1.5">
+                <div className="flex items-center gap-2">
                   <Briefcase className="w-3.5 h-3.5 text-[#7B8798]" />
                   <span>{org.projects} Linked Projects • {org.activeUsers} Personnel</span>
                 </div>
@@ -99,7 +99,7 @@ export default function AdminOrganizationsPage() {
             <div className="mt-4 pt-3 border-t border-[#D9DEE5] flex items-center justify-end">
               <button
                 type="button"
-                className="px-2.5 py-1 text-xs text-[#176B87] hover:bg-[#EDF5F8] rounded font-medium transition-colors"
+                className="px-3 py-1 text-xs text-[#176B87] hover:bg-[#EDF5F8] rounded font-medium transition-colors"
               >
                 Configure Workspace Access
               </button>

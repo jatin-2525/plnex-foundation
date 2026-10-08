@@ -126,7 +126,7 @@ function ResetPasswordForm() {
       {/* Centered Authentication Panel */}
       <div className="bg-white border border-[#D9DEE5] rounded-lg shadow-sm overflow-hidden">
         {/* Header with PLnEX branding */}
-        <div className="px-6 pt-7 pb-5 text-center border-b border-[#D9DEE5] bg-white">
+        <div className="px-6 pt-7 pb-4 text-center border-b border-[#D9DEE5] bg-white">
           <div className="inline-flex items-center justify-center w-10 h-10 rounded-md bg-[#176B87] text-white font-black text-lg tracking-tighter mb-3 shadow-xs">
             PX
           </div>
@@ -149,7 +149,7 @@ function ResetPasswordForm() {
             </div>
             <div>
               <h2 className="text-sm font-bold text-[#172033]">Invalid Reset Token</h2>
-              <p className="text-xs text-[#596579] mt-1.5 leading-relaxed">
+              <p className="text-xs text-[#596579] mt-2 leading-relaxed">
                 The password reset token in this URL is unrecognized, malformed, or has already been consumed.
               </p>
             </div>
@@ -177,7 +177,7 @@ function ResetPasswordForm() {
             </div>
             <div>
               <h2 className="text-sm font-bold text-[#172033]">Reset Link Expired</h2>
-              <p className="text-xs text-[#596579] mt-1.5 leading-relaxed">
+              <p className="text-xs text-[#596579] mt-2 leading-relaxed">
                 For security compliance, password reset links are single-use and expire after 60 minutes.
               </p>
             </div>
@@ -212,7 +212,7 @@ function ResetPasswordForm() {
             <div className="w-full bg-[#D9DEE5] h-1.5 rounded-full overflow-hidden">
               <div className="h-full bg-[#2E7D5B] rounded-full w-full" />
             </div>
-            <span className="inline-flex items-center gap-1.5 text-xs text-[#176B87] font-medium font-mono">
+            <span className="inline-flex items-center gap-2 text-xs text-[#176B87] font-medium font-mono">
               <Loader2 className="w-3.5 h-3.5 animate-spin" />
               Redirecting to Sign In...
             </span>
@@ -230,7 +230,7 @@ function ResetPasswordForm() {
 
         {/* State 4: Active Reset Form (form / submitting) */}
         {(pageState === 'form' || pageState === 'submitting') && (
-          <form onSubmit={handleSubmit} className="p-6 md:p-7 space-y-4">
+          <form onSubmit={handleSubmit} className="p-6 md:p-6 space-y-4">
             <div>
               <h2 className="text-sm font-bold text-[#172033]">Create New Password</h2>
               <p className="text-xs text-[#596579] mt-0.5 leading-relaxed">
@@ -239,7 +239,7 @@ function ResetPasswordForm() {
             </div>
 
             {/* New Password Input */}
-            <div className="space-y-1.5">
+            <div className="space-y-2">
               <label htmlFor="new-password" className="block text-xs font-semibold text-[#172033]">
                 New Password <span className="text-[#B5473C]">*</span>
               </label>
@@ -280,7 +280,7 @@ function ResetPasswordForm() {
             </div>
 
             {/* Confirm Password Input */}
-            <div className="space-y-1.5">
+            <div className="space-y-2">
               <label htmlFor="confirm-password" className="block text-xs font-semibold text-[#172033]">
                 Confirm Password <span className="text-[#B5473C]">*</span>
               </label>
@@ -329,22 +329,22 @@ function ResetPasswordForm() {
             </div>
 
             {/* Password Requirements Checklist */}
-            <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-md text-[11px] space-y-1.5">
+            <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-md text-[11px] space-y-2">
               <span className="font-semibold text-[#172033] block">Password Security Requirements:</span>
-              <div className="grid grid-cols-2 gap-1.5 font-mono">
-                <div className={`flex items-center gap-1.5 ${passwordCriteria.minLength ? 'text-[#2E7D5B]' : 'text-[#7B8798]'}`}>
+              <div className="grid grid-cols-2 gap-2 font-mono">
+                <div className={`flex items-center gap-2 ${passwordCriteria.minLength ? 'text-[#2E7D5B]' : 'text-[#7B8798]'}`}>
                   {passwordCriteria.minLength ? <Check className="w-3.5 h-3.5 text-[#2E7D5B]" /> : <span className="w-3.5 h-3.5 flex items-center justify-center">•</span>}
                   <span>At least 8 characters</span>
                 </div>
-                <div className={`flex items-center gap-1.5 ${passwordCriteria.hasNumber ? 'text-[#2E7D5B]' : 'text-[#7B8798]'}`}>
+                <div className={`flex items-center gap-2 ${passwordCriteria.hasNumber ? 'text-[#2E7D5B]' : 'text-[#7B8798]'}`}>
                   {passwordCriteria.hasNumber ? <Check className="w-3.5 h-3.5 text-[#2E7D5B]" /> : <span className="w-3.5 h-3.5 flex items-center justify-center">•</span>}
                   <span>At least 1 number (0–9)</span>
                 </div>
-                <div className={`flex items-center gap-1.5 ${passwordCriteria.hasUpper ? 'text-[#2E7D5B]' : 'text-[#7B8798]'}`}>
+                <div className={`flex items-center gap-2 ${passwordCriteria.hasUpper ? 'text-[#2E7D5B]' : 'text-[#7B8798]'}`}>
                   {passwordCriteria.hasUpper ? <Check className="w-3.5 h-3.5 text-[#2E7D5B]" /> : <span className="w-3.5 h-3.5 flex items-center justify-center">•</span>}
                   <span>Uppercase letter (A–Z)</span>
                 </div>
-                <div className={`flex items-center gap-1.5 ${passwordCriteria.hasSpecial ? 'text-[#2E7D5B]' : 'text-[#7B8798]'}`}>
+                <div className={`flex items-center gap-2 ${passwordCriteria.hasSpecial ? 'text-[#2E7D5B]' : 'text-[#7B8798]'}`}>
                   {passwordCriteria.hasSpecial ? <Check className="w-3.5 h-3.5 text-[#2E7D5B]" /> : <span className="w-3.5 h-3.5 flex items-center justify-center">•</span>}
                   <span>Special character (!@#$)</span>
                 </div>
@@ -355,7 +355,7 @@ function ResetPasswordForm() {
             <button
               type="submit"
               disabled={pageState === 'submitting'}
-              className="w-full flex items-center justify-center gap-2 py-2.5 px-4 bg-[#176B87] hover:bg-[#135A72] disabled:bg-[#176B87]/60 text-white text-xs font-semibold rounded-md shadow-xs transition-colors cursor-pointer disabled:cursor-not-allowed mt-2"
+              className="w-full flex items-center justify-center gap-2 py-2 px-4 bg-[#176B87] hover:bg-[#135A72] disabled:bg-[#176B87]/60 text-white text-xs font-semibold rounded-md shadow-xs transition-colors cursor-pointer disabled:cursor-not-allowed mt-2"
             >
               {pageState === 'submitting' ? (
                 <>
@@ -394,7 +394,7 @@ function ResetPasswordForm() {
           </span>
           <span className="font-mono">All States Tested</span>
         </div>
-        <div className="flex flex-wrap gap-1.5">
+        <div className="flex flex-wrap gap-2">
           <button
             type="button"
             onClick={() => handleQuickFill('valid')}

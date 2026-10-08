@@ -33,7 +33,7 @@ export default function AdminUsersPage() {
   ];
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 pb-12">
       <Breadcrumbs items={breadcrumbs} />
 
       <PageHeader
@@ -42,7 +42,7 @@ export default function AdminUsersPage() {
         actions={
           <button
             type="button"
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#176B87] hover:bg-[#135A72] text-white rounded-md text-xs font-semibold shadow-xs transition-colors"
+            className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#176B87] hover:bg-[#135A72] text-white rounded-md text-xs font-semibold shadow-xs transition-colors"
           >
             <Plus className="w-3.5 h-3.5" />
             Provision New User
@@ -68,7 +68,7 @@ export default function AdminUsersPage() {
           <select
             value={roleFilter}
             onChange={(e) => setRoleFilter(e.target.value as any)}
-            className="px-2.5 py-1.5 text-xs bg-[#F7F8FA] border border-[#D9DEE5] rounded-md outline-none text-[#172033]"
+            className="px-3 py-1.5 text-xs bg-[#F7F8FA] border border-[#D9DEE5] rounded-md outline-none text-[#172033]"
           >
             <option value="all">All Roles</option>
             <option value="manager">Manager</option>
@@ -103,7 +103,7 @@ export default function AdminUsersPage() {
 
               <div className="flex items-center gap-3 sm:gap-4">
                 <span
-                  className={`px-2.5 py-0.5 rounded text-[11px] font-mono font-bold uppercase ${
+                  className={`px-3 py-0.5 rounded text-[11px] font-mono font-bold uppercase ${
                     u.role === 'admin'
                       ? 'bg-[#EDF5F8] text-[#3B6EA8] border border-[#B3CBE0]'
                       : u.role === 'manager'
@@ -116,7 +116,7 @@ export default function AdminUsersPage() {
 
                 <button
                   type="button"
-                  className="px-2.5 py-1 text-xs text-[#596579] hover:text-[#172033] hover:bg-[#F1F3F5] border border-[#D9DEE5] rounded transition-colors"
+                  className="px-3 py-1 text-xs text-[#596579] hover:text-[#172033] hover:bg-[#F1F3F5] border border-[#D9DEE5] rounded transition-colors"
                 >
                   Edit Permissions
                 </button>

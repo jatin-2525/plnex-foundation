@@ -287,7 +287,7 @@ export function GlobalSearch() {
           {/* =========================================================================
               1. SEARCH INPUT HEADER
               ========================================================================= */}
-          <div className="flex items-center px-4 py-3.5 border-b border-[#D9DEE5] bg-white gap-3">
+          <div className="flex items-center px-4 py-3 border-b border-[#D9DEE5] bg-white gap-3">
             <Search className="w-5 h-5 text-[#7B8798] shrink-0" />
             <input
               ref={inputRef}
@@ -322,7 +322,7 @@ export function GlobalSearch() {
           {/* =========================================================================
               2. CATEGORY PILL FILTER CAROUSEL (THE 7 ENTITY TYPES)
               ========================================================================= */}
-          <div className="px-4 py-2 bg-[#F7F8FA] border-b border-[#D9DEE5] flex items-center gap-1.5 overflow-x-auto scrollbar-thin">
+          <div className="px-4 py-2 bg-[#F7F8FA] border-b border-[#D9DEE5] flex items-center gap-2 overflow-x-auto scrollbar-thin">
             {categories.map((cat) => {
               const isSelected = activeCategory === cat.id;
               return (
@@ -330,7 +330,7 @@ export function GlobalSearch() {
                   key={cat.id}
                   type="button"
                   onClick={() => setActiveCategory(cat.id)}
-                  className={`px-2.5 py-1 rounded-md text-[11px] font-medium whitespace-nowrap transition-colors border ${
+                  className={`px-3 py-1 rounded-md text-[11px] font-medium whitespace-nowrap transition-colors border ${
                     isSelected
                       ? 'bg-[#176B87] text-white border-[#176B87] shadow-xs'
                       : 'bg-white border-[#D9DEE5] text-[#596579] hover:bg-[#F1F3F5]'
@@ -428,7 +428,7 @@ export function GlobalSearch() {
             {!isLoading && !hasError && !query && (
               <div className="space-y-3 p-2">
                 <div className="flex items-center justify-between px-2 text-[11px] font-bold uppercase tracking-wider text-[#596579]">
-                  <span className="flex items-center gap-1.5">
+                  <span className="flex items-center gap-2">
                     <Clock className="w-3.5 h-3.5 text-[#176B87]" />
                     Recent Searches & Quick Queries
                   </span>
@@ -459,9 +459,9 @@ export function GlobalSearch() {
                             setQuery(rec.query);
                           }
                         }}
-                        className="flex items-center justify-between p-2.5 rounded-lg hover:bg-[#F1F3F5] transition-colors cursor-pointer group"
+                        className="flex items-center justify-between p-3 rounded-lg hover:bg-[#F1F3F5] transition-colors cursor-pointer group"
                       >
-                        <div className="flex items-center gap-2.5 min-w-0">
+                        <div className="flex items-center gap-2 min-w-0">
                           <div className="w-6 h-6 rounded bg-white border border-[#D9DEE5] flex items-center justify-center shrink-0 text-[#7B8798]">
                             <Clock className="w-3.5 h-3.5" />
                           </div>
@@ -500,7 +500,7 @@ export function GlobalSearch() {
                   <span className="px-2 text-[10px] uppercase font-semibold text-[#596579] block mb-2">
                     Quick Jump Suggestions (Across 7 Data Stores):
                   </span>
-                  <div className="flex flex-wrap gap-1.5 px-2">
+                  <div className="flex flex-wrap gap-2 px-2">
                     {[
                       { label: 'Line 24 Erection (PIP-24-001)', query: 'PIP-24-001' },
                       { label: 'Unmatched Drain (EVT-2026-004)', query: 'EVT-2026-004' },
@@ -513,7 +513,7 @@ export function GlobalSearch() {
                         key={s.query}
                         type="button"
                         onClick={() => setQuery(s.query)}
-                        className="px-2.5 py-1 bg-[#F7F8FA] hover:bg-[#EDF5F8] text-[#172033] hover:text-[#176B87] rounded-md text-xs border border-[#D9DEE5] transition-colors"
+                        className="px-3 py-1 bg-[#F7F8FA] hover:bg-[#EDF5F8] text-[#172033] hover:text-[#176B87] rounded-md text-xs border border-[#D9DEE5] transition-colors"
                       >
                         {s.label}
                       </button>
@@ -563,7 +563,7 @@ export function GlobalSearch() {
                           </span>
 
                           {/* 2. ID */}
-                          <span className="font-mono font-bold text-xs text-[#176B87] bg-white px-1.5 py-0.2 rounded border border-[#D9DEE5]">
+                          <span className="font-mono font-bold text-xs text-[#176B87] bg-white px-1.5 py-0.5 rounded border border-[#D9DEE5]">
                             {item.id}
                           </span>
 
@@ -610,22 +610,22 @@ export function GlobalSearch() {
           {/* =========================================================================
               4. FOOTER BAR WITH KEYBOARD SHORTCUT HELPER
               ========================================================================= */}
-          <div className="px-4 py-2.5 bg-[#F7F8FA] border-t border-[#D9DEE5] flex items-center justify-between text-xs text-[#596579] flex-wrap gap-2">
+          <div className="px-4 py-2 bg-[#F7F8FA] border-t border-[#D9DEE5] flex items-center justify-between text-xs text-[#596579] flex-wrap gap-2">
             <div className="flex items-center gap-4 text-[11px]">
               <span className="inline-flex items-center gap-1">
-                <kbd className="px-1.5 py-0.2 bg-white border border-[#D9DEE5] rounded font-mono text-[10px]">
+                <kbd className="px-1.5 py-0.5 bg-white border border-[#D9DEE5] rounded font-mono text-[10px]">
                   ↑↓
                 </kbd>
                 <span>Navigate</span>
               </span>
               <span className="inline-flex items-center gap-1">
-                <kbd className="px-1.5 py-0.2 bg-white border border-[#D9DEE5] rounded font-mono text-[10px]">
+                <kbd className="px-1.5 py-0.5 bg-white border border-[#D9DEE5] rounded font-mono text-[10px]">
                   ↵
                 </kbd>
                 <span>Open Destination</span>
               </span>
               <span className="inline-flex items-center gap-1">
-                <kbd className="px-1.5 py-0.2 bg-white border border-[#D9DEE5] rounded font-mono text-[10px]">
+                <kbd className="px-1.5 py-0.5 bg-white border border-[#D9DEE5] rounded font-mono text-[10px]">
                   ESC
                 </kbd>
                 <span>Dismiss</span>

@@ -71,7 +71,7 @@ export function ConnectionStatusControl() {
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-[#F7F8FA] hover:bg-[#EDF5F8] border border-[#D9DEE5] rounded-md text-xs font-medium text-[#172033] transition-colors cursor-pointer"
+        className="inline-flex items-center gap-2 px-3 py-1 bg-[#F7F8FA] hover:bg-[#EDF5F8] border border-[#D9DEE5] rounded-md text-xs font-medium text-[#172033] transition-colors cursor-pointer"
         aria-label="Toggle Connection Status settings"
         title={`Connection Mode: ${connectionMode} • Effective: ${effectiveStatus}`}
       >
@@ -103,9 +103,9 @@ export function ConnectionStatusControl() {
 
       {/* Dropdown Popover */}
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-80 sm:w-96 bg-white border border-[#D9DEE5] rounded-lg shadow-lg z-50 p-4 text-xs space-y-3.5 animate-in fade-in duration-150">
+        <div className="absolute right-0 mt-2 w-80 sm:w-96 bg-white border border-[#D9DEE5] rounded-lg shadow-lg z-50 p-4 text-xs space-y-4 animate-in fade-in duration-150">
           {/* Header */}
-          <div className="flex items-center justify-between border-b border-[#D9DEE5]/60 pb-2.5">
+          <div className="flex items-center justify-between border-b border-[#D9DEE5]/60 pb-2">
             <div>
               <span className="font-bold text-sm text-[#172033] block">Connection Status</span>
               <span className="text-[11px] text-[#596579]">
@@ -126,7 +126,7 @@ export function ConnectionStatusControl() {
           </div>
 
           {/* 3 Modes Selector (Priority 2 Requirement 1) */}
-          <div className="space-y-1.5">
+          <div className="space-y-2">
             <span className="text-[10px] uppercase font-semibold text-[#596579] tracking-wider block">
               Connection Mode
             </span>
@@ -135,21 +135,21 @@ export function ConnectionStatusControl() {
             <button
               type="button"
               onClick={() => handleSelectMode('AUTOMATIC')}
-              className={`w-full p-2.5 rounded-lg border text-left flex items-start justify-between transition-colors ${
+              className={`w-full p-3 rounded-lg border text-left flex items-start justify-between transition-colors ${
                 connectionMode === 'AUTOMATIC'
                   ? 'bg-[#EDF5F8] border-[#176B87] text-[#172033]'
                   : 'bg-white border-[#D9DEE5] hover:bg-[#F7F8FA] text-[#596579]'
               }`}
             >
-              <div className="flex items-start gap-2.5">
+              <div className="flex items-start gap-2">
                 <div className="p-1 rounded bg-white border border-[#D9DEE5] text-[#176B87] mt-0.5">
                   <Wifi className="w-3.5 h-3.5" />
                 </div>
                 <div>
-                  <div className="font-bold text-xs text-[#172033] flex items-center gap-1.5">
+                  <div className="font-bold text-xs text-[#172033] flex items-center gap-2">
                     <span>Automatic</span>
                     {connectionMode === 'AUTOMATIC' && (
-                      <span className="text-[10px] font-semibold text-[#176B87] bg-white px-1.5 py-0.2 rounded border border-[#B3CBE0]">
+                      <span className="text-[10px] font-semibold text-[#176B87] bg-white px-1.5 py-0.5 rounded border border-[#B3CBE0]">
                         Active
                       </span>
                     )}
@@ -166,21 +166,21 @@ export function ConnectionStatusControl() {
             <button
               type="button"
               onClick={() => handleSelectMode('ONLINE')}
-              className={`w-full p-2.5 rounded-lg border text-left flex items-start justify-between transition-colors ${
+              className={`w-full p-3 rounded-lg border text-left flex items-start justify-between transition-colors ${
                 connectionMode === 'ONLINE'
                   ? 'bg-[#EDF7F2] border-[#2E7D5B] text-[#172033]'
                   : 'bg-white border-[#D9DEE5] hover:bg-[#F7F8FA] text-[#596579]'
               }`}
             >
-              <div className="flex items-start gap-2.5">
+              <div className="flex items-start gap-2">
                 <div className="p-1 rounded bg-white border border-[#D9DEE5] text-[#2E7D5B] mt-0.5">
                   <Wifi className="w-3.5 h-3.5" />
                 </div>
                 <div>
-                  <div className="font-bold text-xs text-[#172033] flex items-center gap-1.5">
+                  <div className="font-bold text-xs text-[#172033] flex items-center gap-2">
                     <span>Online</span>
                     {connectionMode === 'ONLINE' && (
-                      <span className="text-[10px] font-semibold text-[#2E7D5B] bg-white px-1.5 py-0.2 rounded border border-[#B8DCC9]">
+                      <span className="text-[10px] font-semibold text-[#2E7D5B] bg-white px-1.5 py-0.5 rounded border border-[#B8DCC9]">
                         Forced
                       </span>
                     )}
@@ -197,21 +197,21 @@ export function ConnectionStatusControl() {
             <button
               type="button"
               onClick={() => handleSelectMode('OFFLINE')}
-              className={`w-full p-2.5 rounded-lg border text-left flex items-start justify-between transition-colors ${
+              className={`w-full p-3 rounded-lg border text-left flex items-start justify-between transition-colors ${
                 connectionMode === 'OFFLINE'
                   ? 'bg-[#FDF6ED] border-[#D98B32] text-[#172033]'
                   : 'bg-white border-[#D9DEE5] hover:bg-[#F7F8FA] text-[#596579]'
               }`}
             >
-              <div className="flex items-start gap-2.5">
+              <div className="flex items-start gap-2">
                 <div className="p-1 rounded bg-white border border-[#D9DEE5] text-[#8C5311] mt-0.5">
                   <WifiOff className="w-3.5 h-3.5" />
                 </div>
                 <div>
-                  <div className="font-bold text-xs text-[#172033] flex items-center gap-1.5">
+                  <div className="font-bold text-xs text-[#172033] flex items-center gap-2">
                     <span>Offline</span>
                     {connectionMode === 'OFFLINE' && (
-                      <span className="text-[10px] font-semibold text-[#8C5311] bg-white px-1.5 py-0.2 rounded border border-[#F0D4A6]">
+                      <span className="text-[10px] font-semibold text-[#8C5311] bg-white px-1.5 py-0.5 rounded border border-[#F0D4A6]">
                         Simulated
                       </span>
                     )}
@@ -227,7 +227,7 @@ export function ConnectionStatusControl() {
 
           {/* Offline Mode Notice Banner (Priority 2 Requirement 3) */}
           {effectiveStatus === 'OFFLINE' && (
-            <div className="p-2.5 rounded-lg bg-[#FDF6ED]/60 border border-[#F0D4A6] text-[11px] text-[#8C5311] space-y-0.5">
+            <div className="p-3 rounded-lg bg-[#FDF6ED]/60 border border-[#F0D4A6] text-[11px] text-[#8C5311] space-y-0.5">
               <span className="font-bold block uppercase tracking-wider text-[10px]">
                 OFFLINE MODE
               </span>
@@ -266,7 +266,7 @@ export function ConnectionStatusControl() {
                   <Sliders className="w-3 h-3 text-[#176B87]" />
                   Admin Test Mode
                 </span>
-                <label className="flex items-center gap-1.5 cursor-pointer text-[10px] font-bold text-[#596579]">
+                <label className="flex items-center gap-2 cursor-pointer text-[10px] font-bold text-[#596579]">
                   <input
                     type="checkbox"
                     checked={testMode.isEnabled}
@@ -280,7 +280,7 @@ export function ConnectionStatusControl() {
               </div>
 
               {testMode.isEnabled && (
-                <div className="p-2.5 rounded-lg bg-[#F7F8FA] border border-[#D9DEE5] space-y-2 text-[11px]">
+                <div className="p-3 rounded-lg bg-[#F7F8FA] border border-[#D9DEE5] space-y-2 text-[11px]">
                   <div className="space-y-1">
                     <label className="flex items-center justify-between cursor-pointer">
                       <span className="text-[#172033] font-medium">Simulate Server Failure</span>
@@ -315,11 +315,11 @@ export function ConnectionStatusControl() {
                   </div>
 
                   {/* Quick Acceptance Test Runner */}
-                  <div className="pt-1.5 border-t border-[#D9DEE5]/60">
+                  <div className="pt-2 border-t border-[#D9DEE5]/60">
                     <span className="text-[10px] text-[#596579] block font-semibold mb-1">
                       Quick Acceptance Scenarios:
                     </span>
-                    <div className="grid grid-cols-2 gap-1.5">
+                    <div className="grid grid-cols-2 gap-2">
                       <button
                         type="button"
                         onClick={async () => {

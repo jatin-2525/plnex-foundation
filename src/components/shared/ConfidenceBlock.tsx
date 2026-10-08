@@ -104,7 +104,7 @@ export function ConfidenceBlock({
              (Never show a percentage alone)
           ========================================================================= */}
       <div className="flex items-center justify-between flex-wrap gap-2">
-        <div className="flex items-center gap-2.5">
+        <div className="flex items-center gap-2">
           {/* Small status indicator dot */}
           <span
             className={`w-2 h-2 rounded-full shrink-0 ${
@@ -161,11 +161,11 @@ export function ConfidenceBlock({
             </span>
           </div>
 
-          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 text-xs">
+          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
             {effectiveFactors.map((factor, idx) => (
               <li
                 key={idx}
-                className="flex items-center gap-2 p-1.5 rounded bg-[#F7FBF9] border border-[#D1EADC] text-[#172033]"
+                className="flex items-center gap-2 p-2 rounded bg-[#F7FBF9] border border-[#D1EADC] text-[#172033]"
               >
                 <span className="w-4 h-4 rounded-full bg-[#EDF7F2] text-[#2E7D5B] flex items-center justify-center shrink-0">
                   <Check className="w-3 h-3 stroke-[3]" />
@@ -189,11 +189,11 @@ export function ConfidenceBlock({
             </span>
           </div>
 
-          <div className="space-y-1.5">
+          <div className="space-y-2">
             {effectiveAlternatives.map((alt) => (
               <div
                 key={alt.activityId}
-                className="p-2.5 rounded-lg border border-[#D9DEE5] bg-[#FDFDFD] hover:border-[#176B87] hover:bg-white transition-colors flex items-center justify-between gap-2 text-xs"
+                className="p-3 rounded-lg border border-[#D9DEE5] bg-[#FDFDFD] hover:border-[#176B87] hover:bg-white transition-colors flex items-center justify-between gap-2 text-xs"
               >
                 <div className="min-w-0 space-y-0.5">
                   <div className="flex items-center gap-2 flex-wrap">
@@ -223,7 +223,7 @@ export function ConfidenceBlock({
                   <button
                     type="button"
                     onClick={() => onSelectAlternative(alt.activityId)}
-                    className="px-2.5 py-1 bg-[#172033] hover:bg-[#0E1524] text-white rounded text-[11px] font-semibold shrink-0 transition-colors shadow-2xs"
+                    className="px-3 py-1 bg-[#172033] hover:bg-[#0E1524] text-white rounded text-[11px] font-semibold shrink-0 transition-colors shadow-2xs"
                   >
                     Select
                   </button>
@@ -236,8 +236,8 @@ export function ConfidenceBlock({
 
       {/* LOW CONFIDENCE (< 70%): Explain that no sufficiently strong match exists */}
       {isLow && (
-        <div className="pt-2 border-t border-[#D9DEE5] space-y-1.5">
-          <div className="flex items-center gap-1.5 text-xs font-bold text-[#B5473C]">
+        <div className="pt-2 border-t border-[#D9DEE5] space-y-2">
+          <div className="flex items-center gap-2 text-xs font-bold text-[#B5473C]">
             <XCircle className="w-4 h-4 shrink-0 text-[#B5473C]" />
             <span>No sufficiently strong match exists</span>
           </div>

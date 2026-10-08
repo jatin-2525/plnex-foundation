@@ -194,7 +194,7 @@ export default function ReportsAndMemoryPage() {
 
   return (
     <StateWrapper>
-      <div className="space-y-6">
+      <div className="space-y-6 pb-12">
         <Breadcrumbs
           items={[
             { label: 'Knowledge & Memory' },
@@ -205,19 +205,19 @@ export default function ReportsAndMemoryPage() {
         {/* =========================================================================
             HEADER: REPORTS & PROJECT MEMORY
             ========================================================================= */}
-        <div className="bg-white border border-[#D9DEE5] rounded-lg p-5 shadow-xs space-y-4">
+        <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 shadow-xs space-y-4">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
             <div>
-              <div className="flex items-center gap-2 mb-1.5 flex-wrap">
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-[11px] font-bold tracking-wider uppercase bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0]">
+              <div className="flex items-center gap-2 mb-2 flex-wrap">
+                <span className="inline-flex items-center gap-2 px-3 py-0.5 rounded text-[11px] font-bold tracking-wider uppercase bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0]">
                   <BookOpen className="w-3.5 h-3.5" />
                   Engineering Documentation
                 </span>
-                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-[11px] font-medium bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]">
+                <span className="inline-flex items-center gap-1 px-3 py-0.5 rounded text-[11px] font-medium bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]">
                   <CheckCircle2 className="w-3 h-3 text-[#2E7D5B]" />
                   Verified Evidence Links Active
                 </span>
-                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-[11px] text-[#596579] bg-[#F7F8FA] border border-[#D9DEE5]">
+                <span className="inline-flex items-center gap-1 px-3 py-0.5 rounded text-[11px] text-[#596579] bg-[#F7F8FA] border border-[#D9DEE5]">
                   {activeProject?.code || 'OIL-DUL-01'} · V3 · Rev 3.2
                 </span>
               </div>
@@ -244,7 +244,7 @@ export default function ReportsAndMemoryPage() {
               <button
                 type="button"
                 onClick={() => setActiveTab('reports')}
-                className={`flex items-center gap-2.5 px-6 py-2 text-xs font-semibold rounded-md transition-all ${
+                className={`flex items-center gap-2 px-6 py-2 text-xs font-semibold rounded-md transition-all ${
                   activeTab === 'reports'
                     ? 'bg-white text-[#172033] shadow-xs border border-[#D9DEE5]'
                     : 'text-[#596579] hover:text-[#172033]'
@@ -266,7 +266,7 @@ export default function ReportsAndMemoryPage() {
               <button
                 type="button"
                 onClick={() => setActiveTab('memory')}
-                className={`flex items-center gap-2.5 px-6 py-2 text-xs font-semibold rounded-md transition-all ${
+                className={`flex items-center gap-2 px-6 py-2 text-xs font-semibold rounded-md transition-all ${
                   activeTab === 'memory'
                     ? 'bg-white text-[#172033] shadow-xs border border-[#D9DEE5]'
                     : 'text-[#596579] hover:text-[#172033]'
@@ -362,7 +362,7 @@ export default function ReportsAndMemoryPage() {
             </div>
 
             {/* REPORT BUILDER CONFIGURATION PANEL */}
-            <div className="bg-white border border-[#D9DEE5] rounded-lg p-5 shadow-xs space-y-4">
+            <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 shadow-xs space-y-4">
               <div className="flex items-center justify-between pb-3 border-b border-[#D9DEE5]/60 flex-wrap gap-2">
                 <div className="flex items-center gap-2">
                   <SlidersHorizontal className="w-4 h-4 text-[#176B87]" />
@@ -476,7 +476,7 @@ export default function ReportsAndMemoryPage() {
                   <button
                     type="button"
                     onClick={() => setPreviewReportOpen(true)}
-                    className="px-4 py-2 bg-white hover:bg-[#F1F3F5] text-[#172033] border border-[#D9DEE5] text-xs font-semibold rounded-lg shadow-xs transition-colors flex items-center gap-1.5"
+                    className="px-4 py-2 bg-white hover:bg-[#F1F3F5] text-[#172033] border border-[#D9DEE5] text-xs font-semibold rounded-lg shadow-xs transition-colors flex items-center gap-2"
                   >
                     <Eye className="w-3.5 h-3.5 text-[#176B87]" />
                     <span>Preview Report</span>
@@ -486,7 +486,7 @@ export default function ReportsAndMemoryPage() {
                     type="button"
                     onClick={handleGenerateReport}
                     disabled={isGenerating}
-                    className="px-4 py-2 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-semibold rounded-lg shadow-xs transition-colors flex items-center gap-1.5 disabled:opacity-50"
+                    className="px-4 py-2 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-semibold rounded-lg shadow-xs transition-colors flex items-center gap-2 disabled:opacity-50"
                   >
                     <FileText className="w-3.5 h-3.5" />
                     <span>{isGenerating ? 'Compiling Dossier...' : 'Generate Report'}</span>
@@ -578,7 +578,7 @@ export default function ReportsAndMemoryPage() {
                 <button
                   type="button"
                   onClick={() => setSelectedMemorySection('ALL')}
-                  className={`p-2.5 rounded-lg border text-left transition-all ${
+                  className={`p-3 rounded-lg border text-left transition-all ${
                     selectedMemorySection === 'ALL'
                       ? 'border-[#176B87] bg-[#EDF5F8] ring-1 ring-[#176B87]'
                       : 'border-[#D9DEE5] bg-[#F7F8FA] hover:bg-white hover:border-[#176B87]/40'
@@ -594,7 +594,7 @@ export default function ReportsAndMemoryPage() {
                 <button
                   type="button"
                   onClick={() => setSelectedMemorySection('Decisions')}
-                  className={`p-2.5 rounded-lg border text-left transition-all ${
+                  className={`p-3 rounded-lg border text-left transition-all ${
                     selectedMemorySection === 'Decisions'
                       ? 'border-[#176B87] bg-[#EDF5F8] ring-1 ring-[#176B87]'
                       : 'border-[#D9DEE5] bg-[#F7F8FA] hover:bg-white hover:border-[#176B87]/40'
@@ -615,7 +615,7 @@ export default function ReportsAndMemoryPage() {
                 <button
                   type="button"
                   onClick={() => setSelectedMemorySection('Lessons')}
-                  className={`p-2.5 rounded-lg border text-left transition-all ${
+                  className={`p-3 rounded-lg border text-left transition-all ${
                     selectedMemorySection === 'Lessons'
                       ? 'border-[#176B87] bg-[#EDF5F8] ring-1 ring-[#176B87]'
                       : 'border-[#D9DEE5] bg-[#F7F8FA] hover:bg-white hover:border-[#176B87]/40'
@@ -636,7 +636,7 @@ export default function ReportsAndMemoryPage() {
                 <button
                   type="button"
                   onClick={() => setSelectedMemorySection('Recurring Issues')}
-                  className={`p-2.5 rounded-lg border text-left transition-all ${
+                  className={`p-3 rounded-lg border text-left transition-all ${
                     selectedMemorySection === 'Recurring Issues'
                       ? 'border-[#176B87] bg-[#EDF5F8] ring-1 ring-[#176B87]'
                       : 'border-[#D9DEE5] bg-[#F7F8FA] hover:bg-white hover:border-[#176B87]/40'
@@ -657,7 +657,7 @@ export default function ReportsAndMemoryPage() {
                 <button
                   type="button"
                   onClick={() => setSelectedMemorySection('Important Events')}
-                  className={`p-2.5 rounded-lg border text-left transition-all ${
+                  className={`p-3 rounded-lg border text-left transition-all ${
                     selectedMemorySection === 'Important Events'
                       ? 'border-[#176B87] bg-[#EDF5F8] ring-1 ring-[#176B87]'
                       : 'border-[#D9DEE5] bg-[#F7F8FA] hover:bg-white hover:border-[#176B87]/40'
@@ -716,7 +716,7 @@ export default function ReportsAndMemoryPage() {
                   <select
                     value={memoryProjectFilter}
                     onChange={(e) => setMemoryProjectFilter(e.target.value)}
-                    className="w-full px-2.5 py-1.5 bg-white border border-[#D9DEE5] rounded-lg text-[#172033] font-medium outline-none focus:border-[#176B87]"
+                    className="w-full px-3 py-1.5 bg-white border border-[#D9DEE5] rounded-lg text-[#172033] font-medium outline-none focus:border-[#176B87]"
                   >
                     <option value="ALL">All Projects</option>
                     <option value="OIL-DUL-01">OIL-DUL-01 (Duliajan Gas Processing)</option>
@@ -732,7 +732,7 @@ export default function ReportsAndMemoryPage() {
                   <select
                     value={memoryDisciplineFilter}
                     onChange={(e) => setMemoryDisciplineFilter(e.target.value)}
-                    className="w-full px-2.5 py-1.5 bg-white border border-[#D9DEE5] rounded-lg text-[#172033] font-medium outline-none focus:border-[#176B87]"
+                    className="w-full px-3 py-1.5 bg-white border border-[#D9DEE5] rounded-lg text-[#172033] font-medium outline-none focus:border-[#176B87]"
                   >
                     <option value="ALL">All Disciplines</option>
                     <option value="Piping">Piping</option>
@@ -748,7 +748,7 @@ export default function ReportsAndMemoryPage() {
                   <select
                     value={memoryYearFilter}
                     onChange={(e) => setMemoryYearFilter(e.target.value)}
-                    className="w-full px-2.5 py-1.5 bg-white border border-[#D9DEE5] rounded-lg text-[#172033] font-medium outline-none focus:border-[#176B87]"
+                    className="w-full px-3 py-1.5 bg-white border border-[#D9DEE5] rounded-lg text-[#172033] font-medium outline-none focus:border-[#176B87]"
                   >
                     <option value="ALL">All Years (2024 - 2026)</option>
                     <option value="2026">2026 (Active Project)</option>
@@ -775,7 +775,7 @@ export default function ReportsAndMemoryPage() {
                 <div
                   key={rec.id}
                   onClick={() => setSelectedMemoryRecord(rec)}
-                  className="bg-white border border-[#D9DEE5] hover:border-[#176B87] rounded-lg p-5 shadow-xs transition-all cursor-pointer flex flex-col justify-between space-y-4 group"
+                  className="bg-white border border-[#D9DEE5] hover:border-[#176B87] rounded-lg p-4 sm:p-6 shadow-xs transition-all cursor-pointer flex flex-col justify-between space-y-4 group"
                 >
                   <div className="space-y-3">
                     <div className="flex items-center justify-between">
@@ -807,7 +807,7 @@ export default function ReportsAndMemoryPage() {
                     {/* STRUCTURED CONTENT PER SECTION */}
                     {/* Section 1: Decisions */}
                     {rec.section === 'Decisions' && rec.decisionDetails && (
-                      <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg space-y-1.5 text-xs">
+                      <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg space-y-2 text-xs">
                         <div>
                           <span className="text-[11px] font-semibold uppercase text-[#596579] block">Decision</span>
                           <p className="text-[#172033] font-medium">{rec.decisionDetails.decision}</p>
@@ -825,7 +825,7 @@ export default function ReportsAndMemoryPage() {
 
                     {/* Section 2: Lessons */}
                     {rec.section === 'Lessons' && rec.lessonDetails && (
-                      <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg space-y-1.5 text-xs">
+                      <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg space-y-2 text-xs">
                         <div>
                           <span className="text-[11px] font-semibold uppercase text-[#596579] block">Observation</span>
                           <p className="text-[#596579]">{rec.lessonDetails.whatHappened}</p>
@@ -842,7 +842,7 @@ export default function ReportsAndMemoryPage() {
 
                     {/* Section 3: Recurring Issues */}
                     {rec.section === 'Recurring Issues' && rec.recurringIssueDetails && (
-                      <div className="p-3 bg-[#FDF6ED] border border-[#F0D4A6] rounded-lg space-y-1.5 text-xs">
+                      <div className="p-3 bg-[#FDF6ED] border border-[#F0D4A6] rounded-lg space-y-2 text-xs">
                         <div>
                           <span className="text-[11px] font-semibold uppercase text-[#8C5311] block">Chronic Root Cause</span>
                           <p className="text-[#172033] font-medium">{rec.recurringIssueDetails.chronicSymptom}</p>
@@ -859,7 +859,7 @@ export default function ReportsAndMemoryPage() {
 
                     {/* Section 4: Important Events */}
                     {rec.section === 'Important Events' && rec.eventDetails && (
-                      <div className="p-3 bg-[#EDF7F2] border border-[#B8DCC9] rounded-lg space-y-1.5 text-xs">
+                      <div className="p-3 bg-[#EDF7F2] border border-[#B8DCC9] rounded-lg space-y-2 text-xs">
                         <div>
                           <span className="text-[11px] font-semibold uppercase text-[#2E7D5B] block">Milestone Significance</span>
                           <p className="text-[#172033] font-medium">{rec.eventDetails.milestoneSignificance}</p>
@@ -875,7 +875,7 @@ export default function ReportsAndMemoryPage() {
                     )}
 
                     {/* DURATION & PRODUCTIVITY METRICS */}
-                    <div className="grid grid-cols-2 gap-2 text-xs bg-[#F7F8FA] p-2.5 rounded-lg border border-[#D9DEE5]/80">
+                    <div className="grid grid-cols-2 gap-2 text-xs bg-[#F7F8FA] p-3 rounded-lg border border-[#D9DEE5]/80">
                       <div>
                         <span className="text-[11px] uppercase font-semibold text-[#596579] block">
                           Actual Duration
@@ -901,7 +901,7 @@ export default function ReportsAndMemoryPage() {
                   {/* MANDATORY SOURCE LINKS & EVIDENCE LINKS */}
                   <div className="pt-3 border-t border-[#D9DEE5]/60 flex items-center justify-between text-xs flex-wrap gap-2">
                     {/* Source link */}
-                    <div className="flex items-center gap-1.5 text-[#596579] truncate max-w-[240px]">
+                    <div className="flex items-center gap-2 text-[#596579] truncate max-w-[240px]">
                       <Lock className="w-3 h-3 text-[#2E7D5B] shrink-0" />
                       <span className="truncate">
                         Source: <strong className="text-[#172033] font-semibold">{rec.sourceVerifiedRecord.recordId}</strong>
@@ -950,7 +950,7 @@ export default function ReportsAndMemoryPage() {
                 <button
                   type="button"
                   onClick={() => handleExportReport('PDF')}
-                  className="px-4 py-2 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-semibold rounded-lg shadow-xs flex items-center gap-1.5"
+                  className="px-4 py-2 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-semibold rounded-lg shadow-xs flex items-center gap-2"
                 >
                   <Download className="w-3.5 h-3.5" />
                   <span>Download Signed PDF</span>
@@ -1017,7 +1017,7 @@ export default function ReportsAndMemoryPage() {
           width="lg"
         >
           {selectedMemoryRecord && (
-            <div className="space-y-5 text-xs p-1">
+            <div className="space-y-6 text-xs p-1">
               <div>
                 <div className="flex items-center gap-2">
                   <span className="px-2 py-0.5 rounded text-[11px] font-semibold uppercase bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0]">
@@ -1027,7 +1027,7 @@ export default function ReportsAndMemoryPage() {
                     {selectedMemoryRecord.category}
                   </span>
                 </div>
-                <h3 className="font-semibold text-base text-[#172033] mt-1.5">
+                <h3 className="font-semibold text-base text-[#172033] mt-2">
                   {selectedMemoryRecord.title}
                 </h3>
                 <p className="text-[11px] text-[#596579] font-mono mt-0.5">
@@ -1036,7 +1036,7 @@ export default function ReportsAndMemoryPage() {
               </div>
 
               {/* Source link card */}
-              <div className="p-3.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg space-y-1.5">
+              <div className="p-4 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg space-y-2">
                 <span className="text-[11px] font-semibold uppercase text-[#596579] block">
                   Verified Source Record
                 </span>
@@ -1052,7 +1052,7 @@ export default function ReportsAndMemoryPage() {
               </div>
 
               {/* Evidence link card */}
-              <div className="p-3.5 bg-[#EDF7F2] border border-[#B8DCC9] rounded-lg flex items-center justify-between">
+              <div className="p-4 bg-[#EDF7F2] border border-[#B8DCC9] rounded-lg flex items-center justify-between">
                 <div>
                   <span className="text-[11px] font-semibold uppercase text-[#2E7D5B] block">
                     Linked Evidence Proof

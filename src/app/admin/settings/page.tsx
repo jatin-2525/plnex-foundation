@@ -30,7 +30,7 @@ export default function AdminSettingsPage() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 pb-12">
       <Breadcrumbs items={breadcrumbs} />
 
       <PageHeader
@@ -40,7 +40,7 @@ export default function AdminSettingsPage() {
 
       <form onSubmit={handleSave} className="space-y-4 max-w-3xl">
         {/* Session Security */}
-        <div className="bg-white border border-[#D9DEE5] rounded-lg p-5 space-y-4">
+        <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 space-y-4">
           <div className="flex items-center gap-2 pb-2 border-b border-[#D9DEE5]">
             <Clock className="w-4 h-4 text-[#176B87]" />
             <h3 className="text-xs font-bold uppercase tracking-wider text-[#172033]">
@@ -86,7 +86,7 @@ export default function AdminSettingsPage() {
         </div>
 
         {/* Schedule Baseline Protection */}
-        <div className="bg-white border border-[#D9DEE5] rounded-lg p-5 space-y-4">
+        <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 space-y-4">
           <div className="flex items-center gap-2 pb-2 border-b border-[#D9DEE5]">
             <Lock className="w-4 h-4 text-[#2E7D5B]" />
             <h3 className="text-xs font-bold uppercase tracking-wider text-[#172033]">
@@ -95,7 +95,7 @@ export default function AdminSettingsPage() {
           </div>
 
           <div className="space-y-3 text-xs">
-            <label className="flex items-start gap-2.5 cursor-pointer">
+            <label className="flex items-start gap-2 cursor-pointer">
               <input
                 type="checkbox"
                 checked={!allowManualBaselineOverride}
@@ -112,7 +112,7 @@ export default function AdminSettingsPage() {
               </div>
             </label>
 
-            <label className="flex items-start gap-2.5 cursor-pointer">
+            <label className="flex items-start gap-2 cursor-pointer">
               <input
                 type="checkbox"
                 checked={immutableAuditLog}
@@ -134,7 +134,7 @@ export default function AdminSettingsPage() {
         <div className="flex items-center justify-end gap-3 pt-2">
           <button
             type="submit"
-            className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-semibold rounded-md shadow-xs transition-colors cursor-pointer"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-semibold rounded-md shadow-xs transition-colors cursor-pointer"
           >
             <Save className="w-3.5 h-3.5" />
             Save Security Configuration

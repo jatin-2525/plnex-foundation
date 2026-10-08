@@ -180,7 +180,7 @@ export function NotificationCenterPanel({
       {/* 1. Header Bar */}
       {showHeading && (
         <div className="p-4 border-b border-[#D9DEE5] bg-[#F7F8FA] flex items-center justify-between gap-3">
-          <div className="flex items-center gap-2.5">
+          <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-lg bg-[#EDF5F8] border border-[#B3CBE0] flex items-center justify-center text-[#176B87]">
               <Bell className="w-4 h-4" />
             </div>
@@ -212,7 +212,7 @@ export function NotificationCenterPanel({
             <button
               type="button"
               onClick={resetNotifications}
-              className="p-1.5 text-[#7B8798] hover:text-[#172033] hover:bg-[#F1F3F5] border border-[#D9DEE5] rounded-md transition-colors"
+              className="p-2 text-[#7B8798] hover:text-[#172033] hover:bg-[#F1F3F5] border border-[#D9DEE5] rounded-md transition-colors"
               title="Reset notification feed to verified defaults"
             >
               <RotateCcw className="w-4 h-4" />
@@ -222,7 +222,7 @@ export function NotificationCenterPanel({
       )}
 
       {/* 2. Controls & Search */}
-      <div className="p-3 bg-[#F7F8FA] border-b border-[#D9DEE5] space-y-2.5">
+      <div className="p-3 bg-[#F7F8FA] border-b border-[#D9DEE5] space-y-2">
         <div className="relative">
           <Search className="w-3.5 h-3.5 text-[#7B8798] absolute left-3 top-2.5" />
           <input
@@ -244,14 +244,14 @@ export function NotificationCenterPanel({
         </div>
 
         {/* Filter Pills */}
-        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-thin text-xs">
+        <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-thin text-xs">
           <button
             type="button"
             onClick={() => {
               setSelectedType('ALL');
               setShowUnreadOnly(false);
             }}
-            className={`px-2.5 py-1 rounded-md text-[11px] font-medium whitespace-nowrap transition-colors border ${
+            className={`px-3 py-1 rounded-md text-[11px] font-medium whitespace-nowrap transition-colors border ${
               selectedType === 'ALL' && !showUnreadOnly
                 ? 'bg-[#176B87] text-white border-[#176B87]'
                 : 'bg-white border-[#D9DEE5] text-[#596579] hover:bg-[#F1F3F5]'
@@ -263,7 +263,7 @@ export function NotificationCenterPanel({
           <button
             type="button"
             onClick={() => setShowUnreadOnly(!showUnreadOnly)}
-            className={`px-2.5 py-1 rounded-md text-[11px] font-medium whitespace-nowrap transition-colors border ${
+            className={`px-3 py-1 rounded-md text-[11px] font-medium whitespace-nowrap transition-colors border ${
               showUnreadOnly
                 ? 'bg-[#176B87] text-white border-[#176B87]'
                 : 'bg-white border-[#D9DEE5] text-[#596579] hover:bg-[#F1F3F5]'
@@ -283,7 +283,7 @@ export function NotificationCenterPanel({
                   onClick={() => {
                     setSelectedType(isActive ? 'ALL' : tab.id);
                   }}
-                  className={`px-2.5 py-1 rounded-md text-[11px] font-medium whitespace-nowrap transition-colors border flex items-center gap-1 ${
+                  className={`px-3 py-1 rounded-md text-[11px] font-medium whitespace-nowrap transition-colors border flex items-center gap-1 ${
                     isActive
                       ? 'bg-[#176B87] text-white border-[#176B87]'
                       : 'bg-white border-[#D9DEE5] text-[#596579] hover:bg-[#F1F3F5]'
@@ -323,7 +323,7 @@ export function NotificationCenterPanel({
               <div
                 key={notification.id}
                 onClick={() => handleNotificationClick(notification)}
-                className={`p-4 hover:bg-[#F7F8FA] transition-colors cursor-pointer group relative flex items-start gap-3.5 ${
+                className={`p-4 hover:bg-[#F7F8FA] transition-colors cursor-pointer group relative flex items-start gap-4 ${
                   !notification.isRead ? 'bg-[#F9FAFC]' : 'bg-white'
                 }`}
               >
@@ -344,17 +344,17 @@ export function NotificationCenterPanel({
 
                 <div className="flex-1 min-w-0 space-y-1">
                   <div className="flex items-center justify-between gap-2 flex-wrap">
-                    <div className="flex items-center gap-1.5 flex-wrap">
+                    <div className="flex items-center gap-2 flex-wrap">
                       <span className="text-[10px] font-bold uppercase tracking-wider text-[#172033]">
                         {notification.type}
                       </span>
                       <span
-                        className={`px-1.5 py-0.2 text-[9px] font-bold rounded border uppercase font-mono ${severityCfg.className}`}
+                        className={`px-1.5 py-0.5 text-[9px] font-bold rounded border uppercase font-mono ${severityCfg.className}`}
                       >
                         {severityCfg.label}
                       </span>
                       {notification.sourceEntity && (
-                        <span className="text-[10px] font-mono text-[#596579] bg-[#F1F3F5] px-1.5 py-0.2 rounded border border-[#D9DEE5]">
+                        <span className="text-[10px] font-mono text-[#596579] bg-[#F1F3F5] px-1.5 py-0.5 rounded border border-[#D9DEE5]">
                           {notification.sourceEntity.id}
                         </span>
                       )}
@@ -378,7 +378,7 @@ export function NotificationCenterPanel({
                     {notification.description}
                   </p>
 
-                  <div className="pt-1.5 flex items-center justify-between gap-2 text-xs">
+                  <div className="pt-2 flex items-center justify-between gap-2 text-xs">
                     <span className="inline-flex items-center gap-1 text-[11px] font-bold text-[#176B87] group-hover:underline">
                       <span>{notification.destination.actionLabel}</span>
                       <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />

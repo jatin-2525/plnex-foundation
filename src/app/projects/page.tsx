@@ -326,14 +326,14 @@ export default function ProjectsPage() {
 
   return (
     <StateWrapper>
-      <div className="space-y-6">
+      <div className="space-y-6 pb-12">
         <Breadcrumbs items={breadcrumbs} />
 
         {/* Enterprise Page Header */}
-        <div className="bg-white border border-[#D9DEE5] rounded-lg p-5">
+        <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
-              <div className="flex items-center gap-2.5 mb-1">
+              <div className="flex items-center gap-2 mb-1">
                 <div className="w-8 h-8 rounded bg-[#EDF5F8] flex items-center justify-center text-[#176B87]">
                   <FolderKanban className="w-4 h-4" />
                 </div>
@@ -346,7 +346,7 @@ export default function ProjectsPage() {
               </p>
             </div>
 
-            <div className="flex items-center gap-2.5">
+            <div className="flex items-center gap-2">
               <button
                 type="button"
                 onClick={() => {
@@ -356,7 +356,7 @@ export default function ProjectsPage() {
                     description: 'Schedule baselines and execution counters synchronized with central repository.',
                   });
                 }}
-                className="px-3 py-2 text-xs font-medium text-[#596579] hover:text-[#172033] bg-[#F7F8FA] hover:bg-[#D9DEE5] border border-[#D9DEE5] rounded-md transition-colors inline-flex items-center gap-1.5"
+                className="px-3 py-2 text-xs font-medium text-[#596579] hover:text-[#172033] bg-[#F7F8FA] hover:bg-[#D9DEE5] border border-[#D9DEE5] rounded-md transition-colors inline-flex items-center gap-2"
                 title="Refresh project list"
               >
                 <RefreshCw className="w-3.5 h-3.5" />
@@ -366,7 +366,7 @@ export default function ProjectsPage() {
               <button
                 type="button"
                 onClick={() => setIsCreateModalOpen(true)}
-                className="px-3.5 py-2 text-xs font-semibold text-white bg-[#176B87] hover:bg-[#135A72] rounded-md transition-colors inline-flex items-center gap-1.5 shadow-sm"
+                className="px-4 py-2 text-xs font-semibold text-white bg-[#176B87] hover:bg-[#135A72] rounded-md transition-colors inline-flex items-center gap-2 shadow-sm"
               >
                 <Plus className="w-4 h-4" />
                 <span>Create Project</span>
@@ -375,31 +375,31 @@ export default function ProjectsPage() {
           </div>
 
           {/* Portfolio Metrics Summary Strip */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 mt-5 pt-4 border-t border-[#D9DEE5]">
-            <div className="p-2.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 mt-4 pt-4 border-t border-[#D9DEE5]">
+            <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded">
               <span className="text-[11px] text-[#596579] font-medium block">Total Projects</span>
               <span className="text-lg font-bold text-[#172033] font-mono">{portfolioStats.total}</span>
             </div>
-            <div className="p-2.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded">
+            <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded">
               <span className="text-[11px] text-[#2E7D5B] font-medium block">On Track / Complete</span>
               <span className="text-lg font-bold text-[#2E7D5B] font-mono">{portfolioStats.onTrack}</span>
             </div>
-            <div className="p-2.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded">
+            <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded">
               <span className="text-[11px] text-[#D98B32] font-medium block">At Risk / Delayed</span>
               <span className="text-lg font-bold text-[#D98B32] font-mono">{portfolioStats.atRiskDelayed}</span>
             </div>
-            <div className="p-2.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded">
+            <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded">
               <span className="text-[11px] text-[#596579] font-medium block">Portfolio Avg Progress</span>
               <span className="text-lg font-bold text-[#176B87] font-mono">{portfolioStats.avgProgress}%</span>
             </div>
-            <div className="p-2.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded">
+            <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded">
               <span className="text-[11px] text-[#596579] font-medium block">Open Reviews</span>
               <span className="text-lg font-bold text-[#172033] font-mono">
                 {portfolioStats.totalReviews}{' '}
                 <span className="text-[10px] text-[#596579] font-normal">items</span>
               </span>
             </div>
-            <div className="p-2.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded">
+            <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded">
               <span className="text-[11px] text-[#B5473C] font-medium block">Critical Path Risks</span>
               <span className="text-lg font-bold text-[#B5473C] font-mono">
                 {portfolioStats.totalRisks}{' '}
@@ -410,7 +410,7 @@ export default function ProjectsPage() {
         </div>
 
         {/* Search & Filters Bar */}
-        <div className="bg-white border border-[#D9DEE5] rounded-lg p-3.5 space-y-3">
+        <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 space-y-3">
           <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3">
             {/* Search: Project ID / Name */}
             <div className="relative flex-1 min-w-[260px]">
@@ -437,12 +437,12 @@ export default function ProjectsPage() {
             {/* Filter Controls Row */}
             <div className="flex flex-wrap items-center gap-2">
               {/* Filter 1: Status */}
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-2">
                 <span className="text-xs text-[#596579] font-medium">Status:</span>
                 <select
                   value={statusFilter}
                   onChange={(e) => setStatusFilter(e.target.value)}
-                  className="px-2.5 py-1.5 text-xs bg-[#F7F8FA] hover:bg-white border border-[#D9DEE5] focus:border-[#176B87] rounded-md text-[#172033] outline-none cursor-pointer"
+                  className="px-3 py-1.5 text-xs bg-[#F7F8FA] hover:bg-white border border-[#D9DEE5] focus:border-[#176B87] rounded-md text-[#172033] outline-none cursor-pointer"
                 >
                   <option value="all">All Statuses</option>
                   <option value="on-track">On Track</option>
@@ -453,12 +453,12 @@ export default function ProjectsPage() {
               </div>
 
               {/* Filter 2: Organization */}
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-2">
                 <span className="text-xs text-[#596579] font-medium">Organization:</span>
                 <select
                   value={organizationFilter}
                   onChange={(e) => setOrganizationFilter(e.target.value)}
-                  className="px-2.5 py-1.5 text-xs bg-[#F7F8FA] hover:bg-white border border-[#D9DEE5] focus:border-[#176B87] rounded-md text-[#172033] outline-none cursor-pointer max-w-[180px] truncate"
+                  className="px-3 py-1.5 text-xs bg-[#F7F8FA] hover:bg-white border border-[#D9DEE5] focus:border-[#176B87] rounded-md text-[#172033] outline-none cursor-pointer max-w-[180px] truncate"
                 >
                   <option value="all">All Organizations</option>
                   {organizationOptions.map((org) => (
@@ -470,12 +470,12 @@ export default function ProjectsPage() {
               </div>
 
               {/* Filter 3: Schedule Health */}
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-2">
                 <span className="text-xs text-[#596579] font-medium">Health:</span>
                 <select
                   value={healthFilter}
                   onChange={(e) => setHealthFilter(e.target.value)}
-                  className="px-2.5 py-1.5 text-xs bg-[#F7F8FA] hover:bg-white border border-[#D9DEE5] focus:border-[#176B87] rounded-md text-[#172033] outline-none cursor-pointer"
+                  className="px-3 py-1.5 text-xs bg-[#F7F8FA] hover:bg-white border border-[#D9DEE5] focus:border-[#176B87] rounded-md text-[#172033] outline-none cursor-pointer"
                 >
                   <option value="all">All Health</option>
                   <option value="healthy">Healthy (0d float)</option>
@@ -485,12 +485,12 @@ export default function ProjectsPage() {
               </div>
 
               {/* Filter 4: Updated Date */}
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-2">
                 <span className="text-xs text-[#596579] font-medium">Updated:</span>
                 <select
                   value={updatedFilter}
                   onChange={(e) => setUpdatedFilter(e.target.value)}
-                  className="px-2.5 py-1.5 text-xs bg-[#F7F8FA] hover:bg-white border border-[#D9DEE5] focus:border-[#176B87] rounded-md text-[#172033] outline-none cursor-pointer"
+                  className="px-3 py-1.5 text-xs bg-[#F7F8FA] hover:bg-white border border-[#D9DEE5] focus:border-[#176B87] rounded-md text-[#172033] outline-none cursor-pointer"
                 >
                   <option value="all">All Time</option>
                   <option value="today">Today (&lt; 24h)</option>
@@ -504,7 +504,7 @@ export default function ProjectsPage() {
                 <button
                   type="button"
                   onClick={clearAllFilters}
-                  className="px-2.5 py-1.5 text-xs text-[#B5473C] hover:bg-[#FBEFEE] border border-[#E4B0AA] rounded-md transition-colors inline-flex items-center gap-1"
+                  className="px-3 py-1.5 text-xs text-[#B5473C] hover:bg-[#FBEFEE] border border-[#E4B0AA] rounded-md transition-colors inline-flex items-center gap-1"
                 >
                   <X className="w-3.5 h-3.5" />
                   <span>Clear Filters</span>
@@ -539,7 +539,7 @@ export default function ProjectsPage() {
               <FolderKanban className="w-6 h-6" />
             </div>
             <h3 className="text-sm font-bold text-[#172033] mb-1">No projects have been created.</h3>
-            <p className="text-xs text-[#596579] max-w-md mx-auto mb-5">
+            <p className="text-xs text-[#596579] max-w-md mx-auto mb-4">
               Initialize your project portfolio by uploading a Primavera P6 XML or MS Project baseline schedule file to begin tracking actual progress.
             </p>
             <button
@@ -564,7 +564,7 @@ export default function ProjectsPage() {
             <button
               type="button"
               onClick={clearAllFilters}
-              className="px-3.5 py-1.5 text-xs font-medium text-[#176B87] bg-[#EDF5F8] hover:bg-[#D9EAF0] rounded-md transition-colors"
+              className="px-4 py-1.5 text-xs font-medium text-[#176B87] bg-[#EDF5F8] hover:bg-[#D9EAF0] rounded-md transition-colors"
             >
               Reset Filters
             </button>
@@ -576,16 +576,16 @@ export default function ProjectsPage() {
               <table className="w-full min-w-[980px] text-left text-xs border-collapse">
                 <thead>
                   <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[#596579] font-medium">
-                    <th className="py-3 px-3.5 whitespace-nowrap">Project ID</th>
-                    <th className="py-3 px-3.5 whitespace-nowrap min-w-[240px]">Project Name</th>
-                    <th className="py-3 px-3.5 whitespace-nowrap">Organization</th>
-                    <th className="py-3 px-3.5 whitespace-nowrap">Schedule Version</th>
-                    <th className="py-3 px-3.5 whitespace-nowrap min-w-[190px]">Overall Progress</th>
-                    <th className="py-3 px-3.5 whitespace-nowrap text-center">Open Reviews</th>
-                    <th className="py-3 px-3.5 whitespace-nowrap text-center">Open Risks</th>
-                    <th className="py-3 px-3.5 whitespace-nowrap">Last Updated</th>
-                    <th className="py-3 px-3.5 whitespace-nowrap">Status</th>
-                    <th className="py-3 px-3.5 whitespace-nowrap text-right">Actions</th>
+                    <th className="py-3 px-4 whitespace-nowrap">Project ID</th>
+                    <th className="py-3 px-4 whitespace-nowrap min-w-[240px]">Project Name</th>
+                    <th className="py-3 px-4 whitespace-nowrap">Organization</th>
+                    <th className="py-3 px-4 whitespace-nowrap">Schedule Version</th>
+                    <th className="py-3 px-4 whitespace-nowrap min-w-[190px]">Overall Progress</th>
+                    <th className="py-3 px-4 whitespace-nowrap text-center">Open Reviews</th>
+                    <th className="py-3 px-4 whitespace-nowrap text-center">Open Risks</th>
+                    <th className="py-3 px-4 whitespace-nowrap">Last Updated</th>
+                    <th className="py-3 px-4 whitespace-nowrap">Status</th>
+                    <th className="py-3 px-4 whitespace-nowrap text-right">Actions</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-[#D9DEE5]">
@@ -599,7 +599,7 @@ export default function ProjectsPage() {
                         className="hover:bg-[#F9FAFC] transition-colors group"
                       >
                         {/* 1. Project ID */}
-                        <td className="py-3 px-3.5 align-middle">
+                        <td className="py-3 px-4 align-middle">
                           <div className="flex flex-col">
                             <span className="font-mono font-bold text-[#176B87] tracking-tight">
                               {project.id}
@@ -611,7 +611,7 @@ export default function ProjectsPage() {
                         </td>
 
                         {/* 2. Project Name */}
-                        <td className="py-3 px-3.5 align-middle">
+                        <td className="py-3 px-4 align-middle">
                           <div>
                             <button
                               type="button"
@@ -632,15 +632,15 @@ export default function ProjectsPage() {
                         </td>
 
                         {/* 3. Organization */}
-                        <td className="py-3 px-3.5 align-middle whitespace-nowrap">
-                          <span className="text-[#172033] font-medium flex items-center gap-1.5">
+                        <td className="py-3 px-4 align-middle whitespace-nowrap">
+                          <span className="text-[#172033] font-medium flex items-center gap-2">
                             <Building2 className="w-3.5 h-3.5 text-[#596579] flex-shrink-0" />
                             <span>{project.organization}</span>
                           </span>
                         </td>
 
                         {/* 4. Schedule Version */}
-                        <td className="py-3 px-3.5 align-middle whitespace-nowrap">
+                        <td className="py-3 px-4 align-middle whitespace-nowrap">
                           <div className="flex flex-col">
                             <span className="font-mono text-xs font-medium text-[#172033] bg-[#F1F3F5] px-2 py-0.5 rounded border border-[#D9DEE5] inline-block w-fit">
                               {project.scheduleVersion || 'Rev 1.0 (P6 XML)'}
@@ -652,7 +652,7 @@ export default function ProjectsPage() {
                         </td>
 
                         {/* 5. Overall Progress */}
-                        <td className="py-3 px-3.5 align-middle">
+                        <td className="py-3 px-4 align-middle">
                           <div className="space-y-1">
                             <div className="flex items-center justify-between text-xs font-mono">
                               <span className="font-bold text-[#172033]">
@@ -685,12 +685,12 @@ export default function ProjectsPage() {
                         </td>
 
                         {/* 6. Open Reviews */}
-                        <td className="py-3 px-3.5 align-middle text-center whitespace-nowrap">
+                        <td className="py-3 px-4 align-middle text-center whitespace-nowrap">
                           {(project.openReviews || 0) > 0 ? (
                             <Link
                               href="/matching"
                               onClick={() => setActiveProjectId(project.id)}
-                              className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-mono font-semibold bg-[#FDF6ED] text-[#8C5311] border border-[#F0D4A6] hover:bg-[#F9ECCF] transition-colors"
+                              className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-mono font-semibold bg-[#FDF6ED] text-[#8C5311] border border-[#F0D4A6] hover:bg-[#F9ECCF] transition-colors"
                               title="Click to view match verification queue"
                             >
                               <AlertTriangle className="w-3 h-3 text-[#D98B32]" />
@@ -705,12 +705,12 @@ export default function ProjectsPage() {
                         </td>
 
                         {/* 7. Open Risks */}
-                        <td className="py-3 px-3.5 align-middle text-center whitespace-nowrap">
+                        <td className="py-3 px-4 align-middle text-center whitespace-nowrap">
                           {(project.openRisks || 0) > 0 ? (
                             <Link
                               href="/variance"
                               onClick={() => setActiveProjectId(project.id)}
-                              className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-mono font-semibold bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA] hover:bg-[#FBE5E1] transition-colors"
+                              className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-mono font-semibold bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA] hover:bg-[#FBE5E1] transition-colors"
                               title="Click to view critical path delay chains"
                             >
                               <AlertCircle className="w-3 h-3 text-[#B5473C]" />
@@ -722,8 +722,8 @@ export default function ProjectsPage() {
                         </td>
 
                         {/* 8. Last Updated */}
-                        <td className="py-3 px-3.5 align-middle whitespace-nowrap">
-                          <div className="flex items-center gap-1.5 text-xs text-[#596579]">
+                        <td className="py-3 px-4 align-middle whitespace-nowrap">
+                          <div className="flex items-center gap-2 text-xs text-[#596579]">
                             <Clock className="w-3.5 h-3.5 text-[#7B8798] flex-shrink-0" />
                             <span className="font-mono text-[11px]">
                               {formatTimestamp(project.lastUpdated)}
@@ -732,17 +732,17 @@ export default function ProjectsPage() {
                         </td>
 
                         {/* 9. Status */}
-                        <td className="py-3 px-3.5 align-middle whitespace-nowrap">
+                        <td className="py-3 px-4 align-middle whitespace-nowrap">
                           <StatusBadge status={project.status} size="sm" />
                         </td>
 
                         {/* 10. Actions */}
-                        <td className="py-3 px-3.5 align-middle text-right whitespace-nowrap">
-                          <div className="flex items-center justify-end gap-1.5">
+                        <td className="py-3 px-4 align-middle text-right whitespace-nowrap">
+                          <div className="flex items-center justify-end gap-2">
                             <button
                               type="button"
                               onClick={() => handleOpenProject(project)}
-                              className="px-2.5 py-1 text-xs font-semibold text-white bg-[#176B87] hover:bg-[#135A72] rounded transition-colors inline-flex items-center gap-1"
+                              className="px-3 py-1 text-xs font-semibold text-white bg-[#176B87] hover:bg-[#135A72] rounded transition-colors inline-flex items-center gap-1"
                               title="Open Project Manager Dashboard"
                             >
                               <span>Open</span>
@@ -813,7 +813,7 @@ export default function ProjectsPage() {
                 type="button"
                 onClick={() => setIsCreateModalOpen(false)}
                 disabled={isSubmitting}
-                className="px-3.5 py-1.5 text-xs font-medium text-[#596579] hover:text-[#172033] bg-white border border-[#D9DEE5] rounded-md transition-colors"
+                className="px-4 py-1.5 text-xs font-medium text-[#596579] hover:text-[#172033] bg-white border border-[#D9DEE5] rounded-md transition-colors"
               >
                 Cancel
               </button>
@@ -821,7 +821,7 @@ export default function ProjectsPage() {
                 type="button"
                 onClick={handleCreateSubmit}
                 disabled={isSubmitting}
-                className="px-4 py-1.5 text-xs font-semibold text-white bg-[#176B87] hover:bg-[#135A72] rounded-md transition-colors inline-flex items-center gap-1.5 disabled:opacity-60"
+                className="px-4 py-1.5 text-xs font-semibold text-white bg-[#176B87] hover:bg-[#135A72] rounded-md transition-colors inline-flex items-center gap-2 disabled:opacity-60"
               >
                 {isSubmitting ? (
                   <>
@@ -1016,7 +1016,7 @@ export default function ProjectsPage() {
                       });
                       setSelectedProjectForReport(null);
                     }}
-                    className="px-3 py-1.5 text-xs font-medium text-[#172033] bg-[#F7F8FA] hover:bg-[#D9DEE5] border border-[#D9DEE5] rounded transition-colors inline-flex items-center gap-1.5"
+                    className="px-3 py-1.5 text-xs font-medium text-[#172033] bg-[#F7F8FA] hover:bg-[#D9DEE5] border border-[#D9DEE5] rounded transition-colors inline-flex items-center gap-2"
                   >
                     <Download className="w-3.5 h-3.5" />
                     <span>Export CSV</span>
@@ -1028,7 +1028,7 @@ export default function ProjectsPage() {
                       setActiveProjectId(selectedProjectForReport.id);
                       router.push('/dashboard');
                     }}
-                    className="px-3.5 py-1.5 text-xs font-semibold text-white bg-[#176B87] hover:bg-[#135A72] rounded transition-colors inline-flex items-center gap-1.5"
+                    className="px-4 py-1.5 text-xs font-semibold text-white bg-[#176B87] hover:bg-[#135A72] rounded transition-colors inline-flex items-center gap-2"
                   >
                     <span>Open Dashboard</span>
                     <ArrowUpRight className="w-3.5 h-3.5" />
@@ -1093,7 +1093,7 @@ export default function ProjectsPage() {
               {/* Key Controls Indicators */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="p-3 border border-[#D9DEE5] rounded bg-white">
-                  <div className="flex items-center gap-2 mb-1.5">
+                  <div className="flex items-center gap-2 mb-2">
                     <AlertTriangle className="w-4 h-4 text-[#D98B32]" />
                     <span className="font-semibold text-[#172033]">Match Verification Queue</span>
                   </div>
@@ -1119,7 +1119,7 @@ export default function ProjectsPage() {
                 </div>
 
                 <div className="p-3 border border-[#D9DEE5] rounded bg-white">
-                  <div className="flex items-center gap-2 mb-1.5">
+                  <div className="flex items-center gap-2 mb-2">
                     <AlertCircle className="w-4 h-4 text-[#B5473C]" />
                     <span className="font-semibold text-[#172033]">Critical Path Delays</span>
                   </div>

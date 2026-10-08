@@ -167,7 +167,7 @@ function LoginForm() {
       {/* Centered Authentication Panel */}
       <div className="bg-white border border-[#D9DEE5] rounded-lg shadow-sm overflow-hidden">
         {/* Header with PLnEX branding */}
-        <div className="px-6 pt-7 pb-5 text-center border-b border-[#D9DEE5] bg-white">
+        <div className="px-6 pt-7 pb-4 text-center border-b border-[#D9DEE5] bg-white">
           <div className="inline-flex items-center justify-center w-10 h-10 rounded-md bg-[#176B87] text-white font-black text-lg tracking-tighter mb-3 shadow-xs">
             PX
           </div>
@@ -197,17 +197,17 @@ function LoginForm() {
             <div className="w-full bg-[#D9DEE5] h-1.5 rounded-full overflow-hidden">
               <div className="h-full bg-[#2E7D5B] rounded-full w-full" />
             </div>
-            <span className="inline-flex items-center gap-1.5 text-xs text-[#176B87] font-medium font-mono">
+            <span className="inline-flex items-center gap-2 text-xs text-[#176B87] font-medium font-mono">
               <Loader2 className="w-3.5 h-3.5 animate-spin" />
               Routing to authorized dashboard...
             </span>
           </div>
         ) : (
           /* Authentication Form */
-          <form onSubmit={handleSubmit} className="p-6 md:p-7 space-y-4">
+          <form onSubmit={handleSubmit} className="p-6 md:p-6 space-y-4">
             {/* Server Error Alert Banner */}
             {loginState === 'server_error' && (
-              <div className="p-3 bg-[#FBEFEE] border border-[#E4B0AA] rounded-md flex items-start gap-2.5 text-xs text-[#B5473C] animate-in fade-in duration-150">
+              <div className="p-3 bg-[#FBEFEE] border border-[#E4B0AA] rounded-md flex items-start gap-2 text-xs text-[#B5473C] animate-in fade-in duration-150">
                 <AlertTriangle className="w-4 h-4 flex-shrink-0 mt-0.5" />
                 <div>
                   <strong className="block font-semibold">Authentication Gateway Error (500)</strong>
@@ -220,7 +220,7 @@ function LoginForm() {
 
             {/* Invalid Credentials Alert Banner */}
             {loginState === 'invalid_credentials' && (
-              <div className="p-3 bg-[#FBEFEE] border border-[#E4B0AA] rounded-md flex items-start gap-2.5 text-xs text-[#B5473C] animate-in fade-in duration-150">
+              <div className="p-3 bg-[#FBEFEE] border border-[#E4B0AA] rounded-md flex items-start gap-2 text-xs text-[#B5473C] animate-in fade-in duration-150">
                 <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
                 <div>
                   <strong className="block font-semibold">Invalid Credentials</strong>
@@ -232,7 +232,7 @@ function LoginForm() {
             )}
 
             {/* Work Email Field */}
-            <div className="space-y-1.5">
+            <div className="space-y-2">
               <label htmlFor="work-email" className="block text-xs font-semibold text-[#172033]">
                 Work Email <span className="text-[#B5473C]">*</span>
               </label>
@@ -266,7 +266,7 @@ function LoginForm() {
             </div>
 
             {/* Password Field */}
-            <div className="space-y-1.5">
+            <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <label htmlFor="password" className="block text-xs font-semibold text-[#172033]">
                   Password <span className="text-[#B5473C]">*</span>
@@ -333,7 +333,7 @@ function LoginForm() {
             <button
               type="submit"
               disabled={loginState === 'submitting'}
-              className="w-full flex items-center justify-center gap-2 py-2.5 px-4 bg-[#176B87] hover:bg-[#135A72] disabled:bg-[#176B87]/60 text-white text-xs font-semibold rounded-md shadow-xs transition-colors cursor-pointer disabled:cursor-not-allowed mt-2"
+              className="w-full flex items-center justify-center gap-2 py-2 px-4 bg-[#176B87] hover:bg-[#135A72] disabled:bg-[#176B87]/60 text-white text-xs font-semibold rounded-md shadow-xs transition-colors cursor-pointer disabled:cursor-not-allowed mt-2"
             >
               {loginState === 'submitting' ? (
                 <>
@@ -376,7 +376,7 @@ function LoginForm() {
           </span>
           <span className="font-mono">Role Test Presets</span>
         </div>
-        <div className="flex flex-wrap gap-1.5">
+        <div className="flex flex-wrap gap-2">
           <button
             type="button"
             onClick={() => handleQuickFill('manager')}

@@ -832,16 +832,16 @@ export default function ProgressVariancePage() {
 
   return (
     <StateWrapper>
-      <div className="space-y-6 pb-24 md:pb-12 max-w-7xl mx-auto">
+      <div className="space-y-6 pb-12 max-w-7xl mx-auto">
         {/* Breadcrumb Navigation */}
         <Breadcrumbs items={breadcrumbs} />
 
         {/* HEADER CONTEXT */}
-        <div className="bg-white border border-[#D9DEE5] rounded-lg p-5 md:p-6 shadow-xs">
+        <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 md:p-6 shadow-xs">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-[#D9DEE5]/60">
             <div>
               <div className="flex items-center gap-2 mb-1">
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-[11px] font-bold tracking-wider uppercase bg-[#176B87]/10 text-[#176B87]">
+                <span className="inline-flex items-center gap-2 px-3 py-0.5 rounded text-[11px] font-bold tracking-wider uppercase bg-[#176B87]/10 text-[#176B87]">
                   <Activity className="w-3.5 h-3.5" />
                   Schedule Execution
                 </span>
@@ -865,21 +865,21 @@ export default function ProgressVariancePage() {
             <div className="flex items-center gap-2 flex-wrap">
               <Link
                 href="/risks"
-                className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-[#B5473C] bg-[#FBEFEE] border border-[#E4B0AA] hover:bg-[#FBEFEE]/80 rounded-lg transition-colors"
+                className="inline-flex items-center gap-2 px-3 py-2 text-xs font-semibold text-[#B5473C] bg-[#FBEFEE] border border-[#E4B0AA] hover:bg-[#FBEFEE]/80 rounded-lg transition-colors"
               >
                 <AlertTriangle className="w-3.5 h-3.5" />
                 <span>Delay & Dependency Impact</span>
               </Link>
               <Link
                 href="/review"
-                className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-[#172033] bg-white border border-[#D9DEE5] hover:bg-[#F1F3F5] rounded-lg transition-colors"
+                className="inline-flex items-center gap-2 px-3 py-2 text-xs font-semibold text-[#172033] bg-white border border-[#D9DEE5] hover:bg-[#F1F3F5] rounded-lg transition-colors"
               >
                 <ShieldCheck className="w-3.5 h-3.5 text-[#176B87]" />
                 <span>Review Queue</span>
               </Link>
               <Link
                 href="/schedule-twin"
-                className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] rounded-lg shadow-xs transition-colors"
+                className="inline-flex items-center gap-2 px-4 py-2 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] rounded-lg shadow-xs transition-colors"
               >
                 <Layers className="w-3.5 h-3.5" />
                 <span>Schedule Twin</span>
@@ -956,7 +956,7 @@ export default function ProgressVariancePage() {
           {/* Performance Summary Metric Row */}
           <div className="bg-white border border-[#D9DEE5] rounded-lg shadow-xs overflow-hidden grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-[#D9DEE5]">
             {/* 1. Planned Progress */}
-            <div className="p-5 flex flex-col justify-between">
+            <div className="p-4 sm:p-6 flex flex-col justify-between">
               <div>
                 <span className="text-xs font-semibold uppercase tracking-wider text-[#596579] block">
                   Planned Progress
@@ -974,7 +974,7 @@ export default function ProgressVariancePage() {
             </div>
 
             {/* 2. Actual Verified Progress */}
-            <div className="p-5 flex flex-col justify-between">
+            <div className="p-4 sm:p-6 flex flex-col justify-between">
               <div>
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-semibold uppercase tracking-wider text-[#2E7D5B] block">
@@ -998,7 +998,7 @@ export default function ProgressVariancePage() {
             </div>
 
             {/* 3. Variance */}
-            <div className="p-5 flex flex-col justify-between">
+            <div className="p-4 sm:p-6 flex flex-col justify-between">
               <div>
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-semibold uppercase tracking-wider text-[#B5473C] block">
@@ -1024,7 +1024,7 @@ export default function ProgressVariancePage() {
             </div>
 
             {/* 4. Forecast at Completion */}
-            <div className="p-5 flex flex-col justify-between">
+            <div className="p-4 sm:p-6 flex flex-col justify-between">
               <div>
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-semibold uppercase tracking-wider text-[#D98B32] block">
@@ -1075,7 +1075,7 @@ export default function ProgressVariancePage() {
             4. PROGRESS BY DISCIPLINE
             Project Question: Which engineering discipline is driving project variance?
             ========================================================================= */}
-        <div className="bg-white border border-[#D9DEE5] rounded-lg p-5 shadow-xs space-y-4">
+        <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 shadow-xs space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#D9DEE5]/60 pb-3">
             <div>
               <div className="flex items-center gap-2">
@@ -1086,7 +1086,7 @@ export default function ProgressVariancePage() {
                 Physical progress breakdown across engineering scopes compared against baseline weightage.
               </p>
             </div>
-            <div className="px-2.5 py-1 rounded bg-[#EDF5F8] border border-[#B3CBE0] text-[11px] font-mono text-[#176B87] font-semibold self-start sm:self-auto">
+            <div className="px-3 py-1 rounded bg-[#EDF5F8] border border-[#B3CBE0] text-[11px] font-mono text-[#176B87] font-semibold self-start sm:self-auto">
               Project Question: Which engineering discipline is driving project variance?
             </div>
           </div>
@@ -1099,12 +1099,12 @@ export default function ProgressVariancePage() {
             <table className="w-full text-left border-collapse text-sm">
               <thead>
                 <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[11px] font-semibold uppercase text-[#596579] tracking-wider">
-                  <th className="py-2.5 px-3">Discipline</th>
-                  <th className="py-2.5 px-3 text-right">Planned Target</th>
-                  <th className="py-2.5 px-3 text-right">Verified Actual</th>
-                  <th className="py-2.5 px-3 text-center">Variance</th>
-                  <th className="py-2.5 px-3 w-44">Trajectory vs Baseline</th>
-                  <th className="py-2.5 px-3">Schedule Lag Driver</th>
+                  <th className="py-2 px-3">Discipline</th>
+                  <th className="py-2 px-3 text-right">Planned Target</th>
+                  <th className="py-2 px-3 text-right">Verified Actual</th>
+                  <th className="py-2 px-3 text-center">Variance</th>
+                  <th className="py-2 px-3 w-44">Trajectory vs Baseline</th>
+                  <th className="py-2 px-3">Schedule Lag Driver</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-[#D9DEE5]">
@@ -1113,7 +1113,7 @@ export default function ProgressVariancePage() {
                   const isAhead = d.variance > 0;
                   return (
                     <tr key={d.discipline} className="hover:bg-[#F7F8FA]/60 transition-colors">
-                      <td className="py-2.5 px-3">
+                      <td className="py-2 px-3">
                         <div className="flex items-center gap-2">
                           <span className="font-medium text-[#172033]">{d.discipline}</span>
                           <span className="text-[11px] font-mono text-[#596579] bg-[#F1F3F5] px-1.5 py-0.5 rounded border border-[#D9DEE5]">
@@ -1121,15 +1121,15 @@ export default function ProgressVariancePage() {
                           </span>
                         </div>
                       </td>
-                      <td className="py-2.5 px-3 text-right font-mono text-[#176B87] font-medium">
+                      <td className="py-2 px-3 text-right font-mono text-[#176B87] font-medium">
                         {d.planned.toFixed(1)}%
                       </td>
-                      <td className="py-2.5 px-3 text-right font-mono font-medium">
+                      <td className="py-2 px-3 text-right font-mono font-medium">
                         <span className={isBehind ? 'text-[#B5473C]' : 'text-[#2E7D5B]'}>
                           {d.actual.toFixed(1)}%
                         </span>
                       </td>
-                      <td className="py-2.5 px-3 text-center">
+                      <td className="py-2 px-3 text-center">
                         <span
                           className={`text-[11px] font-mono font-medium px-2 py-0.5 rounded border ${
                             isBehind
@@ -1142,7 +1142,7 @@ export default function ProgressVariancePage() {
                           {isAhead ? `+${d.variance.toFixed(1)}%` : `${d.variance.toFixed(1)}%`}
                         </span>
                       </td>
-                      <td className="py-2.5 px-3">
+                      <td className="py-2 px-3">
                         <div className="space-y-1">
                           <div className="relative w-full h-2.5 bg-[#E5E9EF] rounded-full overflow-hidden">
                             <div
@@ -1163,7 +1163,7 @@ export default function ProgressVariancePage() {
                           </div>
                         </div>
                       </td>
-                      <td className="py-2.5 px-3 text-xs text-[#596579]">
+                      <td className="py-2 px-3 text-xs text-[#596579]">
                         {d.criticalLagDriver}
                       </td>
                     </tr>
@@ -1184,7 +1184,7 @@ export default function ProgressVariancePage() {
             5. PROGRESS BY AREA
             Project Question: Which physical plant battery limit has progress bottlenecks?
             ========================================================================= */}
-        <div className="bg-white border border-[#D9DEE5] rounded-lg p-5 shadow-xs space-y-4">
+        <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 shadow-xs space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#D9DEE5]/60 pb-3">
             <div>
               <div className="flex items-center gap-2">
@@ -1195,7 +1195,7 @@ export default function ProgressVariancePage() {
                 Geographical battery limit performance tracking with critical path and total float mapping.
               </p>
             </div>
-            <div className="px-2.5 py-1 rounded bg-[#EDF5F8] border border-[#B3CBE0] text-[11px] font-mono text-[#176B87] font-semibold self-start sm:self-auto">
+            <div className="px-3 py-1 rounded bg-[#EDF5F8] border border-[#B3CBE0] text-[11px] font-mono text-[#176B87] font-semibold self-start sm:self-auto">
               Project Question: Which physical plant battery limit has progress bottlenecks?
             </div>
           </div>
@@ -1208,13 +1208,13 @@ export default function ProgressVariancePage() {
             <table className="w-full text-left border-collapse text-sm">
               <thead>
                 <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[11px] font-semibold uppercase text-[#596579] tracking-wider">
-                  <th className="py-2.5 px-3">Area & Battery Limit</th>
-                  <th className="py-2.5 px-3">CPM Path / Float</th>
-                  <th className="py-2.5 px-3 text-right">Planned</th>
-                  <th className="py-2.5 px-3 text-right">Actual</th>
-                  <th className="py-2.5 px-3 text-center">Variance</th>
-                  <th className="py-2.5 px-3 w-36">Progress</th>
-                  <th className="py-2.5 px-3">Operational Status & Constraints</th>
+                  <th className="py-2 px-3">Area & Battery Limit</th>
+                  <th className="py-2 px-3">CPM Path / Float</th>
+                  <th className="py-2 px-3 text-right">Planned</th>
+                  <th className="py-2 px-3 text-right">Actual</th>
+                  <th className="py-2 px-3 text-center">Variance</th>
+                  <th className="py-2 px-3 w-36">Progress</th>
+                  <th className="py-2 px-3">Operational Status & Constraints</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-[#D9DEE5]">
@@ -1223,13 +1223,13 @@ export default function ProgressVariancePage() {
                   const isAhead = area.variance > 0;
                   return (
                     <tr key={area.code} className="hover:bg-[#F7F8FA]/60 transition-colors">
-                      <td className="py-2.5 px-3">
+                      <td className="py-2 px-3">
                         <div>
                           <span className="font-mono text-[11px] text-[#7B8798] block">{area.code}</span>
                           <span className="font-medium text-[#172033]">{area.area}</span>
                         </div>
                       </td>
-                      <td className="py-2.5 px-3">
+                      <td className="py-2 px-3">
                         {area.isCriticalPath ? (
                           <span className="text-[11px] font-semibold px-2 py-0.5 rounded bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA] inline-block">
                             Critical Path
@@ -1240,15 +1240,15 @@ export default function ProgressVariancePage() {
                           </span>
                         )}
                       </td>
-                      <td className="py-2.5 px-3 text-right font-mono text-[#176B87] font-medium">
+                      <td className="py-2 px-3 text-right font-mono text-[#176B87] font-medium">
                         {area.planned.toFixed(0)}%
                       </td>
-                      <td className="py-2.5 px-3 text-right font-mono font-medium">
+                      <td className="py-2 px-3 text-right font-mono font-medium">
                         <span className={isBehind ? 'text-[#B5473C]' : 'text-[#2E7D5B]'}>
                           {area.actual.toFixed(0)}%
                         </span>
                       </td>
-                      <td className="py-2.5 px-3 text-center">
+                      <td className="py-2 px-3 text-center">
                         <span
                           className={`text-[11px] font-mono font-medium px-2 py-0.5 rounded border ${
                             isBehind
@@ -1261,7 +1261,7 @@ export default function ProgressVariancePage() {
                           {isAhead ? `+${area.variance.toFixed(0)}%` : `${area.variance.toFixed(0)}%`}
                         </span>
                       </td>
-                      <td className="py-2.5 px-3">
+                      <td className="py-2 px-3">
                         <div className="relative w-full h-2 bg-[#E5E9EF] rounded-full overflow-hidden">
                           <div
                             className={`h-full ${isBehind ? 'bg-[#D98B32]' : 'bg-[#2E7D5B]'}`}
@@ -1273,7 +1273,7 @@ export default function ProgressVariancePage() {
                           />
                         </div>
                       </td>
-                      <td className="py-2.5 px-3 text-xs text-[#596579]">
+                      <td className="py-2 px-3 text-xs text-[#596579]">
                         {area.summary}
                       </td>
                     </tr>
@@ -1294,7 +1294,7 @@ export default function ProgressVariancePage() {
             6. VARIANCE ANALYSIS & ROOT CAUSES
             Project Question: What are the root causes and schedule impacts of current variances?
             ========================================================================= */}
-        <div className="bg-white border border-[#D9DEE5] rounded-lg p-5 shadow-xs space-y-4">
+        <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 shadow-xs space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#D9DEE5]/60 pb-3">
             <div>
               <div className="flex items-center gap-2">
@@ -1305,7 +1305,7 @@ export default function ProgressVariancePage() {
                 Rigorous causal analysis linking variance drivers to CPM critical path float consumption and recovery actions.
               </p>
             </div>
-            <div className="px-2.5 py-1 rounded bg-[#EDF5F8] border border-[#B3CBE0] text-[11px] font-mono text-[#176B87] font-semibold self-start sm:self-auto">
+            <div className="px-3 py-1 rounded bg-[#EDF5F8] border border-[#B3CBE0] text-[11px] font-mono text-[#176B87] font-semibold self-start sm:self-auto">
               Project Question: What are the root causes and schedule impacts of current variances?
             </div>
           </div>
@@ -1316,7 +1316,7 @@ export default function ProgressVariancePage() {
           {/* 3-Part Analysis Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 pt-2 border-t border-[#D9DEE5]/60">
             {/* Part 1: Causal Factors Ledger */}
-            <div className="lg:col-span-2 space-y-2.5">
+            <div className="lg:col-span-2 space-y-2">
               <span className="text-[11px] font-semibold uppercase tracking-wider text-[#596579] block">
                 Primary Variance Drivers & Mitigation Protocols
               </span>
@@ -1324,7 +1324,7 @@ export default function ProgressVariancePage() {
                 {VARIANCE_ROOT_CAUSES.map((rc) => (
                   <div
                     key={rc.id}
-                    className="p-3 rounded-lg border border-[#D9DEE5] bg-[#F7F8FA] hover:bg-white transition-colors text-xs space-y-1.5"
+                    className="p-3 rounded-lg border border-[#D9DEE5] bg-[#F7F8FA] hover:bg-white transition-colors text-xs space-y-2"
                   >
                     <div className="flex items-center justify-between flex-wrap gap-1">
                       <div className="flex items-center gap-2">
@@ -1333,9 +1333,9 @@ export default function ProgressVariancePage() {
                         <span className="text-[#7B8798]">•</span>
                         <span className="font-mono text-[11px] text-[#176B87]">{rc.activityRef}</span>
                       </div>
-                      <div className="flex items-center gap-1.5 font-mono text-[11px]">
+                      <div className="flex items-center gap-2 font-mono text-[11px]">
                         <span
-                          className={`px-1.5 py-0.2 rounded font-bold ${
+                          className={`px-1.5 py-0.5 rounded font-bold ${
                             rc.varianceContribution < 0
                               ? 'bg-[#FBEFEE] text-[#B5473C]'
                               : 'bg-[#EDF7F2] text-[#2E7D5B]'
@@ -1418,7 +1418,7 @@ export default function ProgressVariancePage() {
                 Activity-level variance ledger with 100% execution event traceability and verified history audit trails.
               </p>
             </div>
-            <div className="px-2.5 py-1 rounded bg-[#EDF5F8] border border-[#B3CBE0] text-[11px] font-mono text-[#176B87] font-semibold self-start md:self-auto">
+            <div className="px-3 py-1 rounded bg-[#EDF5F8] border border-[#B3CBE0] text-[11px] font-mono text-[#176B87] font-semibold self-start md:self-auto">
               Project Question: Which specific activities deviate most from baseline, and how is each verified?
             </div>
           </div>
@@ -1506,12 +1506,12 @@ export default function ProgressVariancePage() {
             </div>
 
             <div className="flex items-center gap-2 flex-wrap">
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-2">
                 <span className="text-[#7B8798] font-medium text-[11px]">Semantics:</span>
                 <select
                   value={selectedSemanticFilter}
                   onChange={(e) => setSelectedSemanticFilter(e.target.value as any)}
-                  className="p-1.5 bg-[#FAFAFA] border border-[#D9DEE5] rounded-lg text-xs font-semibold text-[#172033]"
+                  className="p-2 bg-[#FAFAFA] border border-[#D9DEE5] rounded-lg text-xs font-semibold text-[#172033]"
                 >
                   <option value="ALL">All Semantics ({activities.length})</option>
                   <option value="Positive">Positive (+ Ahead)</option>
@@ -1520,12 +1520,12 @@ export default function ProgressVariancePage() {
                 </select>
               </div>
 
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-2">
                 <span className="text-[#7B8798] font-medium text-[11px]">Status:</span>
                 <select
                   value={selectedStatusFilter}
                   onChange={(e) => setSelectedStatusFilter(e.target.value)}
-                  className="p-1.5 bg-[#FAFAFA] border border-[#D9DEE5] rounded-lg text-xs font-semibold text-[#172033]"
+                  className="p-2 bg-[#FAFAFA] border border-[#D9DEE5] rounded-lg text-xs font-semibold text-[#172033]"
                 >
                   <option value="ALL">All Statuses</option>
                   <option value="Ahead">Ahead</option>
@@ -1542,13 +1542,13 @@ export default function ProgressVariancePage() {
             <table className="w-full min-w-[850px] text-left text-sm border-collapse">
               <thead>
                 <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-[#596579]">
-                  <th className="p-3.5 min-w-[240px]">Activity</th>
-                  <th className="p-3.5 whitespace-nowrap text-right">Planned %</th>
-                  <th className="p-3.5 whitespace-nowrap text-right">Verified Actual %</th>
-                  <th className="p-3.5 whitespace-nowrap text-center">Variance</th>
-                  <th className="p-3.5 whitespace-nowrap">Forecast Finish</th>
-                  <th className="p-3.5 whitespace-nowrap">Status</th>
-                  <th className="p-3.5 min-w-[260px]">Last Verified Update</th>
+                  <th className="p-4 min-w-[240px]">Activity</th>
+                  <th className="p-4 whitespace-nowrap text-right">Planned %</th>
+                  <th className="p-4 whitespace-nowrap text-right">Verified Actual %</th>
+                  <th className="p-4 whitespace-nowrap text-center">Variance</th>
+                  <th className="p-4 whitespace-nowrap">Forecast Finish</th>
+                  <th className="p-4 whitespace-nowrap">Status</th>
+                  <th className="p-4 min-w-[260px]">Last Verified Update</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-[#D9DEE5] text-[14px]">
@@ -1570,13 +1570,13 @@ export default function ProgressVariancePage() {
                         className="hover:bg-[#EDF5F8]/50 transition-colors cursor-pointer group"
                       >
                         {/* 1. Activity (ID, Name, WBS, Area) */}
-                        <td className="p-3.5">
+                        <td className="p-4">
                           <div className="flex items-center gap-2">
                             <span className="font-mono font-semibold text-xs text-[#176B87] group-hover:underline">
                               {act.id}
                             </span>
                             {act.isCritical && (
-                              <span className="text-[11px] font-mono font-semibold px-1.5 py-0.2 rounded bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
+                              <span className="text-[11px] font-mono font-semibold px-1.5 py-0.5 rounded bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
                                 CP
                               </span>
                             )}
@@ -1592,20 +1592,20 @@ export default function ProgressVariancePage() {
                         </td>
 
                         {/* 2. Planned % */}
-                        <td className="p-3.5 whitespace-nowrap text-right font-mono font-semibold text-[#596579]">
+                        <td className="p-4 whitespace-nowrap text-right font-mono font-semibold text-[#596579]">
                           {act.plannedPercent}%
                         </td>
 
                         {/* 3. Verified Actual % */}
-                        <td className="p-3.5 whitespace-nowrap text-right font-mono font-bold text-[#172033]">
+                        <td className="p-4 whitespace-nowrap text-right font-mono font-bold text-[#172033]">
                           {act.actualPercent}%
                         </td>
 
                         {/* 4. Variance */}
-                        <td className="p-3.5 whitespace-nowrap text-center">
-                          <div className="inline-flex items-center gap-1.5 justify-center">
+                        <td className="p-4 whitespace-nowrap text-center">
+                          <div className="inline-flex items-center gap-2 justify-center">
                             <span
-                              className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-[11px] font-mono font-bold border ${varStyle.bg} ${varStyle.border} ${varStyle.text}`}
+                              className={`inline-flex items-center gap-1 px-3 py-0.5 rounded text-[11px] font-mono font-bold border ${varStyle.bg} ${varStyle.border} ${varStyle.text}`}
                             >
                               {act.varianceSemantic === 'Positive' && <TrendingUp className="w-3 h-3" />}
                               {act.varianceSemantic === 'Negative' && <TrendingDown className="w-3 h-3" />}
@@ -1620,12 +1620,12 @@ export default function ProgressVariancePage() {
                         </td>
 
                         {/* 5. Forecast Finish */}
-                        <td className="p-3.5 whitespace-nowrap font-mono text-[11px] text-[#172033] font-bold">
+                        <td className="p-4 whitespace-nowrap font-mono text-[11px] text-[#172033] font-bold">
                           {act.forecastFinish}
                         </td>
 
                         {/* 6. Status */}
-                        <td className="p-3.5 whitespace-nowrap">
+                        <td className="p-4 whitespace-nowrap">
                           <span
                             className={`px-2 py-0.5 rounded text-[10px] font-bold ${
                               act.status === 'Completed'
@@ -1642,7 +1642,7 @@ export default function ProgressVariancePage() {
                         </td>
 
                         {/* 7. Last Verified Update */}
-                        <td className="p-3.5 text-[#596579]">
+                        <td className="p-4 text-[#596579]">
                           <p className="truncate text-[11px] max-w-[280px]" title={act.lastVerifiedUpdate}>
                             {act.lastVerifiedUpdate}
                           </p>
@@ -1655,7 +1655,7 @@ export default function ProgressVariancePage() {
             </table>
           </div>
 
-          <div className="p-3.5 bg-[#F7F8FA] border-t border-[#D9DEE5] flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-[#596579]">
+          <div className="p-4 bg-[#F7F8FA] border-t border-[#D9DEE5] flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-[#596579]">
             <span>
               Showing <strong>{filteredActivities.length}</strong> of <strong>{activities.length}</strong> schedule activities
             </span>
@@ -1691,7 +1691,7 @@ export default function ProgressVariancePage() {
                 <button
                   type="button"
                   onClick={() => setIsCalibrateModalOpen(true)}
-                  className="px-4 py-2 font-bold text-white bg-[#176B87] hover:bg-[#135A72] rounded-lg shadow-xs inline-flex items-center gap-1.5 transition-colors"
+                  className="px-4 py-2 font-bold text-white bg-[#176B87] hover:bg-[#135A72] rounded-lg shadow-xs inline-flex items-center gap-2 transition-colors"
                 >
                   <ShieldCheck className="w-4 h-4" />
                   <span>Record Audited Progress Update</span>
@@ -1726,7 +1726,7 @@ export default function ProgressVariancePage() {
                 </h3>
 
                 {/* Progress Bar & Status */}
-                <div className="space-y-1.5 pt-1">
+                <div className="space-y-2 pt-1">
                   <div className="flex justify-between items-center text-xs">
                     <span>
                       Verified Actual: <strong className="font-mono text-[#2E7D5B] font-semibold">{selectedActivity.actualPercent}%</strong>
@@ -1746,7 +1746,7 @@ export default function ProgressVariancePage() {
                   MANDATED TRACEABILITY CHAIN:
                   Previous Progress ↓ Execution Event ↓ Evidence ↓ Verification ↓ New Progress
                   ===================================================================== */}
-              <div className="p-5 bg-white border border-[#D9DEE5] rounded-lg space-y-4 shadow-xs">
+              <div className="p-4 sm:p-6 bg-white border border-[#D9DEE5] rounded-lg space-y-4 shadow-xs">
                 <div className="flex items-center justify-between border-b border-[#D9DEE5]/60 pb-2">
                   <div className="flex items-center gap-2">
                     <ShieldCheck className="w-4 h-4 text-[#176B87]" />
@@ -1878,7 +1878,7 @@ export default function ProgressVariancePage() {
                   MANDATED PROGRESS HISTORY:
                   Show: 53% → 65% → 72% with dates and source evidence
                   ===================================================================== */}
-              <div className="p-5 bg-white border border-[#D9DEE5] rounded-lg space-y-4 shadow-xs">
+              <div className="p-4 sm:p-6 bg-white border border-[#D9DEE5] rounded-lg space-y-4 shadow-xs">
                 <div className="flex items-center justify-between border-b border-[#D9DEE5]/60 pb-2">
                   <div className="flex items-center gap-2">
                     <HistoryIcon className="w-4 h-4 text-[#176B87]" />
@@ -1903,7 +1903,7 @@ export default function ProgressVariancePage() {
                         .reverse()
                         .map((step, idx, arr) => (
                           <React.Fragment key={step.id}>
-                            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-white border border-[#D9DEE5] font-mono text-xs">
+                            <div className="flex items-center gap-2 px-3 py-1 rounded bg-white border border-[#D9DEE5] font-mono text-xs">
                               <span className="font-semibold text-[#172033]">{step.newPercent}%</span>
                               <span className="text-[11px] text-[#7B8798]">({step.timestamp.split(',')[0]})</span>
                             </div>
@@ -1921,7 +1921,7 @@ export default function ProgressVariancePage() {
                   {selectedActivity.history.map((step) => (
                     <div
                       key={step.id}
-                      className="p-3.5 bg-[#FAFAFA] border border-[#D9DEE5] rounded-lg space-y-2 text-xs hover:border-[#B3CBE0] transition-colors"
+                      className="p-4 bg-[#FAFAFA] border border-[#D9DEE5] rounded-lg space-y-2 text-xs hover:border-[#B3CBE0] transition-colors"
                     >
                       <div className="flex items-center justify-between flex-wrap gap-2">
                         <div className="flex items-center gap-2">
@@ -1983,7 +1983,7 @@ export default function ProgressVariancePage() {
                 type="button"
                 onClick={handleCommitAuditedProgress}
                 disabled={!editReason.trim() || !editSource.trim()}
-                className="px-4 py-2 font-bold text-white bg-[#176B87] hover:bg-[#135A72] rounded shadow-xs disabled:opacity-40 text-xs inline-flex items-center gap-1.5"
+                className="px-4 py-2 font-bold text-white bg-[#176B87] hover:bg-[#135A72] rounded shadow-xs disabled:opacity-40 text-xs inline-flex items-center gap-2"
               >
                 <ShieldCheck className="w-4 h-4" />
                 <span>Commit Verified Progress</span>
@@ -2022,7 +2022,7 @@ export default function ProgressVariancePage() {
                 onChange={(e) => setEditReason(e.target.value)}
                 placeholder="State technical justification (e.g., Physical walkdown and inspection verified completion of 8 welded spools on rack section B)..."
                 rows={3}
-                className="w-full p-2.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg outline-none focus:border-[#176B87] text-xs"
+                className="w-full p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg outline-none focus:border-[#176B87] text-xs"
               />
             </div>
 
@@ -2044,7 +2044,7 @@ export default function ProgressVariancePage() {
             <div className="grid grid-cols-2 gap-3 pt-1">
               <div>
                 <label className="font-semibold text-[#596579] block mb-1">3. Authenticated User</label>
-                <div className="p-2 bg-[#F1F3F5] rounded border border-[#D9DEE5] text-[#596579] font-mono text-[11px] flex items-center gap-1.5">
+                <div className="p-2 bg-[#F1F3F5] rounded border border-[#D9DEE5] text-[#596579] font-mono text-[11px] flex items-center gap-2">
                   <User className="w-3.5 h-3.5" />
                   <span>{userSession?.name || 'Debajit Borah'}</span>
                 </div>
@@ -2052,7 +2052,7 @@ export default function ProgressVariancePage() {
 
               <div>
                 <label className="font-semibold text-[#596579] block mb-1">4. Verification Timestamp</label>
-                <div className="p-2 bg-[#F1F3F5] rounded border border-[#D9DEE5] text-[#596579] font-mono text-[11px] flex items-center gap-1.5">
+                <div className="p-2 bg-[#F1F3F5] rounded border border-[#D9DEE5] text-[#596579] font-mono text-[11px] flex items-center gap-2">
                   <Clock className="w-3.5 h-3.5" />
                   <span>{reportingDate}</span>
                 </div>
@@ -2062,7 +2062,7 @@ export default function ProgressVariancePage() {
             {/* 5. Audit Record Hash */}
             <div>
               <label className="font-semibold text-[#596579] block mb-1">5. Immutable Audit Hash</label>
-              <div className="p-2 bg-[#F1F3F5] rounded border border-[#D9DEE5] text-[#596579] font-mono text-[11px] flex items-center gap-1.5">
+              <div className="p-2 bg-[#F1F3F5] rounded border border-[#D9DEE5] text-[#596579] font-mono text-[11px] flex items-center gap-2">
                 <Hash className="w-3.5 h-3.5" />
                 <span>{editAuditHash}</span>
               </div>
@@ -2070,7 +2070,7 @@ export default function ProgressVariancePage() {
 
             {/* Warning when required fields are missing */}
             {(!editReason.trim() || !editSource.trim()) && (
-              <div className="p-2.5 bg-[#FDF6ED] border border-[#F0D4A6] rounded-lg text-[11px] text-[#8C5311] flex items-center gap-2">
+              <div className="p-3 bg-[#FDF6ED] border border-[#F0D4A6] rounded-lg text-[11px] text-[#8C5311] flex items-center gap-2">
                 <Lock className="w-4 h-4 shrink-0" />
                 <span>Arbitrary edits are blocked: Reason and Source Evidence must be specified.</span>
               </div>

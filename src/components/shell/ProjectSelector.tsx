@@ -32,13 +32,13 @@ export function ProjectSelector() {
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-1 sm:gap-2 px-2 sm:px-2.5 py-1.5 bg-[#F1F3F5] hover:bg-[#E5E8EB] border border-[#D9DEE5] rounded-md text-left transition-colors max-w-[105px] sm:max-w-[320px] cursor-pointer"
+        className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 py-1.5 bg-[#F1F3F5] hover:bg-[#E5E8EB] border border-[#D9DEE5] rounded-md text-left transition-colors max-w-[105px] sm:max-w-[320px] cursor-pointer"
         aria-expanded={isOpen}
         aria-haspopup="true"
       >
         <FolderGit2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#176B87] flex-shrink-0" />
         <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-1 sm:gap-1.5">
+          <div className="flex items-center gap-1 sm:gap-2">
             <span className="font-mono text-xs font-semibold text-[#172033] truncate">{activeProject.code}</span>
             <span className="text-[11px] text-[#596579] truncate hidden sm:inline">• {activeProject.name}</span>
           </div>
@@ -47,7 +47,7 @@ export function ProjectSelector() {
       </button>
 
       {isOpen && (
-        <div className="absolute left-0 mt-1.5 w-80 bg-white border border-[#D9DEE5] rounded-lg shadow-lg z-50 overflow-hidden">
+        <div className="absolute left-0 mt-2 w-80 bg-white border border-[#D9DEE5] rounded-lg shadow-lg z-50 overflow-hidden">
           <div className="p-2 border-b border-[#D9DEE5] bg-[#F7F8FA]">
             <div className="relative">
               <Search className="w-3.5 h-3.5 text-[#7B8798] absolute left-2.5 top-1/2 -translate-y-1/2" />
@@ -72,7 +72,7 @@ export function ProjectSelector() {
                     setActiveProjectId(project.id);
                     setIsOpen(false);
                   }}
-                  className={`w-full text-left p-2.5 rounded-md flex items-start justify-between gap-2 transition-colors ${
+                  className={`w-full text-left p-3 rounded-md flex items-start justify-between gap-2 transition-colors ${
                     isSelected ? 'bg-[#EDF5F8]' : 'hover:bg-[#F1F3F5]'
                   }`}
                 >

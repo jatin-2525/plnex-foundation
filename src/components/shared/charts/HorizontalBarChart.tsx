@@ -224,7 +224,7 @@ export function HorizontalBarChart({
   const plotW = width - padLeft - padRight;
 
   return (
-    <div className={`bg-white rounded-lg border border-[#D9DEE5] p-5 shadow-xs text-[#172033] ${className}`}>
+    <div className={`bg-white rounded-lg border border-[#D9DEE5] p-4 sm:p-6 shadow-xs text-[#172033] ${className}`}>
       {/* Header */}
       <div className="flex flex-col lg:flex-row lg:items-center justify-between pb-3 border-b border-[#D9DEE5] gap-3">
         <div>
@@ -418,7 +418,7 @@ export function HorizontalBarChart({
         <div className="flex items-center gap-4 flex-wrap">
           {variant === 'delayed-activities' ? (
             <>
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-2">
                 <span
                   className="w-4 h-4 inline-flex items-center justify-center rounded-xs text-[10px] text-white font-bold leading-none"
                   style={{ backgroundColor: CHART_TOKENS.critical.fill }}
@@ -427,7 +427,7 @@ export function HorizontalBarChart({
                 </span>
                 <span className="font-semibold text-[#172033]">Critical Path Delay (Zero Float)</span>
               </div>
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-2">
                 <span
                   className="w-4 h-4 inline-flex items-center justify-center rounded-xs text-[10px] text-white font-bold leading-none"
                   style={{ backgroundColor: CHART_TOKENS.warning.fill }}
@@ -439,7 +439,7 @@ export function HorizontalBarChart({
             </>
           ) : variant === 'top-variances' ? (
             <>
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-2">
                 <span
                   className="w-4 h-4 inline-flex items-center justify-center rounded-xs text-[10px] text-white font-bold leading-none"
                   style={{ backgroundColor: CHART_TOKENS.critical.fill }}
@@ -448,7 +448,7 @@ export function HorizontalBarChart({
                 </span>
                 <span className="font-semibold text-[#172033]">Severe Variance (&ge; 12% Slip)</span>
               </div>
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-2">
                 <span
                   className="w-4 h-4 inline-flex items-center justify-center rounded-xs text-[10px] text-white font-bold leading-none"
                   style={{ backgroundColor: CHART_TOKENS.warning.fill }}
@@ -460,7 +460,7 @@ export function HorizontalBarChart({
             </>
           ) : (
             <>
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-2">
                 <span
                   className="w-4 h-4 inline-flex items-center justify-center rounded-xs text-[10px] text-white font-bold leading-none"
                   style={{ backgroundColor: CHART_TOKENS.critical.fill }}
@@ -469,7 +469,7 @@ export function HorizontalBarChart({
                 </span>
                 <span className="font-semibold text-[#172033]">High Priority Backlog (&ge; 6 Items)</span>
               </div>
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-2">
                 <span
                   className="w-4 h-4 inline-flex items-center justify-center rounded-xs text-[10px] text-white font-bold leading-none"
                   style={{ backgroundColor: CHART_TOKENS.planned.stroke }}

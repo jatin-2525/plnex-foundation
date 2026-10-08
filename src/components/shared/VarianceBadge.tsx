@@ -19,7 +19,7 @@ export function VarianceBadge({
   const severity = getVarianceSeverity(daysDelay);
   const config = getVarianceSeverityConfig(severity);
 
-  const sizeClasses = size === 'sm' ? 'px-2 py-0.5 text-xs' : 'px-2.5 py-1 text-xs';
+  const sizeClasses = size === 'sm' ? 'px-2 py-0.5 text-xs' : 'px-3 py-1 text-xs';
 
   let formattedValue = '';
   if (daysDelay > 0) {
@@ -32,7 +32,7 @@ export function VarianceBadge({
 
   return (
     <span
-      className={`inline-flex items-center gap-1.5 font-medium rounded-md border font-mono tracking-tight ${sizeClasses} ${className}`}
+      className={`inline-flex items-center gap-2 font-medium rounded-md border font-mono tracking-tight ${sizeClasses} ${className}`}
       style={{
         backgroundColor: config.bgColor,
         color: config.color,

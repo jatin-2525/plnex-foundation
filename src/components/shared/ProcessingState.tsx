@@ -48,7 +48,7 @@ export function ProcessingState({
       </div>
 
       {notes && (
-        <p className="text-xs text-[#596579] bg-[#F7F8FA] border border-[#D9DEE5] p-2.5 rounded w-full text-left font-mono mb-4 leading-relaxed">
+        <p className="text-xs text-[#596579] bg-[#F7F8FA] border border-[#D9DEE5] p-3 rounded w-full text-left font-mono mb-4 leading-relaxed">
           {notes}
         </p>
       )}

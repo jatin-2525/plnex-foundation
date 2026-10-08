@@ -164,7 +164,7 @@ export default function FieldPage() {
   );
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 pb-12">
       <Breadcrumbs items={breadcrumbs} />
 
       <PageHeader
@@ -175,14 +175,14 @@ export default function FieldPage() {
           <div className="flex items-center gap-2">
             <Link
               href="/field/capture"
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-white hover:bg-[#F1F3F5] text-[#172033] border border-[#D9DEE5] text-xs font-bold rounded-lg shadow-2xs transition-colors"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-white hover:bg-[#F1F3F5] text-[#172033] border border-[#D9DEE5] text-xs font-bold rounded-lg shadow-2xs transition-colors"
             >
               <Sparkles className="w-3.5 h-3.5 text-[#176B87]" />
               <span>Field Capture</span>
             </Link>
             <Link
               href="/field/dpr"
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-bold rounded-lg shadow-xs transition-colors"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-bold rounded-lg shadow-xs transition-colors"
             >
               <FileText className="w-3.5 h-3.5" />
               <span>DPR / Time Agent</span>
@@ -228,11 +228,11 @@ export default function FieldPage() {
 
           <div className="p-4 md:p-6 space-y-4">
             <div>
-              <div className="flex items-center justify-between mb-1.5">
+              <div className="flex items-center justify-between mb-2">
                 <label className="text-xs font-bold uppercase tracking-wider text-[#172033]">
                   Field Statement / Site Diary Extract
                 </label>
-                <div className="flex items-center gap-1.5 text-xs text-[#596579]">
+                <div className="flex items-center gap-2 text-xs text-[#596579]">
                   <span className="text-[11px]">Load Sample:</span>
                   <button
                     onClick={() =>

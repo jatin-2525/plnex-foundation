@@ -110,7 +110,7 @@ export default function ShowcasePage() {
 
       {/* Interactive State & Role Sandbox Bar */}
       <div className="bg-white border border-[#D9DEE5] rounded-lg p-4">
-        <h3 className="text-xs font-bold uppercase tracking-wider text-[#172033] mb-3 flex items-center gap-1.5">
+        <h3 className="text-xs font-bold uppercase tracking-wider text-[#172033] mb-3 flex items-center gap-2">
           <SlidersHorizontal className="w-4 h-4 text-[#176B87]" />
           Interactive State Simulator & RBAC Role Sandbox
         </h3>
@@ -120,7 +120,7 @@ export default function ShowcasePage() {
             <label className="text-[11px] font-semibold text-[#596579] block mb-1">
               Test UI State on Current Page:
             </label>
-            <div className="flex flex-wrap gap-1.5">
+            <div className="flex flex-wrap gap-2">
               {[
                 { id: 'success', label: 'Default / Success' },
                 { id: 'loading', label: 'Loading State' },
@@ -132,7 +132,7 @@ export default function ShowcasePage() {
                 <button
                   key={s.id}
                   onClick={() => setSimulatedState(s.id as any)}
-                  className={`px-2.5 py-1 rounded text-xs font-mono transition-colors ${
+                  className={`px-3 py-1 rounded text-xs font-mono transition-colors ${
                     simulatedState === s.id
                       ? 'bg-[#176B87] text-white font-bold'
                       : 'bg-[#F1F3F5] text-[#596579] hover:bg-[#D9DEE5] hover:text-[#172033]'
@@ -148,7 +148,7 @@ export default function ShowcasePage() {
             <label className="text-[11px] font-semibold text-[#596579] block mb-1">
               Test RBAC Authorization Role:
             </label>
-            <div className="flex flex-wrap gap-1.5">
+            <div className="flex flex-wrap gap-2">
               {[
                 { id: 'manager', label: 'Project Manager' },
                 { id: 'engineer', label: 'Site Engineer' },
@@ -158,7 +158,7 @@ export default function ShowcasePage() {
                 <button
                   key={r.id}
                   onClick={() => setUserRole(r.id as any)}
-                  className={`px-2.5 py-1 rounded text-xs transition-colors ${
+                  className={`px-3 py-1 rounded text-xs transition-colors ${
                     userSession?.role === r.id
                       ? 'bg-[#176B87] text-white font-bold'
                       : 'bg-[#F1F3F5] text-[#596579] hover:bg-[#D9DEE5]'
@@ -173,7 +173,7 @@ export default function ShowcasePage() {
       </div>
 
       {/* 1. Core Workflow Stages (PLAN → ACTION) */}
-      <div className="bg-white border border-[#D9DEE5] rounded-lg p-5">
+      <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6">
         <h3 className="text-xs font-bold uppercase tracking-wider text-[#172033] mb-1">
           1. Core PLnEX Value Chain (9 Stages)
         </h3>
@@ -184,7 +184,7 @@ export default function ShowcasePage() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
           {PIPELINE_STAGES.map((st) => (
             <div key={st.key} className="p-3 border border-[#D9DEE5] rounded bg-[#F7F8FA] text-xs">
-              <div className="flex items-center gap-1.5 mb-1">
+              <div className="flex items-center gap-2 mb-1">
                 <span className="font-mono font-bold text-[#176B87]">
                   {st.stepNumber}. {st.label}
                 </span>
@@ -196,7 +196,7 @@ export default function ShowcasePage() {
       </div>
 
       {/* 2. Semantic Badges (Status, Confidence, Variance) */}
-      <div className="bg-white border border-[#D9DEE5] rounded-lg p-5 space-y-4">
+      <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 space-y-4">
         <h3 className="text-xs font-bold uppercase tracking-wider text-[#172033] mb-1">
           2. Semantic Status & AI Badges
         </h3>
@@ -308,7 +308,7 @@ export default function ShowcasePage() {
       </div>
 
       {/* 3. Progress Bars */}
-      <div className="bg-white border border-[#D9DEE5] rounded-lg p-5 space-y-3">
+      <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 space-y-3">
         <h3 className="text-xs font-bold uppercase tracking-wider text-[#172033] mb-1">
           3. Dual Planned vs Actual Progress Bars
         </h3>
@@ -333,7 +333,7 @@ export default function ShowcasePage() {
       </div>
 
       {/* 4. Feedback & Overlay Triggers */}
-      <div className="bg-white border border-[#D9DEE5] rounded-lg p-5 space-y-4">
+      <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 space-y-4">
         <h3 className="text-xs font-bold uppercase tracking-wider text-[#172033] mb-1">
           4. Toast Notifications & System Triggers
         </h3>
@@ -394,7 +394,7 @@ export default function ShowcasePage() {
       </div>
 
       {/* 5. Centralized Tokens Reference */}
-      <div className="bg-white border border-[#D9DEE5] rounded-lg p-5 space-y-4">
+      <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 space-y-4">
         <h3 className="text-xs font-bold uppercase tracking-wider text-[#172033] mb-1">
           5. Design Tokens Catalog (Exact Specification)
         </h3>
@@ -436,7 +436,7 @@ export default function ShowcasePage() {
       {/* =========================================================================
           REUSABLE COMPONENT: PLnEX MATCH EXPLANATION COMPONENT
           ========================================================================= */}
-      <div className="bg-white border border-[#D9DEE5] rounded-lg p-5 space-y-4">
+      <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 space-y-4">
         <div className="flex items-center justify-between flex-wrap gap-2">
           <div>
             <h3 className="text-sm font-bold text-[#172033] flex items-center gap-2">
@@ -492,7 +492,7 @@ export default function ShowcasePage() {
       {/* =========================================================================
           REUSABLE COMPONENT: PLnEX NOTIFICATION CENTER
           ========================================================================= */}
-      <div className="bg-white border border-[#D9DEE5] rounded-lg p-5 space-y-4">
+      <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 space-y-4">
         <div>
           <h3 className="text-sm font-bold text-[#172033] flex items-center gap-2">
             <Bell className="w-4 h-4 text-[#176B87]" />
@@ -510,7 +510,7 @@ export default function ShowcasePage() {
       {/* =========================================================================
           REUSABLE COMPONENT: PLnEX GLOBAL UNIVERSAL SEARCH
           ========================================================================= */}
-      <div className="bg-white border border-[#D9DEE5] rounded-lg p-5 space-y-4">
+      <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 space-y-4">
         <div className="flex items-center justify-between flex-wrap gap-2">
           <div>
             <h3 className="text-sm font-bold text-[#172033] flex items-center gap-2">
@@ -524,7 +524,7 @@ export default function ShowcasePage() {
           <button
             type="button"
             onClick={() => setGlobalSearchOpen(true)}
-            className="px-3 py-1.5 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-semibold rounded-lg inline-flex items-center gap-1.5 transition-colors shadow-xs"
+            className="px-3 py-1.5 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-semibold rounded-lg inline-flex items-center gap-2 transition-colors shadow-xs"
           >
             <span>Trigger Global Modal (⌘K)</span>
           </button>
@@ -543,7 +543,7 @@ export default function ShowcasePage() {
         footer={
           <button
             onClick={() => setIsModalOpen(false)}
-            className="px-3.5 py-1.5 bg-[#176B87] text-white text-xs font-semibold rounded"
+            className="px-4 py-1.5 bg-[#176B87] text-white text-xs font-semibold rounded"
           >
             Close Modal
           </button>
@@ -563,7 +563,7 @@ export default function ShowcasePage() {
         footer={
           <button
             onClick={() => setIsDrawerOpen(false)}
-            className="px-3.5 py-1.5 bg-[#176B87] text-white text-xs font-semibold rounded"
+            className="px-4 py-1.5 bg-[#176B87] text-white text-xs font-semibold rounded"
           >
             Dismiss
           </button>

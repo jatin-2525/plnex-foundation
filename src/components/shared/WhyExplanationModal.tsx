@@ -121,7 +121,7 @@ export function WhyExplanationModal({
       width="md"
       footer={
         <div className="flex items-center justify-between w-full text-xs">
-          <div className="flex items-center gap-1.5 text-[#596579] font-mono text-[11px] truncate max-w-xs">
+          <div className="flex items-center gap-2 text-[#596579] font-mono text-[11px] truncate max-w-xs">
             <Clock className="w-3.5 h-3.5 text-[#7B8798] shrink-0" />
             <span className="truncate">{data.timestamp || 'Live Schedule Snapshot'}</span>
           </div>
@@ -134,7 +134,7 @@ export function WhyExplanationModal({
                   onClose();
                   onOpenActivityDrawer(data.subjectId);
                 }}
-                className="px-3 py-1.5 bg-[#EDF5F8] hover:bg-[#DCEBF1] text-[#176B87] border border-[#B3CBE0] rounded-lg font-semibold shadow-2xs transition-colors flex items-center gap-1.5 cursor-pointer text-xs"
+                className="px-3 py-1.5 bg-[#EDF5F8] hover:bg-[#DCEBF1] text-[#176B87] border border-[#B3CBE0] rounded-lg font-semibold shadow-2xs transition-colors flex items-center gap-2 cursor-pointer text-xs"
               >
                 <Layers className="w-3.5 h-3.5" />
                 <span>Open Activity</span>
@@ -170,14 +170,14 @@ export function WhyExplanationModal({
           </div>
 
           <div
-            className={`px-2.5 py-1 rounded-md text-[11px] font-semibold border self-center ${getBadgeStyle()}`}
+            className={`px-3 py-1 rounded-md text-[11px] font-semibold border self-center ${getBadgeStyle()}`}
           >
             {getCategoryLabel()}
           </div>
         </div>
 
         {/* Executive Plain English Summary */}
-        <div className="p-3.5 rounded-lg bg-white border border-[#D9DEE5] space-y-1">
+        <div className="p-4 rounded-lg bg-white border border-[#D9DEE5] space-y-1">
           <span className="text-[11px] uppercase font-semibold text-[#596579] tracking-wider block">
             Executive Summary
           </span>
@@ -231,8 +231,8 @@ export function WhyExplanationModal({
 
         {/* Actionable Next Step */}
         {data.recommendation && (
-          <div className="p-3.5 rounded-lg bg-[#EDF7F2] border border-[#B8DCC9] space-y-1">
-            <div className="flex items-center gap-1.5 font-semibold text-[#2E7D5B] text-xs">
+          <div className="p-4 rounded-lg bg-[#EDF7F2] border border-[#B8DCC9] space-y-1">
+            <div className="flex items-center gap-2 font-semibold text-[#2E7D5B] text-xs">
               <CheckCircle2 className="w-4 h-4 text-[#2E7D5B]" />
               <span>Recommended Operational Next Step</span>
             </div>
@@ -250,7 +250,7 @@ export function WhyExplanationModal({
               onClick={() => setShowTechnicalDetails(!showTechnicalDetails)}
               className="w-full flex items-center justify-between p-2 rounded text-[11px] font-medium text-[#596579] hover:text-[#172033] hover:bg-[#F1F3F5] transition-colors cursor-pointer"
             >
-              <span className="flex items-center gap-1.5">
+              <span className="flex items-center gap-2">
                 <Cpu className="w-3.5 h-3.5 text-[#7B8798]" />
                 <span>Technical Calculation Details</span>
               </span>
@@ -262,7 +262,7 @@ export function WhyExplanationModal({
             </button>
 
             {showTechnicalDetails && (
-              <div className="mt-1.5 p-3 rounded-lg bg-[#F7F8FA] border border-[#D9DEE5] space-y-2 text-[11px] font-mono animate-in fade-in duration-150">
+              <div className="mt-2 p-3 rounded-lg bg-[#F7F8FA] border border-[#D9DEE5] space-y-2 text-[11px] font-mono animate-in fade-in duration-150">
                 <div className="flex items-start justify-between gap-2">
                   <span className="text-[#7B8798]">Rule Engine / Baseline:</span>
                   <span className="font-bold text-[#172033] text-right">{data.algorithmOrRule}</span>

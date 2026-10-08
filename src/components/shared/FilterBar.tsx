@@ -42,9 +42,9 @@ export function FilterBar({
 }: FilterBarProps) {
   return (
     <div
-      className={`bg-white border border-[#D9DEE5] rounded-lg p-3.5 flex flex-col md:flex-row md:items-center justify-between gap-3 ${className}`}
+      className={`bg-white border border-[#D9DEE5] rounded-lg p-4 flex flex-col md:flex-row md:items-center justify-between gap-3 ${className}`}
     >
-      <div className="flex flex-1 flex-col sm:flex-row items-stretch sm:items-center gap-2.5">
+      <div className="flex flex-1 flex-col sm:flex-row items-stretch sm:items-center gap-2">
         {/* Search Input */}
         {onSearchChange && (
           <div className="relative flex-1 min-w-[240px]">
@@ -74,7 +74,7 @@ export function FilterBar({
             <select
               value={filter.selectedValue || ''}
               onChange={(e) => onFilterChange && onFilterChange(filter.id, e.target.value)}
-              className="px-2.5 py-1.5 text-xs bg-white border border-[#D9DEE5] rounded-md text-[#172033] focus:border-[#176B87] transition-colors outline-none cursor-pointer"
+              className="px-3 py-1.5 text-xs bg-white border border-[#D9DEE5] rounded-md text-[#172033] focus:border-[#176B87] transition-colors outline-none cursor-pointer"
             >
               <option value="">{filter.label}: All</option>
               {filter.options.map((opt) => (
@@ -90,7 +90,7 @@ export function FilterBar({
         {hasActiveFilters && onClearAll && (
           <button
             onClick={onClearAll}
-            className="inline-flex items-center gap-1 px-2.5 py-1.5 text-xs font-medium text-[#B5473C] hover:bg-[#FBEFEE] rounded-md transition-colors"
+            className="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-medium text-[#B5473C] hover:bg-[#FBEFEE] rounded-md transition-colors"
           >
             <X className="w-3.5 h-3.5" />
             Reset

@@ -208,9 +208,9 @@ export function ActivityDetailDrawer({
               HEADER:
               Focused, non-dashboard header with Activity ID, Status, Name, and Quick Context
               ========================================================================= */}
-          <div className="px-5 py-4 border-b border-[#D9DEE5] bg-white flex flex-col gap-2 flex-shrink-0">
+          <div className="px-4 sm:px-6 py-4 border-b border-[#D9DEE5] bg-white flex flex-col gap-2 flex-shrink-0">
             <div className="flex items-start justify-between gap-3">
-              <div className="space-y-1.5 min-w-0 flex-1">
+              <div className="space-y-2 min-w-0 flex-1">
                 <div className="flex items-center gap-2 flex-wrap">
                   {/* Activity ID */}
                   <span className="font-mono font-bold text-sm text-[#176B87] tracking-tight bg-[#EDF5F8] px-2 py-0.5 rounded border border-[#B3CBE0]">
@@ -267,7 +267,7 @@ export function ActivityDetailDrawer({
             </div>
 
             {/* Quick Summary Pill Strip */}
-            <div className="flex items-center justify-between text-[11px] bg-[#F7F8FA] border border-[#D9DEE5] rounded px-2.5 py-1 text-[#596579] font-mono mt-0.5">
+            <div className="flex items-center justify-between text-[11px] bg-[#F7F8FA] border border-[#D9DEE5] rounded px-3 py-1 text-[#596579] font-mono mt-0.5">
               <span>
                 Progress: <strong className="text-[#172033]">{activity.actualProgress}%</strong> (Plan: {activity.plannedProgress}%)
               </span>
@@ -294,7 +294,7 @@ export function ActivityDetailDrawer({
                   key={tab.id}
                   type="button"
                   onClick={() => setActiveTab(tab.id)}
-                  className={`flex items-center gap-1.5 py-2.5 px-3 text-xs font-semibold whitespace-nowrap border-b-2 transition-colors ${
+                  className={`flex items-center gap-2 py-2 px-3 text-xs font-semibold whitespace-nowrap border-b-2 transition-colors ${
                     isActive
                       ? 'border-[#176B87] text-[#176B87] bg-white font-bold'
                       : 'border-transparent text-[#596579] hover:text-[#172033] hover:bg-[#F1F3F5]'
@@ -304,7 +304,7 @@ export function ActivityDetailDrawer({
                   <span>{tab.label}</span>
                   {tab.count !== undefined && (
                     <span
-                      className={`ml-0.5 px-1.5 py-0.2 rounded-full text-[11px] font-mono ${
+                      className={`ml-0.5 px-1.5 py-0.5 rounded-full text-[11px] font-mono ${
                         isActive
                           ? 'bg-[#176B87] text-white'
                           : 'bg-[#D9DEE5] text-[#596579]'
@@ -321,7 +321,7 @@ export function ActivityDetailDrawer({
           {/* =========================================================================
               BODY CONTENT: Progressive Disclosure within 420–520px Width
               ========================================================================= */}
-          <div className="flex-1 px-5 py-4 overflow-y-auto text-[#172033] text-sm space-y-4">
+          <div className="flex-1 px-4 sm:px-6 py-4 overflow-y-auto text-[#172033] text-sm space-y-4">
             
             {/* ---------------------------------------------------------------------
                 SECTION 1: OVERVIEW
@@ -331,7 +331,7 @@ export function ActivityDetailDrawer({
             {activeTab === 'overview' && (
               <div className="space-y-4 animate-in fade-in duration-150">
                 {/* Primary: Scope Description */}
-                <div className="p-3.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg space-y-1.5">
+                <div className="p-4 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg space-y-2">
                   <span className="text-[11px] uppercase font-semibold text-[#596579] tracking-wider block">
                     Scope Description
                   </span>
@@ -341,11 +341,11 @@ export function ActivityDetailDrawer({
                 </div>
 
                 {/* Primary: Key Work Parameters */}
-                <div className="p-3.5 bg-white border border-[#D9DEE5] rounded-lg space-y-2.5">
+                <div className="p-4 bg-white border border-[#D9DEE5] rounded-lg space-y-2">
                   <span className="text-[11px] uppercase font-semibold text-[#596579] tracking-wider block">
                     Execution Classification
                   </span>
-                  <div className="space-y-1.5 text-sm">
+                  <div className="space-y-2 text-sm">
                     <div className="flex justify-between items-center py-1 border-b border-[#D9DEE5]/60">
                       <span className="text-[#596579]">Engineering Discipline:</span>
                       <span className={`font-semibold px-2 py-0.5 rounded text-[11px] border ${discTheme.bg} ${discTheme.text} ${discTheme.border}`}>
@@ -381,9 +381,9 @@ export function ActivityDetailDrawer({
                   <button
                     type="button"
                     onClick={() => setShowFullWBS(!showFullWBS)}
-                    className="w-full px-3.5 py-2.5 bg-[#F7F8FA] hover:bg-[#F1F3F5] text-left flex items-center justify-between text-xs font-semibold text-[#172033] transition-colors"
+                    className="w-full px-4 py-2 bg-[#F7F8FA] hover:bg-[#F1F3F5] text-left flex items-center justify-between text-xs font-semibold text-[#172033] transition-colors"
                   >
-                    <span className="flex items-center gap-1.5">
+                    <span className="flex items-center gap-2">
                       <Layers className="w-3.5 h-3.5 text-[#176B87]" />
                       <span>Full WBS Hierarchy (L1–L6)</span>
                     </span>
@@ -400,7 +400,7 @@ export function ActivityDetailDrawer({
                         return (
                           <div
                             key={step.level}
-                            className={`pt-2 first:pt-0 pb-2 last:pb-0 flex items-start gap-2.5 ${
+                            className={`pt-2 first:pt-0 pb-2 last:pb-0 flex items-start gap-2 ${
                               isTarget ? 'bg-[#EDF5F8]/50 -mx-1 px-1.5 rounded' : ''
                             }`}
                           >
@@ -434,7 +434,7 @@ export function ActivityDetailDrawer({
                   <button
                     type="button"
                     onClick={() => setShowProjectMetadata(!showProjectMetadata)}
-                    className="w-full px-3.5 py-2.5 bg-[#F7F8FA] hover:bg-[#F1F3F5] text-left flex items-center justify-between text-xs font-semibold text-[#172033] transition-colors"
+                    className="w-full px-4 py-2 bg-[#F7F8FA] hover:bg-[#F1F3F5] text-left flex items-center justify-between text-xs font-semibold text-[#172033] transition-colors"
                   >
                     <span>Project &amp; Schedule Baseline Reference</span>
                     <span className="text-[11px] text-[#596579] flex items-center gap-1">
@@ -444,7 +444,7 @@ export function ActivityDetailDrawer({
                   </button>
 
                   {showProjectMetadata && (
-                    <div className="p-3 border-t border-[#D9DEE5] space-y-1.5 text-xs bg-white">
+                    <div className="p-3 border-t border-[#D9DEE5] space-y-2 text-xs bg-white">
                       <div className="flex justify-between">
                         <span className="text-[#596579]">Project Name:</span>
                         <strong className="text-[#172033]">{projectName}</strong>
@@ -478,7 +478,7 @@ export function ActivityDetailDrawer({
                 <div className="p-4 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg space-y-3">
                   <div className="flex items-center justify-between">
                     <div>
-                      <div className="flex items-center gap-1.5">
+                      <div className="flex items-center gap-2">
                         <span className="text-[11px] uppercase font-semibold text-[#596579] tracking-wider block">
                           Physical Progress
                         </span>
@@ -498,7 +498,7 @@ export function ActivityDetailDrawer({
                     </div>
 
                     <div className="text-right">
-                      <div className="flex items-center justify-end gap-1.5">
+                      <div className="flex items-center justify-end gap-2">
                         <VarianceBadge daysDelay={activity.delayDays} />
                         <WhyButton
                           onClick={() => openWhyExplanation(`variance:${activity.id}`)}
@@ -528,19 +528,19 @@ export function ActivityDetailDrawer({
                 </div>
 
                 {/* Primary Milestone Dates Card */}
-                <div className="p-3.5 bg-white border border-[#D9DEE5] rounded-lg space-y-2.5">
+                <div className="p-4 bg-white border border-[#D9DEE5] rounded-lg space-y-2">
                   <span className="text-[11px] uppercase font-semibold text-[#596579] tracking-wider block">
                     Schedule Dates &amp; Milestone Milestones
                   </span>
                   <div className="grid grid-cols-2 gap-3 text-xs">
-                    <div className="p-2.5 rounded bg-[#F7F8FA] border border-[#D9DEE5] space-y-1">
+                    <div className="p-3 rounded bg-[#F7F8FA] border border-[#D9DEE5] space-y-1">
                       <span className="text-[11px] uppercase font-semibold text-[#596579] block">Planned Start</span>
                       <strong className="font-mono text-[#172033] block">{activity.plannedStart}</strong>
                       <span className="text-[11px] uppercase font-semibold text-[#596579] block pt-1">Planned Finish</span>
                       <strong className="font-mono text-[#172033] block">{activity.plannedFinish}</strong>
                     </div>
 
-                    <div className="p-2.5 rounded bg-[#EDF5F8]/40 border border-[#B3CBE0] space-y-1">
+                    <div className="p-3 rounded bg-[#EDF5F8]/40 border border-[#B3CBE0] space-y-1">
                       <span className="text-[11px] uppercase font-semibold text-[#176B87] block">Actual Start</span>
                       <strong className="font-mono text-[#172033] block">
                         {activity.actualStart || 'Pending Start'}
@@ -555,8 +555,8 @@ export function ActivityDetailDrawer({
 
                 {/* Variance Explanation if delayed */}
                 {activity.delayDays > 0 && (
-                  <div className="p-3.5 bg-[#FBEFEE] border border-[#E4B0AA] rounded-lg space-y-1.5 text-xs text-[#8A382F]">
-                    <div className="flex items-center gap-1.5 font-bold text-[#B5473C]">
+                  <div className="p-4 bg-[#FBEFEE] border border-[#E4B0AA] rounded-lg space-y-2 text-xs text-[#8A382F]">
+                    <div className="flex items-center gap-2 font-bold text-[#B5473C]">
                       <AlertTriangle className="w-3.5 h-3.5 flex-shrink-0" />
                       <span>Variance Driving Cause</span>
                     </div>
@@ -572,7 +572,7 @@ export function ActivityDetailDrawer({
                     <button
                       type="button"
                       onClick={() => setShowProgressHistory(!showProgressHistory)}
-                      className="w-full px-3.5 py-2.5 bg-[#F7F8FA] hover:bg-[#F1F3F5] text-left flex items-center justify-between text-xs font-semibold text-[#172033] transition-colors"
+                      className="w-full px-4 py-2 bg-[#F7F8FA] hover:bg-[#F1F3F5] text-left flex items-center justify-between text-xs font-semibold text-[#172033] transition-colors"
                     >
                       <span>Progress Checkpoints &amp; Historical Cutoffs</span>
                       <span className="text-[11px] text-[#596579] flex items-center gap-1">
@@ -602,7 +602,7 @@ export function ActivityDetailDrawer({
                 Secondary Expandable: Why this match? feature explanation
                 --------------------------------------------------------------------- */}
             {activeTab === 'execution' && (
-              <div className="space-y-3.5 animate-in fade-in duration-150">
+              <div className="space-y-4 animate-in fade-in duration-150">
                 <div className="flex items-center justify-between">
                   <span className="text-[11px] uppercase font-semibold text-[#596579] tracking-wider">
                     Execution Events ({linkedExecutionEvents.length})
@@ -624,15 +624,15 @@ export function ActivityDetailDrawer({
                     {linkedExecutionEvents.map((evt) => (
                       <div
                         key={evt.id}
-                        className="p-3.5 bg-white border border-[#D9DEE5] rounded-lg space-y-2.5 shadow-2xs hover:border-[#176B87] transition-colors"
+                        className="p-4 bg-white border border-[#D9DEE5] rounded-lg space-y-2 shadow-2xs hover:border-[#176B87] transition-colors"
                       >
                         {/* Event ID, Source, Date */}
                         <div className="flex items-center justify-between flex-wrap gap-2">
-                          <div className="flex items-center gap-1.5">
+                          <div className="flex items-center gap-2">
                             <span className="font-mono font-bold text-xs text-[#176B87] bg-[#EDF5F8] px-2 py-0.5 rounded border border-[#B3CBE0]">
                               {evt.id}
                             </span>
-                            <span className="text-[11px] font-semibold px-1.5 py-0.2 rounded bg-[#F1F3F5] text-[#596579] uppercase">
+                            <span className="text-[11px] font-semibold px-1.5 py-0.5 rounded bg-[#F1F3F5] text-[#596579] uppercase">
                               {evt.source.replace('_', ' ')}
                             </span>
                           </div>
@@ -644,7 +644,7 @@ export function ActivityDetailDrawer({
 
                         {/* Standardized Confidence visualization */}
                         <div className="flex items-center justify-between text-xs pt-0.5">
-                          <div className="flex items-center gap-1.5">
+                          <div className="flex items-center gap-2">
                             <ConfidenceBadge score={evt.confidence} />
                             <WhyButton
                               onClick={() => openWhyExplanation(`confidence:${evt.id}`)}
@@ -657,7 +657,7 @@ export function ActivityDetailDrawer({
                         </div>
 
                         {/* Raw observation statement */}
-                        <p className="p-2.5 bg-[#F7F8FA] rounded border border-[#D9DEE5] text-xs text-[#172033] leading-relaxed italic">
+                        <p className="p-3 bg-[#F7F8FA] rounded border border-[#D9DEE5] text-xs text-[#172033] leading-relaxed italic">
                           &quot;{evt.rawText}&quot;
                         </p>
 
@@ -680,22 +680,22 @@ export function ActivityDetailDrawer({
 
                           {expandedMatchEventId === evt.id && (
                             <div className="mt-2 space-y-2 text-[11px]">
-                              <div className="p-2.5 bg-[#EDF7F2] border border-[#B8DCC9] rounded text-[#2E7D5B] space-y-1">
+                              <div className="p-3 bg-[#EDF7F2] border border-[#B8DCC9] rounded text-[#2E7D5B] space-y-1">
                                 <span className="font-semibold uppercase text-[11px] block">Verified Feature Matches:</span>
                                 <div className="space-y-0.5">
-                                   <div className="flex items-center gap-1.5">
+                                   <div className="flex items-center gap-2">
                                      <Check className="w-3 h-3 text-[#2E7D5B]" />
                                      <span>Activity match: {activity.name}</span>
                                    </div>
-                                   <div className="flex items-center gap-1.5">
+                                   <div className="flex items-center gap-2">
                                      <Check className="w-3 h-3 text-[#2E7D5B]" />
                                      <span>Area match: {activity.area}</span>
                                    </div>
-                                   <div className="flex items-center gap-1.5">
+                                   <div className="flex items-center gap-2">
                                      <Check className="w-3 h-3 text-[#2E7D5B]" />
                                      <span>Discipline match: {activity.discipline}</span>
                                    </div>
-                                   <div className="flex items-center gap-1.5">
+                                   <div className="flex items-center gap-2">
                                      <Check className="w-3 h-3 text-[#2E7D5B]" />
                                      <span>Context match: Shift log &amp; physical unit agreement</span>
                                    </div>
@@ -726,7 +726,7 @@ export function ActivityDetailDrawer({
                  Secondary Expandable: Cryptographic SHA256, technical metadata
                  --------------------------------------------------------------------- */}
              {activeTab === 'evidence' && (
-               <div className="space-y-3.5 animate-in fade-in duration-150">
+               <div className="space-y-4 animate-in fade-in duration-150">
                  <div className="flex items-center justify-between">
                    <span className="text-[11px] uppercase font-semibold text-[#596579] tracking-wider">
                      Evidence Records ({linkedEvidenceItems.length})
@@ -748,24 +748,24 @@ export function ActivityDetailDrawer({
                      {linkedEvidenceItems.map((item) => (
                        <div
                          key={item.id}
-                         className="p-3.5 bg-white border border-[#D9DEE5] rounded-lg space-y-2.5 shadow-2xs hover:border-[#176B87] transition-colors"
+                         className="p-4 bg-white border border-[#D9DEE5] rounded-lg space-y-2 shadow-2xs hover:border-[#176B87] transition-colors"
                        >
                          <div className="flex items-start justify-between gap-2">
                            <div className="space-y-1 min-w-0">
-                             <div className="flex items-center gap-1.5 flex-wrap">
+                             <div className="flex items-center gap-2 flex-wrap">
                                <span className="font-mono font-bold text-xs text-[#176B87] bg-[#EDF5F8] px-2 py-0.5 rounded border border-[#B3CBE0]">
                                  {item.id}
                                </span>
-                               <span className="text-[11px] font-semibold px-1.5 py-0.2 rounded bg-[#F1F3F5] text-[#596579] uppercase">
+                               <span className="text-[11px] font-semibold px-1.5 py-0.5 rounded bg-[#F1F3F5] text-[#596579] uppercase">
                                  {item.type}
                                </span>
                                {item.verifiedStatus ? (
-                                 <span className="inline-flex items-center gap-1 px-1.5 py-0.2 rounded text-[11px] font-semibold bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]">
+                                 <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[11px] font-semibold bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]">
                                    <ShieldCheck className="w-3 h-3" />
                                    <span>Verified QC</span>
                                  </span>
                                ) : (
-                                 <span className="inline-flex items-center gap-1 px-1.5 py-0.2 rounded text-[11px] font-semibold bg-[#FDF6ED] text-[#8C5311] border border-[#F0D4A6]">
+                                 <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[11px] font-semibold bg-[#FDF6ED] text-[#8C5311] border border-[#F0D4A6]">
                                    <Clock className="w-3 h-3" />
                                    <span>Pending QC</span>
                                  </span>
@@ -780,7 +780,7 @@ export function ActivityDetailDrawer({
                            <button
                              type="button"
                              onClick={() => setPreviewEvidenceModal(item)}
-                             className="p-1.5 text-[#596579] hover:text-[#172033] border border-[#D9DEE5] rounded hover:bg-[#F1F3F5] transition-colors flex-shrink-0"
+                             className="p-2 text-[#596579] hover:text-[#172033] border border-[#D9DEE5] rounded hover:bg-[#F1F3F5] transition-colors flex-shrink-0"
                              title="Preview file"
                            >
                              <Eye className="w-4 h-4" />
@@ -842,7 +842,7 @@ export function ActivityDetailDrawer({
             {activeTab === 'dependencies' && (
               <div className="space-y-4 animate-in fade-in duration-150">
                 {/* Float & Critical Path Summary */}
-                <div className="p-3.5 bg-[#FDF6ED] border border-[#F0D4A6] rounded-lg flex items-center justify-between text-xs">
+                <div className="p-4 bg-[#FDF6ED] border border-[#F0D4A6] rounded-lg flex items-center justify-between text-xs">
                   <div>
                     <span className="text-[11px] uppercase font-semibold text-[#8C5311] block">
                       CPM Float Analysis
@@ -851,7 +851,7 @@ export function ActivityDetailDrawer({
                       Total Float: {impactData.totalFloatDays}d
                     </strong>
                   </div>
-                  <div className="flex items-center gap-1.5">
+                  <div className="flex items-center gap-2">
                     <span className={`px-2 py-1 rounded text-xs font-semibold uppercase ${
                       activity.isCritical ? 'bg-[#FBEFEE] text-[#B5473C]' : 'bg-[#EDF7F2] text-[#2E7D5B]'
                     }`}>
@@ -879,7 +879,7 @@ export function ActivityDetailDrawer({
                       {detailedPredecessors.map((pred) => (
                         <div
                           key={pred.id}
-                          className="p-3 bg-white border border-[#D9DEE5] rounded-lg space-y-1.5 hover:border-[#176B87] transition-colors"
+                          className="p-3 bg-white border border-[#D9DEE5] rounded-lg space-y-2 hover:border-[#176B87] transition-colors"
                         >
                           <div className="flex items-center justify-between">
                             <button
@@ -917,7 +917,7 @@ export function ActivityDetailDrawer({
                       {detailedSuccessors.map((succ) => (
                         <div
                           key={succ.id}
-                          className="p-3 bg-white border border-[#D9DEE5] rounded-lg space-y-1.5 hover:border-[#176B87] transition-colors"
+                          className="p-3 bg-white border border-[#D9DEE5] rounded-lg space-y-2 hover:border-[#176B87] transition-colors"
                         >
                           <div className="flex items-center justify-between">
                             <button
@@ -945,7 +945,7 @@ export function ActivityDetailDrawer({
                   <button
                     type="button"
                     onClick={() => setShowFullLogic(!showFullLogic)}
-                    className="w-full px-3.5 py-2.5 bg-[#F7F8FA] hover:bg-[#F1F3F5] text-left flex items-center justify-between text-xs font-semibold text-[#172033] transition-colors"
+                    className="w-full px-4 py-2 bg-[#F7F8FA] hover:bg-[#F1F3F5] text-left flex items-center justify-between text-xs font-semibold text-[#172033] transition-colors"
                   >
                     <span>Schedule Impact &amp; Mitigation Notes</span>
                     <span className="text-[11px] text-[#596579] flex items-center gap-1">
@@ -959,7 +959,7 @@ export function ActivityDetailDrawer({
                       <p className="text-[#172033] leading-relaxed">
                         {impactData.projectedScheduleImpact}
                       </p>
-                      <div className="p-2.5 bg-[#F7F8FA] rounded border border-[#D9DEE5] space-y-1 text-[11px]">
+                      <div className="p-3 bg-[#F7F8FA] rounded border border-[#D9DEE5] space-y-1 text-[11px]">
                         <span className="text-[#8C5311] font-semibold block uppercase text-[11px]">Active Mitigation:</span>
                         <p className="text-[#172033]">{impactData.currentMitigation}</p>
                         <span className="text-[#176B87] font-semibold block uppercase text-[11px] pt-1">Recommended Action:</span>
@@ -977,7 +977,7 @@ export function ActivityDetailDrawer({
                 Secondary Expandable: Telemetry & Record IDs
                 --------------------------------------------------------------------- */}
             {activeTab === 'history' && (
-              <div className="space-y-3.5 animate-in fade-in duration-150">
+              <div className="space-y-4 animate-in fade-in duration-150">
                 <div className="flex items-center justify-between">
                   <span className="text-[11px] uppercase font-semibold text-[#596579] tracking-wider">
                     History &amp; Audit Trail ({auditHistory.length})
@@ -992,7 +992,7 @@ export function ActivityDetailDrawer({
                 ) : (
                   <div className="space-y-3 relative before:absolute before:inset-y-0 before:left-3 before:w-0.5 before:bg-[#D9DEE5]">
                     {auditHistory.map((log) => (
-                      <div key={log.id} className="relative pl-7 space-y-1.5">
+                      <div key={log.id} className="relative pl-7 space-y-2">
                         <div className="absolute left-1.5 top-2.5 w-3 h-3 rounded-full bg-[#176B87] border-2 border-white -translate-x-1/2" />
 
                         <div className="p-3 bg-white border border-[#D9DEE5] rounded-lg space-y-2 shadow-2xs hover:bg-[#F7F8FA] transition-colors">
@@ -1015,11 +1015,11 @@ export function ActivityDetailDrawer({
 
                           {(log.before || log.previousValue) && (
                             <div className="grid grid-cols-2 gap-2 text-[11px] font-mono pt-0.5">
-                              <div className="p-1.5 bg-[#FBEFEE] text-[#B5473C] rounded border border-[#E4B0AA]">
+                              <div className="p-2 bg-[#FBEFEE] text-[#B5473C] rounded border border-[#E4B0AA]">
                                 <span className="block text-[11px] uppercase font-semibold">Before:</span>
                                 <span>{log.before || log.previousValue}</span>
                               </div>
-                              <div className="p-1.5 bg-[#EDF7F2] text-[#2E7D5B] rounded border border-[#B8DCC9]">
+                              <div className="p-2 bg-[#EDF7F2] text-[#2E7D5B] rounded border border-[#B8DCC9]">
                                 <span className="block text-[11px] uppercase font-semibold">After:</span>
                                 <span>{log.after || log.newValue}</span>
                               </div>
@@ -1057,12 +1057,12 @@ export function ActivityDetailDrawer({
               Compact, accessible action toolbar
               Capture Update | Review Match | Open Evidence | View Dependency Impact
               ========================================================================= */}
-          <div className="px-5 py-3 border-t border-[#D9DEE5] bg-[#F7F8FA] flex items-center justify-between gap-2 flex-shrink-0">
-            <div className="flex items-center gap-1.5 flex-wrap">
+          <div className="px-4 sm:px-6 py-3 border-t border-[#D9DEE5] bg-[#F7F8FA] flex items-center justify-between gap-2 flex-shrink-0">
+            <div className="flex items-center gap-2 flex-wrap">
               <button
                 type="button"
                 onClick={handleViewDependencyImpact}
-                className={`px-2.5 py-1.5 text-xs font-semibold rounded-lg border transition-colors ${
+                className={`px-3 py-1.5 text-xs font-semibold rounded-lg border transition-colors ${
                   activeTab === 'dependencies'
                     ? 'bg-[#176B87] text-white border-[#176B87]'
                     : 'bg-white text-[#596579] hover:text-[#172033] border-[#D9DEE5] hover:bg-[#F1F3F5]'
@@ -1075,7 +1075,7 @@ export function ActivityDetailDrawer({
               <button
                 type="button"
                 onClick={handleOpenEvidence}
-                className={`px-2.5 py-1.5 text-xs font-semibold rounded-lg border transition-colors ${
+                className={`px-3 py-1.5 text-xs font-semibold rounded-lg border transition-colors ${
                   activeTab === 'evidence'
                     ? 'bg-[#176B87] text-white border-[#176B87]'
                     : 'bg-white text-[#596579] hover:text-[#172033] border-[#D9DEE5] hover:bg-[#F1F3F5]'
@@ -1088,7 +1088,7 @@ export function ActivityDetailDrawer({
               <button
                 type="button"
                 onClick={handleReviewMatch}
-                className="px-2.5 py-1.5 text-xs font-semibold bg-white text-[#176B87] border border-[#176B87] hover:bg-[#EDF5F8] rounded-lg transition-colors"
+                className="px-3 py-1.5 text-xs font-semibold bg-white text-[#176B87] border border-[#176B87] hover:bg-[#EDF5F8] rounded-lg transition-colors"
                 title="Review AI candidate matches"
               >
                 Review Match
@@ -1098,7 +1098,7 @@ export function ActivityDetailDrawer({
             <button
               type="button"
               onClick={handleCaptureUpdate}
-              className="px-3 py-1.5 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] rounded-lg shadow-xs transition-colors inline-flex items-center gap-1.5 flex-shrink-0"
+              className="px-3 py-1.5 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] rounded-lg shadow-xs transition-colors inline-flex items-center gap-2 flex-shrink-0"
               title="Capture physical site progress"
             >
               <Plus className="w-3.5 h-3.5" />

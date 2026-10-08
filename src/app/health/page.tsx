@@ -244,7 +244,7 @@ export default function ScheduleHealthPage() {
 
   return (
     <StateWrapper>
-      <div className="space-y-6">
+      <div className="space-y-6 pb-12">
         <Breadcrumbs
           items={[
             { label: 'Trust & Governance' },
@@ -255,19 +255,19 @@ export default function ScheduleHealthPage() {
         {/* =========================================================================
             HEADER & AUDIT ENGINE
             ========================================================================= */}
-        <div className="bg-white border border-[#D9DEE5] rounded-lg p-5 shadow-xs space-y-4">
+        <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 shadow-xs space-y-4">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
             <div>
-              <div className="flex items-center gap-2 mb-1.5 flex-wrap">
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-[11px] font-bold tracking-wider uppercase bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0]">
+              <div className="flex items-center gap-2 mb-2 flex-wrap">
+                <span className="inline-flex items-center gap-2 px-3 py-0.5 rounded text-[11px] font-bold tracking-wider uppercase bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0]">
                   <Activity className="w-3.5 h-3.5" />
                   Audit Engine
                 </span>
-                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-[11px] font-medium bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]">
+                <span className="inline-flex items-center gap-1 px-3 py-0.5 rounded text-[11px] font-medium bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]">
                   <CheckCircle2 className="w-3 h-3 text-[#2E7D5B]" />
                   Quality Guard Active
                 </span>
-                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-[11px] text-[#596579] bg-[#F7F8FA] border border-[#D9DEE5]">
+                <span className="inline-flex items-center gap-1 px-3 py-0.5 rounded text-[11px] text-[#596579] bg-[#F7F8FA] border border-[#D9DEE5]">
                   {activeProject?.code || 'OIL-DUL-01'} · V3 · Rev 3.2
                 </span>
               </div>
@@ -307,7 +307,7 @@ export default function ScheduleHealthPage() {
                   setActiveTab('Schedule Health');
                   setSelectedRuleFilter('ALL');
                 }}
-                className={`flex items-center gap-2.5 px-5 py-2 text-xs font-bold rounded-md transition-all ${
+                className={`flex items-center gap-2 px-4 sm:px-6 py-2 text-xs font-bold rounded-md transition-all ${
                   activeTab === 'Schedule Health'
                     ? 'bg-white text-[#172033] shadow-xs border border-[#D9DEE5]'
                     : 'text-[#596579] hover:text-[#172033]'
@@ -316,7 +316,7 @@ export default function ScheduleHealthPage() {
                 <Calendar className="w-4 h-4 text-[#176B87]" />
                 <span>Schedule Health</span>
                 <span
-                  className={`px-2 py-0.2 rounded text-[11px] font-mono font-semibold ${
+                  className={`px-2 py-0.5 rounded text-[11px] font-mono font-semibold ${
                     activeTab === 'Schedule Health'
                       ? 'bg-[#EDF5F8] text-[#176B87]'
                       : 'bg-[#D9DEE5] text-[#596579]'
@@ -333,7 +333,7 @@ export default function ScheduleHealthPage() {
                   setActiveTab('Execution Data Quality');
                   setSelectedRuleFilter('ALL');
                 }}
-                className={`flex items-center gap-2.5 px-5 py-2 text-xs font-bold rounded-md transition-all ${
+                className={`flex items-center gap-2 px-4 sm:px-6 py-2 text-xs font-bold rounded-md transition-all ${
                   activeTab === 'Execution Data Quality'
                     ? 'bg-white text-[#172033] shadow-xs border border-[#D9DEE5]'
                     : 'text-[#596579] hover:text-[#172033]'
@@ -342,7 +342,7 @@ export default function ScheduleHealthPage() {
                 <FileText className="w-4 h-4 text-[#176B87]" />
                 <span>Execution Data Quality</span>
                 <span
-                  className={`px-2 py-0.2 rounded text-[11px] font-mono font-semibold ${
+                  className={`px-2 py-0.5 rounded text-[11px] font-mono font-semibold ${
                     activeTab === 'Execution Data Quality'
                       ? 'bg-[#EDF5F8] text-[#176B87]'
                       : 'bg-[#D9DEE5] text-[#596579]'
@@ -360,21 +360,21 @@ export default function ScheduleHealthPage() {
                 title="Why is schedule health in Warning state?"
               />
               <div
-                className="px-2.5 py-1.5 rounded bg-[#EDF7F2] border border-[#B8DCC9] text-[#2E7D5B] font-bold flex items-center gap-1.5"
+                className="px-3 py-1.5 rounded bg-[#EDF7F2] border border-[#B8DCC9] text-[#2E7D5B] font-bold flex items-center gap-2"
                 title="Checks in healthy state with zero open violations"
               >
                 <CheckCircle2 className="w-3.5 h-3.5 text-[#2E7D5B]" />
                 <span>Healthy</span>
               </div>
               <div
-                className="px-2.5 py-1.5 rounded bg-[#FDF6ED] border border-[#F0D4A6] text-[#8C5311] font-bold flex items-center gap-1.5"
+                className="px-3 py-1.5 rounded bg-[#FDF6ED] border border-[#F0D4A6] text-[#8C5311] font-bold flex items-center gap-2"
                 title="Moderate risk or data hygiene warning requiring review"
               >
                 <AlertCircle className="w-3.5 h-3.5 text-[#8C5311]" />
                 <span>{metrics.warningCount} Warning</span>
               </div>
               <div
-                className="px-2.5 py-1.5 rounded bg-[#FBEFEE] border border-[#E4B0AA] text-[#9E332A] font-bold flex items-center gap-1.5"
+                className="px-3 py-1.5 rounded bg-[#FBEFEE] border border-[#E4B0AA] text-[#9E332A] font-bold flex items-center gap-2"
                 title="Critical CPM logic breakdown or severe data integrity failure"
               >
                 <AlertTriangle className="w-3.5 h-3.5 text-[#9E332A]" />
@@ -481,7 +481,7 @@ export default function ScheduleHealthPage() {
         {/* =========================================================================
             SEARCH & SECONDARY FILTER BAR
             ========================================================================= */}
-        <div className="bg-white border border-[#D9DEE5] rounded-lg p-3.5 shadow-xs space-y-3">
+        <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 shadow-xs space-y-3">
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
             <div className="relative flex-1 max-w-md">
               <Search className="w-3.5 h-3.5 text-[#7B8798] absolute left-3 top-2.5" />
@@ -499,7 +499,7 @@ export default function ScheduleHealthPage() {
               <select
                 value={severityFilter}
                 onChange={(e) => setSeverityFilter(e.target.value as any)}
-                className="px-2.5 py-1.5 bg-white border border-[#D9DEE5] rounded-lg text-xs font-medium text-[#172033] outline-none"
+                className="px-3 py-1.5 bg-white border border-[#D9DEE5] rounded-lg text-xs font-medium text-[#172033] outline-none"
               >
                 <option value="ALL">All Severities</option>
                 <option value="Critical">Critical</option>
@@ -511,7 +511,7 @@ export default function ScheduleHealthPage() {
               <select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value as any)}
-                className="px-2.5 py-1.5 bg-white border border-[#D9DEE5] rounded-lg text-xs font-medium text-[#172033] outline-none"
+                className="px-3 py-1.5 bg-white border border-[#D9DEE5] rounded-lg text-xs font-medium text-[#172033] outline-none"
               >
                 <option value="ALL">All Statuses</option>
                 <option value="Open">Open</option>
@@ -523,7 +523,7 @@ export default function ScheduleHealthPage() {
                 <button
                   type="button"
                   onClick={handleResetFilters}
-                  className="px-2.5 py-1 text-xs text-[#9E332A] hover:bg-[#FBEFEE] border border-[#E4B0AA] rounded-lg transition-colors flex items-center gap-1"
+                  className="px-3 py-1 text-xs text-[#9E332A] hover:bg-[#FBEFEE] border border-[#E4B0AA] rounded-lg transition-colors flex items-center gap-1"
                 >
                   <RotateCcw className="w-3 h-3" />
                   <span>Reset</span>
@@ -565,20 +565,20 @@ export default function ScheduleHealthPage() {
                       className="hover:bg-[#F9FAFC] transition-colors group"
                     >
                       {/* 1. Issue (Rule + Issue ID) */}
-                      <td className="py-3.5 px-4 align-top whitespace-nowrap">
+                      <td className="py-3 px-4 align-top whitespace-nowrap">
                         <div className="space-y-0.5">
                           <span className="font-semibold text-[#172033] block">
                             {issue.rule}
                           </span>
-                          <span className="font-mono text-[11px] text-[#176B87] bg-[#EDF5F8] px-1.5 py-0.2 rounded border border-[#B3CBE0] inline-block font-semibold">
+                          <span className="font-mono text-[11px] text-[#176B87] bg-[#EDF5F8] px-1.5 py-0.5 rounded border border-[#B3CBE0] inline-block font-semibold">
                             {issue.id}
                           </span>
                         </div>
                       </td>
 
                       {/* 2. Severity: Healthy | Warning | Critical */}
-                      <td className="py-3.5 px-3 align-top whitespace-nowrap">
-                        <div className="flex items-center gap-1.5">
+                      <td className="py-3 px-3 align-top whitespace-nowrap">
+                        <div className="flex items-center gap-2">
                           {effectiveSeverity === 'Critical' ? (
                             <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold uppercase bg-[#FBEFEE] text-[#9E332A] border border-[#E4B0AA]">
                               <AlertTriangle className="w-3 h-3" />
@@ -603,7 +603,7 @@ export default function ScheduleHealthPage() {
                       </td>
 
                       {/* 3. Object */}
-                      <td className="py-3.5 px-4 align-top max-w-[200px]">
+                      <td className="py-3 px-4 align-top max-w-[200px]">
                         <div>
                           <span className="font-mono font-bold text-[#176B87] block truncate">
                             {issue.objectId}
@@ -615,7 +615,7 @@ export default function ScheduleHealthPage() {
                       </td>
 
                       {/* 4. Description */}
-                      <td className="py-3.5 px-4 align-top">
+                      <td className="py-3 px-4 align-top">
                         <p className="text-sm text-[#172033] leading-relaxed">
                           {issue.description}
                         </p>
@@ -625,12 +625,12 @@ export default function ScheduleHealthPage() {
                       </td>
 
                       {/* 5. Detected */}
-                      <td className="py-3.5 px-3 align-top whitespace-nowrap font-mono text-[11px] text-[#596579]">
+                      <td className="py-3 px-3 align-top whitespace-nowrap font-mono text-[11px] text-[#596579]">
                         {issue.detected || issue.detectedAt}
                       </td>
 
                       {/* 6. Status */}
-                      <td className="py-3.5 px-3 align-top whitespace-nowrap">
+                      <td className="py-3 px-3 align-top whitespace-nowrap">
                         <span
                           className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold uppercase ${
                             issue.status === 'Resolved'
@@ -645,7 +645,7 @@ export default function ScheduleHealthPage() {
                       </td>
 
                       {/* 7. Action: View | Fix | Review | Resolve */}
-                      <td className="py-3.5 px-4 align-top text-right whitespace-nowrap">
+                      <td className="py-3 px-4 align-top text-right whitespace-nowrap">
                         <div className="inline-flex items-center gap-1">
                           {/* Action: View */}
                           <button
@@ -722,8 +722,8 @@ export default function ScheduleHealthPage() {
           width="lg"
         >
           {selectedIssueForDetail && (
-            <div className="space-y-5 text-xs p-1">
-              <div className="p-3.5 bg-[#F7F8FA] rounded-lg border border-[#D9DEE5] space-y-2">
+            <div className="space-y-6 text-xs p-1">
+              <div className="p-4 bg-[#F7F8FA] rounded-lg border border-[#D9DEE5] space-y-2">
                 <div className="flex items-center justify-between">
                   <span className="text-[10px] font-semibold uppercase text-[#596579]">Affected Object</span>
                   <span className="px-2 py-0.5 rounded font-mono text-[10px] font-bold bg-[#EDF5F8] text-[#176B87]">
@@ -753,7 +753,7 @@ export default function ScheduleHealthPage() {
               </div>
 
               {selectedIssueForDetail.fixPayload && (
-                <div className="space-y-2 p-3.5 bg-[#EDF7F2] border border-[#B8DCC9] rounded-lg">
+                <div className="space-y-2 p-4 bg-[#EDF7F2] border border-[#B8DCC9] rounded-lg">
                   <span className="text-[10px] font-bold uppercase text-[#2E7D5B] block">
                     Suggested Remediation
                   </span>

@@ -78,13 +78,13 @@ export function Modal({
           </div>
 
           {/* Body */}
-          <div className="px-6 py-5 max-h-[75vh] overflow-y-auto text-[#172033] text-sm">
+          <div className="px-6 py-4 max-h-[75vh] overflow-y-auto text-[#172033] text-sm">
             {children}
           </div>
 
           {/* Footer */}
           {footer && (
-            <div className="flex items-center justify-end gap-3 px-6 py-3.5 border-t border-[#D9DEE5] bg-[#F7F8FA]">
+            <div className="flex items-center justify-end gap-3 px-6 py-3 border-t border-[#D9DEE5] bg-[#F7F8FA]">
               {footer}
             </div>
           )}

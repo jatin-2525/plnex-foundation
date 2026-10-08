@@ -31,7 +31,7 @@ export function EmptyState({
       <div className="w-12 h-12 rounded-lg bg-[#F1F3F5] border border-[#D9DEE5] flex items-center justify-center text-[#176B87] mb-4 flex-shrink-0">
         <Icon className="w-6 h-6" />
       </div>
-      <h3 className="text-lg sm:text-xl font-bold text-[#172033] mb-1.5 tracking-tight">{title}</h3>
+      <h3 className="text-lg sm:text-xl font-bold text-[#172033] mb-2 tracking-tight">{title}</h3>
       <p className="text-sm sm:text-base text-[#596579] max-w-md mb-6 leading-relaxed">
         {description}
       </p>

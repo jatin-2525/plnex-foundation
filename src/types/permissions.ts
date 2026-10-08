@@ -183,6 +183,7 @@ export function canAccessRoute(role: UserRole, rawPathname: string): boolean {
     // Explicitly denied routes for Manager
     if (
       pathname === '/engineer' ||
+      pathname === '/field/capture' ||
       pathname.startsWith('/admin')
     ) {
       return false;

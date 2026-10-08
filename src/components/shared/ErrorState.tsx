@@ -28,12 +28,12 @@ export function ErrorState({
       <div className="w-12 h-12 rounded-lg bg-[#FBEFEE] border border-[#E4B0AA] flex items-center justify-center text-[#B5473C] mb-4 flex-shrink-0">
         <AlertCircle className="w-6 h-6" />
       </div>
-      <h3 className="text-lg sm:text-xl font-bold text-[#172033] mb-1.5 tracking-tight">{title}</h3>
+      <h3 className="text-lg sm:text-xl font-bold text-[#172033] mb-2 tracking-tight">{title}</h3>
       <p className="text-sm sm:text-base text-[#596579] max-w-md mb-3 leading-relaxed">
         {message}
       </p>
       {code && (
-        <span className="inline-block px-2.5 py-0.5 bg-[#F1F3F5] border border-[#D9DEE5] rounded text-xs font-mono text-[#596579] mb-6">
+        <span className="inline-block px-3 py-0.5 bg-[#F1F3F5] border border-[#D9DEE5] rounded text-xs font-mono text-[#596579] mb-6">
           Diagnostic Code: {code}
         </span>
       )}

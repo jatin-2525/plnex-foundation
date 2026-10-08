@@ -211,7 +211,7 @@ export default function RegisterPage() {
     <div className="w-full max-w-2xl mx-auto py-6">
       <div className="bg-white border border-[#D9DEE5] rounded-lg shadow-sm overflow-hidden">
         {/* Header with PLnEX branding */}
-        <div className="px-6 pt-7 pb-5 text-center border-b border-[#D9DEE5] bg-white">
+        <div className="px-6 pt-7 pb-4 text-center border-b border-[#D9DEE5] bg-white">
           <div className="inline-flex items-center justify-center w-10 h-10 rounded-md bg-[#176B87] text-white font-black text-lg tracking-tighter mb-3 shadow-xs">
             PX
           </div>
@@ -241,17 +241,17 @@ export default function RegisterPage() {
             <div className="w-full max-w-md mx-auto bg-[#D9DEE5] h-1.5 rounded-full overflow-hidden">
               <div className="h-full bg-[#2E7D5B] rounded-full w-full" />
             </div>
-            <span className="inline-flex items-center gap-1.5 text-xs text-[#176B87] font-medium font-mono">
+            <span className="inline-flex items-center gap-2 text-xs text-[#176B87] font-medium font-mono">
               <Loader2 className="w-3.5 h-3.5 animate-spin" />
               Initializing workspace & redirecting...
             </span>
           </div>
         ) : (
           /* Registration Form */
-          <form onSubmit={handleSubmit} className="p-6 md:p-8 space-y-5">
+          <form onSubmit={handleSubmit} className="p-6 md:p-8 space-y-6">
             {/* Server Failure Alert Banner */}
             {registerState === 'server_failure' && (
-              <div className="p-3 bg-[#FBEFEE] border border-[#E4B0AA] rounded-md flex items-start gap-2.5 text-xs text-[#B5473C] animate-in fade-in duration-150">
+              <div className="p-3 bg-[#FBEFEE] border border-[#E4B0AA] rounded-md flex items-start gap-2 text-xs text-[#B5473C] animate-in fade-in duration-150">
                 <AlertTriangle className="w-4 h-4 flex-shrink-0 mt-0.5" />
                 <div>
                   <strong className="block font-semibold">User Provisioning Gateway Error (500)</strong>
@@ -264,7 +264,7 @@ export default function RegisterPage() {
 
             {/* Duplicate Email Alert Banner */}
             {registerState === 'duplicate_email' && (
-              <div className="p-3 bg-[#FDF6ED] border border-[#F0D4A6] rounded-md flex items-start gap-2.5 text-xs text-[#8C5311] animate-in fade-in duration-150">
+              <div className="p-3 bg-[#FDF6ED] border border-[#F0D4A6] rounded-md flex items-start gap-2 text-xs text-[#8C5311] animate-in fade-in duration-150">
                 <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
                 <div>
                   <strong className="block font-semibold">Account Already Registered</strong>
@@ -464,7 +464,7 @@ export default function RegisterPage() {
             </div>
 
             {/* Role Options: Manager vs Engineer */}
-            <div className="space-y-1.5 pt-1">
+            <div className="space-y-2 pt-1">
               <label className="block text-xs font-semibold text-[#172033]">
                 Project Role Assignment <span className="text-[#B5473C]">*</span>
               </label>
@@ -600,22 +600,22 @@ export default function RegisterPage() {
               </div>
 
               {/* Password Requirements Checklist */}
-              <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-md text-[11px] space-y-1.5">
+              <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-md text-[11px] space-y-2">
                 <span className="font-semibold text-[#172033] block">Password Security Requirements:</span>
-                <div className="grid grid-cols-2 gap-1.5 font-mono">
-                  <div className={`flex items-center gap-1.5 ${passwordCriteria.minLength ? 'text-[#2E7D5B]' : 'text-[#7B8798]'}`}>
+                <div className="grid grid-cols-2 gap-2 font-mono">
+                  <div className={`flex items-center gap-2 ${passwordCriteria.minLength ? 'text-[#2E7D5B]' : 'text-[#7B8798]'}`}>
                     {passwordCriteria.minLength ? <Check className="w-3.5 h-3.5 text-[#2E7D5B]" /> : <span className="w-3.5 h-3.5 flex items-center justify-center">•</span>}
                     <span>At least 8 characters</span>
                   </div>
-                  <div className={`flex items-center gap-1.5 ${passwordCriteria.hasNumber ? 'text-[#2E7D5B]' : 'text-[#7B8798]'}`}>
+                  <div className={`flex items-center gap-2 ${passwordCriteria.hasNumber ? 'text-[#2E7D5B]' : 'text-[#7B8798]'}`}>
                     {passwordCriteria.hasNumber ? <Check className="w-3.5 h-3.5 text-[#2E7D5B]" /> : <span className="w-3.5 h-3.5 flex items-center justify-center">•</span>}
                     <span>At least 1 number (0–9)</span>
                   </div>
-                  <div className={`flex items-center gap-1.5 ${passwordCriteria.hasUpper ? 'text-[#2E7D5B]' : 'text-[#7B8798]'}`}>
+                  <div className={`flex items-center gap-2 ${passwordCriteria.hasUpper ? 'text-[#2E7D5B]' : 'text-[#7B8798]'}`}>
                     {passwordCriteria.hasUpper ? <Check className="w-3.5 h-3.5 text-[#2E7D5B]" /> : <span className="w-3.5 h-3.5 flex items-center justify-center">•</span>}
                     <span>Uppercase letter (A–Z)</span>
                   </div>
-                  <div className={`flex items-center gap-1.5 ${passwordCriteria.hasSpecial ? 'text-[#2E7D5B]' : 'text-[#7B8798]'}`}>
+                  <div className={`flex items-center gap-2 ${passwordCriteria.hasSpecial ? 'text-[#2E7D5B]' : 'text-[#7B8798]'}`}>
                     {passwordCriteria.hasSpecial ? <Check className="w-3.5 h-3.5 text-[#2E7D5B]" /> : <span className="w-3.5 h-3.5 flex items-center justify-center">•</span>}
                     <span>Special character (!@#$)</span>
                   </div>
@@ -627,7 +627,7 @@ export default function RegisterPage() {
             <button
               type="submit"
               disabled={registerState === 'submitting'}
-              className="w-full flex items-center justify-center gap-2 py-2.5 px-4 bg-[#176B87] hover:bg-[#135A72] disabled:bg-[#176B87]/60 text-white text-xs font-semibold rounded-md shadow-xs transition-colors cursor-pointer disabled:cursor-not-allowed mt-4"
+              className="w-full flex items-center justify-center gap-2 py-2 px-4 bg-[#176B87] hover:bg-[#135A72] disabled:bg-[#176B87]/60 text-white text-xs font-semibold rounded-md shadow-xs transition-colors cursor-pointer disabled:cursor-not-allowed mt-4"
             >
               {registerState === 'submitting' ? (
                 <>
@@ -643,7 +643,7 @@ export default function RegisterPage() {
             </button>
 
             {/* Bottom Links */}
-            <div className="pt-3 border-t border-[#D9DEE5] flex items-center justify-center gap-1.5 text-xs text-[#596579]">
+            <div className="pt-3 border-t border-[#D9DEE5] flex items-center justify-center gap-2 text-xs text-[#596579]">
               <span>Already have an account?</span>
               <Link href="/login" className="font-semibold text-[#176B87] hover:underline">
                 Sign In
@@ -667,7 +667,7 @@ export default function RegisterPage() {
           </span>
           <span className="font-mono">All States Tested</span>
         </div>
-        <div className="flex flex-wrap gap-1.5">
+        <div className="flex flex-wrap gap-2">
           <button
             type="button"
             onClick={() => handleQuickFill('engineer')}

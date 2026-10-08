@@ -639,14 +639,14 @@ export default function ProjectOverviewPage() {
             </span>
 
             {node.isCritical && (
-              <span className="px-1.5 py-0.2 rounded text-[9px] font-mono font-bold uppercase bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA] flex-shrink-0">
+              <span className="px-1.5 py-0.5 rounded text-[9px] font-mono font-bold uppercase bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA] flex-shrink-0">
                 CRITICAL
               </span>
             )}
           </div>
 
           <div className="flex items-center gap-3 flex-shrink-0 text-xs">
-            <div className="w-24 flex items-center gap-1.5">
+            <div className="w-24 flex items-center gap-2">
               <span className="font-mono text-[11px] font-bold text-[#172033]">{node.actualProgress}%</span>
               <ProgressBar
                 actual={node.actualProgress}
@@ -691,17 +691,17 @@ export default function ProjectOverviewPage() {
 
   return (
     <StateWrapper>
-      <div className="space-y-6 pb-16 max-w-7xl mx-auto">
+      <div className="space-y-6 pb-12 max-w-7xl mx-auto">
         <Breadcrumbs items={breadcrumbs} />
 
         {/* ========================================================= */}
         {/* 1. PROJECT HEADER */}
         {/* Consistent title, ID, breadcrumbs, and primary action bar */}
         {/* ========================================================= */}
-        <div className="bg-white border border-[#D9DEE5] rounded-lg p-5 shadow-xs">
+        <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 shadow-xs">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
             <div>
-              <div className="flex items-center gap-2 mb-1.5 flex-wrap">
+              <div className="flex items-center gap-2 mb-2 flex-wrap">
                 <span className="font-mono text-xs font-bold px-2 py-0.5 rounded bg-[#176B87] text-white">
                   {project.id}
                 </span>
@@ -727,7 +727,7 @@ export default function ProjectOverviewPage() {
                   setActiveProjectId(project.id);
                   router.push('/schedule');
                 }}
-                className="px-3.5 py-2 text-xs font-semibold text-[#172033] bg-white hover:bg-[#F1F3F5] border border-[#D9DEE5] rounded-lg transition-colors inline-flex items-center gap-1.5 shadow-2xs cursor-pointer"
+                className="px-4 py-2 text-xs font-semibold text-[#172033] bg-white hover:bg-[#F1F3F5] border border-[#D9DEE5] rounded-lg transition-colors inline-flex items-center gap-2 shadow-2xs cursor-pointer"
                 title="Open Master Schedule WBS"
               >
                 <Calendar className="w-3.5 h-3.5 text-[#596579]" />
@@ -737,7 +737,7 @@ export default function ProjectOverviewPage() {
               <button
                 type="button"
                 onClick={() => setIsFieldModalOpen(true)}
-                className="px-3.5 py-2 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] rounded-lg transition-colors inline-flex items-center gap-1.5 shadow-xs cursor-pointer"
+                className="px-4 py-2 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] rounded-lg transition-colors inline-flex items-center gap-2 shadow-xs cursor-pointer"
                 title="Record new site progress statement"
               >
                 <ClipboardList className="w-3.5 h-3.5" />
@@ -747,13 +747,13 @@ export default function ProjectOverviewPage() {
               <Link
                 href="/matching"
                 onClick={() => setActiveProjectId(project.id)}
-                className="px-3.5 py-2 text-xs font-semibold text-[#172033] bg-white hover:bg-[#F1F3F5] border border-[#D9DEE5] rounded-lg transition-colors inline-flex items-center gap-1.5 shadow-2xs cursor-pointer"
+                className="px-4 py-2 text-xs font-semibold text-[#172033] bg-white hover:bg-[#F1F3F5] border border-[#D9DEE5] rounded-lg transition-colors inline-flex items-center gap-2 shadow-2xs cursor-pointer"
                 title="View Match Verification Queue"
               >
                 <GitCompare className="w-3.5 h-3.5 text-[#D98B32]" />
                 <span>Review Queue</span>
                 {(project.openReviews || 0) > 0 && (
-                  <span className="px-1.5 py-0.2 rounded-full bg-[#D98B32] text-white text-[10px] font-mono font-bold">
+                  <span className="px-1.5 py-0.5 rounded-full bg-[#D98B32] text-white text-[10px] font-mono font-bold">
                     {project.openReviews}
                   </span>
                 )}
@@ -762,7 +762,7 @@ export default function ProjectOverviewPage() {
               <button
                 type="button"
                 onClick={() => setIsReportModalOpen(true)}
-                className="px-3.5 py-2 text-xs font-medium text-[#596579] hover:text-[#172033] bg-white hover:bg-[#F1F3F5] border border-[#D9DEE5] rounded-lg transition-colors inline-flex items-center gap-1.5 cursor-pointer"
+                className="px-4 py-2 text-xs font-medium text-[#596579] hover:text-[#172033] bg-white hover:bg-[#F1F3F5] border border-[#D9DEE5] rounded-lg transition-colors inline-flex items-center gap-2 cursor-pointer"
                 title="Open Project Dossier & Export Reports"
               >
                 <FileText className="w-3.5 h-3.5 text-[#176B87]" />
@@ -778,8 +778,8 @@ export default function ProjectOverviewPage() {
         {/* ========================================================= */}
         <div className="bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg p-3 sm:p-4 text-xs">
           <div className="flex flex-wrap items-center justify-between gap-y-2 gap-x-4">
-            <div className="flex flex-wrap items-center gap-y-1.5 gap-x-3 text-[#596579]">
-              <div className="flex items-center gap-1.5">
+            <div className="flex flex-wrap items-center gap-y-2 gap-x-3 text-[#596579]">
+              <div className="flex items-center gap-2">
                 <span className="font-semibold text-[#172033]">Status:</span>
                 <StatusBadge status={project.status} size="sm" />
               </div>
@@ -801,7 +801,7 @@ export default function ProjectOverviewPage() {
               </div>
             </div>
 
-            <div className="flex flex-wrap items-center gap-y-1.5 gap-x-3 text-[#596579]">
+            <div className="flex flex-wrap items-center gap-y-2 gap-x-3 text-[#596579]">
               <div className="flex items-center gap-1">
                 <Building2 className="w-3.5 h-3.5 text-[#7B8798]" />
                 <span>Client: <strong className="text-[#172033]">{project.organization}</strong></span>
@@ -827,7 +827,7 @@ export default function ProjectOverviewPage() {
         {/* 3. OVERALL PROGRESS */}
         {/* Focused physical earned progress bar (NOT a wall of KPI cards) */}
         {/* ========================================================= */}
-        <section aria-labelledby="overall-progress-heading" className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-5 shadow-xs space-y-4">
+        <section aria-labelledby="overall-progress-heading" className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-4 sm:p-6 shadow-xs space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D9DEE5] gap-2">
             <div>
               <h2 id="overall-progress-heading" className="text-base sm:text-lg font-bold text-[#172033]">
@@ -843,7 +843,7 @@ export default function ProjectOverviewPage() {
               <Link
                 href="/matching"
                 onClick={() => setActiveProjectId(project.id)}
-                className="px-2.5 py-1 rounded bg-[#FDF6ED] border border-[#F0D4A6] text-[#8C5311] font-semibold hover:bg-[#FCEFD9] transition-colors inline-flex items-center gap-1 cursor-pointer"
+                className="px-3 py-1 rounded bg-[#FDF6ED] border border-[#F0D4A6] text-[#8C5311] font-semibold hover:bg-[#FCEFD9] transition-colors inline-flex items-center gap-1 cursor-pointer"
               >
                 <AlertTriangle className="w-3 h-3" />
                 <span>{project.openReviews || 3} Pending Reviews</span>
@@ -852,13 +852,13 @@ export default function ProjectOverviewPage() {
               <button
                 type="button"
                 onClick={() => setIsDelayDrawerOpen(true)}
-                className="px-2.5 py-1 rounded bg-[#FBEFEE] border border-[#E4B0AA] text-[#B5473C] font-semibold hover:bg-[#F8E3E1] transition-colors inline-flex items-center gap-1 cursor-pointer"
+                className="px-3 py-1 rounded bg-[#FBEFEE] border border-[#E4B0AA] text-[#B5473C] font-semibold hover:bg-[#F8E3E1] transition-colors inline-flex items-center gap-1 cursor-pointer"
               >
                 <TrendingDown className="w-3 h-3" />
                 <span>{project.delayedCount || 2} Critical Delays</span>
               </button>
 
-              <span className="px-2.5 py-1 rounded bg-[#EDF7F2] border border-[#B8DCC9] text-[#2E7D5B] font-mono font-bold text-[11px]">
+              <span className="px-3 py-1 rounded bg-[#EDF7F2] border border-[#B8DCC9] text-[#2E7D5B] font-mono font-bold text-[11px]">
                 Health Score: {MOCK_HEALTH_SCORE.overall}/100
               </span>
             </div>
@@ -925,7 +925,7 @@ export default function ProjectOverviewPage() {
         {/* 5. AREA PROGRESS */}
         {/* WBS Level 2 breakdown by operational plant areas */}
         {/* ========================================================= */}
-        <section aria-labelledby="area-progress-heading" className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-5 shadow-xs space-y-4">
+        <section aria-labelledby="area-progress-heading" className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-4 sm:p-6 shadow-xs space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D9DEE5] gap-2">
             <div>
               <div className="flex items-center gap-2">
@@ -950,14 +950,14 @@ export default function ProjectOverviewPage() {
           </div>
 
           {/* Area Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {operationalAreas.map((area) => (
               <div
                 key={area.id}
-                className="p-3.5 bg-[#F7F8FA] border border-[#D9DEE5] hover:border-[#176B87] rounded-lg transition-colors flex flex-col justify-between space-y-3"
+                className="p-4 bg-[#F7F8FA] border border-[#D9DEE5] hover:border-[#176B87] rounded-lg transition-colors flex flex-col justify-between space-y-3"
               >
                 <div>
-                  <div className="flex items-center justify-between mb-1.5">
+                  <div className="flex items-center justify-between mb-2">
                     <span className="font-mono text-[11px] font-bold text-[#176B87] px-1.5 py-0.5 bg-white border border-[#D9DEE5] rounded">
                       {area.code}
                     </span>
@@ -1015,7 +1015,7 @@ export default function ProjectOverviewPage() {
         {/* 6. MAJOR DELAYS */}
         {/* Critical path slip, root causes, float erosion & mitigations */}
         {/* ========================================================= */}
-        <section aria-labelledby="major-delays-heading" className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-5 shadow-xs space-y-4">
+        <section aria-labelledby="major-delays-heading" className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-4 sm:p-6 shadow-xs space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D9DEE5] gap-2">
             <div>
               <div className="flex items-center gap-2">
@@ -1041,7 +1041,7 @@ export default function ProjectOverviewPage() {
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             {/* Primary Driving Delay */}
-            <div className="p-4 bg-[#FBEFEE] border border-[#E4B0AA] rounded-lg space-y-2.5 text-xs">
+            <div className="p-4 bg-[#FBEFEE] border border-[#E4B0AA] rounded-lg space-y-2 text-xs">
               <div className="flex items-center justify-between gap-2 flex-wrap">
                 <span className="font-mono font-bold text-[#B5473C]">
                   PIP-24-002: Weld Line 24-XX Field Joints &amp; NDT
@@ -1055,7 +1055,7 @@ export default function ProjectOverviewPage() {
                 <strong>Root Cause:</strong> Delayed delivery of 24-inch 600# carbon steel weld fittings from central stores warehouse voucher #4102 during monsoon transport disruption.
               </p>
 
-              <div className="pt-2 border-t border-[#E4B0AA]/40 space-y-1.5">
+              <div className="pt-2 border-t border-[#E4B0AA]/40 space-y-2">
                 <span className="text-[11px] font-bold text-[#172033] block">
                   Downstream Successors Impacted:
                 </span>
@@ -1088,7 +1088,7 @@ export default function ProjectOverviewPage() {
             </div>
 
             {/* Secondary Near-Critical Delay */}
-            <div className="p-4 bg-[#FDF6ED] border border-[#F0D4A6] rounded-lg space-y-2.5 text-xs">
+            <div className="p-4 bg-[#FDF6ED] border border-[#F0D4A6] rounded-lg space-y-2 text-xs">
               <div className="flex items-center justify-between gap-2 flex-wrap">
                 <span className="font-mono font-bold text-[#D98B32]">
                   ELE-11-032: Cable Tray Installation - Substation to Bay
@@ -1102,7 +1102,7 @@ export default function ProjectOverviewPage() {
                 <strong>Root Cause:</strong> Scaffolding tag clearance pending inspection by site HSE officer due to rain on Overhead Gallery Bay 1-4.
               </p>
 
-              <div className="pt-2 border-t border-[#F0D4A6]/40 space-y-1.5">
+              <div className="pt-2 border-t border-[#F0D4A6]/40 space-y-2">
                 <span className="text-[11px] font-bold text-[#172033] block">
                   Downstream Successors Impacted:
                 </span>
@@ -1133,7 +1133,7 @@ export default function ProjectOverviewPage() {
         {/* 7. RECENT EXECUTION */}
         {/* Clean, compact execution events and verified evidence feed */}
         {/* ========================================================= */}
-        <section aria-labelledby="recent-execution-heading" className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-5 shadow-xs space-y-4">
+        <section aria-labelledby="recent-execution-heading" className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-4 sm:p-6 shadow-xs space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D9DEE5] gap-2">
             <div>
               <div className="flex items-center gap-2">
@@ -1219,7 +1219,7 @@ export default function ProjectOverviewPage() {
                 >
                   <div>
                     <div className="flex items-center justify-between mb-1">
-                      <div className="flex items-center gap-1.5">
+                      <div className="flex items-center gap-2">
                         {item.type === 'PHOTO' ? (
                           <Camera className="w-3.5 h-3.5 text-[#176B87]" />
                         ) : (
@@ -1289,7 +1289,7 @@ export default function ProjectOverviewPage() {
                   setActiveProjectId(project.id);
                   router.push('/schedule');
                 }}
-                className="px-3.5 py-1.5 text-xs font-semibold text-white bg-[#176B87] hover:bg-[#135A72] rounded-md transition-colors inline-flex items-center gap-1 cursor-pointer"
+                className="px-4 py-1.5 text-xs font-semibold text-white bg-[#176B87] hover:bg-[#135A72] rounded-md transition-colors inline-flex items-center gap-1 cursor-pointer"
               >
                 <span>Open Full Master Schedule</span>
                 <ExternalLink className="w-3.5 h-3.5" />
@@ -1311,18 +1311,18 @@ export default function ProjectOverviewPage() {
                 />
               </div>
 
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-2">
                 <button
                   type="button"
                   onClick={expandAll}
-                  className="px-2.5 py-1 text-xs font-medium text-[#172033] bg-white border border-[#D9DEE5] hover:bg-[#F1F3F5] rounded transition-colors cursor-pointer"
+                  className="px-3 py-1 text-xs font-medium text-[#172033] bg-white border border-[#D9DEE5] hover:bg-[#F1F3F5] rounded transition-colors cursor-pointer"
                 >
                   Expand All
                 </button>
                 <button
                   type="button"
                   onClick={collapseAll}
-                  className="px-2.5 py-1 text-xs font-medium text-[#596579] bg-white border border-[#D9DEE5] hover:bg-[#F1F3F5] rounded transition-colors cursor-pointer"
+                  className="px-3 py-1 text-xs font-medium text-[#596579] bg-white border border-[#D9DEE5] hover:bg-[#F1F3F5] rounded transition-colors cursor-pointer"
                 >
                   Collapse
                 </button>
@@ -1382,7 +1382,7 @@ export default function ProjectOverviewPage() {
             }
           >
             <div className="space-y-4 text-xs">
-              <div className="p-3.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg space-y-2">
+              <div className="p-4 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg space-y-2">
                 <div className="flex justify-between">
                   <span className="text-[#596579]">Filename:</span>
                   <strong className="text-[#172033] font-mono">{selectedEvidenceForDrawer.filename}</strong>
@@ -1408,7 +1408,7 @@ export default function ProjectOverviewPage() {
               </div>
 
               {selectedEvidenceForDrawer.notes && (
-                <div className="p-3.5 bg-white border border-[#D9DEE5] rounded-lg space-y-1">
+                <div className="p-4 bg-white border border-[#D9DEE5] rounded-lg space-y-1">
                   <span className="font-bold text-[#172033] block">Field QA/QC Verification Notes:</span>
                   <p className="text-[#596579] leading-relaxed">{selectedEvidenceForDrawer.notes}</p>
                 </div>
@@ -1435,7 +1435,7 @@ export default function ProjectOverviewPage() {
                   setActiveProjectId(project.id);
                   router.push('/variance');
                 }}
-                className="px-3.5 py-1.5 text-xs font-semibold text-white bg-[#176B87] hover:bg-[#135A72] rounded-md transition-colors inline-flex items-center gap-1 cursor-pointer"
+                className="px-4 py-1.5 text-xs font-semibold text-white bg-[#176B87] hover:bg-[#135A72] rounded-md transition-colors inline-flex items-center gap-1 cursor-pointer"
               >
                 <span>Open What-If Simulator</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -1444,7 +1444,7 @@ export default function ProjectOverviewPage() {
           }
         >
           <div className="space-y-4 text-xs">
-            <div className="p-3.5 bg-[#FBEFEE] border border-[#E4B0AA] rounded-lg space-y-2">
+            <div className="p-4 bg-[#FBEFEE] border border-[#E4B0AA] rounded-lg space-y-2">
               <span className="font-mono font-bold text-[#B5473C] block">
                 Primary Delay Node: PIP-24-002 (Weld Line 24-XX Field Joints)
               </span>
@@ -1456,9 +1456,9 @@ export default function ProjectOverviewPage() {
               </p>
             </div>
 
-            <div className="p-3.5 bg-white border border-[#D9DEE5] rounded-lg space-y-2">
+            <div className="p-4 bg-white border border-[#D9DEE5] rounded-lg space-y-2">
               <span className="font-bold text-[#172033] block">Network Precedence Chain:</span>
-              <div className="space-y-1.5 font-mono text-[11px]">
+              <div className="space-y-2 font-mono text-[11px]">
                 <div className="p-2 bg-[#F7F8FA] rounded border border-[#D9DEE5] flex justify-between">
                   <span>PIP-24-001 (Erect Gas Header)</span>
                   <span className="text-[#2E7D5B] font-bold">100% Done</span>
@@ -1501,7 +1501,7 @@ export default function ProjectOverviewPage() {
                 type="button"
                 onClick={handleSubmitFieldReport}
                 disabled={isSubmittingField || !fieldReportText.trim()}
-                className="px-4 py-1.5 text-xs font-semibold text-white bg-[#176B87] hover:bg-[#135A72] rounded transition-colors inline-flex items-center gap-1.5 disabled:opacity-50 cursor-pointer"
+                className="px-4 py-1.5 text-xs font-semibold text-white bg-[#176B87] hover:bg-[#135A72] rounded transition-colors inline-flex items-center gap-2 disabled:opacity-50 cursor-pointer"
               >
                 {isSubmittingField ? 'Processing Extraction...' : 'Extract & Match'}
               </button>
@@ -1559,11 +1559,11 @@ export default function ProjectOverviewPage() {
                 value={fieldReportText}
                 onChange={(e) => setFieldReportText(e.target.value)}
                 placeholder="e.g. Line 24 spool welding completed 8 joints today on Header Unit A. Crane shifted to compressor skid."
-                className="w-full p-2.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded focus:border-[#176B87] focus:bg-white text-[#172033] outline-none"
+                className="w-full p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded focus:border-[#176B87] focus:bg-white text-[#172033] outline-none"
               />
             </div>
 
-            <div className="p-2.5 bg-[#F1F3F5] rounded text-[11px] text-[#596579] flex items-start gap-2">
+            <div className="p-3 bg-[#F1F3F5] rounded text-[11px] text-[#596579] flex items-start gap-2">
               <Info className="w-4 h-4 text-[#176B87] flex-shrink-0 mt-0.5" />
               <span>
                 PLnEX NLP engine will parse activity quantities, locations, and weld joints, scoring candidates against L5/L6 activities in the schedule twin.
@@ -1594,7 +1594,7 @@ export default function ProjectOverviewPage() {
                   });
                   setIsReportModalOpen(false);
                 }}
-                className="px-3.5 py-1.5 text-xs font-semibold text-white bg-[#176B87] hover:bg-[#135A72] rounded inline-flex items-center gap-1.5 cursor-pointer"
+                className="px-4 py-1.5 text-xs font-semibold text-white bg-[#176B87] hover:bg-[#135A72] rounded inline-flex items-center gap-2 cursor-pointer"
               >
                 <Download className="w-3.5 h-3.5" />
                 <span>Export CSV Dossier</span>

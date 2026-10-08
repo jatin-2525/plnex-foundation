@@ -238,8 +238,8 @@ export function StatusBadge({
 
   const sizeClasses = {
     xs: 'text-[11px] px-1.5 py-0.5 gap-1',
-    sm: 'text-xs px-2 py-0.5 gap-1.5',
-    md: 'text-sm px-2.5 py-1 gap-2',
+    sm: 'text-xs px-2 py-0.5 gap-2',
+    md: 'text-sm px-3 py-1 gap-2',
   }[size];
 
   const iconSizes = {

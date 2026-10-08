@@ -229,7 +229,7 @@ export default function FieldCapturePage() {
 
   return (
     <StateWrapper>
-      <div className="space-y-4 pb-28 md:pb-12 max-w-2xl mx-auto">
+      <div className="space-y-4 pb-12 max-w-2xl mx-auto">
         <Breadcrumbs items={breadcrumbs} />
 
         {/* OFFLINE MODE BANNER */}
@@ -250,7 +250,7 @@ export default function FieldCapturePage() {
         )}
 
         {/* PAGE HEADER: Mobile-First, Calm, Uncluttered */}
-        <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-5">
+        <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-4 sm:p-6">
           <div className="flex items-center justify-between gap-2">
             <div>
               <div className="flex items-center gap-2 text-xs text-[#596579]">
@@ -295,7 +295,7 @@ export default function FieldCapturePage() {
               </p>
             </div>
 
-            <div className="p-3.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg max-w-sm mx-auto text-xs text-left font-mono space-y-1.5">
+            <div className="p-4 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg max-w-sm mx-auto text-xs text-left font-mono space-y-2">
               <div className="flex justify-between">
                 <span className="text-[#596579]">Target Activity:</span>
                 <strong className="text-[#176B87]">{activityId}</strong>
@@ -312,7 +312,7 @@ export default function FieldCapturePage() {
                 <span className="text-[#596579]">Evidence Attached:</span>
                 <strong className="text-[#2E7D5B]">{attachedPhoto ? '1 Photo' : 'None'}</strong>
               </div>
-              <div className="flex justify-between border-t border-[#D9DEE5] pt-1.5">
+              <div className="flex justify-between border-t border-[#D9DEE5] pt-2">
                 <span className="text-[#596579]">Sync Status:</span>
                 <strong className={isOffline ? 'text-[#D98B32]' : 'text-[#2E7D5B]'}>
                   {isOffline ? 'Saved locally' : 'Server Confirmed'}
@@ -320,7 +320,7 @@ export default function FieldCapturePage() {
               </div>
             </div>
 
-            <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-2.5">
+            <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-2">
               <button
                 type="button"
                 onClick={() => {
@@ -330,7 +330,7 @@ export default function FieldCapturePage() {
                   setAttachedDoc(null);
                   setIsCompleted(false);
                 }}
-                className="w-full sm:w-auto min-h-[44px] px-5 py-2.5 text-xs font-bold text-[#172033] bg-[#F7F8FA] hover:bg-[#F1F3F5] border border-[#D9DEE5] rounded-lg transition-colors inline-flex items-center justify-center gap-1.5 cursor-pointer"
+                className="w-full sm:w-auto min-h-[44px] px-4 sm:px-6 py-2 text-xs font-bold text-[#172033] bg-[#F7F8FA] hover:bg-[#F1F3F5] border border-[#D9DEE5] rounded-lg transition-colors inline-flex items-center justify-center gap-2 cursor-pointer"
               >
                 <Plus className="w-4 h-4" />
                 <span>Record Another Entry</span>
@@ -338,7 +338,7 @@ export default function FieldCapturePage() {
 
               <Link
                 href="/engineer"
-                className="w-full sm:w-auto min-h-[44px] px-5 py-2.5 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] rounded-lg transition-colors inline-flex items-center justify-center gap-1.5 cursor-pointer"
+                className="w-full sm:w-auto min-h-[44px] px-4 sm:px-6 py-2 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] rounded-lg transition-colors inline-flex items-center justify-center gap-2 cursor-pointer"
               >
                 <span>Return to Engineer Dashboard</span>
                 <ArrowRight className="w-4 h-4" />
@@ -351,7 +351,7 @@ export default function FieldCapturePage() {
             {/* ========================================================= */}
             {/* 1. WHAT HAPPENED? */}
             {/* ========================================================= */}
-            <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-5 space-y-3">
+            <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-4 sm:p-6 space-y-3">
               <div className="flex items-center justify-between">
                 <label className="text-base font-bold text-[#172033] block">
                   1. What happened?
@@ -359,7 +359,7 @@ export default function FieldCapturePage() {
                 <button
                   type="button"
                   onClick={toggleVoiceRecording}
-                  className={`min-h-[44px] h-11 px-3.5 text-xs font-semibold rounded-lg border transition-all inline-flex items-center gap-2 cursor-pointer ${
+                  className={`min-h-[44px] h-11 px-4 text-xs font-semibold rounded-lg border transition-all inline-flex items-center gap-2 cursor-pointer ${
                     isRecordingVoice
                       ? 'bg-[#FBEFEE] text-[#B5473C] border-[#B5473C] font-bold'
                       : 'bg-[#F7F8FA] text-[#176B87] border-[#D9DEE5] hover:bg-[#EDF5F8]'
@@ -385,15 +385,15 @@ export default function FieldCapturePage() {
                 value={whatHappened}
                 onChange={(e) => setWhatHappened(e.target.value)}
                 placeholder="Type or dictate what was completed on site today..."
-                className="w-full p-3.5 text-sm sm:text-base bg-[#F7F8FA] focus:bg-white border-2 border-[#D9DEE5] focus:border-[#176B87] rounded-lg text-[#172033] placeholder-[#7B8798] outline-none transition-colors leading-relaxed"
+                className="w-full p-4 text-sm sm:text-base bg-[#F7F8FA] focus:bg-white border-2 border-[#D9DEE5] focus:border-[#176B87] rounded-lg text-[#172033] placeholder-[#7B8798] outline-none transition-colors leading-relaxed"
               />
 
               {/* Quick Tap Chips to minimize typing */}
-              <div className="space-y-1.5 pt-1">
+              <div className="space-y-2 pt-1">
                 <span className="text-[11px] font-bold text-[#596579] block">
                   Quick Tap Presets:
                 </span>
-                <div className="flex flex-wrap gap-1.5">
+                <div className="flex flex-wrap gap-2">
                   {QUICK_CHIPS.map((chip, idx) => (
                     <button
                       key={idx}
@@ -411,7 +411,7 @@ export default function FieldCapturePage() {
             {/* ========================================================= */}
             {/* 2. QUANTITY (Large, Thumb-Friendly Stepper) */}
             {/* ========================================================= */}
-            <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-5 space-y-3">
+            <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-4 sm:p-6 space-y-3">
               <label className="text-base font-bold text-[#172033] block">
                 2. Quantity
               </label>
@@ -470,7 +470,7 @@ export default function FieldCapturePage() {
             {/* ========================================================= */}
             {/* 3. UNIT (Touch-Friendly Pills) */}
             {/* ========================================================= */}
-            <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-5 space-y-3">
+            <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-4 sm:p-6 space-y-3">
               <label className="text-base font-bold text-[#172033] block">
                 3. Unit
               </label>
@@ -497,7 +497,7 @@ export default function FieldCapturePage() {
                 <button
                   type="button"
                   onClick={() => setShowCustomUnit(!showCustomUnit)}
-                  className={`min-h-[44px] h-11 px-3.5 text-xs font-semibold rounded-lg border transition-colors cursor-pointer ${
+                  className={`min-h-[44px] h-11 px-4 text-xs font-semibold rounded-lg border transition-colors cursor-pointer ${
                     showCustomUnit
                       ? 'bg-[#176B87] text-white border-[#176B87]'
                       : 'bg-white text-[#596579] border-[#D9DEE5] hover:bg-[#F1F3F5]'
@@ -526,7 +526,7 @@ export default function FieldCapturePage() {
             {/* ========================================================= */}
             {/* 4. AREA (Touch-Friendly Location Pills) */}
             {/* ========================================================= */}
-            <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-5 space-y-3">
+            <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-4 sm:p-6 space-y-3">
               <label className="text-base font-bold text-[#172033] block">
                 4. Area &amp; Workfront
               </label>
@@ -540,7 +540,7 @@ export default function FieldCapturePage() {
                       setArea(a);
                       setShowCustomArea(false);
                     }}
-                    className={`min-h-[44px] h-11 px-3.5 text-xs font-bold rounded-lg border transition-colors cursor-pointer ${
+                    className={`min-h-[44px] h-11 px-4 text-xs font-bold rounded-lg border transition-colors cursor-pointer ${
                       area === a && !showCustomArea
                         ? 'bg-[#176B87] text-white border-[#176B87]'
                         : 'bg-[#F7F8FA] text-[#172033] border-[#D9DEE5] hover:bg-[#F1F3F5]'
@@ -553,7 +553,7 @@ export default function FieldCapturePage() {
                 <button
                   type="button"
                   onClick={() => setShowCustomArea(!showCustomArea)}
-                  className={`min-h-[44px] h-11 px-3.5 text-xs font-semibold rounded-lg border transition-colors cursor-pointer ${
+                  className={`min-h-[44px] h-11 px-4 text-xs font-semibold rounded-lg border transition-colors cursor-pointer ${
                     showCustomArea
                       ? 'bg-[#176B87] text-white border-[#176B87]'
                       : 'bg-white text-[#596579] border-[#D9DEE5] hover:bg-[#F1F3F5]'
@@ -582,7 +582,7 @@ export default function FieldCapturePage() {
             {/* ========================================================= */}
             {/* 5. EVIDENCE (Secondary Action: Add Evidence) */}
             {/* ========================================================= */}
-            <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-5 space-y-3">
+            <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-4 sm:p-6 space-y-3">
               <div className="flex items-center justify-between">
                 <label className="text-base font-bold text-[#172033] block">
                   5. Evidence
@@ -597,7 +597,7 @@ export default function FieldCapturePage() {
               </div>
 
               {/* Evidence Action Buttons */}
-              <div className="grid grid-cols-2 gap-2.5">
+              <div className="grid grid-cols-2 gap-2">
                 <button
                   type="button"
                   onClick={() => {
@@ -608,7 +608,7 @@ export default function FieldCapturePage() {
                       description: 'Geotagged site image attached.',
                     });
                   }}
-                  className="min-h-[44px] h-11 px-3.5 text-xs font-bold text-[#172033] bg-[#F7F8FA] hover:bg-[#EDF5F8] border border-[#D9DEE5] rounded-lg transition-colors inline-flex items-center justify-center gap-2 cursor-pointer"
+                  className="min-h-[44px] h-11 px-4 text-xs font-bold text-[#172033] bg-[#F7F8FA] hover:bg-[#EDF5F8] border border-[#D9DEE5] rounded-lg transition-colors inline-flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <Camera className="w-4 h-4 text-[#176B87]" />
                   <span>Photo</span>
@@ -624,7 +624,7 @@ export default function FieldCapturePage() {
                       description: 'Shift inspection report attached.',
                     });
                   }}
-                  className="min-h-[44px] h-11 px-3.5 text-xs font-bold text-[#172033] bg-[#F7F8FA] hover:bg-[#EDF5F8] border border-[#D9DEE5] rounded-lg transition-colors inline-flex items-center justify-center gap-2 cursor-pointer"
+                  className="min-h-[44px] h-11 px-4 text-xs font-bold text-[#172033] bg-[#F7F8FA] hover:bg-[#EDF5F8] border border-[#D9DEE5] rounded-lg transition-colors inline-flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <Paperclip className="w-4 h-4 text-[#176B87]" />
                   <span>Document</span>
@@ -633,9 +633,9 @@ export default function FieldCapturePage() {
 
               {/* Attached Evidence Pills */}
               {(attachedPhoto || attachedDoc) ? (
-                <div className="p-3 bg-[#EDF7F2] border border-[#B8DCC9] rounded-lg space-y-1.5 text-xs text-[#2E7D5B]">
+                <div className="p-3 bg-[#EDF7F2] border border-[#B8DCC9] rounded-lg space-y-2 text-xs text-[#2E7D5B]">
                   <div className="flex items-center justify-between">
-                    <span className="font-bold flex items-center gap-1.5">
+                    <span className="font-bold flex items-center gap-2">
                       <CheckCircle2 className="w-4 h-4" />
                       Attached Files:
                     </span>
@@ -673,7 +673,7 @@ export default function FieldCapturePage() {
             </div>
 
             {/* VERIFICATION STATE & TARGET MAPPING (Compact, inline preview) */}
-            <div className="bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg p-3.5 flex items-center justify-between gap-3 text-xs">
+            <div className="bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg p-4 flex items-center justify-between gap-3 text-xs">
               <div>
                 <span className="text-[10px] uppercase font-bold text-[#596579] block">
                   Target WBS Activity
@@ -681,18 +681,18 @@ export default function FieldCapturePage() {
                 <span className="font-mono font-bold text-[#176B87]">
                   {activityId}
                 </span>
-                <span className="text-[#596579] ml-1.5 hidden sm:inline">
+                <span className="text-[#596579] ml-2 hidden sm:inline">
                   • Erect Line 24-XX Header
                 </span>
               </div>
 
               {/* Verification State Dropdown (Confirmed | Needs Confirmation | Unknown | Conflict) */}
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-2">
                 <span className="text-[11px] text-[#596579] font-medium hidden sm:inline">State:</span>
                 <select
                   value={verificationState}
                   onChange={(e) => setVerificationState(e.target.value as FieldVerificationState)}
-                  className="px-2.5 py-1 text-xs font-semibold bg-white border border-[#D9DEE5] rounded-md text-[#172033] outline-none"
+                  className="px-3 py-1 text-xs font-semibold bg-white border border-[#D9DEE5] rounded-md text-[#172033] outline-none"
                 >
                   <option value="Confirmed">Confirmed</option>
                   <option value="Needs Confirmation">Needs Confirmation</option>

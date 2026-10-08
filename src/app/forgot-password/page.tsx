@@ -85,7 +85,7 @@ export default function ForgotPasswordPage() {
       {/* Centered Minimal Authentication Panel */}
       <div className="bg-white border border-[#D9DEE5] rounded-lg shadow-sm overflow-hidden">
         {/* Header with PLnEX branding */}
-        <div className="px-6 pt-7 pb-5 text-center border-b border-[#D9DEE5] bg-white">
+        <div className="px-6 pt-7 pb-4 text-center border-b border-[#D9DEE5] bg-white">
           <div className="inline-flex items-center justify-center w-10 h-10 rounded-md bg-[#176B87] text-white font-black text-lg tracking-tighter mb-3 shadow-xs">
             PX
           </div>
@@ -102,12 +102,12 @@ export default function ForgotPasswordPage() {
 
         {/* State: request accepted (Success Message) */}
         {pageState === 'request_accepted' ? (
-          <div className="p-6 md:p-8 space-y-5 animate-in fade-in zoom-in-95 duration-200">
+          <div className="p-6 md:p-8 space-y-6 animate-in fade-in zoom-in-95 duration-200">
             <div className="w-12 h-12 rounded-full bg-[#EDF7F2] border border-[#B8DCC9] flex items-center justify-center text-[#2E7D5B] mx-auto">
               <CheckCircle2 className="w-6 h-6" />
             </div>
 
-            <div className="text-center space-y-1.5">
+            <div className="text-center space-y-2">
               <h2 className="text-sm font-bold text-[#172033] leading-snug">
                 A password-reset instruction has been requested.
               </h2>
@@ -143,7 +143,7 @@ export default function ForgotPasswordPage() {
               <button
                 type="button"
                 onClick={() => setPageState('initial')}
-                className="w-full flex items-center justify-center gap-1.5 py-1.5 text-xs text-[#596579] hover:text-[#172033] transition-colors"
+                className="w-full flex items-center justify-center gap-2 py-1.5 text-xs text-[#596579] hover:text-[#172033] transition-colors"
               >
                 <RotateCcw className="w-3 h-3" />
                 <span>Request another reset link</span>
@@ -152,7 +152,7 @@ export default function ForgotPasswordPage() {
           </div>
         ) : (
           /* Form for Initial / Submitting / Invalid Email / Server Error */
-          <form onSubmit={handleSubmit} className="p-6 md:p-7 space-y-4">
+          <form onSubmit={handleSubmit} className="p-6 md:p-6 space-y-4">
             <div>
               <h2 className="text-sm font-bold text-[#172033]">Forgot your password?</h2>
               <p className="text-xs text-[#596579] mt-0.5 leading-relaxed">
@@ -162,7 +162,7 @@ export default function ForgotPasswordPage() {
 
             {/* Server Error Alert Banner */}
             {pageState === 'server_error' && (
-              <div className="p-3 bg-[#FBEFEE] border border-[#E4B0AA] rounded-md flex items-start gap-2.5 text-xs text-[#B5473C] animate-in fade-in duration-150">
+              <div className="p-3 bg-[#FBEFEE] border border-[#E4B0AA] rounded-md flex items-start gap-2 text-xs text-[#B5473C] animate-in fade-in duration-150">
                 <AlertTriangle className="w-4 h-4 flex-shrink-0 mt-0.5" />
                 <div>
                   <strong className="block font-semibold">IAM Dispatch Server Error (500)</strong>
@@ -174,7 +174,7 @@ export default function ForgotPasswordPage() {
             )}
 
             {/* Work Email Input */}
-            <div className="space-y-1.5">
+            <div className="space-y-2">
               <label htmlFor="recovery-email" className="block text-xs font-semibold text-[#172033]">
                 Work Email <span className="text-[#B5473C]">*</span>
               </label>
@@ -211,7 +211,7 @@ export default function ForgotPasswordPage() {
             <button
               type="submit"
               disabled={pageState === 'submitting'}
-              className="w-full flex items-center justify-center gap-2 py-2.5 px-4 bg-[#176B87] hover:bg-[#135A72] disabled:bg-[#176B87]/60 text-white text-xs font-semibold rounded-md shadow-xs transition-colors cursor-pointer disabled:cursor-not-allowed mt-2"
+              className="w-full flex items-center justify-center gap-2 py-2 px-4 bg-[#176B87] hover:bg-[#135A72] disabled:bg-[#176B87]/60 text-white text-xs font-semibold rounded-md shadow-xs transition-colors cursor-pointer disabled:cursor-not-allowed mt-2"
             >
               {pageState === 'submitting' ? (
                 <>
@@ -260,7 +260,7 @@ export default function ForgotPasswordPage() {
           </span>
           <span className="font-mono">All States Tested</span>
         </div>
-        <div className="flex flex-wrap gap-1.5">
+        <div className="flex flex-wrap gap-2">
           <button
             type="button"
             onClick={() => handleQuickFill('valid')}

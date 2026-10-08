@@ -453,35 +453,35 @@ export default function MyActivitiesPage() {
     switch (status) {
       case 'not-started':
         return (
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-xs font-medium bg-[#F1F3F5] text-[#596579] border border-[#D9DEE5]">
+          <span className="inline-flex items-center gap-2 px-3 py-0.5 rounded text-xs font-medium bg-[#F1F3F5] text-[#596579] border border-[#D9DEE5]">
             <span className="w-1.5 h-1.5 rounded-full bg-[#7B8798]" />
             Not Started
           </span>
         );
       case 'in-progress':
         return (
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-xs font-medium bg-[#EDF5F8] text-[#176B87] border border-[#C5DCE6]">
+          <span className="inline-flex items-center gap-2 px-3 py-0.5 rounded text-xs font-medium bg-[#EDF5F8] text-[#176B87] border border-[#C5DCE6]">
             <span className="w-1.5 h-1.5 rounded-full bg-[#176B87]" />
             In Progress
           </span>
         );
       case 'completed':
         return (
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-xs font-medium bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]">
+          <span className="inline-flex items-center gap-2 px-3 py-0.5 rounded text-xs font-medium bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]">
             <span className="w-1.5 h-1.5 rounded-full bg-[#2E7D5B]" />
             Completed
           </span>
         );
       case 'blocked':
         return (
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-xs font-medium bg-[#FDF6ED] text-[#8C5311] border border-[#F0D4A6]">
+          <span className="inline-flex items-center gap-2 px-3 py-0.5 rounded text-xs font-medium bg-[#FDF6ED] text-[#8C5311] border border-[#F0D4A6]">
             <Lock className="w-3 h-3 text-[#D98B32]" />
             Blocked
           </span>
         );
       case 'delayed':
         return (
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-xs font-medium bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
+          <span className="inline-flex items-center gap-2 px-3 py-0.5 rounded text-xs font-medium bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
             <span className="w-1.5 h-1.5 rounded-full bg-[#B5473C]" />
             Delayed
           </span>
@@ -491,14 +491,14 @@ export default function MyActivitiesPage() {
 
   return (
     <StateWrapper>
-      <div className="space-y-6">
+      <div className="space-y-6 pb-12">
         <Breadcrumbs items={breadcrumbs} />
 
         {/* HEADER: My Activities, Project Selector, Reporting Date */}
-        <div className="bg-white border border-[#D9DEE5] rounded-lg p-5">
+        <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
             <div>
-              <div className="flex items-center gap-2 mb-1.5">
+              <div className="flex items-center gap-2 mb-2">
                 <div className="w-8 h-8 rounded bg-[#EDF5F8] flex items-center justify-center text-[#176B87]">
                   <ListChecks className="w-4 h-4" />
                 </div>
@@ -514,12 +514,12 @@ export default function MyActivitiesPage() {
 
             {/* Header Controls: Project Selector & Reporting Date */}
             <div className="flex flex-wrap items-center gap-3">
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-2">
                 <span className="text-xs text-[#596579] font-medium hidden sm:inline">Project:</span>
                 <ProjectSelector />
               </div>
 
-              <div className="flex items-center gap-1.5 px-3 py-1.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg text-xs font-mono">
+              <div className="flex items-center gap-2 px-3 py-1.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg text-xs font-mono">
                 <Calendar className="w-3.5 h-3.5 text-[#176B87]" />
                 <span className="text-[#596579]">Reporting Date:</span>
                 <strong className="text-[#172033] font-bold">18 Sep 2026</strong>
@@ -529,23 +529,23 @@ export default function MyActivitiesPage() {
 
           {/* Metrics Ribbon */}
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 mt-4 pt-4 border-t border-[#D9DEE5]">
-            <div className="p-2.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded">
+            <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded">
               <span className="text-[11px] text-[#596579] font-medium block">Total Assigned</span>
               <span className="text-lg font-bold text-[#172033] font-mono">{metrics.total} packages</span>
             </div>
-            <div className="p-2.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded">
+            <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded">
               <span className="text-[11px] text-[#176B87] font-medium block">In Progress</span>
               <span className="text-lg font-bold text-[#176B87] font-mono">{metrics.inProgress} active</span>
             </div>
-            <div className="p-2.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded">
+            <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded">
               <span className="text-[11px] text-[#B5473C] font-medium block">Delayed / Blocked</span>
               <span className="text-lg font-bold text-[#B5473C] font-mono">{metrics.delayed + metrics.blocked} attention</span>
             </div>
-            <div className="p-2.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded">
+            <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded">
               <span className="text-[11px] text-[#2E7D5B] font-medium block">Completed</span>
               <span className="text-lg font-bold text-[#2E7D5B] font-mono">{metrics.completed} finished</span>
             </div>
-            <div className="p-2.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded">
+            <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded">
               <span className="text-[11px] text-[#596579] font-medium block">Avg Progress</span>
               <span className="text-lg font-bold text-[#172033] font-mono">{metrics.avgProgress}%</span>
             </div>
@@ -553,7 +553,7 @@ export default function MyActivitiesPage() {
         </div>
 
         {/* SEARCH & FILTERS BAR */}
-        <div className="bg-white border border-[#D9DEE5] rounded-lg p-3.5 space-y-3">
+        <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 space-y-3">
           <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3">
             {/* Search Input */}
             <div className="relative flex-1 min-w-[240px]">
@@ -580,12 +580,12 @@ export default function MyActivitiesPage() {
             {/* Filter Controls Row: Status | Area | Discipline | Date | Progress */}
             <div className="flex flex-wrap items-center gap-2">
               {/* Filter 1: Status (Not Started, In Progress, Completed, Blocked, Delayed) */}
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-2">
                 <span className="text-xs text-[#596579] font-medium">Status:</span>
                 <select
                   value={statusFilter}
                   onChange={(e) => setStatusFilter(e.target.value)}
-                  className="px-2.5 py-1.5 text-xs bg-[#F7F8FA] border border-[#D9DEE5] focus:border-[#176B87] rounded-md text-[#172033] outline-none cursor-pointer"
+                  className="px-3 py-1.5 text-xs bg-[#F7F8FA] border border-[#D9DEE5] focus:border-[#176B87] rounded-md text-[#172033] outline-none cursor-pointer"
                 >
                   <option value="all">All Statuses</option>
                   <option value="in-progress">In Progress</option>
@@ -597,12 +597,12 @@ export default function MyActivitiesPage() {
               </div>
 
               {/* Filter 2: Area */}
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-2">
                 <span className="text-xs text-[#596579] font-medium">Area:</span>
                 <select
                   value={areaFilter}
                   onChange={(e) => setAreaFilter(e.target.value)}
-                  className="px-2.5 py-1.5 text-xs bg-[#F7F8FA] border border-[#D9DEE5] focus:border-[#176B87] rounded-md text-[#172033] outline-none cursor-pointer max-w-[150px] truncate"
+                  className="px-3 py-1.5 text-xs bg-[#F7F8FA] border border-[#D9DEE5] focus:border-[#176B87] rounded-md text-[#172033] outline-none cursor-pointer max-w-[150px] truncate"
                 >
                   <option value="all">All Areas</option>
                   {areaOptions.map((area) => (
@@ -614,12 +614,12 @@ export default function MyActivitiesPage() {
               </div>
 
               {/* Filter 3: Discipline */}
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-2">
                 <span className="text-xs text-[#596579] font-medium">Discipline:</span>
                 <select
                   value={disciplineFilter}
                   onChange={(e) => setDisciplineFilter(e.target.value)}
-                  className="px-2.5 py-1.5 text-xs bg-[#F7F8FA] border border-[#D9DEE5] focus:border-[#176B87] rounded-md text-[#172033] outline-none cursor-pointer"
+                  className="px-3 py-1.5 text-xs bg-[#F7F8FA] border border-[#D9DEE5] focus:border-[#176B87] rounded-md text-[#172033] outline-none cursor-pointer"
                 >
                   <option value="all">All Disciplines</option>
                   {disciplineOptions.map((disc) => (
@@ -631,12 +631,12 @@ export default function MyActivitiesPage() {
               </div>
 
               {/* Filter 4: Date */}
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-2">
                 <span className="text-xs text-[#596579] font-medium">Date:</span>
                 <select
                   value={dateFilter}
                   onChange={(e) => setDateFilter(e.target.value)}
-                  className="px-2.5 py-1.5 text-xs bg-[#F7F8FA] border border-[#D9DEE5] focus:border-[#176B87] rounded-md text-[#172033] outline-none cursor-pointer"
+                  className="px-3 py-1.5 text-xs bg-[#F7F8FA] border border-[#D9DEE5] focus:border-[#176B87] rounded-md text-[#172033] outline-none cursor-pointer"
                 >
                   <option value="all">All Dates</option>
                   <option value="this-week">Due This Week</option>
@@ -646,12 +646,12 @@ export default function MyActivitiesPage() {
               </div>
 
               {/* Filter 5: Progress */}
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-2">
                 <span className="text-xs text-[#596579] font-medium">Progress:</span>
                 <select
                   value={progressFilter}
                   onChange={(e) => setProgressFilter(e.target.value)}
-                  className="px-2.5 py-1.5 text-xs bg-[#F7F8FA] border border-[#D9DEE5] focus:border-[#176B87] rounded-md text-[#172033] outline-none cursor-pointer"
+                  className="px-3 py-1.5 text-xs bg-[#F7F8FA] border border-[#D9DEE5] focus:border-[#176B87] rounded-md text-[#172033] outline-none cursor-pointer"
                 >
                   <option value="all">All Progress</option>
                   <option value="0">0% (Not Started)</option>
@@ -666,7 +666,7 @@ export default function MyActivitiesPage() {
                 <button
                   type="button"
                   onClick={clearAllFilters}
-                  className="px-2.5 py-1.5 text-xs text-[#B5473C] hover:bg-[#FBEFEE] border border-[#E4B0AA] rounded-md transition-colors inline-flex items-center gap-1"
+                  className="px-3 py-1.5 text-xs text-[#B5473C] hover:bg-[#FBEFEE] border border-[#E4B0AA] rounded-md transition-colors inline-flex items-center gap-1"
                 >
                   <X className="w-3.5 h-3.5" />
                   <span>Clear</span>
@@ -692,14 +692,14 @@ export default function MyActivitiesPage() {
             <table className="w-full min-w-[760px] text-left text-xs border-collapse">
               <thead>
                 <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[#596579] font-medium">
-                  <th className="py-3 px-3.5 whitespace-nowrap">Activity ID</th>
-                  <th className="py-3 px-3.5 whitespace-nowrap min-w-[240px]">Activity</th>
-                  <th className="py-3 px-3.5 whitespace-nowrap">Area</th>
-                  <th className="py-3 px-3.5 whitespace-nowrap">Discipline</th>
-                  <th className="py-3 px-3.5 whitespace-nowrap min-w-[150px]">Progress</th>
-                  <th className="py-3 px-3.5 whitespace-nowrap">Variance</th>
-                  <th className="py-3 px-3.5 whitespace-nowrap">Status</th>
-                  <th className="py-3 px-3.5 whitespace-nowrap text-right">Action</th>
+                  <th className="py-3 px-4 whitespace-nowrap">Activity ID</th>
+                  <th className="py-3 px-4 whitespace-nowrap min-w-[240px]">Activity</th>
+                  <th className="py-3 px-4 whitespace-nowrap">Area</th>
+                  <th className="py-3 px-4 whitespace-nowrap">Discipline</th>
+                  <th className="py-3 px-4 whitespace-nowrap min-w-[150px]">Progress</th>
+                  <th className="py-3 px-4 whitespace-nowrap">Variance</th>
+                  <th className="py-3 px-4 whitespace-nowrap">Status</th>
+                  <th className="py-3 px-4 whitespace-nowrap text-right">Action</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-[#D9DEE5]">
@@ -714,14 +714,14 @@ export default function MyActivitiesPage() {
                       className="hover:bg-[#F9FAFC] cursor-pointer transition-colors group"
                     >
                       {/* 1. Activity ID */}
-                      <td className="py-3 px-3.5 align-middle whitespace-nowrap">
+                      <td className="py-3 px-4 align-middle whitespace-nowrap">
                         <span className="font-mono font-bold text-[#176B87] group-hover:underline">
                           {act.id}
                         </span>
                       </td>
 
                       {/* 2. Activity (Clean title without cluttered inline WBS) */}
-                      <td className="py-3 px-3.5 align-middle">
+                      <td className="py-3 px-4 align-middle">
                         <div className="font-semibold text-[#172033] group-hover:text-[#176B87] transition-colors">
                           {act.name}
                         </div>
@@ -733,19 +733,19 @@ export default function MyActivitiesPage() {
                       </td>
 
                       {/* 3. Area */}
-                      <td className="py-3 px-3.5 align-middle whitespace-nowrap text-[#596579]">
+                      <td className="py-3 px-4 align-middle whitespace-nowrap text-[#596579]">
                         {act.area}
                       </td>
 
                       {/* 4. Discipline */}
-                      <td className="py-3 px-3.5 align-middle whitespace-nowrap">
+                      <td className="py-3 px-4 align-middle whitespace-nowrap">
                         <span className="px-2 py-0.5 bg-[#F1F3F5] border border-[#D9DEE5] rounded text-[11px] text-[#172033] font-medium">
                           {act.discipline}
                         </span>
                       </td>
 
                       {/* 5. Progress */}
-                      <td className="py-3 px-3.5 align-middle">
+                      <td className="py-3 px-4 align-middle">
                         <div className="space-y-1">
                           <div className="flex items-center justify-between text-[11px] font-mono">
                             <span className="font-bold text-[#172033]">{act.actualProgress}%</span>
@@ -762,9 +762,9 @@ export default function MyActivitiesPage() {
                       </td>
 
                       {/* 6. Variance (with contextual Why? explanation) */}
-                      <td className="py-3 px-3.5 align-middle whitespace-nowrap">
+                      <td className="py-3 px-4 align-middle whitespace-nowrap">
                         {isSlipped ? (
-                          <div className="flex items-center gap-1.5">
+                          <div className="flex items-center gap-2">
                             <span className="font-mono font-bold text-xs px-2 py-0.5 rounded bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
                               +{act.delayDays}d slip
                             </span>
@@ -776,7 +776,7 @@ export default function MyActivitiesPage() {
                             />
                           </div>
                         ) : isBehindProgress ? (
-                          <div className="flex items-center gap-1.5">
+                          <div className="flex items-center gap-2">
                             <span className="font-mono font-bold text-xs px-2 py-0.5 rounded bg-[#FDF6ED] text-[#8C5311] border border-[#F0D4A6]">
                               {act.actualProgress - act.plannedProgress}% lag
                             </span>
@@ -795,8 +795,8 @@ export default function MyActivitiesPage() {
                       </td>
 
                       {/* 7. Status */}
-                      <td className="py-3 px-3.5 align-middle whitespace-nowrap">
-                        <div className="flex items-center gap-1.5">
+                      <td className="py-3 px-4 align-middle whitespace-nowrap">
+                        <div className="flex items-center gap-2">
                           {renderStatusBadge(act.status)}
                           {isSlipped && (
                             <WhyButton
@@ -810,13 +810,13 @@ export default function MyActivitiesPage() {
                       </td>
 
                       {/* 8. Action (Primary: Capture Update | Secondary: Details) */}
-                      <td className="py-3 px-3.5 align-middle text-right whitespace-nowrap">
-                        <div className="flex items-center justify-end gap-1.5">
+                      <td className="py-3 px-4 align-middle text-right whitespace-nowrap">
+                        <div className="flex items-center justify-end gap-2">
                           {act.status !== 'completed' && (
                             <button
                               type="button"
                               onClick={(e) => handleOpenCapture(e, act)}
-                              className="px-2.5 py-1 text-xs font-semibold text-white bg-[#176B87] hover:bg-[#135A72] rounded transition-colors inline-flex items-center gap-1 shadow-2xs"
+                              className="px-3 py-1 text-xs font-semibold text-white bg-[#176B87] hover:bg-[#135A72] rounded transition-colors inline-flex items-center gap-1 shadow-2xs"
                               title="Capture field progress for this activity"
                             >
                               <Plus className="w-3.5 h-3.5" />
@@ -858,11 +858,11 @@ export default function MyActivitiesPage() {
             >
               {/* Top Row: Activity ID + Discipline + Status */}
               <div className="flex items-center justify-between gap-2">
-                <div className="flex items-center gap-1.5">
+                <div className="flex items-center gap-2">
                   <span className="font-mono font-bold text-sm text-[#176B87]">
                     {act.id}
                   </span>
-                  <span className="px-1.5 py-0.2 rounded text-[10px] bg-[#F1F3F5] border border-[#D9DEE5] text-[#596579]">
+                  <span className="px-1.5 py-0.5 rounded text-[10px] bg-[#F1F3F5] border border-[#D9DEE5] text-[#596579]">
                     {act.discipline}
                   </span>
                 </div>
@@ -876,14 +876,14 @@ export default function MyActivitiesPage() {
                   {act.area} • WBS {act.wbs}
                 </p>
                 {act.blockedReason && (
-                  <p className="text-[11px] text-[#8C5311] mt-1 bg-[#FDF6ED] p-1.5 rounded border border-[#F0D4A6]">
+                  <p className="text-[11px] text-[#8C5311] mt-1 bg-[#FDF6ED] p-2 rounded border border-[#F0D4A6]">
                     {act.blockedReason}
                   </p>
                 )}
               </div>
 
               {/* Dates & Progress */}
-              <div className="p-2.5 bg-[#F7F8FA] rounded border border-[#D9DEE5] space-y-1.5 text-xs font-mono">
+              <div className="p-3 bg-[#F7F8FA] rounded border border-[#D9DEE5] space-y-2 text-xs font-mono">
                 <div className="flex justify-between text-[#596579] text-[11px]">
                   <span>Planned: {act.plannedStart} → {act.plannedFinish}</span>
                   <span>{act.lastUpdate}</span>
@@ -917,7 +917,7 @@ export default function MyActivitiesPage() {
                 <button
                   type="button"
                   onClick={(e) => handleOpenCapture(e, act)}
-                  className="min-h-[44px] px-4 py-2 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] active:bg-[#135A72] rounded-lg flex-1 inline-flex items-center justify-center gap-1.5 shadow-xs transition-colors cursor-pointer"
+                  className="min-h-[44px] px-4 py-2 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] active:bg-[#135A72] rounded-lg flex-1 inline-flex items-center justify-center gap-2 shadow-xs transition-colors cursor-pointer"
                 >
                   <Plus className="w-3.5 h-3.5" />
                   <span>Capture Update</span>
@@ -949,7 +949,7 @@ export default function MyActivitiesPage() {
                   type="button"
                   onClick={handleQuickCaptureSubmit}
                   disabled={isSubmittingCapture || !captureStatement.trim()}
-                  className="px-4 py-1.5 text-xs font-semibold text-white bg-[#176B87] hover:bg-[#135A72] rounded inline-flex items-center gap-1.5 shadow-xs"
+                  className="px-4 py-1.5 text-xs font-semibold text-white bg-[#176B87] hover:bg-[#135A72] rounded inline-flex items-center gap-2 shadow-xs"
                 >
                   {isSubmittingCapture ? 'Submitting...' : 'Submit Progress Update'}
                 </button>
