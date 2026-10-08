@@ -31,74 +31,11 @@ import {
   MailOpen,
   Filter,
 } from 'lucide-react';
-
-function getNotificationTypeIcon(type: NotificationType) {
-  switch (type) {
-    case 'New review required':
-      return <ClipboardCheck className="w-4 h-4 text-[#D98B32]" />;
-    case 'Activity delayed':
-      return <TrendingDown className="w-4 h-4 text-[#B5473C]" />;
-    case 'Dependency impacted':
-      return <GitBranch className="w-4 h-4 text-[#3B6EA8]" />;
-    case 'Match conflict':
-      return <AlertTriangle className="w-4 h-4 text-[#D98B32]" />;
-    case 'DPR confirmation required':
-      return <FileText className="w-4 h-4 text-[#176B87]" />;
-    case 'Evidence uploaded':
-      return <Camera className="w-4 h-4 text-[#2E7D5B]" />;
-    case 'Processing failed':
-      return <XCircle className="w-4 h-4 text-[#B5473C]" />;
-    case 'Sync conflict':
-      return <RefreshCw className="w-4 h-4 text-[#D98B32]" />;
-    default:
-      return <AlertCircle className="w-4 h-4 text-[#596579]" />;
-  }
-}
-
-function getNotificationIconBg(type: NotificationType) {
-  switch (type) {
-    case 'New review required':
-      return 'bg-[#FDF6ED] border-[#F0D4A6]';
-    case 'Activity delayed':
-      return 'bg-[#FBEFEE] border-[#E4B0AA]';
-    case 'Dependency impacted':
-      return 'bg-[#EDF5F8] border-[#B3CBE0]';
-    case 'Match conflict':
-      return 'bg-[#FDF6ED] border-[#F0D4A6]';
-    case 'DPR confirmation required':
-      return 'bg-[#EDF5F8] border-[#B3CBE0]';
-    case 'Evidence uploaded':
-      return 'bg-[#EDF7F2] border-[#B8DCC9]';
-    case 'Processing failed':
-      return 'bg-[#FBEFEE] border-[#E4B0AA]';
-    case 'Sync conflict':
-      return 'bg-[#FDF6ED] border-[#F0D4A6]';
-    default:
-      return 'bg-[#F1F3F5] border-[#D9DEE5]';
-  }
-}
-
-function getSeverityBadge(severity: NotificationSeverity) {
-  switch (severity) {
-    case 'critical':
-      return {
-        label: 'Critical',
-        className: 'bg-[#FBEFEE] text-[#B5473C] border-[#E4B0AA]',
-      };
-    case 'warning':
-    case 'medium':
-      return {
-        label: severity === 'warning' ? 'Warning' : 'Medium',
-        className: 'bg-[#FDF6ED] text-[#8C5311] border-[#F0D4A6]',
-      };
-    case 'info':
-    default:
-      return {
-        label: 'Info',
-        className: 'bg-[#EDF5F8] text-[#176B87] border-[#B3CBE0]',
-      };
-  }
-}
+import {
+  getNotificationTypeIcon,
+  getNotificationIconBg,
+  getSeverityBadge,
+} from '../shell/NotificationCenter';
 
 export interface NotificationCenterPanelProps {
   className?: string;

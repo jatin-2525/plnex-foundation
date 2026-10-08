@@ -38,7 +38,7 @@ import {
 } from 'lucide-react';
 
 // Icon mapper for the 8 required notification types
-function getNotificationTypeIcon(type: NotificationType) {
+export function getNotificationTypeIcon(type: NotificationType) {
   switch (type) {
     case 'New review required':
       return <ClipboardCheck className="w-4 h-4 text-[#D98B32]" />;
@@ -62,7 +62,7 @@ function getNotificationTypeIcon(type: NotificationType) {
 }
 
 // Background container color for notification icon
-function getNotificationIconBg(type: NotificationType) {
+export function getNotificationIconBg(type: NotificationType) {
   switch (type) {
     case 'New review required':
       return 'bg-[#FDF6ED] border-[#F0D4A6]';
@@ -86,7 +86,7 @@ function getNotificationIconBg(type: NotificationType) {
 }
 
 // Severity pill styling
-function getSeverityBadge(severity: NotificationSeverity) {
+export function getSeverityBadge(severity: NotificationSeverity) {
   switch (severity) {
     case 'critical':
       return {

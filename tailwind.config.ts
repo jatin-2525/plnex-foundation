@@ -60,10 +60,9 @@ const config: Config = {
         }
       },
       spacing: {
-        'sidebar': '16.25rem', // 260px
+        'sidebar': '15.5rem', // 248px
         'sidebar-collapsed': '4rem', // 64px
         'header': '3.5rem', // 56px
-        'gutter': '1.5rem',
       },
       maxWidth: {
         'content': '84rem',
