@@ -180,11 +180,11 @@ export function CoreFlowBanner({
                         </span>
                       ) : step.isAi ? (
                         <span className="text-[9px] font-semibold px-1.5 py-0.5 rounded uppercase bg-[#F1F3F5] text-[#596579]">
-                          AI / Heuristic
+                          Assisted
                         </span>
                       ) : (
                         <span className="text-[9px] font-semibold px-1.5 py-0.5 rounded uppercase bg-[#F1F3F5] text-[#596579]">
-                          Field / System
+                          Field Record
                         </span>
                       )}
                     </div>
@@ -229,10 +229,10 @@ export function CoreFlowBanner({
             <ShieldAlert className="w-4 h-4 text-[#D98B32] shrink-0 mt-0.5" />
             <div className="space-y-0.5">
               <span className="font-bold text-[#172033]">
-                Strict Decoupling: AI Confidence is NOT Verification
+                Strict Decoupling: Match Confidence is NOT Verification
               </span>
               <p className="text-[#596579] leading-relaxed">
-                A 94% score indicates statistical/heuristic match alignment — it is <strong>never automatically verified</strong>. AI output is never silently converted into verified progress without conscious confirmation by the Project Controls Manager or Site Engineer.
+                A 94% score indicates candidate match alignment — it is <strong>never automatically verified</strong>. Candidate matches are never silently converted into verified progress without conscious confirmation by the Project Controls Manager or Site Engineer.
               </p>
             </div>
           </div>

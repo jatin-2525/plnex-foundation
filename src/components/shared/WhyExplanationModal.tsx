@@ -252,7 +252,7 @@ export function WhyExplanationModal({
             >
               <span className="flex items-center gap-2">
                 <Cpu className="w-3.5 h-3.5 text-[#7B8798]" />
-                <span>Technical Calculation Details</span>
+                <span>Technical Details</span>
               </span>
               {showTechnicalDetails ? (
                 <ChevronUp className="w-3.5 h-3.5 text-[#7B8798]" />
@@ -264,12 +264,12 @@ export function WhyExplanationModal({
             {showTechnicalDetails && (
               <div className="mt-2 p-3 rounded-lg bg-[#F7F8FA] border border-[#D9DEE5] space-y-2 text-[11px] font-mono animate-in fade-in duration-150">
                 <div className="flex items-start justify-between gap-2">
-                  <span className="text-[#7B8798]">Rule Engine / Baseline:</span>
+                  <span className="text-[#7B8798]">Calculation Baseline:</span>
                   <span className="font-bold text-[#172033] text-right">{data.algorithmOrRule}</span>
                 </div>
                 <div className="flex items-center justify-between text-[#7B8798]">
-                  <span>Audit Signature:</span>
-                  <span className="text-[#176B87]">Deterministic CPM &amp; Heuristic Validation</span>
+                  <span>Verification Signature:</span>
+                  <span className="text-[#176B87]">Verified Schedule Twin Calculation</span>
                 </div>
               </div>
             )}

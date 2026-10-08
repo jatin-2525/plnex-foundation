@@ -193,7 +193,7 @@ export default function FieldPage() {
           <>
             <span className="font-mono">INGESTION CHANNELS: 4 Active</span>
             <span>•</span>
-            <span>EXTRACTION MODEL: Rule & Semantic Parser v2.4</span>
+            <span>STATUS: 6 Events Extracted &amp; Matched</span>
             <span>•</span>
             <span>SITE: Unit A Gas Processing</span>
           </>
@@ -288,7 +288,7 @@ export default function FieldPage() {
 
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2">
               <div className="text-[11px] text-[#596579] font-mono">
-                Extraction Pipeline: <strong>Discipline</strong> → <strong>Asset Tag</strong> → <strong>Action</strong> → <strong>Quantity</strong>
+                Extracted Fields: <strong>Discipline</strong> → <strong>Asset Tag</strong> → <strong>Action</strong> → <strong>Quantity</strong>
               </div>
 
               <button

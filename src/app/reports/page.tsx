@@ -1056,9 +1056,14 @@ export default function ReportsAndMemoryPage() {
                 <div className="font-mono text-[11px] text-[#176B87]">
                   Record ID: {selectedMemoryRecord.sourceVerifiedRecord.recordId}
                 </div>
-                <div className="font-mono text-[10px] text-[#596579]">
-                  {selectedMemoryRecord.sourceVerifiedRecord.hashOrStamp}
-                </div>
+                <details className="text-[10px] text-[#596579]">
+                  <summary className="cursor-pointer hover:underline text-[#176B87] font-semibold">
+                    Technical Details
+                  </summary>
+                  <div className="font-mono text-[10px] text-[#7B8798] mt-1 p-2 bg-white rounded border border-[#D9DEE5]">
+                    {selectedMemoryRecord.sourceVerifiedRecord.hashOrStamp}
+                  </div>
+                </details>
               </div>
 
               {/* Evidence link card */}

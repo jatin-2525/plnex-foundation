@@ -954,7 +954,7 @@ export default function ManagerDashboardPage() {
                 Recent Activity & Field Execution
               </h2>
               <p className="text-[13px] text-[#596579] mt-0.5">
-                Stream of verified and processing field updates. Technical extraction parameters and NLP spans are hidden until opened.
+                Stream of verified and processing field updates with extracted quantities, match candidates, and verification status.
               </p>
             </div>
             <Link
@@ -1024,15 +1024,15 @@ export default function ManagerDashboardPage() {
                     </div>
                   </div>
 
-                  {/* PROGRESSIVE DISCLOSURE: Raw technical payload hidden until opened */}
+                  {/* PROGRESSIVE DISCLOSURE: Extracted details shown on inspect */}
                   {isTechnicalOpen && (
                     <div className="mt-2 p-4 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg text-xs space-y-3">
                       <div className="flex items-center justify-between pb-2 border-b border-[#D9DEE5]">
                         <span className="font-mono font-bold text-[11px] text-[#172033] uppercase">
-                          Technical Processing Payload • {evt.id}
+                          Extracted Details • {evt.id}
                         </span>
-                        <span className="text-[10px] font-mono text-[#7B8798]">
-                          Parser: V3.2 Precedence NLP Classifier
+                        <span className="text-[10px] font-mono text-[#596579]">
+                          Status: <span className="font-semibold text-[#176B87]">{evt.status}</span>
                         </span>
                       </div>
 
@@ -1072,6 +1072,16 @@ export default function ManagerDashboardPage() {
                           </div>
                         </div>
                       )}
+
+                      <details className="pt-2 border-t border-[#D9DEE5] text-[11px] text-[#596579]">
+                        <summary className="cursor-pointer hover:underline text-[#176B87] font-semibold flex items-center justify-between">
+                          <span>Technical Details</span>
+                        </summary>
+                        <div className="mt-2 font-mono text-[10px] text-[#7B8798] space-y-1 bg-white p-2 rounded border border-[#D9DEE5]">
+                          <div>Extraction Model: NLP Precedence Classifier v3.2</div>
+                          <div>Event Ref: {evt.id}</div>
+                        </div>
+                      </details>
                     </div>
                   )}
                 </div>

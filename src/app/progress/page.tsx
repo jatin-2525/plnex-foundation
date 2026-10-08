@@ -1322,7 +1322,7 @@ export default function ProgressVariancePage() {
             {/* Part 1: Causal Factors Ledger */}
             <div className="lg:col-span-2 space-y-2">
               <span className="text-[11px] font-semibold uppercase tracking-wider text-[#596579] block">
-                Primary Variance Drivers & Mitigation Protocols
+                Primary Variance Drivers & Mitigation Plans
               </span>
               <div className="space-y-2">
                 {VARIANCE_ROOT_CAUSES.map((rc) => (
@@ -1967,7 +1967,7 @@ export default function ProgressVariancePage() {
                         <div className="flex items-center gap-2 text-[#7B8798]">
                           <span>By: {step.verifiedBy}</span>
                           <span>·</span>
-                          <span title={`Audit Hash: ${step.auditHash}`}>Hash: {step.auditHash}</span>
+                          <span title={`Audit Reference: ${step.auditHash}`}>Ref: {step.auditHash}</span>
                         </div>
                       </div>
                     </div>
@@ -2077,14 +2077,16 @@ export default function ProgressVariancePage() {
               </div>
             </div>
 
-            {/* 5. Audit Record Hash */}
-            <div>
-              <label className="font-semibold text-[#596579] block mb-1">5. Immutable Audit Hash</label>
-              <div className="p-2 bg-[#F1F3F5] rounded border border-[#D9DEE5] text-[#596579] font-mono text-[11px] flex items-center gap-2">
+            {/* Technical Details */}
+            <details className="pt-1 text-xs">
+              <summary className="font-semibold text-[#176B87] cursor-pointer hover:underline">
+                Technical Details
+              </summary>
+              <div className="mt-2 p-2 bg-[#F1F3F5] rounded border border-[#D9DEE5] text-[#596579] font-mono text-[11px] flex items-center gap-2">
                 <Hash className="w-3.5 h-3.5" />
-                <span>{editAuditHash}</span>
+                <span>Audit Reference: {editAuditHash}</span>
               </div>
-            </div>
+            </details>
 
             {/* Warning when required fields are missing */}
             {(!editReason.trim() || !editSource.trim()) && (

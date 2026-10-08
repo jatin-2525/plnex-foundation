@@ -1504,10 +1504,13 @@ export default function OfflineSyncCenterPage() {
                     </div>
                   )}
                   {inspectItem.payload.sha256 && (
-                    <div className="pt-1 border-t border-[#D9DEE5] text-[10px]">
-                      <span className="text-[#7B8798] block">SHA-256 Digest:</span>
-                      <span className="text-[#596579] break-all">{inspectItem.payload.sha256}</span>
-                    </div>
+                    <details className="pt-1 border-t border-[#D9DEE5] text-[10px]">
+                      <summary className="text-[#176B87] cursor-pointer hover:underline font-semibold">Technical Details</summary>
+                      <div className="mt-1">
+                        <span className="text-[#7B8798] block">Verification Hash:</span>
+                        <span className="text-[#596579] break-all font-mono">{inspectItem.payload.sha256}</span>
+                      </div>
+                    </details>
                   )}
                 </div>
 

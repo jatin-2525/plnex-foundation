@@ -31,7 +31,7 @@ const DEFAULT_EXECUTION_STATUS_SLICES: StatusSliceItem[] = [
     count: 12,
     color: CHART_TOKENS.positive.fill, // Green #2E7D5B
     glyph: '✓',
-    description: 'Signed off with cryptographic audit hash and evidence proof',
+    description: 'Signed off with verified audit record and evidence proof',
   },
   {
     id: 'pending',
@@ -39,7 +39,7 @@ const DEFAULT_EXECUTION_STATUS_SLICES: StatusSliceItem[] = [
     count: 4,
     color: CHART_TOKENS.planned.stroke, // Primary Teal #176B87
     glyph: '●',
-    description: 'Matched by engine; awaiting Lead Engineer confirmation',
+    description: 'Matched candidate; awaiting Lead Engineer confirmation',
   },
   {
     id: 'attention',

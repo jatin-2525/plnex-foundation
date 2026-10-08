@@ -1490,7 +1490,7 @@ export default function SchedulePage() {
               <ShieldCheck className="w-4 h-4 text-[#176B87] shrink-0" />
               <div className="text-[11px] leading-tight text-[#172033]">
                 <strong className="text-[#176B87] block">Version Protection Active:</strong>
-                Never silently overwrite previous versions. Every revision creates an immutable ledger entry.
+                Never silently overwrite previous versions. Every revision creates a permanent revision snapshot.
               </div>
             </div>
           </div>

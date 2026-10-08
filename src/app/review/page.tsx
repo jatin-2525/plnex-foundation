@@ -850,7 +850,7 @@ export default function ReviewQueuePage() {
               <ShieldCheck className="w-5 h-5 text-[#176B87] shrink-0 mt-0.5" />
               <div className="space-y-0.5">
                 <h4 className="font-bold text-[#172033]">
-                  Schedule Integrity Protocol: AI is Not the Final Authority
+                  Schedule Integrity Policy: Human Verification Required
                 </h4>
                 <p className="text-[#596579] leading-relaxed">
                   A high confidence suggestion (e.g. 94%) is <strong>never treated as verified</strong>. AI candidate matches are assistive only and require conscious human verification. Once approved, events are committed to Schedule Twin and cleared from this queue.
@@ -1928,9 +1928,13 @@ export default function ReviewQueuePage() {
           subtitle={`Attached to ${previewEvidence?.event.id || ''} · ${previewEvidence?.event.discipline} Discipline`}
           footer={
             <div className="flex items-center justify-between w-full text-xs">
-              <span className="text-[11px] text-[#596579] font-mono">
-                SHA-256: 7f8a3c...e901 · Timestamped & Geotagged (OIL Duliajan)
-              </span>
+              <div className="flex items-center gap-2 text-[11px] text-[#596579]">
+                <span>Verified Evidence · Timestamped &amp; Geotagged (OIL Duliajan)</span>
+                <details className="inline-block">
+                  <summary className="text-[10px] text-[#176B87] cursor-pointer hover:underline font-semibold">Technical Details</summary>
+                  <span className="font-mono text-[10px] text-[#7B8798] ml-1">Ref: 7f8a3c...e901</span>
+                </details>
+              </div>
               <button
                 type="button"
                 onClick={() => setPreviewEvidence(null)}

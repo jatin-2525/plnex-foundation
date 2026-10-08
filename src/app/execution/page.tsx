@@ -128,9 +128,9 @@ const MOCK_INTELLIGENCE_EVENTS: ExecutionIntelligenceEvent[] = [
     ],
     processingHistory: [
       { step: 'Field Ingestion', timestamp: '17:15:00', actor: 'Debajit Borah (Site Engineer)', details: 'Received via Shift A DPR upload', status: 'info' },
-      { step: 'Entity Extraction', timestamp: '17:15:02', actor: 'Deterministic NLP Extractor', details: 'Extracted: 12 spools, Line 24-XX, Erection, 09:00-16:30', status: 'success' },
-      { step: 'Schedule Candidate Search', timestamp: '17:15:03', actor: 'Deterministic Linking Engine', details: 'Candidate match: PIP-24-001 (WBS 3.2.1)', status: 'success' },
-      { step: 'Verification Governance', timestamp: '17:15:04', actor: 'Verification Rules Engine', details: 'Confidence 94% >= 90% threshold. Scheduled twin update verified.', status: 'success' },
+      { step: 'Entity Extraction', timestamp: '17:15:02', actor: 'Automated Field Extraction', details: 'Extracted: 12 spools, Line 24-XX, Erection, 09:00-16:30', status: 'success' },
+      { step: 'Schedule Candidate Search', timestamp: '17:15:03', actor: 'Activity Matching Service', details: 'Candidate match: PIP-24-001 (WBS 3.2.1)', status: 'success' },
+      { step: 'Verification Governance', timestamp: '17:15:04', actor: 'Governance Rules Service', details: 'Confidence 94% >= 90% threshold. Scheduled twin update verified.', status: 'success' },
     ],
     verificationStatus: {
       state: 'Verified',
@@ -174,9 +174,9 @@ const MOCK_INTELLIGENCE_EVENTS: ExecutionIntelligenceEvent[] = [
     ],
     processingHistory: [
       { step: 'Field Ingestion', timestamp: '18:20:00', actor: 'Debajit Borah (Site Engineer)', details: 'Batch ingested from Welder Shift Roster', status: 'info' },
-      { step: 'Entity Extraction', timestamp: '18:20:01', actor: 'Deterministic NLP Extractor', details: 'Extracted: 8 welds, Line 24-XX, Welding', status: 'success' },
-      { step: 'Schedule Candidate Search', timestamp: '18:20:02', actor: 'Deterministic Linking Engine', details: 'Matched PIP-24-002 at 86% confidence', status: 'warning' },
-      { step: 'Verification Routing', timestamp: '18:20:03', actor: 'Verification Rules Engine', details: 'Score in 70-89% review band. Routed to Manager Review Queue.', status: 'warning' },
+      { step: 'Entity Extraction', timestamp: '18:20:01', actor: 'Automated Field Extraction', details: 'Extracted: 8 welds, Line 24-XX, Welding', status: 'success' },
+      { step: 'Schedule Candidate Search', timestamp: '18:20:02', actor: 'Activity Matching Service', details: 'Matched PIP-24-002 at 86% confidence', status: 'warning' },
+      { step: 'Verification Routing', timestamp: '18:20:03', actor: 'Governance Rules Service', details: 'Score in 70-89% review band. Routed to Manager Review Queue.', status: 'warning' },
     ],
     verificationStatus: {
       state: 'Pending Review',
@@ -217,8 +217,8 @@ const MOCK_INTELLIGENCE_EVENTS: ExecutionIntelligenceEvent[] = [
     ],
     processingHistory: [
       { step: 'Field Ingestion', timestamp: '16:00:00', actor: 'Voice Note Audio Intake', details: 'Audio transcribed to structured field log', status: 'info' },
-      { step: 'Entity Extraction', timestamp: '16:00:02', actor: 'Deterministic NLP Extractor', details: 'Extracted: 45 meters, Unit A Overhead, Electrical', status: 'success' },
-      { step: 'Verification Routing', timestamp: '16:00:03', actor: 'Verification Rules Engine', details: 'Score 78%. Flagged for physical photo attachment.', status: 'warning' },
+      { step: 'Entity Extraction', timestamp: '16:00:02', actor: 'Automated Field Extraction', details: 'Extracted: 45 meters, Unit A Overhead, Electrical', status: 'success' },
+      { step: 'Verification Routing', timestamp: '16:00:03', actor: 'Governance Rules Service', details: 'Score 78%. Flagged for physical photo attachment.', status: 'warning' },
     ],
     verificationStatus: {
       state: 'Pending Review',
@@ -347,7 +347,7 @@ const MOCK_INTELLIGENCE_EVENTS: ExecutionIntelligenceEvent[] = [
     ],
     processingHistory: [
       { step: 'Field Ingestion', timestamp: '14:30:00', actor: 'Debajit Borah', details: 'Ingested from DPR Shift A', status: 'info' },
-      { step: 'Entity Extraction', timestamp: '14:30:01', actor: 'Deterministic NLP Extractor', details: 'Extracted: 45 m3, Civil, Foundation Block A', status: 'success' },
+      { step: 'Entity Extraction', timestamp: '14:30:01', actor: 'Automated Field Extraction', details: 'Extracted: 45 m3, Civil, Foundation Block A', status: 'success' },
       { step: 'Verification Governance', timestamp: '14:30:02', actor: 'Schedule Twin Engine', details: '100% Milestone completion verified. Twin updated.', status: 'success' },
     ],
     verificationStatus: {
@@ -382,22 +382,22 @@ const MOCK_INTELLIGENCE_EVENTS: ExecutionIntelligenceEvent[] = [
     reasons: [
       'Identical 12 spools on Line 24 already logged and verified in EVT-2026-001',
       'Logged by assistant engineer 30 minutes after primary DPR submission',
-      'Suppressed by de-duplication heuristic to prevent double-counting progress in Schedule Twin',
+      'Suppressed by de-duplication check to prevent double-counting progress in Schedule Twin',
     ],
     signals: [
-      { name: 'Deduplication Hash', score: 0, maxScore: 25, reason: 'Duplicate event signature matching EVT-2026-001' },
+      { name: 'Duplicate Check', score: 0, maxScore: 25, reason: 'Duplicate event signature matching EVT-2026-001' },
       { name: 'Discipline Alignment', score: 25, maxScore: 25, reason: 'Piping matches' },
       { name: 'Asset Identifier', score: 35, maxScore: 35, reason: 'Line 24 matches' },
       { name: 'Quantity Overlap', score: 0, maxScore: 15, reason: 'Same 12 spools would exceed 100% capacity' },
     ],
     processingHistory: [
       { step: 'Field Ingestion', timestamp: '17:45:00', actor: 'Assistant Site Supervisor', details: 'Submitted via Mobile Quick Form', status: 'info' },
-      { step: 'Deduplication Engine', timestamp: '17:45:02', actor: 'Event Deduplicator', details: 'Duplicate detected against EVT-2026-001', status: 'warning' },
-      { step: 'Duplicate Suppression', timestamp: '17:45:03', actor: 'Verification Rules Engine', details: 'Flagged as DUPLICATE. Suppressed from schedule math.', status: 'warning' },
+      { step: 'Deduplication Check', timestamp: '17:45:02', actor: 'Deduplication Service', details: 'Duplicate detected against EVT-2026-001', status: 'warning' },
+      { step: 'Duplicate Suppression', timestamp: '17:45:03', actor: 'Governance Rules Service', details: 'Flagged as DUPLICATE. Suppressed from schedule math.', status: 'warning' },
     ],
     verificationStatus: {
       state: 'Rejected',
-      reviewer: 'System De-duplicator',
+      reviewer: 'System Deduplication Check',
       notes: 'Superfluous duplicate submission suppressed.',
     },
   },
@@ -1653,7 +1653,7 @@ export default function ExecutionIntelligencePage() {
               <div className="pt-2 border-t border-[#D9DEE5]">
                 <details className="text-xs group">
                   <summary className="font-bold text-[#596579] cursor-pointer hover:text-[#172033] flex items-center justify-between">
-                    <span>Advanced: Transformation Timeline & Signal Weights</span>
+                    <span>Technical Details</span>
                     <ChevronDown className="w-3.5 h-3.5 transition-transform group-open:rotate-180" />
                   </summary>
                   <div className="mt-3 border border-[#D9DEE5] rounded-lg overflow-hidden divide-y divide-[#D9DEE5] bg-white">

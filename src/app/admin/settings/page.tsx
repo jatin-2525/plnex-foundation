@@ -121,10 +121,10 @@ export default function AdminSettingsPage() {
               />
               <div>
                 <span className="font-semibold text-[#172033] block">
-                  Immutable Cryptographic Audit Trail
+                  Tamper-Evident Audit Trail
                 </span>
                 <span className="text-[11px] text-[#596579]">
-                  All schedule approvals, DPR matches, and manual overrides are signed and persisted in the unalterable audit log.
+                  All schedule approvals, DPR matches, and manual overrides are signed and persisted in the audit log.
                 </span>
               </div>
             </label>

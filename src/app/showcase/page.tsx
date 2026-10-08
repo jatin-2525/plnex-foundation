@@ -385,7 +385,7 @@ export default function ShowcasePage() {
               addToast({
                 type: 'info',
                 title: 'Audit Record Logged',
-                description: 'Immutable ledger entry generated for match approval AUD-003.',
+                description: 'Permanent audit record generated for match approval AUD-003.',
               })
             }
             className="px-3 py-1.5 bg-[#EDF2F8] text-[#3B6EA8] border border-[#B3CBE0] rounded text-xs font-medium"

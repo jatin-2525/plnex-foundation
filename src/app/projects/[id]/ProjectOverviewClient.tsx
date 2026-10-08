@@ -1566,7 +1566,7 @@ export default function ProjectOverviewPage() {
             <div className="p-3 bg-[#F1F3F5] rounded text-[11px] text-[#596579] flex items-start gap-2">
               <Info className="w-4 h-4 text-[#176B87] flex-shrink-0 mt-0.5" />
               <span>
-                PLnEX NLP engine will parse activity quantities, locations, and weld joints, scoring candidates against L5/L6 activities in the schedule twin.
+                Extracted quantities, locations, and activities will be matched against schedule activities for review and verification.
               </span>
             </div>
           </form>

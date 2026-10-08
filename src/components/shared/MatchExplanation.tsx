@@ -841,47 +841,55 @@ export function MatchExplanation({
       )}
 
       {/* =========================================================================
-          6. ALGORITHM / VERSION & GENERATED TIMESTAMP FOOTER
+          6. TECHNICAL DETAILS (COLLAPSIBLE DISCLOSURE)
           ========================================================================= */}
       {showAlgorithmDetails && (
-        <div className="p-4 sm:p-4 sm:p-6 bg-[#F7F8FA] text-[11px] text-[#596579] space-y-2">
-          <div className="flex items-center justify-between flex-wrap gap-2">
-            <div className="flex items-center gap-2">
-              <Binary className="w-3.5 h-3.5 text-[#176B87]" />
-              <span className="font-bold text-[#172033]">
-                {algorithmVersion.name}
-              </span>
-              <span className="font-mono text-[10px] px-1.5 py-0.5 rounded bg-white border border-[#D9DEE5] text-[#176B87]">
-                {algorithmVersion.version}
-              </span>
-              <span className="text-[10px] text-[#7B8798]">
-                Ruleset: {algorithmVersion.rulepack}
-              </span>
-            </div>
-
-            <div className="flex items-center gap-1 font-mono text-[10px] text-[#7B8798]">
-              <Clock className="w-3 h-3" />
-              <span>Generated: {generatedTimestamp}</span>
-            </div>
-          </div>
-
-          <div className="flex items-center justify-between flex-wrap gap-2 text-[10px] text-[#7B8798] pt-1 border-t border-[#D9DEE5]/60">
-            <p className="max-w-xl">
-              {algorithmVersion.description}
-            </p>
-
-            <div className="flex items-center gap-3 shrink-0">
-              {processingLatencyMs && (
-                <span>Latency: {processingLatencyMs}ms</span>
-              )}
-              {auditHash && (
-                <span className="font-mono" title={`Audit Hash: ${auditHash}`}>
-                  Hash: {auditHash.slice(0, 10)}...{auditHash.slice(-6)}
+        <details className="group border-t border-[#D9DEE5] bg-[#F7F8FA]">
+          <summary className="p-3 sm:px-6 flex items-center justify-between cursor-pointer text-xs font-semibold text-[#596579] hover:text-[#172033] hover:bg-[#F1F3F5] transition-colors list-none">
+            <span className="flex items-center gap-2">
+              <Binary className="w-3.5 h-3.5 text-[#7B8798]" />
+              <span>Technical Details</span>
+            </span>
+            <span className="text-[11px] text-[#7B8798] group-open:rotate-180 transition-transform">▼</span>
+          </summary>
+          <div className="p-4 sm:px-6 pt-0 text-[11px] text-[#596579] space-y-2">
+            <div className="flex items-center justify-between flex-wrap gap-2">
+              <div className="flex items-center gap-2">
+                <span className="font-bold text-[#172033]">
+                  {algorithmVersion.name}
                 </span>
-              )}
+                <span className="font-mono text-[10px] px-1.5 py-0.5 rounded bg-white border border-[#D9DEE5] text-[#176B87]">
+                  {algorithmVersion.version}
+                </span>
+                <span className="text-[10px] text-[#7B8798]">
+                  Ruleset: {algorithmVersion.rulepack}
+                </span>
+              </div>
+
+              <div className="flex items-center gap-1 font-mono text-[10px] text-[#7B8798]">
+                <Clock className="w-3 h-3" />
+                <span>Generated: {generatedTimestamp}</span>
+              </div>
+            </div>
+
+            <div className="flex items-center justify-between flex-wrap gap-2 text-[10px] text-[#7B8798] pt-1 border-t border-[#D9DEE5]/60">
+              <p className="max-w-xl">
+                {algorithmVersion.description}
+              </p>
+
+              <div className="flex items-center gap-3 shrink-0">
+                {processingLatencyMs && (
+                  <span>Latency: {processingLatencyMs}ms</span>
+                )}
+                {auditHash && (
+                  <span className="font-mono" title={`Audit Hash: ${auditHash}`}>
+                    Hash: {auditHash.slice(0, 10)}...{auditHash.slice(-6)}
+                  </span>
+                )}
+              </div>
             </div>
           </div>
-        </div>
+        </details>
       )}
     </div>
   );

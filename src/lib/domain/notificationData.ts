@@ -212,7 +212,7 @@ export const INITIAL_NOTIFICATIONS: PLnEXNotification[] = [
     type: 'Evidence uploaded',
     title: 'QA/QC Physical Proof Linked: EVD-001',
     description:
-      'Compressor pedestal 28-day cube test pour certificate (CIV-PED-QC-20260914.pdf) verified and cryptographically attached to activity CIV-11-001.',
+      'Compressor pedestal 28-day cube test pour certificate (CIV-PED-QC-20260914.pdf) verified and attached to activity CIV-11-001.',
     timestamp: '2026-09-14T14:15:00Z',
     relativeTime: '1d ago',
     severity: 'info',
@@ -231,7 +231,7 @@ export const INITIAL_NOTIFICATIONS: PLnEXNotification[] = [
     },
     metadata: {
       fileSize: '1.4 MB',
-      checksum: 'SHA256:8f3c7d...b291',
+      checksum: 'Ref: 8f3c7d...b291',
     },
   },
 

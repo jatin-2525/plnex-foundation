@@ -822,7 +822,7 @@ export function ActivityDetailDrawer({
                              }
                              className="text-[11px] font-semibold text-[#176B87] hover:underline flex items-center justify-between w-full"
                            >
-                             <span>Cryptographic Proof &amp; Metadata</span>
+                             <span>Technical Details</span>
                              <span>{expandedEvidenceId === item.id ? 'Hide ▲' : 'Expand ▼'}</span>
                            </button>
 
@@ -838,7 +838,7 @@ export function ActivityDetailDrawer({
                                </div>
                                {item.sha256Hash && (
                                  <div className="pt-1 border-t border-[#D9DEE5]">
-                                   <span className="text-[#596579] block">SHA-256 Digest:</span>
+                                   <span className="text-[#596579] block">Verification Hash (SHA-256):</span>
                                    <span className="text-[#596579] break-all">{item.sha256Hash}</span>
                                  </div>
                                )}
@@ -1157,10 +1157,14 @@ export function ActivityDetailDrawer({
 
             <div className="p-3 bg-[#F7F8FA] rounded-lg border border-[#D9DEE5] text-center space-y-1">
               <Camera className="w-8 h-8 text-[#7B8798] mx-auto" />
-              <p className="text-[11px] text-[#596579]">Cryptographically sealed proof.</p>
-              <div className="font-mono text-[11px] text-[#7B8798] break-all">
-                SHA: {previewEvidenceModal.sha256Hash || 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'}
-              </div>
+              <p className="text-[11px] font-semibold text-[#172033]">Verified Onsite Evidence</p>
+              <p className="text-[10px] text-[#596579]">Signed and validated during field inspection.</p>
+              <details className="pt-2 text-left">
+                <summary className="text-[11px] text-[#176B87] cursor-pointer hover:underline font-medium">Technical Details</summary>
+                <div className="mt-1 font-mono text-[10px] text-[#7B8798] break-all bg-white p-2 rounded border border-[#D9DEE5]">
+                  Verification Hash: {previewEvidenceModal.sha256Hash || 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'}
+                </div>
+              </details>
             </div>
 
             <div className="flex justify-end pt-1">

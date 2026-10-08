@@ -102,8 +102,8 @@ export default function EvidenceAndAuditPage() {
     setCopiedHash(hash);
     addToast({
       type: 'info',
-      title: 'SHA-256 Digest Copied',
-      description: 'Cryptographic hash copied to clipboard.',
+      title: 'Verification Hash Copied',
+      description: 'Verification hash copied to clipboard.',
     });
     setTimeout(() => setCopiedHash(null), 2000);
   };
@@ -915,7 +915,7 @@ export default function EvidenceAndAuditPage() {
                                   className="px-2 py-1 rounded border border-[#D9DEE5] hover:bg-[#F1F3F5] text-[#596579] text-[11px] font-medium transition-colors flex items-center gap-1"
                                   title="Expand/Collapse Technical Metadata"
                                 >
-                                  <span>Details</span>
+                                  <span>Technical Details</span>
                                   {isMetaExpanded ? (
                                     <ChevronUp className="w-3 h-3" />
                                   ) : (
@@ -944,17 +944,17 @@ export default function EvidenceAndAuditPage() {
                                   <div className="flex items-center justify-between border-b border-[#D9DEE5]/60 pb-2">
                                     <span className="font-bold uppercase tracking-wider text-[10px] text-[#176B87] flex items-center gap-2">
                                       <Lock className="w-3.5 h-3.5 text-[#176B87]" />
-                                      Technical Audit Metadata & Cryptographic Integrity
+                                      Technical Details • Integrity Verification
                                     </span>
                                     <span className="text-[10px] font-mono text-[#596579]">
-                                      Append-Only Immutable Ledger Record
+                                      Permanent Audit Record
                                     </span>
                                   </div>
 
                                   <div className="grid grid-cols-1 md:grid-cols-3 gap-3 font-mono text-[11px]">
                                     <div className="space-y-0.5">
                                       <span className="text-[10px] uppercase text-[#596579] font-semibold block">
-                                        SHA-256 Digest
+                                        Verification Hash (SHA-256)
                                       </span>
                                       <div className="flex items-center gap-2">
                                         <span className="text-[#172033] truncate max-w-[200px]" title={item.sha256Hash}>
@@ -1499,7 +1499,7 @@ export default function EvidenceAndAuditPage() {
               <span>Audit Integrity & Technical Details</span>
             </div>
             <div className="flex items-center gap-2 text-[11px] text-[#596579] font-normal">
-              <span className="hidden sm:inline">Cryptographic Verification & Append-Only Ledger Proof</span>
+              <span className="hidden sm:inline">Audit Trail & Verification Records</span>
               <ChevronDown className="w-4 h-4 text-[#596579] transition-transform group-open:rotate-180" />
             </div>
           </summary>
@@ -1525,7 +1525,7 @@ export default function EvidenceAndAuditPage() {
               <div className="p-4 rounded-lg bg-[#F7F8FA] border border-[#D9DEE5] space-y-2">
                 <div className="flex items-center gap-2 font-bold text-xs text-[#172033] uppercase">
                   <Lock className="w-4 h-4 text-[#176B87]" />
-                  <span>Technical Details & Checksums</span>
+                  <span>Technical Details</span>
                 </div>
                 <p className="leading-relaxed">
                   Every uploaded photograph, DPR scan, and test certificate is registered with a SHA-256 cryptographic digest at the time of ingestion. This prevents file tampering and certifies that evidence reviewed today is bit-for-bit identical to the field artifact captured on site.

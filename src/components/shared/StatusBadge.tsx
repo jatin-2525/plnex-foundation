@@ -91,7 +91,7 @@ export const STANDARDIZED_STATUS_CONFIGS: Record<StandardizedStatus, StatusConfi
   Processing: {
     key: 'Processing',
     label: 'Processing',
-    description: 'Entity is undergoing NLP parameter extraction or CPM analysis.',
+    description: 'Entity is undergoing field extraction and schedule analysis.',
     badgeClass: 'bg-[#EDF5F8] text-[#176B87] border-[#B3CBE0]',
     dotColor: '#176B87',
     icon: Loader2,

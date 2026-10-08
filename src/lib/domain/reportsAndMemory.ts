@@ -189,7 +189,7 @@ export const REPORT_TEMPLATES: ReportTemplate[] = [
   {
     id: 'REP-EVIDENCE-LINKED',
     name: 'Evidence-linked Activity Report',
-    title: 'Statutory Verification Dossier with Cryptographic Signatures',
+    title: 'Statutory Verification Dossier with Verified Audit Signatures',
     description: 'Compliance binder tying every reported percentage progress update directly to timestamped photos, GPS coordinates, and Evidence-linked Activity Report certificates.',
     category: 'Evidence-linked Activity Report',
     badge: 'Audit Certified',
@@ -366,7 +366,7 @@ export const HISTORICAL_MEMORY_RECORDS: HistoricalMemoryRecord[] = [
       recordType: 'EVIDENCE_ARTIFACT',
       recordId: 'EVD-002',
       title: 'Site Photo: Spool 24-XX Erection on Piperack Section B',
-      hashOrStamp: 'SHA-256: a1b2c3d4e5f60718293a4b5c6d7e8f901234567890abcdef',
+      hashOrStamp: 'Audit Stamp: a1b2c3d4e5f60718293a4b5c6d7e8f901234567890abcdef',
       linkUrl: '/evidence',
     },
     evidenceLink: {
