@@ -264,10 +264,29 @@ export function GlobalSearchPanel({
       {/* 3. Results Container */}
       <div className="p-3 divide-y divide-[#F1F3F5] max-h-[500px] overflow-y-auto">
         {hasError && (
-          <div className="p-6 text-center space-y-2">
-            <AlertCircle className="w-6 h-6 text-[#B5473C] mx-auto" />
-            <p className="text-xs font-bold text-[#172033]">Search Error</p>
-            <p className="text-[11px] text-[#596579]">{errorMessage}</p>
+          <div className="p-6 text-center space-y-2 max-w-sm mx-auto" role="alert">
+            <div className="w-8 h-8 rounded-full bg-[#FBEFEE] border border-[#E4B0AA] flex items-center justify-center text-[#B5473C] mx-auto">
+              <AlertCircle className="w-4 h-4" />
+            </div>
+            <div>
+              <h4 className="text-xs font-semibold text-[#172033]">
+                Search could not be completed.
+              </h4>
+              <p className="text-[11px] text-[#596579] mt-0.5 leading-relaxed">
+                {errorMessage || 'The search index is temporarily unavailable. Check your query syntax or retry search.'}
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={() => {
+                setHasError(false);
+                setQuery('');
+              }}
+              className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-semibold rounded transition-colors cursor-pointer"
+            >
+              <RotateCcw className="w-3 h-3" />
+              <span>Retry Search</span>
+            </button>
           </div>
         )}
 

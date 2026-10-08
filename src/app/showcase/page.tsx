@@ -606,6 +606,38 @@ export default function ShowcasePage() {
         </div>
       </div>
 
+      {/* =========================================================================
+          REUSABLE SYSTEM: STANDARDIZED ERROR STATES
+          ========================================================================= */}
+      <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 space-y-4">
+        <div>
+          <h3 className="text-sm font-bold text-[#172033] flex items-center gap-2">
+            <AlertCircle className="w-4 h-4 text-[#B5473C]" />
+            <span>Standardized Error States (What Happened + What User Can Do + Retry)</span>
+          </h3>
+          <p className="text-xs text-[#596579] mt-1">
+            Consistent restrained error styling. Zero giant red screens and zero dramatic illustrations. Every major error explicitly communicates: 1. What happened, 2. What the user can do, paired with an accessible Retry action.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <ErrorState
+            title="Schedule could not be displayed."
+            message="The schedule data is temporarily unavailable. Check your network connection or retry the operation."
+            code="ERR_SCHEDULE_UNAVAILABLE"
+            onRetry={() => addToast({ type: 'info', title: 'Retry Triggered', description: 'Re-attempting schedule data fetch.' })}
+            retryLabel="Retry"
+          />
+          <ErrorState
+            title="Execution events could not be displayed."
+            message="The execution feed is temporarily unavailable. Check connection parameters or retry the operation."
+            code="ERR_EXECUTION_FEED_UNAVAILABLE"
+            onRetry={() => addToast({ type: 'info', title: 'Retry Triggered', description: 'Re-attempting execution feed fetch.' })}
+            retryLabel="Retry"
+          />
+        </div>
+      </div>
+
       {/* Modal Preview */}
       <Modal
         isOpen={isModalOpen}

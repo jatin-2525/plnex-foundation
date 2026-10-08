@@ -351,16 +351,16 @@ export function GlobalSearch() {
           >
             {/* STATE 1: ERROR STATE */}
             {hasError && (
-              <div className="p-6 text-center space-y-3">
-                <div className="w-10 h-10 rounded-full bg-[#FBEFEE] text-[#B5473C] flex items-center justify-center mx-auto">
-                  <AlertCircle className="w-5 h-5" />
+              <div className="p-6 text-center space-y-2 max-w-sm mx-auto" role="alert">
+                <div className="w-8 h-8 rounded-full bg-[#FBEFEE] border border-[#E4B0AA] flex items-center justify-center text-[#B5473C] mx-auto">
+                  <AlertCircle className="w-4 h-4" />
                 </div>
                 <div>
-                  <h4 className="text-xs font-bold text-[#172033]">
-                    Search Query Failed
+                  <h4 className="text-xs font-semibold text-[#172033]">
+                    Search could not be completed.
                   </h4>
-                  <p className="text-[11px] text-[#596579] mt-0.5 max-w-sm mx-auto">
-                    {errorMessage}
+                  <p className="text-[11px] text-[#596579] mt-0.5 leading-relaxed">
+                    {errorMessage || 'The search index is temporarily unavailable. Check your query syntax or retry search.'}
                   </p>
                 </div>
                 <button
@@ -369,9 +369,10 @@ export function GlobalSearch() {
                     setHasError(false);
                     setQuery('');
                   }}
-                  className="px-3 py-1.5 bg-[#176B87] text-white rounded-lg text-xs font-semibold hover:bg-[#135A72] transition-colors"
+                  className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-semibold rounded transition-colors cursor-pointer"
                 >
-                  Reset Search Index
+                  <RotateCcw className="w-3 h-3" />
+                  <span>Retry Search</span>
                 </button>
               </div>
             )}

@@ -13,8 +13,8 @@ export interface ErrorStateProps {
 }
 
 export function ErrorState({
-  title = 'Unable to load schedule.',
-  message = 'Failed to synchronize with schedule database. Check network connection or retry the operation.',
+  title = 'Schedule could not be displayed.', // Alternate / legacy: Unable to load schedule.
+  message = 'The schedule data is temporarily unavailable. Check your network connection or retry the operation.',
   code,
   onRetry,
   retryLabel = 'Retry',
@@ -22,27 +22,28 @@ export function ErrorState({
 }: ErrorStateProps) {
   return (
     <div
-      className={`bg-white border border-[#E4B0AA] rounded-lg p-6 md:p-8 flex flex-col items-center text-center shadow-xs ${className}`}
+      className={`bg-white border border-[#D9DEE5] rounded-lg p-6 sm:p-8 flex flex-col items-center text-center max-w-lg mx-auto ${className}`}
       role="alert"
     >
-      <div className="w-12 h-12 rounded-lg bg-[#FBEFEE] border border-[#E4B0AA] flex items-center justify-center text-[#B5473C] mb-4 flex-shrink-0">
-        <AlertCircle className="w-6 h-6" />
+      <div className="w-10 h-10 rounded-full bg-[#FBEFEE] border border-[#E4B0AA] flex items-center justify-center text-[#B5473C] mb-3 shrink-0">
+        <AlertCircle className="w-5 h-5 stroke-[2]" />
       </div>
-      <h3 className="text-lg sm:text-xl font-bold text-[#172033] mb-2 tracking-tight">{title}</h3>
-      <p className="text-sm sm:text-base text-[#596579] max-w-md mb-3 leading-relaxed">
+      <h3 className="text-sm sm:text-base font-semibold text-[#172033] mb-1.5">{title}</h3>
+      <p className="text-xs text-[#596579] max-w-sm mb-4 leading-relaxed">
         {message}
       </p>
       {code && (
-        <span className="inline-block px-3 py-0.5 bg-[#F1F3F5] border border-[#D9DEE5] rounded text-xs font-mono text-[#596579] mb-6">
+        <span className="inline-block px-2.5 py-0.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded text-[11px] font-mono text-[#596579] mb-4">
           Diagnostic Code: {code}
         </span>
       )}
       {onRetry && (
         <button
+          type="button"
           onClick={onRetry}
-          className="inline-flex items-center gap-2 px-4 py-2 bg-[#176B87] hover:bg-[#135A72] text-white text-xs sm:text-sm font-medium rounded-lg shadow-xs transition-colors cursor-pointer mt-2"
+          className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-semibold rounded-md shadow-2xs transition-colors cursor-pointer"
         >
-          <RotateCcw className="w-4 h-4 text-white" />
+          <RotateCcw className="w-3.5 h-3.5" />
           <span>{retryLabel}</span>
         </button>
       )}

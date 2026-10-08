@@ -16,6 +16,9 @@ export interface StateWrapperProps {
   loadingMessage?: string;
   emptyTitle?: string;
   emptyDescription?: string;
+  errorTitle?: string;
+  errorMessage?: string;
+  errorCode?: string;
   onRetry?: () => void;
   requiredPermission?: string;
 }
@@ -26,6 +29,9 @@ export function StateWrapper({
   loadingMessage,
   emptyTitle,
   emptyDescription,
+  errorTitle,
+  errorMessage,
+  errorCode,
   onRetry,
   requiredPermission,
 }: StateWrapperProps) {
@@ -112,6 +118,108 @@ export function StateWrapper({
       ? 'No projects match the current search or status filter. Reset filters to view all active capital infrastructure projects.'
       : 'No activities match the current filters or baseline selection. Adjust your filter criteria or reset to view all project activities.');
 
+  const resolvedErrorTitle =
+    errorTitle ||
+    (pathname.includes('/execution')
+      ? 'Execution events could not be displayed.'
+      : pathname.includes('/reports')
+      ? 'Reports could not be displayed.'
+      : pathname.includes('/progress')
+      ? 'Progress telemetry could not be displayed.'
+      : pathname.includes('/review')
+      ? 'Review queue could not be displayed.'
+      : pathname.includes('/risks')
+      ? 'Delay risks could not be displayed.'
+      : pathname.includes('/evidence')
+      ? 'Evidence records could not be displayed.'
+      : pathname.includes('/sync')
+      ? 'Sync queue could not be displayed.'
+      : pathname.includes('/health')
+      ? 'Schedule health could not be displayed.'
+      : pathname.includes('/what-if')
+      ? 'Scenario simulation could not be displayed.'
+      : pathname.includes('/projects')
+      ? 'Project portfolio could not be displayed.'
+      : pathname.includes('/dashboard')
+      ? 'Dashboard could not be displayed.'
+      : pathname.includes('/matching')
+      ? 'Match records could not be displayed.'
+      : pathname.includes('/variance')
+      ? 'Variance analysis could not be displayed.'
+      : pathname.includes('/engineer')
+      ? 'Engineer cockpit could not be displayed.'
+      : pathname.includes('/field')
+      ? 'Field operations could not be displayed.'
+      : 'Schedule could not be displayed.');
+
+  const resolvedErrorMessage =
+    errorMessage ||
+    (pathname.includes('/execution')
+      ? 'The execution data is temporarily unavailable. Check your connection or retry the operation.'
+      : pathname.includes('/reports')
+      ? 'The reporting service is temporarily unavailable. Check report parameters or retry the operation.'
+      : pathname.includes('/progress')
+      ? 'The progress data is temporarily unavailable. Check your connection or retry the operation.'
+      : pathname.includes('/review')
+      ? 'The review queue data is temporarily unavailable. Check your connection or retry the operation.'
+      : pathname.includes('/risks')
+      ? 'The delay analysis data is temporarily unavailable. Check your connection or retry the operation.'
+      : pathname.includes('/evidence')
+      ? 'The evidence vault data is temporarily unavailable. Check your connection or retry the operation.'
+      : pathname.includes('/sync')
+      ? 'The synchronization gateway is temporarily unavailable. Check your connection or retry the operation.'
+      : pathname.includes('/health')
+      ? 'The health integrity data is temporarily unavailable. Check your connection or retry the operation.'
+      : pathname.includes('/what-if')
+      ? 'The simulation engine data is temporarily unavailable. Check simulation parameters or retry the operation.'
+      : pathname.includes('/projects')
+      ? 'The project directory data is temporarily unavailable. Check your connection or retry the operation.'
+      : pathname.includes('/dashboard')
+      ? 'The dashboard overview data is temporarily unavailable. Check your connection or retry the operation.'
+      : pathname.includes('/matching')
+      ? 'The matching engine data is temporarily unavailable. Check your connection or retry the operation.'
+      : pathname.includes('/variance')
+      ? 'The variance data is temporarily unavailable. Check your connection or retry the operation.'
+      : pathname.includes('/engineer')
+      ? 'The field assignment data is temporarily unavailable. Check your connection or retry the operation.'
+      : pathname.includes('/field')
+      ? 'The field operations data is temporarily unavailable. Check your connection or retry the operation.'
+      : 'The schedule data is temporarily unavailable. Check your network connection or retry the operation.');
+
+  const resolvedErrorCode =
+    errorCode ||
+    (pathname.includes('/execution')
+      ? 'ERR_EXECUTION_UNAVAILABLE'
+      : pathname.includes('/reports')
+      ? 'ERR_REPORTS_UNAVAILABLE'
+      : pathname.includes('/progress')
+      ? 'ERR_PROGRESS_UNAVAILABLE'
+      : pathname.includes('/review')
+      ? 'ERR_REVIEW_UNAVAILABLE'
+      : pathname.includes('/risks')
+      ? 'ERR_RISKS_UNAVAILABLE'
+      : pathname.includes('/evidence')
+      ? 'ERR_EVIDENCE_UNAVAILABLE'
+      : pathname.includes('/sync')
+      ? 'ERR_SYNC_UNAVAILABLE'
+      : pathname.includes('/health')
+      ? 'ERR_HEALTH_UNAVAILABLE'
+      : pathname.includes('/what-if')
+      ? 'ERR_SIMULATION_UNAVAILABLE'
+      : pathname.includes('/projects')
+      ? 'ERR_PROJECTS_UNAVAILABLE'
+      : pathname.includes('/dashboard')
+      ? 'ERR_DASHBOARD_UNAVAILABLE'
+      : pathname.includes('/matching')
+      ? 'ERR_MATCHING_UNAVAILABLE'
+      : pathname.includes('/variance')
+      ? 'ERR_VARIANCE_UNAVAILABLE'
+      : pathname.includes('/engineer')
+      ? 'ERR_ENGINEER_UNAVAILABLE'
+      : pathname.includes('/field')
+      ? 'ERR_FIELD_UNAVAILABLE'
+      : 'ERR_P6_SYNC_FAILURE');
+
   // If a simulated state is chosen from the top header simulator, prioritize it
   const effectiveState = (simulatedState !== 'success' ? simulatedState : state) || 'success';
 
@@ -135,9 +243,9 @@ export function StateWrapper({
   if (effectiveState === 'error') {
     return (
       <ErrorState
-        title="Unable to load schedule."
-        message="Failed to synchronize with Primavera P6 schedule bridge. Check connection and retry."
-        code="ERR_P6_SYNC_FAILURE"
+        title={resolvedErrorTitle}
+        message={resolvedErrorMessage}
+        code={resolvedErrorCode}
         onRetry={onRetry || (() => setSimulatedState('success'))}
         retryLabel="Retry"
       />

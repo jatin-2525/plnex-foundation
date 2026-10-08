@@ -406,13 +406,14 @@ export default function WhatIfSimulatorPage() {
         {/* ERROR STATE DISPLAY (if triggered) */}
         {simulateError && (
           <ErrorState
-            title="Scenario Computation Error"
-            message={errorMessage || 'An unexpected condition prevented the CPM forward pass from completing.'}
+            title="Scenario simulation could not be computed."
+            message={errorMessage || 'The CPM network calculation failed due to invalid predecessor logic. Check activity dependencies and retry the simulation.'}
             code="ERR_PLNEX_SIM_TOPOLOGY"
             onRetry={() => {
               setSimulateError(false);
               handleRunScenario();
             }}
+            retryLabel="Retry Simulation"
           />
         )}
 
