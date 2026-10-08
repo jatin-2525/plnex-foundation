@@ -361,7 +361,7 @@ export default function MatchingPage() {
         actions={
           <Link
             href="/review"
-            className="inline-flex items-center gap-2 px-4 py-2 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-bold rounded-lg shadow-xs transition-colors"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-[#176B87] hover:bg-[#135A72] border border-[#176B87] text-white text-xs font-bold rounded-lg shadow-xs transition-colors"
           >
             <ShieldCheck className="w-4 h-4" />
             <span>Open Review Queue</span>
@@ -534,14 +534,14 @@ export default function MatchingPage() {
           <>
             <button
               onClick={() => setIsRematchModalOpen(false)}
-              className="px-4 py-2 text-xs font-semibold text-[#596579] hover:text-[#172033] rounded border border-[#D9DEE5]"
+              className="px-4 py-2 text-xs font-semibold text-[#596579] hover:text-[#172033] bg-white rounded-lg border border-[#D9DEE5] hover:bg-[#F7F8FA] transition-colors"
             >
               Cancel
             </button>
             <button
               onClick={handleRematchConfirm}
               disabled={!selectedRematchTarget}
-              className="px-4 py-2 text-xs font-bold bg-[#176B87] hover:bg-[#135A72] text-white rounded shadow-xs disabled:opacity-50"
+              className="px-4 py-2 text-xs font-bold bg-[#176B87] hover:bg-[#135A72] border border-[#176B87] text-white rounded-lg shadow-xs disabled:opacity-50 transition-colors"
             >
               Assign Selected Activity
             </button>

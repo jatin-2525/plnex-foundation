@@ -32,6 +32,7 @@ import {
   ChevronDown,
   ChevronRight,
   Activity,
+  ShieldCheck,
 } from 'lucide-react';
 
 export default function ManagerDashboardPage() {
@@ -137,8 +138,8 @@ export default function ManagerDashboardPage() {
               </p>
             </div>
 
-            {/* Connection Status Indicator */}
-            <div className="flex items-center gap-3 self-start lg:self-center">
+            {/* Header Action Toolbar & Connection Status */}
+            <div className="flex flex-wrap items-center gap-2 self-start lg:self-center">
               <div
                 className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-md border text-xs font-semibold ${
                   effectiveStatus === 'OFFLINE'
@@ -156,6 +157,23 @@ export default function ManagerDashboardPage() {
                   {effectiveStatus === 'OFFLINE' ? 'Offline Mode' : 'Online'}
                 </span>
               </div>
+
+              {/* Secondary Action */}
+              <Link
+                href="/field/capture"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-[#172033] bg-white border border-[#D9DEE5] hover:bg-[#F1F3F5] rounded-lg transition-colors shadow-2xs"
+              >
+                <span>Record Field Observation</span>
+              </Link>
+
+              {/* Exactly 1 Primary Action */}
+              <Link
+                href="/review"
+                className="inline-flex items-center gap-2 px-4 py-2 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] border border-[#176B87] rounded-lg transition-colors shadow-xs"
+              >
+                <ShieldCheck className="w-3.5 h-3.5" />
+                <span>Review Pending Events ({reviewEvents.length})</span>
+              </Link>
             </div>
           </div>
         </div>
@@ -385,7 +403,7 @@ export default function ManagerDashboardPage() {
               </div>
               <Link
                 href="/review"
-                className="w-full py-2 px-3 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-semibold rounded shadow-xs text-center transition-colors block"
+                className="w-full py-2 px-3 bg-white hover:bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0] text-xs font-semibold rounded shadow-2xs text-center transition-colors block"
               >
                 Review Matches ({reviewEvents.length})
               </Link>
@@ -413,7 +431,7 @@ export default function ManagerDashboardPage() {
               <button
                 type="button"
                 onClick={() => setSelectedReviewModalEvent(unmatchedEvent)}
-                className="w-full py-2 px-3 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-semibold rounded shadow-xs text-center transition-colors block cursor-pointer"
+                className="w-full py-2 px-3 bg-white hover:bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0] text-xs font-semibold rounded shadow-2xs text-center transition-colors block cursor-pointer"
               >
                 Assign Activity Target
               </button>
@@ -443,7 +461,7 @@ export default function ManagerDashboardPage() {
               </div>
               <a
                 href="#schedule-variance"
-                className="w-full py-2 px-3 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-semibold rounded shadow-xs text-center transition-colors block"
+                className="w-full py-2 px-3 bg-white hover:bg-[#F1F3F5] text-[#172033] border border-[#D9DEE5] text-xs font-semibold rounded shadow-2xs text-center transition-colors block"
               >
                 Inspect Delay Chain
               </a>
@@ -476,7 +494,7 @@ export default function ManagerDashboardPage() {
               </div>
               <Link
                 href="/what-if"
-                className="w-full py-2 px-3 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-semibold rounded shadow-xs text-center transition-colors block"
+                className="w-full py-2 px-3 bg-white hover:bg-[#F1F3F5] text-[#172033] border border-[#D9DEE5] text-xs font-semibold rounded shadow-2xs text-center transition-colors block"
               >
                 Run What-If Simulation
               </Link>
@@ -503,7 +521,7 @@ export default function ManagerDashboardPage() {
               </div>
               <Link
                 href="/sync"
-                className="w-full py-2 px-3 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-semibold rounded shadow-xs text-center transition-colors block"
+                className="w-full py-2 px-3 bg-white hover:bg-[#FDF6ED] text-[#8C5311] border border-[#F0D4A6] text-xs font-semibold rounded shadow-2xs text-center transition-colors block"
               >
                 Reconcile Evidence Conflict
               </Link>
@@ -530,7 +548,7 @@ export default function ManagerDashboardPage() {
               </div>
               <Link
                 href="/field/dpr"
-                className="w-full py-2 px-3 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-semibold rounded shadow-xs text-center transition-colors block"
+                className="w-full py-2 px-3 bg-white hover:bg-[#F1F3F5] text-[#172033] border border-[#D9DEE5] text-xs font-semibold rounded shadow-2xs text-center transition-colors block"
               >
                 Request Inspector Signoff
               </Link>
@@ -736,7 +754,7 @@ export default function ManagerDashboardPage() {
                   <span className="text-[10px] uppercase font-bold text-[#596579] block mb-1">Action</span>
                   <Link
                     href="/what-if"
-                    className="w-full py-1.5 px-2 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-bold rounded text-center transition-colors shadow-xs"
+                    className="w-full py-1.5 px-2 bg-white hover:bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0] text-xs font-bold rounded text-center transition-colors shadow-2xs"
                   >
                     Simulate Recovery
                   </Link>
@@ -927,9 +945,9 @@ export default function ManagerDashboardPage() {
                         <button
                           type="button"
                           onClick={() => setSelectedReviewModalEvent(evt)}
-                          className="px-3 py-1.5 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-semibold rounded shadow-xs transition-colors cursor-pointer"
+                          className="px-3 py-1.5 bg-white hover:bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0] text-xs font-semibold rounded shadow-2xs transition-colors cursor-pointer"
                         >
-                          Review
+                          Review Match
                         </button>
                       </td>
                     </tr>

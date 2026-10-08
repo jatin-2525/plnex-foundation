@@ -70,7 +70,7 @@ export default function VariancePage() {
             </Link>
             <Link
               href="/progress"
-              className="inline-flex items-center gap-2 px-4 py-2 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-bold rounded-lg shadow-xs transition-colors"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-[#176B87] hover:bg-[#135A72] border border-[#176B87] text-white text-xs font-bold rounded-lg shadow-xs transition-colors"
             >
               <TrendingDown className="w-3.5 h-3.5 rotate-180" />
               <span>Progress & Variance</span>
@@ -233,7 +233,7 @@ export default function VariancePage() {
 
             <button
               onClick={handleRunSimulation}
-              className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-semibold rounded shadow-xs transition-colors"
+              className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-[#176B87] hover:bg-[#135A72] border border-[#176B87] text-white text-xs font-semibold rounded shadow-xs transition-colors"
             >
               <Play className="w-3.5 h-3.5" />
               Simulate Downstream Slippage

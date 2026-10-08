@@ -477,7 +477,7 @@ export default function ReportsAndMemoryPage() {
                   <button
                     type="button"
                     onClick={() => setPreviewReportOpen(true)}
-                    className="px-4 py-2 bg-white hover:bg-[#F1F3F5] text-[#172033] border border-[#D9DEE5] text-xs font-semibold rounded-lg shadow-xs transition-colors flex items-center gap-2"
+                    className="px-4 py-2 bg-white hover:bg-[#F1F3F5] text-[#172033] border border-[#D9DEE5] text-xs font-semibold rounded-lg shadow-2xs transition-colors flex items-center gap-2"
                   >
                     <Eye className="w-3.5 h-3.5 text-[#176B87]" />
                     <span>Preview Report</span>
@@ -487,7 +487,7 @@ export default function ReportsAndMemoryPage() {
                     type="button"
                     onClick={handleGenerateReport}
                     disabled={isGenerating}
-                    className="px-4 py-2 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-semibold rounded-lg shadow-xs transition-colors flex items-center gap-2 disabled:opacity-50"
+                    className="px-4 py-2 bg-[#176B87] hover:bg-[#135A72] border border-[#176B87] text-white text-xs font-bold rounded-lg shadow-xs transition-colors flex items-center gap-2 disabled:opacity-50"
                   >
                     {isGenerating ? (
                       <>
@@ -497,7 +497,7 @@ export default function ReportsAndMemoryPage() {
                     ) : (
                       <>
                         <FileText className="w-3.5 h-3.5" />
-                        <span>Generate Report</span>
+                        <span>Generate Statutory Report</span>
                       </>
                     )}
                   </button>
@@ -953,14 +953,14 @@ export default function ReportsAndMemoryPage() {
                 <button
                   type="button"
                   onClick={() => setPreviewReportOpen(false)}
-                  className="px-4 py-2 text-xs font-semibold text-[#596579] hover:text-[#172033]"
+                  className="px-4 py-2 text-xs font-semibold text-[#596579] hover:text-[#172033] bg-white border border-[#D9DEE5] hover:bg-[#F7F8FA] rounded-lg transition-colors"
                 >
-                  Close
+                  Close Preview
                 </button>
                 <button
                   type="button"
                   onClick={() => handleExportReport('PDF')}
-                  className="px-4 py-2 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-semibold rounded-lg shadow-xs flex items-center gap-2"
+                  className="px-4 py-2 bg-[#176B87] hover:bg-[#135A72] border border-[#176B87] text-white text-xs font-bold rounded-lg shadow-xs flex items-center gap-2 transition-colors"
                 >
                   <Download className="w-3.5 h-3.5" />
                   <span>Download Signed PDF</span>

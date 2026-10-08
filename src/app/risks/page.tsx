@@ -741,21 +741,21 @@ export default function DelayDependencyImpactPage() {
             <div className="flex items-center gap-2 flex-wrap">
               <Link
                 href="/progress"
-                className="inline-flex items-center gap-2 px-3 py-2 text-xs font-semibold text-[#176B87] bg-[#EDF5F8] border border-[#B3CBE0] hover:bg-[#EDF5F8]/80 rounded-lg transition-colors"
+                className="inline-flex items-center gap-2 px-3 py-2 text-xs font-semibold text-[#172033] bg-white border border-[#D9DEE5] hover:bg-[#F1F3F5] rounded-lg transition-colors shadow-2xs"
               >
                 <TrendingDown className="w-3.5 h-3.5 text-[#176B87]" />
                 <span>Progress & Variance</span>
               </Link>
               <Link
                 href="/what-if"
-                className="inline-flex items-center gap-2 px-3 py-2 text-xs font-semibold text-[#172033] bg-white border border-[#D9DEE5] hover:bg-[#F1F3F5] rounded-lg transition-colors"
+                className="inline-flex items-center gap-2 px-3 py-2 text-xs font-semibold text-[#172033] bg-white border border-[#D9DEE5] hover:bg-[#F1F3F5] rounded-lg transition-colors shadow-2xs"
               >
                 <Sliders className="w-3.5 h-3.5 text-[#176B87]" />
                 <span>What-If Simulator</span>
               </Link>
               <Link
                 href="/schedule-twin"
-                className="inline-flex items-center gap-2 px-4 py-2 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] rounded-lg shadow-xs transition-colors"
+                className="inline-flex items-center gap-2 px-4 py-2 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] border border-[#176B87] rounded-lg shadow-xs transition-colors"
               >
                 <Layers className="w-3.5 h-3.5" />
                 <span>Schedule Twin</span>
@@ -964,7 +964,7 @@ export default function DelayDependencyImpactPage() {
               <button
                 type="button"
                 onClick={() => setIsDrawerOpen(true)}
-                className="px-3 py-1 bg-[#176B87] hover:bg-[#135A72] text-white font-bold text-xs rounded-lg transition-colors shadow-2xs inline-flex items-center gap-1"
+                className="px-3 py-1 bg-white hover:bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0] font-bold text-xs rounded-lg transition-colors shadow-2xs inline-flex items-center gap-1"
               >
                 <span>Open Dependency Drawer</span>
                 <ArrowRight className="w-3.5 h-3.5" />

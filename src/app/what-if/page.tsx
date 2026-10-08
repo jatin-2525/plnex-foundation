@@ -325,14 +325,14 @@ export default function WhatIfSimulatorPage() {
 
             {/* THE 4 CANONICAL ACTIONS */}
             <div className="flex items-center gap-2 flex-wrap">
-              {/* 1. Run Scenario */}
+              {/* 1. Run What-If Simulation */}
               <button
                 type="button"
                 onClick={handleRunScenario}
-                className="inline-flex items-center gap-2 px-4 py-2 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] rounded-lg transition-colors shadow-xs"
+                className="inline-flex items-center gap-2 px-4 py-2 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] border border-[#176B87] rounded-lg transition-colors shadow-xs"
               >
                 <Play className="w-3.5 h-3.5 fill-white" />
-                <span>Run Scenario</span>
+                <span>Run What-If Simulation</span>
               </button>
 
               {/* 2. Save Scenario */}
@@ -346,17 +346,17 @@ export default function WhatIfSimulatorPage() {
                 <span>Save Scenario</span>
               </button>
 
-              {/* 3. Compare Scenario */}
+              {/* 3. Compare Scenarios */}
               <button
                 type="button"
                 onClick={handleOpenCompare}
                 className="inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold text-[#172033] bg-white border border-[#D9DEE5] hover:bg-[#F1F3F5] rounded-lg transition-colors shadow-xs"
               >
                 <GitCompare className="w-3.5 h-3.5 text-[#176B87]" />
-                <span>Compare Scenario</span>
+                <span>Compare Scenarios</span>
               </button>
 
-              {/* 4. Reset */}
+              {/* 4. Reset to Baseline */}
               <button
                 type="button"
                 onClick={handleReset}
@@ -364,7 +364,7 @@ export default function WhatIfSimulatorPage() {
                 title="Reset all inputs to baseline"
               >
                 <RotateCcw className="w-3.5 h-3.5 text-[#596579]" />
-                <span>Reset</span>
+                <span>Reset to Baseline</span>
               </button>
             </div>
           </div>
@@ -818,7 +818,7 @@ export default function WhatIfSimulatorPage() {
                     className="w-full py-2 px-4 bg-[#176B87] hover:bg-[#135A72] text-white font-bold text-xs uppercase tracking-wider rounded-lg shadow-xs flex items-center justify-center gap-2 transition-colors"
                   >
                     <Play className="w-4 h-4 fill-white" />
-                    <span>Run Scenario</span>
+                    <span>Run What-If Simulation</span>
                   </button>
                 </div>
               </div>
@@ -1223,9 +1223,9 @@ export default function WhatIfSimulatorPage() {
                   <div className="pt-3 border-t border-[#D9DEE5]/60 flex items-center justify-between gap-2">
                     <button
                       onClick={() => handleLoadScenario(sc)}
-                      className="flex-1 py-1.5 px-3 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-bold rounded-lg shadow-xs transition-colors flex items-center justify-center gap-2"
+                      className="flex-1 py-1.5 px-3 bg-white hover:bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0] text-xs font-bold rounded-lg shadow-xs transition-colors flex items-center justify-center gap-2"
                     >
-                      <Play className="w-3.5 h-3.5 fill-white" />
+                      <Play className="w-3.5 h-3.5 fill-[#176B87]" />
                       <span>Load Scenario</span>
                     </button>
                     <button
@@ -1266,13 +1266,13 @@ export default function WhatIfSimulatorPage() {
             <div className="flex items-center justify-end gap-2 w-full">
               <button
                 onClick={() => setIsSaveModalOpen(false)}
-                className="px-4 py-2 text-xs font-semibold text-[#596579] hover:text-[#172033]"
+                className="px-4 py-2 text-xs font-semibold text-[#596579] hover:text-[#172033] rounded-lg border border-[#D9DEE5] hover:bg-[#F7F8FA] transition-colors"
               >
                 Cancel
               </button>
               <button
                 onClick={handleSaveScenario}
-                className="px-4 py-2 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-bold rounded-lg shadow-xs"
+                className="px-4 py-2 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-bold rounded-lg shadow-xs border border-[#176B87] transition-colors"
               >
                 Save to Vault
               </button>
@@ -1332,7 +1332,7 @@ export default function WhatIfSimulatorPage() {
             <div className="flex items-center justify-end gap-2 w-full">
               <button
                 onClick={() => setIsCompareModalOpen(false)}
-                className="px-4 py-2 bg-[#172033] hover:bg-[#25324B] text-white text-xs font-bold rounded-lg shadow-xs"
+                className="px-4 py-2 bg-white text-[#172033] border border-[#D9DEE5] hover:bg-[#F7F8FA] text-xs font-semibold rounded-lg shadow-xs transition-colors"
               >
                 Close Comparison
               </button>

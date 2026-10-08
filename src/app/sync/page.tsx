@@ -717,29 +717,29 @@ export default function OfflineSyncCenterPage() {
             </div>
 
             <div className="flex items-center gap-2 flex-wrap">
-              {/* PRIMARY ACTION 1: SYNC NOW */}
+              {/* PRIMARY ACTION 1: TRIGGER MANUAL SYNC */}
               <button
                 type="button"
                 onClick={handleSyncNow}
                 disabled={isSyncing || effectiveStatus === 'OFFLINE'}
-                className="px-4 py-1.5 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-semibold rounded-lg shadow-xs transition-colors flex items-center gap-2 disabled:opacity-50"
+                className="px-4 py-2 bg-[#176B87] hover:bg-[#135A72] border border-[#176B87] text-white text-xs font-bold rounded-lg shadow-xs transition-colors flex items-center gap-2 disabled:opacity-50"
               >
                 <RefreshCw className="w-3.5 h-3.5" />
-                <span>{isSyncing ? 'Syncing...' : 'Sync Now'}</span>
+                <span>{isSyncing ? 'Syncing...' : 'Trigger Manual Sync'}</span>
               </button>
 
-              {/* PRIMARY ACTION 2: RETRY FAILED */}
+              {/* SECONDARY ACTION 2: RETRY FAILED */}
               <button
                 type="button"
                 onClick={handleRetryFailed}
                 disabled={metrics.failedCount === 0}
-                className="px-4 py-1.5 bg-white hover:bg-[#F1F3F5] text-[#172033] border border-[#D9DEE5] text-xs font-semibold rounded-lg shadow-xs transition-colors flex items-center gap-2 disabled:opacity-50"
+                className="px-4 py-2 bg-white hover:bg-[#F1F3F5] text-[#172033] border border-[#D9DEE5] text-xs font-semibold rounded-lg shadow-2xs transition-colors flex items-center gap-2 disabled:opacity-50"
               >
                 <RotateCcw className="w-3.5 h-3.5 text-[#596579]" />
-                <span>Retry Failed ({metrics.failedCount})</span>
+                <span>Retry Failed Items ({metrics.failedCount})</span>
               </button>
 
-              {/* PRIMARY ACTION 3: RESOLVE CONFLICTS */}
+              {/* ACTION 3: RESOLVE CONFLICTS */}
               {metrics.conflictCount > 0 && (
                 <button
                   type="button"
@@ -747,7 +747,7 @@ export default function OfflineSyncCenterPage() {
                     const firstConflict = syncQueue.find((i: SyncQueueItem) => i.status === 'Conflict');
                     if (firstConflict) handleOpenConflictModal(firstConflict);
                   }}
-                  className="px-4 py-1.5 bg-[#FBEFEE] hover:bg-[#FBEFEE]/80 text-[#B5473C] border border-[#E4B0AA] text-xs font-semibold rounded-lg shadow-xs transition-colors flex items-center gap-2"
+                  className="px-4 py-2 bg-[#FBEFEE] hover:bg-[#FBEFEE]/80 text-[#B5473C] border border-[#E4B0AA] text-xs font-semibold rounded-lg shadow-2xs transition-colors flex items-center gap-2"
                 >
                   <AlertTriangle className="w-3.5 h-3.5 text-[#B5473C]" />
                   <span>Resolve Conflicts ({metrics.conflictCount})</span>
@@ -1182,30 +1182,30 @@ export default function OfflineSyncCenterPage() {
                 <button
                   type="button"
                   onClick={() => setConflictItem(null)}
-                  className="px-4 py-2 font-semibold text-[#596579] hover:text-[#172033] bg-white border border-[#D9DEE5] rounded-lg"
+                  className="px-4 py-2 font-semibold text-[#596579] hover:text-[#172033] bg-white border border-[#D9DEE5] hover:bg-[#F7F8FA] rounded-lg transition-colors"
                 >
                   Cancel
                 </button>
                 <button
                   type="button"
                   onClick={() => handleResolveConflictChoice('server')}
-                  className="px-4 py-2 font-semibold text-[#172033] bg-white hover:bg-[#F1F3F5] border border-[#D9DEE5] rounded-lg shadow-2xs"
+                  className="px-4 py-2 font-semibold text-[#172033] bg-white hover:bg-[#F1F3F5] border border-[#D9DEE5] rounded-lg shadow-2xs transition-colors"
                 >
                   Keep Server
                 </button>
                 <button
                   type="button"
                   onClick={() => handleResolveConflictChoice('local')}
-                  className="px-4 py-2 font-bold text-[#176B87] bg-[#EDF5F8] hover:bg-[#DCEBF1] border border-[#B3CBE0] rounded-lg shadow-2xs"
+                  className="px-4 py-2 font-semibold text-[#172033] bg-white hover:bg-[#F1F3F5] border border-[#D9DEE5] rounded-lg shadow-2xs transition-colors"
                 >
                   Keep Local
                 </button>
                 <button
                   type="button"
                   onClick={() => handleResolveConflictChoice('custom')}
-                  className="px-4 py-2 bg-[#176B87] hover:bg-[#135A72] text-white font-bold rounded-lg shadow-xs"
+                  className="px-4 py-2 bg-[#176B87] hover:bg-[#135A72] border border-[#176B87] text-white font-bold rounded-lg shadow-xs transition-colors"
                 >
-                  Merge
+                  Merge Changes &amp; Resolve
                 </button>
               </div>
             </div>

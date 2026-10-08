@@ -962,7 +962,7 @@ export default function ReviewQueuePage() {
                   <button
                     type="button"
                     onClick={() => handleBatchAccept()}
-                    className="min-h-[40px] px-3.5 py-2 bg-[#2E7D5B] hover:bg-[#25684C] text-white font-bold rounded shadow-xs inline-flex items-center gap-2 transition-colors cursor-pointer"
+                    className="min-h-[40px] px-3.5 py-2 bg-[#176B87] hover:bg-[#135A72] border border-[#176B87] text-white font-bold rounded shadow-xs inline-flex items-center gap-2 transition-colors cursor-pointer"
                   >
                     <Check className="w-3.5 h-3.5 stroke-[2.5]" />
                     <span>Accept Selected ({selectedItemIds.length})</span>
@@ -970,7 +970,7 @@ export default function ReviewQueuePage() {
                   <button
                     type="button"
                     onClick={() => setSelectedItemIds([])}
-                    className="min-h-[40px] px-3.5 py-2 bg-white text-[#596579] hover:text-[#172033] border border-[#D9DEE5] rounded font-medium transition-colors cursor-pointer"
+                    className="min-h-[40px] px-3.5 py-2 bg-white text-[#172033] hover:bg-[#F7F8FA] border border-[#D9DEE5] rounded font-medium transition-colors cursor-pointer"
                   >
                     Deselect All
                   </button>
@@ -985,7 +985,7 @@ export default function ReviewQueuePage() {
                         .map((e) => e.id);
                       handleBatchAccept(highConfIds);
                     }}
-                    className="min-h-[40px] px-3.5 py-2 bg-[#EDF7F2] hover:bg-[#E0F2E9] text-[#2E7D5B] border border-[#B8DCC9] font-bold rounded inline-flex items-center gap-2 transition-colors cursor-pointer"
+                    className="min-h-[40px] px-3.5 py-2 bg-white hover:bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0] font-bold rounded inline-flex items-center gap-2 transition-colors cursor-pointer shadow-2xs"
                     title="Fast-track all 90%+ confidence items to Schedule Twin"
                   >
                     <CheckCircle2 className="w-3.5 h-3.5" />
@@ -1580,7 +1580,7 @@ export default function ReviewQueuePage() {
                     type="button"
                     onClick={() => handleInitiateApprove(selectedEvent)}
                     disabled={!selectedEvent.candidateActivityId}
-                    className="w-full sm:w-auto min-h-[44px] px-4 sm:px-6 py-2 font-bold text-white bg-[#176B87] hover:bg-[#135A72] disabled:opacity-50 active:scale-95 rounded-lg shadow-sm inline-flex items-center justify-center gap-2 transition-all cursor-pointer"
+                    className="w-full sm:w-auto min-h-[44px] px-4 py-2 font-bold text-white bg-[#176B87] hover:bg-[#135A72] border border-[#176B87] disabled:opacity-50 rounded-lg shadow-sm inline-flex items-center justify-center gap-2 transition-colors cursor-pointer"
                   >
                     <Check className="w-4 h-4 stroke-[3]" />
                     <span>Approve Match & Commit</span>
@@ -1937,7 +1937,7 @@ export default function ReviewQueuePage() {
               <button
                 type="button"
                 onClick={() => setPreviewEvidence(null)}
-                className="px-4 py-2 font-bold text-white bg-[#176B87] hover:bg-[#135A72] rounded shadow-xs cursor-pointer"
+                className="px-4 py-2 font-semibold text-[#172033] bg-white border border-[#D9DEE5] hover:bg-[#F7F8FA] rounded shadow-xs cursor-pointer transition-colors"
               >
                 Close Preview
               </button>

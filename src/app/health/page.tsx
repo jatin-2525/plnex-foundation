@@ -280,16 +280,24 @@ export default function ScheduleHealthPage() {
               </p>
             </div>
 
-            {/* Actions: Scan Trigger */}
-            <div className="flex items-center gap-3">
+            {/* Actions: Scan Trigger & Reports */}
+            <div className="flex items-center gap-2 flex-wrap">
+              <Link
+                href="/reports"
+                className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-[#172033] bg-white border border-[#D9DEE5] hover:bg-[#F1F3F5] rounded-lg shadow-2xs transition-colors"
+              >
+                <FileText className="w-3.5 h-3.5 text-[#596579]" />
+                <span>Diagnostic Ledger</span>
+              </Link>
+
               <button
                 type="button"
                 onClick={handleRunHealthScan}
                 disabled={isScanning}
-                className="px-4 py-2 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-bold rounded-lg shadow-xs transition-colors flex items-center gap-2 disabled:opacity-50"
+                className="px-4 py-2 bg-[#176B87] hover:bg-[#135A72] border border-[#176B87] text-white text-xs font-bold rounded-lg shadow-xs transition-colors flex items-center gap-2 disabled:opacity-50"
               >
                 <RefreshCw className={`w-3.5 h-3.5 ${isScanning ? 'animate-spin' : ''}`} />
-                <span>{isScanning ? 'Running Audit...' : 'Re-scan Project Health'}</span>
+                <span>{isScanning ? 'Running Audit...' : 'Run Schedule Health Audit'}</span>
               </button>
             </div>
           </div>
@@ -813,14 +821,14 @@ export default function ScheduleHealthPage() {
               <button
                 type="button"
                 onClick={() => setFixingIssue(null)}
-                className="px-3 py-1.5 text-xs text-[#596579] hover:text-[#172033]"
+                className="px-3 py-1.5 text-xs text-[#596579] hover:text-[#172033] bg-white border border-[#D9DEE5] hover:bg-[#F7F8FA] rounded-lg transition-colors"
               >
                 Cancel
               </button>
               <button
                 type="button"
                 onClick={handleApplyFix}
-                className="px-4 py-2 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] rounded-lg shadow-xs"
+                className="px-4 py-2 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] border border-[#176B87] rounded-lg shadow-xs transition-colors"
               >
                 Apply &amp; Resolve Issue
               </button>

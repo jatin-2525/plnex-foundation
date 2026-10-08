@@ -868,21 +868,21 @@ export default function ProgressVariancePage() {
             <div className="flex items-center gap-2 flex-wrap">
               <Link
                 href="/risks"
-                className="inline-flex items-center gap-2 px-3 py-2 text-xs font-semibold text-[#B5473C] bg-[#FBEFEE] border border-[#E4B0AA] hover:bg-[#FBEFEE]/80 rounded-lg transition-colors"
+                className="inline-flex items-center gap-2 px-3 py-2 text-xs font-semibold text-[#B5473C] bg-[#FBEFEE] border border-[#E4B0AA] hover:bg-[#FBEFEE]/80 rounded-lg transition-colors shadow-2xs"
               >
                 <AlertTriangle className="w-3.5 h-3.5" />
                 <span>Delay & Dependency Impact</span>
               </Link>
               <Link
                 href="/review"
-                className="inline-flex items-center gap-2 px-3 py-2 text-xs font-semibold text-[#172033] bg-white border border-[#D9DEE5] hover:bg-[#F1F3F5] rounded-lg transition-colors"
+                className="inline-flex items-center gap-2 px-3 py-2 text-xs font-semibold text-[#172033] bg-white border border-[#D9DEE5] hover:bg-[#F1F3F5] rounded-lg transition-colors shadow-2xs"
               >
                 <ShieldCheck className="w-3.5 h-3.5 text-[#176B87]" />
                 <span>Review Queue</span>
               </Link>
               <Link
                 href="/schedule-twin"
-                className="inline-flex items-center gap-2 px-4 py-2 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] rounded-lg shadow-xs transition-colors"
+                className="inline-flex items-center gap-2 px-4 py-2 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] border border-[#176B87] rounded-lg shadow-xs transition-colors"
               >
                 <Layers className="w-3.5 h-3.5" />
                 <span>Schedule Twin</span>
@@ -1992,7 +1992,7 @@ export default function ProgressVariancePage() {
               <button
                 type="button"
                 onClick={() => setIsCalibrateModalOpen(false)}
-                className="px-4 py-2 font-semibold text-[#596579] hover:text-[#172033] rounded border border-[#D9DEE5] text-xs"
+                className="px-4 py-2 font-semibold text-[#596579] hover:text-[#172033] bg-white rounded-lg border border-[#D9DEE5] hover:bg-[#F7F8FA] text-xs transition-colors"
               >
                 Cancel
               </button>
@@ -2000,7 +2000,7 @@ export default function ProgressVariancePage() {
                 type="button"
                 onClick={handleCommitAuditedProgress}
                 disabled={!editReason.trim() || !editSource.trim()}
-                className="px-4 py-2 font-bold text-white bg-[#176B87] hover:bg-[#135A72] rounded shadow-xs disabled:opacity-40 text-xs inline-flex items-center gap-2"
+                className="px-4 py-2 font-bold text-white bg-[#176B87] hover:bg-[#135A72] border border-[#176B87] rounded-lg shadow-xs disabled:opacity-40 text-xs inline-flex items-center gap-2 transition-colors"
               >
                 <ShieldCheck className="w-4 h-4" />
                 <span>Commit Verified Progress</span>

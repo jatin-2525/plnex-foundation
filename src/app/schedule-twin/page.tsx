@@ -962,9 +962,9 @@ export default function ScheduleTwinPage() {
               <button
                 type="button"
                 onClick={() => openActivityDrawer(selectedActivity.id)}
-                className="px-3 py-1 bg-[#176B87] hover:bg-[#135A72] text-white rounded font-medium inline-flex items-center gap-1 transition-colors"
+                className="px-3 py-1 bg-white hover:bg-[#F1F3F5] text-[#172033] border border-[#D9DEE5] rounded font-medium inline-flex items-center gap-1 transition-colors shadow-2xs"
               >
-                <Maximize2 className="w-3.5 h-3.5" />
+                <Maximize2 className="w-3.5 h-3.5 text-[#176B87]" />
                 <span>Open Activity Drawer</span>
               </button>
             </div>
@@ -1493,7 +1493,7 @@ export default function ScheduleTwinPage() {
               <button
                 type="button"
                 onClick={() => openActivityDrawer(selectedActivity.id)}
-                className="px-3 py-1 bg-[#176B87] hover:bg-[#135A72] text-white rounded text-xs font-semibold inline-flex items-center gap-1 transition-colors"
+                className="px-3 py-1 bg-[#176B87] hover:bg-[#135A72] border border-[#176B87] text-white rounded text-xs font-semibold inline-flex items-center gap-1 transition-colors shadow-xs"
               >
                 <Maximize2 className="w-3.5 h-3.5" />
                 <span>Open Detail Drawer</span>

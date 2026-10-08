@@ -48,6 +48,7 @@ import {
   Key,
   Calendar,
   ExternalLink,
+  Upload,
 } from 'lucide-react';
 
 export default function EvidenceAndAuditPage() {
@@ -360,15 +361,37 @@ export default function EvidenceAndAuditPage() {
               </p>
             </div>
 
-            {/* Core Metrics */}
-            <div className="flex items-center gap-3">
-              <div className="px-4 py-2 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg text-xs">
-                <span className="text-[10px] text-[#596579] uppercase font-semibold block">Evidence Coverage</span>
-                <span className="font-mono font-bold text-[#176B87] text-sm">91.4% Verified</span>
+            {/* Header Actions & Core Metrics */}
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+              <div className="flex items-center gap-2">
+                <div className="px-3 py-1.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg text-xs">
+                  <span className="text-[10px] text-[#596579] uppercase font-semibold block">Coverage</span>
+                  <span className="font-mono font-bold text-[#176B87] text-xs">91.4%</span>
+                </div>
+                <div className="px-3 py-1.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg text-xs">
+                  <span className="text-[10px] text-[#596579] uppercase font-semibold block">Audit Log</span>
+                  <span className="font-mono font-bold text-[#2E7D5B] text-xs">{COMPREHENSIVE_AUDIT_LOGS.length} Logged</span>
+                </div>
               </div>
-              <div className="px-4 py-2 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg text-xs">
-                <span className="text-[10px] text-[#596579] uppercase font-semibold block">Audit Records</span>
-                <span className="font-mono font-bold text-[#2E7D5B] text-sm">{COMPREHENSIVE_AUDIT_LOGS.length} Logged</span>
+
+              <div className="flex items-center gap-2 flex-wrap">
+                {/* Secondary Action */}
+                <Link
+                  href="/reports"
+                  className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-[#172033] bg-white border border-[#D9DEE5] hover:bg-[#F1F3F5] rounded-lg shadow-2xs transition-colors"
+                >
+                  <FileText className="w-3.5 h-3.5 text-[#596579]" />
+                  <span>Export Audit Ledger</span>
+                </Link>
+
+                {/* Exactly 1 Primary Action */}
+                <Link
+                  href="/field/capture"
+                  className="inline-flex items-center gap-2 px-4 py-2 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] border border-[#176B87] rounded-lg shadow-xs transition-colors"
+                >
+                  <Upload className="w-3.5 h-3.5" />
+                  <span>Upload Verification Evidence</span>
+                </Link>
               </div>
             </div>
           </div>
@@ -1566,7 +1589,7 @@ export default function EvidenceAndAuditPage() {
                 <button
                   type="button"
                   onClick={() => setPreviewEvidence(null)}
-                  className="px-4 py-2 text-xs font-semibold text-[#596579] hover:text-[#172033]"
+                  className="px-4 py-2 text-xs font-semibold text-[#596579] hover:text-[#172033] bg-white border border-[#D9DEE5] hover:bg-[#F7F8FA] rounded-lg transition-colors"
                 >
                   Close Preview
                 </button>
@@ -1580,9 +1603,9 @@ export default function EvidenceAndAuditPage() {
                     });
                     setPreviewEvidence(null);
                   }}
-                  className="px-4 py-2 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-bold rounded-lg shadow-xs"
+                  className="px-4 py-2 bg-[#176B87] hover:bg-[#135A72] border border-[#176B87] text-white text-xs font-bold rounded-lg shadow-xs transition-colors"
                 >
-                  Acknowledge / Confirm Verification
+                  Confirm Verification
                 </button>
               </div>
             </div>

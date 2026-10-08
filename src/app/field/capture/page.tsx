@@ -273,9 +273,9 @@ export default function FieldCapturePage() {
 
             <Link
               href="/engineer"
-              className="min-h-[44px] px-3.5 py-2 text-xs text-[#596579] hover:text-[#172033] bg-[#F7F8FA] hover:bg-[#F1F3F5] border border-[#D9DEE5] rounded-lg transition-colors font-semibold shrink-0 inline-flex items-center justify-center"
+              className="min-h-[40px] px-3.5 py-2 text-xs text-[#172033] bg-white hover:bg-[#F1F3F5] border border-[#D9DEE5] rounded-lg transition-colors font-semibold shrink-0 inline-flex items-center justify-center shadow-2xs"
             >
-              Dashboard
+              Engineer Dashboard
             </Link>
           </div>
         </div>
@@ -706,25 +706,25 @@ export default function FieldCapturePage() {
             </div>
 
             {/* ========================================================= */}
-            {/* 6. PRIMARY CTA: SAVE FIELD REPORT (Desktop & In-Flow) */}
+            {/* 6. PRIMARY CTA: SUBMIT FIELD OBSERVATION (Desktop & In-Flow) */}
             {/* ========================================================= */}
             <div className="pt-2">
               <button
                 type="button"
                 onClick={handleSaveReport}
                 disabled={isSubmitting}
-                className="w-full min-h-[48px] h-12 py-3 px-6 text-base font-bold text-white bg-[#176B87] hover:bg-[#135A72] active:bg-[#135A72] rounded-lg shadow-sm transition-colors inline-flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+                className="w-full min-h-[48px] py-2.5 px-4 text-sm font-bold text-white bg-[#176B87] hover:bg-[#135A72] border border-[#176B87] rounded-lg shadow-xs transition-colors inline-flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
               >
                 {isSubmitting ? (
                   <>
                     <RefreshCw className="w-4 h-4 animate-spin" />
-                    <span>Saving Report...</span>
+                    <span>Saving Observation...</span>
                   </>
                 ) : (
                   <>
-                    <Check className="w-5 h-5 stroke-[2.5]" />
+                    <Check className="w-4 h-4 stroke-[2.5]" />
                     <span>
-                      {isOffline ? 'Save Locally to Offline Queue' : 'Save Field Report'}
+                      {isOffline ? 'Save Locally to Offline Queue' : 'Submit Field Observation'}
                     </span>
                   </>
                 )}
@@ -742,7 +742,7 @@ export default function FieldCapturePage() {
               type="button"
               onClick={handleSaveReport}
               disabled={isSubmitting}
-              className="w-full min-h-[48px] h-12 py-3 px-4 text-base font-bold text-white bg-[#176B87] active:bg-[#135A72] rounded-lg shadow-sm flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+              className="w-full min-h-[48px] py-2.5 px-4 text-sm font-bold text-white bg-[#176B87] hover:bg-[#135A72] border border-[#176B87] rounded-lg shadow-xs flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
             >
               {isSubmitting ? (
                 <>
@@ -751,9 +751,9 @@ export default function FieldCapturePage() {
                 </>
               ) : (
                 <>
-                  <Check className="w-5 h-5 stroke-[2.5]" />
+                  <Check className="w-4 h-4 stroke-[2.5]" />
                   <span>
-                    {isOffline ? 'Save Locally to Offline Queue' : 'Save Field Report'}
+                    {isOffline ? 'Save Locally' : 'Submit Field Observation'}
                   </span>
                 </>
               )}

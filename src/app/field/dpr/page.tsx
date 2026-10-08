@@ -608,20 +608,20 @@ export default function DPRPage() {
               <button
                 type="button"
                 onClick={handleSaveDraft}
-                className="px-4 py-2 text-xs font-semibold text-[#172033] bg-white border border-[#D9DEE5] hover:bg-[#F1F3F5] active:bg-[#E5E7EB] rounded-lg inline-flex items-center gap-2 transition-colors cursor-pointer shadow-2xs"
+                className="px-4 py-2 text-xs font-semibold text-[#172033] bg-white border border-[#D9DEE5] hover:bg-[#F1F3F5] rounded-lg inline-flex items-center gap-2 transition-colors cursor-pointer shadow-2xs"
               >
                 <Save className="w-4 h-4 text-[#596579]" />
-                <span>Save Draft</span>
+                <span>Save DPR Draft</span>
               </button>
 
               <button
                 type="button"
                 onClick={handleSubmitDPR}
                 disabled={submissionState === 'Processing'}
-                className="min-h-[48px] px-4 sm:px-6 py-2 text-xs sm:text-sm font-bold text-white bg-[#176B87] hover:bg-[#135A72] active:bg-[#135A72] disabled:opacity-50 rounded-lg inline-flex items-center gap-2 transition-colors cursor-pointer shadow-xs"
+                className="px-4 py-2 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] border border-[#176B87] disabled:opacity-50 rounded-lg inline-flex items-center gap-2 transition-colors cursor-pointer shadow-xs"
               >
                 <Send className="w-4 h-4" />
-                <span>Submit DPR</span>
+                <span>Sign & Submit Daily Report</span>
               </button>
             </div>
           </div>
@@ -1488,7 +1488,7 @@ export default function DPRPage() {
                   className="w-full sm:w-auto min-h-[44px] px-4 py-2 text-xs font-semibold text-[#172033] bg-white border border-[#D9DEE5] hover:bg-[#F1F3F5] rounded-lg inline-flex items-center justify-center gap-2 transition-colors cursor-pointer shadow-2xs"
                 >
                   <Save className="w-4 h-4 text-[#596579]" />
-                  <span>Save Draft</span>
+                  <span>Save DPR Draft</span>
                 </button>
               </div>
 
@@ -1497,7 +1497,7 @@ export default function DPRPage() {
                   type="button"
                   onClick={handleSubmitDPR}
                   disabled={submissionState === 'Processing'}
-                  className="w-full sm:w-auto min-h-[48px] px-6 py-2 text-xs sm:text-sm font-bold text-white bg-[#176B87] hover:bg-[#135A72] active:bg-[#135A72] disabled:opacity-50 rounded-lg inline-flex items-center justify-center gap-2 transition-colors cursor-pointer shadow-xs"
+                  className="w-full sm:w-auto min-h-[48px] px-4 py-2 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] border border-[#176B87] disabled:opacity-50 rounded-lg inline-flex items-center justify-center gap-2 transition-colors cursor-pointer shadow-xs"
                 >
                   <Send className="w-4 h-4" />
                   <span>
@@ -1505,7 +1505,7 @@ export default function DPRPage() {
                       ? 'Submitting DPR...'
                       : isOffline
                       ? 'Save DPR Locally to Offline Queue'
-                      : 'Submit DPR'}
+                      : 'Sign & Submit Daily Report'}
                   </span>
                 </button>
               </div>
