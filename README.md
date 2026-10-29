@@ -2,7 +2,7 @@
 ### Intelligent Data Capture & Schedule-Linking Layer for Infrastructure Project Management
 #### Developed for Oil India Limited (Smart India Hackathon — SIH26122)
 
-[![CI Build](https://github.com/singhaljatin1234/plnex-foundation/actions/workflows/ci.yml/badge.svg)](https://github.com/singhaljatin1234/plnex-foundation/actions)
+[![CI Build](https://github.com/jatin-2525/plnex-foundation/actions/workflows/ci.yml/badge.svg)](https://github.com/jatin-2525/plnex-foundation/actions)
 [![Next.js](https://img.shields.io/badge/Next.js-16.3.8-black?logo=next.js)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue?logo=typescript)](https://www.typescriptlang.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4-38B2AC?logo=tailwind-css)](https://tailwindcss.com/)
@@ -115,7 +115,7 @@ PLnEX strictly enforces an industrial, high-density, WCAG 2.1 AA compliant desig
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/<your-username>/plnex-foundation.git
+   git clone https://github.com/jatin-2525/plnex-foundation.git
    cd plnex-foundation
    ```
 
