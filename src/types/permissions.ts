@@ -214,14 +214,13 @@ export function canAccessRoute(role: UserRole, rawPathname: string): boolean {
 
   // Site Engineer permissions
   if (role === 'engineer') {
-    // Explicitly denied routes for Engineer
-    if (pathname.startsWith('/admin')) {
+    // Explicitly denied routes for Engineer (Manager dashboard is strictly hidden & inaccessible)
+    if (pathname.startsWith('/admin') || pathname === '/dashboard') {
       return false;
     }
     // Allowed routes for Engineer
     if (
       pathname === '/engineer' ||
-      pathname === '/dashboard' ||
       pathname === '/activities' ||
       pathname.startsWith('/field') ||
       pathname.startsWith('/projects') ||

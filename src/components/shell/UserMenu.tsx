@@ -8,7 +8,7 @@ import { ChevronDown, Shield, User, LogOut, Check, LayoutDashboard, HardHat } fr
 
 export function UserMenu() {
   const router = useRouter();
-  const { userSession, logout, setUserRole } = useApp();
+  const { userSession, logout } = useApp();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -74,15 +74,27 @@ export function UserMenu() {
             <p className="text-[10px] text-[#596579] mt-0.5">{userSession?.organization}</p>
           </div>
 
-          {/* Admin Explicit Role View Switcher */}
+          {/* Admin Workspace Access */}
           {userSession?.role === 'admin' && (
             <div className="p-2 border-b border-[#D9DEE5]">
               <div className="px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-[#596579] flex items-center gap-2">
                 <Shield className="w-3 h-3 text-[#176B87]" />
-                <span>Admin View Switcher</span>
+                <span>Authorized Workspaces</span>
               </div>
               <div className="mt-1 space-y-0.5">
                 <button
+                  type="button"
+                  onClick={() => {
+                    setIsOpen(false);
+                    router.push('/admin');
+                  }}
+                  className="w-full text-left p-2 rounded flex items-center gap-2 hover:bg-[#F1F3F5] text-xs text-[#172033]"
+                >
+                  <Shield className="w-3.5 h-3.5 text-[#176B87]" />
+                  <span>Admin Workspace (/admin)</span>
+                </button>
+                <button
+                  type="button"
                   onClick={() => {
                     setIsOpen(false);
                     router.push('/dashboard');
@@ -90,9 +102,10 @@ export function UserMenu() {
                   className="w-full text-left p-2 rounded flex items-center gap-2 hover:bg-[#F1F3F5] text-xs text-[#172033]"
                 >
                   <LayoutDashboard className="w-3.5 h-3.5 text-[#176B87]" />
-                  <span>Switch to Manager View</span>
+                  <span>Manager Workspace (/dashboard)</span>
                 </button>
                 <button
+                  type="button"
                   onClick={() => {
                     setIsOpen(false);
                     router.push('/engineer');
@@ -100,17 +113,7 @@ export function UserMenu() {
                   className="w-full text-left p-2 rounded flex items-center gap-2 hover:bg-[#F1F3F5] text-xs text-[#172033]"
                 >
                   <HardHat className="w-3.5 h-3.5 text-[#2E7D5B]" />
-                  <span>Switch to Engineer View</span>
-                </button>
-                <button
-                  onClick={() => {
-                    setIsOpen(false);
-                    router.push('/admin');
-                  }}
-                  className="w-full text-left p-2 rounded flex items-center gap-2 hover:bg-[#F1F3F5] text-xs text-[#176B87]"
-                >
-                  <Shield className="w-3.5 h-3.5 text-[#176B87]" />
-                  <span>Admin Governance Hub</span>
+                  <span>Site Engineer Workspace (/engineer)</span>
                 </button>
               </div>
             </div>
