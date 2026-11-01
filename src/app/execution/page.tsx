@@ -522,6 +522,22 @@ export default function ExecutionIntelligencePage() {
     { label: 'Execution Intelligence', current: true },
   ];
 
+  const getEventBorderClass = (status: ExecutionIntelligenceStatus) => {
+    switch (status) {
+      case 'Matched':
+        return 'border-l-4 border-l-[#2E7D5B]';
+      case 'Needs Review':
+        return 'border-l-4 border-l-[#D98B32]';
+      case 'Conflict':
+      case 'Duplicate':
+      case 'Stale':
+        return 'border-l-4 border-l-[#B5473C]';
+      case 'Unmatched':
+      default:
+        return 'border-l-4 border-l-[#596579]';
+    }
+  };
+
   return (
     <StateWrapper
       loadingMessage="Loading execution events..."
@@ -533,7 +549,7 @@ export default function ExecutionIntelligencePage() {
         <Breadcrumbs items={breadcrumbs} />
 
         {/* PAGE HEADER */}
-        <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 md:p-6 shadow-xs">
+        <div className="bg-white border border-[#D9DEE5] border-l-4 border-l-[#176B87] rounded-lg p-4 sm:p-6 shadow-xs">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-[#D9DEE5]/60">
             <div>
               <div className="flex items-center gap-2 mb-1 flex-wrap">
@@ -576,13 +592,13 @@ export default function ExecutionIntelligencePage() {
           {/* VISUAL SEPARATION OF CONCEPTS (Pipeline Definition Strip) */}
           <div className="pt-4">
             <div className="text-[10px] font-semibold uppercase tracking-wider text-[#596579] mb-2 flex items-center justify-between">
-              <span>Three Separated Project-Control Stages (Auditable Lifecycle Flow)</span>
-              <span className="font-mono text-[#176B87]">Canonical Flow: Extraction → Matching → Verification</span>
+              <span className="font-bold text-[#172033]">Three Separated Project-Control Stages (Auditable Lifecycle Flow)</span>
+              <span className="font-mono text-[#176B87] font-bold">Canonical Flow: Extraction → Matching → Verification</span>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
               {/* STAGE 1: Extraction */}
-              <div className="p-4 rounded-lg border border-[#B3CBE0] bg-[#EDF5F8]/40 space-y-2">
+              <div className="p-4 rounded-lg border border-[#B3CBE0] border-l-4 border-l-[#176B87] bg-[#EDF5F8]/40 space-y-2">
                 <div className="flex items-center justify-between">
                   <span className="font-bold text-[#176B87] flex items-center gap-2">
                     <span className="w-5 h-5 rounded-full bg-[#176B87] text-white text-[10px] font-bold flex items-center justify-center">
@@ -590,7 +606,7 @@ export default function ExecutionIntelligencePage() {
                     </span>
                     Extraction
                   </span>
-                  <span className="text-[10px] font-bold text-[#176B87] bg-white px-1.5 py-0.5 rounded border border-[#B3CBE0]">
+                  <span className="text-[10px] font-bold text-[#176B87] bg-white px-2 py-0.5 rounded border border-[#B3CBE0]">
                     Field Reality
                   </span>
                 </div>
@@ -600,15 +616,15 @@ export default function ExecutionIntelligencePage() {
               </div>
 
               {/* STAGE 2: Matching */}
-              <div className="p-4 rounded-lg border border-[#D9DEE5] bg-[#F7F8FA] space-y-2">
+              <div className="p-4 rounded-lg border border-[#D9DEE5] border-l-4 border-l-[#3B6EA8] bg-[#F7F8FA] space-y-2">
                 <div className="flex items-center justify-between">
                   <span className="font-bold text-[#172033] flex items-center gap-2">
-                    <span className="w-5 h-5 rounded-full bg-[#172033] text-white text-[10px] font-bold flex items-center justify-center">
+                    <span className="w-5 h-5 rounded-full bg-[#3B6EA8] text-white text-[10px] font-bold flex items-center justify-center">
                       2
                     </span>
                     Matching
                   </span>
-                  <span className="text-[10px] font-bold text-[#596579] bg-white px-1.5 py-0.5 rounded border border-[#D9DEE5]">
+                  <span className="text-[10px] font-bold text-[#3B6EA8] bg-white px-2 py-0.5 rounded border border-[#D9DEE5]">
                     Schedule Link
                   </span>
                 </div>
@@ -618,7 +634,7 @@ export default function ExecutionIntelligencePage() {
               </div>
 
               {/* STAGE 3: Verification */}
-              <div className="p-4 rounded-lg border border-[#B8DCC9] bg-[#EDF7F2]/40 space-y-2">
+              <div className="p-4 rounded-lg border border-[#B8DCC9] border-l-4 border-l-[#2E7D5B] bg-[#EDF7F2]/40 space-y-2">
                 <div className="flex items-center justify-between">
                   <span className="font-bold text-[#2E7D5B] flex items-center gap-2">
                     <span className="w-5 h-5 rounded-full bg-[#2E7D5B] text-white text-[10px] font-bold flex items-center justify-center">
@@ -626,7 +642,7 @@ export default function ExecutionIntelligencePage() {
                     </span>
                     Verification
                   </span>
-                  <span className="text-[10px] font-bold text-[#2E7D5B] bg-white px-1.5 py-0.5 rounded border border-[#B8DCC9]">
+                  <span className="text-[10px] font-bold text-[#2E7D5B] bg-white px-2 py-0.5 rounded border border-[#B8DCC9]">
                     QC Governance
                   </span>
                 </div>
@@ -879,7 +895,9 @@ export default function ExecutionIntelligencePage() {
                 return (
                   <div
                     key={evt.id}
-                    className="bg-white border border-[#D9DEE5] rounded-lg shadow-xs overflow-hidden transition-all hover:border-[#B3CBE0]"
+                    className={`bg-white border border-[#D9DEE5] ${getEventBorderClass(
+                      evt.status
+                    )} rounded-lg shadow-xs overflow-hidden transition-all hover:border-[#B3CBE0]`}
                   >
                     {/* EVENT HEADER */}
                     <div className="bg-[#F7F8FA] border-b border-[#D9DEE5] px-4 py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
@@ -904,7 +922,7 @@ export default function ExecutionIntelligencePage() {
                     </div>
 
                     {/* THREE SEPARATED CONCEPTS: 1. EXTRACTION | 2. MATCHING | 3. VERIFICATION */}
-                    <div className="p-4 sm:p-4 sm:p-6 grid grid-cols-1 lg:grid-cols-12 gap-4">
+                    <div className="p-4 sm:p-6 grid grid-cols-1 lg:grid-cols-12 gap-4">
                       {/* -----------------------------------------------------------
                           1. EXTRACTION (Site Observation & Values)
                           ----------------------------------------------------------- */}
@@ -913,7 +931,7 @@ export default function ExecutionIntelligencePage() {
                           <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0]">
                             1. Extraction
                           </span>
-                          <span className="text-[11px] text-[#7B8798]">Site Physical Record</span>
+                          <span className="text-[11px] font-semibold text-[#7B8798]">Site Physical Record</span>
                         </div>
 
                         {/* Event Description (What happened in the field) */}
@@ -928,21 +946,21 @@ export default function ExecutionIntelligencePage() {
 
                         {/* Extracted Quantity, Unit, Area, Discipline */}
                         <div className="grid grid-cols-2 gap-2 text-xs">
-                          <div className="bg-[#F7F8FA] p-3 rounded border border-[#D9DEE5]">
-                            <span className="text-[9px] uppercase font-semibold text-[#596579] block">
+                          <div className="bg-[#EDF5F8]/50 p-3 rounded-lg border border-[#B3CBE0]">
+                            <span className="text-[9px] uppercase font-bold text-[#176B87] block">
                               Extracted Quantity
                             </span>
                             <span className="font-mono font-bold text-sm text-[#172033]">
                               {evt.extractedQuantity} {evt.unit}
                             </span>
                           </div>
-                          <div className="bg-[#F7F8FA] p-3 rounded border border-[#D9DEE5]">
+                          <div className="bg-[#F7F8FA] p-3 rounded-lg border border-[#D9DEE5]">
                             <span className="text-[9px] uppercase font-semibold text-[#596579] block">
                               Discipline
                             </span>
                             <span className="font-bold text-xs text-[#172033]">{evt.discipline}</span>
                           </div>
-                          <div className="col-span-2 bg-[#F7F8FA] p-3 rounded border border-[#D9DEE5]">
+                          <div className="col-span-2 bg-[#F7F8FA] p-3 rounded-lg border border-[#D9DEE5]">
                             <span className="text-[9px] uppercase font-semibold text-[#596579] block">
                               Area / Workfront
                             </span>
@@ -962,7 +980,7 @@ export default function ExecutionIntelligencePage() {
                             <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-[#F1F3F5] text-[#172033] border border-[#D9DEE5]">
                               2. Matching
                             </span>
-                            <span className="text-[11px] text-[#7B8798]">Schedule Link</span>
+                            <span className="text-[11px] font-semibold text-[#7B8798]">Schedule Link</span>
                           </div>
                           <ConfidenceBadge score={evt.confidence} size="sm" />
                         </div>
@@ -973,7 +991,7 @@ export default function ExecutionIntelligencePage() {
                             Suggested Activity
                           </span>
                           {evt.candidateActivityId ? (
-                            <div className="bg-white p-3 rounded border border-[#D9DEE5] space-y-1">
+                            <div className="bg-white p-3 rounded-lg border border-[#D9DEE5] border-l-4 border-l-[#176B87] space-y-1">
                               <div className="flex items-center justify-between">
                                 <button
                                   type="button"
@@ -983,7 +1001,7 @@ export default function ExecutionIntelligencePage() {
                                   <span>{evt.candidateActivityId}</span>
                                   <ArrowUpRight className="w-3 h-3 text-[#176B87]" />
                                 </button>
-                                <span className="font-mono text-[10px] text-[#7B8798]">
+                                <span className="font-mono text-[10px] font-bold text-[#172033] bg-[#F1F3F5] px-1.5 py-0.5 rounded">
                                   WBS {evt.candidateWbs}
                                 </span>
                               </div>
@@ -992,7 +1010,7 @@ export default function ExecutionIntelligencePage() {
                               </p>
                             </div>
                           ) : (
-                            <div className="p-3 bg-[#FBEFEE] rounded border border-[#E4B0AA] text-xs text-[#B5473C] font-semibold">
+                            <div className="p-3 bg-[#FBEFEE] rounded-lg border border-[#E4B0AA] text-xs text-[#B5473C] font-semibold">
                               No schedule activity matched (Unmatched Candidate)
                             </div>
                           )}

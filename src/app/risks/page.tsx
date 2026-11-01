@@ -945,10 +945,10 @@ export default function DelayDependencyImpactPage() {
             5. Downstream Impact (Activity A +2d, Activity B +3d, Activity C +5d)
             6. Critical Path Impact
             ========================================================================= */}
-        <div className="bg-white border-2 border-[#176B87]/50 rounded-lg p-4 sm:p-6 md:p-6 shadow-sm space-y-6">
+        <div className="bg-white border-2 border-[#176B87]/50 border-l-4 border-l-[#B5473C] rounded-lg p-4 sm:p-6 shadow-sm space-y-6">
           <div className="flex items-center justify-between pb-3 border-b border-[#D9DEE5]/60 flex-wrap gap-2">
             <div className="flex items-center gap-2">
-              <span className="px-3 py-0.5 rounded text-[11px] font-bold uppercase tracking-wider bg-[#176B87] text-white">
+              <span className="px-3 py-0.5 rounded text-[11px] font-bold uppercase tracking-wider bg-[#B5473C] text-white">
                 Schedule Delay Spotlight
               </span>
               <h2 className="text-sm font-bold text-[#172033] uppercase tracking-wider">
@@ -978,11 +978,16 @@ export default function DelayDependencyImpactPage() {
             <div className="lg:col-span-7 space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
                 {/* 1. Delayed Activity (Source Activity) */}
-                <div className="p-4 rounded-lg bg-[#F7F8FA] border border-[#D9DEE5]">
-                  <span className="text-[10px] uppercase font-semibold text-[#596579] tracking-wider block mb-0.5">
-                    Delayed Activity (Source Activity)
-                  </span>
-                  <div className="font-bold text-[#172033] text-sm">
+                <div className="p-4 rounded-lg bg-[#F7F8FA] border border-[#D9DEE5] border-l-4 border-l-[#176B87]">
+                  <div className="flex items-center justify-between mb-0.5">
+                    <span className="text-[10px] uppercase font-bold text-[#596579] tracking-wider block">
+                      Delayed Activity (Source)
+                    </span>
+                    <span className="px-2 py-0.5 rounded text-[9px] font-bold uppercase bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
+                      0d Float (Driving)
+                    </span>
+                  </div>
+                  <div className="font-bold text-[#172033] text-sm mt-1">
                     {selectedDelay.sourceActivityName}
                   </div>
                   <div className="font-mono text-xs text-[#176B87] mt-0.5 font-bold">
@@ -991,10 +996,10 @@ export default function DelayDependencyImpactPage() {
                 </div>
 
                 {/* 2. Delay Duration (Actual Delay) */}
-                <div className="p-4 rounded-lg bg-[#FBEFEE] border border-[#E4B0AA]">
+                <div className="p-4 rounded-lg bg-[#FBEFEE] border border-[#E4B0AA] border-l-4 border-l-[#B5473C]">
                   <div className="flex items-center justify-between mb-0.5">
-                    <span className="text-[11px] uppercase font-semibold text-[#B5473C] tracking-wider block">
-                      Delay Duration (Actual Delay)
+                    <span className="text-[11px] uppercase font-bold text-[#B5473C] tracking-wider block">
+                      Delay Duration (Actual Slip)
                     </span>
                     <WhyButton
                       onClick={() => openWhyExplanation(`delay:${selectedDelay.id}`)}
@@ -1004,23 +1009,23 @@ export default function DelayDependencyImpactPage() {
                   <div className="font-bold font-mono text-[28px] text-[#B5473C] leading-none">
                     +{selectedDelay.delayDays.toFixed(0)} days
                   </div>
-                  <span className="text-[11px] text-[#596579]">
-                    Verified physical execution slip from baseline schedule
+                  <span className="text-[11px] font-medium text-[#B5473C]/80 mt-1 block">
+                    Verified physical execution slip from baseline
                   </span>
                 </div>
               </div>
 
               {/* 3. Cause */}
-              <div className="p-4 rounded-lg bg-white border border-[#D9DEE5] text-xs space-y-1">
-                <span className="text-[11px] uppercase font-semibold text-[#596579] tracking-wider block">
-                  Cause (Physical Site Root Cause)
+              <div className="p-4 rounded-lg bg-[#FFF9F8] border border-[#E4B0AA] border-l-4 border-l-[#B5473C] text-xs space-y-1.5">
+                <span className="text-[11px] uppercase font-bold text-[#B5473C] tracking-wider block">
+                  Root Cause (Physical Site Problem)
                 </span>
-                <p className="text-[#172033] text-sm leading-relaxed">
+                <p className="text-[#172033] text-sm font-medium leading-relaxed">
                   {selectedDelay.cause}
                 </p>
-                <div className="pt-2 border-t border-[#D9DEE5]/60 flex items-center gap-2 text-[11px] text-[#596579]">
+                <div className="pt-2 border-t border-[#E4B0AA]/60 flex items-center gap-2 text-[11px] text-[#596579]">
                   <FileText className="w-3.5 h-3.5 text-[#176B87]" />
-                  <span><strong>Evidence: </strong><code className="text-[#172033] font-mono">{selectedDelay.evidence}</code></span>
+                  <span><strong>Audit Evidence: </strong><code className="text-[#172033] font-mono bg-white px-1.5 py-0.5 rounded border border-[#D9DEE5]">{selectedDelay.evidence}</code></span>
                 </div>
               </div>
 

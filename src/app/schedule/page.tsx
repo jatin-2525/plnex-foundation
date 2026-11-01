@@ -1454,7 +1454,7 @@ export default function SchedulePage() {
               - Metadata: Source: Primavera P6 XML, Status: Current
               - Rule: Never silently overwrite previous versions.
               ========================================================================= */}
-          <div className="p-4 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="p-4 bg-[#F7F8FA] border border-[#D9DEE5] border-l-4 border-l-[#176B87] rounded-lg flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div className="flex items-start md:items-center gap-4">
               <div className="w-10 h-10 rounded-lg bg-white border border-[#D9DEE5] flex items-center justify-center text-[#176B87] shadow-xs shrink-0">
                 <Layers className="w-5 h-5" />
@@ -2032,7 +2032,11 @@ export default function SchedulePage() {
                             openActivityDrawer(row.id);
                           }}
                           className={`h-11 border-b border-[#E5E9EE] hover:bg-[#F4F7FA] cursor-pointer transition-colors group ${
-                            activityDrawerActivityId === row.id ? 'bg-[#EDF5F8] border-l-2 border-l-[#176B87]' : ''
+                            activityDrawerActivityId === row.id
+                              ? 'bg-[#EDF5F8] border-l-2 border-l-[#176B87]'
+                              : row.isCritical && isSlipped
+                              ? 'bg-[#FFF9F8] border-l-2 border-l-[#B5473C]'
+                              : ''
                           }`}
                         >
                           {/* 1. Activity ID */}
@@ -2314,6 +2318,7 @@ export default function SchedulePage() {
                     {displayActivities.map((item) => {
                       const row = item.activity;
                       const isExpanded = expandedNodeIds.has(row.id);
+                      const isSlipped = row.delayDays > 0;
                       const indentPx = sortConfig.field ? 0 : (item.levelNum - 1) * 16;
 
                       return (
@@ -2324,7 +2329,11 @@ export default function SchedulePage() {
                             openActivityDrawer(row.id);
                           }}
                           className={`h-11 border-b border-[#E5E9EE] hover:bg-[#F4F7FA] cursor-pointer transition-colors group ${
-                            activityDrawerActivityId === row.id ? 'bg-[#EDF5F8] border-l-2 border-l-[#176B87]' : ''
+                            activityDrawerActivityId === row.id
+                              ? 'bg-[#EDF5F8] border-l-2 border-l-[#176B87]'
+                              : row.isCritical && isSlipped
+                              ? 'bg-[#FFF9F8] border-l-2 border-l-[#B5473C]'
+                              : ''
                           }`}
                         >
                           {/* 1. Activity ID */}

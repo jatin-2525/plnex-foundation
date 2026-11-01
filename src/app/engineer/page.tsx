@@ -117,6 +117,7 @@ export default function EngineerDashboardPage() {
 
   // Filter for Today's Activities
   const [activityFilter, setActivityFilter] = useState<'all' | 'needs-update' | 'completed'>('all');
+  const [viewMode, setViewMode] = useState<'cards' | 'table'>('cards');
 
   // Time-of-day greeting
   const greeting = useMemo(() => {
@@ -704,152 +705,254 @@ export default function EngineerDashboardPage() {
         </section>
 
         {/* ========================================================= */}
-        {/* 1. TODAY'S WORK (ASSIGNED ACTIVITIES) */}
-        {/* Operational priority cards with Status, Area, Discipline, Priority */}
+        {/* 1. TODAY'S WORK (ASSIGNED WORK PACKAGES) */}
+        {/* Unified operational board with View Mode switcher (Cards vs Table) */}
         {/* ========================================================= */}
-        <section aria-labelledby="todays-work-heading" className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 shadow-xs space-y-4">
+        <section aria-labelledby="todays-work-heading" className="bg-white border border-[#D9DEE5] border-l-4 border-l-[#176B87] rounded-lg p-4 sm:p-6 shadow-xs space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D9DEE5] gap-3">
             <div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 flex-wrap">
                 <HardHat className="w-5 h-5 text-[#176B87]" />
-                <h2 id="todays-work-heading" className="text-lg sm:text-xl font-bold uppercase tracking-wide text-[#172033]">
-                  Today&apos;s Work
+                <h2 id="todays-work-heading" className="text-base sm:text-lg font-bold text-[#172033] tracking-tight">
+                  Today&apos;s Work Assignments
                 </h2>
+                <span className="px-2 py-0.5 rounded bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0] text-xs font-mono font-bold">
+                  {todayActivities.length} PACKAGES ASSIGNED
+                </span>
               </div>
               <p className="text-xs text-[#596579] mt-0.5">
                 Work packages scheduled for site execution, fit-up verification, and welding logging today.
               </p>
             </div>
 
-            {/* Practical filter pills */}
-            <div className="flex items-center gap-2 self-start sm:self-center">
-              <button
-                type="button"
-                onClick={() => setActivityFilter('all')}
-                className={`px-3 py-1 text-xs font-semibold rounded ${
-                  activityFilter === 'all'
-                    ? 'bg-[#176B87] text-white'
-                    : 'bg-[#F1F3F5] text-[#596579] hover:bg-[#E5E9EE]'
-                }`}
-              >
-                All ({todayActivities.length})
-              </button>
-              <button
-                type="button"
-                onClick={() => setActivityFilter('needs-update')}
-                className={`px-3 py-1 text-xs font-semibold rounded ${
-                  activityFilter === 'needs-update'
-                    ? 'bg-[#D98B32] text-white'
-                    : 'bg-[#F1F3F5] text-[#596579] hover:bg-[#E5E9EE]'
-                }`}
-              >
-                Needs Update ({updatesRequiredCount})
-              </button>
-              <button
-                type="button"
-                onClick={() => setActivityFilter('completed')}
-                className={`px-3 py-1 text-xs font-semibold rounded ${
-                  activityFilter === 'completed'
-                    ? 'bg-[#2E7D5B] text-white'
-                    : 'bg-[#F1F3F5] text-[#596579] hover:bg-[#E5E9EE]'
-                }`}
-              >
-                Done ({completedActivitiesCount})
-              </button>
+            {/* Filter pills and View Mode Switcher */}
+            <div className="flex items-center gap-2 self-start sm:self-center flex-wrap">
+              <div className="flex items-center gap-1 bg-[#F1F3F5] p-1 rounded-md">
+                <button
+                  type="button"
+                  onClick={() => setActivityFilter('all')}
+                  className={`px-2.5 py-1 text-xs font-semibold rounded ${
+                    activityFilter === 'all'
+                      ? 'bg-white text-[#176B87] shadow-2xs'
+                      : 'text-[#596579] hover:text-[#172033]'
+                  }`}
+                >
+                  All ({todayActivities.length})
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setActivityFilter('needs-update')}
+                  className={`px-2.5 py-1 text-xs font-semibold rounded ${
+                    activityFilter === 'needs-update'
+                      ? 'bg-[#D98B32] text-white'
+                      : 'text-[#596579] hover:text-[#172033]'
+                  }`}
+                >
+                  Needs Update ({updatesRequiredCount})
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setActivityFilter('completed')}
+                  className={`px-2.5 py-1 text-xs font-semibold rounded ${
+                    activityFilter === 'completed'
+                      ? 'bg-[#2E7D5B] text-white'
+                      : 'text-[#596579] hover:text-[#172033]'
+                  }`}
+                >
+                  Done ({completedActivitiesCount})
+                </button>
+              </div>
+
+              {/* View Toggle */}
+              <div className="flex items-center gap-1 border border-[#D9DEE5] p-0.5 rounded-md">
+                <button
+                  type="button"
+                  onClick={() => setViewMode('cards')}
+                  className={`px-2 py-1 text-xs font-semibold rounded ${
+                    viewMode === 'cards'
+                      ? 'bg-[#176B87] text-white'
+                      : 'text-[#596579] hover:text-[#172033]'
+                  }`}
+                >
+                  Cards
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setViewMode('table')}
+                  className={`px-2 py-1 text-xs font-semibold rounded ${
+                    viewMode === 'table'
+                      ? 'bg-[#176B87] text-white'
+                      : 'text-[#596579] hover:text-[#172033]'
+                  }`}
+                >
+                  Table
+                </button>
+              </div>
             </div>
           </div>
 
-          {/* Operational Activity Cards Grid (Desktop & Mobile) */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-            {filteredActivities.map((act) => (
-              <div
-                key={act.id}
-                className="p-4 rounded-lg border border-[#D9DEE5] hover:border-[#176B87] bg-white transition-all shadow-2xs flex flex-col justify-between space-y-3 group"
-              >
-                <div className="space-y-2">
-                  {/* Top Bar: Activity ID, Priority & Status */}
-                  <div className="flex items-center justify-between gap-2">
-                    <div className="flex items-center gap-1.5">
-                      <span className="font-mono text-xs font-bold text-[#176B87] px-2 py-0.5 rounded bg-[#EDF5F8] border border-[#B3CBE0]">
-                        {act.id}
-                      </span>
-                      <span
-                        className={`text-[10px] font-mono font-bold uppercase px-1.5 py-0.5 rounded border ${
-                          act.priority === 'High'
-                            ? 'bg-[#FBEFEE] text-[#B5473C] border-[#E4B0AA]'
-                            : act.priority === 'Medium'
-                            ? 'bg-[#FDF6ED] text-[#8C5311] border-[#F0D4A6]'
-                            : 'bg-[#F1F3F5] text-[#596579] border-[#D9DEE5]'
-                        }`}
-                      >
-                        {act.priority} Priority
-                      </span>
+          {/* CARDS VIEW */}
+          {viewMode === 'cards' ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+              {filteredActivities.map((act) => (
+                <div
+                  key={act.id}
+                  className={`p-4 rounded-lg border bg-white transition-all shadow-2xs flex flex-col justify-between space-y-3 group ${
+                    act.priority === 'High'
+                      ? 'border-[#E4B0AA] border-l-4 border-l-[#B5473C]'
+                      : 'border-[#D9DEE5] hover:border-[#176B87]'
+                  }`}
+                >
+                  <div className="space-y-2">
+                    {/* Top Bar: Activity ID, Priority & Status */}
+                    <div className="flex items-center justify-between gap-2">
+                      <div className="flex items-center gap-1.5">
+                        <span className="font-mono text-xs font-bold text-[#176B87] px-2 py-0.5 rounded bg-[#EDF5F8] border border-[#B3CBE0]">
+                          {act.id}
+                        </span>
+                        <span
+                          className={`text-[10px] font-mono font-bold uppercase px-1.5 py-0.5 rounded border ${
+                            act.priority === 'High'
+                              ? 'bg-[#FBEFEE] text-[#B5473C] border-[#E4B0AA]'
+                              : act.priority === 'Medium'
+                              ? 'bg-[#FDF6ED] text-[#8C5311] border-[#F0D4A6]'
+                              : 'bg-[#F1F3F5] text-[#596579] border-[#D9DEE5]'
+                          }`}
+                        >
+                          {act.priority} Priority
+                        </span>
+                      </div>
+                      <StatusBadge status={act.status} size="sm" />
                     </div>
-                    <StatusBadge status={act.status} size="sm" />
+
+                    {/* Title */}
+                    <h3 className="text-xs sm:text-sm font-bold text-[#172033] leading-snug">
+                      {act.name}
+                    </h3>
+
+                    {/* Operational Context: Area & Discipline */}
+                    <div className="flex items-center gap-2 text-xs text-[#596579] flex-wrap">
+                      <span className="inline-flex items-center gap-1">
+                        <MapPin className="w-3 h-3 text-[#176B87]" />
+                        <span>{act.area}</span>
+                      </span>
+                      <span>•</span>
+                      <span className="font-medium text-[#172033]">{act.discipline}</span>
+                    </div>
+
+                    {/* Progress Bar with highlighted delta */}
+                    <div className="space-y-1 pt-1">
+                      <div className="flex items-center justify-between text-[11px] font-mono">
+                        <span className="font-bold text-[#172033]">
+                          Progress: <strong className="text-[#176B87]">{act.actualProgress}%</strong>
+                        </span>
+                        <span className={act.actualProgress < act.plannedProgress ? 'text-[#B5473C] font-bold' : 'text-[#596579]'}>
+                          Target: {act.plannedProgress}% {act.actualProgress < act.plannedProgress ? '(Delayed)' : ''}
+                        </span>
+                      </div>
+                      <ProgressBar
+                        actual={act.actualProgress}
+                        planned={act.plannedProgress}
+                        size="sm"
+                        status={act.status}
+                        showLabels={false}
+                      />
+                    </div>
                   </div>
 
-                  {/* Title */}
-                  <h3 className="text-xs sm:text-sm font-bold text-[#172033] leading-snug">
-                    {act.name}
-                  </h3>
-
-                  {/* Operational Context: Area & Discipline */}
-                  <div className="flex items-center gap-2 text-xs text-[#596579] flex-wrap">
-                    <span className="inline-flex items-center gap-1">
-                      <MapPin className="w-3 h-3 text-[#176B87]" />
-                      <span>{act.area}</span>
+                  {/* Card Action & Last Update */}
+                  <div className="flex items-center justify-between pt-2 border-t border-[#F1F3F5] text-xs">
+                    <span className="text-[11px] font-mono text-[#7B8798]">
+                      {act.lastUpdateText}
                     </span>
-                    <span>•</span>
-                    <span className="font-medium text-[#172033]">{act.discipline}</span>
-                  </div>
-
-                  {/* Progress Bar */}
-                  <div className="space-y-1 pt-1">
-                    <div className="flex items-center justify-between text-[11px] font-mono">
-                      <span className="font-bold text-[#172033]">Progress: {act.actualProgress}%</span>
-                      <span className="text-[#596579]">Target: {act.plannedProgress}%</span>
-                    </div>
-                    <ProgressBar
-                      actual={act.actualProgress}
-                      planned={act.plannedProgress}
-                      size="sm"
-                      status={act.status}
-                      showLabels={false}
-                    />
+                    <button
+                      type="button"
+                      onClick={() => handleOpenCaptureForActivity(act.id)}
+                      className="min-h-[36px] px-3 py-1.5 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] active:scale-95 rounded-md transition-all inline-flex items-center gap-1.5 shadow-2xs cursor-pointer"
+                    >
+                      <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
+                      <span>Capture Update</span>
+                    </button>
                   </div>
                 </div>
-
-                {/* Card Action & Last Update */}
-                <div className="flex items-center justify-between pt-2 border-t border-[#F1F3F5] text-xs">
-                  <span className="text-[11px] font-mono text-[#7B8798]">
-                    {act.lastUpdateText}
-                  </span>
-                  <button
-                    type="button"
-                    onClick={() => handleOpenCaptureForActivity(act.id)}
-                    className="min-h-[36px] px-3 py-1.5 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] active:scale-95 rounded-md transition-all inline-flex items-center gap-1.5 shadow-2xs cursor-pointer"
-                  >
-                    <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
-                    <span>Capture Update</span>
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          ) : (
+            /* COMPACT TABLE VIEW */
+            <div className="overflow-x-auto border border-[#D9DEE5] rounded-lg">
+              <table className="w-full min-w-[700px] text-left border-collapse text-xs">
+                <thead className="sticky top-0 z-10 bg-[#F7F8FA] border-b border-[#D9DEE5] text-[#596579] font-semibold text-[11px] uppercase tracking-wider h-10">
+                  <tr>
+                    <th className="py-2.5 px-3">Activity</th>
+                    <th className="py-2.5 px-3">Area</th>
+                    <th className="py-2.5 px-3">Status</th>
+                    <th className="py-2.5 px-3 min-w-[140px]">Progress</th>
+                    <th className="py-2.5 px-3 text-right">Action</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-[#D9DEE5]/60 text-[#172033]">
+                  {filteredActivities.map((act) => (
+                    <tr key={act.id} className="h-10 hover:bg-[#F9FAFC] transition-colors">
+                      <td className="py-2.5 px-3 font-medium">
+                        <div className="flex items-center gap-2">
+                          <span className="font-mono font-bold text-[#176B87]">{act.id}</span>
+                          <span className="text-[#172033] font-semibold">{act.name}</span>
+                          {act.priority === 'High' && (
+                            <span className="text-[9px] font-mono font-bold px-1 rounded bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
+                              HIGH
+                            </span>
+                          )}
+                        </div>
+                        <span className="text-[11px] text-[#596579]">{act.discipline}</span>
+                      </td>
+                      <td className="py-2.5 px-3 text-[#596579] whitespace-nowrap">{act.area}</td>
+                      <td className="py-2.5 px-3 whitespace-nowrap">
+                        <StatusBadge status={act.status} size="sm" />
+                      </td>
+                      <td className="py-2.5 px-3">
+                        <div className="space-y-1">
+                          <div className="flex justify-between font-mono text-[11px]">
+                            <span className="font-bold text-[#172033]">{act.actualProgress}%</span>
+                            <span className="text-[#596579]">Target: {act.plannedProgress}%</span>
+                          </div>
+                          <ProgressBar
+                            actual={act.actualProgress}
+                            planned={act.plannedProgress}
+                            size="sm"
+                            status={act.status}
+                            showLabels={false}
+                          />
+                        </div>
+                      </td>
+                      <td className="py-2.5 px-3 text-right whitespace-nowrap">
+                        <button
+                          type="button"
+                          onClick={() => handleOpenCaptureForActivity(act.id)}
+                          className="px-2.5 py-1 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] rounded transition-colors inline-flex items-center gap-1 shadow-2xs cursor-pointer"
+                        >
+                          <Plus className="w-3 h-3 stroke-[2.5]" />
+                          <span>Capture</span>
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
         </section>
 
         {/* ========================================================= */}
         {/* 2. QUICK ACTIONS */}
-        {/* Highly visible primary Engineer actions: [Capture Field Work], [Create DPR], [Add Evidence] */}
-        {/* Simple buttons/cards without oversized dashboard clutter */}
+        {/* Highlighted primary actions */}
         {/* ========================================================= */}
         <section aria-labelledby="quick-actions-heading" className="space-y-2">
           <div className="flex items-center justify-between">
             <h2 id="quick-actions-heading" className="text-xs font-semibold uppercase tracking-wider text-[#596579]">
-              Quick Actions
+              Fast Field Actions
             </h2>
             <span className="text-[11px] text-[#7B8798] font-mono">
-              Primary site actions
+              Direct execution capture
             </span>
           </div>
 
@@ -861,7 +964,7 @@ export default function EngineerDashboardPage() {
                 setSelectedActivityForCapture('PIP-24-002');
                 setIsCaptureModalOpen(true);
               }}
-              className="p-3 sm:p-4 bg-white hover:bg-[#F9FAFC] border border-[#B3CBE0] hover:border-[#176B87] rounded-lg shadow-2xs text-left transition-all flex items-center gap-3 cursor-pointer group"
+              className="p-3.5 bg-white hover:bg-[#F9FAFC] border-2 border-[#176B87]/30 hover:border-[#176B87] rounded-lg shadow-2xs text-left transition-all flex items-center gap-3 cursor-pointer group"
             >
               <div className="w-10 h-10 rounded-lg bg-[#EDF5F8] group-hover:bg-[#176B87] text-[#176B87] group-hover:text-white flex items-center justify-center flex-shrink-0 transition-colors">
                 <Plus className="w-5 h-5 stroke-[2.5]" />
@@ -871,7 +974,7 @@ export default function EngineerDashboardPage() {
                   Capture Field Work
                 </span>
                 <span className="text-[11px] text-[#596579] block truncate">
-                  Record joints, spools, or progress
+                  Record joints, spools, or fit-up
                 </span>
               </div>
             </button>
@@ -879,17 +982,17 @@ export default function EngineerDashboardPage() {
             {/* Action 2: Create DPR */}
             <Link
               href="/field/dpr"
-              className="p-3 sm:p-4 bg-white hover:bg-[#F9FAFC] border border-[#D9DEE5] hover:border-[#176B87] rounded-lg shadow-2xs text-left transition-all flex items-center gap-3 group"
+              className="p-3.5 bg-white hover:bg-[#F9FAFC] border border-[#D9DEE5] hover:border-[#D98B32] rounded-lg shadow-2xs text-left transition-all flex items-center gap-3 group"
             >
-              <div className="w-10 h-10 rounded-lg bg-[#F1F3F5] group-hover:bg-[#176B87] text-[#596579] group-hover:text-white flex items-center justify-center flex-shrink-0 transition-colors">
+              <div className="w-10 h-10 rounded-lg bg-[#FDF6ED] group-hover:bg-[#D98B32] text-[#8C5311] group-hover:text-white flex items-center justify-center flex-shrink-0 transition-colors">
                 <FileText className="w-5 h-5" />
               </div>
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-2">
                   <span className="text-xs sm:text-sm font-bold text-[#172033]">
-                    Create DPR
+                    Create / Edit DPR
                   </span>
-                  <span className="text-[10px] font-mono font-semibold px-1.5 py-0.5 rounded bg-[#EDF5F8] text-[#176B87]">
+                  <span className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-[#FDF6ED] text-[#8C5311] border border-[#F0D4A6]">
                     65% Draft
                   </span>
                 </div>
@@ -912,14 +1015,14 @@ export default function EngineerDashboardPage() {
                 setSelectedActivityForCapture('PIP-24-002');
                 setIsCaptureModalOpen(true);
               }}
-              className="p-3 sm:p-4 bg-white hover:bg-[#F9FAFC] border border-[#D9DEE5] hover:border-[#176B87] rounded-lg shadow-2xs text-left transition-all flex items-center gap-3 cursor-pointer group"
+              className="p-3.5 bg-white hover:bg-[#F9FAFC] border border-[#D9DEE5] hover:border-[#176B87] rounded-lg shadow-2xs text-left transition-all flex items-center gap-3 cursor-pointer group"
             >
               <div className="w-10 h-10 rounded-lg bg-[#F1F3F5] group-hover:bg-[#176B87] text-[#596579] group-hover:text-white flex items-center justify-center flex-shrink-0 transition-colors">
                 <Camera className="w-5 h-5" />
               </div>
               <div className="min-w-0 flex-1">
                 <span className="text-xs sm:text-sm font-bold text-[#172033] block">
-                  Add Evidence
+                  Add Site Evidence
                 </span>
                 <span className="text-[11px] text-[#596579] block truncate">
                   Attach geotagged photo or certificate
@@ -930,93 +1033,16 @@ export default function EngineerDashboardPage() {
         </section>
 
         {/* ========================================================= */}
-        {/* 3. MY ACTIVITIES */}
-        {/* Compact table showing activities relevant to this engineer */}
-        {/* Columns: Activity | Area | Status | Progress | Action */}
+        {/* 3. PENDING VERIFICATION */}
+        {/* Highlighted items awaiting inspection sign-off */}
         {/* ========================================================= */}
-        <section aria-labelledby="my-activities-heading" className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 shadow-xs space-y-4">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D9DEE5] gap-2">
-            <div>
-              <h2 id="my-activities-heading" className="text-lg sm:text-xl font-bold uppercase tracking-wide text-[#172033]">
-                My Activities
-              </h2>
-              <p className="text-xs text-[#596579] mt-0.5">
-                Compact view of scheduled work packages under your direct site supervision.
-              </p>
-            </div>
-            <span className="text-xs font-mono text-[#596579]">
-              {todayActivities.length} assigned packages
-            </span>
-          </div>
-
-          <div className="overflow-x-auto border border-[#D9DEE5] rounded-lg">
-            <table className="w-full min-w-[700px] text-left border-collapse text-xs">
-              <thead className="sticky top-0 z-10 bg-[#F7F8FA] border-b border-[#D9DEE5] text-[#596579] font-semibold text-[11px] uppercase tracking-wider h-10">
-                <tr>
-                  <th className="py-2.5 px-3">Activity</th>
-                  <th className="py-2.5 px-3">Area</th>
-                  <th className="py-2.5 px-3">Status</th>
-                  <th className="py-2.5 px-3 min-w-[140px]">Progress</th>
-                  <th className="py-2.5 px-3 text-right">Action</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-[#D9DEE5]/60 text-[#172033]">
-                {todayActivities.map((act) => (
-                  <tr key={act.id} className="h-10 hover:bg-[#F9FAFC] transition-colors">
-                    <td className="py-2.5 px-3 font-medium">
-                      <div className="flex items-center gap-2">
-                        <span className="font-mono font-bold text-[#176B87]">{act.id}</span>
-                        <span className="text-[#172033] font-semibold">{act.name}</span>
-                      </div>
-                      <span className="text-[11px] text-[#596579]">{act.discipline}</span>
-                    </td>
-                    <td className="py-2.5 px-3 text-[#596579] whitespace-nowrap">{act.area}</td>
-                    <td className="py-2.5 px-3 whitespace-nowrap">
-                      <StatusBadge status={act.status} size="sm" />
-                    </td>
-                    <td className="py-2.5 px-3">
-                      <div className="space-y-1">
-                        <div className="flex justify-between font-mono text-[11px]">
-                          <span className="font-bold text-[#172033]">{act.actualProgress}%</span>
-                          <span className="text-[#596579]">Target: {act.plannedProgress}%</span>
-                        </div>
-                        <ProgressBar
-                          actual={act.actualProgress}
-                          planned={act.plannedProgress}
-                          size="sm"
-                          status={act.status}
-                          showLabels={false}
-                        />
-                      </div>
-                    </td>
-                    <td className="py-2.5 px-3 text-right whitespace-nowrap">
-                      <button
-                        type="button"
-                        onClick={() => handleOpenCaptureForActivity(act.id)}
-                        className="px-2.5 py-1 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] rounded transition-colors inline-flex items-center gap-1 shadow-2xs cursor-pointer"
-                      >
-                        <Plus className="w-3 h-3 stroke-[2.5]" />
-                        <span>Capture</span>
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </section>
-
-        {/* ========================================================= */}
-        {/* 4. PENDING VERIFICATION (PENDING REVIEW) */}
-        {/* Items submitted from site awaiting QC / Lead Inspector sign-off */}
-        {/* ========================================================= */}
-        <section aria-labelledby="pending-verification-heading" className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-4 sm:p-6 shadow-xs space-y-4">
+        <section aria-labelledby="pending-verification-heading" className="bg-white border border-[#D9DEE5] border-l-4 border-l-[#D98B32] rounded-lg p-4 sm:p-6 shadow-xs space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D9DEE5] gap-2">
             <div>
               <div className="flex items-center gap-2">
-                <FileCheck className="w-5 h-5 text-[#176B87]" />
-                <h2 id="pending-verification-heading" className="text-lg sm:text-xl font-bold uppercase tracking-wide text-[#172033]">
-                  Pending Verification
+                <FileCheck className="w-5 h-5 text-[#D98B32]" />
+                <h2 id="pending-verification-heading" className="text-base sm:text-lg font-bold text-[#172033] tracking-tight">
+                  Pending Verification & Inspection Sign-off
                 </h2>
               </div>
               <p className="text-xs text-[#596579] mt-0.5">
@@ -1071,20 +1097,20 @@ export default function EngineerDashboardPage() {
         </section>
 
         {/* ========================================================= */}
-        {/* 5. RECENT EXECUTION EVENTS (SITE EVENT LOG) */}
+        {/* 4. RECENT EXECUTION EVENTS (SITE EVENT LOG) */}
         {/* Chronological site observations, logs, and sync states */}
         {/* ========================================================= */}
-        <section aria-labelledby="recent-events-heading" className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-4 sm:p-6 shadow-xs space-y-4">
+        <section aria-labelledby="recent-events-heading" className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 shadow-xs space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D9DEE5] gap-2">
             <div>
               <div className="flex items-center gap-2">
                 <Clock className="w-5 h-5 text-[#176B87]" />
-                <h2 id="recent-events-heading" className="text-lg sm:text-xl font-bold uppercase tracking-wide text-[#172033]">
-                  Recent Execution Events
+                <h2 id="recent-events-heading" className="text-base sm:text-lg font-bold text-[#172033] tracking-tight">
+                  Recent Execution Log & Observations
                 </h2>
               </div>
               <p className="text-xs text-[#596579] mt-0.5">
-                Execution events and observations recorded from the field today.
+                Execution events recorded from the field today with local IndexedDB queue status.
               </p>
             </div>
 
@@ -1150,20 +1176,20 @@ export default function EngineerDashboardPage() {
         </section>
 
         {/* ========================================================= */}
-        {/* 6. EVIDENCE (GEOTAGGED PHOTOS & TEST CERTIFICATES) */}
+        {/* 5. EVIDENCE (GEOTAGGED PHOTOS & TEST CERTIFICATES) */}
         {/* Visual gallery grid of site photos and inspection proofs */}
         {/* ========================================================= */}
-        <section aria-labelledby="evidence-heading" className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-4 sm:p-6 shadow-xs space-y-4">
+        <section aria-labelledby="evidence-heading" className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 shadow-xs space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D9DEE5] gap-2">
             <div>
               <div className="flex items-center gap-2">
                 <ShieldCheck className="w-5 h-5 text-[#176B87]" />
-                <h2 id="evidence-heading" className="text-lg sm:text-xl font-bold uppercase tracking-wide text-[#172033]">
+                <h2 id="evidence-heading" className="text-base sm:text-lg font-bold text-[#172033] tracking-tight">
                   Field Evidence & Site Media
                 </h2>
               </div>
               <p className="text-xs text-[#596579] mt-0.5">
-                Geotagged site photography, weld visual inspection cards, and laboratory cube strength records.
+                Geotagged site photography, weld inspection cards, and test records.
               </p>
             </div>
 
@@ -1220,7 +1246,7 @@ export default function EngineerDashboardPage() {
         </section>
 
         {/* ========================================================= */}
-        {/* 7. DAILY PROGRESS & SHIFT SUMMARY */}
+        {/* 6. DAILY PROGRESS & SHIFT SUMMARY */}
         {/* Practical field shift conditions, manpower, equipment, and handover notes */}
         {/* ========================================================= */}
         <section aria-labelledby="shift-summary-heading" className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 shadow-xs space-y-4">
@@ -1228,7 +1254,7 @@ export default function EngineerDashboardPage() {
             <div>
               <div className="flex items-center gap-2">
                 <FileSpreadsheet className="w-5 h-5 text-[#176B87]" />
-                <h2 id="shift-summary-heading" className="text-lg sm:text-xl font-bold uppercase tracking-wide text-[#172033]">
+                <h2 id="shift-summary-heading" className="text-base sm:text-lg font-bold text-[#172033] tracking-tight">
                   Daily Progress & Shift Summary
                 </h2>
               </div>

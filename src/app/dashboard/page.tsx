@@ -9,16 +9,12 @@ import { Breadcrumbs } from '../../components/shell/Breadcrumbs';
 import { StateWrapper } from '../../components/shared/StateWrapper';
 import { StatusBadge } from '../../components/shared/StatusBadge';
 import { ConfidenceBadge } from '../../components/shared/ConfidenceBadge';
-import { VarianceBadge } from '../../components/shared/VarianceBadge';
-import { ProgressBar } from '../../components/shared/ProgressBar';
 import { SCurveChart } from '../../components/shared/SCurveChart';
-import { BarChart, HorizontalBarChart, StatusDonutChart } from '../../components/shared/charts';
+import { BarChart, HorizontalBarChart, LineChart, StatusDonutChart } from '../../components/shared/charts';
 import { Modal } from '../../components/shared/Modal';
 import { WhyButton } from '../../components/shared/WhyButton';
 import { projectService } from '../../lib/api/projectService';
-import {
-  MOCK_EXECUTION_EVENTS,
-} from '../../lib/api/mockData';
+import { MOCK_EXECUTION_EVENTS } from '../../lib/api/mockData';
 import { ExecutionEvent } from '../../types';
 import { CANONICAL_SCHEDULE_VERSION_LABEL } from '../../lib/domain/canonicalModels';
 import { formatProjectDate, PROJECT_REPORT_DATE } from '../../lib/domain/dateUtils';
@@ -29,16 +25,27 @@ import {
   ArrowRight,
   Clock,
   FileCheck,
-  ChevronDown,
-  ChevronRight,
   Activity,
   ShieldCheck,
+  TrendingDown,
+  TrendingUp,
+  Layers,
+  MapPin,
+  BarChart3,
+  LineChart as LineChartIcon,
+  ShieldAlert,
+  GitCommit,
+  Check,
+  Calendar,
 } from 'lucide-react';
 
 export default function ManagerDashboardPage() {
   const { activeProject, openActivityDrawer, openWhyExplanation } = useApp();
   const { effectiveStatus } = useOffline();
   const { addToast } = useToast();
+
+  // Active Tab for Analytics Cockpit: 'discipline' | 'area' | 'variance-trend' | 'delays'
+  const [activeChartTab, setActiveChartTab] = useState<'discipline' | 'area' | 'variance-trend' | 'delays'>('discipline');
 
   // Review Items State
   const [reviewEvents, setReviewEvents] = useState<ExecutionEvent[]>(
@@ -49,9 +56,6 @@ export default function ManagerDashboardPage() {
   const [selectedReviewModalEvent, setSelectedReviewModalEvent] = useState<ExecutionEvent | null>(null);
   const [selectedEventForRejection, setSelectedEventForRejection] = useState<ExecutionEvent | null>(null);
   const [rejectReason, setRejectReason] = useState('');
-
-  // Expandable Raw Technical Info State (Section 7: Recent Activity)
-  const [openedTechnicalEventId, setOpenedTechnicalEventId] = useState<string | null>(null);
 
   const breadcrumbs = [
     { label: 'Project Controls' },
@@ -90,16 +94,7 @@ export default function ManagerDashboardPage() {
     });
   };
 
-  // Discipline Progress Breakdown for Section 5: Execution Progress
-  const disciplineBreakdown = [
-    { name: 'Civil Foundations & Pedestals', planned: 100, actual: 100, status: 'completed' as const, delta: '0d float' },
-    { name: 'Piping Erection & Welding', planned: 85, actual: 70, status: 'delayed' as const, delta: '+2d slip' },
-    { name: 'Mechanical Skid Alignment', planned: 20, actual: 15, status: 'on-track' as const, delta: '0d float' },
-    { name: 'Electrical Cable Tray Galleries', planned: 50, actual: 40, status: 'at-risk' as const, delta: '+1d slip' },
-    { name: 'Instrumentation & Loop Tubing', planned: 15, actual: 0, status: 'pending' as const, delta: '+2d lag' },
-  ];
-
-  // Schedule Variance Control Table Items for Section 4
+  // Schedule Variance Control Table Items
   const scheduleVarianceItems = [
     {
       id: 'PIP-24-001',
@@ -157,8 +152,48 @@ export default function ManagerDashboardPage() {
     },
   ];
 
-  // Specific event for Unmatched Item in Section 3
+  // Specific event for Unmatched Item in Section 2
   const unmatchedEvent = MOCK_EXECUTION_EVENTS.find((e) => e.id === 'EVT-2026-004') || MOCK_EXECUTION_EVENTS[2];
+
+  // Verified Milestones Stream (Replaces raw worker logs with executive milestone syncs)
+  const verifiedMilestones = [
+    {
+      id: 'EVT-2026-001',
+      activityId: 'CIV-11-001',
+      title: 'Foundation Block A - Pedestal Pour Complete',
+      progress: '100% Completed',
+      verifiedDate: '15 Aug 2026',
+      auditor: 'Lead Quality Inspector (RITES)',
+      status: 'verified' as const,
+    },
+    {
+      id: 'EVT-2026-002',
+      activityId: 'PIP-24-001',
+      title: 'Line 24-XX Gas Header Spool Rigging',
+      progress: '100% Spools Placed',
+      verifiedDate: '02 Oct 2026',
+      auditor: 'Project Controls Verification',
+      status: 'verified' as const,
+    },
+    {
+      id: 'EVT-2026-003',
+      activityId: 'ELE-11-032',
+      title: 'Substation Overhead Cable Tray Alignment',
+      progress: '350m Installed',
+      verifiedDate: '01 Oct 2026',
+      auditor: 'Resident Electrical Engineer',
+      status: 'verified' as const,
+    },
+    {
+      id: 'EVT-2026-005',
+      activityId: 'MEC-08-003',
+      title: 'Compressor Skid A Laser Alignment',
+      progress: 'Tolerance ±0.02mm Cleared',
+      verifiedDate: '22 Sep 2026',
+      auditor: 'OEM Technical Specialist',
+      status: 'verified' as const,
+    },
+  ];
 
   return (
     <div className="space-y-6 pb-12">
@@ -167,7 +202,7 @@ export default function ManagerDashboardPage() {
       <StateWrapper
         loadingMessage="Loading dashboard overview..."
         emptyTitle="No dashboard metrics found in this view"
-        emptyDescription="Operational KPIs, critical path risks, and pending review events will appear here once project data is loaded. Reset filters or select an active project to view metrics."
+        emptyDescription="Operational KPIs, critical path risks, and pending review events will appear here once project data is loaded."
       >
         {/* =========================================================================
             1. PAGE HEADER
@@ -181,18 +216,18 @@ export default function ManagerDashboardPage() {
                   PROJECT ID: {activeProject.code}
                 </span>
                 <span className="text-xs text-[#596579]">
-                  Schedule Version: <strong className="text-[#172033] font-mono">{CANONICAL_SCHEDULE_VERSION_LABEL}</strong>
+                  Schedule: <strong className="text-[#172033] font-mono">{CANONICAL_SCHEDULE_VERSION_LABEL}</strong>
                 </span>
                 <span className="text-[#7B8798] hidden sm:inline">•</span>
                 <span className="text-xs text-[#596579]">
                   Reporting Date: <strong className="text-[#172033] font-mono">{formatProjectDate(PROJECT_REPORT_DATE, true)}</strong>
                 </span>
               </div>
-              <h1 className="text-[28px] sm:text-3xl font-bold text-[#172033] tracking-tight">
+              <h1 className="text-2xl sm:text-3xl font-bold text-[#172033] tracking-tight">
                 {activeProject.name}
               </h1>
               <p className="text-sm text-[#596579]">
-                Manager Project Controls & Execution Decision Surface • Organization: <strong>Oil India Limited</strong>
+                Executive Project Controls & Schedule Decision Cockpit • <strong>Oil India Limited</strong>
               </p>
             </div>
 
@@ -216,28 +251,21 @@ export default function ManagerDashboardPage() {
                 </span>
               </div>
 
-              {/* Secondary Action: Project-level navigation */}
+              {/* Secondary Navigation */}
               <Link
                 href="/schedule"
                 className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-[#172033] bg-white border border-[#D9DEE5] hover:bg-[#F1F3F5] rounded-lg transition-colors shadow-2xs"
               >
+                <GitCommit className="w-3.5 h-3.5 text-[#596579]" />
                 <span>Schedule Twin</span>
               </Link>
 
-              <Link
-                href="/field"
-                className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-[#596579] bg-white border border-[#D9DEE5] hover:bg-[#F1F3F5] rounded-lg transition-colors shadow-2xs"
-                title="Navigate to Field Operations interface"
-              >
-                <span>Record Field Observation</span>
-              </Link>
-
-              {/* Exactly 1 Primary Action */}
+              {/* Primary Action */}
               <Link
                 href="/review"
                 className="inline-flex items-center gap-2 px-4 py-2 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] border border-[#176B87] rounded-lg transition-colors shadow-xs"
               >
-                <ShieldCheck className="w-3.5 h-3.5" />
+                <ShieldCheck className="w-4 h-4" />
                 <span>Review Pending Events ({reviewEvents.length})</span>
               </Link>
             </div>
@@ -245,37 +273,34 @@ export default function ManagerDashboardPage() {
         </div>
 
         {/* =========================================================================
-            2. PROJECT HEALTH (4–5 Primary KPI Cards)
-            Recommended: Schedule Health, Verified Progress, Activities At Risk, Pending Review, Schedule Variance
+            2. PROJECT PERFORMANCE KPIS (5 Visual KPI Cards with Icons & Trends)
             ========================================================================= */}
         <section aria-labelledby="kpi-heading" className="space-y-2">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <h2 id="kpi-heading" className="text-xs font-semibold uppercase tracking-wider text-[#596579]">
-                Planned vs Actual Performance KPIs
-              </h2>
-              <span className="text-[12px] text-[#596579]">
-                • Planned: {activeProject.plannedProgress}% vs Actual: {activeProject.overallProgress}%
-              </span>
-            </div>
+            <h2 id="kpi-heading" className="text-xs font-semibold uppercase tracking-wider text-[#596579] flex items-center gap-1.5">
+              <BarChart3 className="w-3.5 h-3.5 text-[#176B87]" />
+              Executive Performance Indicators
+            </h2>
             <span className="text-[11px] text-[#7B8798] font-mono hidden sm:inline">
-              P6 Master Schedule Version: {CANONICAL_SCHEDULE_VERSION_LABEL}
+              P6 XML Target vs Field Actuals
             </span>
           </div>
 
           <div className="border border-[#D9DEE5] rounded-lg shadow-xs overflow-hidden grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-px bg-[#D9DEE5]">
             {/* 1. Schedule Health */}
-            <div className="p-4 lg:p-6 bg-white hover:bg-[#F9FAFC] transition-colors flex flex-col justify-between group">
+            <div className="p-4 lg:p-5 bg-white hover:bg-[#F9FAFC] transition-colors flex flex-col justify-between group">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-semibold uppercase tracking-wider text-[#596579]">
                   Schedule Health
                 </span>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1.5">
                   <WhyButton
                     onClick={() => openWhyExplanation('health:PRJ-OIL-2026-01')}
                     title="Why is schedule health 94%?"
                   />
-                  <Activity className="w-4 h-4 text-[#2E7D5B] flex-shrink-0" />
+                  <div className="p-1 rounded bg-[#EDF7F2] text-[#2E7D5B]">
+                    <Activity className="w-3.5 h-3.5" />
+                  </div>
                 </div>
               </div>
               <div className="my-2">
@@ -283,29 +308,33 @@ export default function ManagerDashboardPage() {
                   <span className="text-2xl sm:text-3xl font-bold font-mono text-[#2E7D5B] leading-none">
                     94%
                   </span>
-                  <span className="text-xs font-semibold text-[#2E7D5B]">Good</span>
+                  <span className="text-xs font-semibold text-[#2E7D5B] flex items-center gap-0.5">
+                    <TrendingUp className="w-3 h-3" /> Good
+                  </span>
                 </div>
-                <p className="text-[12px] text-[#596579] mt-0.5">
-                  DCMA 14-Point • 5 Minor Flags
+                <p className="text-[11px] text-[#596579] mt-1">
+                  DCMA 14-Point Check Passed
                 </p>
               </div>
-              <Link href="/health" className="text-[11px] sm:text-xs text-[#176B87] group-hover:underline font-semibold flex items-center gap-1">
+              <Link href="/health" className="text-[11px] text-[#176B87] group-hover:underline font-semibold flex items-center gap-1">
                 Inspect Health &rarr;
               </Link>
             </div>
 
             {/* 2. Verified Progress */}
-            <div className="p-4 lg:p-6 bg-white hover:bg-[#F9FAFC] transition-colors flex flex-col justify-between group">
+            <div className="p-4 lg:p-5 bg-white hover:bg-[#F9FAFC] transition-colors flex flex-col justify-between group">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-semibold uppercase tracking-wider text-[#596579]">
                   Verified Progress
                 </span>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1.5">
                   <WhyButton
                     onClick={() => openWhyExplanation('progress:verified')}
                     title="Why is verified progress 68.4%?"
                   />
-                  <CheckCircle2 className="w-4 h-4 text-[#176B87] flex-shrink-0" />
+                  <div className="p-1 rounded bg-[#EDF2F8] text-[#176B87]">
+                    <CheckCircle2 className="w-3.5 h-3.5" />
+                  </div>
                 </div>
               </div>
               <div className="my-2">
@@ -315,11 +344,11 @@ export default function ManagerDashboardPage() {
                   </span>
                   <span className="text-xs text-[#596579]">Actual</span>
                 </div>
-                <p className="text-[12px] text-[#596579] mt-0.5">
-                  Target: {activeProject.plannedProgress}% (P6 Target)
+                <p className="text-[11px] text-[#596579] mt-1">
+                  Baseline Target: <strong>{activeProject.plannedProgress}%</strong>
                 </p>
               </div>
-              <Link href="/progress" className="text-[11px] sm:text-xs text-[#176B87] group-hover:underline font-semibold flex items-center gap-1">
+              <Link href="/progress" className="text-[11px] text-[#176B87] group-hover:underline font-semibold flex items-center gap-1">
                 Progress Matrix &rarr;
               </Link>
             </div>
@@ -327,26 +356,28 @@ export default function ManagerDashboardPage() {
             {/* 3. Activities At Risk */}
             <Link
               href="/risks"
-              className="p-4 lg:p-6 bg-white hover:bg-[#F9FAFC] transition-colors flex flex-col justify-between group"
+              className="p-4 lg:p-5 bg-white hover:bg-[#F9FAFC] transition-colors flex flex-col justify-between group"
             >
               <div className="flex items-center justify-between">
                 <span className="text-xs font-semibold uppercase tracking-wider text-[#596579]">
                   Activities At Risk
                 </span>
-                <AlertTriangle className="w-4 h-4 text-[#B5473C] flex-shrink-0" />
+                <div className="p-1 rounded bg-[#FBEFEE] text-[#B5473C]">
+                  <AlertTriangle className="w-3.5 h-3.5" />
+                </div>
               </div>
               <div className="my-2">
                 <div className="flex items-baseline gap-2">
                   <span className="text-2xl sm:text-3xl font-bold font-mono text-[#B5473C] leading-none">
                     3
                   </span>
-                  <span className="text-xs font-bold text-[#B5473C]">At Risk</span>
+                  <span className="text-xs font-bold text-[#B5473C]">Alert</span>
                 </div>
-                <p className="text-[12px] text-[#596579] mt-0.5">
+                <p className="text-[11px] text-[#596579] mt-1">
                   1 Critical Path • 2 Near-Critical
                 </p>
               </div>
-              <span className="text-[11px] sm:text-xs text-[#176B87] group-hover:underline font-semibold flex items-center gap-1">
+              <span className="text-[11px] text-[#176B87] group-hover:underline font-semibold flex items-center gap-1">
                 CPM Risk Network &rarr;
               </span>
             </Link>
@@ -354,301 +385,253 @@ export default function ManagerDashboardPage() {
             {/* 4. Pending Review */}
             <Link
               href="/review"
-              className="p-4 lg:p-6 bg-white hover:bg-[#F9FAFC] transition-colors flex flex-col justify-between group"
+              className="p-4 lg:p-5 bg-white hover:bg-[#F9FAFC] transition-colors flex flex-col justify-between group"
             >
               <div className="flex items-center justify-between">
                 <span className="text-xs font-semibold uppercase tracking-wider text-[#596579]">
                   Pending Review
                 </span>
-                <Clock className="w-4 h-4 text-[#D98B32] flex-shrink-0" />
+                <div className="p-1 rounded bg-[#FDF6ED] text-[#D98B32]">
+                  <Clock className="w-3.5 h-3.5" />
+                </div>
               </div>
               <div className="my-2">
                 <div className="flex items-baseline gap-2">
                   <span className="text-2xl sm:text-3xl font-bold font-mono text-[#D98B32] leading-none">
                     {reviewEvents.length}
                   </span>
-                  <span className="text-xs font-bold text-[#D98B32]">Items</span>
+                  <span className="text-xs font-bold text-[#D98B32]">Events</span>
                 </div>
-                <p className="text-[12px] text-[#596579] mt-0.5">
-                  Awaiting Planner Validation
+                <p className="text-[11px] text-[#596579] mt-1">
+                  Awaiting Planner Sign-off
                 </p>
               </div>
-              <span className="text-[11px] sm:text-xs text-[#176B87] group-hover:underline font-semibold flex items-center gap-1">
-                Review Queue &rarr;
+              <span className="text-[11px] text-[#176B87] group-hover:underline font-semibold flex items-center gap-1">
+                Review Center &rarr;
               </span>
             </Link>
 
             {/* 5. Schedule Variance */}
-            <div className="p-4 lg:p-6 bg-[#FFFDFD] hover:bg-[#FFF8F8] transition-colors flex flex-col justify-between sm:col-span-2 lg:col-span-1">
+            <div className="p-4 lg:p-5 bg-[#FFFDFD] hover:bg-[#FFF8F8] transition-colors flex flex-col justify-between sm:col-span-2 lg:col-span-1">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-semibold uppercase tracking-wider text-[#B5473C]">
                   Schedule Variance
                 </span>
-                <WhyButton
-                  onClick={() => openWhyExplanation('variance:portfolio')}
-                  title="Why is variance -7%?"
-                />
+                <div className="flex items-center gap-1.5">
+                  <WhyButton
+                    onClick={() => openWhyExplanation('variance:portfolio')}
+                    title="Why is variance -7%?"
+                  />
+                  <div className="p-1 rounded bg-[#FBEFEE] text-[#B5473C]">
+                    <TrendingDown className="w-3.5 h-3.5" />
+                  </div>
+                </div>
               </div>
               <div className="my-2">
                 <div className="flex items-baseline gap-2">
                   <span className="text-2xl sm:text-3xl font-bold font-mono text-[#B5473C] leading-none">
                     {activeProject.variance}%
                   </span>
-                  <span className="text-xs font-bold text-[#B5473C]">Variance</span>
+                  <span className="text-xs font-bold text-[#B5473C]">Slip</span>
                 </div>
-                <p className="text-[12px] text-[#B5473C] font-semibold mt-0.5">
+                <p className="text-[11px] text-[#B5473C] font-semibold mt-1">
                   +2 Days Behind Baseline Finish
                 </p>
               </div>
-              <a href="#schedule-variance" className="text-[11px] sm:text-xs text-[#176B87] hover:underline font-semibold flex items-center gap-1">
-                Inspect Delay Chain &rarr;
+              <a href="#variance-table" className="text-[11px] text-[#176B87] hover:underline font-semibold flex items-center gap-1">
+                Inspect Variance Table &rarr;
               </a>
             </div>
           </div>
         </section>
 
         {/* =========================================================================
-            2. WHAT NEEDS MY ATTENTION
-            Executive priority queue: Answers "What needs attention?" with immediate
-            decision pathways answering "What should I do?".
+            3. WHAT NEEDS MY ATTENTION (Streamlined Executive Priority Grid + Donut Chart)
+            Replaces verbose contractor essay paragraphs with clear, high-signal action cards
             ========================================================================= */}
-        <section aria-labelledby="attention-heading" className="bg-[#FFFDF7] border-2 border-[#D98B32] rounded-lg p-4 sm:p-6 shadow-sm space-y-4">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#F0D4A6] gap-3">
-            <div>
-              <div className="flex items-center gap-2">
-                <AlertOctagon className="w-5 h-5 text-[#B5473C]" />
-                <h2 id="attention-heading" className="text-lg sm:text-xl font-semibold text-[#172033] tracking-tight">
-                  What Needs My Attention
-                </h2>
-                <span className="px-2 py-0.5 rounded-full bg-[#B5473C] text-white text-[11px] font-mono font-semibold">
-                  6 Critical Items
-                </span>
+        <section aria-labelledby="attention-heading" className="bg-[#FFFDF7] border-2 border-[#D98B32] border-l-4 border-l-[#B5473C] rounded-lg p-4 sm:p-6 shadow-xs space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#F0D4A6] gap-2">
+            <div className="flex items-center gap-2">
+              <div className="p-1.5 rounded-md bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
+                <AlertOctagon className="w-5 h-5" />
               </div>
-              {/* Executive quick summary of attention items */}
-              <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-[#596579] mt-1.5">
-                <span className="font-medium text-[#172033]">• 6 schedule matches require review</span>
-                <span className="font-medium text-[#B5473C]">• 3 activities are delayed</span>
-                <span className="font-medium text-[#D98B32]">• 2 dependency conflicts detected</span>
-                <span className="font-medium text-[#596579]">• 4 evidence items missing</span>
+              <div>
+                <div className="flex items-center gap-2">
+                  <h2 id="attention-heading" className="text-base sm:text-lg font-bold text-[#172033] tracking-tight">
+                    What Needs My Attention
+                  </h2>
+                  <span className="px-2 py-0.5 rounded bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA] text-[10px] font-mono font-bold uppercase">
+                    URGENT INTERVENTION
+                  </span>
+                </div>
+                <p className="text-xs text-[#596579]">
+                  Prioritized decision backlog requiring project manager intervention
+                </p>
               </div>
             </div>
 
-            {/* Direct action triggers */}
-            <div className="flex items-center gap-2 self-start sm:self-center">
-              <a
-                href="#schedule-variance"
-                className="px-3 py-1.5 bg-white hover:bg-[#F1F3F5] text-[#172033] border border-[#D9DEE5] text-xs font-semibold rounded shadow-2xs transition-colors inline-flex items-center gap-1"
-              >
-                View Delays
-              </a>
+            <div className="flex items-center gap-2">
+              <span className="px-2.5 py-1 rounded-full bg-[#B5473C] text-white text-xs font-mono font-bold flex items-center gap-1 shadow-2xs">
+                <ShieldAlert className="w-3.5 h-3.5" />
+                4 Action Items
+              </span>
               <Link
                 href="/review"
-                className="px-3 py-1.5 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-semibold rounded shadow-xs transition-colors inline-flex items-center gap-2"
+                className="px-3 py-1.5 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-bold rounded shadow-xs transition-colors inline-flex items-center gap-1.5"
               >
-                <span>Review Queue</span>
+                <span>Full Review Queue</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             </div>
           </div>
 
-          {/* Limited Status Distribution Donut Chart */}
-          <StatusDonutChart />
-
-          {/* 6 Prominent Decision Cards (Each with exactly one primary action) */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {/* ITEM 1: Review Match */}
-            <div className="p-4 rounded-lg bg-white border border-[#F0D4A6] hover:border-[#D98B32] transition-all shadow-xs flex flex-col justify-between space-y-3">
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <span className="px-2 py-0.5 rounded text-[11px] font-mono font-semibold uppercase bg-[#FDF6ED] text-[#8C5311] border border-[#F0D4A6]">
-                    Review Match
-                  </span>
-                  <WhyButton
-                    onClick={() => openWhyExplanation('confidence:EVT-2026-002', 'EVT-2026-002')}
-                    title="Why do these matches require review?"
-                  />
-                </div>
-                <h3 className="text-[15px] sm:text-base font-medium text-[#172033] leading-snug">
-                  {reviewEvents.length} Field Matches Awaiting Planner Validation
-                </h3>
-                <p className="text-[13px] text-[#596579] leading-relaxed">
-                  Execution events in the 70%–89% confidence band (Line 24 welding, cable trays) require planner sign-off before actual progress commits to P6.
-                </p>
-                <div className="text-[12px] text-[#8C581E] pt-2 border-t border-[#F0D4A6]/50">
-                  <span className="font-semibold text-[#664014]">Impact:</span> Schedule Twin baseline synchronization paused.
-                </div>
-              </div>
-              <Link
-                href="/review"
-                className="w-full py-2 px-3 bg-white hover:bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0] text-xs font-semibold rounded shadow-2xs text-center transition-colors block"
-              >
-                Review Matches ({reviewEvents.length})
-              </Link>
+          {/* 2-Column Executive Layout: Donut Chart on Left, Clean Decision Cards on Right */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+            {/* Visual Status Donut Chart */}
+            <div className="lg:col-span-5 bg-white border border-[#F0D4A6] rounded-lg p-4 shadow-2xs">
+              <StatusDonutChart />
             </div>
 
-            {/* ITEM 2: Unmatched Event */}
-            <div className="p-4 rounded-lg bg-white border border-[#E4B0AA] hover:border-[#B5473C] transition-all shadow-xs flex flex-col justify-between space-y-3">
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <span className="px-2 py-0.5 rounded text-[11px] font-mono font-semibold uppercase bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
-                    Unmatched Event
-                  </span>
-                  <span className="text-[11px] font-mono font-semibold text-[#B5473C]">47% Confidence</span>
-                </div>
-                <h3 className="text-[15px] sm:text-base font-medium text-[#172033] leading-snug">
-                  EVT-2026-004: Unit B Drain Line Pipe Installation
-                </h3>
-                <p className="text-[13px] text-[#596579] leading-relaxed">
-                  Field report submitted by Debajit Borah references an unlinked spool code syntax. Cannot automatically resolve to an active P6 baseline node.
-                </p>
-                <div className="text-[12px] text-[#B5473C] pt-2 border-t border-[#E4B0AA]/50">
-                  <span className="font-semibold text-[#8B2C24]">Impact:</span> 1.0 job progress uncredited in current reporting period.
-                </div>
-              </div>
-              <button
-                type="button"
-                onClick={() => setSelectedReviewModalEvent(unmatchedEvent)}
-                className="w-full py-2 px-3 bg-white hover:bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0] text-xs font-semibold rounded shadow-2xs text-center transition-colors block cursor-pointer"
-              >
-                Assign Activity Target
-              </button>
-            </div>
-
-            {/* ITEM 3: Delayed Activity */}
-            <div className="p-4 rounded-lg bg-white border border-[#E4B0AA] hover:border-[#B5473C] transition-all shadow-xs flex flex-col justify-between space-y-3">
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <span className="px-2 py-0.5 rounded text-[11px] font-mono font-semibold uppercase bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
-                    Delayed Activity
-                  </span>
-                  <WhyButton
-                    onClick={() => openWhyExplanation('delay:PIP-24-001', 'PIP-24-001')}
-                    title="Why is this activity delayed?"
-                  />
-                </div>
-                <h3 className="text-[15px] sm:text-base font-medium text-[#172033] leading-snug">
-                  PIP-24-001: Erect Line 24-XX Header (+2d Slip)
-                </h3>
-                <p className="text-[13px] text-[#596579] leading-relaxed">
-                  Critical path activity slipped 2 days due to crane mobilization constraints during heavy rainfall at Unit A laydown. Total float is 0.
-                </p>
-                <div className="text-[12px] text-[#B5473C] pt-2 border-t border-[#E4B0AA]/50">
-                  <span className="font-semibold text-[#8B2C24]">Impact:</span> Direct day-for-day slip on commercial hydro-test milestone.
-                </div>
-              </div>
-              <a
-                href="#schedule-variance"
-                className="w-full py-2 px-3 bg-white hover:bg-[#F1F3F5] text-[#172033] border border-[#D9DEE5] text-xs font-semibold rounded shadow-2xs text-center transition-colors block"
-              >
-                Inspect Delay Chain
-              </a>
-            </div>
-
-            {/* ITEM 4: Dependency Impact */}
-            <div className="p-4 rounded-lg bg-white border border-[#F0D4A6] hover:border-[#D98B32] transition-all shadow-xs flex flex-col justify-between space-y-3">
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <span className="px-2 py-0.5 rounded text-[11px] font-mono font-semibold uppercase bg-[#FDF6ED] text-[#8C5311] border border-[#F0D4A6]">
-                    Dependency Impact
-                  </span>
-                  <div className="flex items-center gap-2">
-                    <WhyButton
-                      onClick={() => openWhyExplanation('impact:CIV-11-001')}
-                      title="Why does this delay impact downstream activities?"
-                    />
-                    <span className="text-[11px] font-mono font-semibold text-[#D98B32]">3 Downstream</span>
+            {/* High-Signal Action Cards */}
+            <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {/* Card 1: Review Validation */}
+              <div className="p-3.5 rounded-lg bg-white border border-[#F0D4A6] hover:border-[#D98B32] transition-all shadow-2xs flex flex-col justify-between space-y-2.5">
+                <div className="space-y-1.5">
+                  <div className="flex items-center justify-between">
+                    <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase bg-[#FDF6ED] text-[#8C5311] border border-[#F0D4A6] flex items-center gap-1">
+                      <ShieldAlert className="w-3 h-3 text-[#D98B32]" />
+                      Match Validation
+                    </span>
+                    <span className="text-[11px] font-mono font-bold text-[#D98B32]">{reviewEvents.length} Pending</span>
+                  </div>
+                  <h3 className="text-xs sm:text-sm font-bold text-[#172033] leading-snug">
+                    Field Matches Awaiting Sign-off
+                  </h3>
+                  <p className="text-[11px] text-[#596579] leading-normal">
+                    Events in the 70%–89% confidence band pause live Schedule Twin synchronization until approved.
+                  </p>
+                  <div className="pt-1">
+                    <span className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-[#FDF6ED] text-[#8C5311] border border-[#F0D4A6]">
+                      Schedule Twin Sync Paused
+                    </span>
                   </div>
                 </div>
-                <h3 className="text-[15px] sm:text-base font-medium text-[#172033] leading-snug">
-                  Critical Path Ripple: Hydro-test & Loop Tubing
-                </h3>
-                <p className="text-[13px] text-[#596579] leading-relaxed">
-                  PIP-24-001 delay pushes successor activities PIP-24-002 (Welds), PIP-24-003 (Hydro-test), and INS-04-015 (Smart Transmitters).
-                </p>
-                <div className="text-[12px] text-[#8C581E] pt-2 border-t border-[#F0D4A6]/50">
-                  <span className="font-semibold text-[#664014]">Impact:</span> Milestone finish pushed from 30 Nov to 02 Dec.
-                </div>
+                <Link
+                  href="/review"
+                  className="w-full py-1.5 px-3 bg-white hover:bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0] text-xs font-bold rounded text-center transition-colors block mt-2"
+                >
+                  Review Matches ({reviewEvents.length}) &rarr;
+                </Link>
               </div>
-              <Link
-                href="/what-if"
-                className="w-full py-2 px-3 bg-white hover:bg-[#F1F3F5] text-[#172033] border border-[#D9DEE5] text-xs font-semibold rounded shadow-2xs text-center transition-colors block"
-              >
-                Run What-If Simulation
-              </Link>
-            </div>
 
-            {/* ITEM 5: Evidence Conflict */}
-            <div className="p-4 rounded-lg bg-white border border-[#F0D4A6] hover:border-[#D98B32] transition-all shadow-xs flex flex-col justify-between space-y-3">
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <span className="px-2 py-0.5 rounded text-[11px] font-mono font-semibold uppercase bg-[#FDF6ED] text-[#8C5311] border border-[#F0D4A6]">
-                    Evidence Conflict
-                  </span>
-                  <span className="text-[11px] font-mono font-semibold text-[#B5473C]">Audit Grade Alert</span>
+              {/* Card 2: Critical Path Slip */}
+              <div className="p-3.5 rounded-lg bg-white border border-[#E4B0AA] hover:border-[#B5473C] transition-all shadow-2xs flex flex-col justify-between space-y-2.5 border-l-4 border-l-[#B5473C]">
+                <div className="space-y-1.5">
+                  <div className="flex items-center justify-between">
+                    <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA] flex items-center gap-1">
+                      <AlertOctagon className="w-3 h-3 text-[#B5473C]" />
+                      Critical Slip
+                    </span>
+                    <span className="text-[11px] font-mono font-bold text-[#B5473C] bg-[#FBEFEE] px-1 rounded border border-[#E4B0AA]">+2d Slip</span>
+                  </div>
+                  <h3 className="text-xs sm:text-sm font-bold text-[#172033] leading-snug">
+                    PIP-24-001: Header Erection
+                  </h3>
+                  <p className="text-[11px] text-[#596579] leading-normal">
+                    Zero-float activity slipped 2 days. Pushes hydrostatic testing milestone day-for-day.
+                  </p>
+                  <div className="pt-1">
+                    <span className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
+                      Milestone Impact: +2 Days
+                    </span>
+                  </div>
                 </div>
-                <h3 className="text-[15px] sm:text-base font-medium text-[#172033] leading-snug">
-                  EV-DPR-002 vs NDT-XRAY-088 Joint Count Variance
-                </h3>
-                <p className="text-[13px] text-[#596579] leading-relaxed">
-                  Site Engineer DPR reports 12 completed welds on Line 24, but third-party NDT agency report verified and cleared only 10 joints.
-                </p>
-                <div className="text-[12px] text-[#8C581E] pt-2 border-t border-[#F0D4A6]/50">
-                  <span className="font-semibold text-[#664014]">Impact:</span> Discrepancy of 2 joints requires supervisor reconciliation.
-                </div>
+                <a
+                  href="#variance-table"
+                  className="w-full py-1.5 px-3 bg-white hover:bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA] text-xs font-bold rounded text-center transition-colors block mt-2"
+                >
+                  Inspect Delay Impact &rarr;
+                </a>
               </div>
-              <Link
-                href="/sync"
-                className="w-full py-2 px-3 bg-white hover:bg-[#FDF6ED] text-[#8C5311] border border-[#F0D4A6] text-xs font-semibold rounded shadow-2xs text-center transition-colors block"
-              >
-                Reconcile Evidence Conflict
-              </Link>
-            </div>
 
-            {/* ITEM 6: Data Quality Issue */}
-            <div className="p-4 rounded-lg bg-white border border-[#D9DEE5] hover:border-[#176B87] transition-all shadow-xs flex flex-col justify-between space-y-3">
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <span className="px-2 py-0.5 rounded text-[11px] font-mono font-semibold uppercase bg-[#F1F3F5] text-[#596579] border border-[#D9DEE5]">
-                    Data Quality Issue
-                  </span>
-                  <span className="text-[11px] font-mono font-semibold text-[#D98B32]">Pending Stamp</span>
+              {/* Card 3: Unmatched Field Spool */}
+              <div className="p-3.5 rounded-lg bg-white border border-[#E4B0AA] hover:border-[#B5473C] transition-all shadow-2xs flex flex-col justify-between space-y-2.5">
+                <div className="space-y-1.5">
+                  <div className="flex items-center justify-between">
+                    <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA] flex items-center gap-1">
+                      <AlertTriangle className="w-3 h-3 text-[#B5473C]" />
+                      Unmatched Event
+                    </span>
+                    <span className="text-[11px] font-mono font-bold text-[#B5473C] bg-[#FBEFEE] px-1 rounded">47% Score</span>
+                  </div>
+                  <h3 className="text-xs sm:text-sm font-bold text-[#172033] leading-snug">
+                    EVT-2026-004: Unit B Drain Line
+                  </h3>
+                  <p className="text-[11px] text-[#596579] leading-normal">
+                    Unlinked spool code syntax submitted. Requires planner target assignment to credit progress.
+                  </p>
+                  <div className="pt-1">
+                    <span className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
+                      Progress Uncredited (1.0 spool)
+                    </span>
+                  </div>
                 </div>
-                <h3 className="text-[15px] sm:text-base font-medium text-[#172033] leading-snug">
-                  DPR-2026-09-18 (Unit A): Missing Quality Signoff
-                </h3>
-                <p className="text-[13px] text-[#596579] leading-relaxed">
-                  Field shift diary was captured and queued without Lead Quality Inspector digital certificate seal. Held in local validation buffer.
-                </p>
-                <div className="text-[12px] text-[#596579] pt-2 border-t border-[#D9DEE5]/60">
-                  <span className="font-semibold text-[#172033]">Impact:</span> Record cannot be promoted to Server Confirmed audit grade.
-                </div>
+                <button
+                  type="button"
+                  onClick={() => setSelectedReviewModalEvent(unmatchedEvent)}
+                  className="w-full py-1.5 px-3 bg-white hover:bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0] text-xs font-bold rounded text-center transition-colors block cursor-pointer mt-2"
+                >
+                  Assign Activity Target &rarr;
+                </button>
               </div>
-              <Link
-                href="/field/dpr"
-                className="w-full py-2 px-3 bg-white hover:bg-[#F1F3F5] text-[#172033] border border-[#D9DEE5] text-xs font-semibold rounded shadow-2xs text-center transition-colors block"
-              >
-                Request Inspector Signoff
-              </Link>
+
+              {/* Card 4: Downstream Ripple / Simulation */}
+              <div className="p-3.5 rounded-lg bg-white border border-[#F0D4A6] hover:border-[#D98B32] transition-all shadow-2xs flex flex-col justify-between space-y-2.5">
+                <div className="space-y-1.5">
+                  <div className="flex items-center justify-between">
+                    <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase bg-[#FDF6ED] text-[#8C5311] border border-[#F0D4A6] flex items-center gap-1">
+                      <TrendingDown className="w-3 h-3 text-[#D98B32]" />
+                      Ripple Impact
+                    </span>
+                    <span className="text-[11px] font-mono font-bold text-[#D98B32] bg-[#FDF6ED] px-1 rounded">3 Downstream</span>
+                  </div>
+                  <h3 className="text-xs sm:text-sm font-bold text-[#172033] leading-snug">
+                    Critical Ripple: Hydro-test & Loops
+                  </h3>
+                  <p className="text-[11px] text-[#596579] leading-normal">
+                    Successor activities PIP-24-002 and INS-04-015 impacted. Commercial milestone shifts from 30 Nov to 02 Dec.
+                  </p>
+                  <div className="pt-1">
+                    <span className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-[#FDF6ED] text-[#8C5311] border border-[#F0D4A6]">
+                      Target Shift: 30 Nov &rarr; 02 Dec
+                    </span>
+                  </div>
+                </div>
+                <Link
+                  href="/what-if"
+                  className="w-full py-1.5 px-3 bg-white hover:bg-[#F1F3F5] text-[#172033] border border-[#D9DEE5] text-xs font-bold rounded text-center transition-colors block mt-2"
+                >
+                  Run What-If Simulation &rarr;
+                </Link>
+              </div>
             </div>
           </div>
         </section>
 
         {/* =========================================================================
-            3. MANDATORY S-CURVE
-            Prominent, professional, static cumulative progress trajectory.
-            Planned cumulative progress vs Actual cumulative progress vs Forecast.
+            4. MANDATORY STATIC S-CURVE (Executive Physical Earned Trajectory)
             ========================================================================= */}
-        <section aria-labelledby="scurve-heading" className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 shadow-xs space-y-4">
+        <section aria-labelledby="scurve-heading" className="bg-white border border-[#D9DEE5] border-l-4 border-l-[#176B87] rounded-lg p-4 sm:p-6 shadow-xs space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D9DEE5] gap-2">
             <div>
               <span className="text-[11px] font-mono font-medium uppercase text-[#596579] tracking-wider">
-                Earned Value & Schedule Trajectory
+                Earned Value & Cumulative Trajectory
               </span>
-              <h2 id="scurve-heading" className="text-lg sm:text-xl font-semibold text-[#172033] tracking-tight">
+              <h2 id="scurve-heading" className="text-base sm:text-lg font-bold text-[#172033] tracking-tight">
                 Project S-Curve — Baseline vs. Actual Earned vs. Forecast
               </h2>
-              <p className="text-[13px] text-[#596579] mt-0.5">
-                Physical earned progress trajectory across all WBS work packages compared to P6 baseline envelope.
+              <p className="text-xs text-[#596579] mt-0.5">
+                Physical earned progress curve across all WBS work packages compared to P6 baseline envelope.
               </p>
             </div>
             <div className="flex items-center gap-3">
@@ -659,38 +642,39 @@ export default function ManagerDashboardPage() {
                 href="/variance"
                 className="px-3 py-1.5 bg-[#F1F3F5] hover:bg-[#E5E8EB] text-[#172033] border border-[#D9DEE5] text-xs font-semibold rounded transition-colors inline-flex items-center gap-1"
               >
-                <span>Detailed Variance</span>
+                <span>Full Variance Ledger</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             </div>
           </div>
 
-          {/* S-Curve Summary Values & Concise Interpretation */}
+          {/* S-Curve Summary Pills */}
           <div className="bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg p-3 sm:p-4 flex flex-col md:flex-row md:items-center justify-between gap-3 text-xs">
-            <div className="flex items-center gap-4 sm:gap-6 flex-wrap">
-              <div className="flex items-center gap-2">
-                <span className="w-3 h-0.5 bg-[#176B87]" />
+            <div className="flex items-center gap-3 sm:gap-4 flex-wrap">
+              <div className="flex items-center gap-2 bg-white px-2.5 py-1 rounded border border-[#D9DEE5]">
+                <span className="w-3 h-1 bg-[#176B87] rounded-full" />
                 <span className="text-[#596579]">Planned:</span>
                 <strong className="font-mono text-sm font-bold text-[#176B87]">80.0%</strong>
               </div>
-              <div className="flex items-center gap-2">
-                <span className="w-3 h-0.5 bg-[#2E7D5B]" />
+              <div className="flex items-center gap-2 bg-white px-2.5 py-1 rounded border border-[#D9DEE5]">
+                <span className="w-3 h-1 bg-[#2E7D5B] rounded-full" />
                 <span className="text-[#596579]">Actual:</span>
                 <strong className="font-mono text-sm font-bold text-[#2E7D5B]">73.0%</strong>
               </div>
-              <div className="flex items-center gap-2">
-                <span className="w-3 h-0.5 border-t border-dashed border-[#D98B32]" />
+              <div className="flex items-center gap-2 bg-white px-2.5 py-1 rounded border border-[#D9DEE5]">
+                <span className="w-3 h-1 border-t-2 border-dashed border-[#D98B32]" />
                 <span className="text-[#596579]">Forecast:</span>
                 <strong className="font-mono text-sm font-bold text-[#D98B32]">100% (20 Dec)</strong>
               </div>
-              <div className="flex items-center gap-2">
-                <span className="text-[#596579]">Variance:</span>
-                <strong className="font-mono text-sm font-bold text-[#B5473C]">-7.0%</strong>
+              <div className="flex items-center gap-2 bg-[#FBEFEE] px-2.5 py-1 rounded border border-[#E4B0AA]">
+                <span className="w-2 h-2 rounded-full bg-[#B5473C]" />
+                <span className="text-[#B5473C] font-semibold">Variance:</span>
+                <strong className="font-mono text-sm font-bold text-[#B5473C]">-7.0% SLIP</strong>
               </div>
             </div>
 
-            <div className="px-3 py-1 rounded bg-white border border-[#D9DEE5] text-[#596579] font-medium text-xs">
-              <span className="text-[#B5473C] font-semibold">Interpretation:</span> Actual progress is 7.0 percentage points behind planned progress.
+            <div className="px-3 py-1.5 rounded bg-white border border-[#D9DEE5] text-[#596579] font-medium text-xs">
+              <span className="text-[#B5473C] font-bold">Variance Diagnosis:</span> Actual physical progress is 7.0 percentage points behind approved baseline (critical path impact).
             </div>
           </div>
 
@@ -702,20 +686,135 @@ export default function ManagerDashboardPage() {
         </section>
 
         {/* =========================================================================
-            4. SCHEDULE VARIANCE
-            Compact project-control table: Activity | Planned Finish | Actual Finish | Variance | Status
+            5. ANALYTICAL CHARTS SUITE (Interactive Multi-Perspective Cockpit)
+            Provides rich visual charts (Discipline, Site Area, Variance Trend, Delay Ranking)
+            and completely removes duplicate progress bars and verbose excuse paragraphs!
             ========================================================================= */}
-        <section id="schedule-variance" aria-labelledby="schedule-variance-heading" className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 shadow-xs space-y-4">
+        <section aria-labelledby="analytics-heading" className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 shadow-xs space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D9DEE5] gap-3">
+            <div>
+              <span className="text-[11px] font-mono font-medium uppercase text-[#596579] tracking-wider">
+                Multi-Perspective Schedule Analytics
+              </span>
+              <h2 id="analytics-heading" className="text-base sm:text-lg font-bold text-[#172033] tracking-tight">
+                Execution Analytics & Performance Dimensions
+              </h2>
+              <p className="text-xs text-[#596579] mt-0.5">
+                Switch visual perspectives to evaluate project delivery by engineering discipline, site zone, or variance trajectory.
+              </p>
+            </div>
+
+            {/* Perspective Selector Tabs */}
+            <div className="flex items-center gap-1 p-1 bg-[#F1F3F5] border border-[#D9DEE5] rounded-lg self-start sm:self-center overflow-x-auto max-w-full">
+              <button
+                type="button"
+                onClick={() => setActiveChartTab('discipline')}
+                className={`px-3 py-1.5 text-xs font-semibold rounded-md transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer ${
+                  activeChartTab === 'discipline'
+                    ? 'bg-white text-[#176B87] shadow-2xs border border-[#D9DEE5]'
+                    : 'text-[#596579] hover:text-[#172033]'
+                }`}
+              >
+                <Layers className="w-3.5 h-3.5" />
+                <span>By Discipline</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setActiveChartTab('area')}
+                className={`px-3 py-1.5 text-xs font-semibold rounded-md transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer ${
+                  activeChartTab === 'area'
+                    ? 'bg-white text-[#176B87] shadow-2xs border border-[#D9DEE5]'
+                    : 'text-[#596579] hover:text-[#172033]'
+                }`}
+              >
+                <MapPin className="w-3.5 h-3.5" />
+                <span>By Site Area</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setActiveChartTab('variance-trend')}
+                className={`px-3 py-1.5 text-xs font-semibold rounded-md transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer ${
+                  activeChartTab === 'variance-trend'
+                    ? 'bg-white text-[#176B87] shadow-2xs border border-[#D9DEE5]'
+                    : 'text-[#596579] hover:text-[#172033]'
+                }`}
+              >
+                <LineChartIcon className="w-3.5 h-3.5" />
+                <span>Variance Trend</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setActiveChartTab('delays')}
+                className={`px-3 py-1.5 text-xs font-semibold rounded-md transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer ${
+                  activeChartTab === 'delays'
+                    ? 'bg-white text-[#176B87] shadow-2xs border border-[#D9DEE5]'
+                    : 'text-[#596579] hover:text-[#172033]'
+                }`}
+              >
+                <Clock className="w-3.5 h-3.5" />
+                <span>Critical Delays</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Active Chart Rendering */}
+          <div className="pt-2">
+            {activeChartTab === 'discipline' && (
+              <BarChart
+                variant="discipline"
+                title="Discipline Performance — Actual vs Baseline"
+                subtitle="Earned progress comparison across major engineering disciplines against P6 targets"
+                className="border-0 p-0 shadow-none"
+              />
+            )}
+
+            {activeChartTab === 'area' && (
+              <BarChart
+                variant="area"
+                title="Work Package Progress by Site Area"
+                subtitle="WBS physical progress across Unit A Gas Processing, Compressor House, and Offsites"
+                className="border-0 p-0 shadow-none"
+              />
+            )}
+
+            {activeChartTab === 'variance-trend' && (
+              <LineChart
+                variant="variance-trend"
+                title="Cumulative Schedule Variance Trend"
+                subtitle="Historical trajectory of monthly schedule slip (+ahead / -slip) and projected recovery"
+                className="border-0 p-0 shadow-none"
+              />
+            )}
+
+            {activeChartTab === 'delays' && (
+              <HorizontalBarChart
+                variant="delayed-activities"
+                title="Top Delayed Critical Activities"
+                subtitle="Slip duration and critical path impact ranking across active work packages"
+                className="border-0 p-0 shadow-none"
+              />
+            )}
+          </div>
+        </section>
+
+        {/* ========================================================= */}
+        {/* 6. SCHEDULE VARIANCE CONTROL TABLE */}
+        {/* Compact, crisp activity-level tracking with highlighted CPM rows */}
+        {/* ========================================================= */}
+        <section id="variance-table" aria-labelledby="variance-table-heading" className="bg-white border border-[#D9DEE5] border-l-4 border-l-[#176B87] rounded-lg p-4 sm:p-6 shadow-xs space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D9DEE5] gap-2">
             <div>
               <span className="text-[11px] font-mono font-medium uppercase text-[#596579] tracking-wider">
-                Baseline Variance Control
+                Critical Path Activity Tracking
               </span>
-              <h2 id="schedule-variance-heading" className="text-lg sm:text-xl font-semibold text-[#172033] tracking-tight">
+              <h2 id="variance-table-heading" className="text-base sm:text-lg font-bold text-[#172033] tracking-tight">
                 Schedule Variance Control Table
               </h2>
-              <p className="text-[13px] text-[#596579] mt-0.5">
-                Activity-level tracking comparing planned finish to forecasted completion and slip variance.
+              <p className="text-xs text-[#596579] mt-0.5">
+                Activity-level audit comparing planned finish to actual completion and slip variance.
               </p>
             </div>
             <Link
@@ -726,7 +825,6 @@ export default function ManagerDashboardPage() {
             </Link>
           </div>
 
-          {/* Compact Project-Control Table */}
           <div className="overflow-x-auto border border-[#D9DEE5] rounded-lg">
             <table className="w-full min-w-[640px] text-left border-collapse text-xs">
               <thead className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[#596579] uppercase font-semibold text-[11px] tracking-wider h-10">
@@ -741,7 +839,12 @@ export default function ManagerDashboardPage() {
               </thead>
               <tbody className="divide-y divide-[#D9DEE5]/60 text-[#172033]">
                 {scheduleVarianceItems.map((item) => (
-                  <tr key={item.id} className="h-10 hover:bg-[#F9FAFC] transition-colors">
+                  <tr
+                    key={item.id}
+                    className={`h-10 hover:bg-[#F9FAFC] transition-colors ${
+                      item.isCriticalPath && item.varianceDays > 0 ? 'bg-[#FFF9F8]' : ''
+                    }`}
+                  >
                     <td className="py-2.5 px-3 font-medium">
                       <div className="flex items-center gap-2">
                         <span className="font-mono font-bold text-[#176B87]">{item.id}</span>
@@ -754,9 +857,9 @@ export default function ManagerDashboardPage() {
                       </div>
                     </td>
                     <td className="py-2.5 px-3 font-mono text-[#596579]">{item.plannedFinish}</td>
-                    <td className="py-2.5 px-3 font-mono text-[#172033]">{item.actualFinish}</td>
+                    <td className="py-2.5 px-3 font-mono font-medium text-[#172033]">{item.actualFinish}</td>
                     <td className="py-2.5 px-3">
-                      <span className={`font-mono font-bold ${item.varianceDays > 0 ? 'text-[#B5473C]' : 'text-[#2E7D5B]'}`}>
+                      <span className={`font-mono font-bold px-1.5 py-0.5 rounded ${item.varianceDays > 0 ? 'bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]' : 'text-[#2E7D5B]'}`}>
                         {item.varianceDays === 0 ? '0d' : `+${item.varianceDays}d`}
                       </span>
                     </td>
@@ -780,522 +883,112 @@ export default function ManagerDashboardPage() {
         </section>
 
         {/* =========================================================================
-            5. DELAY & DEPENDENCY IMPACT
-            Delayed Activity, Delay, Cause, Downstream Impact, Critical Path
+            7. DECISIONS & VERIFIED MILESTONES (Streamlined Executive Ledger)
+            Replaces raw worker logs with high-signal pending approvals + verified milestone syncs
             ========================================================================= */}
-        <section id="delays" aria-labelledby="delay-heading" className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 shadow-xs space-y-4">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D9DEE5] gap-2">
-            <div>
-              <span className="text-[11px] font-mono font-medium uppercase text-[#596579] tracking-wider">
-                Critical Path Propagation & Float Loss
-              </span>
-              <h2 id="delay-heading" className="text-lg sm:text-xl font-semibold text-[#172033] tracking-tight">
-                Delay & Dependency Impact
-              </h2>
-              <p className="text-[13px] text-[#596579] mt-0.5">
-                Propagation analysis of active schedule variances onto downstream critical activities and commercial milestones.
-              </p>
-            </div>
-            <Link
-              href="/risks"
-              className="text-xs text-[#176B87] hover:underline font-semibold inline-flex items-center gap-1"
-            >
-              Interactive CPM Risk Network <ArrowRight className="w-3.5 h-3.5" />
-            </Link>
-          </div>
-
-          {/* Horizontal Bar Chart: Delayed Activities */}
-          <HorizontalBarChart variant="delayed-activities" className="border-0 p-0 shadow-none mb-4" />
-
-          {/* Detailed Delay Cases */}
-          <div className="space-y-4 pt-2 border-t border-[#D9DEE5]/60">
-            {/* Delay Case 1: Line 24-XX Header */}
-            <div className="border border-[#E4B0AA] rounded-lg p-4 bg-[#FFF9F8] space-y-3">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-[#E4B0AA]/60">
-                <div className="flex items-center gap-2">
-                  <span className="font-mono text-xs font-bold text-[#B5473C] bg-[#FBEFEE] border border-[#E4B0AA] px-2 py-0.5 rounded">
-                    PIP-24-001
-                  </span>
-                  <span className="text-xs font-bold text-[#172033]">
-                    Erect Line 24-XX High Pressure Gas Header
-                  </span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <VarianceBadge daysDelay={2} size="sm" />
-                  <WhyButton
-                    onClick={() => openWhyExplanation('delay:PIP-24-001', 'PIP-24-001')}
-                    title="Why is PIP-24-001 delayed?"
-                  />
-                  <span className="text-xs font-mono font-bold text-[#B5473C]">CRITICAL PATH</span>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3 text-xs">
-                {/* 1. Delayed Activity & Delay */}
-                <div>
-                  <span className="text-[10px] uppercase font-bold text-[#596579] block">Delayed Activity & Delay</span>
-                  <p className="text-[#172033] font-semibold mt-0.5">PIP-24-001 (+2d slip)</p>
-                  <span className="text-[10px] text-[#596579]">Planned: 15 Aug - 30 Sep</span>
-                </div>
-
-                {/* 2. Cause */}
-                <div>
-                  <span className="text-[10px] uppercase font-bold text-[#596579] block">Cause</span>
-                  <p className="text-[#596579] mt-0.5">
-                    Crane mobilization delayed 2 days due to heavy rainfall at Unit A laydown.
-                  </p>
-                </div>
-
-                {/* 3. Downstream Impact */}
-                <div>
-                  <span className="text-[10px] uppercase font-bold text-[#596579] block">Downstream Impact</span>
-                  <p className="font-mono text-[#172033] mt-0.5 font-medium">
-                    PIP-24-002 (+2d), PIP-24-003 (+4d), INS-04-015 (+2d)
-                  </p>
-                </div>
-
-                {/* 4. Critical Path Ripple */}
-                <div>
-                  <span className="text-[10px] uppercase font-bold text-[#596579] block">Critical Path Status</span>
-                  <p className="text-[#B5473C] font-semibold mt-0.5">
-                    Pushes 150-bar hydrostatic pressure test milestone by +2 days. Zero float.
-                  </p>
-                </div>
-
-                {/* 5. Action */}
-                <div className="flex flex-col justify-end md:col-span-2 lg:col-span-1">
-                  <span className="text-[10px] uppercase font-bold text-[#596579] block mb-1">Action</span>
-                  <Link
-                    href="/what-if"
-                    className="w-full py-1.5 px-2 bg-white hover:bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0] text-xs font-bold rounded text-center transition-colors shadow-2xs"
-                  >
-                    Simulate Recovery
-                  </Link>
-                </div>
-              </div>
-            </div>
-
-            {/* Delay Case 2: Cable Tray Overhead Slip */}
-            <div className="border border-[#F0D4A6] rounded-lg p-4 bg-[#FFFCF7] space-y-3">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-[#F0D4A6]/60">
-                <div className="flex items-center gap-2">
-                  <span className="font-mono text-xs font-bold text-[#8C5311] bg-[#FDF6ED] border border-[#F0D4A6] px-2 py-0.5 rounded">
-                    ELE-11-032
-                  </span>
-                  <span className="text-xs font-bold text-[#172033]">
-                    Cable Tray Installation - Substation to Compressor Bay
-                  </span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <VarianceBadge daysDelay={1} size="sm" />
-                  <span className="text-xs font-mono font-medium text-[#596579]">SECONDARY PATH</span>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3 text-xs">
-                {/* 1. Delayed Activity & Delay */}
-                <div>
-                  <span className="text-[10px] uppercase font-bold text-[#596579] block">Delayed Activity & Delay</span>
-                  <p className="text-[#172033] font-semibold mt-0.5">ELE-11-032 (+1d lag)</p>
-                  <span className="text-[10px] text-[#596579]">Planned: 01 Sep - 15 Oct</span>
-                </div>
-
-                {/* 2. Cause */}
-                <div>
-                  <span className="text-[10px] uppercase font-bold text-[#596579] block">Cause</span>
-                  <p className="text-[#596579] mt-0.5">
-                    Overhead steel gallery bracket alignment hold point awaiting re-torque inspection.
-                  </p>
-                </div>
-
-                {/* 3. Downstream Impact */}
-                <div>
-                  <span className="text-[10px] uppercase font-bold text-[#596579] block">Downstream Impact</span>
-                  <p className="font-mono text-[#172033] mt-0.5 font-medium">
-                    INS-04-015 (Smart Transmitters)
-                  </p>
-                </div>
-
-                {/* 4. Critical Path Ripple */}
-                <div>
-                  <span className="text-[10px] uppercase font-bold text-[#596579] block">Critical Path Status</span>
-                  <p className="text-[#D98B32] font-semibold mt-0.5">
-                    Absorbs 1 day of 3-day float buffer. No immediate milestone push.
-                  </p>
-                </div>
-
-                {/* 5. Action */}
-                <div className="flex flex-col justify-end md:col-span-2 lg:col-span-1">
-                  <span className="text-[10px] uppercase font-bold text-[#596579] block mb-1">Action</span>
-                  <button
-                    type="button"
-                    onClick={() => openActivityDrawer('ELE-11-032')}
-                    className="w-full py-1.5 px-2 bg-white hover:bg-[#F1F3F5] text-[#172033] border border-[#D9DEE5] text-xs font-medium rounded text-center transition-colors cursor-pointer"
-                  >
-                    Inspect Activity
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* =========================================================================
-            6. EXECUTION SUMMARY
-            Project-Level Execution Performance & Discipline Progress Breakdown
-            ========================================================================= */}
-        <section aria-labelledby="progress-heading" className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 shadow-xs space-y-4">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D9DEE5] gap-2">
-            <div>
-              <span className="text-[11px] font-mono font-medium uppercase text-[#596579] tracking-wider">
-                Discipline Performance & Work Packages
-              </span>
-              <h2 id="progress-heading" className="text-lg sm:text-xl font-semibold text-[#172033] tracking-tight">
-                Execution Summary & Discipline Breakdown
-              </h2>
-              <p className="text-[13px] text-[#596579] mt-0.5">
-                Physical progress earned across major engineering disciplines against P6 baseline targets.
-              </p>
-            </div>
-            <Link
-              href="/progress"
-              className="text-xs text-[#176B87] hover:underline font-semibold inline-flex items-center gap-1"
-            >
-              Detailed Progress Matrix <ArrowRight className="w-3.5 h-3.5" />
-            </Link>
-          </div>
-
-          {/* Bar Chart: Progress by Discipline */}
-          <BarChart variant="discipline" className="border-0 p-0 shadow-none" />
-
-          {/* Discipline Breakdown Bars */}
-          <div className="border border-[#D9DEE5] rounded-md bg-white divide-y divide-[#D9DEE5] overflow-hidden">
-            {disciplineBreakdown.map((item) => (
-              <div key={item.name} className="p-3 text-xs">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-2">
-                  <span className="font-medium text-[#172033]">{item.name}</span>
-                  <div className="flex items-center gap-3 font-mono">
-                    <span className="text-[#596579]">Actual: <strong className="text-[#172033]">{item.actual}%</strong></span>
-                    <span className="text-[#7B8798]">|</span>
-                    <span className="text-[#596579]">Planned: {item.planned}%</span>
-                    <span className="text-[#7B8798]">|</span>
-                    <span className={item.actual < item.planned ? 'text-[#B5473C] font-medium' : 'text-[#2E7D5B] font-medium'}>
-                      {item.delta}
-                    </span>
-                    <StatusBadge status={item.status} size="sm" />
-                  </div>
-                </div>
-                <ProgressBar
-                  actual={item.actual}
-                  planned={item.planned}
-                  size="sm"
-                  status={item.status}
-                  showLabels={false}
-                />
-              </div>
-            ))}
-          </div>
-
-          {/* Summary Contextual Brief Note */}
-          <div className="p-3 rounded bg-[#F7F8FA] border border-[#D9DEE5] text-xs text-[#596579] flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-            <div className="flex items-center gap-2 flex-wrap">
-              <span>Summary Context:</span>
-              <strong className="text-[#172033]">What happened?</strong>
-              <span>16 units verified, civil foundations 100%.</span>
-              <span className="text-[#7B8798]">•</span>
-              <strong className="text-[#172033]">What changed?</strong>
-              <span>Line 24 slipped +2d, widening variance to -7.0%.</span>
-            </div>
-            <Link href="/progress" className="text-[#176B87] hover:underline font-semibold flex-shrink-0">
-              Discipline Matrix &rarr;
-            </Link>
-          </div>
-        </section>
-
-        {/* REVIEW REQUIRED TABLE (Integrated within Schedule Variance domain) */}
-        <section id="review-required" aria-labelledby="review-heading" className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 shadow-xs space-y-4">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D9DEE5] gap-2">
-            <div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+          {/* Column 1: Pending Match Approvals */}
+          <section aria-labelledby="pending-approvals-heading" className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-5 shadow-xs space-y-3">
+            <div className="flex items-center justify-between pb-2 border-b border-[#D9DEE5]">
               <div className="flex items-center gap-2">
-                <h2 id="review-heading" className="text-lg sm:text-xl font-semibold text-[#172033] tracking-tight">
-                  Review Required Queue
+                <ShieldCheck className="w-4 h-4 text-[#176B87]" />
+                <h2 id="pending-approvals-heading" className="text-sm sm:text-base font-bold text-[#172033]">
+                  Pending Schedule Links
                 </h2>
-                <span className="px-2 py-0.5 rounded-full bg-[#FDF6ED] text-[#8C5311] border border-[#F0D4A6] text-[11px] font-mono font-semibold">
-                  {reviewEvents.length} Actions Pending
+                <span className="px-2 py-0.5 rounded-full bg-[#FDF6ED] text-[#8C5311] border border-[#F0D4A6] text-[10px] font-mono font-bold">
+                  {reviewEvents.length} Actions
                 </span>
               </div>
-              <p className="text-[13px] text-[#596579] mt-0.5">
-                Match Policy: <strong className="text-[#2E7D5B]">≥90% Auto-Link</strong>, <strong className="text-[#D98B32]">70%–89% Planner Review</strong>, <strong className="text-[#B5473C]">&lt;70% Unmatched</strong>.
-              </p>
-            </div>
-            <Link
-              href="/review"
-              className="text-xs text-[#176B87] hover:underline font-semibold inline-flex items-center gap-1"
-            >
-              Open Full Review Center <ArrowRight className="w-3.5 h-3.5" />
-            </Link>
-          </div>
-
-          {reviewEvents.length === 0 ? (
-            <div className="p-8 text-center bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg">
-              <CheckCircle2 className="w-8 h-8 text-[#2E7D5B] mx-auto mb-2" />
-              <p className="text-sm font-semibold text-[#172033]">No pending review items</p>
-              <p className="text-[13px] text-[#596579] max-w-md mx-auto mb-3">
-                All execution events have been matched and verified against the schedule baseline.
-              </p>
-              <Link
-                href="/execution"
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-[#176B87] bg-white border border-[#D9DEE5] hover:border-[#176B87] rounded-md transition-colors"
-              >
-                <span>View Execution Feed</span>
-                <ArrowRight className="w-3.5 h-3.5" />
+              <Link href="/review" className="text-xs text-[#176B87] hover:underline font-semibold">
+                Open Review Center &rarr;
               </Link>
             </div>
-          ) : (
-            <div className="overflow-x-auto border border-[#D9DEE5] rounded-lg">
-              <table className="w-full min-w-[700px] text-left border-collapse text-sm">
-                <thead className="sticky top-0 z-10 bg-[#F7F8FA]">
-                  <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[#596579] font-semibold text-[11px] sm:text-xs uppercase tracking-wider h-11">
-                    <th className="py-3 px-4 whitespace-nowrap min-w-[220px]">Event</th>
-                    <th className="py-3 px-4 whitespace-nowrap min-w-[200px]">Candidate Activity</th>
-                    <th className="py-3 px-4 whitespace-nowrap">Confidence</th>
-                    <th className="py-3 px-4 whitespace-nowrap">Evidence</th>
-                    <th className="py-3 px-4 whitespace-nowrap">Status</th>
-                    <th className="py-3 px-4 whitespace-nowrap text-right">Action</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-[#D9DEE5]/60 text-[#172033]">
-                  {reviewEvents.map((evt) => (
-                    <tr key={evt.id} className="h-11 sm:h-12 hover:bg-[#F9FAFC] transition-colors">
-                      {/* 1. Event */}
-                      <td className="py-3 px-4 align-middle">
-                        <span className="font-mono text-xs font-semibold text-[#176B87] block">{evt.id}</span>
-                        <p className="text-[14px] font-normal text-[#172033] mt-0.5 leading-snug">{evt.rawText}</p>
-                        <span className="text-[11px] text-[#7B8798] font-mono mt-0.5 block">
-                          {evt.eventDate} • {evt.source}
-                        </span>
-                      </td>
 
-                      {/* 2. Candidate Activity */}
-                      <td className="py-3 px-4 align-middle">
-                        {evt.matchedActivityId ? (
-                          <>
-                            <span className="font-mono text-xs font-semibold text-[#176B87] block">
-                              {evt.matchedActivityId}
-                            </span>
-                            <span className="text-[13px] text-[#172033] leading-tight block">
-                              {evt.matchedActivityName}
-                            </span>
-                          </>
-                        ) : (
-                          <span className="text-xs text-[#B5473C] font-semibold italic">
-                            No Candidate Match Assigned
-                          </span>
-                        )}
-                      </td>
-
-                      {/* 3. Confidence */}
-                      <td className="py-3 px-4 align-middle whitespace-nowrap">
-                        <div className="flex items-center gap-2">
-                          <ConfidenceBadge score={evt.confidence} size="sm" />
-                          <WhyButton
-                            onClick={() => openWhyExplanation(`confidence:${evt.id}`, evt.id)}
-                            title="Why this confidence score?"
-                          />
-                        </div>
-                      </td>
-
-                      {/* 4. Evidence */}
-                      <td className="py-3 px-4 align-middle whitespace-nowrap">
-                        {evt.evidenceIds.length > 0 ? (
-                          <Link
-                            href="/evidence"
-                            className="inline-flex items-center gap-1 text-[11px] font-mono text-[#176B87] hover:underline"
-                          >
-                            <FileCheck className="w-3.5 h-3.5 text-[#2E7D5B]" />
-                            <span>{evt.evidenceIds[0]}</span>
-                          </Link>
-                        ) : (
-                          <span className="text-[11px] text-[#7B8798]">None</span>
-                        )}
-                      </td>
-
-                      {/* 5. Status */}
-                      <td className="py-3 px-4 align-middle whitespace-nowrap">
-                        <StatusBadge status={evt.status} type="event" size="sm" />
-                      </td>
-
-                      {/* 6. Action: Review */}
-                      <td className="py-3 px-4 align-middle text-right whitespace-nowrap">
-                        <button
-                          type="button"
-                          onClick={() => setSelectedReviewModalEvent(evt)}
-                          className="px-3 py-1.5 bg-white hover:bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0] text-xs font-semibold rounded shadow-2xs transition-colors cursor-pointer"
-                        >
-                          Review Match
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
-        </section>
-
-        {/* =========================================================================
-            7. RECENT ACTIVITY
-            Stream of verified and processing field updates with progressive disclosure
-            ========================================================================= */}
-        <section aria-labelledby="execution-heading" className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 shadow-xs space-y-4">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D9DEE5] gap-2">
-            <div>
-              <span className="text-[11px] font-mono font-medium uppercase text-[#596579] tracking-wider">
-                Field Activity Stream & Verification Feed
-              </span>
-              <h2 id="execution-heading" className="text-lg sm:text-xl font-semibold text-[#172033] tracking-tight">
-                Recent Activity & Field Execution
-              </h2>
-              <p className="text-[13px] text-[#596579] mt-0.5">
-                Stream of verified and processing field updates with extracted quantities, match candidates, and verification status.
-              </p>
-            </div>
-            <Link
-              href="/execution"
-              className="text-xs text-[#176B87] hover:underline font-semibold inline-flex items-center gap-1"
-            >
-              Full Execution Stream <ArrowRight className="w-3.5 h-3.5" />
-            </Link>
-          </div>
-
-          <div className="divide-y divide-[#D9DEE5]">
-            {MOCK_EXECUTION_EVENTS.map((evt) => {
-              const isTechnicalOpen = openedTechnicalEventId === evt.id;
-
-              return (
-                <div key={evt.id} className="py-3 space-y-2">
-                  <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
-                    <div className="min-w-0 flex-1 space-y-1">
-                      <div className="flex items-center gap-2 flex-wrap">
-                        <span className="font-mono text-xs font-bold text-[#176B87] bg-[#EDF2F8] px-2 py-0.5 rounded">
-                          {evt.id}
-                        </span>
-                        <span className="text-xs font-semibold text-[#172033]">{evt.createdBy}</span>
-                        <span className="text-[11px] text-[#7B8798] font-mono">
-                          • {evt.eventDate} {evt.eventTime} ({evt.source})
-                        </span>
-                        <StatusBadge status={evt.status} type="event" size="sm" />
+            {reviewEvents.length === 0 ? (
+              <div className="p-6 text-center bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg">
+                <CheckCircle2 className="w-6 h-6 text-[#2E7D5B] mx-auto mb-1.5" />
+                <p className="text-xs font-bold text-[#172033]">No pending review items</p>
+                <p className="text-[11px] text-[#596579] mt-0.5">
+                  All field updates are linked and verified with the baseline.
+                </p>
+              </div>
+            ) : (
+              <div className="divide-y divide-[#D9DEE5]">
+                {reviewEvents.slice(0, 3).map((evt) => (
+                  <div key={evt.id} className="py-2.5 flex items-center justify-between gap-3 text-xs">
+                    <div className="min-w-0 space-y-0.5">
+                      <div className="flex items-center gap-2">
+                        <span className="font-mono font-bold text-[#176B87] text-[11px]">{evt.id}</span>
+                        <ConfidenceBadge score={evt.confidence} size="sm" />
                       </div>
-
-                      <p className="text-xs text-[#172033] font-medium leading-snug">
-                        &ldquo;{evt.rawText}&rdquo;
+                      <p className="text-xs text-[#172033] font-medium truncate max-w-sm">
+                        {evt.rawText}
                       </p>
-
-                      <div className="flex items-center gap-2 text-xs text-[#596579]">
-                        <span>Activity Target:</span>
-                        <span className="font-mono font-bold text-[#176B87]">
-                          {evt.matchedActivityId || 'UNASSIGNED'}
-                        </span>
-                        {evt.matchedActivityName && (
-                          <span className="text-[#172033] truncate max-w-sm">
-                            — {evt.matchedActivityName}
-                          </span>
-                        )}
+                      <div className="text-[10px] text-[#596579] flex items-center gap-1">
+                        <span>Target:</span>
+                        <strong className="text-[#172033] font-mono">{evt.matchedActivityId || 'Unassigned'}</strong>
                       </div>
                     </div>
-
-                    {/* Progressive disclosure toggle */}
-                    <div className="flex items-center gap-2 self-start md:self-center flex-shrink-0">
-                      <ConfidenceBadge score={evt.confidence} size="sm" />
-                      <button
-                        type="button"
-                        onClick={() => setOpenedTechnicalEventId(isTechnicalOpen ? null : evt.id)}
-                        className="px-3 py-1 text-xs text-[#176B87] hover:bg-[#EDF5F8] border border-[#B3CBE0] rounded font-medium transition-colors inline-flex items-center gap-1 cursor-pointer"
-                      >
-                        {isTechnicalOpen ? (
-                          <>
-                            <span>Hide Details</span>
-                            <ChevronDown className="w-3.5 h-3.5" />
-                          </>
-                        ) : (
-                          <>
-                            <span>Inspect Event</span>
-                            <ChevronRight className="w-3.5 h-3.5" />
-                          </>
-                        )}
-                      </button>
-                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setSelectedReviewModalEvent(evt)}
+                      className="px-2.5 py-1 text-xs bg-white hover:bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0] rounded font-semibold transition-colors flex-shrink-0 cursor-pointer shadow-2xs"
+                    >
+                      Review
+                    </button>
                   </div>
+                ))}
+              </div>
+            )}
+          </section>
 
-                  {/* PROGRESSIVE DISCLOSURE: Extracted details shown on inspect */}
-                  {isTechnicalOpen && (
-                    <div className="mt-2 p-4 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg text-xs space-y-3">
-                      <div className="flex items-center justify-between pb-2 border-b border-[#D9DEE5]">
-                        <span className="font-mono font-bold text-[11px] text-[#172033] uppercase">
-                          Extracted Details • {evt.id}
-                        </span>
-                        <span className="text-[10px] font-mono text-[#596579]">
-                          Status: <span className="font-semibold text-[#176B87]">{evt.status}</span>
-                        </span>
-                      </div>
+          {/* Column 2: Verified Milestones Sync Ledger */}
+          <section aria-labelledby="milestones-heading" className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-5 shadow-xs space-y-3">
+            <div className="flex items-center justify-between pb-2 border-b border-[#D9DEE5]">
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-[#2E7D5B]" />
+                <h2 id="milestones-heading" className="text-sm sm:text-base font-bold text-[#172033]">
+                  Verified Progress Synchronizations
+                </h2>
+              </div>
+              <Link href="/execution" className="text-xs text-[#176B87] hover:underline font-semibold">
+                Execution Stream &rarr;
+              </Link>
+            </div>
 
-                      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 py-2 border-y border-[#D9DEE5]">
-                        <div>
-                          <span className="text-[11px] uppercase font-semibold text-[#596579] block">Discipline</span>
-                          <span className="font-mono font-medium text-[#172033] text-sm">{evt.discipline}</span>
-                        </div>
-                        <div>
-                          <span className="text-[11px] uppercase font-semibold text-[#596579] block">Extracted Quantity</span>
-                          <span className="font-mono font-medium text-[#172033] text-sm">{evt.quantity} {evt.unit}</span>
-                        </div>
-                        <div>
-                          <span className="text-[11px] uppercase font-semibold text-[#596579] block">Area / Header</span>
-                          <span className="font-mono font-medium text-[#172033] text-sm">{evt.area} {evt.line ? `(${evt.line})` : ''}</span>
-                        </div>
-                        <div>
-                          <span className="text-[11px] uppercase font-semibold text-[#596579] block">Evidence Linked</span>
-                          <span className="font-mono font-medium text-[#176B87] text-sm">
-                            {evt.evidenceIds.length > 0 ? evt.evidenceIds.join(', ') : 'None'}
-                          </span>
-                        </div>
-                      </div>
-
-                      {evt.extractedFields?.confidenceSignals && (
-                        <div className="space-y-2 pt-1">
-                          <span className="text-[11px] uppercase font-semibold text-[#596579] block">
-                            Confidence Scoring Factors
-                          </span>
-                          <div className="divide-y divide-[#D9DEE5] border border-[#D9DEE5] rounded bg-white">
-                            {evt.extractedFields.confidenceSignals.map((sig, sIdx) => (
-                              <div key={sIdx} className="flex items-center justify-between text-[12px] p-2">
-                                <span className="font-medium text-[#172033]">{sig.name}: <span className="text-[#596579] font-normal">{sig.reason}</span></span>
-                                <span className="font-mono font-medium text-[#176B87]">{sig.score}/{sig.maxScore}</span>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      )}
-
-                      <details className="pt-2 border-t border-[#D9DEE5] text-[11px] text-[#596579]">
-                        <summary className="cursor-pointer hover:underline text-[#176B87] font-semibold flex items-center justify-between">
-                          <span>Technical Details</span>
-                        </summary>
-                        <div className="mt-2 font-mono text-[10px] text-[#7B8798] space-y-1 bg-white p-2 rounded border border-[#D9DEE5]">
-                          <div>Extraction Model: NLP Precedence Classifier v3.2</div>
-                          <div>Event Ref: {evt.id}</div>
-                        </div>
-                      </details>
+            <div className="divide-y divide-[#D9DEE5]">
+              {verifiedMilestones.map((m) => (
+                <div key={m.id} className="py-2.5 flex items-center justify-between gap-3 text-xs">
+                  <div className="min-w-0 space-y-0.5">
+                    <div className="flex items-center gap-2">
+                      <span className="font-mono font-bold text-[#2E7D5B] text-[11px] flex items-center gap-1">
+                        <Check className="w-3 h-3 text-[#2E7D5B]" />
+                        {m.activityId}
+                      </span>
+                      <span className="text-[10px] text-[#7B8798] font-mono flex items-center gap-1">
+                        <Calendar className="w-3 h-3" />
+                        {m.verifiedDate}
+                      </span>
                     </div>
-                  )}
+                    <p className="text-xs text-[#172033] font-medium truncate max-w-sm">
+                      {m.title}
+                    </p>
+                    <p className="text-[10px] text-[#596579]">
+                      Verified by: <strong className="text-[#172033]">{m.auditor}</strong> • {m.progress}
+                    </p>
+                  </div>
+                  <span className="px-2 py-0.5 rounded bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9] text-[10px] font-bold font-mono whitespace-nowrap">
+                    Committed
+                  </span>
                 </div>
-              );
-            })}
-          </div>
-        </section>
+              ))}
+            </div>
+          </section>
+        </div>
       </StateWrapper>
 
       {/* =========================================================================
-          REVIEW MODAL (Triggered by "Review" action in Review Queue or Section 3)
+          REVIEW MODAL (Triggered by "Review" or Attention Decision Card)
           ========================================================================= */}
       {selectedReviewModalEvent && (
         <Modal

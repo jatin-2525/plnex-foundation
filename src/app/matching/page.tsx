@@ -380,39 +380,45 @@ export default function MatchingPage() {
 
         {/* Verification Policy Summary Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-          <div className="bg-white border border-[#B8DCC9] rounded-lg p-4 flex items-start gap-3">
+          <div className="bg-white border border-[#B8DCC9] border-l-4 border-l-[#2E7D5B] rounded-lg p-4 flex items-start gap-3 shadow-2xs">
             <div className="w-8 h-8 rounded bg-[#EDF7F2] text-[#2E7D5B] flex items-center justify-center flex-shrink-0">
               <CheckCircle2 className="w-4 h-4" />
             </div>
             <div>
-              <span className="text-xs font-bold text-[#2E7D5B] font-mono">≥ 90% High Confidence</span>
-              <p className="text-xs text-[#172033] font-medium mt-0.5">High-Confidence Suggestion</p>
+              <span className="text-[11px] font-bold text-[#2E7D5B] font-mono px-1.5 py-0.5 rounded bg-[#EDF7F2] border border-[#B8DCC9]">
+                ≥ 90% AUTO-MATCH RECOMMENDATION
+              </span>
+              <p className="text-xs text-[#172033] font-bold mt-1">High-Confidence Alignment</p>
               <p className="text-[11px] text-[#596579] mt-0.5">
-                Strong alignment across line, area, and discipline. Requires manager approval before schedule commit.
+                Exact alignment across line, area, and trade boundaries. Ready for 1-click commitment.
               </p>
             </div>
           </div>
 
-          <div className="bg-white border border-[#F0D4A6] rounded-lg p-4 flex items-start gap-3">
+          <div className="bg-white border border-[#F0D4A6] border-l-4 border-l-[#D98B32] rounded-lg p-4 flex items-start gap-3 shadow-2xs">
             <div className="w-8 h-8 rounded bg-[#FDF6ED] text-[#8C5311] flex items-center justify-center flex-shrink-0">
               <AlertTriangle className="w-4 h-4" />
             </div>
             <div>
-              <span className="text-xs font-bold text-[#D98B32] font-mono">70% – 89% Review Required</span>
-              <p className="text-xs text-[#172033] font-medium mt-0.5">Ambiguous / Partial Match</p>
+              <span className="text-[11px] font-bold text-[#8C5311] font-mono px-1.5 py-0.5 rounded bg-[#FDF6ED] border border-[#F0D4A6]">
+                70% – 89% PLANNER REVIEW REQUIRED
+              </span>
+              <p className="text-xs text-[#172033] font-bold mt-1">Ambiguous / Partial Match</p>
               <p className="text-[11px] text-[#596579] mt-0.5">
                 Partial name alignment or missing parameters. Requires planner review and candidate alternative selection.
               </p>
             </div>
           </div>
 
-          <div className="bg-white border border-[#E4B0AA] rounded-lg p-4 flex items-start gap-3">
+          <div className="bg-white border border-[#E4B0AA] border-l-4 border-l-[#B5473C] rounded-lg p-4 flex items-start gap-3 shadow-2xs">
             <div className="w-8 h-8 rounded bg-[#FBEFEE] text-[#B5473C] flex items-center justify-center flex-shrink-0">
               <XCircle className="w-4 h-4" />
             </div>
             <div>
-              <span className="text-xs font-bold text-[#B5473C] font-mono">&lt; 70% Unmatched / Conflict</span>
-              <p className="text-xs text-[#172033] font-medium mt-0.5">Manual Scope Resolution</p>
+              <span className="text-[11px] font-bold text-[#B5473C] font-mono px-1.5 py-0.5 rounded bg-[#FBEFEE] border border-[#E4B0AA]">
+                &lt; 70% UNMATCHED / MANUAL SCOPE
+              </span>
+              <p className="text-xs text-[#172033] font-bold mt-1">Manual Scope Resolution</p>
               <p className="text-[11px] text-[#596579] mt-0.5">
                 Reported work not found in baseline WBS. Reviewer can rematch to WBS activity or mark as out-of-scope work.
               </p>

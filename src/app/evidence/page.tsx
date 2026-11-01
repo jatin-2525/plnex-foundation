@@ -306,7 +306,7 @@ export default function EvidenceAndAuditPage() {
             Final Rule: Evidence should answer: "Why should I trust this update?"
             Technical details moved to collapsible sections to prevent clutter.
             ========================================================================= */}
-        <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 md:p-6 shadow-xs">
+        <div className="bg-white border border-[#D9DEE5] border-l-4 border-l-[#176B87] rounded-lg p-4 sm:p-6 shadow-xs">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-[#D9DEE5]/60">
             <div>
               <div className="flex items-center gap-2 mb-2 flex-wrap">

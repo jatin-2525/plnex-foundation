@@ -812,7 +812,7 @@ export default function ReviewQueuePage() {
         <Breadcrumbs items={breadcrumbs} />
 
         {/* HEADER */}
-        <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 md:p-6 shadow-xs">
+        <div className="bg-white border border-[#D9DEE5] border-l-4 border-l-[#176B87] rounded-lg p-4 sm:p-6 shadow-xs">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-[#D9DEE5]/60">
             <div>
               <div className="flex items-center gap-2 mb-1">
@@ -846,7 +846,7 @@ export default function ReviewQueuePage() {
 
           {/* GOVERNANCE POLICY BANNER */}
           <div className="pt-4">
-            <div className="p-4 bg-[#EDF5F8] border border-[#B3CBE0] rounded-lg flex items-start gap-3 text-xs">
+            <div className="p-4 bg-[#EDF5F8] border border-[#B3CBE0] border-l-4 border-l-[#176B87] rounded-lg flex items-start gap-3 text-xs">
               <ShieldCheck className="w-5 h-5 text-[#176B87] shrink-0 mt-0.5" />
               <div className="space-y-0.5">
                 <h4 className="font-bold text-[#172033]">

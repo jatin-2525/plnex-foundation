@@ -94,14 +94,17 @@ export default function VariancePage() {
         emptyDescription="Activities with start or finish date variances relative to the committed baseline will appear here. Reset your filter criteria to inspect all variance bands."
       >
         {/* Section 1: "Why is this delayed?" Dependency Chain Visualization */}
-        <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 space-y-4">
+        <div className="bg-white border border-[#D9DEE5] border-l-4 border-l-[#B5473C] rounded-lg p-4 sm:p-6 space-y-4 shadow-xs">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#D9DEE5]">
             <div>
-              <div className="flex items-center gap-2">
-                <GitBranch className="w-4 h-4 text-[#176B87]" />
-                <h3 className="text-sm font-bold text-[#172033]">
-                  "Why Is This Delayed?" — Traceable Predecessor Dependency Chain
+              <div className="flex items-center gap-2 flex-wrap">
+                <GitBranch className="w-5 h-5 text-[#B5473C]" />
+                <h3 className="text-base font-bold text-[#172033] tracking-tight">
+                  &ldquo;Why Is This Delayed?&rdquo; — Root Predecessor Dependency Chain
                 </h3>
+                <span className="px-2 py-0.5 rounded bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA] text-[11px] font-mono font-bold">
+                  ROOT CAUSE TRACE
+                </span>
               </div>
               <p className="text-xs text-[#596579] mt-0.5">
                 Reveals the cascading root causes of execution slips across construction disciplines.
@@ -109,15 +112,15 @@ export default function VariancePage() {
             </div>
 
             <div className="flex items-center gap-2">
-              <span className="text-xs text-[#596579] font-medium">Inspect Activity:</span>
+              <span className="text-xs text-[#596579] font-bold">Inspect Activity:</span>
               <select
                 value={selectedActivityId}
                 onChange={(e) => setSelectedActivityId(e.target.value)}
-                className="px-3 py-1 text-xs bg-white border border-[#D9DEE5] rounded-md font-mono text-[#172033] outline-none"
+                className="px-3 py-1.5 text-xs bg-[#F7F8FA] border border-[#D9DEE5] rounded-md font-mono font-bold text-[#172033] outline-none hover:border-[#176B87] transition-colors"
               >
                 {MOCK_ACTIVITIES.map((act) => (
                   <option key={act.id} value={act.id}>
-                    {act.id} ({act.name.slice(0, 30)}...)
+                    {act.id} ({act.name.slice(0, 32)}...)
                   </option>
                 ))}
               </select>
@@ -142,26 +145,39 @@ export default function VariancePage() {
                     />
                   </div>
 
-                  <div className="bg-[#F7F8FA] border border-[#D9DEE5] rounded-md p-3">
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-1">
-                      <div className="flex items-center gap-2">
-                        <span className="font-mono text-xs font-bold text-[#176B87]">
+                  <div className="bg-[#F7F8FA] border border-[#D9DEE5] rounded-md p-3.5 hover:border-[#176B87] transition-all">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-2">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <span className="font-mono text-xs font-bold text-[#176B87] bg-white px-2 py-0.5 rounded border border-[#D9DEE5]">
                           {step.activityId}
                         </span>
-                        <span className="text-xs font-semibold text-[#172033]">{step.name}</span>
-                        <span className="text-[11px] text-[#596579]">({step.discipline})</span>
+                        <span className="text-xs font-bold text-[#172033]">{step.name}</span>
+                        <span className="text-[11px] font-semibold text-[#596579]">({step.discipline})</span>
                       </div>
-                      <VarianceBadge daysDelay={step.delayDays} size="sm" />
+                      <div className="flex items-center gap-2">
+                        {step.delayDays > 0 && (
+                          <span className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
+                            CRITICAL PATH (0d float)
+                          </span>
+                        )}
+                        <VarianceBadge daysDelay={step.delayDays} size="sm" />
+                      </div>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs mt-2 pt-2 border-t border-[#D9DEE5]">
-                      <div>
-                        <span className="text-[10px] uppercase font-semibold text-[#596579]">Cause / Origin</span>
-                        <p className="text-[#596579] mt-0.5">{step.reason}</p>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs pt-2 border-t border-[#D9DEE5]">
+                      <div className="bg-white p-2.5 rounded border border-[#D9DEE5]">
+                        <span className="text-[10px] uppercase font-bold text-[#B5473C] flex items-center gap-1 mb-1">
+                          <AlertCircle className="w-3 h-3" />
+                          Root Cause / Origin:
+                        </span>
+                        <p className="text-[#172033] font-medium leading-relaxed">{step.reason}</p>
                       </div>
-                      <div>
-                        <span className="text-[10px] uppercase font-bold text-[#176B87]">Successor Impact</span>
-                        <p className="text-[#172033] font-medium mt-0.5">{step.impactOnSuccessor}</p>
+                      <div className="bg-white p-2.5 rounded border border-[#D9DEE5]">
+                        <span className="text-[10px] uppercase font-bold text-[#176B87] flex items-center gap-1 mb-1">
+                          <ArrowRight className="w-3 h-3" />
+                          Downstream Successor Impact:
+                        </span>
+                        <p className="text-[#172033] font-medium leading-relaxed">{step.impactOnSuccessor}</p>
                       </div>
                     </div>
                   </div>
@@ -172,12 +188,12 @@ export default function VariancePage() {
         </div>
 
         {/* Section 2: Deterministic What-If Simulator */}
-        <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 space-y-4">
+        <div className="bg-white border border-[#D9DEE5] border-l-4 border-l-[#176B87] rounded-lg p-4 sm:p-6 space-y-4 shadow-xs">
           <div className="pb-3 border-b border-[#D9DEE5] flex items-center justify-between flex-wrap gap-2">
             <div>
               <div className="flex items-center gap-2">
                 <Play className="w-4 h-4 text-[#176B87]" />
-                <h3 className="text-sm font-bold text-[#172033]">
+                <h3 className="text-base font-bold text-[#172033] tracking-tight">
                   Deterministic What-If Delay Simulator
                 </h3>
               </div>
@@ -307,17 +323,22 @@ export default function VariancePage() {
         </div>
 
         {/* Section 3: Project Memory — Institutional Knowledge */}
-        <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 space-y-4">
-          <div className="flex items-center gap-2 pb-3 border-b border-[#D9DEE5]">
-            <BookOpen className="w-4 h-4 text-[#176B87]" />
-            <div>
-              <h3 className="text-sm font-bold text-[#172033]">
-                Project Memory & Institutional Knowledge Base
-              </h3>
-              <p className="text-xs text-[#596579] mt-0.5">
-                Past project completion records and root cause patterns from historical Oil India infrastructure executions.
-              </p>
+        <div className="bg-white border border-[#D9DEE5] border-l-4 border-l-[#2E7D5B] rounded-lg p-4 sm:p-6 space-y-4 shadow-xs">
+          <div className="flex items-center justify-between pb-3 border-b border-[#D9DEE5]">
+            <div className="flex items-center gap-2">
+              <BookOpen className="w-5 h-5 text-[#2E7D5B]" />
+              <div>
+                <h3 className="text-base font-bold text-[#172033] tracking-tight">
+                  Project Memory & Institutional Knowledge Base
+                </h3>
+                <p className="text-xs text-[#596579] mt-0.5">
+                  Past project completion records and root cause patterns from historical Oil India infrastructure executions.
+                </p>
+              </div>
             </div>
+            <span className="px-2.5 py-1 rounded bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9] text-xs font-mono font-bold">
+              HISTORICAL RECOVERY RULES
+            </span>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
