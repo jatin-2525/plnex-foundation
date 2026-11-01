@@ -7,6 +7,7 @@ import { ProjectSelector } from './ProjectSelector';
 import { NotificationCenter } from './NotificationCenter';
 import { UserMenu } from './UserMenu';
 import { ConnectionStatusControl } from './ConnectionStatusControl';
+import { Logo } from '../shared/Logo';
 import { Search, PanelLeft } from 'lucide-react';
 
 export interface TopHeaderProps {
@@ -44,14 +45,9 @@ export function TopHeader({ onToggleSidebar, onMobileToggle, onDesktopToggle }: 
           <PanelLeft className="w-4 h-4 text-[#596579]" />
         </button>
 
-        {/* PLnEX Brand */}
-        <Link href="/" className="flex items-center gap-2 sm:gap-2 flex-shrink-0 hover:opacity-90 transition-opacity">
-          <div className="w-7 h-7 rounded bg-[#176B87] text-white flex items-center justify-center font-bold text-xs tracking-tight">
-            PX
-          </div>
-          <span className="text-sm font-bold tracking-tight text-[#172033] leading-none">
-            PL<span className="text-[#176B87]">n</span>EX
-          </span>
+        {/* PLnEX Brand with Geometric Plan-to-Field Synchronization Mark */}
+        <Link href="/" className="flex items-center flex-shrink-0 hover:opacity-90 transition-opacity" title="PLnEX Project Controls">
+          <Logo size="md" />
         </Link>
 
         {/* Subtle vertical separator */}

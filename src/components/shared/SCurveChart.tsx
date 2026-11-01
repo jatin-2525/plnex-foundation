@@ -125,67 +125,59 @@ export function SCurveChart({
             </span>
           </div>
           {!isCompact && (
-            <p className="text-xs text-[#596579] mt-0.5">{subtitle}</p>
+            <p className="text-xs text-[#526779] mt-0.5">{subtitle}</p>
           )}
         </div>
 
-        {/* Real Project-Control Question Banner */}
-        <div className="px-3 py-1.5 rounded bg-[#EDF5F8] border border-[#B3CBE0] text-xs font-mono text-[#176B87] font-semibold self-start lg:self-auto max-w-md">
-          <span className="font-sans font-bold text-[#172033] block text-[10px] uppercase tracking-wide">
-            Project-Control Question:
-          </span>
-          Is cumulative physical progress tracking ahead or behind the approved baseline curve?
-        </div>
-
-        {/* Summary values above / beside chart */}
+        {/* Summary values above / beside chart with consistent palette */}
         <div className="flex items-center flex-wrap gap-2 text-xs font-mono">
           {/* Planned */}
-          <div className="px-3 py-1.5 rounded bg-[#F7F8FA] border border-[#D9DEE5] flex items-center gap-2 shadow-2xs">
-            <span className="text-[#596579] font-sans font-medium text-[11px]">Planned:</span>
-            <span className="font-bold text-[#176B87]">{summary.plannedAtDataDate.toFixed(1)}%</span>
+          <div className="px-3 py-1.5 rounded bg-[#F4F7FA] border border-[#D7E1E8] flex items-center gap-2 shadow-2xs">
+            <span className="text-[#526779] font-sans font-medium text-[11px]">Planned:</span>
+            <span className="font-bold text-[#3D73B5]">{summary.plannedAtDataDate.toFixed(1)}%</span>
           </div>
 
           {/* Actual */}
-          <div className="px-3 py-1.5 rounded bg-[#F7F8FA] border border-[#D9DEE5] flex items-center gap-2 shadow-2xs">
-            <span className="text-[#596579] font-sans font-medium text-[11px]">Actual:</span>
-            <span className="font-bold text-[#2E7D5B]">{summary.actualAtDataDate.toFixed(1)}%</span>
+          <div className="px-3 py-1.5 rounded bg-[#F4F7FA] border border-[#D7E1E8] flex items-center gap-2 shadow-2xs">
+            <span className="text-[#526779] font-sans font-medium text-[11px]">Actual:</span>
+            <span className="font-bold text-[#187A6A]">{summary.actualAtDataDate.toFixed(1)}%</span>
           </div>
 
           {/* Variance */}
           <div
             className={`px-3 py-1.5 rounded border flex items-center gap-2 shadow-2xs ${
               summary.varianceAtDataDate < 0
-                ? 'bg-[#FDF6ED] border-[#F0D4A6]'
-                : 'bg-[#EDF7F2] border-[#B8DCC9]'
+                ? 'bg-[#FBEFEE] border-[#E8B6BA]'
+                : 'bg-[#E8F5F2] border-[#B1DBD2]'
             }`}
           >
-            <span className="text-[#596579] font-sans font-medium text-[11px]">Variance:</span>
+            <span className="text-[#526779] font-sans font-medium text-[11px]">Variance:</span>
             <span
               className={`font-bold ${
-                summary.varianceAtDataDate < 0 ? 'text-[#B5473C]' : 'text-[#2E7D5B]'
+                summary.varianceAtDataDate < 0 ? 'text-[#B43D47]' : 'text-[#187A6A]'
               }`}
             >
               {summary.varianceAtDataDate > 0
                 ? `+${summary.varianceAtDataDate.toFixed(1)}%`
-                : `${summary.varianceAtDataDate.toFixed(1)}%`}
+                : `${summary.varianceAtDataDate.toFixed(1)}% SLIP`}
             </span>
           </div>
 
           {summary.forecastFinishDate && (
-            <div className="px-3 py-1.5 rounded bg-[#F7F8FA] border border-[#D9DEE5] flex items-center gap-2 shadow-2xs">
-              <span className="text-[#596579] font-sans font-medium text-[11px]">Forecast Finish:</span>
-              <span className="font-semibold text-[#172033]">{summary.forecastFinishDate}</span>
+            <div className="px-3 py-1.5 rounded bg-[#F4F7FA] border border-[#D7E1E8] flex items-center gap-2 shadow-2xs">
+              <span className="text-[#526779] font-sans font-medium text-[11px]">Forecast Finish:</span>
+              <span className="font-bold text-[#7655A6]">{summary.forecastFinishDate} (+{summary.forecastDelayDays}d)</span>
             </div>
           )}
         </div>
       </div>
 
       {/* ========================================================= */}
-      {/* 2. STATIC S-CURVE CANVAS AREA */}
-      {/* Strictly static, non-animated, clean engineering visualization */}
+      {/* 2. STATIC S-CURVE CANVAS AREA (Responsive SVG Container) */}
+      {/* Fluid scaling on all screen sizes, no horizontal scroll clipping */}
       {/* ========================================================= */}
-      <div className="p-4 overflow-x-auto">
-        <div className="min-w-[620px]">
+      <div className="p-3 sm:p-4 w-full">
+        <div className="w-full">
           <svg
             viewBox={`0 0 ${width} ${height}`}
             className="w-full h-auto select-none font-sans"
@@ -239,28 +231,28 @@ export function SCurveChart({
               y1={padTop}
               x2={ddX}
               y2={height - padBottom}
-              stroke="#172033"
+              stroke="#172B3A"
               strokeWidth="1.5"
               strokeDasharray="4,3"
             />
             {/* Data Date Callout on top */}
             <rect
-              x={ddX - 44}
+              x={ddX - 52}
               y={padTop - 18}
-              width={88}
-              height={16}
+              width={104}
+              height={18}
               rx={3}
-              fill="#172033"
+              fill="#172B3A"
             />
             <text
               x={ddX}
-              y={padTop - 7}
+              y={padTop - 5}
               textAnchor="middle"
-              fontSize="9"
+              fontSize="10"
               fontWeight="bold"
               fill="#FFFFFF"
             >
-              DATA DATE
+              DATA DATE (18 Sep)
             </text>
 
             {/* Variance Gap between Planned and Actual at Data Date */}
@@ -269,31 +261,31 @@ export function SCurveChart({
               y1={ddPlannedY}
               x2={ddX}
               y2={ddActualY}
-              stroke="#B5473C"
+              stroke="#B43D47"
               strokeWidth="3.5"
             />
             <rect
               x={ddX + 6}
               y={(ddPlannedY + ddActualY) / 2 - 10}
-              width={100}
+              width={112}
               height={20}
               rx={3}
-              fill={CHART_TOKENS.critical.bg}
-              stroke={CHART_TOKENS.critical.border}
+              fill="#FBEFEE"
+              stroke="#E8B6BA"
               strokeWidth="1"
             />
             <text
-              x={ddX + 56}
+              x={ddX + 62}
               y={(ddPlannedY + ddActualY) / 2 + 4}
               textAnchor="middle"
               fontSize="10"
               fontWeight="bold"
-              fill={CHART_TOKENS.critical.text}
+              fill="#922E37"
             >
-              -7.0% Var [✕ Critical]
+              -7.0% Slip [Critical]
             </text>
 
-            {/* LINE 1: Planned Progress (Neutral/Primary solid line) */}
+            {/* LINE 1: Planned Progress (Blue solid line #3D73B5) */}
             <path
               d={plannedPathD}
               fill="none"
@@ -303,7 +295,7 @@ export function SCurveChart({
               strokeLinejoin="round"
             />
 
-            {/* LINE 3: Forecast Progress (Dashed Neutral/Secondary line from data date onwards) */}
+            {/* LINE 3: Forecast Progress (Violet dashed line #7655A6 from data date onwards) */}
             <path
               d={forecastPathD}
               fill="none"
@@ -314,7 +306,7 @@ export function SCurveChart({
               strokeLinejoin="round"
             />
 
-            {/* LINE 2: Actual Progress (Semantic contrast solid line) */}
+            {/* LINE 2: Actual Progress (Verified Teal solid line #187A6A) */}
             <path
               d={actualPathD}
               fill="none"
@@ -324,7 +316,7 @@ export function SCurveChart({
               strokeLinejoin="round"
             />
 
-            {/* X-axis ticks, period labels, and hover hit columns */}
+            {/* X-axis ticks, period labels, and accessible keyboard hit columns */}
             {data.map((pt, idx) => {
               const x = getX(idx);
               const isSelected = idx === activeIndex;
@@ -334,9 +326,18 @@ export function SCurveChart({
               return (
                 <g
                   key={pt.period}
-                  className="cursor-pointer"
+                  tabIndex={0}
+                  role="button"
+                  aria-label={`Reporting period ${pt.period}, Planned ${pt.planned}%, ${pt.actual !== null ? `Actual ${pt.actual}%` : `Forecast ${pt.forecast}%`}`}
+                  className="cursor-pointer focus:outline-none"
                   onMouseEnter={() => setHoveredPointIndex(idx)}
                   onClick={() => handlePointClick(idx)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      handlePointClick(idx);
+                    }
+                  }}
                 >
                   {/* Invisible wide hover hit target */}
                   <rect
@@ -354,41 +355,41 @@ export function SCurveChart({
                       y1={padTop}
                       x2={x}
                       y2={height - padBottom}
-                      stroke="#596579"
+                      stroke="#526779"
                       strokeWidth="1"
                       strokeDasharray="2,2"
                     />
                   )}
 
-                  {/* Planned Node Circle */}
+                  {/* Planned Node Circle (Blue stroke #3D73B5) */}
                   <circle
                     cx={x}
                     cy={getY(pt.planned)}
                     r={isSelected ? 4.5 : 3.5}
                     fill="#FFFFFF"
-                    stroke="#176B87"
+                    stroke="#3D73B5"
                     strokeWidth="2"
                   />
 
-                  {/* Actual Node Circle */}
+                  {/* Actual Node Circle (Verified Teal fill #187A6A) */}
                   {pt.actual !== null && (
                     <circle
                       cx={x}
                       cy={getY(pt.actual)}
                       r={isSelected ? 5 : 4}
-                      fill="#2E7D5B"
+                      fill="#187A6A"
                       stroke="#FFFFFF"
                       strokeWidth="1.5"
                     />
                   )}
 
-                  {/* Forecast Node Circle (future periods only) */}
+                  {/* Forecast Node Circle (Consistent Violet fill #7655A6) */}
                   {pt.actual === null && (
                     <circle
                       cx={x}
                       cy={getY(pt.forecast)}
                       r={isSelected ? 4.5 : 3.5}
-                      fill="#D98B32"
+                      fill="#7655A6"
                       stroke="#FFFFFF"
                       strokeWidth="1.5"
                     />
@@ -399,9 +400,9 @@ export function SCurveChart({
                     x={x}
                     y={height - padBottom + 16}
                     textAnchor="middle"
-                    fontSize="10"
-                    fontWeight={isDD || isSelected ? '700' : '400'}
-                    fill={isSelected ? '#176B87' : isDD ? '#172033' : '#596579'}
+                    fontSize="11"
+                    fontWeight={isDD || isSelected ? '700' : '500'}
+                    fill={isSelected ? '#0F6574' : isDD ? '#172B3A' : '#526779'}
                   >
                     {pt.period}
                   </text>
@@ -412,7 +413,7 @@ export function SCurveChart({
                       cx={x}
                       cy={height - padBottom + 26}
                       r="2"
-                      fill={pt.actual !== null ? '#2E7D5B' : '#7B8798'}
+                      fill={pt.actual !== null ? '#187A6A' : '#7655A6'}
                     />
                   )}
                 </g>
@@ -424,16 +425,16 @@ export function SCurveChart({
               x={padLeft + plotW / 2}
               y={height - 6}
               textAnchor="middle"
-              fontSize="10"
+              fontSize="11"
               fontWeight="bold"
-              fill="#596579"
+              fill="#526779"
             >
               Timeline (Project Reporting Periods • Rev 3.2 (P6 XML) • Cutoff: 18 Sep 2026)
             </text>
 
             {/* ========================================================= */}
             {/* STATIC TOOLTIP ON HOVER (NO ANIMATION) */}
-            {/* Shows: Date, Planned, Actual, Variance */}
+            {/* Shows: Date, Planned, Actual / Forecast, Variance */}
             {/* ========================================================= */}
             {hoveredPointIndex !== null && (
               <g pointerEvents="none">
@@ -441,13 +442,13 @@ export function SCurveChart({
                 <rect
                   x={tooltipX}
                   y={tooltipY}
-                  width={tooltipWidth}
+                  width={tooltipWidth + 8}
                   height={tooltipHeight}
                   rx={4}
                   fill="#FFFFFF"
-                  stroke="#D9DEE5"
+                  stroke="#D7E1E8"
                   strokeWidth="1.5"
-                  filter="drop-shadow(0 2px 4px rgba(23, 32, 51, 0.08))"
+                  filter="drop-shadow(0 2px 4px rgba(23, 43, 58, 0.08))"
                 />
 
                 {/* Date */}
@@ -456,7 +457,7 @@ export function SCurveChart({
                   y={tooltipY + 16}
                   fontSize="11"
                   fontWeight="bold"
-                  fill="#172033"
+                  fill="#172B3A"
                 >
                   {activePoint.dateLabel}
                 </text>
@@ -465,26 +466,29 @@ export function SCurveChart({
                 <text
                   x={tooltipX + 10}
                   y={tooltipY + 33}
-                  fontSize="10"
+                  fontSize="11"
                   fontWeight="500"
-                  fill="#596579"
+                  fill="#526779"
                 >
-                  Planned: <tspan fontWeight="bold" fill="#176B87">{activePoint.planned.toFixed(1)}%</tspan>
+                  Planned: <tspan fontWeight="bold" fill="#3D73B5">{activePoint.planned.toFixed(1)}%</tspan>
                 </text>
 
-                {/* Actual */}
+                {/* Actual / Forecast */}
                 <text
                   x={tooltipX + 10}
                   y={tooltipY + 48}
-                  fontSize="10"
+                  fontSize="11"
                   fontWeight="500"
-                  fill="#596579"
+                  fill="#526779"
                 >
-                  Actual:{' '}
                   {activePoint.actual !== null ? (
-                    <tspan fontWeight="bold" fill="#2E7D5B">{activePoint.actual.toFixed(1)}%</tspan>
+                    <>
+                      Actual: <tspan fontWeight="bold" fill="#187A6A">{activePoint.actual.toFixed(1)}%</tspan>
+                    </>
                   ) : (
-                    <tspan fill="#596579">N/A (Future)</tspan>
+                    <>
+                      Forecast: <tspan fontWeight="bold" fill="#7655A6">{activePoint.forecast.toFixed(1)}%</tspan>
+                    </>
                   )}
                 </text>
 
@@ -492,14 +496,14 @@ export function SCurveChart({
                 <text
                   x={tooltipX + 10}
                   y={tooltipY + 63}
-                  fontSize="10"
+                  fontSize="11"
                   fontWeight="500"
-                  fill="#596579"
+                  fill="#526779"
                 >
                   Variance:{' '}
                   <tspan
                     fontWeight="bold"
-                    fill={activeVariance < 0 ? '#B5473C' : '#2E7D5B'}
+                    fill={activeVariance < 0 ? '#B43D47' : '#187A6A'}
                   >
                     {activeVariance > 0 ? `+${activeVariance}%` : `${activeVariance}%`}
                     {activePoint.actual === null ? ' (Fcst)' : ''}
@@ -510,31 +514,31 @@ export function SCurveChart({
           </svg>
         </div>
 
-        {/* Clear Legend (Max 3 Major Lines + Data Date) */}
-        <div className="flex flex-wrap items-center justify-between gap-4 mt-2 pt-3 border-t border-[#F1F3F5] text-xs text-[#596579]">
+        {/* Clear Legend (Planned, Verified Actual, Forecast, Data Date) */}
+        <div className="flex flex-wrap items-center justify-between gap-4 mt-2 pt-3 border-t border-[#D7E1E8] text-xs text-[#526779]">
           <div className="flex items-center gap-4 flex-wrap">
             {/* Planned Line Legend */}
             <div className="flex items-center gap-2">
-              <span className="w-3.5 h-1 bg-[#176B87] inline-block rounded-xs" />
-              <span className="font-semibold text-[#172033]">■ Planned (Neutral/Primary)</span>
+              <span className="w-3.5 h-1 bg-[#3D73B5] inline-block rounded-xs" />
+              <span className="font-semibold text-[#172B3A]">■ Planned Target</span>
             </div>
 
             {/* Actual Line Legend */}
             <div className="flex items-center gap-2">
-              <span className="w-3.5 h-1.5 bg-[#2E7D5B] inline-block rounded-xs" />
-              <span className="font-semibold text-[#172033]">● Actual (Semantic Contrast)</span>
+              <span className="w-3.5 h-1.5 bg-[#187A6A] inline-block rounded-xs" />
+              <span className="font-semibold text-[#172B3A]">● Verified Actual</span>
             </div>
 
             {/* Forecast Line Legend */}
             <div className="flex items-center gap-2">
-              <span className="w-4 h-0.5 border-t-2 border-dashed border-[#7B8798] inline-block" />
-              <span className="font-semibold text-[#596579]">▲ Forecast (Dashed Secondary)</span>
+              <span className="w-4 h-0.5 border-t-2 border-dashed border-[#7655A6] inline-block" />
+              <span className="font-semibold text-[#172B3A]">▲ Forecast</span>
             </div>
 
             {/* Data Date Marker Legend */}
             <div className="flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full border-2 border-[#172033] inline-block" />
-              <span className="font-semibold text-[#172033]">Cutoff Data Date</span>
+              <span className="w-2.5 h-2.5 rounded-full border-2 border-[#172B3A] inline-block" />
+              <span className="font-semibold text-[#172B3A]">Cutoff Data Date</span>
             </div>
           </div>
 
@@ -542,7 +546,7 @@ export function SCurveChart({
             <button
               type="button"
               onClick={() => setShowLedger(!showLedger)}
-              className="text-xs font-semibold text-[#176B87] hover:underline focus:outline-none flex items-center gap-1 cursor-pointer"
+              className="text-xs font-semibold text-[#0F6574] hover:underline focus:outline-none flex items-center gap-1 cursor-pointer"
             >
               {showLedger ? 'Hide Level 3 Ledger' : 'View Level 3 Cumulative Ledger'}
               <span className="text-[10px]">{showLedger ? '▲' : '▼'}</span>

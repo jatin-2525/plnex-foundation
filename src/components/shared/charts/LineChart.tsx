@@ -34,7 +34,7 @@ const DEFAULT_PROGRESS_OVER_TIME: LineChartDataPoint[] = [
   { period: 'Sep 2026', dateLabel: '18 Sep 2026', planned: 80, actual: 73, isDataDate: true, notes: 'Cutoff date' },
   { period: 'Oct 2026', dateLabel: '31 Oct 2026', planned: 92, actual: null, forecast: 88, notes: 'Double-shift RT' },
   { period: 'Nov 2026', dateLabel: '30 Nov 2026', planned: 98, actual: null, forecast: 95, notes: 'Hydrotests' },
-  { period: 'Dec 2026', dateLabel: '15 Dec 2026', planned: 100, actual: null, forecast: 100, notes: 'Handover' },
+  { period: 'Dec 2026', dateLabel: '20 Dec 2026', planned: 100, actual: null, forecast: 100, notes: 'Commercial completion (+5d)' },
 ];
 
 // Canonical default dataset for Variance Trend
@@ -46,7 +46,7 @@ const DEFAULT_VARIANCE_TREND: LineChartDataPoint[] = [
   { period: 'Sep 2026', dateLabel: '18 Sep 2026', variance: -7.0, isDataDate: true, notes: '-7.0% slip (Cutoff)' },
   { period: 'Oct 2026', dateLabel: '31 Oct 2026', variance: -4.0, notes: 'Recovery forecast' },
   { period: 'Nov 2026', dateLabel: '30 Nov 2026', variance: -3.0, notes: 'Recovery forecast' },
-  { period: 'Dec 2026', dateLabel: '15 Dec 2026', variance: 0.0, notes: 'Zero float recovered' },
+  { period: 'Dec 2026', dateLabel: '20 Dec 2026', variance: 0.0, notes: 'Target zero float recovered' },
 ];
 
 export function LineChart({
@@ -171,13 +171,15 @@ export function LineChart({
           <p className="text-xs text-[#596579] mt-0.5">{displaySubtitle}</p>
         </div>
 
-        {/* Real Project-Control Question Banner */}
-        <div className="px-3 py-1.5 rounded bg-[#EDF5F8] border border-[#B3CBE0] text-xs font-mono text-[#176B87] font-semibold self-start lg:self-auto max-w-md">
-          <span className="font-sans font-bold text-[#172033] block text-[10px] uppercase tracking-wide">
-            Project-Control Question:
-          </span>
-          {displayQuestion}
-        </div>
+        {/* Project Question Banner (only if explicitly provided) */}
+        {projectQuestion && (
+          <div className="px-3 py-1.5 rounded bg-[#EDF5F8] border border-[#B3CBE0] text-xs font-mono text-[#176B87] font-semibold self-start lg:self-auto max-w-md">
+            <span className="font-sans font-bold text-[#172033] block text-[10px] uppercase tracking-wide">
+              Project Question:
+            </span>
+            {displayQuestion}
+          </div>
+        )}
       </div>
 
       {/* Summary KPI Strip */}
@@ -186,23 +188,23 @@ export function LineChart({
           <>
             <div className="p-2 bg-[#F7F8FA] rounded border border-[#D9DEE5]">
               <span className="text-[#596579] block text-[10px] font-sans">Planned Target</span>
-              <span className="font-bold text-[#176B87]">
+              <span className="font-bold text-[#3D73B5]">
                 {effectiveData[dataDateIndex]?.planned ?? 80}%
               </span>
             </div>
             <div className="p-2 bg-[#F7F8FA] rounded border border-[#D9DEE5]">
               <span className="text-[#596579] block text-[10px] font-sans">Verified Actual</span>
-              <span className="font-bold text-[#2E7D5B]">
+              <span className="font-bold text-[#187A6A]">
                 {effectiveData[dataDateIndex]?.actual ?? 73}%
               </span>
             </div>
             <div className="p-2 bg-[#FDF6ED] rounded border border-[#F0D4A6]">
               <span className="text-[#596579] block text-[10px] font-sans">Current Variance</span>
-              <span className="font-bold text-[#B5473C]">-7.0%</span>
+              <span className="font-bold text-[#B43D47]">-7.0%</span>
             </div>
             <div className="p-2 bg-[#F7F8FA] rounded border border-[#D9DEE5]">
               <span className="text-[#596579] block text-[10px] font-sans">Forecast Completion</span>
-              <span className="font-bold text-[#172033]">19 Dec 2026 (+4d)</span>
+              <span className="font-bold text-[#172033]">20 Dec 2026 (+5d)</span>
             </div>
           </>
         ) : (
@@ -213,15 +215,15 @@ export function LineChart({
             </div>
             <div className="p-2 bg-[#FBEFEE] rounded border border-[#E4B0AA]">
               <span className="text-[#596579] block text-[10px] font-sans">Active Maximum Slip</span>
-              <span className="font-bold text-[#B5473C]">-7.0% pts (18 Sep)</span>
+              <span className="font-bold text-[#B43D47]">-7.0% pts (18 Sep)</span>
             </div>
             <div className="p-2 bg-[#EDF7F2] rounded border border-[#B8DCC9]">
               <span className="text-[#596579] block text-[10px] font-sans">Peak Prior Gain</span>
-              <span className="font-bold text-[#2E7D5B]">+2.0% pts (Jun/Jul)</span>
+              <span className="font-bold text-[#187A6A]">+2.0% pts (Jun/Jul)</span>
             </div>
             <div className="p-2 bg-[#F7F8FA] rounded border border-[#D9DEE5]">
               <span className="text-[#596579] block text-[10px] font-sans">Target Recovery</span>
-              <span className="font-bold text-[#176B87]">0.0% pts by Dec</span>
+              <span className="font-bold text-[#3D73B5]">0.0% pts by Dec</span>
             </div>
           </>
         )}
@@ -315,11 +317,11 @@ export function LineChart({
                 <path
                   d={plannedPath}
                   fill="none"
-                  stroke="#176B87"
+                  stroke="#3D73B5"
                   strokeWidth="2.5"
                   strokeLinecap="round"
                 />
-                {/* Forecast Line (Dashed Neutral/Secondary) */}
+                {/* Forecast Line (Dashed Violet) */}
                 <path
                   d={forecastPath}
                   fill="none"
@@ -332,7 +334,7 @@ export function LineChart({
                 <path
                   d={actualPath}
                   fill="none"
-                  stroke="#2E7D5B"
+                  stroke="#187A6A"
                   strokeWidth="3.5"
                   strokeLinecap="round"
                 />
@@ -344,7 +346,7 @@ export function LineChart({
               <path
                 d={variancePath}
                 fill="none"
-                stroke="#B5473C"
+                stroke="#B43D47"
                 strokeWidth="3"
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -457,16 +459,16 @@ export function LineChart({
           {!isVariance ? (
             <>
               <div className="flex items-center gap-2">
-                <span className="w-3.5 h-1 bg-[#176B87] inline-block rounded-xs" />
-                <span className="font-semibold text-[#172033]">■ Planned (Neutral/Primary)</span>
+                <span className="w-3.5 h-1 bg-[#3D73B5] inline-block rounded-xs" />
+                <span className="font-semibold text-[#172033]">■ Planned Target</span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="w-3.5 h-1.5 bg-[#2E7D5B] inline-block rounded-xs" />
-                <span className="font-semibold text-[#172033]">● Actual (Semantic Contrast)</span>
+                <span className="w-3.5 h-1.5 bg-[#187A6A] inline-block rounded-xs" />
+                <span className="font-semibold text-[#172033]">● Verified Actual</span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="w-4 h-0.5 border-t-2 border-dashed border-[#7B8798] inline-block" />
-                <span className="font-semibold text-[#596579]">▲ Forecast (Dashed Secondary)</span>
+                <span className="w-4 h-0.5 border-t-2 border-dashed border-[#7655A6] inline-block" />
+                <span className="font-semibold text-[#526779]">▲ Forecast (Dashed)</span>
               </div>
             </>
           ) : (
@@ -476,12 +478,12 @@ export function LineChart({
                 <span className="font-semibold text-[#172033]">— Baseline (0.0% Variance)</span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="w-3.5 h-1.5 bg-[#B5473C] inline-block rounded-xs" />
-                <span className="font-semibold text-[#172033]">✕ Schedule Slip Trend [Critical Red]</span>
+                <span className="w-3.5 h-1.5 bg-[#B43D47] inline-block rounded-xs" />
+                <span className="font-semibold text-[#172033]">✕ Schedule Slip Trend</span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="w-3.5 h-1.5 bg-[#2E7D5B] inline-block rounded-xs" />
-                <span className="font-semibold text-[#172033]">✓ Schedule Gain Ahead [Green]</span>
+                <span className="w-3.5 h-1.5 bg-[#187A6A] inline-block rounded-xs" />
+                <span className="font-semibold text-[#172033]">✓ Schedule Gain Ahead</span>
               </div>
             </>
           )}
@@ -494,12 +496,12 @@ export function LineChart({
         <div className="text-[11px] font-mono text-[#596579]">
           Active Point: <strong className="text-[#172033]">{activePoint.period}</strong> —{' '}
           {isVariance ? (
-            <span className={(activePoint.variance ?? 0) < 0 ? 'text-[#B5473C] font-bold' : 'text-[#2E7D5B] font-bold'}>
+            <span className={(activePoint.variance ?? 0) < 0 ? 'text-[#B43D47] font-bold' : 'text-[#187A6A] font-bold'}>
               {activePoint.variance ?? 0}% pts
             </span>
           ) : (
             <span>
-              Act: <strong className="text-[#2E7D5B]">{activePoint.actual ?? activePoint.forecast}%</strong> | Plan: <strong className="text-[#176B87]">{activePoint.planned}%</strong>
+              Act: <strong className="text-[#187A6A]">{activePoint.actual ?? activePoint.forecast}%</strong> | Plan: <strong className="text-[#3D73B5]">{activePoint.planned}%</strong>
             </span>
           )}{' '}
           ({activePoint.notes || 'Normal progression'})

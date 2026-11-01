@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { useApp } from '../../context/AppContext';
 import { useToast } from '../../context/ToastContext';
 import { canAccessRoute, getDefaultRouteForRole } from '../../types/permissions';
+import { Logo } from '../../components/shared/Logo';
 import {
   Eye,
   EyeOff,
@@ -167,17 +168,17 @@ function LoginForm() {
       {/* Centered Authentication Panel */}
       <div className="bg-white border border-[#D9DEE5] rounded-lg shadow-sm overflow-hidden">
         {/* Header with PLnEX branding */}
-        <div className="px-6 pt-7 pb-4 text-center border-b border-[#D9DEE5] bg-white">
-          <div className="inline-flex items-center justify-center w-10 h-10 rounded-md bg-[#176B87] text-white font-black text-lg tracking-tighter mb-3 shadow-xs">
-            PX
+        <div className="px-6 pt-7 pb-4 text-center border-b border-[#D7E1E8] bg-white">
+          <div className="inline-flex items-center justify-center mb-3">
+            <Logo size="lg" showWordmark={false} />
           </div>
-          <h1 className="text-xl font-bold text-[#172033] tracking-tight leading-snug">
-            PL<span className="text-[#176B87]">n</span>EX
+          <h1 className="text-xl font-bold text-[#172B3A] tracking-tight leading-snug">
+            PL<span className="text-[#0F6574]">n</span>EX
           </h1>
-          <p className="text-xs font-semibold text-[#176B87] uppercase tracking-wider font-mono mt-0.5">
+          <p className="text-xs font-semibold text-[#0F6574] uppercase tracking-wider font-mono mt-0.5">
             Planning-to-Execution Bridge
           </p>
-          <p className="text-[11px] text-[#596579] mt-1">
+          <p className="text-[11px] text-[#526779] mt-1">
             Oil India Limited • Infrastructure Project Controls
           </p>
         </div>

@@ -26,63 +26,63 @@ export interface BarChartProps {
   className?: string;
 }
 
-// Canonical Progress by Discipline
+// Canonical Progress by Discipline (Reconciled with 80.0% Planned / 73.0% Actual)
 const DEFAULT_DISCIPLINE_ITEMS: BarChartItem[] = [
   {
     label: 'Piping',
     subLabel: '35% Scope',
-    planned: 82.0,
+    planned: 85.0,
     actual: 68.0,
-    variance: -14.0,
+    variance: -17.0,
     status: 'Behind',
     driver: 'Line 24 field butt welding hold (4 joints pending RT)',
   },
   {
     label: 'Civil',
     subLabel: '25% Scope',
-    planned: 94.0,
-    actual: 97.0,
-    variance: 3.0,
+    planned: 95.0,
+    actual: 96.0,
+    variance: 1.0,
     status: 'Ahead',
     driver: 'Compressor foundation pedestal 45 m³ pour complete',
   },
   {
     label: 'Electrical',
     subLabel: '15% Scope',
-    planned: 70.0,
-    actual: 65.0,
-    variance: -5.0,
+    planned: 72.0,
+    actual: 64.0,
+    variance: -8.0,
     status: 'Behind',
     driver: '350m cable pull complete; overhead bracket delay',
   },
   {
     label: 'Mechanical',
     subLabel: '15% Scope',
-    planned: 75.0,
+    planned: 76.0,
     actual: 78.0,
-    variance: 3.0,
+    variance: 2.0,
     status: 'Ahead',
     driver: 'Compressor C-101 laser alignment running ahead',
   },
   {
     label: 'Instrumentation',
     subLabel: '10% Scope',
-    planned: 45.0,
-    actual: 40.0,
-    variance: -5.0,
+    planned: 43.0,
+    actual: 39.0,
+    variance: -4.0,
     status: 'Behind',
     driver: 'Transmitter bracket held awaiting hydrotest signoff',
   },
 ];
 
-// Canonical Progress by Area
+// Canonical Progress by Area (Reconciled with 80.0% Planned / 73.0% Actual)
 const DEFAULT_AREA_ITEMS: BarChartItem[] = [
   {
     label: 'Unit A - Gas Processing',
     subLabel: 'AREA-01 • 45% WBS',
-    planned: 84.0,
-    actual: 72.0,
-    variance: -12.0,
+    planned: 83.0,
+    actual: 69.0,
+    variance: -14.0,
     status: 'Behind',
     isCriticalPath: true,
     totalFloatDays: 0,
@@ -91,9 +91,9 @@ const DEFAULT_AREA_ITEMS: BarChartItem[] = [
   {
     label: 'Unit A - Compressor House',
     subLabel: 'AREA-02 • 25% WBS',
-    planned: 92.0,
-    actual: 95.0,
-    variance: 3.0,
+    planned: 95.0,
+    actual: 97.0,
+    variance: 2.0,
     status: 'Ahead',
     isCriticalPath: false,
     totalFloatDays: 8,
@@ -102,9 +102,9 @@ const DEFAULT_AREA_ITEMS: BarChartItem[] = [
   {
     label: 'Unit B - Offsites',
     subLabel: 'AREA-03 • 15% WBS',
-    planned: 65.0,
+    planned: 66.0,
     actual: 60.0,
-    variance: -5.0,
+    variance: -6.0,
     status: 'Behind',
     isCriticalPath: false,
     totalFloatDays: 14,
@@ -113,8 +113,8 @@ const DEFAULT_AREA_ITEMS: BarChartItem[] = [
   {
     label: 'Unit 02 - Flare System',
     subLabel: 'AREA-04 • 15% WBS',
-    planned: 70.0,
-    actual: 68.0,
+    planned: 60.0,
+    actual: 58.0,
     variance: -2.0,
     status: 'Behind',
     isCriticalPath: false,
@@ -188,13 +188,15 @@ export function BarChart({
           <p className="text-xs text-[#596579] mt-0.5">{displaySubtitle}</p>
         </div>
 
-        {/* Real Project-Control Question Banner */}
-        <div className="px-3 py-1.5 rounded bg-[#EDF5F8] border border-[#B3CBE0] text-xs font-mono text-[#176B87] font-semibold self-start lg:self-auto max-w-md">
-          <span className="font-sans font-bold text-[#172033] block text-[10px] uppercase tracking-wide">
-            Project-Control Question:
-          </span>
-          {displayQuestion}
-        </div>
+        {/* Project Question Banner (only if explicitly provided) */}
+        {projectQuestion && (
+          <div className="px-3 py-1.5 rounded bg-[#EDF5F8] border border-[#B3CBE0] text-xs font-mono text-[#176B87] font-semibold self-start lg:self-auto max-w-md">
+            <span className="font-sans font-bold text-[#172033] block text-[10px] uppercase tracking-wide">
+              Project Question:
+            </span>
+            {displayQuestion}
+          </div>
+        )}
       </div>
 
       {/* SVG Canvas (Side-by-side Planned vs Actual Bars, No animation) */}
@@ -223,7 +225,7 @@ export function BarChart({
                     x={padLeft - 8}
                     y={y + 3.5}
                     textAnchor="end"
-                    fontSize="10"
+                    fontSize="11"
                     fill="#596579"
                     fontFamily="inherit"
                     fontWeight="500"
@@ -239,7 +241,7 @@ export function BarChart({
               x={padLeft - 42}
               y={padTop - 14}
               textAnchor="start"
-              fontSize="10"
+              fontSize="11"
               fontWeight="bold"
               fill="#172033"
             >
@@ -275,7 +277,7 @@ export function BarChart({
                     rx={4}
                   />
 
-                  {/* Planned Target Bar (Teal outline / soft fill) */}
+                  {/* Planned Target Bar (Blue line / soft fill) */}
                   <rect
                     x={plannedX}
                     y={plannedY}
@@ -292,14 +294,14 @@ export function BarChart({
                     x={plannedX + barW / 2}
                     y={plannedY - 6}
                     textAnchor="middle"
-                    fontSize="9"
+                    fontSize="11"
                     fontWeight="bold"
                     fill={CHART_TOKENS.planned.text}
                   >
                     {item.planned.toFixed(0)}%
                   </text>
 
-                  {/* Actual Earned Bar (Green if on track, Rose/Red if lagging) */}
+                  {/* Actual Earned Bar (Teal if on track, Red if lagging) */}
                   <rect
                     x={actualX}
                     y={actualY}
@@ -314,7 +316,7 @@ export function BarChart({
                     x={actualX + barW / 2}
                     y={actualY - 6}
                     textAnchor="middle"
-                    fontSize="9"
+                    fontSize="11"
                     fontWeight="bold"
                     fill={isBehind ? CHART_TOKENS.critical.text : CHART_TOKENS.positive.text}
                   >
@@ -334,9 +336,9 @@ export function BarChart({
                   />
                   <text
                     x={groupCenterX}
-                    y={padTop - 7}
+                    y={padTop - 6}
                     textAnchor="middle"
-                    fontSize="9"
+                    fontSize="10"
                     fontWeight="bold"
                     fill={isBehind ? CHART_TOKENS.critical.text : isAhead ? CHART_TOKENS.positive.text : CHART_TOKENS.neutral.text}
                   >
@@ -348,7 +350,7 @@ export function BarChart({
                     x={groupCenterX}
                     y={height - padBottom + 16}
                     textAnchor="middle"
-                    fontSize="11"
+                    fontSize="12"
                     fontWeight="700"
                     fill="#172033"
                   >
@@ -359,9 +361,9 @@ export function BarChart({
                   {item.subLabel && (
                     <text
                       x={groupCenterX}
-                      y={height - padBottom + 29}
+                      y={height - padBottom + 30}
                       textAnchor="middle"
-                      fontSize="9"
+                      fontSize="10"
                       fontFamily="monospace"
                       fill="#596579"
                     >
@@ -377,7 +379,7 @@ export function BarChart({
               x={padLeft + plotW / 2}
               y={height - 6}
               textAnchor="middle"
-              fontSize="10"
+              fontSize="11"
               fontWeight="bold"
               fill="#596579"
             >
@@ -391,15 +393,15 @@ export function BarChart({
       <div className="flex flex-wrap items-center justify-between gap-4 mt-3 pt-3 border-t border-[#F1F3F5] text-xs text-[#596579]">
         <div className="flex items-center gap-4 flex-wrap">
           <div className="flex items-center gap-2">
-            <span className="w-3.5 h-3.5 bg-[#E0EEF2] border border-[#176B87] inline-block rounded-xs" />
+            <span className="w-3.5 h-3.5 bg-[#EBF2FA] border border-[#3D73B5] inline-block rounded-xs" />
             <span>Planned Target</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="w-3.5 h-3.5 bg-[#2E7D5B] inline-block rounded-xs" />
+            <span className="w-3.5 h-3.5 bg-[#187A6A] inline-block rounded-xs" />
             <span>Actual (On-Track / Ahead)</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="w-3.5 h-3.5 bg-[#B5473C] inline-block rounded-xs" />
+            <span className="w-3.5 h-3.5 bg-[#B43D47] inline-block rounded-xs" />
             <span>Actual (Behind Schedule)</span>
           </div>
         </div>

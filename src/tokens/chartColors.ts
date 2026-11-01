@@ -18,69 +18,69 @@
  */
 
 export const CHART_TOKENS = {
-  // Planned: neutral / primary
+  // Planned: blue series (#3D73B5)
   planned: {
-    stroke: '#176B87',        // Primary Teal / Slate
-    fill: '#E0EEF2',          // Soft primary background for bars
-    text: '#176B87',
-    label: 'Planned Baseline',
+    stroke: '#3D73B5',        // Planned schedule blue
+    fill: '#EDF5FC',          // Soft blue fill for bars
+    text: '#3D73B5',
+    label: 'Planned Target',
     glyph: '■',               // Square node / marker
     strokeWidth: 2.5,
   },
 
-  // Actual: primary / semantic contrast
+  // Actual: verified teal/green (#187A6A)
   actual: {
-    stroke: '#2E7D5B',        // High-contrast semantic green
-    fill: '#2E7D5B',
-    text: '#2E7D5B',
+    stroke: '#187A6A',        // High-contrast verified teal
+    fill: '#187A6A',
+    text: '#187A6A',
     label: 'Verified Actual',
     glyph: '●',               // Solid circle node / marker
     strokeWidth: 3.5,
   },
 
-  // Forecast: dashed neutral / secondary
+  // Forecast: dashed violet series (#7655A6)
   forecast: {
-    stroke: '#7B8798',        // Neutral secondary slate
-    strokeAlt: '#D98B32',     // Secondary amber-slate
+    stroke: '#7655A6',        // Forecast violet
+    strokeAlt: '#7655A6',     // Consistent violet marker
     dashArray: '5,4',         // Strictly dashed
     fill: '#FFFFFF',
-    text: '#596579',
+    text: '#7655A6',
     label: 'Forecast Trajectory',
     glyph: '▲',               // Secondary triangle / dashed marker
     strokeWidth: 2.5,
   },
 
-  // Positive: green
+  // Positive: green (#187A6A)
   positive: {
-    stroke: '#2E7D5B',
-    fill: '#2E7D5B',
-    bg: '#EDF7F2',
-    border: '#B8DCC9',
-    text: '#2E7D5B',
+    stroke: '#187A6A',
+    fill: '#187A6A',
+    bg: '#E8F5F2',
+    border: '#B1DBD2',
+    text: '#105B4F',
     label: 'Ahead of Schedule',
     glyph: '✓',
     prefix: '+',
   },
 
-  // Warning: amber
+  // Warning: amber (#9C5A08)
   warning: {
-    stroke: '#D98B32',
-    fill: '#D98B32',
+    stroke: '#9C5A08',
+    fill: '#9C5A08',
     bg: '#FDF6ED',
     border: '#F0D4A6',
-    text: '#D98B32',
+    text: '#7B4504',
     label: 'Buffer Consumed',
     glyph: '▲',
     prefix: '▲',
   },
 
-  // Critical: red
+  // Critical: red (#B43D47)
   critical: {
-    stroke: '#B5473C',
-    fill: '#B5473C',
+    stroke: '#B43D47',
+    fill: '#B43D47',
     bg: '#FBEFEE',
-    border: '#E4B0AA',
-    text: '#B5473C',
+    border: '#E8B6BA',
+    text: '#922E37',
     label: 'Critical Path Slip',
     glyph: '✕',
     prefix: '-',
@@ -88,14 +88,14 @@ export const CHART_TOKENS = {
 
   // Neutral / Axis / Grid lines
   neutral: {
-    grid: '#E5E9F0',
-    gridDark: '#172033',
-    axis: '#7B8798',
-    text: '#596579',
-    heading: '#172033',
-    bg: '#F7F8FA',
-    border: '#D9DEE5',
-    dataDate: '#172033',
+    grid: '#E2EAF0',
+    gridDark: '#172B3A',
+    axis: '#526779',
+    text: '#526779',
+    heading: '#172B3A',
+    bg: '#F4F7FA',
+    border: '#D7E1E8',
+    dataDate: '#172B3A',
   },
 } as const;
 

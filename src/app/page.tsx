@@ -3,6 +3,7 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useApp } from '../context/AppContext';
+import { Logo } from '../components/shared/Logo';
 import { Loader2 } from 'lucide-react';
 
 export default function RootPage() {
@@ -37,9 +38,7 @@ export default function RootPage() {
   return (
     <div className="min-h-screen bg-[#F7F8FA] flex flex-col items-center justify-center p-4">
       <div className="flex flex-col items-center gap-3">
-        <div className="w-10 h-10 rounded-md bg-[#176B87] text-white flex items-center justify-center font-black text-base tracking-tighter">
-          PX
-        </div>
+        <Logo size="lg" />
         <div className="flex items-center gap-2 text-xs font-mono text-[#596579]">
           <Loader2 className="w-4 h-4 animate-spin text-[#176B87]" />
           <span>Verifying PLnEX session authority...</span>

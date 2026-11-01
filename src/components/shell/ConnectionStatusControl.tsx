@@ -87,9 +87,9 @@ export function ConnectionStatusControl() {
         {/* Status Label */}
         <span className="font-semibold text-xs">
           {effectiveStatus === 'ONLINE'
-            ? 'Online'
+            ? 'Demo Online'
             : effectiveStatus === 'OFFLINE'
-            ? 'Offline'
+            ? 'Demo Offline'
             : 'Syncing'}
         </span>
 

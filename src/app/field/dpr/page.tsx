@@ -566,6 +566,37 @@ export default function DPRPage() {
           </div>
         )}
 
+        {/* DEMO SAMPLE DATA BANNER */}
+        <div className="p-3 bg-[#EDF5F8] border border-[#B3CBE0] rounded-lg flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+          <div className="flex items-center gap-2">
+            <span className="px-2 py-0.5 rounded bg-[#176B87] text-white font-mono font-bold text-[10px] uppercase">
+              Demo Sample Data
+            </span>
+            <span className="text-[#172033] font-medium">
+              This DPR form is pre-loaded with simulated field execution records for 18 Sep 2026 Shift A.
+            </span>
+          </div>
+          <div className="flex items-center gap-2 self-start sm:self-auto">
+            <button
+              type="button"
+              onClick={() => {
+                setWorkCompletedList([]);
+                setQuantityItems([]);
+                setIssuesList([]);
+                setEvidenceList([]);
+                addToast({
+                  type: 'info',
+                  title: 'Form Cleared',
+                  description: 'Sample DPR contents cleared. Ready for fresh blank entry.',
+                });
+              }}
+              className="px-2.5 py-1 text-[11px] font-semibold text-[#596579] hover:text-[#172033] bg-white border border-[#D9DEE5] rounded transition-colors"
+            >
+              Clear to Blank
+            </button>
+          </div>
+        </div>
+
         {/* =========================================================================
             SECTION 1: DAILY PROGRESS REPORT (Document Header & Top Actions)
             ========================================================================= */}

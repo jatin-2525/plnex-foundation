@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useApp } from '../../context/AppContext';
 import { getDefaultRouteForRole } from '../../types/permissions';
 import { Breadcrumbs } from '../../components/shell/Breadcrumbs';
+import { Logo } from '../../components/shared/Logo';
 import {
   ShieldAlert,
   ArrowLeft,
@@ -57,17 +58,7 @@ function AccessDeniedContent() {
         {/* Top Header with Brand */}
         <div className="px-6 py-4 border-b border-[#D9DEE5] bg-white flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded bg-[#176B87] text-white flex items-center justify-center font-bold text-xs font-mono">
-              PX
-            </div>
-            <div>
-              <span className="text-sm font-bold text-[#172033] leading-none block">
-                PL<span className="text-[#176B87]">n</span>EX
-              </span>
-              <span className="text-[10px] text-[#596579] font-mono leading-none mt-0.5 block">
-                Planning-to-Execution Bridge
-              </span>
-            </div>
+            <Logo size="sm" />
           </div>
           <span className="text-xs font-mono text-[#B5473C] bg-[#FBEFEE] border border-[#E4B0AA] px-3 py-0.5 rounded font-semibold">
             HTTP 403 FORBIDDEN

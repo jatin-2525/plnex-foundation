@@ -109,7 +109,7 @@ const TIME_SERIES_DATA: TimeSeriesPoint[] = [
   { period: '18 Sep 2026', dateLabel: '18 Sep 2026', planned: 80, actual: 73, forecast: 73, isDataDate: true, notes: 'Reporting Date: Line 24 welding delayed by rain' },
   { period: 'Oct 2026', dateLabel: '31 Oct 2026', planned: 92, actual: null, forecast: 88, notes: 'Forecast recovery with double shift RT inspection' },
   { period: 'Nov 2026', dateLabel: '30 Nov 2026', planned: 98, actual: null, forecast: 95, notes: 'Pre-commissioning hydrotests' },
-  { period: 'Dec 2026', dateLabel: '15 Dec 2026', planned: 100, actual: null, forecast: 100, notes: 'Target commercial completion' },
+  { period: 'Dec 2026', dateLabel: '20 Dec 2026', planned: 100, actual: null, forecast: 100, notes: 'Forecast commercial completion (+5d slip)' },
 ];
 
 // Data Models for Detailed Project-Control Analytics
@@ -127,9 +127,9 @@ export interface DisciplineProgressItem {
 export const DISCIPLINE_PROGRESS_DATA: DisciplineProgressItem[] = [
   {
     discipline: 'Piping',
-    planned: 82.0,
+    planned: 85.0,
     actual: 68.0,
-    variance: -14.0,
+    variance: -17.0,
     weight: 35,
     activitiesCount: 64,
     status: 'Behind',
@@ -137,9 +137,9 @@ export const DISCIPLINE_PROGRESS_DATA: DisciplineProgressItem[] = [
   },
   {
     discipline: 'Civil',
-    planned: 94.0,
-    actual: 97.0,
-    variance: 3.0,
+    planned: 95.0,
+    actual: 96.0,
+    variance: 1.0,
     weight: 25,
     activitiesCount: 42,
     status: 'Ahead',
@@ -147,9 +147,9 @@ export const DISCIPLINE_PROGRESS_DATA: DisciplineProgressItem[] = [
   },
   {
     discipline: 'Electrical',
-    planned: 70.0,
-    actual: 65.0,
-    variance: -5.0,
+    planned: 72.0,
+    actual: 64.0,
+    variance: -8.0,
     weight: 15,
     activitiesCount: 28,
     status: 'Behind',
@@ -157,9 +157,9 @@ export const DISCIPLINE_PROGRESS_DATA: DisciplineProgressItem[] = [
   },
   {
     discipline: 'Mechanical',
-    planned: 75.0,
+    planned: 76.0,
     actual: 78.0,
-    variance: 3.0,
+    variance: 2.0,
     weight: 15,
     activitiesCount: 30,
     status: 'Ahead',
@@ -167,9 +167,9 @@ export const DISCIPLINE_PROGRESS_DATA: DisciplineProgressItem[] = [
   },
   {
     discipline: 'Instrumentation',
-    planned: 45.0,
-    actual: 40.0,
-    variance: -5.0,
+    planned: 43.0,
+    actual: 39.0,
+    variance: -4.0,
     weight: 10,
     activitiesCount: 20,
     status: 'Behind',
@@ -194,9 +194,9 @@ export const AREA_PROGRESS_DATA: AreaProgressItem[] = [
   {
     area: 'Unit A - Gas Processing',
     code: 'AREA-01',
-    planned: 84.0,
-    actual: 72.0,
-    variance: -12.0,
+    planned: 83.0,
+    actual: 69.0,
+    variance: -14.0,
     weight: 45,
     isCriticalPath: true,
     totalFloatDays: 0,
@@ -206,9 +206,9 @@ export const AREA_PROGRESS_DATA: AreaProgressItem[] = [
   {
     area: 'Unit A - Compressor House',
     code: 'AREA-02',
-    planned: 92.0,
-    actual: 95.0,
-    variance: 3.0,
+    planned: 95.0,
+    actual: 97.0,
+    variance: 2.0,
     weight: 25,
     isCriticalPath: false,
     totalFloatDays: 8,
@@ -218,9 +218,9 @@ export const AREA_PROGRESS_DATA: AreaProgressItem[] = [
   {
     area: 'Unit B - Offsites & Utilities',
     code: 'AREA-03',
-    planned: 65.0,
+    planned: 66.0,
     actual: 60.0,
-    variance: -5.0,
+    variance: -6.0,
     weight: 15,
     isCriticalPath: false,
     totalFloatDays: 14,
@@ -230,8 +230,8 @@ export const AREA_PROGRESS_DATA: AreaProgressItem[] = [
   {
     area: 'Unit 02 - Flare System',
     code: 'AREA-04',
-    planned: 70.0,
-    actual: 68.0,
+    planned: 60.0,
+    actual: 58.0,
     variance: -2.0,
     weight: 15,
     isCriticalPath: false,
@@ -308,9 +308,9 @@ const MOCK_PROGRESS_ACTIVITIES: ProgressActivityRow[] = [
     variancePercent: 0,
     varianceSemantic: 'Neutral',
     plannedFinish: '15 Sep 2026',
-    forecastFinish: '15 Sep 2026',
+    forecastFinish: '17 Sep 2026',
     status: 'Completed',
-    lastVerifiedUpdate: '14 Sep 2026: 12 spools erected with 75T mobile crane (Debajit Borah)',
+    lastVerifiedUpdate: '17 Sep 2026: 12 spools erected with 75T mobile crane (+2d slip, verified)',
     assignedEngineer: 'Debajit Borah',
     isCritical: true,
     history: [
@@ -321,9 +321,9 @@ const MOCK_PROGRESS_ACTIVITIES: ProgressActivityRow[] = [
         deltaPercent: 70,
         executionEventId: 'EVT-2026-001',
         evidenceId: 'EVD-001',
-        evidenceTitle: 'IMG_20260914_Line24_Erect.jpg',
+        evidenceTitle: 'IMG_20260917_Line24_Erect.jpg',
         verifiedBy: 'Debajit Borah (Lead Site Engineer)',
-        timestamp: '14 Sep 2026, 17:15 IST',
+        timestamp: '17 Sep 2026, 17:15 IST',
         statement: 'Spool erection completed on Line 24. 12 spools erected today with crane support.',
         auditHash: '0x8f3c7d1e4a9b2c3d',
       },
@@ -1027,27 +1027,27 @@ export default function ProgressVariancePage() {
               </p>
             </div>
 
-            {/* 4. Forecast at Completion */}
+            {/* 4. Forecast Finish Date */}
             <div className="p-4 sm:p-6 flex flex-col justify-between">
               <div>
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-semibold uppercase tracking-wider text-[#D98B32] block">
-                    Forecast at Completion
+                    Forecast Finish Date
                   </span>
                   <WhyButton
                     onClick={() => openWhyExplanation('impact:forecast')}
-                    title="Why is forecast completion delayed by +4 days?"
+                    title="Why is forecast completion delayed by +5 days?"
                   />
                 </div>
                 <div className="flex items-baseline gap-2 mt-2">
-                  <span className="text-[28px] sm:text-3xl font-bold text-[#D98B32] font-mono leading-none">
-                    100.0%
+                  <span className="text-[24px] sm:text-2xl font-bold text-[#D98B32] font-mono leading-none">
+                    20 Dec 2026
                   </span>
-                  <span className="text-xs text-[#D98B32] font-semibold">+4 Days Slip</span>
+                  <span className="text-xs text-[#D98B32] font-semibold">+5 Days Slip</span>
                 </div>
               </div>
               <p className="text-[13px] text-[#596579] mt-2">
-                Target completion shifted to 15 Dec 2026 (contractual baseline 11 Dec 2026).
+                Forecast finish shifted to 20 Dec 2026 (baseline finish: 15 Dec 2026).
               </p>
             </div>
           </div>
@@ -1055,7 +1055,7 @@ export default function ProgressVariancePage() {
           {/* Summary Metrics Interpretation */}
           <div className="p-3 bg-[#F7F8FA] border-l-4 border-[#176B87] rounded-r-lg text-xs text-[#172033] leading-relaxed">
             <strong className="text-[#176B87]">Summary Performance Interpretation: </strong>
-            Cumulative verified physical progress is currently <strong>7.0 percentage points behind baseline (-7.0% variance)</strong>. The project critical path has consumed 4 days of total float, shifting projected commercial completion to 15 Dec 2026 unless recovery shifts on Line 24 are mobilized.
+            Cumulative verified physical progress is currently <strong>7.0 percentage points behind baseline (-7.0% variance)</strong>. The project critical path has consumed 5 days of total float, shifting projected commercial completion to 20 Dec 2026 (+5 days slip) unless recovery shifts on Line 24 are mobilized.
           </div>
         </div>
 
@@ -1064,10 +1064,6 @@ export default function ProgressVariancePage() {
             Planned Progress | Actual Verified Progress | Forecast Progress | Variance
             ========================================================================= */}
         <div className="space-y-2">
-          <div className="px-3 py-1.5 bg-[#EDF5F8] border border-[#B3CBE0] rounded-lg flex items-center justify-between text-xs text-[#176B87] font-medium flex-wrap gap-2">
-            <span>Project Question: Is cumulative physical progress tracking the approved CPM baseline over time?</span>
-            <span className="font-mono text-[11px] font-bold">Planned vs. Actual vs. Forecast Trajectory</span>
-          </div>
           <SCurveChart
             variant="full"
             title="Project S-Curve — Planned vs. Actual vs. Forecast"
@@ -1077,7 +1073,6 @@ export default function ProgressVariancePage() {
 
         {/* =========================================================================
             4. PROGRESS BY DISCIPLINE
-            Project Question: Which engineering discipline is driving project variance?
             ========================================================================= */}
         <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 shadow-xs space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#D9DEE5]/60 pb-3">
@@ -1090,103 +1085,109 @@ export default function ProgressVariancePage() {
                 Physical progress breakdown across engineering scopes compared against baseline weightage.
               </p>
             </div>
-            <div className="px-3 py-1 rounded bg-[#EDF5F8] border border-[#B3CBE0] text-[11px] font-mono text-[#176B87] font-semibold self-start sm:self-auto">
-              Project Question: Which engineering discipline is driving project variance?
-            </div>
           </div>
 
           {/* Bar Chart: Progress by Discipline */}
           <BarChart variant="discipline" className="border-0 p-0 shadow-none" />
 
-          {/* Discipline Progress Table */}
-          <div className="border border-[#D9DEE5] rounded-md bg-white overflow-x-auto">
-            <table className="w-full text-left border-collapse text-sm">
-              <thead className="sticky top-0 z-10 bg-[#F7F8FA]">
-                <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[11px] font-semibold uppercase text-[#596579] tracking-wider h-11">
-                  <th className="py-3 px-4">Discipline</th>
-                  <th className="py-3 px-4 text-right">Planned Target</th>
-                  <th className="py-3 px-4 text-right">Verified Actual</th>
-                  <th className="py-3 px-4 text-center">Variance</th>
-                  <th className="py-3 px-4 w-44">Trajectory vs Baseline</th>
-                  <th className="py-3 px-4">Schedule Lag Driver</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-[#D9DEE5]/60">
-                {DISCIPLINE_PROGRESS_DATA.map((d) => {
-                  const isBehind = d.variance < 0;
-                  const isAhead = d.variance > 0;
-                  return (
-                    <tr key={d.discipline} className="h-11 sm:h-12 hover:bg-[#F7F8FA]/60 transition-colors">
-                      <td className="py-3 px-4">
-                        <div className="flex items-center gap-2">
-                          <span className="font-medium text-[#172033]">{d.discipline}</span>
-                          <span className="text-[11px] font-mono text-[#596579] bg-[#F1F3F5] px-1.5 py-0.5 rounded border border-[#D9DEE5]">
-                            {d.weight}% Scope
+          {/* Collapsible Discipline Progress Table */}
+          <details className="group border border-[#D9DEE5] rounded-md bg-white overflow-hidden">
+            <summary className="flex items-center justify-between p-3.5 bg-[#F7F8FA] hover:bg-[#F1F3F5] cursor-pointer text-xs font-semibold text-[#172033] transition-colors select-none">
+              <span className="flex items-center gap-2">
+                <Layers className="w-4 h-4 text-[#176B87]" />
+                <span>View Full Discipline Breakdown Table ({DISCIPLINE_PROGRESS_DATA.length} Disciplines)</span>
+              </span>
+              <span className="text-[11px] text-[#176B87] group-open:hidden">Expand Table ↓</span>
+              <span className="text-[11px] text-[#176B87] hidden group-open:inline">Collapse Table ↑</span>
+            </summary>
+            <div className="border-t border-[#D9DEE5] overflow-x-auto">
+              <table className="w-full text-left border-collapse text-sm">
+                <thead className="sticky top-0 z-10 bg-[#F7F8FA]">
+                  <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[11px] font-semibold uppercase text-[#596579] tracking-wider h-11">
+                    <th className="py-3 px-4">Discipline</th>
+                    <th className="py-3 px-4 text-right">Planned Target</th>
+                    <th className="py-3 px-4 text-right">Verified Actual</th>
+                    <th className="py-3 px-4 text-center">Variance</th>
+                    <th className="py-3 px-4 w-44">Trajectory vs Baseline</th>
+                    <th className="py-3 px-4">Schedule Lag Driver</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-[#D9DEE5]/60">
+                  {DISCIPLINE_PROGRESS_DATA.map((d) => {
+                    const isBehind = d.variance < 0;
+                    const isAhead = d.variance > 0;
+                    return (
+                      <tr key={d.discipline} className="h-11 sm:h-12 hover:bg-[#F7F8FA]/60 transition-colors">
+                        <td className="py-3 px-4">
+                          <div className="flex items-center gap-2">
+                            <span className="font-medium text-[#172033]">{d.discipline}</span>
+                            <span className="text-[11px] font-mono text-[#596579] bg-[#F1F3F5] px-1.5 py-0.5 rounded border border-[#D9DEE5]">
+                              {d.weight}% Scope
+                            </span>
+                          </div>
+                        </td>
+                        <td className="py-2 px-3 text-right font-mono text-[#176B87] font-medium">
+                          {d.planned.toFixed(1)}%
+                        </td>
+                        <td className="py-2 px-3 text-right font-mono font-medium">
+                          <span className={isBehind ? 'text-[#B5473C]' : 'text-[#2E7D5B]'}>
+                            {d.actual.toFixed(1)}%
                           </span>
-                        </div>
-                      </td>
-                      <td className="py-2 px-3 text-right font-mono text-[#176B87] font-medium">
-                        {d.planned.toFixed(1)}%
-                      </td>
-                      <td className="py-2 px-3 text-right font-mono font-medium">
-                        <span className={isBehind ? 'text-[#B5473C]' : 'text-[#2E7D5B]'}>
-                          {d.actual.toFixed(1)}%
-                        </span>
-                      </td>
-                      <td className="py-2 px-3 text-center">
-                        <span
-                          className={`text-[11px] font-mono font-medium px-2 py-0.5 rounded border ${
-                            isBehind
-                              ? 'bg-[#FBEFEE] text-[#B5473C] border-[#E4B0AA]'
-                              : isAhead
-                              ? 'bg-[#EDF7F2] text-[#2E7D5B] border-[#B8DCC9]'
-                              : 'bg-[#F1F3F5] text-[#596579] border-[#D9DEE5]'
-                          }`}
-                        >
-                          {isAhead ? `+${d.variance.toFixed(1)}%` : `${d.variance.toFixed(1)}%`}
-                        </span>
-                      </td>
-                      <td className="py-2 px-3">
-                        <div className="space-y-1">
-                          <div className="relative w-full h-2.5 bg-[#E5E9EF] rounded-full overflow-hidden">
-                            <div
-                              className={`h-full ${isBehind ? 'bg-[#D98B32]' : 'bg-[#2E7D5B]'}`}
-                              style={{ width: `${d.actual}%` }}
-                              title={`Actual: ${d.actual}%`}
-                            />
-                            <div
-                              className="absolute top-0 bottom-0 w-0.5 bg-[#172033] z-10"
-                              style={{ left: `${d.planned}%` }}
-                              title={`Planned Target: ${d.planned}%`}
-                            />
+                        </td>
+                        <td className="py-2 px-3 text-center">
+                          <span
+                            className={`text-[11px] font-mono font-medium px-2 py-0.5 rounded border ${
+                              isBehind
+                                ? 'bg-[#FBEFEE] text-[#B5473C] border-[#E4B0AA]'
+                                : isAhead
+                                ? 'bg-[#EDF7F2] text-[#2E7D5B] border-[#B8DCC9]'
+                                : 'bg-[#F1F3F5] text-[#596579] border-[#D9DEE5]'
+                            }`}
+                          >
+                            {isAhead ? `+${d.variance.toFixed(1)}%` : `${d.variance.toFixed(1)}%`}
+                          </span>
+                        </td>
+                        <td className="py-2 px-3">
+                          <div className="space-y-1">
+                            <div className="relative w-full h-2.5 bg-[#E5E9EF] rounded-full overflow-hidden">
+                              <div
+                                className={`h-full ${isBehind ? 'bg-[#D98B32]' : 'bg-[#2E7D5B]'}`}
+                                style={{ width: `${d.actual}%` }}
+                                title={`Actual: ${d.actual}%`}
+                              />
+                              <div
+                                className="absolute top-0 bottom-0 w-0.5 bg-[#172033] z-10"
+                                style={{ left: `${d.planned}%` }}
+                                title={`Planned Target: ${d.planned}%`}
+                              />
+                            </div>
+                            <div className="flex justify-between text-[10px] text-[#7B8798] font-mono">
+                              <span>0%</span>
+                              <span className="text-[#172033]">Marker: {d.planned}%</span>
+                              <span>100%</span>
+                            </div>
                           </div>
-                          <div className="flex justify-between text-[10px] text-[#7B8798] font-mono">
-                            <span>0%</span>
-                            <span className="text-[#172033]">Marker: {d.planned}%</span>
-                            <span>100%</span>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="py-2 px-3 text-xs text-[#596579]">
-                        {d.criticalLagDriver}
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
+                        </td>
+                        <td className="py-2 px-3 text-xs text-[#596579]">
+                          {d.criticalLagDriver}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </details>
 
           {/* Concise Engineering Interpretation */}
           <div className="p-3 bg-[#F7F8FA] border-l-4 border-[#176B87] rounded-r-lg text-xs text-[#172033] leading-relaxed">
             <strong className="text-[#176B87]">Discipline Analytics Interpretation: </strong>
-            Piping is the primary schedule lag driver with a <strong>-14.0% variance</strong> (weighted 35% of overall project scope) due to unresolved Line 24 field butt welds and monsoon stoppages. Civil (+3.0%) and Mechanical (+3.0%) are running ahead of baseline, preventing foundation delays from impacting the pre-commissioning critical path.
+            Piping is the primary schedule lag driver with a <strong>-17.0% variance</strong> (weighted 35% of overall project scope) due to unresolved Line 24 field butt welds and monsoon stoppages. Civil (+1.0%) and Mechanical (+2.0%) are running ahead of baseline, preventing foundation delays from impacting the pre-commissioning critical path.
           </div>
         </div>
 
         {/* =========================================================================
             5. PROGRESS BY AREA
-            Project Question: Which physical plant battery limit has progress bottlenecks?
             ========================================================================= */}
         <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 shadow-xs space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#D9DEE5]/60 pb-3">
@@ -1199,104 +1200,110 @@ export default function ProgressVariancePage() {
                 Geographical battery limit performance tracking with critical path and total float mapping.
               </p>
             </div>
-            <div className="px-3 py-1 rounded bg-[#EDF5F8] border border-[#B3CBE0] text-[11px] font-mono text-[#176B87] font-semibold self-start sm:self-auto">
-              Project Question: Which physical plant battery limit has progress bottlenecks?
-            </div>
           </div>
 
           {/* Bar Chart: Progress by Area */}
           <BarChart variant="area" className="border-0 p-0 shadow-none" />
 
-          {/* Area Performance Table */}
-          <div className="border border-[#D9DEE5] rounded-md bg-white overflow-x-auto">
-            <table className="w-full text-left border-collapse text-sm">
-              <thead className="sticky top-0 z-10 bg-[#F7F8FA]">
-                <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[11px] font-semibold uppercase text-[#596579] tracking-wider h-11">
-                  <th className="py-3 px-4">Area & Battery Limit</th>
-                  <th className="py-3 px-4">CPM Path / Float</th>
-                  <th className="py-3 px-4 text-right">Planned</th>
-                  <th className="py-3 px-4 text-right">Actual</th>
-                  <th className="py-3 px-4 text-center">Variance</th>
-                  <th className="py-3 px-4 w-36">Progress</th>
-                  <th className="py-3 px-4">Operational Status & Constraints</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-[#D9DEE5]/60">
-                {AREA_PROGRESS_DATA.map((area) => {
-                  const isBehind = area.variance < 0;
-                  const isAhead = area.variance > 0;
-                  return (
-                    <tr key={area.code} className="h-11 sm:h-12 hover:bg-[#F7F8FA]/60 transition-colors">
-                      <td className="py-3 px-4">
-                        <div>
-                          <span className="font-mono text-[11px] text-[#7B8798] block">{area.code}</span>
-                          <span className="font-medium text-[#172033]">{area.area}</span>
-                        </div>
-                      </td>
-                      <td className="py-2 px-3">
-                        {area.isCriticalPath ? (
-                          <span className="text-[11px] font-semibold px-2 py-0.5 rounded bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA] inline-block">
-                            Critical Path
+          {/* Collapsible Area Performance Table */}
+          <details className="group border border-[#D9DEE5] rounded-md bg-white overflow-hidden">
+            <summary className="flex items-center justify-between p-3.5 bg-[#F7F8FA] hover:bg-[#F1F3F5] cursor-pointer text-xs font-semibold text-[#172033] transition-colors select-none">
+              <span className="flex items-center gap-2">
+                <MapPin className="w-4 h-4 text-[#176B87]" />
+                <span>View Full Area Breakdown Table ({AREA_PROGRESS_DATA.length} Battery Limits)</span>
+              </span>
+              <span className="text-[11px] text-[#176B87] group-open:hidden">Expand Table ↓</span>
+              <span className="text-[11px] text-[#176B87] hidden group-open:inline">Collapse Table ↑</span>
+            </summary>
+            <div className="border-t border-[#D9DEE5] overflow-x-auto">
+              <table className="w-full text-left border-collapse text-sm">
+                <thead className="sticky top-0 z-10 bg-[#F7F8FA]">
+                  <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[11px] font-semibold uppercase text-[#596579] tracking-wider h-11">
+                    <th className="py-3 px-4">Area & Battery Limit</th>
+                    <th className="py-3 px-4">CPM Path / Float</th>
+                    <th className="py-3 px-4 text-right">Planned</th>
+                    <th className="py-3 px-4 text-right">Actual</th>
+                    <th className="py-3 px-4 text-center">Variance</th>
+                    <th className="py-3 px-4 w-36">Progress</th>
+                    <th className="py-3 px-4">Operational Status & Constraints</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-[#D9DEE5]/60">
+                  {AREA_PROGRESS_DATA.map((area) => {
+                    const isBehind = area.variance < 0;
+                    const isAhead = area.variance > 0;
+                    return (
+                      <tr key={area.code} className="h-11 sm:h-12 hover:bg-[#F7F8FA]/60 transition-colors">
+                        <td className="py-3 px-4">
+                          <div>
+                            <span className="font-mono text-[11px] text-[#7B8798] block">{area.code}</span>
+                            <span className="font-medium text-[#172033]">{area.area}</span>
+                          </div>
+                        </td>
+                        <td className="py-2 px-3">
+                          {area.isCriticalPath ? (
+                            <span className="text-[11px] font-semibold px-2 py-0.5 rounded bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA] inline-block">
+                              Critical Path
+                            </span>
+                          ) : (
+                            <span className="text-[11px] font-mono font-medium px-2 py-0.5 rounded bg-[#F1F3F5] text-[#596579] inline-block">
+                              Float: {area.totalFloatDays}d
+                            </span>
+                          )}
+                        </td>
+                        <td className="py-2 px-3 text-right font-mono text-[#176B87] font-medium">
+                          {area.planned.toFixed(0)}%
+                        </td>
+                        <td className="py-2 px-3 text-right font-mono font-medium">
+                          <span className={isBehind ? 'text-[#B5473C]' : 'text-[#2E7D5B]'}>
+                            {area.actual.toFixed(0)}%
                           </span>
-                        ) : (
-                          <span className="text-[11px] font-mono font-medium px-2 py-0.5 rounded bg-[#F1F3F5] text-[#596579] inline-block">
-                            Float: {area.totalFloatDays}d
+                        </td>
+                        <td className="py-2 px-3 text-center">
+                          <span
+                            className={`text-[11px] font-mono font-medium px-2 py-0.5 rounded border ${
+                              isBehind
+                                ? 'bg-[#FBEFEE] text-[#B5473C] border-[#E4B0AA]'
+                                : isAhead
+                                ? 'bg-[#EDF7F2] text-[#2E7D5B] border-[#B8DCC9]'
+                                : 'bg-[#F1F3F5] text-[#596579] border-[#D9DEE5]'
+                            }`}
+                          >
+                            {isAhead ? `+${area.variance.toFixed(0)}%` : `${area.variance.toFixed(0)}%`}
                           </span>
-                        )}
-                      </td>
-                      <td className="py-2 px-3 text-right font-mono text-[#176B87] font-medium">
-                        {area.planned.toFixed(0)}%
-                      </td>
-                      <td className="py-2 px-3 text-right font-mono font-medium">
-                        <span className={isBehind ? 'text-[#B5473C]' : 'text-[#2E7D5B]'}>
-                          {area.actual.toFixed(0)}%
-                        </span>
-                      </td>
-                      <td className="py-2 px-3 text-center">
-                        <span
-                          className={`text-[11px] font-mono font-medium px-2 py-0.5 rounded border ${
-                            isBehind
-                              ? 'bg-[#FBEFEE] text-[#B5473C] border-[#E4B0AA]'
-                              : isAhead
-                              ? 'bg-[#EDF7F2] text-[#2E7D5B] border-[#B8DCC9]'
-                              : 'bg-[#F1F3F5] text-[#596579] border-[#D9DEE5]'
-                          }`}
-                        >
-                          {isAhead ? `+${area.variance.toFixed(0)}%` : `${area.variance.toFixed(0)}%`}
-                        </span>
-                      </td>
-                      <td className="py-2 px-3">
-                        <div className="relative w-full h-2 bg-[#E5E9EF] rounded-full overflow-hidden">
-                          <div
-                            className={`h-full ${isBehind ? 'bg-[#D98B32]' : 'bg-[#2E7D5B]'}`}
-                            style={{ width: `${area.actual}%` }}
-                          />
-                          <div
-                            className="absolute top-0 bottom-0 w-0.5 bg-[#172033]"
-                            style={{ left: `${area.planned}%` }}
-                          />
-                        </div>
-                      </td>
-                      <td className="py-2 px-3 text-xs text-[#596579]">
-                        {area.summary}
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
+                        </td>
+                        <td className="py-2 px-3">
+                          <div className="relative w-full h-2 bg-[#E5E9EF] rounded-full overflow-hidden">
+                            <div
+                              className={`h-full ${isBehind ? 'bg-[#D98B32]' : 'bg-[#2E7D5B]'}`}
+                              style={{ width: `${area.actual}%` }}
+                            />
+                            <div
+                              className="absolute top-0 bottom-0 w-0.5 bg-[#172033]"
+                              style={{ left: `${area.planned}%` }}
+                            />
+                          </div>
+                        </td>
+                        <td className="py-2 px-3 text-xs text-[#596579]">
+                          {area.summary}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </details>
 
           {/* Concise Engineering Interpretation */}
           <div className="p-3 bg-[#F7F8FA] border-l-4 border-[#176B87] rounded-r-lg text-xs text-[#172033] leading-relaxed">
             <strong className="text-[#176B87]">Area Analytics Interpretation: </strong>
-            <strong>Unit A - Gas Processing</strong> contains 85% of total schedule slippage and is the sole battery limit on the zero-float critical path. By contrast, Unit A - Compressor House is ahead (+3.0%), and offsite drainage/flare packages carry healthy float buffers (14 to 20 days) that insulate the milestone completion date.
+            <strong>Unit A - Gas Processing</strong> contains 85% of total schedule slippage and is the sole battery limit on the zero-float critical path (-14.0% variance). By contrast, Unit A - Compressor House is ahead (+2.0%), and offsite drainage/flare packages carry healthy float buffers (14 to 20 days) that insulate the milestone completion date.
           </div>
         </div>
 
         {/* =========================================================================
             6. VARIANCE ANALYSIS & ROOT CAUSES
-            Project Question: What are the root causes and schedule impacts of current variances?
             ========================================================================= */}
         <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 shadow-xs space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#D9DEE5]/60 pb-3">
@@ -1308,9 +1315,6 @@ export default function ProgressVariancePage() {
               <p className="text-xs text-[#596579] mt-0.5">
                 Rigorous causal analysis linking variance drivers to CPM critical path float consumption and recovery actions.
               </p>
-            </div>
-            <div className="px-3 py-1 rounded bg-[#EDF5F8] border border-[#B3CBE0] text-[11px] font-mono text-[#176B87] font-semibold self-start sm:self-auto">
-              Project Question: What are the root causes and schedule impacts of current variances?
             </div>
           </div>
 
@@ -1375,7 +1379,7 @@ export default function ProgressVariancePage() {
               <div className="p-4 rounded-lg bg-[#FBEFEE]/60 border border-[#E4B0AA] space-y-3 text-xs">
                 <div className="flex items-center gap-2 text-[#B5473C] font-bold">
                   <AlertTriangle className="w-4 h-4 shrink-0" />
-                  <span>Path 1 Float Consumed: 4 Days</span>
+                  <span>Path 1 Float Consumed: 5 Days</span>
                 </div>
 
                 <div className="text-[11px] text-[#596579] space-y-1">
@@ -1383,7 +1387,7 @@ export default function ProgressVariancePage() {
                     The critical chain sequence <code>CIV-11-001 → PIP-24-001 → PIP-24-002 → PIP-24-003</code> has exhausted all baseline float.
                   </p>
                   <p>
-                    Forecast commercial completion is currently <strong>15 Dec 2026</strong> (+4 days slip vs. 11 Dec 2026 contract baseline).
+                    Forecast commercial completion is currently <strong>20 Dec 2026</strong> (+5 days slip vs. 15 Dec 2026 baseline).
                   </p>
                 </div>
 
@@ -1392,7 +1396,7 @@ export default function ProgressVariancePage() {
                   <ul className="list-disc pl-4 space-y-0.5 text-[#596579]">
                     <li>20 Sep: Mobilize 2nd shift RT inspection team</li>
                     <li>22 Sep: Pre-clear 150 bar blind flanges from stores</li>
-                    <li>01 Oct: Recover 4 days float before hydrotesting</li>
+                    <li>01 Oct: Recover 5 days float before hydrotesting</li>
                   </ul>
                 </div>
               </div>
@@ -1402,13 +1406,12 @@ export default function ProgressVariancePage() {
           {/* Concise Engineering Interpretation */}
           <div className="p-3 bg-[#F7F8FA] border-l-4 border-[#176B87] rounded-r-lg text-xs text-[#172033] leading-relaxed">
             <strong className="text-[#176B87]">Variance Analysis Interpretation: </strong>
-            The -7.0% net variance is attributable to 3 localized operational bottlenecks on Line 24 rather than chronic site labor shortages. Executing the approved 2-shift NDT clearance and expediting stores material release will recover the 4 days of consumed critical path float by Milestone M4 (Hydrotesting).
+            The -7.0% net variance is attributable to 3 localized operational bottlenecks on Line 24 rather than chronic site labor shortages. Executing the approved 2-shift NDT clearance and expediting stores material release will recover the 5 days of consumed critical path float by Milestone M4 (Hydrotesting).
           </div>
         </div>
 
         {/* =========================================================================
             7. TOP VARIANCES & SCHEDULE ACTIVITIES LEDGER
-            Project Question: Which specific activities deviate most from baseline, and how is each verified?
             Activity | Planned % | Verified Actual % | Variance | Forecast Finish | Status | Last Verified Update
             ========================================================================= */}
         <div className="bg-white border border-[#D9DEE5] rounded-lg overflow-hidden shadow-xs space-y-0">
@@ -1421,9 +1424,6 @@ export default function ProgressVariancePage() {
               <p className="text-xs text-[#596579] mt-0.5">
                 Activity-level variance ledger with 100% execution event traceability and verified history audit trails.
               </p>
-            </div>
-            <div className="px-3 py-1 rounded bg-[#EDF5F8] border border-[#B3CBE0] text-[11px] font-mono text-[#176B87] font-semibold self-start md:self-auto">
-              Project Question: Which specific activities deviate most from baseline, and how is each verified?
             </div>
           </div>
 
@@ -1663,7 +1663,7 @@ export default function ProgressVariancePage() {
 
           <div className="p-4 bg-[#F7F8FA] border-t border-[#D9DEE5] flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-[#596579]">
             <span>
-              Showing <strong>{filteredActivities.length}</strong> of <strong>{activities.length}</strong> schedule activities
+              Showing <strong>{filteredActivities.length}</strong> active monitored critical activities (out of 184 total activities in Rev 3.2 baseline)
             </span>
             <span className="text-[11px] text-[#7B8798]">
               Click any activity row to view complete execution lineage and verification history

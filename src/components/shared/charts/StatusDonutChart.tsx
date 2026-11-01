@@ -101,13 +101,15 @@ export function StatusDonutChart({
           <p className="text-xs text-[#596579] mt-0.5">{subtitle}</p>
         </div>
 
-        {/* Real Project-Control Question Banner */}
-        <div className="px-3 py-1.5 rounded bg-[#EDF5F8] border border-[#B3CBE0] text-xs font-mono text-[#176B87] font-semibold self-start lg:self-auto max-w-md">
-          <span className="font-sans font-bold text-[#172033] block text-[10px] uppercase tracking-wide">
-            Project-Control Question:
-          </span>
-          {projectQuestion}
-        </div>
+        {/* Project Question Banner (only if explicitly provided) */}
+        {projectQuestion && (
+          <div className="px-3 py-1.5 rounded bg-[#EDF5F8] border border-[#B3CBE0] text-xs font-mono text-[#176B87] font-semibold self-start lg:self-auto max-w-md">
+            <span className="font-sans font-bold text-[#172033] block text-[10px] uppercase tracking-wide">
+              Project Question:
+            </span>
+            {projectQuestion}
+          </div>
+        )}
       </div>
 
       {/* Content: Static Donut on Left, Detailed Data Table on Right */}

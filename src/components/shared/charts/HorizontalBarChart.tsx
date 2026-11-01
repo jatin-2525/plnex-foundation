@@ -81,8 +81,17 @@ const DEFAULT_DELAYED_ACTIVITIES: HorizontalBarItem[] = [
   },
 ];
 
-// Canonical Top Variances Dataset
+// Canonical Top Variances Dataset (Reconciled with 80.0% Planned / 73.0% Actual)
 const DEFAULT_TOP_VARIANCES: HorizontalBarItem[] = [
+  {
+    id: 'PIP-24-SCOPE',
+    label: 'Piping Erection & Welding Scope',
+    subLabel: 'Discipline Level • 35% Weight',
+    value: 17.0,
+    valueDisplay: '-17.0%',
+    isCritical: true,
+    contextNote: 'Actual 68% vs Planned 85% • 4 joints pending RT',
+  },
   {
     id: 'PIP-24-002',
     label: 'Weld Line 24-XX Field Joints & NDT',
@@ -93,40 +102,31 @@ const DEFAULT_TOP_VARIANCES: HorizontalBarItem[] = [
     contextNote: 'Actual 70% vs Planned 85% • NDT clearance hold',
   },
   {
-    id: 'PIP-24-SCOPE',
-    label: 'Piping Erection & Welding Scope',
-    subLabel: 'Discipline Level • 35% Weight',
-    value: 14.0,
-    valueDisplay: '-14.0%',
-    isCritical: true,
-    contextNote: 'Actual 68% vs Planned 82% • 4 joints pending RT',
-  },
-  {
     id: 'AREA-01-GAS',
     label: 'Unit A - Gas Processing Battery Limit',
     subLabel: 'Area Level • 45% Scope',
-    value: 12.0,
-    valueDisplay: '-12.0%',
+    value: 14.0,
+    valueDisplay: '-14.0%',
     isCritical: true,
-    contextNote: 'Actual 72% vs Planned 84% • Zero float critical path',
+    contextNote: 'Actual 69% vs Planned 83% • Zero float critical path',
   },
   {
     id: 'ELE-11-032',
     label: 'Cable Tray Installation - Overhead Gallery',
     subLabel: 'Electrical • WBS 1.1.4.1.2',
-    value: 10.0,
-    valueDisplay: '-10.0%',
+    value: 8.0,
+    valueDisplay: '-8.0%',
     isCritical: false,
-    contextNote: 'Actual 40% vs Planned 50% • Bracket logistics delay',
+    contextNote: 'Actual 64% vs Planned 72% • Bracket logistics delay',
   },
   {
     id: 'INS-04-SCOPE',
     label: 'Instrumentation & Loop Tubing',
     subLabel: 'Discipline Level • 10% Weight',
-    value: 5.0,
-    valueDisplay: '-5.0%',
+    value: 4.0,
+    valueDisplay: '-4.0%',
     isCritical: false,
-    contextNote: 'Actual 40% vs Planned 45% • Awaiting piping test signoff',
+    contextNote: 'Actual 39% vs Planned 43% • Awaiting piping test signoff',
   },
 ];
 
@@ -240,13 +240,15 @@ export function HorizontalBarChart({
           <p className="text-xs text-[#596579] mt-0.5">{displaySubtitle}</p>
         </div>
 
-        {/* Real Project-Control Question Banner */}
-        <div className="px-3 py-1.5 rounded bg-[#EDF5F8] border border-[#B3CBE0] text-xs font-mono text-[#176B87] font-semibold self-start lg:self-auto max-w-md">
-          <span className="font-sans font-bold text-[#172033] block text-[10px] uppercase tracking-wide">
-            Project-Control Question:
-          </span>
-          {displayQuestion}
-        </div>
+        {/* Project Question Banner (only if explicitly provided) */}
+        {projectQuestion && (
+          <div className="px-3 py-1.5 rounded bg-[#EDF5F8] border border-[#B3CBE0] text-xs font-mono text-[#176B87] font-semibold self-start lg:self-auto max-w-md">
+            <span className="font-sans font-bold text-[#172033] block text-[10px] uppercase tracking-wide">
+              Project Question:
+            </span>
+            {displayQuestion}
+          </div>
+        )}
       </div>
 
       {/* SVG Canvas (Static Horizontal Bars, No animation) */}
