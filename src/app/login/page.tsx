@@ -365,49 +365,55 @@ function LoginForm() {
         {/* Security & Compliance Footer */}
         <div className="px-6 py-3 bg-[#F7F8FA] border-t border-[#D9DEE5] flex items-center justify-center gap-2 text-[11px] text-[#596579]">
           <Shield className="w-3.5 h-3.5 text-[#176B87] flex-shrink-0" />
-          <span>Restricted to Authorized Infrastructure Personnel</span>
+          <span>Enterprise Multi-Tenant Access Gate · Role-Based Access Control</span>
         </div>
       </div>
 
       {/* Quick Testing Sandbox Bar (For evaluator testing of all 3 roles) */}
-      <div className="mt-4 p-3 bg-white border border-[#D9DEE5] rounded-lg text-xs space-y-2">
-        <div className="flex items-center justify-between text-[11px] text-[#596579]">
-          <span className="font-semibold uppercase tracking-wider text-[#172033]">
-            Quick Role Credentials (Direct Routing)
+      <details className="mt-4 p-3 bg-white border border-[#D9DEE5] rounded-lg text-xs space-y-2 group">
+        <summary className="flex items-center justify-between text-[11px] text-[#596579] font-medium list-none select-none cursor-pointer">
+          <span className="font-semibold uppercase tracking-wider text-[#172033] flex items-center gap-1.5">
+            <span>Demo Sandbox Credentials</span>
           </span>
-          <span className="font-mono">Role Test Presets</span>
+          <span className="text-[10px] text-[#176B87] group-open:hidden">Show Role Presets ▾</span>
+          <span className="text-[10px] text-[#176B87] hidden group-open:inline">Hide Role Presets ▴</span>
+        </summary>
+        <div className="pt-2 text-xs space-y-2">
+          <p className="text-[11px] text-[#596579]">
+            Select a verified persona to test role-based navigation and views:
+          </p>
+          <div className="flex flex-wrap gap-2">
+            <button
+              type="button"
+              onClick={() => handleQuickFill('manager')}
+              className="px-2.5 py-1 bg-[#EDF5F8] hover:bg-[#D9EBF2] text-[#176B87] border border-[#B3CBE0] rounded text-[11px] font-mono font-medium transition-colors cursor-pointer"
+            >
+              Pre-fill as Manager (/dashboard)
+            </button>
+            <button
+              type="button"
+              onClick={() => handleQuickFill('engineer')}
+              className="px-2.5 py-1 bg-[#EDF7F2] hover:bg-[#B8DCC9]/40 text-[#2E7D5B] border border-[#B8DCC9] rounded text-[11px] font-mono font-medium transition-colors cursor-pointer"
+            >
+              Pre-fill as Site Engineer (/engineer)
+            </button>
+            <button
+              type="button"
+              onClick={() => handleQuickFill('admin')}
+              className="px-2.5 py-1 bg-[#EDF5F8] hover:bg-[#B3CBE0]/40 text-[#3B6EA8] border border-[#B3CBE0] rounded text-[11px] font-mono font-medium transition-colors cursor-pointer"
+            >
+              Pre-fill as Admin (/admin)
+            </button>
+            <button
+              type="button"
+              onClick={() => handleQuickFill('invalid')}
+              className="px-2.5 py-1 bg-[#FBEFEE] hover:bg-[#FBEFEE]/80 text-[#B5473C] border border-[#E4B0AA] rounded text-[11px] font-mono transition-colors cursor-pointer"
+            >
+              Invalid Creds
+            </button>
+          </div>
         </div>
-        <div className="flex flex-wrap gap-2">
-          <button
-            type="button"
-            onClick={() => handleQuickFill('manager')}
-            className="px-2 py-1 bg-[#EDF5F8] hover:bg-[#D9EBF2] text-[#176B87] border border-[#B3CBE0] rounded text-[11px] font-mono font-medium transition-colors"
-          >
-            Manager → /dashboard
-          </button>
-          <button
-            type="button"
-            onClick={() => handleQuickFill('engineer')}
-            className="px-2 py-1 bg-[#EDF7F2] hover:bg-[#B8DCC9]/40 text-[#2E7D5B] border border-[#B8DCC9] rounded text-[11px] font-mono font-medium transition-colors"
-          >
-            Site Engineer → /engineer
-          </button>
-          <button
-            type="button"
-            onClick={() => handleQuickFill('admin')}
-            className="px-2 py-1 bg-[#EDF5F8] hover:bg-[#B3CBE0]/40 text-[#3B6EA8] border border-[#B3CBE0] rounded text-[11px] font-mono font-medium transition-colors"
-          >
-            Admin → /admin
-          </button>
-          <button
-            type="button"
-            onClick={() => handleQuickFill('invalid')}
-            className="px-2 py-1 bg-[#FBEFEE] hover:bg-[#FBEFEE]/80 text-[#B5473C] border border-[#E4B0AA] rounded text-[11px] font-mono transition-colors"
-          >
-            Invalid Creds
-          </button>
-        </div>
-      </div>
+      </details>
     </div>
   );
 }

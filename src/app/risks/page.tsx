@@ -118,10 +118,10 @@ export interface ScheduleDelayItem {
 export const MOCK_SCHEDULE_DELAYS: ScheduleDelayItem[] = [
   {
     id: 'DLY-CIV-01',
-    title: 'Foundation Block A Curing & Soil Retest Delay',
-    sourceActivityId: 'CIV-11-001',
-    sourceActivityName: 'Foundation Block A',
-    sourceWbs: '2.1.1',
+    title: 'Compressor Bay Baseplate Grouting & Curing Hold',
+    sourceActivityId: 'CIV-11-002',
+    sourceActivityName: 'Compressor House Baseplate Grouting & Anchor Setting',
+    sourceWbs: '2.1.2',
     sourceDiscipline: 'Civil',
     delayDays: 5.0,
     criticality: 'Critical Path',
@@ -1344,7 +1344,7 @@ export default function DelayDependencyImpactPage() {
                         {/* 2. Delay Duration */}
                         <td className="p-4 whitespace-nowrap text-center font-mono font-bold text-[#B5473C] text-sm">
                           <div className="inline-flex items-center gap-2 justify-center">
-                            <span>+{item.delayDays.toFixed(0)} days</span>
+                            <span>+{item.delayDays % 1 === 0 ? item.delayDays.toFixed(0) : item.delayDays.toFixed(1)} days</span>
                             <WhyButton
                               onClick={(e) => {
                                 e.stopPropagation();
@@ -1414,7 +1414,7 @@ export default function DelayDependencyImpactPage() {
                             />
                           </div>
                           <div className="mt-1 font-mono text-[11px] text-[#172033] font-semibold">
-                            {item.criticalPathSlipDays > 0 ? `+{item.criticalPathSlipDays}d Critical Path Slip` : '0d Project Slip'}
+                            {item.criticalPathSlipDays > 0 ? `+${item.criticalPathSlipDays}d Critical Path Slip` : '0d Project Slip'}
                           </div>
                           <span className="text-[11px] text-[#596579] block">
                             Remaining Float: {item.remainingFloatDays}d

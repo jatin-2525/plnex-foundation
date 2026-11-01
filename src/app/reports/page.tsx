@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
 import { useApp } from '../../context/AppContext';
 import { useToast } from '../../context/ToastContext';
@@ -66,13 +66,27 @@ export default function ReportsAndMemoryPage() {
   // =========================================================================
   const [selectedReportId, setSelectedReportId] = useState<string>('REP-DPR');
   const [builderProject, setBuilderProject] = useState<string>('PRJ-OIL-2026-01');
-  const [startDate, setStartDate] = useState<string>('2026-09-01');
+  const [startDate, setStartDate] = useState<string>('2026-09-18');
   const [endDate, setEndDate] = useState<string>('2026-09-18');
   const [scheduleVersion] = useState<string>(CANONICAL_SCHEDULE_VERSION_LABEL);
   const [builderDiscipline, setBuilderDiscipline] = useState<string>('ALL');
   const [includeEvidence, setIncludeEvidence] = useState<boolean>(true);
   const [includeSignatures, setIncludeSignatures] = useState<boolean>(true);
   const [includeCpmPath, setIncludeCpmPath] = useState<boolean>(true);
+
+  // Default date ranges to appropriate boundaries when template selection changes
+  useEffect(() => {
+    if (selectedReportId === 'REP-DPR') {
+      setStartDate('2026-09-18');
+      setEndDate('2026-09-18');
+    } else if (selectedReportId === 'REP-WPR') {
+      setStartDate('2026-09-12');
+      setEndDate('2026-09-18');
+    } else if (selectedReportId === 'REP-SPR' || selectedReportId === 'REP-VAR' || selectedReportId === 'REP-DLY') {
+      setStartDate('2026-09-01');
+      setEndDate('2026-09-18');
+    }
+  }, [selectedReportId]);
 
   // Preview Report Modal State
   const [previewReportOpen, setPreviewReportOpen] = useState<boolean>(false);

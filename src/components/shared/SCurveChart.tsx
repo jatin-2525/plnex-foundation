@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useRef, useId, useEffect } from 'react';
+import Link from 'next/link';
 import {
   TimeSeriesPoint,
   PROJECT_S_CURVE_DATA,
@@ -29,11 +30,12 @@ import {
   AlertTriangle,
   Check,
   X,
+  ArrowRight,
 } from 'lucide-react';
 
 export interface SCurveChartProps {
   data?: TimeSeriesPoint[];
-  variant?: 'full' | 'compact';
+  variant?: 'full' | 'compact' | 'dashboard';
   title?: string;
   subtitle?: string;
   className?: string;
@@ -51,6 +53,8 @@ export function SCurveChart({
   onSelectPeriod,
 }: SCurveChartProps) {
   const isCompact = variant === 'compact';
+  const isDashboard = variant === 'dashboard';
+  const [showDashboardAdvanced, setShowDashboardAdvanced] = useState(false);
   const svgRef = useRef<SVGSVGElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const liveRegionId = useId();
@@ -354,32 +358,6 @@ export function SCurveChart({
 
           {/* Action Tools: Reset, Mode Switch, CSV, SVG, Fullscreen */}
           <div className="flex items-center flex-wrap gap-2 text-xs">
-            {/* Feature 9: Cumulative vs Period Switch */}
-            <div className="flex rounded-md border border-[#D7E1E8] overflow-hidden bg-[#F4F7FA] p-0.5">
-              <button
-                type="button"
-                onClick={() => setProgressViewMode('cumulative')}
-                className={`px-2.5 py-1 text-xs font-medium rounded transition-colors ${
-                  progressViewMode === 'cumulative'
-                    ? 'bg-white text-[#0F6574] shadow-xs font-semibold'
-                    : 'text-[#526779] hover:text-[#172B3A]'
-                }`}
-              >
-                Cumulative S-Curve
-              </button>
-              <button
-                type="button"
-                onClick={() => setProgressViewMode('period')}
-                className={`px-2.5 py-1 text-xs font-medium rounded transition-colors ${
-                  progressViewMode === 'period'
-                    ? 'bg-white text-[#0F6574] shadow-xs font-semibold'
-                    : 'text-[#526779] hover:text-[#172B3A]'
-                }`}
-              >
-                Period Progress (%/Mo)
-              </button>
-            </div>
-
             {/* Feature 7: Time-range options */}
             <div className="flex rounded-md border border-[#D7E1E8] overflow-hidden bg-[#F4F7FA] p-0.5">
               {(['full', '6m', '3m'] as const).map((r) => (
@@ -396,48 +374,101 @@ export function SCurveChart({
               ))}
             </div>
 
-            {/* Feature 14: Report Summary Toggle */}
-            <button
-              type="button"
-              onClick={() => setShowReportSummary(!showReportSummary)}
-              className={`p-1.5 rounded border text-xs flex items-center gap-1 cursor-pointer transition-colors ${
-                showReportSummary
-                  ? 'bg-[#0F6574] text-white border-[#0F6574]'
-                  : 'bg-white text-[#526779] border-[#D7E1E8] hover:bg-[#F4F7FA]'
-              }`}
-              title="Toggle Executive Summary card for reports"
-            >
-              <FileSpreadsheet className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">Report Card</span>
-            </button>
+            {isDashboard ? (
+              <>
+                <button
+                  type="button"
+                  onClick={() => setShowDashboardAdvanced(!showDashboardAdvanced)}
+                  className={`px-2.5 py-1 text-xs rounded border inline-flex items-center gap-1 transition-colors cursor-pointer ${
+                    showDashboardAdvanced
+                      ? 'bg-[#0F6574] text-white border-[#0F6574]'
+                      : 'bg-white text-[#526779] border-[#D7E1E8] hover:bg-[#F4F7FA]'
+                  }`}
+                >
+                  <SlidersHorizontal className="w-3.5 h-3.5" />
+                  <span>{showDashboardAdvanced ? 'Hide Secondary Controls' : 'Advanced Controls'}</span>
+                </button>
 
-            {/* Feature 13: Export Options */}
-            <div className="flex items-center gap-1">
-              <button
-                type="button"
-                onClick={handleExportCSV}
-                className="p-1.5 rounded border border-[#D7E1E8] bg-white text-[#526779] hover:bg-[#F4F7FA] hover:text-[#172B3A] transition-colors cursor-pointer"
-                title="Download S-Curve Ledger CSV"
-              >
-                <Download className="w-3.5 h-3.5" />
-              </button>
-              <button
-                type="button"
-                onClick={handleExportSVG}
-                className="p-1.5 rounded border border-[#D7E1E8] bg-white text-[#526779] hover:bg-[#F4F7FA] hover:text-[#172B3A] transition-colors cursor-pointer"
-                title="Download S-Curve SVG Vector Image"
-              >
-                <FileImage className="w-3.5 h-3.5" />
-              </button>
-              <button
-                type="button"
-                onClick={() => setIsFullscreen(!isFullscreen)}
-                className="p-1.5 rounded border border-[#D7E1E8] bg-white text-[#526779] hover:bg-[#F4F7FA] hover:text-[#172B3A] transition-colors cursor-pointer"
-                title={isFullscreen ? 'Exit Fullscreen' : 'Fullscreen S-Curve Workspace'}
-              >
-                {isFullscreen ? <Minimize2 className="w-3.5 h-3.5 text-[#B43D47]" /> : <Maximize2 className="w-3.5 h-3.5" />}
-              </button>
-            </div>
+                <Link
+                  href="/progress"
+                  className="px-2.5 py-1 text-xs font-semibold text-[#0F6574] hover:text-[#0c4e5a] bg-[#EDF5F8] hover:bg-[#D9EBF2] border border-[#B3CBE0] rounded inline-flex items-center gap-1 transition-colors"
+                >
+                  <span>Progress Deep Dive</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+              </>
+            ) : (
+              <>
+                {/* Feature 9: Cumulative vs Period Switch */}
+                <div className="flex rounded-md border border-[#D7E1E8] overflow-hidden bg-[#F4F7FA] p-0.5">
+                  <button
+                    type="button"
+                    onClick={() => setProgressViewMode('cumulative')}
+                    className={`px-2.5 py-1 text-xs font-medium rounded transition-colors ${
+                      progressViewMode === 'cumulative'
+                        ? 'bg-white text-[#0F6574] shadow-xs font-semibold'
+                        : 'text-[#526779] hover:text-[#172B3A]'
+                    }`}
+                  >
+                    Cumulative S-Curve
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setProgressViewMode('period')}
+                    className={`px-2.5 py-1 text-xs font-medium rounded transition-colors ${
+                      progressViewMode === 'period'
+                        ? 'bg-white text-[#0F6574] shadow-xs font-semibold'
+                        : 'text-[#526779] hover:text-[#172B3A]'
+                    }`}
+                  >
+                    Period Progress (%/Mo)
+                  </button>
+                </div>
+
+                {/* Feature 14: Report Summary Toggle */}
+                <button
+                  type="button"
+                  onClick={() => setShowReportSummary(!showReportSummary)}
+                  className={`p-1.5 rounded border text-xs flex items-center gap-1 cursor-pointer transition-colors ${
+                    showReportSummary
+                      ? 'bg-[#0F6574] text-white border-[#0F6574]'
+                      : 'bg-white text-[#526779] border-[#D7E1E8] hover:bg-[#F4F7FA]'
+                  }`}
+                  title="Toggle Executive Summary card for reports"
+                >
+                  <FileSpreadsheet className="w-3.5 h-3.5" />
+                  <span className="hidden sm:inline">Report Card</span>
+                </button>
+
+                {/* Feature 13: Export Options */}
+                <div className="flex items-center gap-1">
+                  <button
+                    type="button"
+                    onClick={handleExportCSV}
+                    className="p-1.5 rounded border border-[#D7E1E8] bg-white text-[#526779] hover:bg-[#F4F7FA] hover:text-[#172B3A] transition-colors cursor-pointer"
+                    title="Download S-Curve Ledger CSV"
+                  >
+                    <Download className="w-3.5 h-3.5" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleExportSVG}
+                    className="p-1.5 rounded border border-[#D7E1E8] bg-white text-[#526779] hover:bg-[#F4F7FA] hover:text-[#172B3A] transition-colors cursor-pointer"
+                    title="Download S-Curve SVG Vector Image"
+                  >
+                    <FileImage className="w-3.5 h-3.5" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setIsFullscreen(!isFullscreen)}
+                    className="p-1.5 rounded border border-[#D7E1E8] bg-white text-[#526779] hover:bg-[#F4F7FA] hover:text-[#172B3A] transition-colors cursor-pointer"
+                    title={isFullscreen ? 'Exit Fullscreen' : 'Fullscreen S-Curve Workspace'}
+                  >
+                    {isFullscreen ? <Minimize2 className="w-3.5 h-3.5 text-[#B43D47]" /> : <Maximize2 className="w-3.5 h-3.5" />}
+                  </button>
+                </div>
+              </>
+            )}
           </div>
         </div>
 
@@ -508,146 +539,148 @@ export function SCurveChart({
         )}
 
         {/* Feature 2, 3, 4, 8: Interactive Filter Toolbar ("As of", Baselines, Discipline, Compare) */}
-        <div className="flex items-center justify-between flex-wrap gap-2 pt-2 border-t border-[#D7E1E8]/70 text-xs">
-          <div className="flex items-center flex-wrap gap-2">
-            {/* Feature 3: "As of" Reporting Date */}
-            <div className="flex items-center gap-1 bg-[#F4F7FA] border border-[#D7E1E8] rounded px-2 py-1">
-              <Calendar className="w-3.5 h-3.5 text-[#526779]" />
-              <span className="text-[#526779] font-medium text-[11px]">As of:</span>
-              <select
-                value={asOfDate}
-                onChange={(e) => setAsOfDate(e.target.value as any)}
-                className="bg-transparent font-medium text-[#172B3A] focus:outline-none cursor-pointer"
-              >
-                <option value="18 Sep 2026">18 Sep 2026 (Current Cutoff)</option>
-                <option value="11 Sep 2026">11 Sep 2026 (Week 37)</option>
-                <option value="04 Sep 2026">04 Sep 2026 (Week 36)</option>
-                <option value="28 Aug 2026">28 Aug 2026 (Week 35)</option>
-              </select>
+        {(!isDashboard || showDashboardAdvanced) && (
+          <div className="flex items-center justify-between flex-wrap gap-2 pt-2 border-t border-[#D7E1E8]/70 text-xs">
+            <div className="flex items-center flex-wrap gap-2">
+              {/* Feature 3: "As of" Reporting Date */}
+              <div className="flex items-center gap-1 bg-[#F4F7FA] border border-[#D7E1E8] rounded px-2 py-1">
+                <Calendar className="w-3.5 h-3.5 text-[#526779]" />
+                <span className="text-[#526779] font-medium text-[11px]">As of:</span>
+                <select
+                  value={asOfDate}
+                  onChange={(e) => setAsOfDate(e.target.value as any)}
+                  className="bg-transparent font-medium text-[#172B3A] focus:outline-none cursor-pointer"
+                >
+                  <option value="18 Sep 2026">18 Sep 2026 (Current Cutoff)</option>
+                  <option value="11 Sep 2026">11 Sep 2026 (Week 37)</option>
+                  <option value="04 Sep 2026">04 Sep 2026 (Week 36)</option>
+                  <option value="28 Aug 2026">28 Aug 2026 (Week 35)</option>
+                </select>
+              </div>
+
+              {/* Feature 3: Baseline Revision */}
+              <div className="flex items-center gap-1 bg-[#F4F7FA] border border-[#D7E1E8] rounded px-2 py-1">
+                <span className="text-[#526779] font-medium text-[11px]">Baseline:</span>
+                <select
+                  value={baselineRevision}
+                  onChange={(e) => setBaselineRevision(e.target.value as any)}
+                  className="bg-transparent font-medium text-[#172B3A] focus:outline-none cursor-pointer"
+                >
+                  <option value="Rev 3.2">Rev 3.2 (Approved)</option>
+                  <option value="Rev 3.1">Rev 3.1 (Aug 2026)</option>
+                  <option value="Rev 3.0">Rev 3.0 (FID Contract)</option>
+                </select>
+              </div>
+
+              {/* Feature 4: Discipline Filter */}
+              <div className="flex items-center gap-1 bg-[#F4F7FA] border border-[#D7E1E8] rounded px-2 py-1">
+                <span className="text-[#526779] font-medium text-[11px]">Discipline:</span>
+                <select
+                  value={selectedDiscipline}
+                  onChange={(e) => {
+                    setSelectedDiscipline(e.target.value as any);
+                    if (e.target.value !== 'All') setSelectedArea('All');
+                  }}
+                  className="bg-transparent font-medium text-[#172B3A] focus:outline-none cursor-pointer"
+                >
+                  <option value="All">All Disciplines</option>
+                  <option value="Piping">Piping</option>
+                  <option value="Civil">Civil</option>
+                  <option value="Mechanical">Mechanical</option>
+                  <option value="Electrical">Electrical</option>
+                </select>
+              </div>
+
+              {/* Feature 4: Area Filter */}
+              <div className="flex items-center gap-1 bg-[#F4F7FA] border border-[#D7E1E8] rounded px-2 py-1">
+                <span className="text-[#526779] font-medium text-[11px]">Area:</span>
+                <select
+                  value={selectedArea}
+                  onChange={(e) => {
+                    setSelectedArea(e.target.value as any);
+                    if (e.target.value !== 'All') setSelectedDiscipline('All');
+                  }}
+                  className="bg-transparent font-medium text-[#172B3A] focus:outline-none cursor-pointer"
+                >
+                  <option value="All">All Areas</option>
+                  <option value="Unit A - Gas Processing">Unit A (Gas Processing)</option>
+                  <option value="Unit B - Compressor House">Unit B (Compressors)</option>
+                  <option value="Offsites & Substation">Offsites & Substation</option>
+                </select>
+              </div>
+
+              {/* Feature 8: Compare Revisions or Saved Scenarios */}
+              <div className="flex items-center gap-1 bg-[#F4F7FA] border border-[#D7E1E8] rounded px-2 py-1">
+                <span className="text-[#526779] font-medium text-[11px]">Compare:</span>
+                <select
+                  value={comparisonMode}
+                  onChange={(e) => setComparisonMode(e.target.value as any)}
+                  className="bg-transparent font-medium text-[#172B3A] focus:outline-none cursor-pointer"
+                >
+                  <option value="none">None</option>
+                  <option value="rev31">Rev 3.1 Baseline</option>
+                  <option value="rev30">Rev 3.0 Baseline</option>
+                  <option value="monsoon">Monsoon Slip Scenario</option>
+                </select>
+              </div>
+
+              {/* Reset Filters */}
+              {isFiltered && (
+                <button
+                  type="button"
+                  onClick={handleResetFilters}
+                  className="inline-flex items-center gap-1 px-2 py-1 text-xs font-semibold text-[#B43D47] bg-[#FBEFEE] hover:bg-[#F6DFDE] border border-[#E8B6BA] rounded transition-colors cursor-pointer"
+                  title="Reset all filters back to project baseline"
+                >
+                  <RotateCcw className="w-3 h-3" />
+                  <span>Reset</span>
+                </button>
+              )}
             </div>
 
-            {/* Feature 3: Baseline Revision */}
-            <div className="flex items-center gap-1 bg-[#F4F7FA] border border-[#D7E1E8] rounded px-2 py-1">
-              <span className="text-[#526779] font-medium text-[11px]">Baseline:</span>
-              <select
-                value={baselineRevision}
-                onChange={(e) => setBaselineRevision(e.target.value as any)}
-                className="bg-transparent font-medium text-[#172B3A] focus:outline-none cursor-pointer"
-              >
-                <option value="Rev 3.2">Rev 3.2 (Approved)</option>
-                <option value="Rev 3.1">Rev 3.1 (Aug 2026)</option>
-                <option value="Rev 3.0">Rev 3.0 (FID Contract)</option>
-              </select>
-            </div>
-
-            {/* Feature 4: Discipline Filter */}
-            <div className="flex items-center gap-1 bg-[#F4F7FA] border border-[#D7E1E8] rounded px-2 py-1">
-              <span className="text-[#526779] font-medium text-[11px]">Discipline:</span>
-              <select
-                value={selectedDiscipline}
-                onChange={(e) => {
-                  setSelectedDiscipline(e.target.value as any);
-                  if (e.target.value !== 'All') setSelectedArea('All');
-                }}
-                className="bg-transparent font-medium text-[#172B3A] focus:outline-none cursor-pointer"
-              >
-                <option value="All">All Disciplines</option>
-                <option value="Piping">Piping</option>
-                <option value="Civil">Civil</option>
-                <option value="Mechanical">Mechanical</option>
-                <option value="Electrical">Electrical</option>
-              </select>
-            </div>
-
-            {/* Feature 4: Area Filter */}
-            <div className="flex items-center gap-1 bg-[#F4F7FA] border border-[#D7E1E8] rounded px-2 py-1">
-              <span className="text-[#526779] font-medium text-[11px]">Area:</span>
-              <select
-                value={selectedArea}
-                onChange={(e) => {
-                  setSelectedArea(e.target.value as any);
-                  if (e.target.value !== 'All') setSelectedDiscipline('All');
-                }}
-                className="bg-transparent font-medium text-[#172B3A] focus:outline-none cursor-pointer"
-              >
-                <option value="All">All Areas</option>
-                <option value="Unit A - Gas Processing">Unit A (Gas Processing)</option>
-                <option value="Unit B - Compressor House">Unit B (Compressors)</option>
-                <option value="Offsites & Substation">Offsites & Substation</option>
-              </select>
-            </div>
-
-            {/* Feature 8: Compare Revisions or Saved Scenarios */}
-            <div className="flex items-center gap-1 bg-[#F4F7FA] border border-[#D7E1E8] rounded px-2 py-1">
-              <span className="text-[#526779] font-medium text-[11px]">Compare:</span>
-              <select
-                value={comparisonMode}
-                onChange={(e) => setComparisonMode(e.target.value as any)}
-                className="bg-transparent font-medium text-[#172B3A] focus:outline-none cursor-pointer"
-              >
-                <option value="none">None</option>
-                <option value="rev31">Rev 3.1 Baseline</option>
-                <option value="rev30">Rev 3.0 Baseline</option>
-                <option value="monsoon">Monsoon Slip Scenario</option>
-              </select>
-            </div>
-
-            {/* Reset Filters */}
-            {isFiltered && (
-              <button
-                type="button"
-                onClick={handleResetFilters}
-                className="inline-flex items-center gap-1 px-2 py-1 text-xs font-semibold text-[#B43D47] bg-[#FBEFEE] hover:bg-[#F6DFDE] border border-[#E8B6BA] rounded transition-colors cursor-pointer"
-                title="Reset all filters back to project baseline"
-              >
-                <RotateCcw className="w-3 h-3" />
-                <span>Reset</span>
-              </button>
-            )}
-          </div>
-
-          {/* Feature 2: Series Toggles (Checkboxes) */}
-          <div className="flex items-center gap-3">
-            <label className="inline-flex items-center gap-1.5 cursor-pointer text-[11px] font-semibold text-[#3D73B5]">
-              <input
-                type="checkbox"
-                checked={seriesVisible.planned}
-                onChange={(e) => setSeriesVisible((prev) => ({ ...prev, planned: e.target.checked }))}
-                className="rounded border-[#D7E1E8] text-[#3D73B5] focus:ring-0 cursor-pointer"
-              />
-              Planned
-            </label>
-            <label className="inline-flex items-center gap-1.5 cursor-pointer text-[11px] font-semibold text-[#187A6A]">
-              <input
-                type="checkbox"
-                checked={seriesVisible.actual}
-                onChange={(e) => setSeriesVisible((prev) => ({ ...prev, actual: e.target.checked }))}
-                className="rounded border-[#D7E1E8] text-[#187A6A] focus:ring-0 cursor-pointer"
-              />
-              Verified Actual
-            </label>
-            <label className="inline-flex items-center gap-1.5 cursor-pointer text-[11px] font-semibold text-[#7655A6]">
-              <input
-                type="checkbox"
-                checked={seriesVisible.forecast}
-                onChange={(e) => setSeriesVisible((prev) => ({ ...prev, forecast: e.target.checked }))}
-                className="rounded border-[#D7E1E8] text-[#7655A6] focus:ring-0 cursor-pointer"
-              />
-              Forecast
-            </label>
-            {comparisonMode !== 'none' && (
-              <label className="inline-flex items-center gap-1.5 cursor-pointer text-[11px] font-semibold text-[#9C5A08]">
+            {/* Feature 2: Series Toggles (Checkboxes) */}
+            <div className="flex items-center gap-3">
+              <label className="inline-flex items-center gap-1.5 cursor-pointer text-[11px] font-semibold text-[#3D73B5]">
                 <input
                   type="checkbox"
-                  checked={seriesVisible.comparison}
-                  onChange={(e) => setSeriesVisible((prev) => ({ ...prev, comparison: e.target.checked }))}
-                  className="rounded border-[#D7E1E8] text-[#9C5A08] focus:ring-0 cursor-pointer"
+                  checked={seriesVisible.planned}
+                  onChange={(e) => setSeriesVisible((prev) => ({ ...prev, planned: e.target.checked }))}
+                  className="rounded border-[#D7E1E8] text-[#3D73B5] focus:ring-0 cursor-pointer"
                 />
-                Comparison
+                Planned
               </label>
-            )}
+              <label className="inline-flex items-center gap-1.5 cursor-pointer text-[11px] font-semibold text-[#187A6A]">
+                <input
+                  type="checkbox"
+                  checked={seriesVisible.actual}
+                  onChange={(e) => setSeriesVisible((prev) => ({ ...prev, actual: e.target.checked }))}
+                  className="rounded border-[#D7E1E8] text-[#187A6A] focus:ring-0 cursor-pointer"
+                />
+                Verified Actual
+              </label>
+              <label className="inline-flex items-center gap-1.5 cursor-pointer text-[11px] font-semibold text-[#7655A6]">
+                <input
+                  type="checkbox"
+                  checked={seriesVisible.forecast}
+                  onChange={(e) => setSeriesVisible((prev) => ({ ...prev, forecast: e.target.checked }))}
+                  className="rounded border-[#D7E1E8] text-[#7655A6] focus:ring-0 cursor-pointer"
+                />
+                Forecast
+              </label>
+              {comparisonMode !== 'none' && (
+                <label className="inline-flex items-center gap-1.5 cursor-pointer text-[11px] font-semibold text-[#9C5A08]">
+                  <input
+                    type="checkbox"
+                    checked={seriesVisible.comparison}
+                    onChange={(e) => setSeriesVisible((prev) => ({ ...prev, comparison: e.target.checked }))}
+                    className="rounded border-[#D7E1E8] text-[#9C5A08] focus:ring-0 cursor-pointer"
+                  />
+                  Comparison
+                </label>
+              )}
+            </div>
           </div>
-        </div>
+        )}
 
         {/* Feature 4: Scope Warning Banner when filtering */}
         {(selectedDiscipline !== 'All' || selectedArea !== 'All') && (
@@ -1021,6 +1054,32 @@ export function SCurveChart({
                       stroke="#FFFFFF"
                       strokeWidth="1.5"
                     />
+                  </g>
+                )}
+
+                {/* Explicit Visual COD Slip Annotation Badge */}
+                {pt.period === '20 Dec 2026' && (
+                  <g transform={`translate(${x}, ${getY(pt.forecast) - 26})`}>
+                    <rect
+                      x="-38"
+                      y="-11"
+                      width="76"
+                      height="16"
+                      rx="3"
+                      fill="#B43D47"
+                      stroke="#FFFFFF"
+                      strokeWidth="1"
+                    />
+                    <text
+                      x="0"
+                      y="1"
+                      textAnchor="middle"
+                      fontSize="9"
+                      fontWeight="bold"
+                      fill="#FFFFFF"
+                    >
+                      +5d COD Slip
+                    </text>
                   </g>
                 )}
 

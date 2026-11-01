@@ -348,7 +348,7 @@ export default function MatchingPage() {
 
       <PageHeader
         title="Intelligent Activity Matching & Verification"
-        description="Connects unstructured site execution statements with exact L5/L6 activities. Uses explainable confidence scoring to assist project teams without replacing human engineering judgment."
+        description="Displaying 4 active NLP candidate matches from Shift A & B batch ingestion (out of 8 total system review queue items). Connects unstructured site execution statements with exact L5/L6 activities using explainable confidence scoring without replacing human engineering judgment."
         stage="MATCH"
         actions={
           <Link

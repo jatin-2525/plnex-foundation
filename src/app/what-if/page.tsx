@@ -443,21 +443,21 @@ export default function WhatIfSimulatorPage() {
                 Impact: +4 days
                 ===================================================================== */}
             <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
-              {/* Card 1: Current Finish */}
+              {/* Card 1: Selected Activity Baseline Finish */}
               <div className="bg-white border-2 border-[#D9DEE5] rounded-lg p-4 shadow-xs">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-[11px] uppercase font-semibold text-[#596579] tracking-wider">
-                    Current Finish
+                  <span className="text-[11px] uppercase font-semibold text-[#596579] tracking-wider truncate max-w-[140px]" title="Selected Activity Baseline Finish">
+                    Activity Baseline Finish
                   </span>
-                  <span className="px-1.5 py-0.5 rounded text-[11px] font-semibold uppercase bg-[#F1F3F5] text-[#596579] border border-[#D9DEE5]">
-                    Planned Baseline
+                  <span className="px-1.5 py-0.5 rounded text-[11px] font-mono font-bold uppercase bg-[#F1F3F5] text-[#172033] border border-[#D9DEE5]">
+                    {selectedActivity.id}
                   </span>
                 </div>
                 <div className="text-[28px] sm:text-3xl font-bold font-mono text-[#172033] leading-none">
                   {formatShortDate(selectedActivity.plannedFinish)}
                 </div>
                 <div className="mt-2 pt-2 border-t border-[#D9DEE5]/60 text-xs text-[#596579] flex items-center justify-between">
-                  <span>Current baseline date:</span>
+                  <span>Activity baseline date:</span>
                   <span className="font-mono font-medium text-[#172033]">
                     {formatFriendlyDate(selectedActivity.plannedFinish)}
                   </span>
@@ -554,7 +554,7 @@ export default function WhatIfSimulatorPage() {
                   <div className={`bg-white border-2 ${borderClass} rounded-lg p-4 shadow-xs`}>
                     <div className="flex items-center justify-between mb-2">
                       <span className={`text-[11px] uppercase font-semibold ${textClass} tracking-wider`}>
-                        Project COD Impact
+                        Project COD (15 Dec 2026) Impact
                       </span>
                       <div className="flex items-center gap-2">
                         <span className={`px-1.5 py-0.5 rounded text-[11px] font-semibold uppercase ${badgeBg} border`}>

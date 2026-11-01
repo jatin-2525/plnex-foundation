@@ -20,6 +20,13 @@ export interface TopHeaderProps {
 export function TopHeader({ onToggleSidebar, onMobileToggle, onDesktopToggle }: TopHeaderProps) {
   const { setGlobalSearchOpen, userSession } = useApp();
   const [sandboxModalOpen, setSandboxModalOpen] = useState(false);
+  const [isMac, setIsMac] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined' && /Mac|iPhone|iPad/i.test(navigator.userAgent)) {
+      setIsMac(true);
+    }
+  }, []);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -79,7 +86,7 @@ export function TopHeader({ onToggleSidebar, onMobileToggle, onDesktopToggle }: 
           title="Click to inspect Sample Data Mode and Sandbox Isolation details"
         >
           <Database className="w-3 h-3 text-[#8C5311]" />
-          <span>Demo Data</span>
+          <span>Snapshot: 18 Sep 2026 (Demo Scenario)</span>
         </button>
       </div>
 
@@ -97,7 +104,7 @@ export function TopHeader({ onToggleSidebar, onMobileToggle, onDesktopToggle }: 
             <span className="truncate text-xs text-[#7B8798]">Search...</span>
           </div>
           <kbd className="hidden md:inline-flex items-center px-1.5 py-0.5 text-[10px] font-mono text-[#7B8798] bg-white border border-[#D9DEE5] rounded leading-none">
-            Ctrl+K
+            {isMac ? '⌘K' : 'Ctrl+K'}
           </kbd>
         </button>
 

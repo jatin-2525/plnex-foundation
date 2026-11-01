@@ -940,12 +940,12 @@ export default function ScheduleTwinPage() {
                 </div>
                 <div>
                   <h1 className="text-xl font-bold text-[#172033] tracking-tight">
-                    Schedule Twin — 2D Project-Control Timeline
+                    Schedule Twin — 2D Project-Control Timeline (CPM &amp; WBS)
                   </h1>
                 </div>
               </div>
               <p className="text-xs text-[#596579]">
-                Interactive correlation of Planned WBS Baseline, Verified Field Actuals, and Projected EAC Forecast.
+                Interactive correlation of Planned WBS (Work Breakdown Structure) Baseline, Verified Field Actuals, and Projected EAC (Estimate at Completion) Forecast.
               </p>
             </div>
 
@@ -1070,6 +1070,7 @@ export default function ScheduleTwinPage() {
               <input
                 type="text"
                 placeholder="Filter by ID, Name, or WBS..."
+                aria-label="Filter schedule twin activities by ID, name, or WBS"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full pl-8 pr-2.5 py-1 text-xs bg-[#F7F8FA] border border-[#D9DEE5] rounded focus:border-[#176B87] outline-none"
@@ -1079,6 +1080,7 @@ export default function ScheduleTwinPage() {
             <select
               value={levelFilter}
               onChange={(e) => setLevelFilter(e.target.value as any)}
+              aria-label="Filter activities by WBS level hierarchy"
               className="px-3 py-1 bg-[#F7F8FA] border border-[#D9DEE5] rounded text-xs text-[#172033] outline-none"
             >
               <option value="all">All WBS Levels</option>
@@ -1105,6 +1107,8 @@ export default function ScheduleTwinPage() {
               <button
                 type="button"
                 onClick={() => setTimeScaleMode('execution')}
+                aria-label="Switch schedule timescale to 60-Day Lookahead (September to October)"
+                aria-pressed={timeScaleMode === 'execution'}
                 className={`px-3 py-1 text-xs font-medium transition-colors ${
                   timeScaleMode === 'execution'
                     ? 'bg-[#176B87] text-white'
@@ -1116,6 +1120,8 @@ export default function ScheduleTwinPage() {
               <button
                 type="button"
                 onClick={() => setTimeScaleMode('full')}
+                aria-label="Switch schedule timescale to Full Project timeline (August to December)"
+                aria-pressed={timeScaleMode === 'full'}
                 className={`px-3 py-1 text-xs font-medium transition-colors ${
                   timeScaleMode === 'full'
                     ? 'bg-[#176B87] text-white'
@@ -1205,7 +1211,7 @@ export default function ScheduleTwinPage() {
             </div>
 
             {/* TIMELINE ROWS CONTAINER */}
-            <div className="divide-y divide-[#D9DEE5] relative max-h-[580px] overflow-y-auto">
+            <div role="region" aria-label="Interactive CPM Schedule Twin Gantt and Timeline View" className="divide-y divide-[#D9DEE5] relative max-h-[580px] overflow-y-auto">
               {/* Continuous Vertical Data Date Line */}
               <div
                 style={{ left: `calc(398px + (calc(100% - 398px) * ${dataDatePct} / 100))` }}
@@ -1277,6 +1283,8 @@ export default function ScheduleTwinPage() {
                               e.stopPropagation();
                               toggleNode(act.id);
                             }}
+                            aria-label={expandedNodes[act.id] ? `Collapse WBS item ${act.id} ${act.name}` : `Expand WBS item ${act.id} ${act.name}`}
+                            aria-expanded={expandedNodes[act.id]}
                             className="w-4 h-4 mt-0.5 flex items-center justify-center rounded text-[#596579] hover:bg-[#D9DEE5] flex-shrink-0"
                           >
                             {expandedNodes[act.id] ? (

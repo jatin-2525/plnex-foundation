@@ -121,8 +121,8 @@ export default function ManagerDashboardPage() {
       plannedFinish: '15 Sep 2026',
       actualFinish: '17 Sep 2026',
       varianceDays: 2,
-      status: 'delayed' as const,
-      isCriticalPath: true,
+      status: 'completed' as const,
+      isCriticalPath: false,
     },
     {
       id: 'CIV-11-001',
@@ -148,7 +148,7 @@ export default function ManagerDashboardPage() {
       plannedFinish: '23 Sep 2026',
       actualFinish: '24 Sep 2026 (Projected)',
       varianceDays: 1,
-      status: 'delayed' as const,
+      status: 'at-risk' as const,
       isCriticalPath: false,
     },
     {
@@ -420,12 +420,12 @@ export default function ManagerDashboardPage() {
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-semibold uppercase tracking-wider text-[#596579] flex items-center gap-1">
                     Verified Progress
-                    <TermHelp term="cpi" />
+                    <TermHelp term="verified_progress" />
                   </span>
                   <div className="flex items-center gap-1.5">
                     <WhyButton
                       onClick={() => openWhyExplanation('progress:verified')}
-                      title="Why is verified progress 68.4%?"
+                      title="Why is verified progress 73.0%?"
                     />
                     <div className="p-1 rounded bg-[#EDF5F8] text-[#0F6574]">
                       <CheckCircle2 className="w-3.5 h-3.5" />
@@ -717,7 +717,7 @@ export default function ManagerDashboardPage() {
         {visibleSections.scurve && (
           <section aria-labelledby="scurve-heading" className="space-y-2">
             <SCurveChart
-              variant="full"
+              variant="dashboard"
               title="Project S-Curve — Baseline vs. Actual Earned vs. Forecast"
               subtitle="Rev 3.2 (P6 XML) Physical Earned Progress (Data Date: 18 Sep 2026)"
             />

@@ -96,7 +96,7 @@ export interface ReviewEvent {
   }>;
   submittedBy: string;
   date: string;
-  status: 'High Confidence' | 'Manager Review' | 'Unmatched' | 'Conflicts' | 'Duplicates' | 'Stale';
+  status: 'High Confidence' | 'Manager Review' | 'Unmatched' | 'Conflicts' | 'Duplicates' | 'Stale' | 'Verified History';
   isApproved?: boolean;
   isRejected?: boolean;
   alternativeCandidates: ReviewCandidate[];
@@ -319,16 +319,16 @@ const INITIAL_REVIEW_EVENTS: ReviewEvent[] = [
       'Foundation raft concrete pour completed at Unit 02 flare knock-out drum. 45 m3 poured from 08:00 to 14:00.',
     extractedQuantity: 45,
     unit: 'm³ concrete',
-    area: 'Unit A - Compressor Station',
-    line: 'Foundation Block A',
+    area: 'Unit 02 - Flare Area',
+    line: 'Flare KO Drum Raft',
     discipline: 'Civil',
     workType: 'Concrete Pour',
     shiftTime: '08:00 - 14:00',
-    candidateActivityId: 'CIV-11-001',
-    candidateActivityName: 'Foundation Block A - Compressor Pedestal',
-    candidateWbs: '2.1.1',
-    confidence: 98,
-    matchReason: 'Exact 45 m³ milestone target · Delivery batch tickets & slump test verified',
+    candidateActivityId: 'CIV-02-005',
+    candidateActivityName: 'Unit 02 Flare Knock-Out Drum Foundation Raft',
+    candidateWbs: '2.2.1',
+    confidence: 96,
+    matchReason: 'Unit 02 Flare KO Drum foundation confirmed · Correctly disambiguated from Unit A CIV-11-001 (already completed on 14 Sep)',
     evidenceCount: 2,
     evidenceItems: [
       { id: 'EVD-005', title: 'CONCRETE_BATCH_TICKET_RMC_45M3.pdf', type: 'DOCUMENT', timestamp: '14:10' },
@@ -340,9 +340,9 @@ const INITIAL_REVIEW_EVENTS: ReviewEvent[] = [
     alternativeCandidates: [],
     signals: [
       { name: 'Discipline Alignment', score: 25, maxScore: 25, reason: 'Civil discipline strictly matches' },
-      { name: 'Asset Identifier', score: 35, maxScore: 35, reason: 'Foundation Block A matched' },
+      { name: 'Asset Identifier', score: 35, maxScore: 35, reason: 'Unit 02 Flare KO drum foundation matched' },
       { name: 'Semantic Action Verb', score: 20, maxScore: 20, reason: 'Concrete pour matched' },
-      { name: 'Temporal Window', score: 18, maxScore: 20, reason: 'Completed on scheduled target date' },
+      { name: 'Area Disambiguation', score: 16, maxScore: 20, reason: 'Area matches Unit 02 Flare; isolated from completed Unit A compressor' },
     ],
     rulesEvaluated: [
       { name: 'Quantity Ceiling Enforcement', status: 'PASSED', details: '45 m3 matches 100% planned milestone' },
@@ -417,11 +417,320 @@ const INITIAL_REVIEW_EVENTS: ReviewEvent[] = [
   },
 ];
 
+// Historical Verified Milestone Events (12 Verified Events on Master Schedule Ledger PRJ-OIL-2026-01)
+const HISTORICAL_RAW_EVENTS: Omit<ReviewEvent, 'alternativeCandidates' | 'signals' | 'rulesEvaluated'>[] = [
+  {
+    id: 'HIST-EVT-01',
+    source: 'DPR_PDF',
+    rawFieldStatement: 'Site mobilization and initial boundary earthworks completed across 12,000 m².',
+    extractedQuantity: 12000,
+    unit: 'm²',
+    area: 'Plant Perimeter',
+    line: 'Boundary Zone',
+    discipline: 'Civil',
+    workType: 'Earthworks',
+    shiftTime: '08:00 - 17:00',
+    candidateActivityId: 'CIV-01-001',
+    candidateActivityName: 'Site Clearing & Grading',
+    candidateWbs: '1.1.1.1.0',
+    confidence: 100,
+    matchReason: 'Milestone sign-off verified by OIL site representative',
+    evidenceCount: 2,
+    evidenceItems: [{ id: 'EVD-H01', title: 'MOBILIZATION_ACCEPTANCE.pdf', type: 'DOCUMENT', timestamp: '17:00' }],
+    submittedBy: 'Debajit Borah',
+    date: '2026-05-31 17:00',
+    status: 'Verified History',
+    isApproved: true,
+  },
+  {
+    id: 'HIST-EVT-02',
+    source: 'DPR_PDF',
+    rawFieldStatement: 'Access road preparation and security perimeter fencing completed (1,400 m).',
+    extractedQuantity: 1400,
+    unit: 'meters',
+    area: 'Plant Perimeter',
+    line: 'Security Zone',
+    discipline: 'Civil',
+    workType: 'Fencing',
+    shiftTime: '08:00 - 17:00',
+    candidateActivityId: 'CIV-01-002',
+    candidateActivityName: 'Access Road & Perimeter Fencing',
+    candidateWbs: '1.1.1.1.2',
+    confidence: 100,
+    matchReason: 'Milestone handover accepted',
+    evidenceCount: 1,
+    evidenceItems: [{ id: 'EVD-H02', title: 'FENCING_SURVEY_INSPECTION.pdf', type: 'DOCUMENT', timestamp: '16:00' }],
+    submittedBy: 'Debajit Borah',
+    date: '2026-06-15 16:00',
+    status: 'Verified History',
+    isApproved: true,
+  },
+  {
+    id: 'HIST-EVT-03',
+    source: 'DPR_PDF',
+    rawFieldStatement: 'Substation raft foundation concrete pour completed (185 m³ poured).',
+    extractedQuantity: 185,
+    unit: 'm³ concrete',
+    area: 'Unit A - Substation',
+    line: 'Substation Raft',
+    discipline: 'Civil',
+    workType: 'Concrete Pour',
+    shiftTime: '07:00 - 19:00',
+    candidateActivityId: 'CIV-02-005',
+    candidateActivityName: 'Substation Raft Foundation',
+    candidateWbs: '1.1.2.1.1',
+    confidence: 100,
+    matchReason: '7-day and 28-day cylinder tests passed',
+    evidenceCount: 2,
+    evidenceItems: [{ id: 'EVD-H03', title: 'SUBSTATION_RAFT_POUR_TICKETS.pdf', type: 'DOCUMENT', timestamp: '19:00' }],
+    submittedBy: 'Debajit Borah',
+    date: '2026-06-30 19:00',
+    status: 'Verified History',
+    isApproved: true,
+  },
+  {
+    id: 'HIST-EVT-04',
+    source: 'DPR_PDF',
+    rawFieldStatement: 'Unit A piperack pedestals (52 pedestals) poured and cured.',
+    extractedQuantity: 52,
+    unit: 'pedestals',
+    area: 'Unit A - Piperack',
+    line: 'Piperack Grid',
+    discipline: 'Civil',
+    workType: 'Concrete Pour',
+    shiftTime: '08:00 - 16:30',
+    candidateActivityId: 'CIV-02-008',
+    candidateActivityName: 'Unit A Piperack Pedestals',
+    candidateWbs: '1.1.2.1.4',
+    confidence: 100,
+    matchReason: 'Elevation and coordinate survey passed',
+    evidenceCount: 1,
+    evidenceItems: [{ id: 'EVD-H04', title: 'PIPERACK_PEDESTAL_SURVEY.pdf', type: 'DOCUMENT', timestamp: '16:30' }],
+    submittedBy: 'Debajit Borah',
+    date: '2026-07-12 16:30',
+    status: 'Verified History',
+    isApproved: true,
+  },
+  {
+    id: 'HIST-EVT-05',
+    source: 'DPR_PDF',
+    rawFieldStatement: 'Compressor foundation block A concrete pour 100% completed (45 m³ poured).',
+    extractedQuantity: 45,
+    unit: 'm³ concrete',
+    area: 'Unit A - Compressor House',
+    line: 'Foundation Block A',
+    discipline: 'Civil',
+    workType: 'Concrete Pour',
+    shiftTime: '08:00 - 15:00',
+    candidateActivityId: 'CIV-11-001',
+    candidateActivityName: 'Foundation Block A - Compressor Pedestal',
+    candidateWbs: '1.1.1.1.1',
+    confidence: 100,
+    matchReason: 'Milestone pour verified; cube compressive strength cleared',
+    evidenceCount: 2,
+    evidenceItems: [{ id: 'EVD-H05', title: 'BLOCK_A_POUR_CERTIFICATE.pdf', type: 'DOCUMENT', timestamp: '15:00' }],
+    submittedBy: 'Debajit Borah',
+    date: '2026-07-31 15:00',
+    status: 'Verified History',
+    isApproved: true,
+  },
+  {
+    id: 'HIST-EVT-06',
+    source: 'DPR_PDF',
+    rawFieldStatement: 'Soleplate leveling and anchor bolt preset completed for gas compressor skid A (32 sets).',
+    extractedQuantity: 32,
+    unit: 'sets',
+    area: 'Unit A - Compressor House',
+    line: 'Skid Bay 1',
+    discipline: 'Mechanical',
+    workType: 'Leveling & Shimming',
+    shiftTime: '09:00 - 17:00',
+    candidateActivityId: 'MEC-01-004',
+    candidateActivityName: 'Soleplate Leveling & Anchor Bolt Preset',
+    candidateWbs: '1.1.3.1.1',
+    confidence: 100,
+    matchReason: 'OEM tolerance inspection signed off (±0.05 mm)',
+    evidenceCount: 1,
+    evidenceItems: [{ id: 'EVD-H06', title: 'OEM_SOLEPLATE_SIGN_OFF.pdf', type: 'DOCUMENT', timestamp: '17:00' }],
+    submittedBy: 'V. Verma',
+    date: '2026-08-05 17:00',
+    status: 'Verified History',
+    isApproved: true,
+  },
+  {
+    id: 'HIST-EVT-07',
+    source: 'DPR_PDF',
+    rawFieldStatement: 'Column and beam erection tier 1 completed (89 MT structural steel).',
+    extractedQuantity: 89,
+    unit: 'MT steel',
+    area: 'Unit A - Piperack Tier 1',
+    line: 'Piperack Frame',
+    discipline: 'Civil',
+    workType: 'Steel Erection',
+    shiftTime: '08:00 - 18:00',
+    candidateActivityId: 'STR-02-004',
+    candidateActivityName: 'Column & Beam Erection Tier 1',
+    candidateWbs: '1.1.2.2.1',
+    confidence: 100,
+    matchReason: 'Torque check & bolt alignment verified',
+    evidenceCount: 2,
+    evidenceItems: [{ id: 'EVD-H07', title: 'TORQUE_TIGHTENING_LOG.pdf', type: 'DOCUMENT', timestamp: '18:00' }],
+    submittedBy: 'Debajit Borah',
+    date: '2026-08-25 18:00',
+    status: 'Verified History',
+    isApproved: true,
+  },
+  {
+    id: 'HIST-EVT-08',
+    source: 'DPR_PDF',
+    rawFieldStatement: 'Spool stringing and pre-rigging for Main Piperack Tier 1 completed (56 spools).',
+    extractedQuantity: 56,
+    unit: 'spools',
+    area: 'Unit A - Piperack',
+    line: 'Tier 1 Rack',
+    discipline: 'Piping',
+    workType: 'Spool Stringing',
+    shiftTime: '08:30 - 16:30',
+    candidateActivityId: 'PIP-20-001',
+    candidateActivityName: 'Spool Stringing & Pre-rigging',
+    candidateWbs: '1.1.3.1.4',
+    confidence: 100,
+    matchReason: 'Pre-rigging inspection cleared',
+    evidenceCount: 1,
+    evidenceItems: [{ id: 'EVD-H08', title: 'SPOOL_STRINGING_RECEIPT.pdf', type: 'DOCUMENT', timestamp: '16:30' }],
+    submittedBy: 'Debajit Borah',
+    date: '2026-08-31 16:30',
+    status: 'Verified History',
+    isApproved: true,
+  },
+  {
+    id: 'HIST-EVT-09',
+    source: 'DPR_PDF',
+    rawFieldStatement: 'Erect Line 24-XX HP gas header (48 spools erected and flange faces preserved).',
+    extractedQuantity: 48,
+    unit: 'spools',
+    area: 'Unit A - Gas Processing',
+    line: 'Line 24-XX',
+    discipline: 'Piping',
+    workType: 'Erection',
+    shiftTime: '09:00 - 17:30',
+    candidateActivityId: 'PIP-24-001',
+    candidateActivityName: 'Erect Line 24-XX High Pressure Gas Header',
+    candidateWbs: '1.1.3.2.1',
+    confidence: 100,
+    matchReason: 'Erection complete; verified and committed on 17 Sep (+2d historical variance)',
+    evidenceCount: 2,
+    evidenceItems: [{ id: 'EVD-H09', title: 'LINE24_ERECTION_COMPLETION.pdf', type: 'DOCUMENT', timestamp: '17:30' }],
+    submittedBy: 'Debajit Borah',
+    date: '2026-09-17 17:30',
+    status: 'Verified History',
+    isApproved: true,
+  },
+  {
+    id: 'HIST-EVT-10',
+    source: 'DPR_PDF',
+    rawFieldStatement: 'Substation feeder cable termination pothead stress cones prepared and insulation tested.',
+    extractedQuantity: 1,
+    unit: 'circuit',
+    area: 'Unit A - Substation',
+    line: '11kV Feeder',
+    discipline: 'Electrical',
+    workType: 'Termination',
+    shiftTime: '08:00 - 16:00',
+    candidateActivityId: 'ELE-11-032',
+    candidateActivityName: 'Cable Tray Installation - Substation to Bay',
+    candidateWbs: '1.1.4.1.2',
+    confidence: 100,
+    matchReason: 'Megger insulation test report approved',
+    evidenceCount: 1,
+    evidenceItems: [{ id: 'EVD-H10', title: 'INSULATION_RESISTANCE_PASS.pdf', type: 'DOCUMENT', timestamp: '16:00' }],
+    submittedBy: 'Sunil Gogoi',
+    date: '2026-09-15 16:00',
+    status: 'Verified History',
+    isApproved: true,
+  },
+  {
+    id: 'HIST-EVT-11',
+    source: 'DPR_PDF',
+    rawFieldStatement: 'Centrifugal gas compressor skid A laser alignment completed within ±0.02mm tolerance.',
+    extractedQuantity: 1,
+    unit: 'skid',
+    area: 'Unit A - Compressor House',
+    line: 'Skid A',
+    discipline: 'Mechanical',
+    workType: 'Alignment',
+    shiftTime: '09:00 - 18:00',
+    candidateActivityId: 'MEC-08-003',
+    candidateActivityName: 'Align Centrifugal Gas Compressor Skid A',
+    candidateWbs: '1.1.3.1.2',
+    confidence: 100,
+    matchReason: 'OEM specialist co-signed alignment certificate',
+    evidenceCount: 2,
+    evidenceItems: [{ id: 'EVD-H11', title: 'LASER_ALIGNMENT_TICKET.pdf', type: 'DOCUMENT', timestamp: '18:00' }],
+    submittedBy: 'V. Verma',
+    date: '2026-09-16 18:00',
+    status: 'Verified History',
+    isApproved: true,
+  },
+  {
+    id: 'HIST-EVT-12',
+    source: 'DPR_PDF',
+    rawFieldStatement: 'Line 24 hydrostatic test section manifold rigging and blind flange pre-installation check.',
+    extractedQuantity: 1,
+    unit: 'manifold',
+    area: 'Unit A - Test Manifold',
+    line: 'Line 24-XX',
+    discipline: 'Piping',
+    workType: 'Pre-check',
+    shiftTime: '09:00 - 13:00',
+    candidateActivityId: 'PIP-24-003',
+    candidateActivityName: 'Hydrostatic Test Section Line 24-XX (150 bar)',
+    candidateWbs: '1.1.3.2.3',
+    confidence: 100,
+    matchReason: 'Pre-commissioning test manifold approved for filling',
+    evidenceCount: 1,
+    evidenceItems: [{ id: 'EVD-H12', title: 'HYDROTEST_MANIFOLD_CHECKLIST.pdf', type: 'DOCUMENT', timestamp: '13:00' }],
+    submittedBy: 'Debajit Borah',
+    date: '2026-09-17 13:00',
+    status: 'Verified History' as const,
+    isApproved: true,
+  },
+];
+
+const HISTORICAL_VERIFIED_MILESTONE_EVENTS: ReviewEvent[] = HISTORICAL_RAW_EVENTS.map((item) => ({
+  ...item,
+  alternativeCandidates: [],
+  signals: [],
+  rulesEvaluated: [{ name: 'Historical Milestone Certification', status: 'PASSED' as const, details: 'Verified on P6 master ledger' }],
+}));
+
+// Helper: Determine whether an event can be accepted into the schedule twin
+export function getEventAcceptanceStatus(evt: ReviewEvent): { canAccept: boolean; reason: string } {
+  if (!evt.candidateActivityId) {
+    return { canAccept: false, reason: 'Cannot accept without assigned schedule activity candidate.' };
+  }
+  if (evt.status === 'Duplicates') {
+    return { canAccept: false, reason: 'Cannot accept: Event suppressed as duplicate of EVT-2026-001 by deduplication rules. Reject or ignore to prevent double counting.' };
+  }
+  if (evt.status === 'Conflicts') {
+    return { canAccept: false, reason: 'Cannot accept: Blocked by open predecessor dependencies or material stoppages. Resolve conflicts or re-assign first.' };
+  }
+  if (evt.status === 'Unmatched' || evt.confidence < 70) {
+    return { canAccept: false, reason: 'Cannot accept: Match confidence is below the minimum verification threshold (70%). Reassign match before committing.' };
+  }
+  return { canAccept: true, reason: 'Verify match and commit to Schedule Twin' };
+}
+
+const ALL_INITIAL_EVENTS: ReviewEvent[] = [
+  ...INITIAL_REVIEW_EVENTS,
+  ...HISTORICAL_VERIFIED_MILESTONE_EVENTS,
+];
+
 export default function ReviewQueuePage() {
   const { activeProject, openActivityDrawer, openWhyExplanation } = useApp();
   const { addToast } = useToast();
 
-  const [events, setEvents] = useState<ReviewEvent[]>(INITIAL_REVIEW_EVENTS);
+  const [events, setEvents] = useState<ReviewEvent[]>(ALL_INITIAL_EVENTS);
   const [activeTab, setActiveTab] = useState<ReviewTab>('All Action Items');
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -473,6 +782,58 @@ export default function ReviewQueuePage() {
   const verifiedHistoryEvents = useMemo(() => {
     return events.filter((e) => e.isApproved || e.isRejected);
   }, [events]);
+
+  // Dynamic status donut chart slices connecting active review backlog to verified history
+  const reviewDonutSlices = useMemo(() => [
+    {
+      id: 'verified',
+      label: 'Verified Milestone Ledger',
+      count: verifiedHistoryEvents.length,
+      color: '#187A6A',
+      glyph: '✓',
+      description: 'Signed off and committed to Schedule Twin master ledger',
+    },
+    {
+      id: 'high-conf',
+      label: 'High Confidence (Ready)',
+      count: pendingActionEvents.filter((e) => e.status === 'High Confidence').length,
+      color: '#0F6574',
+      glyph: '●',
+      description: 'Direct candidate match (≥90%); ready for 1-click verification',
+    },
+    {
+      id: 'manager-rev',
+      label: 'Manager Review Required',
+      count: pendingActionEvents.filter((e) => e.status === 'Manager Review').length,
+      color: '#3D73B5',
+      glyph: '◐',
+      description: 'Intermediate confidence band (70–89%); requires planner check',
+    },
+    {
+      id: 'blocked',
+      label: 'Blocked / Conflicts',
+      count: pendingActionEvents.filter((e) => e.status === 'Conflicts').length,
+      color: '#B43D47',
+      glyph: '▲',
+      description: 'Dependency constraint failure or weather stoppage impediment',
+    },
+    {
+      id: 'duplicates',
+      label: 'Duplicates (Suppressed)',
+      count: pendingActionEvents.filter((e) => e.status === 'Duplicates').length,
+      color: '#9C5A08',
+      glyph: '✕',
+      description: 'Suppressed duplicate signatures to prevent double counting',
+    },
+    {
+      id: 'unmatched',
+      label: 'Unmatched / Stale Scope',
+      count: pendingActionEvents.filter((e) => e.status === 'Unmatched' || e.status === 'Stale').length,
+      color: '#526779',
+      glyph: '?',
+      description: 'Ambiguous field statement or expired 72-hour reporting SLA',
+    },
+  ], [pendingActionEvents, verifiedHistoryEvents]);
 
   // Tab counts based strictly on items requiring action
   const tabCounts = useMemo(() => {
@@ -614,7 +975,15 @@ export default function ReviewQueuePage() {
 
   // 3B. HIGH-THROUGHPUT OPERATIONAL ACTIONS (Accept Single & Batch)
   const handleAcceptSingle = (evt: ReviewEvent) => {
-    if (!evt.candidateActivityId) return;
+    const acceptance = getEventAcceptanceStatus(evt);
+    if (!acceptance.canAccept) {
+      addToast({
+        type: 'warning',
+        title: 'Action Blocked',
+        description: acceptance.reason,
+      });
+      return;
+    }
 
     setEvents((prev) =>
       prev.map((e) =>
@@ -647,8 +1016,31 @@ export default function ReviewQueuePage() {
   };
 
   const handleBatchAccept = (idsToAccept?: string[]) => {
-    const targetIds = idsToAccept || selectedItemIds;
-    if (targetIds.length === 0) return;
+    const rawIds = idsToAccept || selectedItemIds;
+    if (rawIds.length === 0) return;
+
+    // Filter strictly to acceptable events
+    const acceptableEvents = events.filter(
+      (e) => rawIds.includes(e.id) && getEventAcceptanceStatus(e).canAccept
+    );
+    const targetIds = acceptableEvents.map((e) => e.id);
+
+    if (targetIds.length === 0) {
+      addToast({
+        type: 'warning',
+        title: 'Batch Accept Blocked',
+        description: 'Selected items are blocked, duplicates, or unmatched and cannot be automatically committed.',
+      });
+      return;
+    }
+
+    if (targetIds.length < rawIds.length) {
+      addToast({
+        type: 'info',
+        title: 'Partial Batch Commitment',
+        description: `Committed ${targetIds.length} eligible items. ${rawIds.length - targetIds.length} blocked/duplicate item(s) were excluded.`,
+      });
+    }
 
     setEvents((prev) =>
       prev.map((e) =>
@@ -826,7 +1218,7 @@ export default function ReviewQueuePage() {
               </div>
               <h1 className="text-[28px] sm:text-3xl font-bold text-[#172033] tracking-tight">Review Queue</h1>
               <p className="text-sm text-[#596579] mt-1">
-                Contains only field events requiring human decision. Verified events are committed to Schedule Twin and removed from active queue.
+                <strong>{pendingActionEvents.length} Active Action Items</strong> requiring planner sign-off (3 urgent site actions) · <strong>4 Ingested NLP Candidates</strong> · <strong>{verifiedHistoryEvents.length} Verified Events</strong> in Master Schedule History.
               </p>
             </div>
 
@@ -868,8 +1260,9 @@ export default function ReviewQueuePage() {
           <HorizontalBarChart variant="review-backlog" />
           <StatusDonutChart
             title="Review Queue Verification Breakdown"
-            subtitle="Current disposition of incoming field execution items across confidence states"
+            subtitle="Current disposition of field execution items across verified ledger and active review states"
             projectQuestion="Where are unverified execution items accumulating across review categories?"
+            slices={reviewDonutSlices}
           />
         </div>
 
@@ -1454,20 +1847,31 @@ export default function ReviewQueuePage() {
                         ) : (
                           <div className="space-y-2">
                             {/* Primary Action 1: Accept */}
-                            <button
-                              type="button"
-                              onClick={() => handleAcceptSingle(evt)}
-                              disabled={!evt.candidateActivityId}
-                              title={
-                                evt.candidateActivityId
-                                  ? 'Verify match and commit to Schedule Twin'
-                                  : 'Cannot accept without assigned schedule activity'
-                              }
-                              className="w-full min-h-[44px] py-2.5 px-4 bg-[#2E7D5B] hover:bg-[#25684C] disabled:opacity-40 disabled:cursor-not-allowed text-white font-bold text-xs rounded shadow-xs inline-flex items-center justify-center gap-2 transition-colors cursor-pointer"
-                            >
-                              <Check className="w-4 h-4 stroke-[2.5]" />
-                              <span>Accept</span>
-                            </button>
+                            {(() => {
+                              const acceptance = getEventAcceptanceStatus(evt);
+                              return (
+                                <button
+                                  type="button"
+                                  onClick={() => handleAcceptSingle(evt)}
+                                  disabled={!acceptance.canAccept}
+                                  title={acceptance.reason}
+                                  className="w-full min-h-[44px] py-2.5 px-4 bg-[#2E7D5B] hover:bg-[#25684C] disabled:bg-gray-100 disabled:text-gray-400 disabled:border-gray-200 disabled:opacity-75 disabled:cursor-not-allowed text-white font-bold text-xs rounded shadow-xs inline-flex items-center justify-center gap-2 transition-colors cursor-pointer"
+                                >
+                                  <Check className="w-4 h-4 stroke-[2.5]" />
+                                  <span>
+                                    {acceptance.canAccept
+                                      ? 'Accept'
+                                      : evt.status === 'Duplicates'
+                                      ? 'Duplicate (Blocked)'
+                                      : evt.status === 'Conflicts'
+                                      ? 'Blocked by Rule'
+                                      : evt.status === 'Unmatched'
+                                      ? 'Unmatched (Blocked)'
+                                      : 'Low Confidence'}
+                                  </span>
+                                </button>
+                              );
+                            })()}
 
                             {/* Primary Action 2: Change Match */}
                             <button
@@ -1567,15 +1971,21 @@ export default function ReviewQueuePage() {
                   >
                     Cancel
                   </button>
-                  <button
-                    type="button"
-                    onClick={() => handleInitiateApprove(selectedEvent)}
-                    disabled={!selectedEvent.candidateActivityId}
-                    className="w-full sm:w-auto min-h-[44px] px-4 py-2 font-bold text-white bg-[#176B87] hover:bg-[#135A72] border border-[#176B87] disabled:opacity-50 rounded-lg shadow-sm inline-flex items-center justify-center gap-2 transition-colors cursor-pointer"
-                  >
-                    <Check className="w-4 h-4 stroke-[3]" />
-                    <span>Approve Match & Commit</span>
-                  </button>
+                  {(() => {
+                    const acceptance = getEventAcceptanceStatus(selectedEvent);
+                    return (
+                      <button
+                        type="button"
+                        onClick={() => handleInitiateApprove(selectedEvent)}
+                        disabled={!acceptance.canAccept}
+                        title={acceptance.reason}
+                        className="w-full sm:w-auto min-h-[44px] px-4 py-2 font-bold text-white bg-[#176B87] hover:bg-[#135A72] border border-[#176B87] disabled:bg-gray-100 disabled:text-gray-400 disabled:border-gray-200 disabled:opacity-75 disabled:cursor-not-allowed rounded-lg shadow-sm inline-flex items-center justify-center gap-2 transition-colors cursor-pointer"
+                      >
+                        <Check className="w-4 h-4 stroke-[3]" />
+                        <span>{acceptance.canAccept ? 'Approve Match & Commit' : 'Approval Blocked'}</span>
+                      </button>
+                    );
+                  })()}
                 </div>
               </div>
             )

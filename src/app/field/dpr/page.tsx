@@ -213,19 +213,19 @@ export default function DPRPage() {
       discipline: 'Piping',
       area: 'Unit A - Piperack Section B (Joints J-04 to J-07)',
       narrative:
-        '4 circumferential butt welds (Joints J-04, J-05, J-06, J-07) completed by qualified welders (IDs W-12, W-19). Root pass and visual inspection accepted by site QC. Radiographic testing (RT) scheduled for night shift.',
+        '2 circumferential butt welds (Joints J-04, J-05) completed today by qualified welders (IDs W-12, W-19). Root pass and visual inspection accepted by site QC. 2 remaining welds (J-06, J-07) prepared for night shift setup.',
       hoursWorked: 6.0,
       crewCount: 8,
     },
     {
       id: 'WRK-03',
-      activityId: 'CIV-11-001',
-      wbs: '2.1.1',
-      title: 'Foundation Block A - Compressor Pedestal',
+      activityId: 'CIV-02-005',
+      wbs: '2.2.1',
+      title: 'Unit 02 Flare Knock-Out Drum Foundation Raft',
       discipline: 'Civil',
-      area: 'Unit A - Compressor Station Bay 1',
+      area: 'Unit 02 - Flare Area Bay 1',
       narrative:
-        'Compressor foundation pedestal concrete placement completed continuously using ready-mix concrete (RMC). 45 m³ M35 grade concrete poured with poker vibrators. Slump verified at 120mm; 6 standard test cubes cast for 7/28 day curing.',
+        'Unit 02 Flare knock-out drum foundation raft concrete placement completed continuously using ready-mix concrete (RMC). 45 m³ M35 grade concrete poured with poker vibrators. Slump verified at 120mm; 6 standard test cubes cast for 7/28 day curing.',
       hoursWorked: 6.0,
       crewCount: 10,
     },
@@ -262,7 +262,7 @@ export default function DPRPage() {
     {
       id: 'QTY-02',
       activityId: 'PIP-24-002',
-      description: 'Weld Line 24-XX Field Joints & NDT Inspection',
+      description: 'Weld Line 24-XX Field Joints & NDT (Non-Destructive Testing) Inspection',
       discipline: 'Piping',
       plannedToday: 4,
       actualToday: 2,
@@ -275,17 +275,17 @@ export default function DPRPage() {
     },
     {
       id: 'QTY-03',
-      activityId: 'CIV-11-001',
-      description: 'Foundation Block A - Compressor Pedestal',
+      activityId: 'CIV-02-005',
+      description: 'Unit 02 Flare Knock-Out Drum Foundation Raft',
       discipline: 'Civil',
       plannedToday: 45,
       actualToday: 45,
       unit: 'm³ concrete',
-      cumulativeQty: 180,
-      targetTotal: 180,
+      cumulativeQty: 45,
+      targetTotal: 45,
       status: 'Completed',
       variance: 0,
-      isCriticalPath: true,
+      isCriticalPath: false,
     },
     {
       id: 'QTY-04',
@@ -696,10 +696,10 @@ export default function DPRPage() {
                 </span>
               </div>
               <h1 className="text-[28px] sm:text-3xl font-bold text-[#172033] tracking-tight">
-                Daily Progress Report
+                Daily Progress Report (DPR)
               </h1>
               <p className="text-xs sm:text-sm text-[#596579] mt-1">
-                Official EPC project site execution record, labor allocation, quantity progress, and Schedule Twin log sheet.
+                Official EPC project site execution record, labor allocation, quantity progress, and CPM Schedule Twin log sheet.
               </p>
             </div>
 
@@ -1093,7 +1093,7 @@ export default function DPRPage() {
             <div className="border border-[#D9DEE5] rounded-lg overflow-hidden text-xs">
               <div className="bg-[#F7F8FA] p-3 border-b border-[#D9DEE5] font-bold text-[#172033] flex items-center justify-between">
                 <span>Discipline Crew Allocation</span>
-                <span className="text-[11px] text-[#596579] font-normal">Direct Labor on Site</span>
+                <span className="text-[11px] text-[#596579] font-normal">Active Direct Labor on Site</span>
               </div>
               <div className="divide-y divide-[#D9DEE5] p-3 space-y-2">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
@@ -1104,7 +1104,9 @@ export default function DPRPage() {
                     onChange={(e) => setPipingCrew(e.target.value)}
                     className="w-full p-2 bg-[#FAFAFA] border border-[#D9DEE5] rounded text-xs text-[#172033]"
                   />
-                  <span className="font-mono font-bold text-[#176B87] shrink-0 text-right w-16">15 Pax</span>
+                  <span className="font-mono font-bold text-[#176B87] shrink-0 text-right w-16">
+                    {selectedDisciplines.includes('Piping') ? '15 Pax' : '0 Pax'}
+                  </span>
                 </div>
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pt-2">
                   <span className="font-bold text-[#172033] w-32 shrink-0">Civil Crew:</span>
@@ -1114,17 +1116,32 @@ export default function DPRPage() {
                     onChange={(e) => setCivilCrew(e.target.value)}
                     className="w-full p-2 bg-[#FAFAFA] border border-[#D9DEE5] rounded text-xs text-[#172033]"
                   />
-                  <span className="font-mono font-bold text-[#176B87] shrink-0 text-right w-16">10 Pax</span>
+                  <span className="font-mono font-bold text-[#176B87] shrink-0 text-right w-16">
+                    {selectedDisciplines.some((d) => d.includes('Civil')) ? '10 Pax' : '0 Pax'}
+                  </span>
                 </div>
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pt-2">
-                  <span className="font-bold text-[#172033] w-32 shrink-0">E&I Crew:</span>
+                  <span className="font-bold text-[#172033] w-32 shrink-0">E&amp;I Crew:</span>
                   <input
                     type="text"
                     value={electricalCrew}
                     onChange={(e) => setElectricalCrew(e.target.value)}
-                    className="w-full p-2 bg-[#FAFAFA] border border-[#D9DEE5] rounded text-xs text-[#172033]"
+                    className={`w-full p-2 border border-[#D9DEE5] rounded text-xs ${
+                      selectedDisciplines.some((d) => d.includes('Electrical') || d.includes('E&I'))
+                        ? 'bg-[#FAFAFA] text-[#172033]'
+                        : 'bg-gray-100 text-gray-400 italic'
+                    }`}
+                    placeholder="Not deployed today (0 Pax)"
                   />
-                  <span className="font-mono font-bold text-[#176B87] shrink-0 text-right w-16">4 Pax</span>
+                  <span className="font-mono font-bold text-[#596579] shrink-0 text-right w-16">
+                    {selectedDisciplines.some((d) => d.includes('Electrical') || d.includes('E&I'))
+                      ? '4 Pax'
+                      : '0 Pax (Inactive)'}
+                  </span>
+                </div>
+                <div className="flex items-center justify-between pt-2 border-t-2 border-[#D9DEE5] text-xs font-bold text-[#172033]">
+                  <span>Total Deployed Site Headcount:</span>
+                  <span className="font-mono text-sm text-[#176B87]">{totalHeadcount} Pax</span>
                 </div>
               </div>
             </div>

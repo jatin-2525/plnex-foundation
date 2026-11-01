@@ -93,6 +93,13 @@ export function GlobalSearchPanel({
   const [hasError, setHasError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [recentSearches, setRecentSearches] = useState<RecentSearchEntry[]>(INITIAL_RECENT_SEARCHES);
+  const [isMac, setIsMac] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined' && /Mac|iPhone|iPad/i.test(navigator.userAgent)) {
+      setIsMac(true);
+    }
+  }, []);
 
   useEffect(() => {
     let isSubscribed = true;
@@ -180,7 +187,7 @@ export function GlobalSearchPanel({
             </div>
           </div>
           <kbd className="hidden sm:inline-flex items-center gap-1 px-2 py-1 text-[11px] font-mono text-[#596579] bg-[#F1F3F5] border border-[#D9DEE5] rounded">
-            ⌘K / Ctrl+K
+            {isMac ? '⌘K' : 'Ctrl+K'}
           </kbd>
         </div>
       )}

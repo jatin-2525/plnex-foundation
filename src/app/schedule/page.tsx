@@ -1480,7 +1480,7 @@ export default function SchedulePage() {
                   <span>•</span>
                   <span>Data Date: <strong className="text-[#172033]">18 Sep 2026</strong></span>
                   <span>•</span>
-                  <span>Activities: <strong className="text-[#172033]">{activities.length}</strong></span>
+                  <span>Activities: <strong className="text-[#172033]">{activities.length} Key Level-3/4 Nodes</strong> <span className="text-[#596579] font-sans">(184 Total Level-5 Physical WBS Work Packages)</span></span>
                 </div>
               </div>
             </div>
@@ -2514,7 +2514,7 @@ export default function SchedulePage() {
               <div className="flex items-center gap-2 flex-wrap">
                 <span>Version: <strong className="font-mono text-[#172033]">Rev 3.2 (P6 XML)</strong></span>
                 <span>•</span>
-                <span>Visible Nodes: <strong className="text-[#172033] font-mono">{displayActivities.length}</strong></span>
+                <span>Showing: <strong className="text-[#172033] font-mono">{displayActivities.length} Key Level-3/4 Schedule Activities</strong> <span className="text-[#596579]">(of 184 Total Level-5 Physical WBS Activities)</span></span>
                 <span>•</span>
                 <span className="font-medium text-[#176B87]">
                   View: {viewMode === 'operational' ? 'Standard Schedule (10 cols)' : 'Full P6 Matrix (14 cols)'}

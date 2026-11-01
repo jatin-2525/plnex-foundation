@@ -102,7 +102,7 @@ export const managerNav: SidebarGroup[] = [
     group: 'EXECUTION',
     items: [
       { label: 'Execution Intelligence', href: '/execution', icon: Cpu, subtitle: 'Live Site Telemetry & Unstructured Stream' },
-      { label: 'Review Queue', href: '/review', icon: ShieldCheck, badge: 3, subtitle: 'Pending Planner Verification Gate' },
+      { label: 'Review Queue', href: '/review', icon: ShieldCheck, badge: 8, subtitle: '8 Pending Verification Items (3 Urgent)' },
       { label: 'Progress & Variance', href: '/progress', icon: TrendingUp, subtitle: 'Earned Value S-Curve & Trend Analytics' },
     ],
   },
@@ -194,7 +194,7 @@ export const adminNav: SidebarGroup[] = [
       { label: 'Field Capture', href: '/field/capture', icon: Camera, subtitle: 'Fast Mobile Entry for Single Site Events' },
       { label: 'DPR', href: '/field/dpr', icon: FileText, subtitle: 'Official End-of-Shift Submission & Signoff' },
       { label: 'Execution Intelligence', href: '/execution', icon: Cpu, subtitle: 'Live Site Telemetry & Unstructured Stream' },
-      { label: 'Review Queue', href: '/review', icon: ShieldCheck, badge: 3, subtitle: 'Pending Planner Verification Gate' },
+      { label: 'Review Queue', href: '/review', icon: ShieldCheck, badge: 8, subtitle: '8 Pending Verification Items (3 Urgent)' },
     ],
   },
   {

@@ -13,7 +13,9 @@ export type ProjectControlTerm =
   | 'spi'
   | 'data_date'
   | 's_curve'
-  | 'critical_path';
+  | 'critical_path'
+  | 'verified_progress'
+  | 'progress';
 
 export interface TermDefinition {
   term: string;
@@ -54,12 +56,30 @@ export const GLOSSARY: Record<ProjectControlTerm, TermDefinition> = {
   },
   variance: {
     term: 'variance',
-    name: 'Schedule Variance (SV / pp)',
+    name: 'Schedule Variance & Sign Conventions',
     short: 'Difference between verified actual and planned baseline progress.',
     detail:
-      'In physical progress project controls, variance is expressed in percentage points (pp) relative to the committed baseline envelope. A negative variance indicates work is behind schedule.',
-    formula: 'Progress Variance (pp) = Actual Progress % - Planned Progress %',
+      'In physical progress project controls, two standard sign conventions apply:\n• Progress % Variance uses negative values for delays/slip (e.g. 73.0% actual - 80.0% planned = -7.0 pp slip).\n• Delay Duration uses positive values for calendar slip days (e.g. +5.0d slip beyond baseline finish date).',
+    formula: 'Progress % Variance = Actual % - Planned % (Negative = Behind) | Delay Slip Days = Forecast Finish - Baseline Finish (Positive = Late)',
     referenceStandard: 'AACE RP 55R-09 / Earned Value Management System',
+  },
+  verified_progress: {
+    term: 'verified_progress',
+    name: 'Verified Physical Progress (%)',
+    short: 'Audited physical completion backed by field evidence and engineering sign-off.',
+    detail:
+      'The percentage of physical work completed to date, validated through inspection evidence and engineering sign-off, independent of incurred cost or spend. Calculated as (Earned Physical Quantities / Total Baseline Quantities) * 100.',
+    formula: 'Verified Progress % = Σ (Installed Quantity Done / Target Quantity) * Work Package Weight',
+    referenceStandard: 'AACE International Recommended Practice 37R-06 / Level 5 Quantity Tracking',
+  },
+  progress: {
+    term: 'progress',
+    name: 'Verified Physical Progress (%)',
+    short: 'Audited physical completion backed by field evidence and engineering sign-off.',
+    detail:
+      'The percentage of physical work completed to date, validated through inspection evidence and engineering sign-off, independent of incurred cost or spend. Calculated as (Earned Physical Quantities / Total Baseline Quantities) * 100.',
+    formula: 'Verified Progress % = Σ (Installed Quantity Done / Target Quantity) * Work Package Weight',
+    referenceStandard: 'AACE International Recommended Practice 37R-06 / Level 5 Quantity Tracking',
   },
   confidence: {
     term: 'confidence',

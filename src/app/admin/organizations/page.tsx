@@ -44,6 +44,24 @@ export default function AdminOrganizationsPage() {
       activeUsers: 2,
       status: 'Subcontractor',
     },
+    {
+      id: 'ORG-RITES-05',
+      name: 'RITES Limited (Govt. of India Enterprise)',
+      type: 'Third Party Inspection & Quality Audit',
+      locations: 'Duliajan & Regional QC Labs',
+      projects: 1,
+      activeUsers: 2,
+      status: 'Active TPI',
+    },
+    {
+      id: 'ORG-GAIL-06',
+      name: 'GAIL (India) Limited',
+      type: 'Gas Offtaker & Interconnect Partner',
+      locations: 'Assam Gas Grid Interconnect Station',
+      projects: 1,
+      activeUsers: 2,
+      status: 'Commercial Partner',
+    },
   ];
 
   const breadcrumbs = [
