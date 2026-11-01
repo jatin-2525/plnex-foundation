@@ -61,18 +61,17 @@ export default function FieldCapturePage() {
   // Workflow: 'form' | 'completed'
   const [isCompleted, setIsCompleted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSampleLoaded, setIsSampleLoaded] = useState(false);
 
-  // 1. What happened?
-  const [whatHappened, setWhatHappened] = useState(
-    '12 spools installed on Line 24. Work started at 09:00.'
-  );
+  // 1. What happened? (Starts blank by default; sample loaded on demand)
+  const [whatHappened, setWhatHappened] = useState('');
 
   // Voice recording simulation
   const [isRecordingVoice, setIsRecordingVoice] = useState(false);
   const [voiceSeconds, setVoiceSeconds] = useState(0);
 
   // 2. Quantity
-  const [quantity, setQuantity] = useState<number>(12);
+  const [quantity, setQuantity] = useState<number>(0);
 
   // 3. Unit
   const [unit, setUnit] = useState<string>('spools');
@@ -85,15 +84,44 @@ export default function FieldCapturePage() {
   const [showCustomArea, setShowCustomArea] = useState(false);
 
   // 5. Evidence
-  const [attachedPhoto, setAttachedPhoto] = useState<string | null>(
-    'IMG_LINE24_SPOOL_12.jpg'
-  );
+  const [attachedPhoto, setAttachedPhoto] = useState<string | null>(null);
   const [attachedDoc, setAttachedDoc] = useState<string | null>(null);
   const [showEvidenceTray, setShowEvidenceTray] = useState(false);
 
   // Verification state & matched activity
-  const [verificationState, setVerificationState] = useState<FieldVerificationState>('Confirmed');
+  const [verificationState, setVerificationState] = useState<FieldVerificationState>('Needs Confirmation');
   const [activityId, setActivityId] = useState<string>('PIP-24-001');
+
+  // Load sample content preset
+  const handleLoadSample = () => {
+    setWhatHappened('12 spools installed on Line 24. Work started at 09:00.');
+    setQuantity(12);
+    setUnit('spools');
+    setArea('Line 24-XX');
+    setAttachedPhoto('IMG_LINE24_SPOOL_12.jpg');
+    setVerificationState('Confirmed');
+    setActivityId('PIP-24-001');
+    setIsSampleLoaded(true);
+    addToast({
+      type: 'info',
+      title: 'Sample Content Loaded',
+      description: 'Loaded Line 24 demo observation with attached sample photo.',
+    });
+  };
+
+  // Clear form to clean blank state
+  const handleClearForm = () => {
+    setWhatHappened('');
+    setQuantity(0);
+    setAttachedPhoto(null);
+    setAttachedDoc(null);
+    setIsSampleLoaded(false);
+    addToast({
+      type: 'info',
+      title: 'Form Cleared',
+      description: 'Ready for new field entry.',
+    });
+  };
 
   // Voice Timer Simulation
   useEffect(() => {
@@ -232,7 +260,7 @@ export default function FieldCapturePage() {
       emptyTitle="No field capture activities found in this view"
       emptyDescription="Activities available for rapid physical progress recording and evidence upload will appear here. Select an active work area or reset filters to continue."
     >
-      <div className="space-y-4 pb-24 md:pb-12 max-w-2xl mx-auto">
+      <div className="space-y-4 pb-36 sm:pb-20 max-w-2xl mx-auto">
         <Breadcrumbs items={breadcrumbs} />
 
         {/* OFFLINE MODE BANNER */}
@@ -253,7 +281,7 @@ export default function FieldCapturePage() {
         )}
 
         {/* PAGE HEADER: Mobile-First, Calm, Uncluttered */}
-        <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-4 sm:p-6">
+        <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 shadow-xs">
           <div className="flex items-center justify-between gap-2">
             <div>
               <div className="flex items-center gap-2 text-xs text-[#596579]">
@@ -279,6 +307,43 @@ export default function FieldCapturePage() {
             </Link>
           </div>
         </div>
+
+        {/* DEMO PRESET / CLEAR CONTROL TOOLBAR */}
+        {!isCompleted && (
+          <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 text-xs shadow-2xs">
+            <div className="flex items-center gap-2">
+              <span className="font-semibold text-[#172033]">Form Mode:</span>
+              {isSampleLoaded ? (
+                <span className="px-2 py-0.5 rounded bg-[#FDF6ED] text-[#8C5311] border border-[#F0D4A6] text-[11px] font-mono font-bold">
+                  Sample Demo Content Loaded
+                </span>
+              ) : (
+                <span className="px-2 py-0.5 rounded bg-white text-[#596579] border border-[#D9DEE5] text-[11px] font-mono">
+                  Blank Form (Ready for Site Input)
+                </span>
+              )}
+            </div>
+            <div className="flex items-center gap-2">
+              {!isSampleLoaded ? (
+                <button
+                  type="button"
+                  onClick={handleLoadSample}
+                  className="px-3 py-1.5 bg-white hover:bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0] rounded font-semibold text-xs transition-colors cursor-pointer"
+                >
+                  Load Sample Preset (Line 24)
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  onClick={handleClearForm}
+                  className="px-3 py-1.5 bg-white hover:bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA] rounded font-semibold text-xs transition-colors cursor-pointer"
+                >
+                  Clear Form & Start Blank
+                </button>
+              )}
+            </div>
+          </div>
+        )}
 
         {/* COMPLETED SUCCESS STATE */}
         {isCompleted ? (

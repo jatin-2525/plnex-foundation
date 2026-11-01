@@ -28,7 +28,7 @@ export interface WhatIfSimulationResult {
 
 /**
  * Pure domain logic for delay detection and variance calculation.
- * Follows the transparent rule engine requested by SIH26122:
+ * Follows the transparent rule engine:
  * - IF actual_finish > planned_finish -> DELAYED
  * - IF actual_progress < planned_progress -> AT RISK
  * - IF milestone deadline passed AND completion < 100% -> CRITICAL / DELAYED

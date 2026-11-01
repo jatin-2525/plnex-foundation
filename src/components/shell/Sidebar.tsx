@@ -101,7 +101,7 @@ export const managerNav: SidebarGroup[] = [
     group: 'EXECUTION',
     items: [
       { label: 'Execution Intelligence', href: '/execution', icon: Cpu },
-      { label: 'Review Queue', href: '/review', icon: ShieldCheck, badge: 6 },
+      { label: 'Review Queue', href: '/review', icon: ShieldCheck, badge: 3 },
       { label: 'Progress & Variance', href: '/progress', icon: TrendingUp },
     ],
   },
@@ -193,7 +193,7 @@ export const adminNav: SidebarGroup[] = [
       { label: 'Field Capture', href: '/field/capture', icon: Camera },
       { label: 'DPR', href: '/field/dpr', icon: FileText },
       { label: 'Execution Intelligence', href: '/execution', icon: Cpu },
-      { label: 'Review Queue', href: '/review', icon: ShieldCheck, badge: 6 },
+      { label: 'Review Queue', href: '/review', icon: ShieldCheck, badge: 3 },
     ],
   },
   {
@@ -221,12 +221,6 @@ export const adminNav: SidebarGroup[] = [
     group: 'SYSTEM',
     items: [
       { label: 'Offline / Sync', href: '/sync', icon: Wifi },
-    ],
-  },
-  {
-    group: 'FOUNDATION',
-    items: [
-      { label: 'Foundation & Showcase', href: '/showcase', icon: Layers },
     ],
   },
 ];

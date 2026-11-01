@@ -94,49 +94,22 @@ export default function ManagerDashboardPage() {
     });
   };
 
-  // Schedule Variance Control Table Items
+  // Schedule Variance Control Table Items (Anchored strictly to Data Date: 18 Sep 2026)
   const scheduleVarianceItems = [
     {
       id: 'PIP-24-001',
       name: 'Erect Line 24-XX High Pressure Gas Header',
-      plannedFinish: '30 Sep 2026',
-      actualFinish: '02 Oct 2026',
+      plannedFinish: '15 Sep 2026',
+      actualFinish: '17 Sep 2026',
       varianceDays: 2,
       status: 'delayed' as const,
       isCriticalPath: true,
     },
     {
-      id: 'PIP-24-002',
-      name: 'Weld Line 24-XX Field Joints & NDT Clearance',
-      plannedFinish: '15 Oct 2026',
-      actualFinish: '15 Oct 2026',
-      varianceDays: 0,
-      status: 'on-track' as const,
-      isCriticalPath: false,
-    },
-    {
-      id: 'PIP-24-003',
-      name: 'Hydrostatic Test Section Line 24-XX (150 bar)',
-      plannedFinish: '25 Oct 2026',
-      actualFinish: '29 Oct 2026',
-      varianceDays: 4,
-      status: 'at-risk' as const,
-      isCriticalPath: true,
-    },
-    {
-      id: 'ELE-11-032',
-      name: 'Cable Tray Installation - Substation to Bay',
-      plannedFinish: '15 Oct 2026',
-      actualFinish: '16 Oct 2026',
-      varianceDays: 1,
-      status: 'delayed' as const,
-      isCriticalPath: false,
-    },
-    {
       id: 'CIV-11-001',
       name: 'Foundation Block A - Compressor Pedestal',
-      plannedFinish: '15 Aug 2026',
-      actualFinish: '15 Aug 2026',
+      plannedFinish: '14 Sep 2026',
+      actualFinish: '14 Sep 2026',
       varianceDays: 0,
       status: 'completed' as const,
       isCriticalPath: false,
@@ -145,17 +118,44 @@ export default function ManagerDashboardPage() {
       id: 'MEC-08-003',
       name: 'Align Centrifugal Gas Compressor Skid A',
       plannedFinish: '22 Sep 2026',
-      actualFinish: '22 Sep 2026',
+      actualFinish: '22 Sep 2026 (Projected)',
       varianceDays: 0,
       status: 'on-track' as const,
       isCriticalPath: false,
+    },
+    {
+      id: 'ELE-11-032',
+      name: 'Cable Tray Installation - Substation to Bay',
+      plannedFinish: '23 Sep 2026',
+      actualFinish: '24 Sep 2026 (Projected)',
+      varianceDays: 1,
+      status: 'delayed' as const,
+      isCriticalPath: false,
+    },
+    {
+      id: 'PIP-24-002',
+      name: 'Weld Line 24-XX Field Joints & NDT Clearance',
+      plannedFinish: '20 Sep 2026',
+      actualFinish: '20 Sep 2026 (Projected)',
+      varianceDays: 0,
+      status: 'on-track' as const,
+      isCriticalPath: false,
+    },
+    {
+      id: 'PIP-24-003',
+      name: 'Hydrostatic Test Section Line 24-XX (150 bar)',
+      plannedFinish: '22 Sep 2026',
+      actualFinish: '26 Sep 2026 (Projected)',
+      varianceDays: 4,
+      status: 'at-risk' as const,
+      isCriticalPath: true,
     },
   ];
 
   // Specific event for Unmatched Item in Section 2
   const unmatchedEvent = MOCK_EXECUTION_EVENTS.find((e) => e.id === 'EVT-2026-004') || MOCK_EXECUTION_EVENTS[2];
 
-  // Verified Milestones Stream (Replaces raw worker logs with executive milestone syncs)
+  // Verified Milestones Stream (All completions strictly on or before Data Date: 18 Sep 2026)
   const verifiedMilestones = [
     {
       id: 'EVT-2026-001',
@@ -171,7 +171,7 @@ export default function ManagerDashboardPage() {
       activityId: 'PIP-24-001',
       title: 'Line 24-XX Gas Header Spool Rigging',
       progress: '100% Spools Placed',
-      verifiedDate: '02 Oct 2026',
+      verifiedDate: '17 Sep 2026',
       auditor: 'Project Controls Verification',
       status: 'verified' as const,
     },
@@ -180,7 +180,7 @@ export default function ManagerDashboardPage() {
       activityId: 'ELE-11-032',
       title: 'Substation Overhead Cable Tray Alignment',
       progress: '350m Installed',
-      verifiedDate: '01 Oct 2026',
+      verifiedDate: '16 Sep 2026',
       auditor: 'Resident Electrical Engineer',
       status: 'verified' as const,
     },
@@ -189,7 +189,7 @@ export default function ManagerDashboardPage() {
       activityId: 'MEC-08-003',
       title: 'Compressor Skid A Laser Alignment',
       progress: 'Tolerance ±0.02mm Cleared',
-      verifiedDate: '22 Sep 2026',
+      verifiedDate: '12 Sep 2026',
       auditor: 'OEM Technical Specialist',
       status: 'verified' as const,
     },
@@ -253,10 +253,10 @@ export default function ManagerDashboardPage() {
 
               {/* Secondary Navigation */}
               <Link
-                href="/schedule"
+                href="/schedule-twin"
                 className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-[#172033] bg-white border border-[#D9DEE5] hover:bg-[#F1F3F5] rounded-lg transition-colors shadow-2xs"
               >
-                <GitCommit className="w-3.5 h-3.5 text-[#596579]" />
+                <GitCommit className="w-3.5 h-3.5 text-[#176B87]" />
                 <span>Schedule Twin</span>
               </Link>
 
@@ -296,24 +296,24 @@ export default function ManagerDashboardPage() {
                 <div className="flex items-center gap-1.5">
                   <WhyButton
                     onClick={() => openWhyExplanation('health:PRJ-OIL-2026-01')}
-                    title="Why is schedule health 94%?"
+                    title="Why is schedule health 82%?"
                   />
-                  <div className="p-1 rounded bg-[#EDF7F2] text-[#2E7D5B]">
+                  <div className="p-1 rounded bg-[#FDF6ED] text-[#D98B32]">
                     <Activity className="w-3.5 h-3.5" />
                   </div>
                 </div>
               </div>
               <div className="my-2">
                 <div className="flex items-baseline gap-2">
-                  <span className="text-2xl sm:text-3xl font-bold font-mono text-[#2E7D5B] leading-none">
-                    94%
+                  <span className="text-2xl sm:text-3xl font-bold font-mono text-[#D98B32] leading-none">
+                    82%
                   </span>
-                  <span className="text-xs font-semibold text-[#2E7D5B] flex items-center gap-0.5">
-                    <TrendingUp className="w-3 h-3" /> Good
+                  <span className="text-xs font-semibold text-[#D98B32] flex items-center gap-0.5">
+                    <AlertTriangle className="w-3 h-3" /> Warning
                   </span>
                 </div>
                 <p className="text-[11px] text-[#596579] mt-1">
-                  DCMA 14-Point Check Passed
+                  Needs Attention — 5 Warnings
                 </p>
               </div>
               <Link href="/health" className="text-[11px] text-[#176B87] group-hover:underline font-semibold flex items-center gap-1">
@@ -485,141 +485,134 @@ export default function ManagerDashboardPage() {
             </div>
           </div>
 
-          {/* 2-Column Executive Layout: Donut Chart on Left, Clean Decision Cards on Right */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-            {/* Visual Status Donut Chart */}
-            <div className="lg:col-span-5 bg-white border border-[#F0D4A6] rounded-lg p-4 shadow-2xs">
-              <StatusDonutChart />
+          {/* High-Signal Action Cards (Direct 4-Column Manager Focus Grid) */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
+            {/* Card 1: Review Validation */}
+            <div className="p-4 rounded-lg bg-white border border-[#F0D4A6] hover:border-[#D98B32] transition-all shadow-2xs flex flex-col justify-between space-y-3">
+              <div className="space-y-1.5">
+                <div className="flex items-center justify-between">
+                  <span className="px-2 py-0.5 rounded text-[11px] font-mono font-bold uppercase bg-[#FDF6ED] text-[#8C5311] border border-[#F0D4A6] flex items-center gap-1">
+                    <ShieldAlert className="w-3.5 h-3.5 text-[#D98B32]" />
+                    Match Validation
+                  </span>
+                  <span className="text-xs font-mono font-bold text-[#D98B32]">{reviewEvents.length} Pending</span>
+                </div>
+                <h3 className="text-sm font-bold text-[#172033] leading-snug">
+                  Field Matches Awaiting Sign-off
+                </h3>
+                <p className="text-xs text-[#596579] leading-relaxed">
+                  Events in the 70%–89% confidence band pause live Schedule Twin synchronization until approved.
+                </p>
+                <div className="pt-1">
+                  <span className="text-[11px] font-mono font-semibold px-2 py-0.5 rounded bg-[#FDF6ED] text-[#8C5311] border border-[#F0D4A6]">
+                    Schedule Twin Sync Paused
+                  </span>
+                </div>
+              </div>
+              <Link
+                href="/review"
+                className="w-full py-2 px-3 bg-white hover:bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0] text-xs font-bold rounded text-center transition-colors block mt-2"
+              >
+                Review Matches ({reviewEvents.length}) &rarr;
+              </Link>
             </div>
 
-            {/* High-Signal Action Cards */}
-            <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {/* Card 1: Review Validation */}
-              <div className="p-3.5 rounded-lg bg-white border border-[#F0D4A6] hover:border-[#D98B32] transition-all shadow-2xs flex flex-col justify-between space-y-2.5">
-                <div className="space-y-1.5">
-                  <div className="flex items-center justify-between">
-                    <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase bg-[#FDF6ED] text-[#8C5311] border border-[#F0D4A6] flex items-center gap-1">
-                      <ShieldAlert className="w-3 h-3 text-[#D98B32]" />
-                      Match Validation
-                    </span>
-                    <span className="text-[11px] font-mono font-bold text-[#D98B32]">{reviewEvents.length} Pending</span>
-                  </div>
-                  <h3 className="text-xs sm:text-sm font-bold text-[#172033] leading-snug">
-                    Field Matches Awaiting Sign-off
-                  </h3>
-                  <p className="text-[11px] text-[#596579] leading-normal">
-                    Events in the 70%–89% confidence band pause live Schedule Twin synchronization until approved.
-                  </p>
-                  <div className="pt-1">
-                    <span className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-[#FDF6ED] text-[#8C5311] border border-[#F0D4A6]">
-                      Schedule Twin Sync Paused
-                    </span>
-                  </div>
+            {/* Card 2: Critical Path Slip */}
+            <div className="p-4 rounded-lg bg-white border border-[#E4B0AA] hover:border-[#B5473C] transition-all shadow-2xs flex flex-col justify-between space-y-3 border-l-4 border-l-[#B5473C]">
+              <div className="space-y-1.5">
+                <div className="flex items-center justify-between">
+                  <span className="px-2 py-0.5 rounded text-[11px] font-mono font-bold uppercase bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA] flex items-center gap-1">
+                    <AlertOctagon className="w-3.5 h-3.5 text-[#B5473C]" />
+                    Critical Slip
+                  </span>
+                  <span className="text-xs font-mono font-bold text-[#B5473C] bg-[#FBEFEE] px-1.5 rounded border border-[#E4B0AA]">+2d Slip</span>
                 </div>
-                <Link
-                  href="/review"
-                  className="w-full py-1.5 px-3 bg-white hover:bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0] text-xs font-bold rounded text-center transition-colors block mt-2"
-                >
-                  Review Matches ({reviewEvents.length}) &rarr;
-                </Link>
+                <h3 className="text-sm font-bold text-[#172033] leading-snug">
+                  PIP-24-001: Header Erection
+                </h3>
+                <p className="text-xs text-[#596579] leading-relaxed">
+                  Zero-float activity slipped 2 days. Pushes downstream hydrostatic testing milestone day-for-day.
+                </p>
+                <div className="pt-1">
+                  <span className="text-[11px] font-mono font-semibold px-2 py-0.5 rounded bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
+                    Milestone Impact: +2 Days
+                  </span>
+                </div>
               </div>
+              <a
+                href="#variance-table"
+                className="w-full py-2 px-3 bg-white hover:bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA] text-xs font-bold rounded text-center transition-colors block mt-2"
+              >
+                Inspect Delay Impact &rarr;
+              </a>
+            </div>
 
-              {/* Card 2: Critical Path Slip */}
-              <div className="p-3.5 rounded-lg bg-white border border-[#E4B0AA] hover:border-[#B5473C] transition-all shadow-2xs flex flex-col justify-between space-y-2.5 border-l-4 border-l-[#B5473C]">
-                <div className="space-y-1.5">
-                  <div className="flex items-center justify-between">
-                    <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA] flex items-center gap-1">
-                      <AlertOctagon className="w-3 h-3 text-[#B5473C]" />
-                      Critical Slip
-                    </span>
-                    <span className="text-[11px] font-mono font-bold text-[#B5473C] bg-[#FBEFEE] px-1 rounded border border-[#E4B0AA]">+2d Slip</span>
-                  </div>
-                  <h3 className="text-xs sm:text-sm font-bold text-[#172033] leading-snug">
-                    PIP-24-001: Header Erection
-                  </h3>
-                  <p className="text-[11px] text-[#596579] leading-normal">
-                    Zero-float activity slipped 2 days. Pushes hydrostatic testing milestone day-for-day.
-                  </p>
-                  <div className="pt-1">
-                    <span className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
-                      Milestone Impact: +2 Days
-                    </span>
-                  </div>
+            {/* Card 3: Unmatched Field Spool */}
+            <div className="p-4 rounded-lg bg-white border border-[#E4B0AA] hover:border-[#B5473C] transition-all shadow-2xs flex flex-col justify-between space-y-3">
+              <div className="space-y-1.5">
+                <div className="flex items-center justify-between">
+                  <span className="px-2 py-0.5 rounded text-[11px] font-mono font-bold uppercase bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA] flex items-center gap-1">
+                    <AlertTriangle className="w-3.5 h-3.5 text-[#B5473C]" />
+                    Unmatched Event
+                  </span>
+                  <span className="text-xs font-mono font-bold text-[#B5473C] bg-[#FBEFEE] px-1.5 rounded">47% Score</span>
                 </div>
-                <a
-                  href="#variance-table"
-                  className="w-full py-1.5 px-3 bg-white hover:bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA] text-xs font-bold rounded text-center transition-colors block mt-2"
-                >
-                  Inspect Delay Impact &rarr;
-                </a>
+                <h3 className="text-sm font-bold text-[#172033] leading-snug">
+                  EVT-2026-004: Unit B Drain Line
+                </h3>
+                <p className="text-xs text-[#596579] leading-relaxed">
+                  Unlinked spool code syntax submitted. Requires planner target assignment to credit progress.
+                </p>
+                <div className="pt-1">
+                  <span className="text-[11px] font-mono font-semibold px-2 py-0.5 rounded bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
+                    Progress Uncredited (1.0 spool)
+                  </span>
+                </div>
               </div>
+              <button
+                type="button"
+                onClick={() => setSelectedReviewModalEvent(unmatchedEvent)}
+                className="w-full py-2 px-3 bg-white hover:bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0] text-xs font-bold rounded text-center transition-colors block cursor-pointer mt-2"
+              >
+                Assign Activity Target &rarr;
+              </button>
+            </div>
 
-              {/* Card 3: Unmatched Field Spool */}
-              <div className="p-3.5 rounded-lg bg-white border border-[#E4B0AA] hover:border-[#B5473C] transition-all shadow-2xs flex flex-col justify-between space-y-2.5">
-                <div className="space-y-1.5">
-                  <div className="flex items-center justify-between">
-                    <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA] flex items-center gap-1">
-                      <AlertTriangle className="w-3 h-3 text-[#B5473C]" />
-                      Unmatched Event
-                    </span>
-                    <span className="text-[11px] font-mono font-bold text-[#B5473C] bg-[#FBEFEE] px-1 rounded">47% Score</span>
-                  </div>
-                  <h3 className="text-xs sm:text-sm font-bold text-[#172033] leading-snug">
-                    EVT-2026-004: Unit B Drain Line
-                  </h3>
-                  <p className="text-[11px] text-[#596579] leading-normal">
-                    Unlinked spool code syntax submitted. Requires planner target assignment to credit progress.
-                  </p>
-                  <div className="pt-1">
-                    <span className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
-                      Progress Uncredited (1.0 spool)
-                    </span>
-                  </div>
+            {/* Card 4: Downstream Ripple / Simulation */}
+            <div className="p-4 rounded-lg bg-white border border-[#F0D4A6] hover:border-[#D98B32] transition-all shadow-2xs flex flex-col justify-between space-y-3">
+              <div className="space-y-1.5">
+                <div className="flex items-center justify-between">
+                  <span className="px-2 py-0.5 rounded text-[11px] font-mono font-bold uppercase bg-[#FDF6ED] text-[#8C5311] border border-[#F0D4A6] flex items-center gap-1">
+                    <TrendingDown className="w-3.5 h-3.5 text-[#D98B32]" />
+                    Ripple Impact
+                  </span>
+                  <span className="text-xs font-mono font-bold text-[#D98B32] bg-[#FDF6ED] px-1.5 rounded">3 Downstream</span>
                 </div>
-                <button
-                  type="button"
-                  onClick={() => setSelectedReviewModalEvent(unmatchedEvent)}
-                  className="w-full py-1.5 px-3 bg-white hover:bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0] text-xs font-bold rounded text-center transition-colors block cursor-pointer mt-2"
-                >
-                  Assign Activity Target &rarr;
-                </button>
-              </div>
-
-              {/* Card 4: Downstream Ripple / Simulation */}
-              <div className="p-3.5 rounded-lg bg-white border border-[#F0D4A6] hover:border-[#D98B32] transition-all shadow-2xs flex flex-col justify-between space-y-2.5">
-                <div className="space-y-1.5">
-                  <div className="flex items-center justify-between">
-                    <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase bg-[#FDF6ED] text-[#8C5311] border border-[#F0D4A6] flex items-center gap-1">
-                      <TrendingDown className="w-3 h-3 text-[#D98B32]" />
-                      Ripple Impact
-                    </span>
-                    <span className="text-[11px] font-mono font-bold text-[#D98B32] bg-[#FDF6ED] px-1 rounded">3 Downstream</span>
-                  </div>
-                  <h3 className="text-xs sm:text-sm font-bold text-[#172033] leading-snug">
-                    Critical Ripple: Hydro-test & Loops
-                  </h3>
-                  <p className="text-[11px] text-[#596579] leading-normal">
-                    Successor activities PIP-24-002 and INS-04-015 impacted. Commercial milestone shifts from 30 Nov to 02 Dec.
-                  </p>
-                  <div className="pt-1">
-                    <span className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-[#FDF6ED] text-[#8C5311] border border-[#F0D4A6]">
-                      Target Shift: 30 Nov &rarr; 02 Dec
-                    </span>
-                  </div>
+                <h3 className="text-sm font-bold text-[#172033] leading-snug">
+                  Critical Ripple: Hydro-test & Loops
+                </h3>
+                <p className="text-xs text-[#596579] leading-relaxed">
+                  Successor activities PIP-24-002 and INS-04-015 impacted. Commercial milestone shifts from 30 Nov to 02 Dec.
+                </p>
+                <div className="pt-1">
+                  <span className="text-[11px] font-mono font-semibold px-2 py-0.5 rounded bg-[#FDF6ED] text-[#8C5311] border border-[#F0D4A6]">
+                    Target Shift: 30 Nov &rarr; 02 Dec
+                  </span>
                 </div>
-                <Link
-                  href="/what-if"
-                  className="w-full py-1.5 px-3 bg-white hover:bg-[#F1F3F5] text-[#172033] border border-[#D9DEE5] text-xs font-bold rounded text-center transition-colors block mt-2"
-                >
-                  Run What-If Simulation &rarr;
-                </Link>
               </div>
+              <Link
+                href="/what-if"
+                className="w-full py-2 px-3 bg-white hover:bg-[#F1F3F5] text-[#172033] border border-[#D9DEE5] text-xs font-bold rounded text-center transition-colors block mt-2"
+              >
+                Run What-If Simulation &rarr;
+              </Link>
             </div>
           </div>
         </section>
 
         {/* =========================================================================
             4. MANDATORY STATIC S-CURVE (Executive Physical Earned Trajectory)
+            Single concise summary integrated with the trajectory chart
             ========================================================================= */}
         <section aria-labelledby="scurve-heading" className="bg-white border border-[#D9DEE5] border-l-4 border-l-[#176B87] rounded-lg p-4 sm:p-6 shadow-xs space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D9DEE5] gap-2">
@@ -648,36 +641,6 @@ export default function ManagerDashboardPage() {
             </div>
           </div>
 
-          {/* S-Curve Summary Pills */}
-          <div className="bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg p-3 sm:p-4 flex flex-col md:flex-row md:items-center justify-between gap-3 text-xs">
-            <div className="flex items-center gap-3 sm:gap-4 flex-wrap">
-              <div className="flex items-center gap-2 bg-white px-2.5 py-1 rounded border border-[#D9DEE5]">
-                <span className="w-3 h-1 bg-[#176B87] rounded-full" />
-                <span className="text-[#596579]">Planned:</span>
-                <strong className="font-mono text-sm font-bold text-[#176B87]">80.0%</strong>
-              </div>
-              <div className="flex items-center gap-2 bg-white px-2.5 py-1 rounded border border-[#D9DEE5]">
-                <span className="w-3 h-1 bg-[#2E7D5B] rounded-full" />
-                <span className="text-[#596579]">Actual:</span>
-                <strong className="font-mono text-sm font-bold text-[#2E7D5B]">73.0%</strong>
-              </div>
-              <div className="flex items-center gap-2 bg-white px-2.5 py-1 rounded border border-[#D9DEE5]">
-                <span className="w-3 h-1 border-t-2 border-dashed border-[#D98B32]" />
-                <span className="text-[#596579]">Forecast:</span>
-                <strong className="font-mono text-sm font-bold text-[#D98B32]">100% (20 Dec)</strong>
-              </div>
-              <div className="flex items-center gap-2 bg-[#FBEFEE] px-2.5 py-1 rounded border border-[#E4B0AA]">
-                <span className="w-2 h-2 rounded-full bg-[#B5473C]" />
-                <span className="text-[#B5473C] font-semibold">Variance:</span>
-                <strong className="font-mono text-sm font-bold text-[#B5473C]">-7.0% SLIP</strong>
-              </div>
-            </div>
-
-            <div className="px-3 py-1.5 rounded bg-white border border-[#D9DEE5] text-[#596579] font-medium text-xs">
-              <span className="text-[#B5473C] font-bold">Variance Diagnosis:</span> Actual physical progress is 7.0 percentage points behind approved baseline (critical path impact).
-            </div>
-          </div>
-
           <SCurveChart
             variant="full"
             title="Project S-Curve — Baseline vs. Actual Earned vs. Forecast"
@@ -686,119 +649,140 @@ export default function ManagerDashboardPage() {
         </section>
 
         {/* =========================================================================
-            5. ANALYTICAL CHARTS SUITE (Interactive Multi-Perspective Cockpit)
-            Provides rich visual charts (Discipline, Site Area, Variance Trend, Delay Ranking)
-            and completely removes duplicate progress bars and verbose excuse paragraphs!
+            5. SUPPORTING ANALYTICAL CHARTS SUITE (Expandable Section)
+            Supporting analysis moved to expandable section to keep manager focus on decisions
             ========================================================================= */}
-        <section aria-labelledby="analytics-heading" className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 shadow-xs space-y-4">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D9DEE5] gap-3">
-            <div>
+        <details className="group bg-white border border-[#D9DEE5] rounded-lg shadow-xs overflow-hidden">
+          <summary className="p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between cursor-pointer list-none hover:bg-[#F9FAFC] transition-colors gap-3 select-none">
+            <div className="space-y-0.5">
               <span className="text-[11px] font-mono font-medium uppercase text-[#596579] tracking-wider">
-                Multi-Perspective Schedule Analytics
+                Supporting Schedule Analytics
               </span>
-              <h2 id="analytics-heading" className="text-base sm:text-lg font-bold text-[#172033] tracking-tight">
-                Execution Analytics & Performance Dimensions
-              </h2>
-              <p className="text-xs text-[#596579] mt-0.5">
-                Switch visual perspectives to evaluate project delivery by engineering discipline, site zone, or variance trajectory.
+              <div className="flex items-center gap-2">
+                <h2 id="analytics-heading" className="text-base sm:text-lg font-bold text-[#172033] tracking-tight">
+                  Dimensional Analysis & Deep-Dive Charts
+                </h2>
+                <span className="text-xs px-2 py-0.5 rounded bg-[#EDF5F8] text-[#176B87] font-semibold hidden sm:inline">
+                  Discipline • Site Area • Trend • Delays
+                </span>
+              </div>
+              <p className="text-xs text-[#596579]">
+                Expand to inspect multi-perspective breakdowns across engineering disciplines, site zones, and variance trajectories.
               </p>
             </div>
+            <div className="flex items-center gap-2 text-xs font-bold text-[#176B87] self-start sm:self-center">
+              <span className="group-open:hidden">Expand Analysis &darr;</span>
+              <span className="hidden group-open:inline">Collapse Analysis &uarr;</span>
+            </div>
+          </summary>
 
-            {/* Perspective Selector Tabs */}
-            <div className="flex items-center gap-1 p-1 bg-[#F1F3F5] border border-[#D9DEE5] rounded-lg self-start sm:self-center overflow-x-auto max-w-full">
-              <button
-                type="button"
-                onClick={() => setActiveChartTab('discipline')}
-                className={`px-3 py-1.5 text-xs font-semibold rounded-md transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer ${
-                  activeChartTab === 'discipline'
-                    ? 'bg-white text-[#176B87] shadow-2xs border border-[#D9DEE5]'
-                    : 'text-[#596579] hover:text-[#172033]'
-                }`}
-              >
-                <Layers className="w-3.5 h-3.5" />
-                <span>By Discipline</span>
-              </button>
+          <div className="p-4 sm:p-6 border-t border-[#D9DEE5] space-y-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D9DEE5] gap-3">
+              <div>
+                <h3 className="text-sm font-bold text-[#172033]">
+                  Interactive Performance Dimensions
+                </h3>
+                <p className="text-xs text-[#596579]">
+                  Switch visual perspectives to evaluate project delivery by engineering discipline, site zone, or variance trajectory.
+                </p>
+              </div>
 
-              <button
-                type="button"
-                onClick={() => setActiveChartTab('area')}
-                className={`px-3 py-1.5 text-xs font-semibold rounded-md transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer ${
-                  activeChartTab === 'area'
-                    ? 'bg-white text-[#176B87] shadow-2xs border border-[#D9DEE5]'
-                    : 'text-[#596579] hover:text-[#172033]'
-                }`}
-              >
-                <MapPin className="w-3.5 h-3.5" />
-                <span>By Site Area</span>
-              </button>
+              {/* Perspective Selector Tabs */}
+              <div className="flex items-center gap-1 p-1 bg-[#F1F3F5] border border-[#D9DEE5] rounded-lg self-start sm:self-center overflow-x-auto max-w-full">
+                <button
+                  type="button"
+                  onClick={() => setActiveChartTab('discipline')}
+                  className={`px-3 py-1.5 text-xs font-semibold rounded-md transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer ${
+                    activeChartTab === 'discipline'
+                      ? 'bg-white text-[#176B87] shadow-2xs border border-[#D9DEE5]'
+                      : 'text-[#596579] hover:text-[#172033]'
+                  }`}
+                >
+                  <Layers className="w-3.5 h-3.5" />
+                  <span>By Discipline</span>
+                </button>
 
-              <button
-                type="button"
-                onClick={() => setActiveChartTab('variance-trend')}
-                className={`px-3 py-1.5 text-xs font-semibold rounded-md transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer ${
-                  activeChartTab === 'variance-trend'
-                    ? 'bg-white text-[#176B87] shadow-2xs border border-[#D9DEE5]'
-                    : 'text-[#596579] hover:text-[#172033]'
-                }`}
-              >
-                <LineChartIcon className="w-3.5 h-3.5" />
-                <span>Variance Trend</span>
-              </button>
+                <button
+                  type="button"
+                  onClick={() => setActiveChartTab('area')}
+                  className={`px-3 py-1.5 text-xs font-semibold rounded-md transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer ${
+                    activeChartTab === 'area'
+                      ? 'bg-white text-[#176B87] shadow-2xs border border-[#D9DEE5]'
+                      : 'text-[#596579] hover:text-[#172033]'
+                  }`}
+                >
+                  <MapPin className="w-3.5 h-3.5" />
+                  <span>By Site Area</span>
+                </button>
 
-              <button
-                type="button"
-                onClick={() => setActiveChartTab('delays')}
-                className={`px-3 py-1.5 text-xs font-semibold rounded-md transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer ${
-                  activeChartTab === 'delays'
-                    ? 'bg-white text-[#176B87] shadow-2xs border border-[#D9DEE5]'
-                    : 'text-[#596579] hover:text-[#172033]'
-                }`}
-              >
-                <Clock className="w-3.5 h-3.5" />
-                <span>Critical Delays</span>
-              </button>
+                <button
+                  type="button"
+                  onClick={() => setActiveChartTab('variance-trend')}
+                  className={`px-3 py-1.5 text-xs font-semibold rounded-md transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer ${
+                    activeChartTab === 'variance-trend'
+                      ? 'bg-white text-[#176B87] shadow-2xs border border-[#D9DEE5]'
+                      : 'text-[#596579] hover:text-[#172033]'
+                  }`}
+                >
+                  <LineChartIcon className="w-3.5 h-3.5" />
+                  <span>Variance Trend</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setActiveChartTab('delays')}
+                  className={`px-3 py-1.5 text-xs font-semibold rounded-md transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer ${
+                    activeChartTab === 'delays'
+                      ? 'bg-white text-[#176B87] shadow-2xs border border-[#D9DEE5]'
+                      : 'text-[#596579] hover:text-[#172033]'
+                  }`}
+                >
+                  <Clock className="w-3.5 h-3.5" />
+                  <span>Critical Delays</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Active Chart Rendering */}
+            <div className="pt-2">
+              {activeChartTab === 'discipline' && (
+                <BarChart
+                  variant="discipline"
+                  title="Discipline Performance — Actual vs Baseline"
+                  subtitle="Earned progress comparison across major engineering disciplines against P6 targets"
+                  className="border-0 p-0 shadow-none"
+                />
+              )}
+
+              {activeChartTab === 'area' && (
+                <BarChart
+                  variant="area"
+                  title="Work Package Progress by Site Area"
+                  subtitle="WBS physical progress across Unit A Gas Processing, Compressor House, and Offsites"
+                  className="border-0 p-0 shadow-none"
+                />
+              )}
+
+              {activeChartTab === 'variance-trend' && (
+                <LineChart
+                  variant="variance-trend"
+                  title="Cumulative Schedule Variance Trend"
+                  subtitle="Historical trajectory of monthly schedule slip (+ahead / -slip) and projected recovery"
+                  className="border-0 p-0 shadow-none"
+                />
+              )}
+
+              {activeChartTab === 'delays' && (
+                <HorizontalBarChart
+                  variant="delayed-activities"
+                  title="Top Delayed Critical Activities"
+                  subtitle="Slip duration and critical path impact ranking across active work packages"
+                  className="border-0 p-0 shadow-none"
+                />
+              )}
             </div>
           </div>
-
-          {/* Active Chart Rendering */}
-          <div className="pt-2">
-            {activeChartTab === 'discipline' && (
-              <BarChart
-                variant="discipline"
-                title="Discipline Performance — Actual vs Baseline"
-                subtitle="Earned progress comparison across major engineering disciplines against P6 targets"
-                className="border-0 p-0 shadow-none"
-              />
-            )}
-
-            {activeChartTab === 'area' && (
-              <BarChart
-                variant="area"
-                title="Work Package Progress by Site Area"
-                subtitle="WBS physical progress across Unit A Gas Processing, Compressor House, and Offsites"
-                className="border-0 p-0 shadow-none"
-              />
-            )}
-
-            {activeChartTab === 'variance-trend' && (
-              <LineChart
-                variant="variance-trend"
-                title="Cumulative Schedule Variance Trend"
-                subtitle="Historical trajectory of monthly schedule slip (+ahead / -slip) and projected recovery"
-                className="border-0 p-0 shadow-none"
-              />
-            )}
-
-            {activeChartTab === 'delays' && (
-              <HorizontalBarChart
-                variant="delayed-activities"
-                title="Top Delayed Critical Activities"
-                subtitle="Slip duration and critical path impact ranking across active work packages"
-                className="border-0 p-0 shadow-none"
-              />
-            )}
-          </div>
-        </section>
+        </details>
 
         {/* ========================================================= */}
         {/* 6. SCHEDULE VARIANCE CONTROL TABLE */}
@@ -942,21 +926,22 @@ export default function ManagerDashboardPage() {
             )}
           </section>
 
-          {/* Column 2: Verified Milestones Sync Ledger */}
-          <section aria-labelledby="milestones-heading" className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-5 shadow-xs space-y-3">
-            <div className="flex items-center justify-between pb-2 border-b border-[#D9DEE5]">
+          {/* Column 2: Verified Milestones Sync History (Collapsible Historical Stream) */}
+          <details className="group bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-5 shadow-xs">
+            <summary className="flex items-center justify-between cursor-pointer list-none select-none">
               <div className="flex items-center gap-2">
                 <CheckCircle2 className="w-4 h-4 text-[#2E7D5B]" />
                 <h2 id="milestones-heading" className="text-sm sm:text-base font-bold text-[#172033]">
-                  Verified Progress Synchronizations
+                  Verified Progress History ({verifiedMilestones.length})
                 </h2>
               </div>
-              <Link href="/execution" className="text-xs text-[#176B87] hover:underline font-semibold">
-                Execution Stream &rarr;
-              </Link>
-            </div>
+              <div className="flex items-center gap-2">
+                <span className="text-xs text-[#176B87] font-semibold group-open:hidden">View History &darr;</span>
+                <span className="text-xs text-[#176B87] font-semibold hidden group-open:inline">Hide History &uarr;</span>
+              </div>
+            </summary>
 
-            <div className="divide-y divide-[#D9DEE5]">
+            <div className="pt-3 mt-3 border-t border-[#D9DEE5] divide-y divide-[#D9DEE5]">
               {verifiedMilestones.map((m) => (
                 <div key={m.id} className="py-2.5 flex items-center justify-between gap-3 text-xs">
                   <div className="min-w-0 space-y-0.5">
@@ -982,8 +967,13 @@ export default function ManagerDashboardPage() {
                   </span>
                 </div>
               ))}
+              <div className="pt-2 text-right">
+                <Link href="/execution" className="text-xs text-[#176B87] hover:underline font-semibold inline-flex items-center gap-1">
+                  Full Execution Stream &rarr;
+                </Link>
+              </div>
             </div>
-          </section>
+          </details>
         </div>
       </StateWrapper>
 

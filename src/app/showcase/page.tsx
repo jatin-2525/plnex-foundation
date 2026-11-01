@@ -180,7 +180,7 @@ export default function ShowcasePage() {
           1. Core PLnEX Value Chain (9 Stages)
         </h3>
         <p className="text-xs text-[#596579] mb-4">
-          Strict sequence defined in SIH26122 specification connecting planning schedules with actual site execution.
+          Strict sequence defined in authoritative engineering specifications connecting planning schedules with actual site execution.
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">

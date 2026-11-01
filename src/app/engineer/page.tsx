@@ -129,7 +129,7 @@ export default function EngineerDashboardPage() {
 
   const currentUserName = userSession?.name || 'Debajit Borah';
 
-  // Today's Assigned Activities for this Site Engineer
+  // Today's Assigned Activities for this Site Engineer (Anchored to 18 Sep 2026)
   const [todayActivities, setTodayActivities] = useState<TodayActivityItem[]>([
     {
       ...MOCK_ACTIVITIES[1], // PIP-24-001
@@ -143,7 +143,7 @@ export default function EngineerDashboardPage() {
       status: 'completed',
       delayDays: 0,
       priority: 'High',
-      lastUpdateText: 'Today, 11:30',
+      lastUpdateText: '18 Sep, 11:30 IST',
     },
     {
       ...MOCK_ACTIVITIES[2], // PIP-24-002
@@ -157,7 +157,7 @@ export default function EngineerDashboardPage() {
       status: 'delayed',
       delayDays: 2,
       priority: 'High',
-      lastUpdateText: 'Today, 14:15',
+      lastUpdateText: '18 Sep, 14:15 IST',
     },
     {
       ...MOCK_ACTIVITIES[0], // CIV-11-001
@@ -171,7 +171,7 @@ export default function EngineerDashboardPage() {
       status: 'completed',
       delayDays: 0,
       priority: 'Normal',
-      lastUpdateText: 'Today, 09:45',
+      lastUpdateText: '18 Sep, 09:45 IST',
     },
     {
       ...MOCK_ACTIVITIES[4], // MEC-08-003
@@ -185,7 +185,7 @@ export default function EngineerDashboardPage() {
       status: 'on-track',
       delayDays: 0,
       priority: 'Medium',
-      lastUpdateText: 'Today, 12:10',
+      lastUpdateText: '18 Sep, 12:10 IST',
     },
     {
       ...MOCK_ACTIVITIES[5], // ELE-11-032
@@ -199,7 +199,7 @@ export default function EngineerDashboardPage() {
       status: 'at-risk',
       delayDays: 1,
       priority: 'Medium',
-      lastUpdateText: 'Yesterday, 17:00',
+      lastUpdateText: '17 Sep, 17:00 IST',
     },
     {
       ...MOCK_ACTIVITIES[3], // PIP-24-003
@@ -213,7 +213,7 @@ export default function EngineerDashboardPage() {
       status: 'pending',
       delayDays: 2,
       priority: 'High',
-      lastUpdateText: 'Scheduled tomorrow',
+      lastUpdateText: 'Target 19 Sep 2026',
     },
   ]);
 
@@ -221,7 +221,7 @@ export default function EngineerDashboardPage() {
   const [todaySubmissions, setTodaySubmissions] = useState<TodaySubmission[]>([
     {
       id: 'SUB-TODAY-00',
-      time: 'Today, 13:40',
+      time: '18 Sep, 13:40 IST',
       activityId: 'PIP-24-001',
       activityName: 'Install Spools — Line 24',
       statement: '12 spools installed on Line 24 header run. Alignment checked with spirit level.',
@@ -234,7 +234,7 @@ export default function EngineerDashboardPage() {
     },
     {
       id: 'SUB-TODAY-01',
-      time: 'Today, 14:15',
+      time: '18 Sep, 14:15 IST',
       activityId: 'PIP-24-002',
       activityName: 'Weld Line 24-XX Field Joints',
       statement: 'Completed 4 field butt welds on Header Unit A. Joints #05 to #08 cleared visually.',
@@ -247,7 +247,7 @@ export default function EngineerDashboardPage() {
     },
     {
       id: 'SUB-TODAY-02',
-      time: 'Today, 12:10',
+      time: '18 Sep, 12:10 IST',
       activityId: 'MEC-08-003',
       activityName: 'Align Centrifugal Gas Compressor Skid A',
       statement: 'Valve installation started. Laser rough alignment verified with OEM technician.',
@@ -259,7 +259,7 @@ export default function EngineerDashboardPage() {
     },
     {
       id: 'SUB-TODAY-03',
-      time: 'Today, 09:45',
+      time: '18 Sep, 09:45 IST',
       activityId: 'CIV-11-001',
       activityName: 'Foundation Block A - Pedestal',
       statement: 'Foundation completed. De-shuttering finished and curing compound applied. Cube strength 35 N/mm² confirmed.',
@@ -272,7 +272,7 @@ export default function EngineerDashboardPage() {
     },
     {
       id: 'SUB-TODAY-04',
-      time: 'Today, 15:50',
+      time: '18 Sep, 15:50 IST',
       activityId: 'PIP-24-002',
       activityName: 'Weld Line 24-XX Field Joints',
       statement: 'Joint #09 root pass finished with TIG. Pre-heating maintained at 120°C.',
@@ -292,7 +292,7 @@ export default function EngineerDashboardPage() {
       activityName: 'Install Spools — Line 24',
       item: '12 spools installed — Line 24',
       area: 'Unit A',
-      submittedAt: 'Today, 13:40',
+      submittedAt: '18 Sep, 13:40 IST',
       assignedReviewer: 'R. K. Sharma',
       reviewerRole: 'Piping Lead Inspector',
       confidence: 71,
@@ -305,7 +305,7 @@ export default function EngineerDashboardPage() {
       activityName: 'Weld Line 24-XX Field Joints',
       item: 'Field Butt Joints #05 to #08 (4 Joints)',
       area: 'Unit A',
-      submittedAt: 'Today, 14:15',
+      submittedAt: '18 Sep, 14:15 IST',
       assignedReviewer: 'R. K. Sharma',
       reviewerRole: 'NDT / QC Level II Inspector',
       confidence: 84,
@@ -318,7 +318,7 @@ export default function EngineerDashboardPage() {
       activityName: 'Align Centrifugal Gas Compressor Skid A',
       item: 'Skid Footing Rough Alignment & Cold Shimming',
       area: 'Compressor House',
-      submittedAt: 'Today, 12:10',
+      submittedAt: '18 Sep, 12:10 IST',
       assignedReviewer: 'V. Verma',
       reviewerRole: 'Lead Mechanical Planner',
       confidence: 92,
@@ -331,7 +331,7 @@ export default function EngineerDashboardPage() {
       activityName: 'Foundation Block A - Pedestal',
       item: 'Compressor Pedestal 7-Day Concrete Cube Strength',
       area: 'Compressor Bay',
-      submittedAt: 'Today, 09:45',
+      submittedAt: '18 Sep, 09:45 IST',
       assignedReviewer: 'S. Patgiri',
       reviewerRole: 'Civil Quality Lead',
       confidence: 98,
@@ -350,7 +350,7 @@ export default function EngineerDashboardPage() {
       type: 'photo',
       fileName: 'IMG_LINE24_WELD_08.jpg',
       gps: '27.348° N, 95.313° E',
-      timestamp: 'Today, 14:15 IST',
+      timestamp: '18 Sep 2026, 14:15 IST',
       verified: false,
       notes: 'TIG root pass inspection on 12-inch schedule 80 carbon steel header.',
     },
@@ -362,7 +362,7 @@ export default function EngineerDashboardPage() {
       type: 'photo',
       fileName: 'IMG_MEC_SKID_ALIGN.jpg',
       gps: '27.349° N, 95.312° E',
-      timestamp: 'Today, 12:10 IST',
+      timestamp: '18 Sep 2026, 12:10 IST',
       verified: true,
       notes: 'Laser alignment reading with OEM representative witness.',
     },
@@ -374,7 +374,7 @@ export default function EngineerDashboardPage() {
       type: 'cert',
       fileName: 'CIV_PED_CUBE_35MPA.pdf',
       gps: '27.347° N, 95.314° E',
-      timestamp: 'Today, 09:45 IST',
+      timestamp: '18 Sep 2026, 09:45 IST',
       verified: true,
       notes: 'Civil test lab certificate. Average strength 35.2 MPa at 7 days.',
     },
@@ -386,7 +386,7 @@ export default function EngineerDashboardPage() {
       type: 'photo',
       fileName: 'IMG_ELE_TRAY_BRACKET.jpg',
       gps: '27.350° N, 95.315° E',
-      timestamp: 'Yesterday, 17:00 IST',
+      timestamp: '17 Sep 2026, 17:00 IST',
       verified: true,
       notes: 'Galvanized support brackets bolted to structural bay columns.',
     },
@@ -578,9 +578,15 @@ export default function EngineerDashboardPage() {
                   {greeting}, <strong className="text-[#176B87]">{currentUserName}</strong>
                 </span>
                 <span className="text-[#7B8798] hidden sm:inline">•</span>
-                <span className="text-xs font-semibold text-[#596579]">
-                  Site Piping & Field Engineer
-                </span>
+                {userSession?.role === 'admin' ? (
+                  <span className="px-2 py-0.5 rounded bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0] text-xs font-semibold">
+                    Admin Previewing Engineer Workspace
+                  </span>
+                ) : (
+                  <span className="text-xs font-semibold text-[#596579]">
+                    Site Field Construction Engineer
+                  </span>
+                )}
                 <span className="text-[#7B8798] hidden sm:inline">•</span>
                 <div
                   className={`inline-flex items-center gap-2 px-2 py-0.5 rounded-md text-[11px] font-mono font-bold border ${
@@ -607,15 +613,15 @@ export default function EngineerDashboardPage() {
               <div className="flex items-center gap-3 text-xs text-[#596579] mt-2 flex-wrap">
                 <span className="inline-flex items-center gap-1">
                   <MapPin className="w-3.5 h-3.5 text-[#176B87]" />
-                  <span>Area / Scope: <strong className="text-[#172033]">Unit A / Piping</strong></span>
+                  <span>Area / Scope: <strong className="text-[#172033]">Unit A & Substation (Multi-Discipline Field Execution)</strong></span>
                 </span>
                 <span>•</span>
                 <span className="inline-flex items-center gap-1">
                   <Clock className="w-3.5 h-3.5 text-[#596579]" />
-                  <span>Shift / Date: <strong className="text-[#172033]">Today · Shift A</strong></span>
+                  <span>Shift: <strong className="text-[#172033]">Shift A (Day)</strong></span>
                 </span>
                 <span>•</span>
-                <span>Date: <strong className="text-[#172033] font-mono">{formatProjectDate(PROJECT_REPORT_DATE, true)}</strong></span>
+                <span>Reporting Date: <strong className="text-[#172033] font-mono">{formatProjectDate(PROJECT_REPORT_DATE, true)}</strong></span>
               </div>
             </div>
 
@@ -1246,111 +1252,122 @@ export default function EngineerDashboardPage() {
         </section>
 
         {/* ========================================================= */}
-        {/* 6. DAILY PROGRESS & SHIFT SUMMARY */}
-        {/* Practical field shift conditions, manpower, equipment, and handover notes */}
+        {/* 6. DAILY PROGRESS & SHIFT SUMMARY (Expandable Shift Context) */}
         {/* ========================================================= */}
-        <section aria-labelledby="shift-summary-heading" className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 shadow-xs space-y-4">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D9DEE5] gap-2">
+        <details className="group bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 shadow-xs space-y-4">
+          <summary className="flex flex-col sm:flex-row sm:items-center justify-between cursor-pointer list-none select-none gap-2">
             <div>
               <div className="flex items-center gap-2">
                 <FileSpreadsheet className="w-5 h-5 text-[#176B87]" />
                 <h2 id="shift-summary-heading" className="text-base sm:text-lg font-bold text-[#172033] tracking-tight">
                   Daily Progress & Shift Summary
                 </h2>
+                <span className="text-xs px-2 py-0.5 rounded bg-[#EDF5F8] text-[#176B87] font-semibold hidden sm:inline">
+                  Weather • Manpower • Equipment • Handover
+                </span>
               </div>
               <p className="text-xs text-[#596579] mt-0.5">
                 Site staffing, equipment utilization, work permits, and cross-shift handover notes.
               </p>
             </div>
-            <Link
-              href="/field/dpr"
-              className="text-xs font-semibold text-[#176B87] hover:underline inline-flex items-center gap-1 self-start sm:self-center"
-            >
-              <span>Open Daily Progress Report</span>
-              <ChevronRight className="w-3.5 h-3.5" />
-            </Link>
-          </div>
+            <div className="flex items-center gap-3 self-start sm:self-center">
+              <span className="text-xs font-bold text-[#176B87] group-open:hidden">Expand Shift Details &darr;</span>
+              <span className="text-xs font-bold text-[#176B87] hidden group-open:inline">Collapse Shift Details &uarr;</span>
+            </div>
+          </summary>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
-            {/* Shift Logistics & Permits */}
-            <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg space-y-2">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-[#596579] block">
-                Shift Logistics & Permits
-              </span>
-              <div className="space-y-1.5 text-xs">
-                <div className="flex justify-between">
-                  <span className="text-[#596579]">Shift Schedule:</span>
-                  <span className="font-semibold text-[#172033]">Shift A (07:00 - 15:30 IST)</span>
+          <div className="pt-3 border-t border-[#D9DEE5] space-y-4">
+            <div className="flex justify-end">
+              <Link
+                href="/field/dpr"
+                className="text-xs font-semibold text-[#176B87] hover:underline inline-flex items-center gap-1"
+              >
+                <span>Open Full Daily Progress Report (DPR)</span>
+                <ChevronRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+              {/* Shift Logistics & Permits */}
+              <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg space-y-2">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-[#596579] block">
+                  Shift Logistics & Permits
+                </span>
+                <div className="space-y-1.5 text-xs">
+                  <div className="flex justify-between">
+                    <span className="text-[#596579]">Shift Schedule:</span>
+                    <span className="font-semibold text-[#172033]">Shift A (07:00 - 15:30 IST)</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-[#596579]">Hot Work Permit:</span>
+                    <span className="font-mono text-[#2E7D5B] font-semibold">#HWP-2026-0918 (Active)</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-[#596579]">Site Weather:</span>
+                    <span className="text-[#172033] font-medium">Clear · 28°C · Wind 6 km/h</span>
+                  </div>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-[#596579]">Hot Work Permit:</span>
-                  <span className="font-mono text-[#2E7D5B] font-semibold">#HWP-2026-0918 (Active)</span>
+              </div>
+
+              {/* Manpower & Resources */}
+              <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg space-y-2">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-[#596579] block">
+                  Manpower On Site
+                </span>
+                <div className="space-y-1.5 text-xs">
+                  <div className="flex justify-between">
+                    <span className="text-[#596579]">Pipefitters & Fabricators:</span>
+                    <span className="font-mono font-bold text-[#172033]">18 personnel</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-[#596579]">6G Certified Welders:</span>
+                    <span className="font-mono font-bold text-[#172033]">6 personnel</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-[#596579]">QC & NDT Level II:</span>
+                    <span className="font-mono font-bold text-[#172033]">2 inspectors</span>
+                  </div>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-[#596579]">Site Weather:</span>
-                  <span className="text-[#172033] font-medium">Clear · 28°C · Wind 6 km/h</span>
+              </div>
+
+              {/* Active Plant & Equipment */}
+              <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg space-y-2">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-[#596579] block">
+                  Plant & Heavy Equipment
+                </span>
+                <div className="space-y-1.5 text-xs">
+                  <div className="flex justify-between">
+                    <span className="text-[#596579]">Hydraulic Mobile Crane:</span>
+                    <span className="font-semibold text-[#172033]">1x 50-Ton (Operating)</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-[#596579]">Inverter TIG Welding Sets:</span>
+                    <span className="font-semibold text-[#172033]">4x 400A Active</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-[#596579]">Hydrostatic Test Skid:</span>
+                    <span className="font-semibold text-[#172033]">1x 250-bar (Standby)</span>
+                  </div>
                 </div>
               </div>
             </div>
 
-            {/* Manpower & Resources */}
-            <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg space-y-2">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-[#596579] block">
-                Manpower On Site
-              </span>
-              <div className="space-y-1.5 text-xs">
-                <div className="flex justify-between">
-                  <span className="text-[#596579]">Pipefitters & Fabricators:</span>
-                  <span className="font-mono font-bold text-[#172033]">18 personnel</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-[#596579]">6G Certified Welders:</span>
-                  <span className="font-mono font-bold text-[#172033]">6 personnel</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-[#596579]">QC & NDT Level II:</span>
-                  <span className="font-mono font-bold text-[#172033]">2 inspectors</span>
-                </div>
+            {/* Cross-Shift Handover Note */}
+            <div className="p-3 bg-[#EDF5F8] border border-[#B3CBE0] rounded-lg text-xs flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div className="space-y-0.5">
+                <span className="font-bold text-[#176B87] uppercase text-[10px] tracking-wider block">
+                  Shift Handover Note
+                </span>
+                <p className="text-[#172033]">
+                  Shift A completed root & hot passes on Line 24 joints #05–#08. Joints handed over to Shift B for radiographic testing (RT) and capping passes.
+                </p>
               </div>
-            </div>
-
-            {/* Active Plant & Equipment */}
-            <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg space-y-2">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-[#596579] block">
-                Plant & Heavy Equipment
+              <span className="text-[11px] font-mono text-[#596579] whitespace-nowrap self-start sm:self-center">
+                Logged by: D. Borah
               </span>
-              <div className="space-y-1.5 text-xs">
-                <div className="flex justify-between">
-                  <span className="text-[#596579]">Hydraulic Mobile Crane:</span>
-                  <span className="font-semibold text-[#172033]">1x 50-Ton (Operating)</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-[#596579]">Inverter TIG Welding Sets:</span>
-                  <span className="font-semibold text-[#172033]">4x 400A Active</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-[#596579]">Hydrostatic Test Skid:</span>
-                  <span className="font-semibold text-[#172033]">1x 250-bar (Standby)</span>
-                </div>
-              </div>
             </div>
           </div>
-
-          {/* Cross-Shift Handover Note */}
-          <div className="p-3 bg-[#EDF5F8] border border-[#B3CBE0] rounded-lg text-xs flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-            <div className="space-y-0.5">
-              <span className="font-bold text-[#176B87] uppercase text-[10px] tracking-wider block">
-                Shift Handover Note
-              </span>
-              <p className="text-[#172033]">
-                Shift A completed root & hot passes on Line 24 joints #05–#08. Joints handed over to Shift B for radiographic testing (RT) and capping passes.
-              </p>
-            </div>
-            <span className="text-[11px] font-mono text-[#596579] whitespace-nowrap self-start sm:self-center">
-              Logged by: D. Borah
-            </span>
-          </div>
-        </section>
+        </details>
 
         {/* ========================================================= */}
         {/* MOBILE STICKY BOTTOM ACTION BAR (One-Hand Reachable) */}

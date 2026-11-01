@@ -39,7 +39,7 @@ export function ProjectSelector() {
         <FolderGit2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#176B87] flex-shrink-0" />
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-1 sm:gap-2">
-            <span className="font-mono text-xs font-semibold text-[#172033] truncate">{activeProject.code}</span>
+            <span className="font-mono text-xs font-bold text-[#172033] truncate">{activeProject.code}</span>
             <span className="text-[11px] text-[#596579] truncate hidden sm:inline">• {activeProject.name}</span>
           </div>
         </div>
@@ -47,7 +47,13 @@ export function ProjectSelector() {
       </button>
 
       {isOpen && (
-        <div className="absolute left-0 mt-2 w-80 bg-white border border-[#D9DEE5] rounded-lg shadow-lg z-50 overflow-hidden">
+        <div className="absolute left-0 mt-2 w-84 bg-white border border-[#D9DEE5] rounded-lg shadow-lg z-50 overflow-hidden">
+          {/* Scope notice banner */}
+          <div className="px-3 py-2 bg-[#FDF6ED] border-b border-[#F0D4A6] text-[11px] text-[#8C5311]">
+            <strong className="block font-bold">Simulated Demo Scope:</strong>
+            Full schedule twin, S-curves, and field logs are actively simulated on <strong>OIL-DUL-01</strong>.
+          </div>
+
           <div className="p-2 border-b border-[#D9DEE5] bg-[#F7F8FA]">
             <div className="relative">
               <Search className="w-3.5 h-3.5 text-[#7B8798] absolute left-2.5 top-1/2 -translate-y-1/2" />
@@ -65,6 +71,7 @@ export function ProjectSelector() {
           <div className="max-h-64 overflow-y-auto p-1 divide-y divide-[#F1F3F5]">
             {filtered.map((project) => {
               const isSelected = project.id === activeProject.id;
+              const isDemoProject = project.code === 'OIL-DUL-01' || project.id === 'PRJ-OIL-2026-01';
               return (
                 <button
                   key={project.id}
@@ -77,10 +84,19 @@ export function ProjectSelector() {
                   }`}
                 >
                   <div className="min-w-0 flex-1">
-                    <div className="flex items-center gap-2 mb-0.5">
+                    <div className="flex items-center gap-2 mb-0.5 flex-wrap">
                       <span className="font-mono text-xs font-bold text-[#172033]">
                         {project.code}
                       </span>
+                      {isDemoProject ? (
+                        <span className="px-1.5 py-0.2 rounded text-[10px] font-bold bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]">
+                          Active Baseline Twin
+                        </span>
+                      ) : (
+                        <span className="px-1.5 py-0.2 rounded text-[10px] text-[#596579] bg-[#F1F3F5] border border-[#D9DEE5]">
+                          Reference Record
+                        </span>
+                      )}
                       <StatusBadge status={project.status} size="sm" />
                     </div>
                     <p className="text-xs text-[#172033] font-medium truncate">{project.name}</p>

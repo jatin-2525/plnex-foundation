@@ -62,12 +62,10 @@ export function TopHeader({ onToggleSidebar, onMobileToggle, onDesktopToggle }: 
           <ProjectSelector />
         </div>
 
-        {/* Sample Project Data indicator */}
-        {userSession?.role === 'admin' && (
-          <span className="hidden xl:inline-flex items-center text-[10px] font-mono text-[#596579] bg-[#F1F3F5] px-2 py-0.5 rounded border border-[#D9DEE5]">
-            Sample Project Data
-          </span>
-        )}
+        {/* Visible Demo / Sample Data indicator across all screen sizes and roles */}
+        <span className="inline-flex items-center text-[10px] sm:text-xs font-mono font-bold text-[#8C5311] bg-[#FDF6ED] px-2 py-0.5 rounded border border-[#F0D4A6] shrink-0" title="This prototype operates on simulated sample project data for evaluation">
+          Demo Data
+        </span>
       </div>
 
       {/* Right: Search + Notifications + Profile */}
