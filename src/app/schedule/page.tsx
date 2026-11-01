@@ -857,9 +857,9 @@ export default function SchedulePage() {
       );
     }
     if (sortConfig.direction === 'asc') {
-      return <ChevronUp className="w-3.5 h-3.5 text-[#176B87] shrink-0 ml-1" />;
+      return <ChevronUp className="w-3.5 h-3.5 text-[#0F6B68] shrink-0 ml-1" />;
     }
-    return <ChevronDown className="w-3.5 h-3.5 text-[#176B87] shrink-0 ml-1" />;
+    return <ChevronDown className="w-3.5 h-3.5 text-[#0F6B68] shrink-0 ml-1" />;
   };
 
   // Versions State
@@ -1337,13 +1337,13 @@ export default function SchedulePage() {
   const getVersionBadgeClass = (status: VersionState) => {
     switch (status) {
       case 'current':
-        return 'bg-[#EDF7F2] text-[#2E7D5B] border-[#B8DCC9]';
+        return 'bg-[#E4F4EC] text-[#2E7D5B] border-[#B8DCC9]';
       case 'previous':
-        return 'bg-[#F1F3F5] text-[#596579] border-[#D9DEE5]';
+        return 'bg-[#EAF0F5] text-[#526779] border-[#D8E2EA]';
       case 'processing':
-        return 'bg-[#EDF5F8] text-[#176B87] border-[#C5DCE6]';
+        return 'bg-[#EAF0F5] text-[#0F6B68] border-[#C5DCE6]';
       case 'failed':
-        return 'bg-[#FBEFEE] text-[#B5473C] border-[#E4B0AA]';
+        return 'bg-[#FCE8E4] text-[#A24335] border-[#E4B0AA]';
     }
   };
 
@@ -1351,16 +1351,16 @@ export default function SchedulePage() {
     // Standardized neutral badge styling across all hierarchy levels - no 6 rainbow colors
     switch (level) {
       case 'L1':
-        return 'bg-[#172033] text-white border-[#172033] font-bold';
+        return 'bg-[#142C3F] text-white border-[#142C3F] font-bold';
       case 'L2':
       case 'L3':
       case 'L4':
       case 'L5':
-        return 'bg-[#F1F3F5] text-[#172033] border-[#D9DEE5] font-semibold';
+        return 'bg-[#EAF0F5] text-[#142C3F] border-[#D8E2EA] font-semibold';
       case 'L6':
-        return 'bg-white text-[#596579] border-[#D9DEE5] font-normal';
+        return 'bg-white text-[#526779] border-[#D8E2EA] font-normal';
       default:
-        return 'bg-[#F1F3F5] text-[#596579] border-[#D9DEE5] font-normal';
+        return 'bg-[#EAF0F5] text-[#526779] border-[#D8E2EA] font-normal';
     }
   };
 
@@ -1368,19 +1368,19 @@ export default function SchedulePage() {
     // Consistent typography with subtle structural hierarchy weight
     switch (level) {
       case 'L1':
-        return 'font-bold text-[#172033]';
+        return 'font-bold text-[#142C3F]';
       case 'L2':
-        return 'font-semibold text-[#172033]';
+        return 'font-semibold text-[#142C3F]';
       case 'L3':
-        return 'font-semibold text-[#172033]';
+        return 'font-semibold text-[#142C3F]';
       case 'L4':
-        return 'font-medium text-[#172033]';
+        return 'font-medium text-[#142C3F]';
       case 'L5':
-        return 'font-medium text-[#172033]';
+        return 'font-medium text-[#142C3F]';
       case 'L6':
-        return 'font-normal text-[#596579]';
+        return 'font-normal text-[#526779]';
       default:
-        return 'font-medium text-[#172033]';
+        return 'font-medium text-[#142C3F]';
     }
   };
 
@@ -1392,23 +1392,23 @@ export default function SchedulePage() {
         {/* =========================================================================
             HEADER: SCHEDULE MANAGEMENT & VERSION METADATA
             ========================================================================= */}
-        <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 shadow-xs space-y-4">
+        <div className="bg-white border border-[#D8E2EA] rounded-lg p-4 sm:p-6 shadow-xs space-y-4">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
             <div>
               <div className="flex items-center gap-2 mb-2 flex-wrap">
-                <span className="inline-flex items-center gap-2 px-3 py-0.5 rounded text-[11px] font-bold tracking-wider uppercase bg-[#176B87]/10 text-[#176B87]">
+                <span className="inline-flex items-center gap-2 px-3 py-0.5 rounded text-[11px] font-bold tracking-wider uppercase bg-[#0F6B68]/10 text-[#0F6B68]">
                   <Calendar className="w-3.5 h-3.5" />
                   Schedule Controls
                 </span>
 
-                <span className="inline-flex items-center gap-1 px-3 py-0.5 rounded text-[11px] font-medium bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]">
+                <span className="inline-flex items-center gap-1 px-3 py-0.5 rounded text-[11px] font-medium bg-[#E4F4EC] text-[#2E7D5B] border border-[#B8DCC9]">
                   <CheckCircle2 className="w-3 h-3 text-[#2E7D5B]" />
                   Active Baseline Sync
                 </span>
               </div>
 
-              <h1 className="text-[28px] sm:text-3xl font-bold text-[#172033] tracking-tight">Schedule</h1>
-              <p className="text-sm text-[#596579] mt-1 max-w-3xl">
+              <h1 className="text-[28px] sm:text-3xl font-bold text-[#142C3F] tracking-tight">Schedule</h1>
+              <p className="text-sm text-[#526779] mt-1 max-w-3xl">
                 Master L1–L6 WBS hierarchy, baseline version lineage, and Primavera P6 synchronization. Easy to scan by default; use the Activity Drawer for deep technical complexity.
               </p>
             </div>
@@ -1416,7 +1416,7 @@ export default function SchedulePage() {
             {/* Header Actions */}
             <div className="flex flex-wrap items-center gap-3">
               <div className="flex items-center gap-2">
-                <span className="text-xs text-[#596579] font-medium hidden sm:inline">Project:</span>
+                <span className="text-xs text-[#526779] font-medium hidden sm:inline">Project:</span>
                 <ProjectSelector />
               </div>
 
@@ -1424,7 +1424,7 @@ export default function SchedulePage() {
               <button
                 type="button"
                 onClick={handleStartImport}
-                className="px-4 py-2 text-xs font-semibold text-white bg-[#176B87] hover:bg-[#135A72] border border-[#176B87] rounded-lg transition-colors inline-flex items-center gap-2 shadow-sm"
+                className="px-4 py-2 text-xs font-semibold text-white bg-[#0F6B68] hover:bg-[#135A72] border border-[#0F6B68] rounded-lg transition-colors inline-flex items-center gap-2 shadow-sm"
               >
                 <Upload className="w-3.5 h-3.5" />
                 <span>Import P6 Baseline</span>
@@ -1437,8 +1437,8 @@ export default function SchedulePage() {
                   onClick={() => setIsSimulatedEmpty(!isSimulatedEmpty)}
                   className={`px-3 py-2 text-xs rounded-lg border transition-colors ${
                     isSimulatedEmpty
-                      ? 'bg-[#B5473C] text-white border-[#B5473C]'
-                      : 'bg-white text-[#596579] border-[#D9DEE5] hover:bg-[#F1F3F5]'
+                      ? 'bg-[#A24335] text-white border-[#A24335]'
+                      : 'bg-white text-[#526779] border-[#D8E2EA] hover:bg-[#EAF0F5]'
                   }`}
                   title="Toggle demonstration of empty schedule state (Admin only)"
                 >
@@ -1454,42 +1454,42 @@ export default function SchedulePage() {
               - Metadata: Source: Primavera P6 XML, Status: Current
               - Rule: Never silently overwrite previous versions.
               ========================================================================= */}
-          <div className="p-4 bg-[#F7F8FA] border border-[#D9DEE5] border-l-4 border-l-[#176B87] rounded-lg flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="p-4 bg-[#F3F6FA] border border-[#D8E2EA] border-l-4 border-l-[#0F6B68] rounded-lg flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div className="flex items-start md:items-center gap-4">
-              <div className="w-10 h-10 rounded-lg bg-white border border-[#D9DEE5] flex items-center justify-center text-[#176B87] shadow-xs shrink-0">
+              <div className="w-10 h-10 rounded-lg bg-white border border-[#D8E2EA] flex items-center justify-center text-[#0F6B68] shadow-xs shrink-0">
                 <Layers className="w-5 h-5" />
               </div>
 
               <div className="space-y-1">
                 <div className="flex items-center gap-2 flex-wrap">
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-[#596579]">
+                  <span className="text-[11px] font-bold uppercase tracking-wider text-[#526779]">
                     Schedule Version:
                   </span>
-                  <span className="font-mono font-bold text-base text-[#172033]">
+                  <span className="font-mono font-bold text-base text-[#142C3F]">
                     Rev 3.2 (P6 XML)
                   </span>
-                  <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]">
+                  <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider bg-[#E4F4EC] text-[#2E7D5B] border border-[#B8DCC9]">
                     Status: Current
                   </span>
                 </div>
 
-                <div className="flex items-center gap-3 text-xs text-[#596579] font-mono flex-wrap">
-                  <span>Source: <strong className="text-[#172033]">Primavera P6 XML</strong></span>
+                <div className="flex items-center gap-3 text-xs text-[#526779] font-mono flex-wrap">
+                  <span>Source: <strong className="text-[#142C3F]">Primavera P6 XML</strong></span>
                   <span>•</span>
-                  <span>File: <strong className="text-[#172033]">OIL_DUL_BASELINE_REV3.2.xml</strong></span>
+                  <span>File: <strong className="text-[#142C3F]">OIL_DUL_BASELINE_REV3.2.xml</strong></span>
                   <span>•</span>
-                  <span>Data Date: <strong className="text-[#172033]">18 Sep 2026</strong></span>
+                  <span>Data Date: <strong className="text-[#142C3F]">18 Sep 2026</strong></span>
                   <span>•</span>
-                  <span>Activities: <strong className="text-[#172033]">{activities.length} Key Level-3/4 Nodes</strong> <span className="text-[#596579] font-sans">(184 Total Level-5 Physical WBS Work Packages)</span></span>
+                  <span>Activities: <strong className="text-[#142C3F]">{activities.length} Key Level-3/4 Nodes</strong> <span className="text-[#526779] font-sans">(184 Total Level-5 Physical WBS Work Packages)</span></span>
                 </div>
               </div>
             </div>
 
             {/* Strict Version Protection Notice */}
-            <div className="px-4 py-2 bg-white border border-[#B3CBE0] rounded-lg text-xs flex items-center gap-2 max-w-md shrink-0">
-              <ShieldCheck className="w-4 h-4 text-[#176B87] shrink-0" />
-              <div className="text-[11px] leading-tight text-[#172033]">
-                <strong className="text-[#176B87] block">Version Protection Active:</strong>
+            <div className="px-4 py-2 bg-white border border-[#D8E2EA] rounded-lg text-xs flex items-center gap-2 max-w-md shrink-0">
+              <ShieldCheck className="w-4 h-4 text-[#0F6B68] shrink-0" />
+              <div className="text-[11px] leading-tight text-[#142C3F]">
+                <strong className="text-[#0F6B68] block">Version Protection Active:</strong>
                 Never silently overwrite previous versions. Every revision creates a permanent revision snapshot.
               </div>
             </div>
@@ -1497,7 +1497,7 @@ export default function SchedulePage() {
 
           {/* Historical Baseline Lineage Strip */}
           <div className="space-y-2 pt-1">
-            <div className="flex items-center justify-between text-xs text-[#596579]">
+            <div className="flex items-center justify-between text-xs text-[#526779]">
               <span className="font-semibold uppercase tracking-wider text-[11px]">
                 Baseline Version Lineage ({versions.length} Revisions):
               </span>
@@ -1514,12 +1514,12 @@ export default function SchedulePage() {
                     onClick={() => handleSelectVersion(ver)}
                     className={`p-3 rounded-lg border text-left transition-all ${
                       isSelected
-                        ? 'border-[#176B87] bg-white shadow-xs ring-1 ring-[#176B87]'
-                        : 'border-[#D9DEE5] bg-[#F7F8FA] hover:bg-white hover:border-[#176B87]/40'
+                        ? 'border-[#0F6B68] bg-white shadow-xs ring-1 ring-[#0F6B68]'
+                        : 'border-[#D8E2EA] bg-[#F3F6FA] hover:bg-white hover:border-[#0F6B68]/40'
                     }`}
                   >
                     <div className="flex items-center justify-between mb-1">
-                      <span className="font-mono font-bold text-xs text-[#172033]">{ver.id}</span>
+                      <span className="font-mono font-bold text-xs text-[#142C3F]">{ver.id}</span>
                       <span
                         className={`text-[9px] font-mono px-1.5 py-0.5 rounded border font-bold uppercase ${getVersionBadgeClass(
                           ver.status
@@ -1528,10 +1528,10 @@ export default function SchedulePage() {
                         {ver.status}
                       </span>
                     </div>
-                    <div className="text-xs font-semibold text-[#172033] truncate" title={ver.versionCode}>
+                    <div className="text-xs font-semibold text-[#142C3F] truncate" title={ver.versionCode}>
                       {ver.versionCode}
                     </div>
-                    <div className="text-[10px] text-[#596579] font-mono mt-1">
+                    <div className="text-[10px] text-[#526779] font-mono mt-1">
                       Source: {ver.source}
                     </div>
                   </button>
@@ -1545,15 +1545,15 @@ export default function SchedulePage() {
             SPECIAL DISPLAY: Failed Version Validation Error Report
             ========================================================================= */}
         {activeVersion.status === 'failed' && activeVersion.errors && (
-          <div className="bg-[#FBEFEE] border border-[#E4B0AA] rounded-lg p-4 sm:p-6 space-y-3">
+          <div className="bg-[#FCE8E4] border border-[#E4B0AA] rounded-lg p-4 sm:p-6 space-y-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <ShieldAlert className="w-5 h-5 text-[#B5473C]" />
+                <ShieldAlert className="w-5 h-5 text-[#A24335]" />
                 <div>
-                  <h3 className="text-sm font-bold text-[#B5473C]">
+                  <h3 className="text-sm font-bold text-[#A24335]">
                     Baseline Import Validation Error Report ({activeVersion.errors.length} Failures)
                   </h3>
-                  <p className="text-xs text-[#596579]">
+                  <p className="text-xs text-[#526779]">
                     Validation errors must be corrected in Primavera P6 before this schedule version can be committed.
                   </p>
                 </div>
@@ -1562,7 +1562,7 @@ export default function SchedulePage() {
               <button
                 type="button"
                 onClick={handleStartImport}
-                className="px-3 py-1.5 text-xs font-semibold text-white bg-[#B5473C] hover:bg-[#96372E] rounded-lg transition-colors"
+                className="px-3 py-1.5 text-xs font-semibold text-white bg-[#A24335] hover:bg-[#96372E] rounded-lg transition-colors"
               >
                 Retry Import
               </button>
@@ -1572,7 +1572,7 @@ export default function SchedulePage() {
             <div className="bg-white border border-[#E4B0AA] rounded-lg overflow-x-auto">
               <table className="w-full min-w-[500px] text-left text-sm border-collapse">
                 <thead className="sticky top-0 z-10 bg-[#FAF2F1]">
-                  <tr className="bg-[#FAF2F1] border-b border-[#E4B0AA] text-[#B5473C] font-semibold h-11">
+                  <tr className="bg-[#FAF2F1] border-b border-[#E4B0AA] text-[#A24335] font-semibold h-11">
                     <th className="py-3 px-4 whitespace-nowrap">Row</th>
                     <th className="py-3 px-4 whitespace-nowrap">Column</th>
                     <th className="py-3 px-4">Problem</th>
@@ -1582,9 +1582,9 @@ export default function SchedulePage() {
                 <tbody className="divide-y divide-[#F0D5D2]">
                   {activeVersion.errors.map((err, idx) => (
                     <tr key={idx} className="h-11 sm:h-12 hover:bg-[#FFF9F8]">
-                      <td className="py-3 px-4 font-mono font-bold text-[#172033]">{err.row}</td>
-                      <td className="py-3 px-4 font-semibold text-[#172033]">{err.column || err.field}</td>
-                      <td className="py-3 px-4 text-[#B5473C] font-medium">{err.problem || err.reason}</td>
+                      <td className="py-3 px-4 font-mono font-bold text-[#142C3F]">{err.row}</td>
+                      <td className="py-3 px-4 font-semibold text-[#142C3F]">{err.column || err.field}</td>
+                      <td className="py-3 px-4 text-[#A24335] font-medium">{err.problem || err.reason}</td>
                       <td className="py-3 px-4 text-[#2E7D5B] font-mono">{err.correction || 'Correct in source schedule'}</td>
                     </tr>
                   ))}
@@ -1598,46 +1598,46 @@ export default function SchedulePage() {
             HIERARCHY BANNER & EXPANDABLE TREE CONTROLS
             L1 Project ↓ L2 Area ↓ L3 Discipline ↓ L4 Work Package ↓ L5 Activity ↓ L6 Sub-Activity
             ========================================================================= */}
-        <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 shadow-xs space-y-3">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#D9DEE5]/60">
+        <div className="bg-white border border-[#D8E2EA] rounded-lg p-4 shadow-xs space-y-3">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#D8E2EA]/60">
             <div className="flex items-center gap-2">
-              <FolderTree className="w-4 h-4 text-[#176B87]" />
-              <h3 className="text-xs font-bold text-[#172033] uppercase tracking-wider">
+              <FolderTree className="w-4 h-4 text-[#0F6B68]" />
+              <h3 className="text-xs font-bold text-[#142C3F] uppercase tracking-wider">
                 L1–L6 WBS Hierarchy
               </h3>
             </div>
 
             {/* Expand / Collapse Quick Controls */}
             <div className="flex items-center gap-2 flex-wrap text-xs">
-              <span className="text-[#596579] text-[11px]">Tree Navigation:</span>
+              <span className="text-[#526779] text-[11px]">Tree Navigation:</span>
               <button
                 type="button"
                 onClick={handleExpandAll}
-                className="px-3 py-1 text-xs font-medium text-[#172033] bg-white hover:bg-[#F1F3F5] border border-[#D9DEE5] rounded-md transition-colors inline-flex items-center gap-1 shadow-2xs"
+                className="px-3 py-1 text-xs font-medium text-[#142C3F] bg-white hover:bg-[#EAF0F5] border border-[#D8E2EA] rounded-md transition-colors inline-flex items-center gap-1 shadow-2xs"
               >
-                <Maximize2 className="w-3 h-3 text-[#176B87]" />
+                <Maximize2 className="w-3 h-3 text-[#0F6B68]" />
                 <span>Expand All</span>
               </button>
               <button
                 type="button"
                 onClick={handleCollapseAll}
-                className="px-3 py-1 text-xs font-medium text-[#596579] bg-white hover:bg-[#F1F3F5] border border-[#D9DEE5] rounded-md transition-colors inline-flex items-center gap-1 shadow-2xs"
+                className="px-3 py-1 text-xs font-medium text-[#526779] bg-white hover:bg-[#EAF0F5] border border-[#D8E2EA] rounded-md transition-colors inline-flex items-center gap-1 shadow-2xs"
               >
-                <Minimize2 className="w-3 h-3 text-[#596579]" />
+                <Minimize2 className="w-3 h-3 text-[#526779]" />
                 <span>Collapse All</span>
               </button>
-              <span className="text-[#D9DEE5]">|</span>
+              <span className="text-[#D8E2EA]">|</span>
               <button
                 type="button"
                 onClick={() => handleExpandToLevel('L3')}
-                className="px-2 py-1 text-[11px] font-mono text-[#596579] hover:text-[#172033] hover:bg-[#F1F3F5] rounded"
+                className="px-2 py-1 text-[11px] font-mono text-[#526779] hover:text-[#142C3F] hover:bg-[#EAF0F5] rounded"
               >
                 To L3 (Discipline)
               </button>
               <button
                 type="button"
                 onClick={() => handleExpandToLevel('L5')}
-                className="px-2 py-1 text-[11px] font-mono text-[#596579] hover:text-[#172033] hover:bg-[#F1F3F5] rounded"
+                className="px-2 py-1 text-[11px] font-mono text-[#526779] hover:text-[#142C3F] hover:bg-[#EAF0F5] rounded"
               >
                 To L5 (Activity)
               </button>
@@ -1656,20 +1656,20 @@ export default function SchedulePage() {
             ].map((tierItem) => (
               <div
                 key={tierItem.code}
-                className="p-3 rounded-lg bg-[#F7F8FA] border border-[#D9DEE5] flex flex-col justify-between"
+                className="p-3 rounded-lg bg-[#F3F6FA] border border-[#D8E2EA] flex flex-col justify-between"
               >
                 <div className="flex items-center justify-between">
-                  <span className="font-mono text-[10px] font-bold text-[#172033] bg-[#E5E9EE] px-1.5 py-0.5 rounded">
+                  <span className="font-mono text-[10px] font-bold text-[#142C3F] bg-[#E5E9EE] px-1.5 py-0.5 rounded">
                     {tierItem.code}
                   </span>
-                  <span className="font-mono text-xs text-[#596579] select-none font-semibold">
+                  <span className="font-mono text-xs text-[#526779] select-none font-semibold">
                     {tierItem.marker}
                   </span>
                 </div>
-                <div className="font-semibold text-[#172033] mt-2 text-xs">
+                <div className="font-semibold text-[#142C3F] mt-2 text-xs">
                   {tierItem.name}
                 </div>
-                <span className="text-[10px] text-[#596579] mt-0.5 leading-tight truncate">
+                <span className="text-[10px] text-[#526779] mt-0.5 leading-tight truncate">
                   {tierItem.desc}
                 </span>
               </div>
@@ -1680,7 +1680,7 @@ export default function SchedulePage() {
         {/* =========================================================================
             SEARCH & FILTER BAR
             ========================================================================= */}
-        <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 space-y-3 shadow-xs">
+        <div className="bg-white border border-[#D8E2EA] rounded-lg p-4 space-y-3 shadow-xs">
           <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3">
             {/* Search: Activity ID / Activity Name / WBS */}
             <div className="relative flex-1 min-w-[260px]">
@@ -1690,13 +1690,13 @@ export default function SchedulePage() {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search by Activity ID, Activity Name, or WBS..."
-                className="w-full pl-9 pr-8 py-2 text-xs bg-[#F7F8FA] border border-[#D9DEE5] focus:border-[#176B87] focus:bg-white rounded-lg text-[#172033] placeholder-[#7B8798] transition-colors outline-none"
+                className="w-full pl-9 pr-8 py-2 text-xs bg-[#F3F6FA] border border-[#D8E2EA] focus:border-[#0F6B68] focus:bg-white rounded-lg text-[#142C3F] placeholder-[#7B8798] transition-colors outline-none"
               />
               {search && (
                 <button
                   type="button"
                   onClick={() => setSearch('')}
-                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[#7B8798] hover:text-[#172033]"
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[#7B8798] hover:text-[#142C3F]"
                   aria-label="Clear search"
                 >
                   <X className="w-3.5 h-3.5" />
@@ -1708,11 +1708,11 @@ export default function SchedulePage() {
             <div className="flex flex-wrap items-center gap-2">
               {/* Level Filter */}
               <div className="flex items-center gap-2">
-                <span className="text-xs text-[#596579] font-medium">Level:</span>
+                <span className="text-xs text-[#526779] font-medium">Level:</span>
                 <select
                   value={levelFilter}
                   onChange={(e) => setLevelFilter(e.target.value)}
-                  className="px-2 py-1.5 text-xs bg-[#F7F8FA] border border-[#D9DEE5] focus:border-[#176B87] rounded-lg text-[#172033] outline-none cursor-pointer"
+                  className="px-2 py-1.5 text-xs bg-[#F3F6FA] border border-[#D8E2EA] focus:border-[#0F6B68] rounded-lg text-[#142C3F] outline-none cursor-pointer"
                 >
                   <option value="all">All Levels</option>
                   <option value="L1">L1 - Project</option>
@@ -1726,11 +1726,11 @@ export default function SchedulePage() {
 
               {/* Area Filter */}
               <div className="flex items-center gap-2">
-                <span className="text-xs text-[#596579] font-medium">Area:</span>
+                <span className="text-xs text-[#526779] font-medium">Area:</span>
                 <select
                   value={areaFilter}
                   onChange={(e) => setAreaFilter(e.target.value)}
-                  className="px-2 py-1.5 text-xs bg-[#F7F8FA] border border-[#D9DEE5] focus:border-[#176B87] rounded-lg text-[#172033] outline-none cursor-pointer max-w-[150px] truncate"
+                  className="px-2 py-1.5 text-xs bg-[#F3F6FA] border border-[#D8E2EA] focus:border-[#0F6B68] rounded-lg text-[#142C3F] outline-none cursor-pointer max-w-[150px] truncate"
                 >
                   <option value="all">All Areas</option>
                   {areaOptions.map((area) => (
@@ -1743,11 +1743,11 @@ export default function SchedulePage() {
 
               {/* Discipline Filter */}
               <div className="flex items-center gap-2">
-                <span className="text-xs text-[#596579] font-medium">Discipline:</span>
+                <span className="text-xs text-[#526779] font-medium">Discipline:</span>
                 <select
                   value={disciplineFilter}
                   onChange={(e) => setDisciplineFilter(e.target.value)}
-                  className="px-2 py-1.5 text-xs bg-[#F7F8FA] border border-[#D9DEE5] focus:border-[#176B87] rounded-lg text-[#172033] outline-none cursor-pointer"
+                  className="px-2 py-1.5 text-xs bg-[#F3F6FA] border border-[#D8E2EA] focus:border-[#0F6B68] rounded-lg text-[#142C3F] outline-none cursor-pointer"
                 >
                   <option value="all">All Disciplines</option>
                   {disciplineOptions.map((disc) => (
@@ -1760,11 +1760,11 @@ export default function SchedulePage() {
 
               {/* Status Filter */}
               <div className="flex items-center gap-2">
-                <span className="text-xs text-[#596579] font-medium">Status:</span>
+                <span className="text-xs text-[#526779] font-medium">Status:</span>
                 <select
                   value={statusFilter}
                   onChange={(e) => setStatusFilter(e.target.value)}
-                  className="px-2 py-1.5 text-xs bg-[#F7F8FA] border border-[#D9DEE5] focus:border-[#176B87] rounded-lg text-[#172033] outline-none cursor-pointer"
+                  className="px-2 py-1.5 text-xs bg-[#F3F6FA] border border-[#D8E2EA] focus:border-[#0F6B68] rounded-lg text-[#142C3F] outline-none cursor-pointer"
                 >
                   <option value="all">All Statuses</option>
                   <option value="on-track">On Track</option>
@@ -1780,7 +1780,7 @@ export default function SchedulePage() {
                 <button
                   type="button"
                   onClick={clearAllFilters}
-                  className="px-3 py-1.5 text-xs text-[#B5473C] hover:bg-[#FBEFEE] border border-[#E4B0AA] rounded-lg transition-colors inline-flex items-center gap-1"
+                  className="px-3 py-1.5 text-xs text-[#A24335] hover:bg-[#FCE8E4] border border-[#E4B0AA] rounded-lg transition-colors inline-flex items-center gap-1"
                 >
                   <X className="w-3.5 h-3.5" />
                   <span>Clear</span>
@@ -1790,24 +1790,24 @@ export default function SchedulePage() {
           </div>
 
           {/* Results count & View Mode Toggle */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between text-xs text-[#596579] pt-2 border-t border-[#F1F3F5] gap-2">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between text-xs text-[#526779] pt-2 border-t border-[#EAF0F5] gap-2">
             <div className="flex items-center gap-2 flex-wrap">
               <span>
-                Showing <strong className="text-[#172033] font-mono">{displayActivities.length}</strong> of{' '}
+                Showing <strong className="text-[#142C3F] font-mono">{displayActivities.length}</strong> of{' '}
                 <span className="font-mono">{activities.length}</span> activities
               </span>
               {hasActiveFilters && (
-                <span className="text-[11px] px-2 py-0.5 rounded bg-[#EDF5F8] text-[#176B87] font-medium">
+                <span className="text-[11px] px-2 py-0.5 rounded bg-[#EAF0F5] text-[#0F6B68] font-medium">
                   Filtered
                 </span>
               )}
               {sortConfig.field && (
-                <span className="inline-flex items-center gap-1 text-[11px] px-3 py-0.5 rounded bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9] font-medium">
+                <span className="inline-flex items-center gap-1 text-[11px] px-3 py-0.5 rounded bg-[#E4F4EC] text-[#2E7D5B] border border-[#B8DCC9] font-medium">
                   <span>Sorted by: <strong>{getSortLabel(sortConfig.field)}</strong> ({sortConfig.direction === 'asc' ? 'Ascending' : 'Descending'})</span>
                   <button
                     type="button"
                     onClick={() => setSortConfig({ field: null, direction: 'asc' })}
-                    className="ml-1 text-[#B5473C] hover:underline font-bold"
+                    className="ml-1 text-[#A24335] hover:underline font-bold"
                     title="Reset to default WBS tree order"
                   >
                     × Reset WBS Tree
@@ -1819,14 +1819,14 @@ export default function SchedulePage() {
             {/* View Mode Toggle: Operational vs Detailed */}
             <div className="flex items-center gap-2">
               <span className="text-[11px] text-[#7B8798]">Table View:</span>
-              <div className="inline-flex items-center p-0.5 bg-[#F1F3F5] rounded-lg border border-[#D9DEE5]">
+              <div className="inline-flex items-center p-0.5 bg-[#EAF0F5] rounded-lg border border-[#D8E2EA]">
                 <button
                   type="button"
                   onClick={() => setViewMode('operational')}
                   className={`px-3 py-1 text-xs rounded-md transition-colors ${
                     viewMode === 'operational'
-                      ? 'bg-white text-[#172033] font-semibold shadow-xs'
-                      : 'text-[#596579] hover:text-[#172033]'
+                      ? 'bg-white text-[#142C3F] font-semibold shadow-xs'
+                      : 'text-[#526779] hover:text-[#142C3F]'
                   }`}
                 >
                   Default Schedule (10 cols)
@@ -1836,8 +1836,8 @@ export default function SchedulePage() {
                   onClick={() => setViewMode('detailed')}
                   className={`px-3 py-1 text-xs rounded-md transition-colors ${
                     viewMode === 'detailed'
-                      ? 'bg-white text-[#172033] font-semibold shadow-xs'
-                      : 'text-[#596579] hover:text-[#172033]'
+                      ? 'bg-white text-[#142C3F] font-semibold shadow-xs'
+                      : 'text-[#526779] hover:text-[#142C3F]'
                   }`}
                 >
                   Full P6 Matrix (14 cols)
@@ -1851,36 +1851,36 @@ export default function SchedulePage() {
             EMPTY STATES
             ========================================================================= */}
         {isSimulatedEmpty || (activities.length === 0 && activeVersion.status !== 'failed') ? (
-          <div className="bg-white border border-[#D9DEE5] rounded-lg p-12 text-center shadow-xs">
-            <div className="w-12 h-12 rounded-full bg-[#EDF5F8] text-[#176B87] flex items-center justify-center mx-auto mb-4">
+          <div className="bg-white border border-[#D8E2EA] rounded-lg p-12 text-center shadow-xs">
+            <div className="w-12 h-12 rounded-full bg-[#EAF0F5] text-[#0F6B68] flex items-center justify-center mx-auto mb-4">
               <Calendar className="w-6 h-6" />
             </div>
-            <h3 className="text-sm font-bold text-[#172033] mb-1">No schedule has been imported.</h3>
-            <p className="text-xs text-[#596579] max-w-md mx-auto mb-4">
+            <h3 className="text-sm font-bold text-[#142C3F] mb-1">No schedule has been imported.</h3>
+            <p className="text-xs text-[#526779] max-w-md mx-auto mb-4">
               Initialize this project&apos;s schedule baseline by importing a Primavera P6 XML schedule file with complete L1–L6 WBS hierarchy.
             </p>
             <button
               type="button"
               onClick={handleStartImport}
-              className="px-4 py-2 text-xs font-semibold text-white bg-[#176B87] hover:bg-[#135A72] border border-[#176B87] rounded-lg transition-colors inline-flex items-center gap-2 shadow-xs"
+              className="px-4 py-2 text-xs font-semibold text-white bg-[#0F6B68] hover:bg-[#135A72] border border-[#0F6B68] rounded-lg transition-colors inline-flex items-center gap-2 shadow-xs"
             >
               <Upload className="w-4 h-4" />
               <span>Import P6 Baseline</span>
             </button>
           </div>
         ) : displayActivities.length === 0 && activeVersion.status !== 'failed' ? (
-          <div className="bg-white border border-[#D9DEE5] rounded-lg p-10 text-center shadow-xs">
-            <div className="w-10 h-10 rounded-full bg-[#F1F3F5] text-[#596579] flex items-center justify-center mx-auto mb-3">
+          <div className="bg-white border border-[#D8E2EA] rounded-lg p-10 text-center shadow-xs">
+            <div className="w-10 h-10 rounded-full bg-[#EAF0F5] text-[#526779] flex items-center justify-center mx-auto mb-3">
               <Search className="w-5 h-5" />
             </div>
-            <h3 className="text-sm font-bold text-[#172033] mb-1">No activities match current filters</h3>
-            <p className="text-xs text-[#596579] max-w-sm mx-auto mb-4">
+            <h3 className="text-sm font-bold text-[#142C3F] mb-1">No activities match current filters</h3>
+            <p className="text-xs text-[#526779] max-w-sm mx-auto mb-4">
               No activities in the active baseline match your current search query, WBS level, or discipline selection. Reset filters to view all schedule activities.
             </p>
             <button
               type="button"
               onClick={clearAllFilters}
-              className="px-4 py-1.5 text-xs font-medium text-[#172033] bg-white hover:bg-[#F1F3F5] border border-[#D9DEE5] rounded-lg transition-colors cursor-pointer shadow-2xs"
+              className="px-4 py-1.5 text-xs font-medium text-[#142C3F] bg-white hover:bg-[#EAF0F5] border border-[#D8E2EA] rounded-lg transition-colors cursor-pointer shadow-2xs"
             >
               Clear All Filters
             </button>
@@ -1892,7 +1892,7 @@ export default function SchedulePage() {
               Activity ID | Activity | Level | Area | Discipline | Start | Finish | Progress | Status | Variance | Action
               Canonical headers: >Activity ID</th> >Activity</th> >Area</th> >Discipline</th> >Start</th> >Finish</th> >Progress</th> >Status</th> >Variance</th> >Action</th>
               ========================================================================= */
-          <div className="bg-white border border-[#D9DEE5] rounded-lg overflow-hidden shadow-xs">
+          <div className="bg-white border border-[#D8E2EA] rounded-lg overflow-hidden shadow-xs">
             <div className="overflow-x-auto overflow-y-auto max-h-[calc(100vh-250px)] min-h-[480px] relative">
               {viewMode === 'operational' ? (
                 /* -----------------------------------------------------------------
@@ -1900,7 +1900,7 @@ export default function SchedulePage() {
                    Activity ID | Activity | Level | Area | Discipline | Start | Finish | Progress | Status | Variance | Action
                    ----------------------------------------------------------------- */
                 <table className="w-full min-w-[960px] text-left text-sm border-collapse">
-                  <thead className="sticky top-0 z-20 bg-[#F7F8FA] border-b border-[#D9DEE5] text-[#596579] font-semibold text-[11px] sm:text-xs uppercase tracking-wider select-none shadow-[0_1px_2px_rgba(0,0,0,0.04)]">
+                  <thead className="sticky top-0 z-20 bg-[#F3F6FA] border-b border-[#D8E2EA] text-[#526779] font-semibold text-[11px] sm:text-xs uppercase tracking-wider select-none shadow-[0_1px_2px_rgba(0,0,0,0.04)]">
                     <tr>
                       {/* 1. Activity ID */}
                       <th
@@ -2031,17 +2031,17 @@ export default function SchedulePage() {
                             setActiveActivity(row);
                             openActivityDrawer(row.id);
                           }}
-                          className={`h-11 border-b border-[#E5E9EE] hover:bg-[#F4F7FA] cursor-pointer transition-colors group ${
+                          className={`h-11 border-b border-[#E5E9EE] hover:bg-[#F3F6FA] cursor-pointer transition-colors group ${
                             activityDrawerActivityId === row.id
-                              ? 'bg-[#EDF5F8] border-l-2 border-l-[#176B87]'
+                              ? 'bg-[#EAF0F5] border-l-2 border-l-[#0F6B68]'
                               : row.isCritical && isSlipped
-                              ? 'bg-[#FFF9F8] border-l-2 border-l-[#B5473C]'
+                              ? 'bg-[#FFF9F8] border-l-2 border-l-[#A24335]'
                               : ''
                           }`}
                         >
                           {/* 1. Activity ID */}
                           <td className="py-2 px-4 align-middle whitespace-nowrap">
-                            <span className="font-mono font-semibold text-xs text-[#176B87] group-hover:underline">
+                            <span className="font-mono font-semibold text-xs text-[#0F6B68] group-hover:underline">
                               {row.id}
                             </span>
                           </td>
@@ -2060,14 +2060,14 @@ export default function SchedulePage() {
                                       e.stopPropagation();
                                       toggleNode(row.id);
                                     }}
-                                    className="w-5 h-5 flex items-center justify-center rounded hover:bg-[#E5E9EE] text-[#596579] hover:text-[#172033] transition-colors -ml-1 shrink-0"
+                                    className="w-5 h-5 flex items-center justify-center rounded hover:bg-[#E5E9EE] text-[#526779] hover:text-[#142C3F] transition-colors -ml-1 shrink-0"
                                     title={isExpanded ? `Collapse ${row.wbsLevel}` : `Expand ${row.wbsLevel}`}
                                     aria-label={`Toggle ${row.id}`}
                                   >
                                     {isExpanded ? (
-                                      <ChevronDown className="w-3.5 h-3.5 text-[#596579]" />
+                                      <ChevronDown className="w-3.5 h-3.5 text-[#526779]" />
                                     ) : (
-                                      <ChevronRight className="w-3.5 h-3.5 text-[#596579]" />
+                                      <ChevronRight className="w-3.5 h-3.5 text-[#526779]" />
                                     )}
                                   </button>
                                 ) : (
@@ -2084,14 +2084,14 @@ export default function SchedulePage() {
                               <span
                                 className={`text-sm ${getActivityTypographyClass(
                                   row.wbsLevel
-                                )} group-hover:text-[#176B87] transition-colors truncate max-w-sm`}
+                                )} group-hover:text-[#0F6B68] transition-colors truncate max-w-sm`}
                                 title={row.name}
                               >
                                 {row.name}
                               </span>
 
                               {row.isCritical && (
-                                <span className="text-[11px] font-mono text-[#B5473C] bg-[#FBEFEE] border border-[#E4B0AA] px-1.5 py-0.5 rounded font-semibold shrink-0">
+                                <span className="text-[11px] font-mono text-[#A24335] bg-[#FCE8E4] border border-[#E4B0AA] px-1.5 py-0.5 rounded font-semibold shrink-0">
                                   CRITICAL
                                 </span>
                               )}
@@ -2111,24 +2111,24 @@ export default function SchedulePage() {
                           </td>
 
                           {/* 4. Area */}
-                          <td className="py-2 px-4 align-middle whitespace-nowrap text-[13px] text-[#596579] truncate max-w-[160px]" title={row.area}>
+                          <td className="py-2 px-4 align-middle whitespace-nowrap text-[13px] text-[#526779] truncate max-w-[160px]" title={row.area}>
                             {row.area}
                           </td>
 
                           {/* 5. Discipline */}
                           <td className="py-2 px-4 align-middle whitespace-nowrap">
-                            <span className="px-2 py-0.5 bg-[#F1F3F5] border border-[#D9DEE5] rounded text-[11px] text-[#172033] font-medium">
+                            <span className="px-2 py-0.5 bg-[#EAF0F5] border border-[#D8E2EA] rounded text-[11px] text-[#142C3F] font-medium">
                               {row.discipline}
                             </span>
                           </td>
 
                           {/* 6. Start (Planned Start Date) */}
-                          <td className="py-2 px-4 align-middle whitespace-nowrap font-mono text-xs text-[#596579]">
+                          <td className="py-2 px-4 align-middle whitespace-nowrap font-mono text-xs text-[#526779]">
                             {row.plannedStart}
                           </td>
 
                           {/* 7. Finish (Planned Finish Date) */}
-                          <td className="py-2 px-4 align-middle whitespace-nowrap font-mono text-xs text-[#172033] font-medium">
+                          <td className="py-2 px-4 align-middle whitespace-nowrap font-mono text-xs text-[#142C3F] font-medium">
                             {row.plannedFinish}
                           </td>
 
@@ -2136,7 +2136,7 @@ export default function SchedulePage() {
                           <td className="py-2 px-4 align-middle">
                             <div className="space-y-1 w-28">
                               <div className="flex items-center justify-between text-[11px] font-mono">
-                                <span className="font-bold text-[#172033]">{row.actualProgress}%</span>
+                                <span className="font-bold text-[#142C3F]">{row.actualProgress}%</span>
                                 <WhyButton
                                   variant="subtle"
                                   onClick={(e) => {
@@ -2145,7 +2145,7 @@ export default function SchedulePage() {
                                   }}
                                   title={`Why is progress ${row.actualProgress}%?`}
                                 />
-                                <span className="text-[#596579]">T: {row.plannedProgress}%</span>
+                                <span className="text-[#526779]">T: {row.plannedProgress}%</span>
                               </div>
                               <ProgressBar
                                 actual={row.actualProgress}
@@ -2199,7 +2199,7 @@ export default function SchedulePage() {
                                 setActiveActivity(row);
                                 openActivityDrawer(row.id);
                               }}
-                              className="px-3 py-1 text-xs font-medium text-[#176B87] hover:bg-[#EDF5F8] border border-[#C5D9E2] rounded-md transition-colors inline-flex items-center gap-1"
+                              className="px-3 py-1 text-xs font-medium text-[#0F6B68] hover:bg-[#EAF0F5] border border-[#C5D9E2] rounded-md transition-colors inline-flex items-center gap-1"
                               title="Open Activity Detail Drawer for WBS, Actual Dates, Dependencies, Evidence, and Audit History"
                             >
                               <SlidersHorizontal className="w-3 h-3" />
@@ -2216,7 +2216,7 @@ export default function SchedulePage() {
                    FULL 14-COLUMN P6 MATRIX VIEW (Detailed mode)
                    ----------------------------------------------------------------- */
                 <table className="w-full min-w-[1200px] text-left text-sm border-collapse">
-                  <thead className="sticky top-0 z-20 bg-[#F7F8FA] border-b border-[#D9DEE5] text-[#596579] font-semibold text-[11px] sm:text-xs uppercase tracking-wider select-none shadow-[0_1px_2px_rgba(0,0,0,0.04)]">
+                  <thead className="sticky top-0 z-20 bg-[#F3F6FA] border-b border-[#D8E2EA] text-[#526779] font-semibold text-[11px] sm:text-xs uppercase tracking-wider select-none shadow-[0_1px_2px_rgba(0,0,0,0.04)]">
                     <tr>
                       <th
                         onClick={() => handleSort('id')}
@@ -2328,17 +2328,17 @@ export default function SchedulePage() {
                             setActiveActivity(row);
                             openActivityDrawer(row.id);
                           }}
-                          className={`h-11 border-b border-[#E5E9EE] hover:bg-[#F4F7FA] cursor-pointer transition-colors group ${
+                          className={`h-11 border-b border-[#E5E9EE] hover:bg-[#F3F6FA] cursor-pointer transition-colors group ${
                             activityDrawerActivityId === row.id
-                              ? 'bg-[#EDF5F8] border-l-2 border-l-[#176B87]'
+                              ? 'bg-[#EAF0F5] border-l-2 border-l-[#0F6B68]'
                               : row.isCritical && isSlipped
-                              ? 'bg-[#FFF9F8] border-l-2 border-l-[#B5473C]'
+                              ? 'bg-[#FFF9F8] border-l-2 border-l-[#A24335]'
                               : ''
                           }`}
                         >
                           {/* 1. Activity ID */}
                           <td className="py-2 px-3 align-middle whitespace-nowrap">
-                            <span className="font-mono font-bold text-xs text-[#176B87] group-hover:underline">
+                            <span className="font-mono font-bold text-xs text-[#0F6B68] group-hover:underline">
                               {row.id}
                             </span>
                           </td>
@@ -2354,14 +2354,14 @@ export default function SchedulePage() {
                                       e.stopPropagation();
                                       toggleNode(row.id);
                                     }}
-                                    className="w-5 h-5 flex items-center justify-center rounded hover:bg-[#E5E9EE] text-[#596579] hover:text-[#172033] transition-colors -ml-1 shrink-0"
+                                    className="w-5 h-5 flex items-center justify-center rounded hover:bg-[#E5E9EE] text-[#526779] hover:text-[#142C3F] transition-colors -ml-1 shrink-0"
                                     title={isExpanded ? `Collapse ${row.wbsLevel}` : `Expand ${row.wbsLevel}`}
                                     aria-label={`Toggle ${row.id}`}
                                   >
                                     {isExpanded ? (
-                                      <ChevronDown className="w-3.5 h-3.5 text-[#596579]" />
+                                      <ChevronDown className="w-3.5 h-3.5 text-[#526779]" />
                                     ) : (
-                                      <ChevronRight className="w-3.5 h-3.5 text-[#596579]" />
+                                      <ChevronRight className="w-3.5 h-3.5 text-[#526779]" />
                                     )}
                                   </button>
                                 ) : (
@@ -2377,13 +2377,13 @@ export default function SchedulePage() {
                               <span
                                 className={`text-sm ${getActivityTypographyClass(
                                   row.wbsLevel
-                                )} group-hover:text-[#176B87] transition-colors truncate max-w-xs`}
+                                )} group-hover:text-[#0F6B68] transition-colors truncate max-w-xs`}
                                 title={row.name}
                               >
                                 {row.name}
                               </span>
                               {row.isCritical && (
-                                <span className="text-[11px] font-mono text-[#B5473C] bg-[#FBEFEE] border border-[#E4B0AA] px-1.5 py-0.5 rounded font-semibold shrink-0">
+                                <span className="text-[11px] font-mono text-[#A24335] bg-[#FCE8E4] border border-[#E4B0AA] px-1.5 py-0.5 rounded font-semibold shrink-0">
                                   CRITICAL
                                 </span>
                               )}
@@ -2403,35 +2403,35 @@ export default function SchedulePage() {
 
                           {/* 4. WBS */}
                           <td className="py-2 px-3 align-middle whitespace-nowrap">
-                            <span className="font-mono text-xs text-[#596579] font-medium">{row.wbs}</span>
+                            <span className="font-mono text-xs text-[#526779] font-medium">{row.wbs}</span>
                           </td>
 
                           {/* 5. Area */}
-                          <td className="py-2 px-3 align-middle whitespace-nowrap text-[#596579] truncate max-w-[140px]" title={row.area}>
+                          <td className="py-2 px-3 align-middle whitespace-nowrap text-[#526779] truncate max-w-[140px]" title={row.area}>
                             {row.area}
                           </td>
 
                           {/* 6. Discipline */}
                           <td className="py-2 px-3 align-middle whitespace-nowrap">
-                            <span className="px-2 py-0.5 bg-[#F1F3F5] border border-[#D9DEE5] rounded text-[11px] text-[#172033] font-medium">
+                            <span className="px-2 py-0.5 bg-[#EAF0F5] border border-[#D8E2EA] rounded text-[11px] text-[#142C3F] font-medium">
                               {row.discipline}
                             </span>
                           </td>
 
                           {/* 7. Planned Start */}
-                          <td className="py-2 px-3 align-middle whitespace-nowrap font-mono text-xs text-[#596579]">
+                          <td className="py-2 px-3 align-middle whitespace-nowrap font-mono text-xs text-[#526779]">
                             {row.plannedStart}
                           </td>
 
                           {/* 8. Planned Finish */}
-                          <td className="py-2 px-3 align-middle whitespace-nowrap font-mono text-xs text-[#172033] font-medium">
+                          <td className="py-2 px-3 align-middle whitespace-nowrap font-mono text-xs text-[#142C3F] font-medium">
                             {row.plannedFinish}
                           </td>
 
                           {/* 9. Actual Start */}
                           <td className="py-2 px-3 align-middle whitespace-nowrap font-mono text-xs">
                             {row.actualStart ? (
-                              <span className="text-[#172033]">{row.actualStart}</span>
+                              <span className="text-[#142C3F]">{row.actualStart}</span>
                             ) : (
                               <span className="text-[#7B8798] italic">-</span>
                             )}
@@ -2442,7 +2442,7 @@ export default function SchedulePage() {
                             {row.actualFinish ? (
                               <span className="text-[#2E7D5B] font-semibold">{row.actualFinish}</span>
                             ) : row.actualStart ? (
-                              <span className="text-[#176B87] italic">In Progress</span>
+                              <span className="text-[#0F6B68] italic">In Progress</span>
                             ) : (
                               <span className="text-[#7B8798] italic">-</span>
                             )}
@@ -2452,8 +2452,8 @@ export default function SchedulePage() {
                           <td className="py-2 px-3 align-middle">
                             <div className="space-y-1 w-28">
                               <div className="flex items-center justify-between text-[11px] font-mono">
-                                <span className="font-bold text-[#172033]">{row.actualProgress}%</span>
-                                <span className="text-[#596579]">T: {row.plannedProgress}%</span>
+                                <span className="font-bold text-[#142C3F]">{row.actualProgress}%</span>
+                                <span className="text-[#526779]">T: {row.plannedProgress}%</span>
                               </div>
                               <ProgressBar
                                 actual={row.actualProgress}
@@ -2490,8 +2490,8 @@ export default function SchedulePage() {
                           <td className="py-2 px-3 align-middle">
                             <div className="flex flex-col gap-0.5 text-[10px] font-mono">
                               {row.predecessors.length > 0 ? (
-                                <span className="text-[#596579]">
-                                  Pred: <strong className="text-[#176B87]">{row.predecessors.join(', ')}</strong>
+                                <span className="text-[#526779]">
+                                  Pred: <strong className="text-[#0F6B68]">{row.predecessors.join(', ')}</strong>
                                 </span>
                               ) : (
                                 <span className="text-[#7B8798] italic">No Predecessors</span>
@@ -2510,13 +2510,13 @@ export default function SchedulePage() {
             </div>
 
             {/* Table Footer with Summary & Drawer Guidance */}
-            <div className="px-4 py-3 bg-[#F7F8FA] border-t border-[#D9DEE5] flex flex-col sm:flex-row sm:items-center justify-between text-xs text-[#596579] gap-2">
+            <div className="px-4 py-3 bg-[#F3F6FA] border-t border-[#D8E2EA] flex flex-col sm:flex-row sm:items-center justify-between text-xs text-[#526779] gap-2">
               <div className="flex items-center gap-2 flex-wrap">
-                <span>Version: <strong className="font-mono text-[#172033]">Rev 3.2 (P6 XML)</strong></span>
+                <span>Version: <strong className="font-mono text-[#142C3F]">Rev 3.2 (P6 XML)</strong></span>
                 <span>•</span>
-                <span>Showing: <strong className="text-[#172033] font-mono">{displayActivities.length} Key Level-3/4 Schedule Activities</strong> <span className="text-[#596579]">(of 184 Total Level-5 Physical WBS Activities)</span></span>
+                <span>Showing: <strong className="text-[#142C3F] font-mono">{displayActivities.length} Key Level-3/4 Schedule Activities</strong> <span className="text-[#526779]">(of 184 Total Level-5 Physical WBS Activities)</span></span>
                 <span>•</span>
-                <span className="font-medium text-[#176B87]">
+                <span className="font-medium text-[#0F6B68]">
                   View: {viewMode === 'operational' ? 'Standard Schedule (10 cols)' : 'Full P6 Matrix (14 cols)'}
                 </span>
               </div>
@@ -2539,7 +2539,7 @@ export default function SchedulePage() {
           maxWidth="2xl"
           footer={
             <div className="flex items-center justify-between w-full">
-              <span className="text-[11px] text-[#596579] font-mono">
+              <span className="text-[11px] text-[#526779] font-mono">
                 Stage {importStep} of 8: {
                   [
                     'Select File',
@@ -2558,7 +2558,7 @@ export default function SchedulePage() {
                   <button
                     type="button"
                     onClick={() => setImportStep(1)}
-                    className="px-3 py-1.5 text-xs text-[#596579] hover:text-[#172033] border border-[#D9DEE5] rounded-lg"
+                    className="px-3 py-1.5 text-xs text-[#526779] hover:text-[#142C3F] border border-[#D8E2EA] rounded-lg"
                   >
                     Restart
                   </button>
@@ -2567,7 +2567,7 @@ export default function SchedulePage() {
                   <button
                     type="button"
                     onClick={() => setIsImportModalOpen(false)}
-                    className="px-4 py-1.5 text-xs font-semibold text-white bg-[#176B87] hover:bg-[#135A72] rounded-lg"
+                    className="px-4 py-1.5 text-xs font-semibold text-white bg-[#0F6B68] hover:bg-[#135A72] rounded-lg"
                   >
                     Done &amp; View Schedule
                   </button>
@@ -2575,7 +2575,7 @@ export default function SchedulePage() {
                   <button
                     type="button"
                     onClick={() => setIsImportModalOpen(false)}
-                    className="px-4 py-1.5 text-xs text-[#596579] hover:text-[#172033] border border-[#D9DEE5] rounded-lg"
+                    className="px-4 py-1.5 text-xs text-[#526779] hover:text-[#142C3F] border border-[#D8E2EA] rounded-lg"
                   >
                     Cancel
                   </button>
@@ -2586,7 +2586,7 @@ export default function SchedulePage() {
         >
           <div className="space-y-4 text-xs">
             {/* Visual Step Indicator Banner */}
-            <div className="grid grid-cols-4 sm:grid-cols-8 gap-1 p-2 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg text-center text-[10px] font-mono">
+            <div className="grid grid-cols-4 sm:grid-cols-8 gap-1 p-2 bg-[#F3F6FA] border border-[#D8E2EA] rounded-lg text-center text-[10px] font-mono">
               {[
                 '1. Select File',
                 '2. Upload',
@@ -2605,9 +2605,9 @@ export default function SchedulePage() {
                     key={stepName}
                     className={`py-1 px-0.5 rounded truncate ${
                       isCurrent
-                        ? 'bg-[#176B87] text-white font-bold'
+                        ? 'bg-[#0F6B68] text-white font-bold'
                         : isPassed
-                        ? 'bg-[#EDF7F2] text-[#2E7D5B] font-semibold'
+                        ? 'bg-[#E4F4EC] text-[#2E7D5B] font-semibold'
                         : 'text-[#7B8798]'
                     }`}
                     title={stepName}
@@ -2621,12 +2621,12 @@ export default function SchedulePage() {
             {/* STAGE 1: SELECT FILE */}
             {importStep === 1 && (
               <div className="space-y-4">
-                <div className="border-2 border-dashed border-[#D9DEE5] hover:border-[#176B87] rounded-lg p-6 text-center bg-[#F7F8FA] transition-colors">
-                  <FileSpreadsheet className="w-10 h-10 text-[#176B87] mx-auto mb-2" />
-                  <p className="font-semibold text-sm text-[#172033]">
+                <div className="border-2 border-dashed border-[#D8E2EA] hover:border-[#0F6B68] rounded-lg p-6 text-center bg-[#F3F6FA] transition-colors">
+                  <FileSpreadsheet className="w-10 h-10 text-[#0F6B68] mx-auto mb-2" />
+                  <p className="font-semibold text-sm text-[#142C3F]">
                     Select or drag Primavera P6 baseline XML schedule file
                   </p>
-                  <p className="text-[11px] text-[#596579] mt-0.5">
+                  <p className="text-[11px] text-[#526779] mt-0.5">
                     Supports Primavera P6 XML (.xml), Primavera XER (.xer), or Microsoft Project (.xml)
                   </p>
 
@@ -2634,21 +2634,21 @@ export default function SchedulePage() {
                     <button
                       type="button"
                       onClick={() => handleFileChosen('OIL_DUL_BASELINE_REV4.0.xml', false)}
-                      className="px-4 py-2 text-xs font-semibold text-white bg-[#176B87] hover:bg-[#135A72] rounded-lg shadow-xs"
+                      className="px-4 py-2 text-xs font-semibold text-white bg-[#0F6B68] hover:bg-[#135A72] rounded-lg shadow-xs"
                     >
                       Select Sample Primavera P6 XML File
                     </button>
                     <button
                       type="button"
                       onClick={() => handleFileChosen('OIL_DUL_CORRUPT_SAMPLE.xml', true)}
-                      className="px-4 py-2 text-xs font-medium text-[#B5473C] bg-white border border-[#E4B0AA] hover:bg-[#FBEFEE] rounded-lg"
+                      className="px-4 py-2 text-xs font-medium text-[#A24335] bg-white border border-[#E4B0AA] hover:bg-[#FCE8E4] rounded-lg"
                     >
                       Test with Validation Errors
                     </button>
                   </div>
                 </div>
 
-                <div className="p-3 bg-[#EDF5F8] rounded-lg border border-[#B3CBE0] text-xs text-[#176B87] flex items-start gap-2">
+                <div className="p-3 bg-[#EAF0F5] rounded-lg border border-[#D8E2EA] text-xs text-[#0F6B68] flex items-start gap-2">
                   <Info className="w-4 h-4 shrink-0 mt-0.5" />
                   <div>
                     <strong className="font-semibold">Schedule Lineage Rule:</strong>
@@ -2663,22 +2663,22 @@ export default function SchedulePage() {
             {/* STAGE 2: UPLOAD */}
             {importStep === 2 && (
               <div className="p-8 flex flex-col items-center justify-center gap-2 text-center" role="status" aria-live="polite">
-                <div className="flex items-center gap-2 text-sm font-medium text-[#172033]">
-                  <Loader2 className="w-4 h-4 text-[#176B87] animate-spin shrink-0" />
+                <div className="flex items-center gap-2 text-sm font-medium text-[#142C3F]">
+                  <Loader2 className="w-4 h-4 text-[#0F6B68] animate-spin shrink-0" />
                   <span>Loading schedule...</span>
                 </div>
-                <p className="text-xs text-[#596579]">Streaming {selectedFile} to baseline ingestion service...</p>
+                <p className="text-xs text-[#526779]">Streaming {selectedFile} to baseline ingestion service...</p>
               </div>
             )}
 
             {/* STAGE 3: PROCESSING */}
             {importStep === 3 && (
               <div className="p-8 flex flex-col items-center justify-center gap-2 text-center" role="status" aria-live="polite">
-                <div className="flex items-center gap-2 text-sm font-medium text-[#172033]">
-                  <Loader2 className="w-4 h-4 text-[#176B87] animate-spin shrink-0" />
+                <div className="flex items-center gap-2 text-sm font-medium text-[#142C3F]">
+                  <Loader2 className="w-4 h-4 text-[#0F6B68] animate-spin shrink-0" />
                   <span>Processing WBS hierarchy...</span>
                 </div>
-                <p className="text-xs text-[#596579]">
+                <p className="text-xs text-[#526779]">
                   Parsing WBS tree, inspecting predecessor networks, and reading activity calendars...
                 </p>
               </div>
@@ -2687,11 +2687,11 @@ export default function SchedulePage() {
             {/* STAGE 4: VALIDATION */}
             {importStep === 4 && (
               <div className="p-8 flex flex-col items-center justify-center gap-2 text-center" role="status" aria-live="polite">
-                <div className="flex items-center gap-2 text-sm font-medium text-[#172033]">
-                  <Loader2 className="w-4 h-4 text-[#176B87] animate-spin shrink-0" />
+                <div className="flex items-center gap-2 text-sm font-medium text-[#142C3F]">
+                  <Loader2 className="w-4 h-4 text-[#0F6B68] animate-spin shrink-0" />
                   <span>Validating schedule integrity...</span>
                 </div>
-                <p className="text-xs text-[#596579]">
+                <p className="text-xs text-[#526779]">
                   Checking date chronological sequences, circular logic loops, and WBS parent resolution...
                 </p>
               </div>
@@ -2700,12 +2700,12 @@ export default function SchedulePage() {
             {/* STAGE 5: ERROR REPORT (Validation errors identifying: Row, Column, Problem, Correction) */}
             {importStep === 5 && (
               <div className="space-y-3">
-                <div className="p-3 bg-[#FBEFEE] border border-[#E4B0AA] rounded-lg text-xs text-[#B5473C]">
+                <div className="p-3 bg-[#FCE8E4] border border-[#E4B0AA] rounded-lg text-xs text-[#A24335]">
                   <div className="flex items-center gap-2 font-bold mb-1">
                     <ShieldAlert className="w-4 h-4 shrink-0" />
                     <span>Validation Error Report ({importErrors.length} Issues Identified)</span>
                   </div>
-                  <p className="text-[11px] text-[#596579]">
+                  <p className="text-[11px] text-[#526779]">
                     Validation errors must identify Row, Column, Problem, and Correction. Fix these issues in Primavera P6 or choose a corrected file.
                   </p>
                 </div>
@@ -2714,7 +2714,7 @@ export default function SchedulePage() {
                 <div className="border border-[#E4B0AA] rounded-lg overflow-x-auto bg-white shadow-xs">
                   <table className="w-full min-w-[500px] text-left text-sm border-collapse">
                     <thead className="sticky top-0 z-10 bg-[#FAF2F1]">
-                      <tr className="bg-[#FAF2F1] border-b border-[#E4B0AA] text-[#B5473C] font-semibold text-[11px] sm:text-xs uppercase tracking-wider h-11">
+                      <tr className="bg-[#FAF2F1] border-b border-[#E4B0AA] text-[#A24335] font-semibold text-[11px] sm:text-xs uppercase tracking-wider h-11">
                         <th className="py-3 px-4 whitespace-nowrap">Row</th>
                         <th className="py-3 px-4 whitespace-nowrap">Column</th>
                         <th className="py-3 px-4">Problem</th>
@@ -2724,9 +2724,9 @@ export default function SchedulePage() {
                     <tbody className="divide-y divide-[#F0D5D2] text-[14px]">
                       {importErrors.map((err, idx) => (
                         <tr key={idx} className="h-11 sm:h-12 hover:bg-[#FFF9F8]">
-                          <td className="py-3 px-4 font-mono font-semibold text-[#172033]">{err.row}</td>
-                          <td className="py-3 px-4 font-medium text-[#172033]">{err.column}</td>
-                          <td className="py-3 px-4 text-[#B5473C]">{err.problem}</td>
+                          <td className="py-3 px-4 font-mono font-semibold text-[#142C3F]">{err.row}</td>
+                          <td className="py-3 px-4 font-medium text-[#142C3F]">{err.column}</td>
+                          <td className="py-3 px-4 text-[#A24335]">{err.problem}</td>
                           <td className="py-3 px-4 text-[#2E7D5B] font-mono text-[12px]">{err.correction}</td>
                         </tr>
                       ))}
@@ -2735,13 +2735,13 @@ export default function SchedulePage() {
                 </div>
 
                 <div className="flex items-center justify-between pt-2">
-                  <span className="text-[11px] text-[#596579]">
+                  <span className="text-[11px] text-[#526779]">
                     You cannot commit a baseline with active integrity errors.
                   </span>
                   <button
                     type="button"
                     onClick={() => handleFileChosen('OIL_DUL_FIXED_BASELINE.xml', false)}
-                    className="px-4 py-1.5 text-xs font-semibold text-white bg-[#176B87] hover:bg-[#135A72] rounded-lg shadow-xs"
+                    className="px-4 py-1.5 text-xs font-semibold text-white bg-[#0F6B68] hover:bg-[#135A72] rounded-lg shadow-xs"
                   >
                     Re-Validate with Corrected File →
                   </button>
@@ -2752,34 +2752,34 @@ export default function SchedulePage() {
             {/* STAGE 6: PREVIEW */}
             {importStep === 6 && (
               <div className="space-y-4">
-                <div className="p-3 bg-[#EDF7F2] border border-[#B8DCC9] rounded-lg text-xs text-[#2E7D5B] flex items-center gap-2">
+                <div className="p-3 bg-[#E4F4EC] border border-[#B8DCC9] rounded-lg text-xs text-[#2E7D5B] flex items-center gap-2">
                   <CheckCircle2 className="w-4 h-4 shrink-0" />
                   <span className="font-semibold">Schedule Baseline Analysis Verified &amp; Ready for Preview</span>
                 </div>
 
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 p-4 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 p-4 bg-[#F3F6FA] border border-[#D8E2EA] rounded-lg">
                   <div>
-                    <span className="text-[11px] text-[#596579] block">Total Activities</span>
-                    <span className="text-lg font-bold text-[#172033] font-mono">154</span>
+                    <span className="text-[11px] text-[#526779] block">Total Activities</span>
+                    <span className="text-lg font-bold text-[#142C3F] font-mono">154</span>
                   </div>
                   <div>
-                    <span className="text-[11px] text-[#596579] block">Critical Path Items</span>
-                    <span className="text-lg font-bold text-[#B5473C] font-mono">26</span>
+                    <span className="text-[11px] text-[#526779] block">Critical Path Items</span>
+                    <span className="text-lg font-bold text-[#A24335] font-mono">26</span>
                   </div>
                   <div>
-                    <span className="text-[11px] text-[#596579] block">WBS Hierarchy Depth</span>
-                    <span className="text-lg font-bold text-[#172033] font-mono">L1 to L6</span>
+                    <span className="text-[11px] text-[#526779] block">WBS Hierarchy Depth</span>
+                    <span className="text-lg font-bold text-[#142C3F] font-mono">L1 to L6</span>
                   </div>
                   <div>
-                    <span className="text-[11px] text-[#596579] block">Precedence Links</span>
-                    <span className="text-lg font-bold text-[#176B87] font-mono">198</span>
+                    <span className="text-[11px] text-[#526779] block">Precedence Links</span>
+                    <span className="text-lg font-bold text-[#0F6B68] font-mono">198</span>
                   </div>
                 </div>
 
-                <div className="p-3 bg-white border border-[#D9DEE5] rounded-lg text-xs space-y-1">
-                  <span className="font-bold text-[#172033] block">Import Metadata Summary:</span>
-                  <p className="text-[#596579]">
-                    File: <strong className="text-[#172033] font-mono">{selectedFile}</strong> · Source: <strong className="text-[#172033]">Primavera P6 XML</strong> · Data Date: <strong className="text-[#172033]">18 Sep 2026</strong>
+                <div className="p-3 bg-white border border-[#D8E2EA] rounded-lg text-xs space-y-1">
+                  <span className="font-bold text-[#142C3F] block">Import Metadata Summary:</span>
+                  <p className="text-[#526779]">
+                    File: <strong className="text-[#142C3F] font-mono">{selectedFile}</strong> · Source: <strong className="text-[#142C3F]">Primavera P6 XML</strong> · Data Date: <strong className="text-[#142C3F]">18 Sep 2026</strong>
                   </p>
                 </div>
 
@@ -2787,7 +2787,7 @@ export default function SchedulePage() {
                   <button
                     type="button"
                     onClick={() => setImportStep(7)}
-                    className="px-4 py-2 text-xs font-semibold text-white bg-[#176B87] hover:bg-[#135A72] rounded-lg shadow-xs"
+                    className="px-4 py-2 text-xs font-semibold text-white bg-[#0F6B68] hover:bg-[#135A72] rounded-lg shadow-xs"
                   >
                     Proceed to Create Version →
                   </button>
@@ -2799,8 +2799,8 @@ export default function SchedulePage() {
             {importStep === 7 && (
               <form onSubmit={handleCommitNewVersion} className="space-y-4">
                 <div>
-                  <label className="block text-xs font-bold text-[#172033] mb-1">
-                    New Schedule Version Code <span className="text-[#B5473C]">*</span>
+                  <label className="block text-xs font-bold text-[#142C3F] mb-1">
+                    New Schedule Version Code <span className="text-[#A24335]">*</span>
                   </label>
                   <input
                     type="text"
@@ -2810,11 +2810,11 @@ export default function SchedulePage() {
                       setVersionOverwriteError(null);
                     }}
                     placeholder="e.g. V4 · Rev 4.0"
-                    className="w-full px-3 py-2 text-xs bg-[#F7F8FA] border border-[#D9DEE5] focus:border-[#176B87] focus:bg-white rounded-lg font-mono text-[#172033] outline-none"
+                    className="w-full px-3 py-2 text-xs bg-[#F3F6FA] border border-[#D8E2EA] focus:border-[#0F6B68] focus:bg-white rounded-lg font-mono text-[#142C3F] outline-none"
                     required
                   />
                   {versionOverwriteError && (
-                    <div className="p-3 bg-[#FBEFEE] border border-[#E4B0AA] rounded-lg text-[11px] text-[#B5473C] mt-2 flex items-start gap-2">
+                    <div className="p-3 bg-[#FCE8E4] border border-[#E4B0AA] rounded-lg text-[11px] text-[#A24335] mt-2 flex items-start gap-2">
                       <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5" />
                       <span>{versionOverwriteError}</span>
                     </div>
@@ -2822,7 +2822,7 @@ export default function SchedulePage() {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-[#172033] mb-1">
+                  <label className="block text-xs font-bold text-[#142C3F] mb-1">
                     Revision Notes / Reason for Baseline Adjustment
                   </label>
                   <textarea
@@ -2830,12 +2830,12 @@ export default function SchedulePage() {
                     value={newVersionNotes}
                     onChange={(e) => setNewVersionNotes(e.target.value)}
                     placeholder="e.g. Approved recovery baseline reflecting revised compressor foundation delivery and resequenced piping joints."
-                    className="w-full px-3 py-2 text-xs bg-[#F7F8FA] border border-[#D9DEE5] focus:border-[#176B87] focus:bg-white rounded-lg text-[#172033] outline-none"
+                    className="w-full px-3 py-2 text-xs bg-[#F3F6FA] border border-[#D8E2EA] focus:border-[#0F6B68] focus:bg-white rounded-lg text-[#142C3F] outline-none"
                   />
                 </div>
 
-                <div className="p-3 bg-[#F7F8FA] rounded-lg border border-[#D9DEE5] text-[11px] text-[#596579]">
-                  <strong className="text-[#172033] block mb-0.5">Version Lineage Governance:</strong>
+                <div className="p-3 bg-[#F3F6FA] rounded-lg border border-[#D8E2EA] text-[11px] text-[#526779]">
+                  <strong className="text-[#142C3F] block mb-0.5">Version Lineage Governance:</strong>
                   Version {currentOperationalVersion.label} will be safely archived as <strong>Previous</strong>. The new version will be set as <strong>Current</strong>.
                 </div>
 
@@ -2843,13 +2843,13 @@ export default function SchedulePage() {
                   <button
                     type="button"
                     onClick={() => setImportStep(6)}
-                    className="px-4 py-1.5 text-xs text-[#596579] border border-[#D9DEE5] rounded-lg"
+                    className="px-4 py-1.5 text-xs text-[#526779] border border-[#D8E2EA] rounded-lg"
                   >
                     Back to Preview
                   </button>
                   <button
                     type="submit"
-                    className="px-4 py-2 text-xs font-semibold text-white bg-[#176B87] hover:bg-[#135A72] rounded-lg shadow-xs"
+                    className="px-4 py-2 text-xs font-semibold text-white bg-[#0F6B68] hover:bg-[#135A72] rounded-lg shadow-xs"
                   >
                     Create Version &amp; Activate Baseline
                   </button>
@@ -2861,13 +2861,13 @@ export default function SchedulePage() {
             {importStep === 8 && (
               <div className="p-6 text-center space-y-3">
                 <CheckCircle2 className="w-10 h-10 text-[#2E7D5B] mx-auto" />
-                <h4 className="text-base font-bold text-[#172033]">
+                <h4 className="text-base font-bold text-[#142C3F]">
                   Schedule Version Activated Successfully
                 </h4>
-                <p className="text-xs text-[#596579] max-w-sm mx-auto">
+                <p className="text-xs text-[#526779] max-w-sm mx-auto">
                   Baseline version <strong>{newVersionCode}</strong> is now the active operational baseline. Previous version has been safely archived in the lineage history.
                 </p>
-                <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg font-mono text-xs text-[#172033] inline-block">
+                <div className="p-3 bg-[#F3F6FA] border border-[#D8E2EA] rounded-lg font-mono text-xs text-[#142C3F] inline-block">
                   Current Version: <strong>{newVersionCode} (Primavera P6 XML)</strong>
                 </div>
               </div>

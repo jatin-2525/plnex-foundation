@@ -41,23 +41,23 @@ import {
 export function getNotificationTypeIcon(type: NotificationType) {
   switch (type) {
     case 'New review required':
-      return <ClipboardCheck className="w-4 h-4 text-[#D98B32]" />;
+      return <ClipboardCheck className="w-4 h-4 text-[#845006]" />;
     case 'Activity delayed':
-      return <TrendingDown className="w-4 h-4 text-[#B5473C]" />;
+      return <TrendingDown className="w-4 h-4 text-[#A24335]" />;
     case 'Dependency impacted':
       return <GitBranch className="w-4 h-4 text-[#3B6EA8]" />;
     case 'Match conflict':
-      return <AlertTriangle className="w-4 h-4 text-[#D98B32]" />;
+      return <AlertTriangle className="w-4 h-4 text-[#845006]" />;
     case 'DPR confirmation required':
-      return <FileText className="w-4 h-4 text-[#176B87]" />;
+      return <FileText className="w-4 h-4 text-[#0F6B68]" />;
     case 'Evidence uploaded':
       return <Camera className="w-4 h-4 text-[#2E7D5B]" />;
     case 'Processing failed':
-      return <XCircle className="w-4 h-4 text-[#B5473C]" />;
+      return <XCircle className="w-4 h-4 text-[#A24335]" />;
     case 'Sync conflict':
-      return <RefreshCw className="w-4 h-4 text-[#D98B32]" />;
+      return <RefreshCw className="w-4 h-4 text-[#845006]" />;
     default:
-      return <AlertCircle className="w-4 h-4 text-[#596579]" />;
+      return <AlertCircle className="w-4 h-4 text-[#526779]" />;
   }
 }
 
@@ -65,23 +65,23 @@ export function getNotificationTypeIcon(type: NotificationType) {
 export function getNotificationIconBg(type: NotificationType) {
   switch (type) {
     case 'New review required':
-      return 'bg-[#FDF6ED] border-[#F0D4A6]';
+      return 'bg-[#FFF1D3] border-[#F0D4A6]';
     case 'Activity delayed':
-      return 'bg-[#FBEFEE] border-[#E4B0AA]';
+      return 'bg-[#FCE8E4] border-[#E4B0AA]';
     case 'Dependency impacted':
-      return 'bg-[#EDF5F8] border-[#B3CBE0]';
+      return 'bg-[#EAF0F5] border-[#D8E2EA]';
     case 'Match conflict':
-      return 'bg-[#FDF6ED] border-[#F0D4A6]';
+      return 'bg-[#FFF1D3] border-[#F0D4A6]';
     case 'DPR confirmation required':
-      return 'bg-[#EDF5F8] border-[#B3CBE0]';
+      return 'bg-[#EAF0F5] border-[#D8E2EA]';
     case 'Evidence uploaded':
-      return 'bg-[#EDF7F2] border-[#B8DCC9]';
+      return 'bg-[#E4F4EC] border-[#B8DCC9]';
     case 'Processing failed':
-      return 'bg-[#FBEFEE] border-[#E4B0AA]';
+      return 'bg-[#FCE8E4] border-[#E4B0AA]';
     case 'Sync conflict':
-      return 'bg-[#FDF6ED] border-[#F0D4A6]';
+      return 'bg-[#FFF1D3] border-[#F0D4A6]';
     default:
-      return 'bg-[#F1F3F5] border-[#D9DEE5]';
+      return 'bg-[#EAF0F5] border-[#D8E2EA]';
   }
 }
 
@@ -91,19 +91,19 @@ export function getSeverityBadge(severity: NotificationSeverity) {
     case 'critical':
       return {
         label: 'Critical',
-        className: 'bg-[#FBEFEE] text-[#B5473C] border-[#E4B0AA]',
+        className: 'bg-[#FCE8E4] text-[#A24335] border-[#E4B0AA]',
       };
     case 'warning':
     case 'medium':
       return {
         label: severity === 'warning' ? 'Warning' : 'Medium',
-        className: 'bg-[#FDF6ED] text-[#8C5311] border-[#F0D4A6]',
+        className: 'bg-[#FFF1D3] text-[#8C5311] border-[#F0D4A6]',
       };
     case 'info':
     default:
       return {
         label: 'Info',
-        className: 'bg-[#EDF5F8] text-[#176B87] border-[#B3CBE0]',
+        className: 'bg-[#EAF0F5] text-[#0F6B68] border-[#D8E2EA]',
       };
   }
 }
@@ -214,8 +214,8 @@ export function NotificationCenter() {
         onClick={() => setIsOpen(!isOpen)}
         className={`relative p-2 rounded-md transition-colors flex items-center justify-center cursor-pointer ${
           isOpen
-            ? 'bg-[#EDF5F8] text-[#176B87]'
-            : 'text-[#596579] hover:text-[#172033] hover:bg-[#F1F3F5]'
+            ? 'bg-[#EAF0F5] text-[#0F6B68]'
+            : 'text-[#526779] hover:text-[#142C3F] hover:bg-[#EAF0F5]'
         }`}
         aria-label="View PLnEX Project Notifications"
         aria-expanded={isOpen}
@@ -223,7 +223,7 @@ export function NotificationCenter() {
       >
         <Bell className="w-4 h-4" />
         {unreadCount > 0 && (
-          <span className="absolute -top-0.5 -right-0.5 min-w-[16px] h-[16px] px-1 bg-[#B5473C] text-white rounded-full text-[9px] font-bold font-mono flex items-center justify-center ring-2 ring-white">
+          <span className="absolute -top-0.5 -right-0.5 min-w-[16px] h-[16px] px-1 bg-[#A24335] text-white rounded-full text-[9px] font-bold font-mono flex items-center justify-center ring-2 ring-white">
             {unreadCount}
           </span>
         )}
@@ -234,26 +234,26 @@ export function NotificationCenter() {
           ------------------------------------------------------------------- */}
       {isOpen && (
         <div
-          className="absolute right-0 mt-2 w-[92vw] sm:w-[480px] md:w-[520px] max-w-[540px] bg-white border border-[#D9DEE5] rounded-lg shadow-lg z-50 overflow-hidden flex flex-col max-h-[85vh]"
+          className="absolute right-0 mt-2 w-[92vw] sm:w-[480px] md:w-[520px] max-w-[540px] bg-white border border-[#D8E2EA] rounded-lg shadow-lg z-50 overflow-hidden flex flex-col max-h-[85vh]"
           role="dialog"
           aria-label="Notification Center"
         >
           {/* 1. Header Bar */}
-          <div className="p-4 border-b border-[#D9DEE5] bg-[#F7F8FA] flex items-center justify-between gap-3">
+          <div className="p-4 border-b border-[#D8E2EA] bg-[#F3F6FA] flex items-center justify-between gap-3">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-[#EDF5F8] border border-[#B3CBE0] flex items-center justify-center text-[#176B87]">
+              <div className="w-8 h-8 rounded-lg bg-[#EAF0F5] border border-[#D8E2EA] flex items-center justify-center text-[#0F6B68]">
                 <Bell className="w-4 h-4" />
               </div>
               <div>
                 <div className="flex items-center gap-2">
-                  <h3 className="text-sm font-bold text-[#172033]">
+                  <h3 className="text-sm font-bold text-[#142C3F]">
                     Notification Center
                   </h3>
-                  <span className="px-2 py-0.5 rounded-md text-[11px] font-mono font-bold bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0]">
+                  <span className="px-2 py-0.5 rounded-md text-[11px] font-mono font-bold bg-[#EAF0F5] text-[#0F6B68] border border-[#D8E2EA]">
                     {unreadCount} unread
                   </span>
                 </div>
-                <p className="text-[11px] text-[#596579]">
+                <p className="text-[11px] text-[#526779]">
                   Live field-to-schedule alerts and verification requirements
                 </p>
               </div>
@@ -264,7 +264,7 @@ export function NotificationCenter() {
                 <button
                   type="button"
                   onClick={markAllAsRead}
-                  className="px-3 py-1 text-[11px] font-semibold text-[#176B87] hover:bg-[#EDF5F8] rounded-md transition-colors"
+                  className="px-3 py-1 text-[11px] font-semibold text-[#0F6B68] hover:bg-[#EAF0F5] rounded-md transition-colors"
                   title="Mark all notifications as read"
                 >
                   Mark all read
@@ -273,7 +273,7 @@ export function NotificationCenter() {
               <button
                 type="button"
                 onClick={() => setIsOpen(false)}
-                className="p-2 text-[#7B8798] hover:text-[#172033] hover:bg-[#F1F3F5] rounded-md transition-colors"
+                className="p-2 text-[#7B8798] hover:text-[#142C3F] hover:bg-[#EAF0F5] rounded-md transition-colors"
                 aria-label="Close notification center"
               >
                 <X className="w-4 h-4" />
@@ -282,7 +282,7 @@ export function NotificationCenter() {
           </div>
 
           {/* 2. Search & Filter Bar */}
-          <div className="p-3 bg-[#F7F8FA] border-b border-[#D9DEE5] space-y-2">
+          <div className="p-3 bg-[#F3F6FA] border-b border-[#D8E2EA] space-y-2">
             {/* Search Input */}
             <div className="relative">
               <Search className="w-3.5 h-3.5 text-[#7B8798] absolute left-3 top-2.5" />
@@ -291,13 +291,13 @@ export function NotificationCenter() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search alerts, activities (PIP-24-001), events, DPRs..."
-                className="w-full pl-8 pr-7 py-1.5 bg-white border border-[#D9DEE5] rounded-lg text-xs text-[#172033] placeholder-[#7B8798] focus:outline-none focus:border-[#176B87] focus:ring-1 focus:ring-[#176B87]"
+                className="w-full pl-8 pr-7 py-1.5 bg-white border border-[#D8E2EA] rounded-lg text-xs text-[#142C3F] placeholder-[#7B8798] focus:outline-none focus:border-[#0F6B68] focus:ring-1 focus:ring-[#0F6B68]"
               />
               {searchQuery && (
                 <button
                   type="button"
                   onClick={() => setSearchQuery('')}
-                  className="absolute right-2.5 top-2 text-[#7B8798] hover:text-[#172033]"
+                  className="absolute right-2.5 top-2 text-[#7B8798] hover:text-[#142C3F]"
                 >
                   <X className="w-3 h-3" />
                 </button>
@@ -314,8 +314,8 @@ export function NotificationCenter() {
                 }}
                 className={`px-3 py-1 rounded-md text-[11px] font-medium whitespace-nowrap transition-colors border ${
                   selectedType === 'ALL' && !showUnreadOnly
-                    ? 'bg-[#176B87] text-white border-[#176B87]'
-                    : 'bg-white border-[#D9DEE5] text-[#596579] hover:bg-[#F1F3F5]'
+                    ? 'bg-[#0F6B68] text-white border-[#0F6B68]'
+                    : 'bg-white border-[#D8E2EA] text-[#526779] hover:bg-[#EAF0F5]'
                 }`}
               >
                 All ({notifications.length})
@@ -326,8 +326,8 @@ export function NotificationCenter() {
                 onClick={() => setShowUnreadOnly(!showUnreadOnly)}
                 className={`px-3 py-1 rounded-md text-[11px] font-medium whitespace-nowrap transition-colors border ${
                   showUnreadOnly
-                    ? 'bg-[#176B87] text-white border-[#176B87]'
-                    : 'bg-white border-[#D9DEE5] text-[#596579] hover:bg-[#F1F3F5]'
+                    ? 'bg-[#0F6B68] text-white border-[#0F6B68]'
+                    : 'bg-white border-[#D8E2EA] text-[#526779] hover:bg-[#EAF0F5]'
                 }`}
               >
                 Unread Only ({unreadCount})
@@ -346,8 +346,8 @@ export function NotificationCenter() {
                       }}
                       className={`px-3 py-1 rounded-md text-[11px] font-medium whitespace-nowrap transition-colors border flex items-center gap-1 ${
                         isActive
-                          ? 'bg-[#176B87] text-white border-[#176B87]'
-                          : 'bg-white border-[#D9DEE5] text-[#596579] hover:bg-[#F1F3F5]'
+                          ? 'bg-[#0F6B68] text-white border-[#0F6B68]'
+                          : 'bg-white border-[#D8E2EA] text-[#526779] hover:bg-[#EAF0F5]'
                       }`}
                     >
                       <span>{tab.label}</span>
@@ -361,16 +361,16 @@ export function NotificationCenter() {
           </div>
 
           {/* 3. Notification Feed List */}
-          <div className="flex-1 overflow-y-auto divide-y divide-[#D9DEE5] max-h-[55vh]">
+          <div className="flex-1 overflow-y-auto divide-y divide-[#D8E2EA] max-h-[55vh]">
             {filteredNotifications.length === 0 ? (
               <div className="p-8 text-center space-y-2">
-                <div className="w-10 h-10 rounded-lg bg-[#F1F3F5] text-[#7B8798] flex items-center justify-center mx-auto">
+                <div className="w-10 h-10 rounded-lg bg-[#EAF0F5] text-[#7B8798] flex items-center justify-center mx-auto">
                   <CheckCircle2 className="w-5 h-5 text-[#2E7D5B]" />
                 </div>
-                <p className="text-xs font-bold text-[#172033]">
+                <p className="text-xs font-bold text-[#142C3F]">
                   No Notifications Found
                 </p>
-                <p className="text-[11px] text-[#596579] max-w-xs mx-auto">
+                <p className="text-[11px] text-[#526779] max-w-xs mx-auto">
                   {showUnreadOnly
                     ? 'All notifications have been reviewed and acknowledged.'
                     : 'No project controls events match the active search filter.'}
@@ -383,7 +383,7 @@ export function NotificationCenter() {
                       setSelectedType('ALL');
                       setShowUnreadOnly(false);
                     }}
-                    className="text-xs text-[#176B87] font-semibold hover:underline mt-1 inline-block"
+                    className="text-xs text-[#0F6B68] font-semibold hover:underline mt-1 inline-block"
                   >
                     Reset all filters
                   </button>
@@ -397,14 +397,14 @@ export function NotificationCenter() {
                   <div
                     key={notification.id}
                     onClick={() => handleNotificationClick(notification)}
-                    className={`p-4 sm:p-4 hover:bg-[#F7F8FA] transition-colors cursor-pointer group relative flex items-start gap-4 ${
+                    className={`p-4 sm:p-4 hover:bg-[#F3F6FA] transition-colors cursor-pointer group relative flex items-start gap-4 ${
                       !notification.isRead ? 'bg-[#F9FAFC]' : 'bg-white'
                     }`}
                   >
                     {/* Unread Indicator Bar / Dot */}
                     {!notification.isRead && (
                       <span
-                        className="absolute left-1 top-4 bottom-4 w-1 bg-[#176B87] rounded-r"
+                        className="absolute left-1 top-4 bottom-4 w-1 bg-[#0F6B68] rounded-r"
                         title="Unread"
                       />
                     )}
@@ -423,7 +423,7 @@ export function NotificationCenter() {
                       {/* Top Meta Line: Type Pill + Severity + Timestamp */}
                       <div className="flex items-center justify-between gap-2 flex-wrap">
                         <div className="flex items-center gap-2 flex-wrap">
-                          <span className="text-[10px] font-bold uppercase tracking-wider text-[#172033]">
+                          <span className="text-[10px] font-bold uppercase tracking-wider text-[#142C3F]">
                             {notification.type}
                           </span>
                           <span
@@ -432,7 +432,7 @@ export function NotificationCenter() {
                             {severityCfg.label}
                           </span>
                           {notification.sourceEntity && (
-                            <span className="text-[10px] font-mono text-[#596579] bg-[#F1F3F5] px-1.5 py-0.5 rounded border border-[#D9DEE5]">
+                            <span className="text-[10px] font-mono text-[#526779] bg-[#EAF0F5] px-1.5 py-0.5 rounded border border-[#D8E2EA]">
                               {notification.sourceEntity.id}
                             </span>
                           )}
@@ -446,7 +446,7 @@ export function NotificationCenter() {
 
                       {/* Notification Title */}
                       <h4
-                        className={`text-xs text-[#172033] leading-snug ${
+                        className={`text-xs text-[#142C3F] leading-snug ${
                           !notification.isRead ? 'font-bold' : 'font-semibold'
                         }`}
                       >
@@ -454,14 +454,14 @@ export function NotificationCenter() {
                       </h4>
 
                       {/* Description Text */}
-                      <p className="text-[11px] text-[#596579] leading-relaxed line-clamp-2">
+                      <p className="text-[11px] text-[#526779] leading-relaxed line-clamp-2">
                         {notification.description}
                       </p>
 
                       {/* Bottom Action Footer */}
                       <div className="pt-2 flex items-center justify-between gap-2 text-xs">
                         {/* Primary Action Button */}
-                        <span className="inline-flex items-center gap-1 text-[11px] font-bold text-[#176B87] group-hover:underline">
+                        <span className="inline-flex items-center gap-1 text-[11px] font-bold text-[#0F6B68] group-hover:underline">
                           <span>{notification.destination.actionLabel}</span>
                           <ArrowRight className="w-3 h-3" />
                         </span>
@@ -480,7 +480,7 @@ export function NotificationCenter() {
                                 markAsRead(notification.id);
                               }
                             }}
-                            className="p-1 text-[#7B8798] hover:text-[#172033] hover:bg-[#F1F3F5] rounded transition-colors"
+                            className="p-1 text-[#7B8798] hover:text-[#142C3F] hover:bg-[#EAF0F5] rounded transition-colors"
                             title={notification.isRead ? 'Mark as unread' : 'Mark as read'}
                           >
                             {notification.isRead ? (
@@ -492,7 +492,7 @@ export function NotificationCenter() {
                           <button
                             type="button"
                             onClick={() => dismissNotification(notification.id)}
-                            className="p-1 text-[#7B8798] hover:text-[#B5473C] hover:bg-[#FBEFEE] rounded transition-colors"
+                            className="p-1 text-[#7B8798] hover:text-[#A24335] hover:bg-[#FCE8E4] rounded transition-colors"
                             title="Dismiss notification"
                           >
                             <X className="w-3.5 h-3.5" />
@@ -507,12 +507,12 @@ export function NotificationCenter() {
           </div>
 
           {/* 4. Footer Bar */}
-          <div className="p-3 bg-[#F7F8FA] border-t border-[#D9DEE5] flex items-center justify-between text-xs text-[#596579] flex-wrap gap-2">
+          <div className="p-3 bg-[#F3F6FA] border-t border-[#D8E2EA] flex items-center justify-between text-xs text-[#526779] flex-wrap gap-2">
             <div className="flex items-center gap-3 text-[11px]">
               <Link
                 href="/review"
                 onClick={() => setIsOpen(false)}
-                className="hover:text-[#176B87] font-semibold flex items-center gap-1"
+                className="hover:text-[#0F6B68] font-semibold flex items-center gap-1"
               >
                 <span>Review Queue</span>
                 <ChevronRight className="w-3 h-3" />
@@ -520,7 +520,7 @@ export function NotificationCenter() {
               <Link
                 href="/health"
                 onClick={() => setIsOpen(false)}
-                className="hover:text-[#176B87] font-semibold flex items-center gap-1"
+                className="hover:text-[#0F6B68] font-semibold flex items-center gap-1"
               >
                 <span>Data Health</span>
                 <ChevronRight className="w-3 h-3" />
@@ -528,7 +528,7 @@ export function NotificationCenter() {
               <Link
                 href="/sync"
                 onClick={() => setIsOpen(false)}
-                className="hover:text-[#176B87] font-semibold flex items-center gap-1"
+                className="hover:text-[#0F6B68] font-semibold flex items-center gap-1"
               >
                 <span>Sync Center</span>
                 <ChevronRight className="w-3 h-3" />
@@ -538,7 +538,7 @@ export function NotificationCenter() {
             <button
               type="button"
               onClick={resetNotifications}
-              className="text-[10px] text-[#7B8798] hover:text-[#172033] flex items-center gap-1"
+              className="text-[10px] text-[#7B8798] hover:text-[#142C3F] flex items-center gap-1"
               title="Reset all notifications to initial verified state"
             >
               <RotateCcw className="w-3 h-3" />

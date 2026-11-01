@@ -16,12 +16,12 @@ export function LoadingState({
 }: LoadingStateProps) {
   return (
     <div
-      className={`flex items-center justify-center gap-2 p-8 bg-white border border-[#D9DEE5] rounded-lg text-sm text-[#596579] ${className}`}
+      className={`flex items-center justify-center gap-2 p-8 bg-white border border-[#D8E2EA] rounded-lg text-sm text-[#526779] ${className}`}
       role="status"
       aria-live="polite"
     >
-      <Loader2 className="w-4 h-4 animate-spin text-[#176B87] flex-shrink-0" />
-      <span className="font-medium text-[#172033]">{message}</span>
+      <Loader2 className="w-4 h-4 animate-spin text-[#0F6B68] flex-shrink-0" />
+      <span className="font-medium text-[#142C3F]">{message}</span>
     </div>
   );
 }

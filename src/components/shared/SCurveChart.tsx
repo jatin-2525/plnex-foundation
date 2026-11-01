@@ -308,8 +308,8 @@ export function SCurveChart({
   return (
     <div
       ref={containerRef}
-      className={`bg-white rounded-lg border border-[#D7E1E8] text-[#172B3A] shadow-xs ${
-        isFullscreen ? 'fixed inset-4 z-50 overflow-y-auto bg-white shadow-2xl p-6 border-2 border-[#0F6574]' : className
+      className={`bg-white rounded-lg border border-[#D8E2EA] text-[#142C3F] shadow-xs ${
+        isFullscreen ? 'fixed inset-4 z-50 overflow-y-auto bg-white shadow-2xl p-6 border-2 border-[#0F6B68]' : className
       }`}
       data-testid="s-curve-chart"
       onKeyDown={handleKeyDown}
@@ -327,15 +327,15 @@ export function SCurveChart({
       {/* ========================================================= */}
       {/* 1. TOP HEADER & INTERACTIVE S-CURVE TOOLBAR */}
       {/* ========================================================= */}
-      <div className="p-4 border-b border-[#D7E1E8] flex flex-col gap-3">
+      <div className="p-4 border-b border-[#D8E2EA] flex flex-col gap-3">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
           <div>
             <div className="flex items-center gap-2 flex-wrap">
-              <h3 className="text-base font-bold text-[#172B3A] tracking-tight">{title}</h3>
-              <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-[#EDF5F8] text-[#0F6574] border border-[#B3CBE0]">
+              <h3 className="text-base font-bold text-[#142C3F] tracking-tight">{title}</h3>
+              <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-[#EAF0F5] text-[#0F6B68] border border-[#D8E2EA]">
                 Baseline: {baselineRevision} (P6 XML)
               </span>
-              <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-medium bg-[#F4F7FA] text-[#526779] border border-[#D7E1E8]">
+              <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-medium bg-[#F3F6FA] text-[#526779] border border-[#D8E2EA]">
                 Cutoff: {asOfDate}
               </span>
 
@@ -343,7 +343,7 @@ export function SCurveChart({
               <button
                 type="button"
                 onClick={() => setShowExplanation(!showExplanation)}
-                className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-semibold text-[#0F6574] bg-[#E8F5F2] hover:bg-[#D5EFEA] border border-[#B1DBD2] transition-colors cursor-pointer"
+                className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-semibold text-[#0F6B68] bg-[#E4F4EC] hover:bg-[#D5EFEA] border border-[#BDE4D0] transition-colors cursor-pointer"
                 title="Explain Planned, Verified Actual, Forecast, Data Date, and Variance"
               >
                 <Info className="w-3.5 h-3.5" />
@@ -359,14 +359,14 @@ export function SCurveChart({
           {/* Action Tools: Reset, Mode Switch, CSV, SVG, Fullscreen */}
           <div className="flex items-center flex-wrap gap-2 text-xs">
             {/* Feature 7: Time-range options */}
-            <div className="flex rounded-md border border-[#D7E1E8] overflow-hidden bg-[#F4F7FA] p-0.5">
+            <div className="flex rounded-md border border-[#D8E2EA] overflow-hidden bg-[#F3F6FA] p-0.5">
               {(['full', '6m', '3m'] as const).map((r) => (
                 <button
                   key={r}
                   type="button"
                   onClick={() => setTimeRange(r)}
                   className={`px-2 py-1 text-xs font-mono uppercase transition-colors ${
-                    timeRange === r ? 'bg-white text-[#0F6574] font-bold shadow-xs' : 'text-[#526779] hover:text-[#172B3A]'
+                    timeRange === r ? 'bg-white text-[#0F6B68] font-bold shadow-xs' : 'text-[#526779] hover:text-[#142C3F]'
                   }`}
                 >
                   {r === 'full' ? 'Full' : r}
@@ -381,8 +381,8 @@ export function SCurveChart({
                   onClick={() => setShowDashboardAdvanced(!showDashboardAdvanced)}
                   className={`px-2.5 py-1 text-xs rounded border inline-flex items-center gap-1 transition-colors cursor-pointer ${
                     showDashboardAdvanced
-                      ? 'bg-[#0F6574] text-white border-[#0F6574]'
-                      : 'bg-white text-[#526779] border-[#D7E1E8] hover:bg-[#F4F7FA]'
+                      ? 'bg-[#0F6B68] text-white border-[#0F6B68]'
+                      : 'bg-white text-[#526779] border-[#D8E2EA] hover:bg-[#F3F6FA]'
                   }`}
                 >
                   <SlidersHorizontal className="w-3.5 h-3.5" />
@@ -391,7 +391,7 @@ export function SCurveChart({
 
                 <Link
                   href="/progress"
-                  className="px-2.5 py-1 text-xs font-semibold text-[#0F6574] hover:text-[#0c4e5a] bg-[#EDF5F8] hover:bg-[#D9EBF2] border border-[#B3CBE0] rounded inline-flex items-center gap-1 transition-colors"
+                  className="px-2.5 py-1 text-xs font-semibold text-[#0F6B68] hover:text-[#0a4846] bg-[#EAF0F5] hover:bg-[#DCE7EE] border border-[#D8E2EA] rounded inline-flex items-center gap-1 transition-colors"
                 >
                   <span>Progress Deep Dive</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -400,14 +400,14 @@ export function SCurveChart({
             ) : (
               <>
                 {/* Feature 9: Cumulative vs Period Switch */}
-                <div className="flex rounded-md border border-[#D7E1E8] overflow-hidden bg-[#F4F7FA] p-0.5">
+                <div className="flex rounded-md border border-[#D8E2EA] overflow-hidden bg-[#F3F6FA] p-0.5">
                   <button
                     type="button"
                     onClick={() => setProgressViewMode('cumulative')}
                     className={`px-2.5 py-1 text-xs font-medium rounded transition-colors ${
                       progressViewMode === 'cumulative'
-                        ? 'bg-white text-[#0F6574] shadow-xs font-semibold'
-                        : 'text-[#526779] hover:text-[#172B3A]'
+                        ? 'bg-white text-[#0F6B68] shadow-xs font-semibold'
+                        : 'text-[#526779] hover:text-[#142C3F]'
                     }`}
                   >
                     Cumulative S-Curve
@@ -417,8 +417,8 @@ export function SCurveChart({
                     onClick={() => setProgressViewMode('period')}
                     className={`px-2.5 py-1 text-xs font-medium rounded transition-colors ${
                       progressViewMode === 'period'
-                        ? 'bg-white text-[#0F6574] shadow-xs font-semibold'
-                        : 'text-[#526779] hover:text-[#172B3A]'
+                        ? 'bg-white text-[#0F6B68] shadow-xs font-semibold'
+                        : 'text-[#526779] hover:text-[#142C3F]'
                     }`}
                   >
                     Period Progress (%/Mo)
@@ -431,8 +431,8 @@ export function SCurveChart({
                   onClick={() => setShowReportSummary(!showReportSummary)}
                   className={`p-1.5 rounded border text-xs flex items-center gap-1 cursor-pointer transition-colors ${
                     showReportSummary
-                      ? 'bg-[#0F6574] text-white border-[#0F6574]'
-                      : 'bg-white text-[#526779] border-[#D7E1E8] hover:bg-[#F4F7FA]'
+                      ? 'bg-[#0F6B68] text-white border-[#0F6B68]'
+                      : 'bg-white text-[#526779] border-[#D8E2EA] hover:bg-[#F3F6FA]'
                   }`}
                   title="Toggle Executive Summary card for reports"
                 >
@@ -445,7 +445,7 @@ export function SCurveChart({
                   <button
                     type="button"
                     onClick={handleExportCSV}
-                    className="p-1.5 rounded border border-[#D7E1E8] bg-white text-[#526779] hover:bg-[#F4F7FA] hover:text-[#172B3A] transition-colors cursor-pointer"
+                    className="p-1.5 rounded border border-[#D8E2EA] bg-white text-[#526779] hover:bg-[#F3F6FA] hover:text-[#142C3F] transition-colors cursor-pointer"
                     title="Download S-Curve Ledger CSV"
                   >
                     <Download className="w-3.5 h-3.5" />
@@ -453,7 +453,7 @@ export function SCurveChart({
                   <button
                     type="button"
                     onClick={handleExportSVG}
-                    className="p-1.5 rounded border border-[#D7E1E8] bg-white text-[#526779] hover:bg-[#F4F7FA] hover:text-[#172B3A] transition-colors cursor-pointer"
+                    className="p-1.5 rounded border border-[#D8E2EA] bg-white text-[#526779] hover:bg-[#F3F6FA] hover:text-[#142C3F] transition-colors cursor-pointer"
                     title="Download S-Curve SVG Vector Image"
                   >
                     <FileImage className="w-3.5 h-3.5" />
@@ -461,10 +461,10 @@ export function SCurveChart({
                   <button
                     type="button"
                     onClick={() => setIsFullscreen(!isFullscreen)}
-                    className="p-1.5 rounded border border-[#D7E1E8] bg-white text-[#526779] hover:bg-[#F4F7FA] hover:text-[#172B3A] transition-colors cursor-pointer"
+                    className="p-1.5 rounded border border-[#D8E2EA] bg-white text-[#526779] hover:bg-[#F3F6FA] hover:text-[#142C3F] transition-colors cursor-pointer"
                     title={isFullscreen ? 'Exit Fullscreen' : 'Fullscreen S-Curve Workspace'}
                   >
-                    {isFullscreen ? <Minimize2 className="w-3.5 h-3.5 text-[#B43D47]" /> : <Maximize2 className="w-3.5 h-3.5" />}
+                    {isFullscreen ? <Minimize2 className="w-3.5 h-3.5 text-[#A24335]" /> : <Maximize2 className="w-3.5 h-3.5" />}
                   </button>
                 </div>
               </>
@@ -474,60 +474,60 @@ export function SCurveChart({
 
         {/* Feature 1: "What does this chart mean?" Collapsible Explanation Drawer */}
         {showExplanation && (
-          <div className="bg-[#EDF5F8] border border-[#B3CBE0] rounded-md p-3 text-xs text-[#172B3A] animate-fadeIn">
+          <div className="bg-[#EAF0F5] border border-[#D8E2EA] rounded-md p-3 text-xs text-[#142C3F] animate-fadeIn">
             <div className="flex items-start justify-between gap-2 mb-2">
-              <div className="flex items-center gap-1.5 font-bold text-[#0F6574]">
-                <Info className="w-4 h-4 text-[#0F6574]" />
+              <div className="flex items-center gap-1.5 font-bold text-[#0F6B68]">
+                <Info className="w-4 h-4 text-[#0F6B68]" />
                 <span>Understanding the Project S-Curve & Earned Value Metrics</span>
               </div>
               <button
                 type="button"
                 onClick={() => setShowExplanation(false)}
-                className="text-[#526779] hover:text-[#172B3A] cursor-pointer"
+                className="text-[#526779] hover:text-[#142C3F] cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2.5">
-              <div className="bg-white p-2.5 rounded border border-[#D7E1E8]">
-                <div className="font-semibold text-[#3D73B5] mb-0.5 flex items-center gap-1.5">
-                  <span className="w-2.5 h-2.5 rounded-xs bg-[#3D73B5] inline-block" />
+              <div className="bg-white p-2.5 rounded border border-[#D8E2EA]">
+                <div className="font-semibold text-[#5274B8] mb-0.5 flex items-center gap-1.5">
+                  <span className="w-2.5 h-2.5 rounded-xs bg-[#5274B8] inline-block" />
                   Planned (Baseline)
                 </div>
                 <p className="text-[11px] text-[#526779]">
                   Physical progress scheduled in Rev 3.2 baseline envelope. Frozen contract commitment.
                 </p>
               </div>
-              <div className="bg-white p-2.5 rounded border border-[#D7E1E8]">
-                <div className="font-semibold text-[#187A6A] mb-0.5 flex items-center gap-1.5">
-                  <span className="w-2.5 h-2.5 rounded-full bg-[#187A6A] inline-block" />
+              <div className="bg-white p-2.5 rounded border border-[#D8E2EA]">
+                <div className="font-semibold text-[#0D8879] mb-0.5 flex items-center gap-1.5">
+                  <span className="w-2.5 h-2.5 rounded-full bg-[#0D8879] inline-block" />
                   Verified Actual
                 </div>
                 <p className="text-[11px] text-[#526779]">
                   Physical progress certified by site engineers and signed DPR evidence up to Data Date.
                 </p>
               </div>
-              <div className="bg-white p-2.5 rounded border border-[#D7E1E8]">
-                <div className="font-semibold text-[#7655A6] mb-0.5 flex items-center gap-1.5">
-                  <span className="w-3 h-1 border-t-2 border-dashed border-[#7655A6] inline-block" />
+              <div className="bg-white p-2.5 rounded border border-[#D8E2EA]">
+                <div className="font-semibold text-[#8057B7] mb-0.5 flex items-center gap-1.5">
+                  <span className="w-3 h-1 border-t-2 border-dashed border-[#8057B7] inline-block" />
                   Forecast (CPM Logic)
                 </div>
                 <p className="text-[11px] text-[#526779]">
                   Deterministic critical-path projection calculated from remaining durations and logic ties.
                 </p>
               </div>
-              <div className="bg-white p-2.5 rounded border border-[#D7E1E8]">
-                <div className="font-semibold text-[#172B3A] mb-0.5 flex items-center gap-1.5">
-                  <span className="w-2.5 h-2.5 rounded-full border-2 border-[#172B3A] inline-block" />
+              <div className="bg-white p-2.5 rounded border border-[#D8E2EA]">
+                <div className="font-semibold text-[#142C3F] mb-0.5 flex items-center gap-1.5">
+                  <span className="w-2.5 h-2.5 rounded-full border-2 border-[#142C3F] inline-block" />
                   Data Date (Cutoff)
                 </div>
                 <p className="text-[11px] text-[#526779]">
                   Current reporting boundary (18 Sep 2026). Actuals end here; future work is projected.
                 </p>
               </div>
-              <div className="bg-white p-2.5 rounded border border-[#D7E1E8]">
-                <div className="font-semibold text-[#B43D47] mb-0.5 flex items-center gap-1.5">
-                  <span className="w-2.5 h-2.5 rounded-xs bg-[#B43D47] inline-block" />
+              <div className="bg-white p-2.5 rounded border border-[#D8E2EA]">
+                <div className="font-semibold text-[#A24335] mb-0.5 flex items-center gap-1.5">
+                  <span className="w-2.5 h-2.5 rounded-xs bg-[#A24335] inline-block" />
                   Variance (% Slip)
                 </div>
                 <p className="text-[11px] text-[#526779]">
@@ -540,16 +540,16 @@ export function SCurveChart({
 
         {/* Feature 2, 3, 4, 8: Interactive Filter Toolbar ("As of", Baselines, Discipline, Compare) */}
         {(!isDashboard || showDashboardAdvanced) && (
-          <div className="flex items-center justify-between flex-wrap gap-2 pt-2 border-t border-[#D7E1E8]/70 text-xs">
+          <div className="flex items-center justify-between flex-wrap gap-2 pt-2 border-t border-[#D8E2EA]/70 text-xs">
             <div className="flex items-center flex-wrap gap-2">
               {/* Feature 3: "As of" Reporting Date */}
-              <div className="flex items-center gap-1 bg-[#F4F7FA] border border-[#D7E1E8] rounded px-2 py-1">
+              <div className="flex items-center gap-1 bg-[#F3F6FA] border border-[#D8E2EA] rounded px-2 py-1">
                 <Calendar className="w-3.5 h-3.5 text-[#526779]" />
                 <span className="text-[#526779] font-medium text-[11px]">As of:</span>
                 <select
                   value={asOfDate}
                   onChange={(e) => setAsOfDate(e.target.value as any)}
-                  className="bg-transparent font-medium text-[#172B3A] focus:outline-none cursor-pointer"
+                  className="bg-transparent font-medium text-[#142C3F] focus:outline-none cursor-pointer"
                 >
                   <option value="18 Sep 2026">18 Sep 2026 (Current Cutoff)</option>
                   <option value="11 Sep 2026">11 Sep 2026 (Week 37)</option>
@@ -559,12 +559,12 @@ export function SCurveChart({
               </div>
 
               {/* Feature 3: Baseline Revision */}
-              <div className="flex items-center gap-1 bg-[#F4F7FA] border border-[#D7E1E8] rounded px-2 py-1">
+              <div className="flex items-center gap-1 bg-[#F3F6FA] border border-[#D8E2EA] rounded px-2 py-1">
                 <span className="text-[#526779] font-medium text-[11px]">Baseline:</span>
                 <select
                   value={baselineRevision}
                   onChange={(e) => setBaselineRevision(e.target.value as any)}
-                  className="bg-transparent font-medium text-[#172B3A] focus:outline-none cursor-pointer"
+                  className="bg-transparent font-medium text-[#142C3F] focus:outline-none cursor-pointer"
                 >
                   <option value="Rev 3.2">Rev 3.2 (Approved)</option>
                   <option value="Rev 3.1">Rev 3.1 (Aug 2026)</option>
@@ -573,7 +573,7 @@ export function SCurveChart({
               </div>
 
               {/* Feature 4: Discipline Filter */}
-              <div className="flex items-center gap-1 bg-[#F4F7FA] border border-[#D7E1E8] rounded px-2 py-1">
+              <div className="flex items-center gap-1 bg-[#F3F6FA] border border-[#D8E2EA] rounded px-2 py-1">
                 <span className="text-[#526779] font-medium text-[11px]">Discipline:</span>
                 <select
                   value={selectedDiscipline}
@@ -581,7 +581,7 @@ export function SCurveChart({
                     setSelectedDiscipline(e.target.value as any);
                     if (e.target.value !== 'All') setSelectedArea('All');
                   }}
-                  className="bg-transparent font-medium text-[#172B3A] focus:outline-none cursor-pointer"
+                  className="bg-transparent font-medium text-[#142C3F] focus:outline-none cursor-pointer"
                 >
                   <option value="All">All Disciplines</option>
                   <option value="Piping">Piping</option>
@@ -592,7 +592,7 @@ export function SCurveChart({
               </div>
 
               {/* Feature 4: Area Filter */}
-              <div className="flex items-center gap-1 bg-[#F4F7FA] border border-[#D7E1E8] rounded px-2 py-1">
+              <div className="flex items-center gap-1 bg-[#F3F6FA] border border-[#D8E2EA] rounded px-2 py-1">
                 <span className="text-[#526779] font-medium text-[11px]">Area:</span>
                 <select
                   value={selectedArea}
@@ -600,7 +600,7 @@ export function SCurveChart({
                     setSelectedArea(e.target.value as any);
                     if (e.target.value !== 'All') setSelectedDiscipline('All');
                   }}
-                  className="bg-transparent font-medium text-[#172B3A] focus:outline-none cursor-pointer"
+                  className="bg-transparent font-medium text-[#142C3F] focus:outline-none cursor-pointer"
                 >
                   <option value="All">All Areas</option>
                   <option value="Unit A - Gas Processing">Unit A (Gas Processing)</option>
@@ -610,12 +610,12 @@ export function SCurveChart({
               </div>
 
               {/* Feature 8: Compare Revisions or Saved Scenarios */}
-              <div className="flex items-center gap-1 bg-[#F4F7FA] border border-[#D7E1E8] rounded px-2 py-1">
+              <div className="flex items-center gap-1 bg-[#F3F6FA] border border-[#D8E2EA] rounded px-2 py-1">
                 <span className="text-[#526779] font-medium text-[11px]">Compare:</span>
                 <select
                   value={comparisonMode}
                   onChange={(e) => setComparisonMode(e.target.value as any)}
-                  className="bg-transparent font-medium text-[#172B3A] focus:outline-none cursor-pointer"
+                  className="bg-transparent font-medium text-[#142C3F] focus:outline-none cursor-pointer"
                 >
                   <option value="none">None</option>
                   <option value="rev31">Rev 3.1 Baseline</option>
@@ -629,7 +629,7 @@ export function SCurveChart({
                 <button
                   type="button"
                   onClick={handleResetFilters}
-                  className="inline-flex items-center gap-1 px-2 py-1 text-xs font-semibold text-[#B43D47] bg-[#FBEFEE] hover:bg-[#F6DFDE] border border-[#E8B6BA] rounded transition-colors cursor-pointer"
+                  className="inline-flex items-center gap-1 px-2 py-1 text-xs font-semibold text-[#A24335] bg-[#FCE8E4] hover:bg-[#F8D2CC] border border-[#F6C7BE] rounded transition-colors cursor-pointer"
                   title="Reset all filters back to project baseline"
                 >
                   <RotateCcw className="w-3 h-3" />
@@ -640,40 +640,40 @@ export function SCurveChart({
 
             {/* Feature 2: Series Toggles (Checkboxes) */}
             <div className="flex items-center gap-3">
-              <label className="inline-flex items-center gap-1.5 cursor-pointer text-[11px] font-semibold text-[#3D73B5]">
+              <label className="inline-flex items-center gap-1.5 cursor-pointer text-[11px] font-semibold text-[#5274B8]">
                 <input
                   type="checkbox"
                   checked={seriesVisible.planned}
                   onChange={(e) => setSeriesVisible((prev) => ({ ...prev, planned: e.target.checked }))}
-                  className="rounded border-[#D7E1E8] text-[#3D73B5] focus:ring-0 cursor-pointer"
+                  className="rounded border-[#D8E2EA] text-[#5274B8] focus:ring-0 cursor-pointer"
                 />
                 Planned
               </label>
-              <label className="inline-flex items-center gap-1.5 cursor-pointer text-[11px] font-semibold text-[#187A6A]">
+              <label className="inline-flex items-center gap-1.5 cursor-pointer text-[11px] font-semibold text-[#0D8879]">
                 <input
                   type="checkbox"
                   checked={seriesVisible.actual}
                   onChange={(e) => setSeriesVisible((prev) => ({ ...prev, actual: e.target.checked }))}
-                  className="rounded border-[#D7E1E8] text-[#187A6A] focus:ring-0 cursor-pointer"
+                  className="rounded border-[#D8E2EA] text-[#0D8879] focus:ring-0 cursor-pointer"
                 />
                 Verified Actual
               </label>
-              <label className="inline-flex items-center gap-1.5 cursor-pointer text-[11px] font-semibold text-[#7655A6]">
+              <label className="inline-flex items-center gap-1.5 cursor-pointer text-[11px] font-semibold text-[#8057B7]">
                 <input
                   type="checkbox"
                   checked={seriesVisible.forecast}
                   onChange={(e) => setSeriesVisible((prev) => ({ ...prev, forecast: e.target.checked }))}
-                  className="rounded border-[#D7E1E8] text-[#7655A6] focus:ring-0 cursor-pointer"
+                  className="rounded border-[#D8E2EA] text-[#8057B7] focus:ring-0 cursor-pointer"
                 />
                 Forecast
               </label>
               {comparisonMode !== 'none' && (
-                <label className="inline-flex items-center gap-1.5 cursor-pointer text-[11px] font-semibold text-[#9C5A08]">
+                <label className="inline-flex items-center gap-1.5 cursor-pointer text-[11px] font-semibold text-[#C98925]">
                   <input
                     type="checkbox"
                     checked={seriesVisible.comparison}
                     onChange={(e) => setSeriesVisible((prev) => ({ ...prev, comparison: e.target.checked }))}
-                    className="rounded border-[#D7E1E8] text-[#9C5A08] focus:ring-0 cursor-pointer"
+                    className="rounded border-[#D8E2EA] text-[#C98925] focus:ring-0 cursor-pointer"
                   />
                   Comparison
                 </label>
@@ -706,7 +706,7 @@ export function SCurveChart({
 
         {/* Feature 14: Compact Report Summary Card */}
         {showReportSummary && (
-          <div className="bg-[#F4F7FA] border border-[#D7E1E8] rounded-md p-3 text-xs text-[#172B3A]">
+          <div className="bg-[#F3F6FA] border border-[#D8E2EA] rounded-md p-3 text-xs text-[#142C3F]">
             <div className="flex items-center justify-between mb-2">
               <span className="font-bold uppercase tracking-wider text-[11px] text-[#526779]">
                 Executive S-Curve Audit Report Card
@@ -714,27 +714,27 @@ export function SCurveChart({
               <span className="font-mono text-[10px] text-[#526779]">Source: Rev 3.2 (P6 XML)</span>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
-              <div className="bg-white p-2 rounded border border-[#D7E1E8]">
+              <div className="bg-white p-2 rounded border border-[#D8E2EA]">
                 <div className="text-[10px] text-[#526779]">Reporting Date</div>
-                <div className="font-bold text-[#172B3A]">{asOfDate}</div>
+                <div className="font-bold text-[#142C3F]">{asOfDate}</div>
               </div>
-              <div className="bg-white p-2 rounded border border-[#D7E1E8]">
+              <div className="bg-white p-2 rounded border border-[#D8E2EA]">
                 <div className="text-[10px] text-[#526779]">Baseline Plan</div>
                 <div className="font-bold text-[#3D73B5]">{summary.plannedAtDataDate.toFixed(1)}%</div>
               </div>
-              <div className="bg-white p-2 rounded border border-[#D7E1E8]">
+              <div className="bg-white p-2 rounded border border-[#D8E2EA]">
                 <div className="text-[10px] text-[#526779]">Verified Actual</div>
-                <div className="font-bold text-[#187A6A]">{summary.actualAtDataDate.toFixed(1)}%</div>
+                <div className="font-bold text-[#176B53]">{summary.actualAtDataDate.toFixed(1)}%</div>
               </div>
-              <div className="bg-white p-2 rounded border border-[#D7E1E8]">
+              <div className="bg-white p-2 rounded border border-[#D8E2EA]">
                 <div className="text-[10px] text-[#526779]">Schedule Variance</div>
-                <div className="font-bold text-[#B43D47]">{summary.varianceAtDataDate.toFixed(1)} pp slip</div>
+                <div className="font-bold text-[#A24335]">{summary.varianceAtDataDate.toFixed(1)} pp slip</div>
               </div>
-              <div className="bg-white p-2 rounded border border-[#D7E1E8]">
+              <div className="bg-white p-2 rounded border border-[#D8E2EA]">
                 <div className="text-[10px] text-[#526779]">Schedule Perf Index (SPI)</div>
-                <div className="font-bold text-[#9C5A08]">0.91 (Critical)</div>
+                <div className="font-bold text-[#845006]">0.91 (Critical)</div>
               </div>
-              <div className="bg-white p-2 rounded border border-[#D7E1E8]">
+              <div className="bg-white p-2 rounded border border-[#D8E2EA]">
                 <div className="text-[10px] text-[#526779]">Forecast COD Finish</div>
                 <div className="font-bold text-[#7655A6]">20 Dec 2026 (+5d)</div>
               </div>
@@ -761,7 +761,7 @@ export function SCurveChart({
             textAnchor="start"
             fontSize="10"
             fontWeight="bold"
-            fill="#172B3A"
+            fill="#142C3F"
           >
             {progressViewMode === 'cumulative' ? 'Cumulative Progress (%)' : 'Period Increment (%/Month)'}
           </text>
@@ -801,7 +801,7 @@ export function SCurveChart({
             y={padTop}
             width={width - padRight - ddX}
             height={plotH}
-            fill="#F4F7FA"
+            fill="#F3F6FA"
             opacity="0.75"
           />
           <text
@@ -822,7 +822,7 @@ export function SCurveChart({
             y1={padTop}
             x2={ddX}
             y2={height - padBottom}
-            stroke="#172B3A"
+            stroke="#142C3F"
             strokeWidth="1.5"
             strokeDasharray="4,3"
           />
@@ -832,7 +832,7 @@ export function SCurveChart({
             width={116}
             height={20}
             rx={3}
-            fill="#172B3A"
+            fill="#142C3F"
           />
           <text
             x={ddX}
@@ -851,7 +851,7 @@ export function SCurveChart({
             y1={ddPlannedY}
             x2={ddX}
             y2={ddActualY}
-            stroke="#B43D47"
+            stroke="#A24335"
             strokeWidth="3.5"
           />
           <rect
@@ -860,7 +860,7 @@ export function SCurveChart({
             width={124}
             height={24}
             rx={3}
-            fill="#FBEFEE"
+            fill="#FCE8E4"
             stroke="#E8B6BA"
             strokeWidth="1"
           />
@@ -885,7 +885,7 @@ export function SCurveChart({
                 <path
                   d={comparisonPathD}
                   fill="none"
-                  stroke="#9C5A08"
+                  stroke="#845006"
                   strokeWidth="2"
                   strokeDasharray="5,4"
                   strokeLinecap="round"
@@ -918,7 +918,7 @@ export function SCurveChart({
                 />
               )}
 
-              {/* Actual Line (Verified Teal #187A6A) */}
+              {/* Actual Line (Verified Teal #176B53) */}
               {seriesVisible.actual && (
                 <path
                   d={actualPathD}
@@ -960,7 +960,7 @@ export function SCurveChart({
                         y={planY}
                         width={barW - 1}
                         height={planH}
-                        fill="#3D73B5"
+                        fill="#5274B8"
                         rx="1"
                         opacity="0.85"
                       />
@@ -973,7 +973,7 @@ export function SCurveChart({
                         y={actY}
                         width={barW - 1}
                         height={actH}
-                        fill="#187A6A"
+                        fill="#0D8879"
                         rx="1"
                       />
                     )}
@@ -985,7 +985,7 @@ export function SCurveChart({
                         y={fcstY}
                         width={barW - 1}
                         height={fcstH}
-                        fill="#7655A6"
+                        fill="#8057B7"
                         rx="1"
                         strokeDasharray="2,2"
                       />
@@ -1050,7 +1050,7 @@ export function SCurveChart({
                   <g transform={`translate(${x}, ${getY(pt.actual ?? pt.planned) - 14})`}>
                     <polygon
                       points="0,-6 6,0 0,6 -6,0"
-                      fill={pt.actual !== null ? '#187A6A' : pt.milestoneDetail?.status === 'Critical Slip' ? '#B43D47' : '#7655A6'}
+                      fill={pt.actual !== null ? '#0D8879' : pt.milestoneDetail?.status === 'Critical Slip' ? '#A24335' : '#8057B7'}
                       stroke="#FFFFFF"
                       strokeWidth="1.5"
                     />
@@ -1066,7 +1066,7 @@ export function SCurveChart({
                       width="76"
                       height="16"
                       rx="3"
-                      fill="#B43D47"
+                      fill="#A24335"
                       stroke="#FFFFFF"
                       strokeWidth="1"
                     />
@@ -1090,7 +1090,7 @@ export function SCurveChart({
                     cy={getY(pt.planned)}
                     r={isSelected ? 4.5 : 3.5}
                     fill="#FFFFFF"
-                    stroke="#3D73B5"
+                    stroke="#5274B8"
                     strokeWidth="2"
                   />
                 )}
@@ -1101,7 +1101,7 @@ export function SCurveChart({
                     cx={x}
                     cy={getY(pt.actual)}
                     r={isSelected ? 5 : 4}
-                    fill="#187A6A"
+                    fill="#0D8879"
                     stroke="#FFFFFF"
                     strokeWidth="1.5"
                   />
@@ -1113,7 +1113,7 @@ export function SCurveChart({
                     cx={x}
                     cy={getY(pt.forecast)}
                     r={isSelected ? 4.5 : 3.5}
-                    fill="#7655A6"
+                    fill="#8057B7"
                     stroke="#FFFFFF"
                     strokeWidth="1.5"
                   />
@@ -1126,7 +1126,7 @@ export function SCurveChart({
                   textAnchor="middle"
                   fontSize="11"
                   fontWeight={isDD || isSelected ? '700' : '500'}
-                  fill={isSelected ? '#0F6574' : isDD ? '#172B3A' : '#526779'}
+                  fill={isSelected ? '#0F6B68' : isDD ? '#142C3F' : '#526779'}
                 >
                   {pt.period}
                 </text>
@@ -1156,31 +1156,31 @@ export function SCurveChart({
                 height={tooltipHeight}
                 rx={4}
                 fill="#FFFFFF"
-                stroke="#D7E1E8"
+                stroke="#D8E2EA"
                 strokeWidth="1.5"
-                filter="drop-shadow(0 2px 4px rgba(23, 43, 58, 0.08))"
+                filter="drop-shadow(0 2px 4px rgba(20, 44, 63, 0.08))"
               />
-              <text x={tooltipX + 10} y={tooltipY + 16} fontSize="11" fontWeight="bold" fill="#172B3A">
+              <text x={tooltipX + 10} y={tooltipY + 16} fontSize="11" fontWeight="bold" fill="#142C3F">
                 {activePoint.dateLabel}
               </text>
               <text x={tooltipX + 10} y={tooltipY + 33} fontSize="11" fontWeight="500" fill="#526779">
-                Planned: <tspan fontWeight="bold" fill="#3D73B5">{activePoint.planned.toFixed(1)}%</tspan>
+                Planned: <tspan fontWeight="bold" fill="#5274B8">{activePoint.planned.toFixed(1)}%</tspan>
               </text>
               <text x={tooltipX + 10} y={tooltipY + 48} fontSize="11" fontWeight="500" fill="#526779">
                 {activePoint.actual !== null ? (
-                  <>Actual: <tspan fontWeight="bold" fill="#187A6A">{activePoint.actual.toFixed(1)}%</tspan></>
+                  <>Actual: <tspan fontWeight="bold" fill="#0D8879">{activePoint.actual.toFixed(1)}%</tspan></>
                 ) : (
-                  <>Forecast: <tspan fontWeight="bold" fill="#7655A6">{activePoint.forecast.toFixed(1)}%</tspan></>
+                  <>Forecast: <tspan fontWeight="bold" fill="#8057B7">{activePoint.forecast.toFixed(1)}%</tspan></>
                 )}
               </text>
               <text x={tooltipX + 10} y={tooltipY + 63} fontSize="11" fontWeight="500" fill="#526779">
                 Variance:{' '}
-                <tspan fontWeight="bold" fill={activeVariance < 0 ? '#B43D47' : '#187A6A'}>
+                <tspan fontWeight="bold" fill={activeVariance < 0 ? '#A24335' : '#0D8879'}>
                   {activeVariance > 0 ? `+${activeVariance}%` : `${activeVariance}%`}
                   {activePoint.actual === null ? ' (Fcst)' : ''}
                 </tspan>
               </text>
-              <text x={tooltipX + 10} y={tooltipY + 76} fontSize="9" fill="#7655A6" fontWeight="bold">
+              <text x={tooltipX + 10} y={tooltipY + 76} fontSize="9" fill="#8057B7" fontWeight="bold">
                 {activePoint.milestone ? `◆ ${activePoint.milestone.substring(0, 18)}...` : ''}
               </text>
             </g>
@@ -1188,33 +1188,33 @@ export function SCurveChart({
         </svg>
 
         {/* Legend */}
-        <div className="flex flex-wrap items-center justify-between gap-4 mt-2 pt-3 border-t border-[#D7E1E8] text-xs text-[#526779]">
+        <div className="flex flex-wrap items-center justify-between gap-4 mt-2 pt-3 border-t border-[#D8E2EA] text-xs text-[#526779]">
           <div className="flex items-center gap-4 flex-wrap">
             <div className="flex items-center gap-2">
-              <span className="w-3.5 h-1 bg-[#3D73B5] inline-block rounded-xs" />
-              <span className="font-semibold text-[#172B3A]">■ Planned Baseline</span>
+              <span className="w-3.5 h-1 bg-[#5274B8] inline-block rounded-xs" />
+              <span className="font-semibold text-[#142C3F]">■ Planned Baseline</span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="w-3.5 h-1.5 bg-[#187A6A] inline-block rounded-xs" />
-              <span className="font-semibold text-[#172B3A]">● Verified Actual</span>
+              <span className="w-3.5 h-1.5 bg-[#0D8879] inline-block rounded-xs" />
+              <span className="font-semibold text-[#142C3F]">● Verified Actual</span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="w-4 h-0.5 border-t-2 border-dashed border-[#7655A6] inline-block" />
-              <span className="font-semibold text-[#172B3A]">▲ Forecast (CPM)</span>
+              <span className="w-4 h-0.5 border-t-2 border-dashed border-[#8057B7] inline-block" />
+              <span className="font-semibold text-[#142C3F]">▲ Forecast (CPM)</span>
             </div>
             {comparisonMode !== 'none' && (
               <div className="flex items-center gap-2">
-                <span className="w-4 h-0.5 border-t-2 border-dashed border-[#9C5A08] inline-block" />
-                <span className="font-semibold text-[#9C5A08]">◇ Comparison Series</span>
+                <span className="w-4 h-0.5 border-t-2 border-dashed border-[#C98925] inline-block" />
+                <span className="font-semibold text-[#C98925]">◇ Comparison Series</span>
               </div>
             )}
             <div className="flex items-center gap-2">
-              <span className="text-[#187A6A] font-bold">◆</span>
-              <span className="font-semibold text-[#172B3A]">Milestone Marker</span>
+              <span className="text-[#0D8879] font-bold">◆</span>
+              <span className="font-semibold text-[#142C3F]">Milestone Marker</span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full border-2 border-[#172B3A] inline-block" />
-              <span className="font-semibold text-[#172B3A]">Data Date Cutoff</span>
+              <span className="w-2.5 h-2.5 rounded-full border-2 border-[#142C3F] inline-block" />
+              <span className="font-semibold text-[#142C3F]">Data Date Cutoff</span>
             </div>
           </div>
 
@@ -1222,7 +1222,7 @@ export function SCurveChart({
             <button
               type="button"
               onClick={() => setShowLedger(!showLedger)}
-              className="text-xs font-semibold text-[#0F6574] hover:underline focus:outline-none flex items-center gap-1 cursor-pointer"
+              className="text-xs font-semibold text-[#0F6B68] hover:underline focus:outline-none flex items-center gap-1 cursor-pointer"
             >
               {showLedger ? 'Hide Level 3 Ledger' : 'View Level 3 Cumulative Ledger'}
               <span className="text-[10px]">{showLedger ? '▲' : '▼'}</span>
@@ -1234,14 +1234,14 @@ export function SCurveChart({
       {/* ========================================================= */}
       {/* 3. SHORT INTERPRETATION STRIP */}
       {/* ========================================================= */}
-      <div className="mx-4 mb-3 p-3 bg-[#F4F7FA] border border-[#D7E1E8] rounded text-xs text-[#172B3A] flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+      <div className="mx-4 mb-3 p-3 bg-[#F3F6FA] border border-[#D8E2EA] rounded text-xs text-[#142C3F] flex flex-col sm:flex-row sm:items-center justify-between gap-2">
         <div className="flex items-center gap-2">
           <span
             className={`w-2.5 h-2.5 rounded-full shrink-0 ${
-              summary.varianceAtDataDate < 0 ? 'bg-[#B43D47]' : 'bg-[#187A6A]'
+              summary.varianceAtDataDate < 0 ? 'bg-[#A24335]' : 'bg-[#0D8879]'
             }`}
           />
-          <p className="font-medium text-[#172B3A]">
+          <p className="font-medium text-[#142C3F]">
             {getSCurveInterpretation(summary)}
           </p>
         </div>
@@ -1254,37 +1254,37 @@ export function SCurveChart({
       {/* Feature 5: SELECTABLE POINT INTERACTIVE DRAWER / CONTEXT */}
       {/* Numbers, Period Delta, Milestones, and Contributed Work Items */}
       {/* ========================================================= */}
-      <div className="px-4 py-3 bg-[#F4F7FA] border-t border-[#D7E1E8] text-xs">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 mb-2 pb-2 border-b border-[#D7E1E8]/60">
+      <div className="px-4 py-3 bg-[#F3F6FA] border-t border-[#D8E2EA] text-xs">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 mb-2 pb-2 border-b border-[#D8E2EA]/60">
           <div className="flex items-center gap-2 flex-wrap">
-            <span className="font-bold text-[#172B3A] text-sm">{activePoint.period}</span>
+            <span className="font-bold text-[#142C3F] text-sm">{activePoint.period}</span>
             <span className="text-[#526779] text-xs font-mono">({activePoint.dateLabel})</span>
             {activePoint.isDataDate && (
-              <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-[#172B3A] text-white">
+              <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-[#142C3F] text-white">
                 CURRENT REPORTING CUTOFF
               </span>
             )}
           </div>
           <div className="flex items-center gap-3 font-mono text-xs">
             <span>
-              Cumulative Plan: <strong className="text-[#3D73B5]">{activePoint.planned.toFixed(1)}%</strong>
+              Cumulative Plan: <strong className="text-[#5274B8]">{activePoint.planned.toFixed(1)}%</strong>
             </span>
             {activePoint.actual !== null ? (
               <span>
-                Verified Actual: <strong className="text-[#187A6A]">{activePoint.actual.toFixed(1)}%</strong> (
-                <strong className={activeVariance < 0 ? 'text-[#B43D47]' : 'text-[#187A6A]'}>
+                Verified Actual: <strong className="text-[#0D8879]">{activePoint.actual.toFixed(1)}%</strong> (
+                <strong className={activeVariance < 0 ? 'text-[#A24335]' : 'text-[#0D8879]'}>
                   {activeVariance > 0 ? `+${activeVariance}%` : `${activeVariance}%`}
                 </strong>
                 )
               </span>
             ) : (
               <span>
-                Forecast: <strong className="text-[#7655A6]">{activePoint.forecast.toFixed(1)}%</strong>
+                Forecast: <strong className="text-[#8057B7]">{activePoint.forecast.toFixed(1)}%</strong>
               </span>
             )}
-            <span className="border-l border-[#D7E1E8] pl-3 text-[#526779]">
-              Period Work: <strong className="text-[#172B3A]">+{activePoint.periodPlannedIncrement.toFixed(1)}%</strong> plan /{' '}
-              <strong className="text-[#187A6A]">
+            <span className="border-l border-[#D8E2EA] pl-3 text-[#526779]">
+              Period Work: <strong className="text-[#142C3F]">+{activePoint.periodPlannedIncrement.toFixed(1)}%</strong> plan /{' '}
+              <strong className="text-[#0D8879]">
                 {activePoint.periodActualIncrement !== null ? `+${activePoint.periodActualIncrement.toFixed(1)}%` : '—'}
               </strong>{' '}
               actual
@@ -1295,19 +1295,19 @@ export function SCurveChart({
         {/* Milestone & Work Items Detail */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-2">
           {/* Milestone Detail */}
-          <div className="bg-white p-2.5 rounded border border-[#D7E1E8]">
+          <div className="bg-white p-2.5 rounded border border-[#D8E2EA]">
             <div className="flex items-center justify-between mb-1">
-              <span className="font-semibold text-[#172B3A] flex items-center gap-1.5 text-xs">
-                <span className="text-[#0F6574]">◆</span> Milestone in this Period:
+              <span className="font-semibold text-[#142C3F] flex items-center gap-1.5 text-xs">
+                <span className="text-[#0F6B68]">◆</span> Milestone in this Period:
               </span>
               {activePoint.milestoneDetail && (
                 <span
                   className={`text-[10px] font-bold px-1.5 py-0.5 rounded ${
                     activePoint.milestoneDetail.status === 'Completed'
-                      ? 'bg-[#E8F5F2] text-[#187A6A]'
+                      ? 'bg-[#E4F4EC] text-[#176B53]'
                       : activePoint.milestoneDetail.status === 'Critical Slip'
-                      ? 'bg-[#FBEFEE] text-[#B43D47]'
-                      : 'bg-[#F4F7FA] text-[#526779]'
+                      ? 'bg-[#FCE8E4] text-[#A24335]'
+                      : 'bg-[#F3F6FA] text-[#526779]'
                   }`}
                 >
                   {activePoint.milestoneDetail.status}
@@ -1316,11 +1316,11 @@ export function SCurveChart({
             </div>
             {activePoint.milestoneDetail ? (
               <div className="text-xs space-y-1">
-                <p className="font-medium text-[#172B3A]">{activePoint.milestoneDetail.name}</p>
+                <p className="font-medium text-[#142C3F]">{activePoint.milestoneDetail.name}</p>
                 <div className="flex items-center gap-3 text-[11px] text-[#526779]">
                   <span>Baseline: <strong>{activePoint.milestoneDetail.baselineDate}</strong></span>
                   <span>Forecast: <strong>{activePoint.milestoneDetail.forecastDate}</strong></span>
-                  <span>Float: <strong className={activePoint.milestoneDetail.floatDays < 0 ? 'text-[#B43D47]' : 'text-[#187A6A]'}>{activePoint.milestoneDetail.floatDays}d</strong></span>
+                  <span>Float: <strong className={activePoint.milestoneDetail.floatDays < 0 ? 'text-[#A24335]' : 'text-[#0D8879]'}>{activePoint.milestoneDetail.floatDays}d</strong></span>
                 </div>
               </div>
             ) : (
@@ -1329,16 +1329,16 @@ export function SCurveChart({
           </div>
 
           {/* Work Package Contribution */}
-          <div className="bg-white p-2.5 rounded border border-[#D7E1E8]">
-            <span className="font-semibold text-[#172B3A] text-xs block mb-1">
+          <div className="bg-white p-2.5 rounded border border-[#D8E2EA]">
+            <span className="font-semibold text-[#142C3F] text-xs block mb-1">
               Contributing WBS Work Packages ({activePoint.workItems?.length || 0}):
             </span>
             {activePoint.workItems && activePoint.workItems.length > 0 ? (
               <ul className="space-y-1 text-xs">
                 {activePoint.workItems.map((item) => (
                   <li key={item.id} className="flex items-center justify-between text-[11px] border-b border-gray-100 pb-0.5 last:border-0">
-                    <span className="font-medium text-[#172B3A] truncate max-w-[200px]" title={item.name}>
-                      <span className="font-mono text-[#0F6574] mr-1">{item.id}</span>
+                    <span className="font-medium text-[#142C3F] truncate max-w-[200px]" title={item.name}>
+                      <span className="font-mono text-[#0F6B68] mr-1">{item.id}</span>
                       {item.name}
                     </span>
                     <span className="font-mono text-[#526779] shrink-0 ml-2">
@@ -1358,7 +1358,7 @@ export function SCurveChart({
       {/* LEVEL 3 AUDIT TRAIL LEDGER */}
       {/* ========================================================= */}
       {showLedger && !isCompact && (
-        <div className="p-4 border-t border-[#D7E1E8] bg-white">
+        <div className="p-4 border-t border-[#D8E2EA] bg-white">
           <div className="flex items-center justify-between mb-2">
             <h4 className="text-xs font-semibold uppercase text-[#526779] tracking-wider">
               Level 3 — Cumulative Physical Progress Ledger (Audit Trail)
@@ -1366,10 +1366,10 @@ export function SCurveChart({
             <span className="text-[11px] text-[#7B8798]">Source: {baselineRevision} (P6 XML)</span>
           </div>
 
-          <div className="overflow-x-auto rounded border border-[#D7E1E8]">
-            <table className="w-full min-w-[720px] text-left text-sm border-collapse">
-              <thead className="sticky top-0 z-10 bg-[#F4F7FA]">
-                <tr className="bg-[#F4F7FA] text-[#172B3A] border-b border-[#D7E1E8] h-10 text-xs">
+          <div className="overflow-x-auto rounded border border-[#D8E2EA]">
+            <table className="w-full min-w-[720px] text-left text-[13px] border-collapse">
+              <thead className="sticky top-0 z-10 bg-[#F3F6FA]">
+                <tr className="bg-[#F3F6FA] text-[#142C3F] border-b border-[#D8E2EA] h-10 text-xs">
                   <th className="py-2.5 px-3 font-semibold">Period</th>
                   <th className="py-2.5 px-3 font-semibold">Cutoff Date</th>
                   <th className="py-2.5 px-3 font-semibold text-right">Planned Cum %</th>
@@ -1379,31 +1379,31 @@ export function SCurveChart({
                   <th className="py-2.5 px-3 font-semibold">Work Package / Milestone Notes</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#D7E1E8]/60 text-xs">
+              <tbody className="divide-y divide-[#D8E2EA]/60 text-[13px]">
                 {displayedData.map((row) => {
                   const varVal = row.actual !== null ? Number((row.actual - row.planned).toFixed(1)) : null;
                   const isCurrentDD = row.isDataDate;
                   return (
                     <tr
                       key={row.period}
-                      className={`hover:bg-[#F4F7FA] transition-colors ${
-                        isCurrentDD ? 'bg-[#EDF5F8] font-medium' : ''
+                      className={`hover:bg-[#F3F6FA] transition-colors ${
+                        isCurrentDD ? 'bg-[#EAF0F5] font-medium' : ''
                       }`}
                     >
                       <td className="py-2.5 px-3 whitespace-nowrap">
                         {row.period}
                         {isCurrentDD && (
-                          <span className="ml-2 inline-block px-1.5 py-0.5 rounded text-[10px] font-semibold bg-[#0F6574] text-white">
+                          <span className="ml-2 inline-block px-1.5 py-0.5 rounded text-[10px] font-semibold bg-[#0F6B68] text-white">
                             Current
                           </span>
                         )}
                       </td>
                       <td className="py-2 px-3 text-[#526779] whitespace-nowrap">{row.dateLabel}</td>
-                      <td className="py-2 px-3 font-mono text-right text-[#3D73B5] font-semibold">{row.planned.toFixed(1)}%</td>
-                      <td className="py-2 px-3 font-mono text-right text-[#187A6A] font-semibold">
+                      <td className="py-2 px-3 font-mono text-right text-[#5274B8] font-semibold">{row.planned.toFixed(1)}%</td>
+                      <td className="py-2 px-3 font-mono text-right text-[#0D8879] font-semibold">
                         {row.actual !== null ? `${row.actual.toFixed(1)}%` : '—'}
                       </td>
-                      <td className="py-2 px-3 font-mono text-right text-[#7655A6]">
+                      <td className="py-2 px-3 font-mono text-right text-[#8057B7]">
                         {row.forecast.toFixed(1)}%
                       </td>
                       <td
@@ -1411,14 +1411,14 @@ export function SCurveChart({
                           varVal === null
                             ? 'text-[#7B8798]'
                             : varVal < 0
-                            ? 'text-[#B43D47]'
-                            : 'text-[#187A6A]'
+                            ? 'text-[#A24335]'
+                            : 'text-[#0D8879]'
                         }`}
                       >
                         {varVal !== null ? (varVal > 0 ? `+${varVal}%` : `${varVal}%`) : '—'}
                       </td>
                       <td className="py-2 px-3 text-[#526779]">
-                        <span className="font-medium text-[#172B3A]">{row.milestone}</span>
+                        <span className="font-medium text-[#142C3F]">{row.milestone}</span>
                         {row.notes && <span className="block text-[11px] text-[#7B8798]">{row.notes}</span>}
                       </td>
                     </tr>

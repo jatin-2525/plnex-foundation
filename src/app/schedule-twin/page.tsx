@@ -914,11 +914,11 @@ export default function ScheduleTwinPage() {
 
   // Level Badge Helper (matching PLnEX calm neutral design system)
   const getLevelBadgeClass = (level: WBSLevel) => {
-    if (level === 'L1') return 'bg-[#172033] text-white border-[#172033] font-bold';
+    if (level === 'L1') return 'bg-[#142C3F] text-white border-[#142C3F] font-bold';
     if (['L2', 'L3', 'L4', 'L5'].includes(level)) {
-      return 'bg-[#F1F3F5] text-[#172033] border-[#D9DEE5] font-semibold';
+      return 'bg-[#EAF0F5] text-[#142C3F] border-[#D8E2EA] font-semibold';
     }
-    return 'bg-white text-[#596579] border-[#D9DEE5] font-normal';
+    return 'bg-white text-[#526779] border-[#D8E2EA] font-normal';
   };
 
   return (
@@ -931,40 +931,40 @@ export default function ScheduleTwinPage() {
         <Breadcrumbs items={breadcrumbs} />
 
         {/* 1. TOP HEADER & METADATA BAR */}
-        <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 space-y-3">
+        <div className="bg-white border border-[#D8E2EA] rounded-lg p-4 space-y-3">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
             <div>
               <div className="flex items-center gap-2 mb-1">
-                <div className="w-7 h-7 rounded bg-[#EDF5F8] flex items-center justify-center text-[#176B87]">
+                <div className="w-7 h-7 rounded bg-[#EAF0F5] flex items-center justify-center text-[#0F6B68]">
                   <Layers className="w-4 h-4" />
                 </div>
                 <div>
-                  <h1 className="text-xl font-bold text-[#172033] tracking-tight">
+                  <h1 className="text-xl font-bold text-[#142C3F] tracking-tight">
                     Schedule Twin — 2D Project-Control Timeline (CPM &amp; WBS)
                   </h1>
                 </div>
               </div>
-              <p className="text-xs text-[#596579]">
+              <p className="text-xs text-[#526779]">
                 Interactive correlation of Planned WBS (Work Breakdown Structure) Baseline, Verified Field Actuals, and Projected EAC (Estimate at Completion) Forecast.
               </p>
             </div>
 
             <div className="flex items-center gap-2 text-xs flex-wrap">
-              <span className="font-mono text-[#596579] bg-[#F7F8FA] px-3 py-1 rounded border border-[#D9DEE5]">
+              <span className="font-mono text-[#526779] bg-[#F3F6FA] px-3 py-1 rounded border border-[#D8E2EA]">
                 BASELINE: {CANONICAL_SCHEDULE_VERSION_LABEL}
               </span>
-              <span className="font-mono text-[#B5473C] font-semibold bg-[#FBEFEE] px-3 py-1 rounded border border-[#E4B0AA]">
+              <span className="font-mono text-[#A24335] font-semibold bg-[#FCE8E4] px-3 py-1 rounded border border-[#E4B0AA]">
                 DATA DATE: 18 Sep 2026
               </span>
-              <span className="font-mono text-[#172033] bg-[#F7F8FA] px-3 py-1 rounded border border-[#D9DEE5]">
+              <span className="font-mono text-[#142C3F] bg-[#F3F6FA] px-3 py-1 rounded border border-[#D8E2EA]">
                 PROJECT: {activeProject.code}
               </span>
               <button
                 type="button"
                 onClick={() => openActivityDrawer(selectedActivity.id)}
-                className="px-3 py-1 bg-white hover:bg-[#F1F3F5] text-[#172033] border border-[#D9DEE5] rounded font-medium inline-flex items-center gap-1 transition-colors shadow-2xs"
+                className="px-3 py-1 bg-white hover:bg-[#EAF0F5] text-[#142C3F] border border-[#D8E2EA] rounded font-medium inline-flex items-center gap-1 transition-colors shadow-2xs"
               >
-                <Maximize2 className="w-3.5 h-3.5 text-[#176B87]" />
+                <Maximize2 className="w-3.5 h-3.5 text-[#0F6B68]" />
                 <span>Open Activity Drawer</span>
               </button>
             </div>
@@ -974,87 +974,87 @@ export default function ScheduleTwinPage() {
         {/* 2. THREE CORE PROJECT-CONTROL SUMMARY CARDS (Planned, Actual, Forecast) */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
           {/* Card 1: What was planned? */}
-          <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 space-y-2">
+          <div className="bg-white border border-[#D8E2EA] rounded-lg p-4 space-y-2">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <span className="w-2.5 h-2.5 rounded-sm bg-[#176B87]" />
-                <h3 className="text-xs font-bold uppercase tracking-wider text-[#172033]">
+                <span className="w-2.5 h-2.5 rounded-sm bg-[#0F6B68]" />
+                <h3 className="text-xs font-bold uppercase tracking-wider text-[#142C3F]">
                   1. What Was Planned?
                 </h3>
               </div>
-              <span className="text-[10px] font-mono text-[#176B87] font-semibold bg-[#EDF5F8] px-1.5 py-0.5 rounded border border-[#C5DCE6]">
+              <span className="text-[10px] font-mono text-[#0F6B68] font-semibold bg-[#EAF0F5] px-1.5 py-0.5 rounded border border-[#C5DCE6]">
                 P6 Baseline
               </span>
             </div>
             <div className="flex items-baseline justify-between pt-1">
               <div>
-                <span className="text-2xl font-bold font-mono text-[#172033]">80.0%</span>
-                <span className="text-[11px] text-[#596579] block">Target Baseline Progress</span>
+                <span className="text-2xl font-bold font-mono text-[#142C3F]">80.0%</span>
+                <span className="text-[11px] text-[#526779] block">Target Baseline Progress</span>
               </div>
               <div className="text-right">
-                <span className="text-xs font-mono font-medium text-[#172033]">15 Dec 2026</span>
+                <span className="text-xs font-mono font-medium text-[#142C3F]">15 Dec 2026</span>
                 <span className="text-[10px] text-[#7B8798] block">Planned Target Finish</span>
               </div>
             </div>
-            <div className="p-2 bg-[#F7F8FA] border border-[#D9DEE5] rounded text-[11px] text-[#596579] space-y-0.5">
+            <div className="p-2 bg-[#F3F6FA] border border-[#D8E2EA] rounded text-[11px] text-[#526779] space-y-0.5">
               <div>• Frozen Baseline: <strong>Rev 3.2 (P6 XML)</strong></div>
               <div>• Critical Path Duration: <strong>137 calendar days</strong></div>
             </div>
           </div>
 
           {/* Card 2: What actually happened? */}
-          <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 space-y-2">
+          <div className="bg-white border border-[#D8E2EA] rounded-lg p-4 space-y-2">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <span className="w-2.5 h-2.5 rounded-sm bg-[#2E7D5B]" />
-                <h3 className="text-xs font-bold uppercase tracking-wider text-[#172033]">
+                <h3 className="text-xs font-bold uppercase tracking-wider text-[#142C3F]">
                   2. What Actually Happened?
                 </h3>
               </div>
-              <span className="text-[10px] font-mono text-[#2E7D5B] font-semibold bg-[#EDF7F2] px-1.5 py-0.5 rounded border border-[#B8DCC9]">
+              <span className="text-[10px] font-mono text-[#2E7D5B] font-semibold bg-[#E4F4EC] px-1.5 py-0.5 rounded border border-[#B8DCC9]">
                 Verified As-Built
               </span>
             </div>
             <div className="flex items-baseline justify-between pt-1">
               <div>
                 <span className="text-2xl font-bold font-mono text-[#2E7D5B]">73.0%</span>
-                <span className="text-[11px] text-[#596579] block">Verified Progress to Date</span>
+                <span className="text-[11px] text-[#526779] block">Verified Progress to Date</span>
               </div>
               <div className="text-right">
-                <span className="text-xs font-mono font-bold text-[#B5473C]">-7.0% Lag</span>
+                <span className="text-xs font-mono font-bold text-[#A24335]">-7.0% Lag</span>
                 <span className="text-[10px] text-[#7B8798] block">As of 18 Sep 2026</span>
               </div>
             </div>
-            <div className="p-2 bg-[#F7F8FA] border border-[#D9DEE5] rounded text-[11px] text-[#596579] space-y-0.5">
+            <div className="p-2 bg-[#F3F6FA] border border-[#D8E2EA] rounded text-[11px] text-[#526779] space-y-0.5">
               <div>• Field Observations: <strong>8 verified DPR entries</strong></div>
               <div>• Quality Verification: <strong>12 QA/QC evidence records</strong></div>
             </div>
           </div>
 
           {/* Card 3: What is forecast? */}
-          <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 space-y-2">
+          <div className="bg-white border border-[#D8E2EA] rounded-lg p-4 space-y-2">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <span className="w-2.5 h-2.5 rounded-sm bg-[#D98B32] border border-[#B5473C]" />
-                <h3 className="text-xs font-bold uppercase tracking-wider text-[#172033]">
+                <span className="w-2.5 h-2.5 rounded-sm bg-[#845006] border border-[#A24335]" />
+                <h3 className="text-xs font-bold uppercase tracking-wider text-[#142C3F]">
                   3. What Is Forecast?
                 </h3>
               </div>
-              <span className="text-[10px] font-mono text-[#B5473C] font-semibold bg-[#FBEFEE] px-1.5 py-0.5 rounded border border-[#E4B0AA]">
+              <span className="text-[10px] font-mono text-[#A24335] font-semibold bg-[#FCE8E4] px-1.5 py-0.5 rounded border border-[#E4B0AA]">
                 Projected EAC
               </span>
             </div>
             <div className="flex items-baseline justify-between pt-1">
               <div>
-                <span className="text-2xl font-bold font-mono text-[#B5473C]">19 Dec 2026</span>
-                <span className="text-[11px] text-[#596579] block">Forecast Finish (+4d Slip)</span>
+                <span className="text-2xl font-bold font-mono text-[#A24335]">19 Dec 2026</span>
+                <span className="text-[11px] text-[#526779] block">Forecast Finish (+4d Slip)</span>
               </div>
               <div className="text-right">
-                <span className="text-xs font-mono font-bold text-[#B5473C]">+2d Critical</span>
+                <span className="text-xs font-mono font-bold text-[#A24335]">+2d Critical</span>
                 <span className="text-[10px] text-[#7B8798] block">Line 24-XX Driving Delay</span>
               </div>
             </div>
-            <div className="p-2 bg-[#F7F8FA] border border-[#D9DEE5] rounded text-[11px] text-[#596579] space-y-0.5">
+            <div className="p-2 bg-[#F3F6FA] border border-[#D8E2EA] rounded text-[11px] text-[#526779] space-y-0.5">
               <div>• Critical Path Float: <strong>-2 days total float erosion</strong></div>
               <div>• Mitigation: <strong>Double welding crew shift from 20 Sep</strong></div>
             </div>
@@ -1062,7 +1062,7 @@ export default function ScheduleTwinPage() {
         </div>
 
         {/* 3. TIMELINE TOOLBAR & CONTROLS */}
-        <div className="bg-white border border-[#D9DEE5] rounded-lg p-3 flex flex-col md:flex-row md:items-center justify-between gap-3 text-xs">
+        <div className="bg-white border border-[#D8E2EA] rounded-lg p-3 flex flex-col md:flex-row md:items-center justify-between gap-3 text-xs">
           {/* Left: Search & Filter */}
           <div className="flex items-center gap-2 flex-wrap flex-1">
             <div className="relative min-w-[200px]">
@@ -1073,7 +1073,7 @@ export default function ScheduleTwinPage() {
                 aria-label="Filter schedule twin activities by ID, name, or WBS"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-8 pr-2.5 py-1 text-xs bg-[#F7F8FA] border border-[#D9DEE5] rounded focus:border-[#176B87] outline-none"
+                className="w-full pl-8 pr-2.5 py-1 text-xs bg-[#F3F6FA] border border-[#D8E2EA] rounded focus:border-[#0F6B68] outline-none"
               />
             </div>
 
@@ -1081,7 +1081,7 @@ export default function ScheduleTwinPage() {
               value={levelFilter}
               onChange={(e) => setLevelFilter(e.target.value as any)}
               aria-label="Filter activities by WBS level hierarchy"
-              className="px-3 py-1 bg-[#F7F8FA] border border-[#D9DEE5] rounded text-xs text-[#172033] outline-none"
+              className="px-3 py-1 bg-[#F3F6FA] border border-[#D8E2EA] rounded text-xs text-[#142C3F] outline-none"
             >
               <option value="all">All WBS Levels</option>
               <option value="L1-L2">L1 &amp; L2 Summary</option>
@@ -1090,12 +1090,12 @@ export default function ScheduleTwinPage() {
               <option value="L5-L6">L5 &amp; L6 Activities</option>
             </select>
 
-            <label className="flex items-center gap-2 cursor-pointer text-[#172033] select-none">
+            <label className="flex items-center gap-2 cursor-pointer text-[#142C3F] select-none">
               <input
                 type="checkbox"
                 checked={criticalOnly}
                 onChange={(e) => setCriticalOnly(e.target.checked)}
-                className="rounded text-[#176B87] border-[#D9DEE5] focus:ring-0"
+                className="rounded text-[#0F6B68] border-[#D8E2EA] focus:ring-0"
               />
               <span className="font-medium">Critical Path Only</span>
             </label>
@@ -1103,7 +1103,7 @@ export default function ScheduleTwinPage() {
 
           {/* Right: Time Scale Selector & Legend */}
           <div className="flex items-center gap-3 flex-wrap">
-            <div className="flex items-center border border-[#D9DEE5] rounded overflow-hidden">
+            <div className="flex items-center border border-[#D8E2EA] rounded overflow-hidden">
               <button
                 type="button"
                 onClick={() => setTimeScaleMode('execution')}
@@ -1111,8 +1111,8 @@ export default function ScheduleTwinPage() {
                 aria-pressed={timeScaleMode === 'execution'}
                 className={`px-3 py-1 text-xs font-medium transition-colors ${
                   timeScaleMode === 'execution'
-                    ? 'bg-[#176B87] text-white'
-                    : 'bg-[#F7F8FA] text-[#596579] hover:bg-[#D9DEE5]'
+                    ? 'bg-[#0F6B68] text-white'
+                    : 'bg-[#F3F6FA] text-[#526779] hover:bg-[#D8E2EA]'
                 }`}
               >
                 60-Day Lookahead (Sep–Oct)
@@ -1124,8 +1124,8 @@ export default function ScheduleTwinPage() {
                 aria-pressed={timeScaleMode === 'full'}
                 className={`px-3 py-1 text-xs font-medium transition-colors ${
                   timeScaleMode === 'full'
-                    ? 'bg-[#176B87] text-white'
-                    : 'bg-[#F7F8FA] text-[#596579] hover:bg-[#D9DEE5]'
+                    ? 'bg-[#0F6B68] text-white'
+                    : 'bg-[#F3F6FA] text-[#526779] hover:bg-[#D8E2EA]'
                 }`}
               >
                 Full Project (Aug–Dec)
@@ -1133,9 +1133,9 @@ export default function ScheduleTwinPage() {
             </div>
 
             {/* Visual Legend */}
-            <div className="flex items-center gap-3 font-mono text-[11px] text-[#596579] pl-2 border-l border-[#D9DEE5]">
+            <div className="flex items-center gap-3 font-mono text-[11px] text-[#526779] pl-2 border-l border-[#D8E2EA]">
               <div className="flex items-center gap-1">
-                <span className="w-3 h-2 bg-[#176B87] rounded-xs" />
+                <span className="w-3 h-2 bg-[#0F6B68] rounded-xs" />
                 <span>P: Planned</span>
               </div>
               <div className="flex items-center gap-1">
@@ -1143,11 +1143,11 @@ export default function ScheduleTwinPage() {
                 <span>A: Actual</span>
               </div>
               <div className="flex items-center gap-1">
-                <span className="w-3 h-2 bg-[#D98B32] border border-[#B5473C] rounded-xs" />
+                <span className="w-3 h-2 bg-[#845006] border border-[#A24335] rounded-xs" />
                 <span>F: Forecast</span>
               </div>
-              <div className="flex items-center gap-1 text-[#B5473C] font-semibold">
-                <span className="w-1.5 h-3 bg-[#B5473C] rounded-xs" />
+              <div className="flex items-center gap-1 text-[#A24335] font-semibold">
+                <span className="w-1.5 h-3 bg-[#A24335] rounded-xs" />
                 <span>Data Date</span>
               </div>
             </div>
@@ -1155,32 +1155,32 @@ export default function ScheduleTwinPage() {
         </div>
 
         {/* 4. 2D GANTT / TIMELINE VISUALIZATION TABLE */}
-        <div className="bg-white border border-[#D9DEE5] rounded-lg overflow-hidden">
+        <div className="bg-white border border-[#D8E2EA] rounded-lg overflow-hidden">
           <div className="overflow-x-auto min-w-[1040px]">
             {/* TIMELINE HEADER */}
-            <div className="flex border-b border-[#D9DEE5] bg-[#F7F8FA] select-none">
+            <div className="flex border-b border-[#D8E2EA] bg-[#F3F6FA] select-none">
               {/* Left Column Header: WBS & Activity info */}
-              <div className="w-[370px] flex-shrink-0 p-3 border-r border-[#D9DEE5] flex items-center justify-between text-xs font-bold text-[#172033]">
+              <div className="w-[370px] flex-shrink-0 p-3 border-r border-[#D8E2EA] flex items-center justify-between text-xs font-bold text-[#142C3F]">
                 <span>Activity &amp; WBS Hierarchy</span>
-                <span className="text-[10px] font-mono text-[#596579]">
+                <span className="text-[10px] font-mono text-[#526779]">
                   {filteredActivities.length} items
                 </span>
               </div>
 
               {/* Dedicated Track Column Header (P / A / F) */}
-              <div className="w-7 flex-shrink-0 border-r border-[#D9DEE5] p-2 text-center text-[10px] font-mono font-semibold text-[#596579]">
+              <div className="w-7 flex-shrink-0 border-r border-[#D8E2EA] p-2 text-center text-[10px] font-mono font-semibold text-[#526779]">
                 Trk
               </div>
 
               {/* Right Column Header: Time Axis */}
               <div className="flex-1 relative">
                 {/* Month bands */}
-                <div className="flex border-b border-[#D9DEE5] text-[11px] font-bold text-[#172033]">
+                <div className="flex border-b border-[#D8E2EA] text-[11px] font-bold text-[#142C3F]">
                   {timeAxisBands.map((band, idx) => (
                     <div
                       key={idx}
                       style={{ width: `${band.widthPct}%` }}
-                      className="py-1 px-2 border-r border-[#D9DEE5] last:border-r-0 truncate text-center"
+                      className="py-1 px-2 border-r border-[#D8E2EA] last:border-r-0 truncate text-center"
                     >
                       {band.label}
                     </div>
@@ -1188,7 +1188,7 @@ export default function ScheduleTwinPage() {
                 </div>
 
                 {/* Day/Week ticks */}
-                <div className="h-6 relative text-[10px] font-mono text-[#596579]">
+                <div className="h-6 relative text-[10px] font-mono text-[#526779]">
                   {weekTicks.map((tick, idx) => (
                     <div
                       key={idx}
@@ -1202,7 +1202,7 @@ export default function ScheduleTwinPage() {
                   {/* Top Data Date Badge - positioned right at Data Date */}
                   <div
                     style={{ left: `${dataDatePct}%` }}
-                    className="absolute top-0.5 -translate-x-1/2 bg-[#B5473C] text-white font-mono text-[9px] font-bold px-1.5 py-0.5 rounded shadow-xs z-20 pointer-events-none whitespace-nowrap"
+                    className="absolute top-0.5 -translate-x-1/2 bg-[#A24335] text-white font-mono text-[9px] font-bold px-1.5 py-0.5 rounded shadow-xs z-20 pointer-events-none whitespace-nowrap"
                   >
                     Data Date
                   </div>
@@ -1211,17 +1211,17 @@ export default function ScheduleTwinPage() {
             </div>
 
             {/* TIMELINE ROWS CONTAINER */}
-            <div role="region" aria-label="Interactive CPM Schedule Twin Gantt and Timeline View" className="divide-y divide-[#D9DEE5] relative max-h-[580px] overflow-y-auto">
+            <div role="region" aria-label="Interactive CPM Schedule Twin Gantt and Timeline View" className="divide-y divide-[#D8E2EA] relative max-h-[580px] overflow-y-auto">
               {/* Continuous Vertical Data Date Line */}
               <div
                 style={{ left: `calc(398px + (calc(100% - 398px) * ${dataDatePct} / 100))` }}
-                className="absolute top-0 bottom-0 w-0.5 bg-[#B5473C] z-10 pointer-events-none"
+                className="absolute top-0 bottom-0 w-0.5 bg-[#A24335] z-10 pointer-events-none"
               />
 
               {filteredActivities.length === 0 ? (
                 <div className="p-8 text-center bg-white">
-                  <p className="font-semibold text-sm text-[#172033]">No activities match your filters</p>
-                  <p className="text-xs text-[#596579] mt-1 max-w-sm mx-auto">
+                  <p className="font-semibold text-sm text-[#142C3F]">No activities match your filters</p>
+                  <p className="text-xs text-[#526779] mt-1 max-w-sm mx-auto">
                     None of the schedule twin activities match the current search query, WBS level, or critical path filter.
                   </p>
                   <button
@@ -1231,7 +1231,7 @@ export default function ScheduleTwinPage() {
                       setLevelFilter('all');
                       setCriticalOnly(false);
                     }}
-                    className="mt-3 text-xs font-semibold text-[#176B87] hover:underline cursor-pointer"
+                    className="mt-3 text-xs font-semibold text-[#0F6B68] hover:underline cursor-pointer"
                   >
                     Reset All Filters
                   </button>
@@ -1266,13 +1266,13 @@ export default function ScheduleTwinPage() {
                       onClick={() => setSelectedActivityId(act.id)}
                       className={`flex cursor-pointer transition-colors ${
                         isSelected
-                          ? 'bg-[#EDF5F8]/60 ring-1 ring-inset ring-[#176B87]'
-                          : 'hover:bg-[#F7F8FA]'
+                          ? 'bg-[#EAF0F5]/60 ring-1 ring-inset ring-[#0F6B68]'
+                          : 'hover:bg-[#F3F6FA]'
                       }`}
                     >
                       {/* Left Side: Activity Details */}
                       <div
-                        className="w-[370px] flex-shrink-0 p-2 border-r border-[#D9DEE5] flex items-start gap-2 min-w-0"
+                        className="w-[370px] flex-shrink-0 p-2 border-r border-[#D8E2EA] flex items-start gap-2 min-w-0"
                         style={{ paddingLeft: `${Math.max(6, (act.levelNum - 1) * 12 + 6)}px` }}
                       >
                         {/* Expand/Collapse or Leaf marker */}
@@ -1285,7 +1285,7 @@ export default function ScheduleTwinPage() {
                             }}
                             aria-label={expandedNodes[act.id] ? `Collapse WBS item ${act.id} ${act.name}` : `Expand WBS item ${act.id} ${act.name}`}
                             aria-expanded={expandedNodes[act.id]}
-                            className="w-4 h-4 mt-0.5 flex items-center justify-center rounded text-[#596579] hover:bg-[#D9DEE5] flex-shrink-0"
+                            className="w-4 h-4 mt-0.5 flex items-center justify-center rounded text-[#526779] hover:bg-[#D8E2EA] flex-shrink-0"
                           >
                             {expandedNodes[act.id] ? (
                               <ChevronDown className="w-3 h-3" />
@@ -1311,27 +1311,27 @@ export default function ScheduleTwinPage() {
                         {/* Activity ID & Name */}
                         <div className="flex-1 min-w-0 pr-1">
                           <div className="flex items-center gap-2 flex-wrap">
-                            <span className="font-mono text-[11px] font-bold text-[#172033]">
+                            <span className="font-mono text-[11px] font-bold text-[#142C3F]">
                               {act.id}
                             </span>
                             {act.isCritical && (
-                              <span className="font-mono text-[8px] font-bold text-[#B5473C] bg-[#FBEFEE] px-1 rounded border border-[#E4B0AA]">
+                              <span className="font-mono text-[8px] font-bold text-[#A24335] bg-[#FCE8E4] px-1 rounded border border-[#E4B0AA]">
                                 CRITICAL
                               </span>
                             )}
                             <StatusBadge status={act.status} size="sm" />
                           </div>
-                          <div className="text-xs text-[#172033] font-medium truncate" title={act.name}>
+                          <div className="text-xs text-[#142C3F] font-medium truncate" title={act.name}>
                             {act.name}
                           </div>
-                          <div className="flex items-center gap-2 font-mono text-[10px] text-[#596579] mt-0.5">
+                          <div className="flex items-center gap-2 font-mono text-[10px] text-[#526779] mt-0.5">
                             <span>WBS {act.wbs}</span>
                             <span>•</span>
                             <span className="truncate max-w-[140px]">{act.area}</span>
                             {act.delayDays > 0 && (
                               <>
                                 <span>•</span>
-                                <span className="font-bold text-[#B5473C]">+{act.delayDays}d slip</span>
+                                <span className="font-bold text-[#A24335]">+{act.delayDays}d slip</span>
                               </>
                             )}
                           </div>
@@ -1339,10 +1339,10 @@ export default function ScheduleTwinPage() {
                       </div>
 
                       {/* Middle: Dedicated Track Indicators (P / A / F) */}
-                      <div className="w-7 flex-shrink-0 border-r border-[#D9DEE5] py-2 flex flex-col justify-between items-center text-[9px] font-mono font-bold select-none">
-                        <span className="text-[#176B87]" title="Planned Baseline">P</span>
+                      <div className="w-7 flex-shrink-0 border-r border-[#D8E2EA] py-2 flex flex-col justify-between items-center text-[9px] font-mono font-bold select-none">
+                        <span className="text-[#0F6B68]" title="Planned Baseline">P</span>
                         <span className="text-[#2E7D5B]" title="Actual As-Built">A</span>
-                        <span className="text-[#D98B32]" title="Forecast EAC">F</span>
+                        <span className="text-[#845006]" title="Forecast EAC">F</span>
                       </div>
 
                       {/* Right Side: 2D Gantt Timeline Canvas */}
@@ -1352,7 +1352,7 @@ export default function ScheduleTwinPage() {
                           <div
                             key={idx}
                             style={{ left: `${tick.pct}%` }}
-                            className="absolute top-0 bottom-0 w-px bg-[#F1F3F5] pointer-events-none"
+                            className="absolute top-0 bottom-0 w-px bg-[#EAF0F5] pointer-events-none"
                           />
                         ))}
 
@@ -1363,7 +1363,7 @@ export default function ScheduleTwinPage() {
                               left: `${plannedLeft}%`,
                               width: `${plannedWidth}%`,
                             }}
-                            className="absolute h-3.5 bg-[#176B87] border border-[#0E4355] rounded-xs flex items-center px-1 text-white text-[9px] font-mono truncate"
+                            className="absolute h-3.5 bg-[#0F6B68] border border-[#0E4355] rounded-xs flex items-center px-1 text-white text-[9px] font-mono truncate"
                             title={`Planned: ${act.plannedStart} → ${act.plannedFinish}`}
                           >
                             {plannedWidth >= 14 ? (
@@ -1375,7 +1375,7 @@ export default function ScheduleTwinPage() {
                           {plannedWidth < 14 && (
                             <span
                               style={{ left: `calc(${plannedLeft + plannedWidth}% + 4px)` }}
-                              className="absolute text-[9px] font-mono text-[#176B87] whitespace-nowrap font-medium pointer-events-none"
+                              className="absolute text-[9px] font-mono text-[#0F6B68] whitespace-nowrap font-medium pointer-events-none"
                             >
                               {act.plannedStart} → {act.plannedFinish}
                             </span>
@@ -1417,7 +1417,7 @@ export default function ScheduleTwinPage() {
                                 left: `${plannedLeft}%`,
                                 width: `${plannedWidth}%`,
                               }}
-                              className="absolute h-3.5 border border-dashed border-[#D9DEE5] rounded-xs flex items-center px-1 text-[#7B8798] text-[9px] font-mono"
+                              className="absolute h-3.5 border border-dashed border-[#D8E2EA] rounded-xs flex items-center px-1 text-[#7B8798] text-[9px] font-mono"
                             >
                               Not Started
                             </div>
@@ -1433,8 +1433,8 @@ export default function ScheduleTwinPage() {
                             }}
                             className={`absolute h-3.5 rounded-xs flex items-center px-1 text-[9px] font-mono truncate ${
                               act.delayDays > 0
-                                ? 'bg-[#FDF6ED] text-[#B5473C] border border-[#D98B32] font-bold'
-                                : 'bg-[#F1F3F5] text-[#172033] border border-[#D9DEE5]'
+                                ? 'bg-[#FFF1D3] text-[#A24335] border border-[#845006] font-bold'
+                                : 'bg-[#EAF0F5] text-[#142C3F] border border-[#D8E2EA]'
                             }`}
                             title={`Forecast: ${act.forecastStart} → ${act.forecastFinish} (${act.delayDays > 0 ? `+${act.delayDays}d slip` : '0d variance'})`}
                           >
@@ -1448,7 +1448,7 @@ export default function ScheduleTwinPage() {
                             <span
                               style={{ left: `calc(${forecastStartPct + forecastWidth}% + 4px)` }}
                               className={`absolute text-[9px] font-mono whitespace-nowrap font-medium pointer-events-none ${
-                                act.delayDays > 0 ? 'text-[#B5473C]' : 'text-[#596579]'
+                                act.delayDays > 0 ? 'text-[#A24335]' : 'text-[#526779]'
                               }`}
                             >
                               {act.forecastFinish} {act.delayDays > 0 ? `(+${act.delayDays}d)` : '(On-track)'}
@@ -1465,24 +1465,24 @@ export default function ScheduleTwinPage() {
         </div>
 
         {/* 5. SELECTED ACTIVITY TWIN DEEP-DIVE CORRELATION PANEL */}
-        <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 space-y-4">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D9DEE5] gap-2">
+        <div className="bg-white border border-[#D8E2EA] rounded-lg p-4 sm:p-6 space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D8E2EA] gap-2">
             <div>
               <div className="flex items-center gap-2">
-                <span className="font-mono text-base font-bold text-[#176B87] bg-[#EDF5F8] px-3 py-0.5 rounded border border-[#C5DCE6]">
+                <span className="font-mono text-base font-bold text-[#0F6B68] bg-[#EAF0F5] px-3 py-0.5 rounded border border-[#C5DCE6]">
                   {selectedActivity.id}
                 </span>
-                <span className="font-mono text-xs text-[#596579] bg-[#F1F3F5] px-2 py-0.5 rounded border border-[#D9DEE5]">
+                <span className="font-mono text-xs text-[#526779] bg-[#EAF0F5] px-2 py-0.5 rounded border border-[#D8E2EA]">
                   WBS {selectedActivity.wbs} ({selectedActivity.wbsLevel})
                 </span>
                 <StatusBadge status={selectedActivity.status} size="sm" />
                 {selectedActivity.isCritical && (
-                  <span className="font-mono text-[10px] font-bold text-[#B5473C] bg-[#FBEFEE] px-1.5 py-0.5 rounded border border-[#E4B0AA]">
+                  <span className="font-mono text-[10px] font-bold text-[#A24335] bg-[#FCE8E4] px-1.5 py-0.5 rounded border border-[#E4B0AA]">
                     CRITICAL PATH
                   </span>
                 )}
               </div>
-              <h2 className="text-base font-bold text-[#172033] mt-1">
+              <h2 className="text-base font-bold text-[#142C3F] mt-1">
                 {selectedActivity.name}
               </h2>
             </div>
@@ -1492,7 +1492,7 @@ export default function ScheduleTwinPage() {
                 <button
                   type="button"
                   onClick={() => openWhyExplanation('DELAY', selectedActivity.id)}
-                  className="px-3 py-1 text-xs text-[#B5473C] bg-[#FBEFEE] hover:bg-[#F5DBD8] border border-[#E4B0AA] rounded font-semibold inline-flex items-center gap-1 transition-colors"
+                  className="px-3 py-1 text-xs text-[#A24335] bg-[#FCE8E4] hover:bg-[#F5DBD8] border border-[#E4B0AA] rounded font-semibold inline-flex items-center gap-1 transition-colors"
                 >
                   <HelpCircle className="w-3.5 h-3.5" />
                   <span>Why Slipping?</span>
@@ -1501,7 +1501,7 @@ export default function ScheduleTwinPage() {
               <button
                 type="button"
                 onClick={() => openActivityDrawer(selectedActivity.id)}
-                className="px-3 py-1 bg-[#176B87] hover:bg-[#135A72] border border-[#176B87] text-white rounded text-xs font-semibold inline-flex items-center gap-1 transition-colors shadow-xs"
+                className="px-3 py-1 bg-[#0F6B68] hover:bg-[#135A72] border border-[#0F6B68] text-white rounded text-xs font-semibold inline-flex items-center gap-1 transition-colors shadow-xs"
               >
                 <Maximize2 className="w-3.5 h-3.5" />
                 <span>Open Detail Drawer</span>
@@ -1512,80 +1512,80 @@ export default function ScheduleTwinPage() {
           {/* 3 Side-by-Side Deep-Dive Panels */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
             {/* Panel 1: What was planned? */}
-            <div className="p-4 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg space-y-2">
-              <div className="flex items-center justify-between pb-2 border-b border-[#D9DEE5]">
-                <span className="font-bold uppercase tracking-wider text-[#172033]">
+            <div className="p-4 bg-[#F3F6FA] border border-[#D8E2EA] rounded-lg space-y-2">
+              <div className="flex items-center justify-between pb-2 border-b border-[#D8E2EA]">
+                <span className="font-bold uppercase tracking-wider text-[#142C3F]">
                   1. What Was Planned?
                 </span>
-                <span className="font-mono text-[10px] text-[#176B87] font-semibold">P6 Baseline</span>
+                <span className="font-mono text-[10px] text-[#0F6B68] font-semibold">P6 Baseline</span>
               </div>
               <div className="space-y-2 font-mono">
                 <div className="flex justify-between">
-                  <span className="text-[#596579]">Planned Dates:</span>
-                  <span className="font-bold text-[#172033]">
+                  <span className="text-[#526779]">Planned Dates:</span>
+                  <span className="font-bold text-[#142C3F]">
                     {selectedActivity.plannedStart} → {selectedActivity.plannedFinish}
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-[#596579]">Planned Scope:</span>
-                  <span className="font-bold text-[#172033]">
+                  <span className="text-[#526779]">Planned Scope:</span>
+                  <span className="font-bold text-[#142C3F]">
                     {selectedActivity.plannedQuantity} {selectedActivity.unit}
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-[#596579]">Target Progress:</span>
-                  <span className="font-bold text-[#172033]">{selectedActivity.plannedProgress}%</span>
+                  <span className="text-[#526779]">Target Progress:</span>
+                  <span className="font-bold text-[#142C3F]">{selectedActivity.plannedProgress}%</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-[#596579]">Total Float:</span>
-                  <span className="font-bold text-[#172033]">
+                  <span className="text-[#526779]">Total Float:</span>
+                  <span className="font-bold text-[#142C3F]">
                     {selectedActivity.isCritical ? '0d (Critical)' : '4d float'}
                   </span>
                 </div>
               </div>
-              <p className="text-[11px] text-[#596579] pt-1 border-t border-[#D9DEE5]">
+              <p className="text-[11px] text-[#526779] pt-1 border-t border-[#D8E2EA]">
                 {selectedActivity.description}
               </p>
             </div>
 
             {/* Panel 2: What actually happened? */}
-            <div className="p-4 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg space-y-2">
-              <div className="flex items-center justify-between pb-2 border-b border-[#D9DEE5]">
-                <span className="font-bold uppercase tracking-wider text-[#172033]">
+            <div className="p-4 bg-[#F3F6FA] border border-[#D8E2EA] rounded-lg space-y-2">
+              <div className="flex items-center justify-between pb-2 border-b border-[#D8E2EA]">
+                <span className="font-bold uppercase tracking-wider text-[#142C3F]">
                   2. What Actually Happened?
                 </span>
                 <span className="font-mono text-[10px] text-[#2E7D5B] font-semibold">Field As-Built</span>
               </div>
               <div className="space-y-2 font-mono">
                 <div className="flex justify-between">
-                  <span className="text-[#596579]">Actual Start:</span>
-                  <span className="font-bold text-[#172033]">
+                  <span className="text-[#526779]">Actual Start:</span>
+                  <span className="font-bold text-[#142C3F]">
                     {selectedActivity.actualStart || 'Not Started'}
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-[#596579]">Actual Finish:</span>
-                  <span className="font-bold text-[#172033]">
+                  <span className="text-[#526779]">Actual Finish:</span>
+                  <span className="font-bold text-[#142C3F]">
                     {selectedActivity.actualFinish || 'In Progress'}
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-[#596579]">Verified Progress:</span>
+                  <span className="text-[#526779]">Verified Progress:</span>
                   <span className="font-bold text-[#2E7D5B]">{selectedActivity.actualProgress}%</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-[#596579]">Executed Quantity:</span>
-                  <span className="font-bold text-[#172033]">
+                  <span className="text-[#526779]">Executed Quantity:</span>
+                  <span className="font-bold text-[#142C3F]">
                     {selectedActivity.actualQuantity} {selectedActivity.unit}
                   </span>
                 </div>
               </div>
 
               {/* Linked Evidence Count */}
-              <div className="pt-2 border-t border-[#D9DEE5] space-y-2">
+              <div className="pt-2 border-t border-[#D8E2EA] space-y-2">
                 <div className="flex items-center justify-between text-[11px]">
-                  <span className="text-[#596579]">Linked QA/QC Evidence:</span>
-                  <span className="font-mono font-bold text-[#172033]">
+                  <span className="text-[#526779]">Linked QA/QC Evidence:</span>
+                  <span className="font-mono font-bold text-[#142C3F]">
                     {linkedEvidence.length} items
                   </span>
                 </div>
@@ -1594,15 +1594,15 @@ export default function ScheduleTwinPage() {
                     {linkedEvidence.slice(0, 2).map((item) => (
                       <div
                         key={item.id}
-                        className="p-2 bg-white border border-[#D9DEE5] rounded flex items-center justify-between text-[10px]"
+                        className="p-2 bg-white border border-[#D8E2EA] rounded flex items-center justify-between text-[10px]"
                       >
-                        <span className="truncate max-w-[170px] text-[#172033] font-medium">
+                        <span className="truncate max-w-[170px] text-[#142C3F] font-medium">
                           {item.title}
                         </span>
                         <button
                           type="button"
                           onClick={() => setSelectedEvidenceForModal(item)}
-                          className="text-[#176B87] hover:underline font-bold"
+                          className="text-[#0F6B68] hover:underline font-bold"
                         >
                           View
                         </button>
@@ -1614,44 +1614,44 @@ export default function ScheduleTwinPage() {
             </div>
 
             {/* Panel 3: What is forecast? */}
-            <div className="p-4 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg space-y-2">
-              <div className="flex items-center justify-between pb-2 border-b border-[#D9DEE5]">
-                <span className="font-bold uppercase tracking-wider text-[#172033]">
+            <div className="p-4 bg-[#F3F6FA] border border-[#D8E2EA] rounded-lg space-y-2">
+              <div className="flex items-center justify-between pb-2 border-b border-[#D8E2EA]">
+                <span className="font-bold uppercase tracking-wider text-[#142C3F]">
                   3. What Is Forecast?
                 </span>
-                <span className="font-mono text-[10px] text-[#B5473C] font-semibold">Projected EAC</span>
+                <span className="font-mono text-[10px] text-[#A24335] font-semibold">Projected EAC</span>
               </div>
               <div className="space-y-2 font-mono">
                 <div className="flex justify-between">
-                  <span className="text-[#596579]">Forecast Finish:</span>
-                  <span className={`font-bold ${selectedActivity.delayDays > 0 ? 'text-[#B5473C]' : 'text-[#172033]'}`}>
+                  <span className="text-[#526779]">Forecast Finish:</span>
+                  <span className={`font-bold ${selectedActivity.delayDays > 0 ? 'text-[#A24335]' : 'text-[#142C3F]'}`}>
                     {selectedActivity.forecastFinish}
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-[#596579]">Schedule Variance:</span>
+                  <span className="text-[#526779]">Schedule Variance:</span>
                   <VarianceBadge daysDelay={selectedActivity.delayDays} size="sm" />
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-[#596579]">Float Erosion:</span>
-                  <span className="font-bold text-[#B5473C]">
+                  <span className="text-[#526779]">Float Erosion:</span>
+                  <span className="font-bold text-[#A24335]">
                     {selectedActivity.delayDays > 0 ? `-${selectedActivity.delayDays}d` : '0d'}
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-[#596579]">Successors:</span>
-                  <span className="text-[#172033] truncate max-w-[150px]">
+                  <span className="text-[#526779]">Successors:</span>
+                  <span className="text-[#142C3F] truncate max-w-[150px]">
                     {selectedActivity.successors.join(', ') || 'None'}
                   </span>
                 </div>
               </div>
 
               {selectedActivity.delayDays > 0 ? (
-                <div className="p-2 bg-[#FBEFEE] border border-[#E4B0AA] rounded text-[11px] text-[#B5473C] mt-2">
+                <div className="p-2 bg-[#FCE8E4] border border-[#E4B0AA] rounded text-[11px] text-[#A24335] mt-2">
                   <strong>Critical Float Erosion:</strong> A +{selectedActivity.delayDays}-day slip directly pushes downstream successor {selectedActivity.successors[0] || 'workfront'}.
                 </div>
               ) : (
-                <div className="p-2 bg-[#EDF7F2] border border-[#B8DCC9] rounded text-[11px] text-[#2E7D5B] mt-2">
+                <div className="p-2 bg-[#E4F4EC] border border-[#B8DCC9] rounded text-[11px] text-[#2E7D5B] mt-2">
                   <strong>On Schedule:</strong> Zero float erosion. Proceeding according to master baseline logic.
                 </div>
               )}
@@ -1671,24 +1671,24 @@ export default function ScheduleTwinPage() {
               <button
                 type="button"
                 onClick={() => setSelectedEvidenceForModal(null)}
-                className="px-3 py-1.5 text-xs text-[#172033] bg-[#F7F8FA] hover:bg-[#D9DEE5] border border-[#D9DEE5] rounded"
+                className="px-3 py-1.5 text-xs text-[#142C3F] bg-[#F3F6FA] hover:bg-[#D8E2EA] border border-[#D8E2EA] rounded"
               >
                 Close
               </button>
             }
           >
             <div className="space-y-3 text-xs">
-              <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded space-y-2">
+              <div className="p-3 bg-[#F3F6FA] border border-[#D8E2EA] rounded space-y-2">
                 <div className="flex justify-between">
-                  <span className="text-[#596579]">File Size:</span>
+                  <span className="text-[#526779]">File Size:</span>
                   <span className="font-mono">{selectedEvidenceForModal.fileSize}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-[#596579]">Uploader:</span>
+                  <span className="text-[#526779]">Uploader:</span>
                   <strong>{selectedEvidenceForModal.uploader}</strong>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-[#596579]">Timestamp:</span>
+                  <span className="text-[#526779]">Timestamp:</span>
                   <span className="font-mono">{selectedEvidenceForModal.timestamp}</span>
                 </div>
                 {selectedEvidenceForModal.gpsCoords && (
@@ -1700,9 +1700,9 @@ export default function ScheduleTwinPage() {
               </div>
 
               {selectedEvidenceForModal.notes && (
-                <div className="p-3 bg-white border border-[#D9DEE5] rounded">
-                  <strong className="text-[#172033] block mb-1">Inspector Notes:</strong>
-                  <p className="text-[#596579]">{selectedEvidenceForModal.notes}</p>
+                <div className="p-3 bg-white border border-[#D8E2EA] rounded">
+                  <strong className="text-[#142C3F] block mb-1">Inspector Notes:</strong>
+                  <p className="text-[#526779]">{selectedEvidenceForModal.notes}</p>
                 </div>
               )}
             </div>

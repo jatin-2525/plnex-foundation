@@ -31,20 +31,20 @@ export function ConfirmationDialog({
     switch (variant) {
       case 'critical':
         return (
-          <div className="w-10 h-10 rounded-lg bg-[#FBEFEE] border border-[#E4B0AA] flex items-center justify-center text-[#B5473C] flex-shrink-0">
+          <div className="w-10 h-10 rounded-lg bg-[#FCE8E4] border border-[#E4B0AA] flex items-center justify-center text-[#A24335] flex-shrink-0">
             <AlertCircle className="w-5 h-5" />
           </div>
         );
       case 'warning':
         return (
-          <div className="w-10 h-10 rounded-lg bg-[#FDF6ED] border border-[#F0D4A6] flex items-center justify-center text-[#8C5311] flex-shrink-0">
+          <div className="w-10 h-10 rounded-lg bg-[#FFF1D3] border border-[#F0D4A6] flex items-center justify-center text-[#8C5311] flex-shrink-0">
             <AlertTriangle className="w-5 h-5" />
           </div>
         );
       case 'primary':
       default:
         return (
-          <div className="w-10 h-10 rounded-lg bg-[#EDF5F8] border border-[#B3CBE0] flex items-center justify-center text-[#176B87] flex-shrink-0">
+          <div className="w-10 h-10 rounded-lg bg-[#EAF0F5] border border-[#D8E2EA] flex items-center justify-center text-[#0F6B68] flex-shrink-0">
             <Info className="w-5 h-5" />
           </div>
         );
@@ -54,12 +54,12 @@ export function ConfirmationDialog({
   const getConfirmButtonClasses = () => {
     switch (variant) {
       case 'critical':
-        return 'bg-[#B5473C] hover:bg-[#973930] text-white';
+        return 'bg-[#A24335] hover:bg-[#973930] text-white';
       case 'warning':
-        return 'bg-[#D98B32] hover:bg-[#B77226] text-white';
+        return 'bg-[#845006] hover:bg-[#B77226] text-white';
       case 'primary':
       default:
-        return 'bg-[#176B87] hover:bg-[#135A72] text-white';
+        return 'bg-[#0F6B68] hover:bg-[#135A72] text-white';
     }
   };
 
@@ -75,7 +75,7 @@ export function ConfirmationDialog({
             type="button"
             onClick={onClose}
             disabled={isLoading}
-            className="px-4 py-2 text-sm font-medium text-[#596579] hover:text-[#172033] hover:bg-[#F1F3F5] rounded-md transition-colors border border-[#D9DEE5]"
+            className="px-4 py-2 text-sm font-medium text-[#526779] hover:text-[#142C3F] hover:bg-[#EAF0F5] rounded-md transition-colors border border-[#D8E2EA]"
           >
             {cancelLabel}
           </button>
@@ -93,7 +93,7 @@ export function ConfirmationDialog({
     >
       <div className="flex items-start gap-4 py-2">
         {getIcon()}
-        <div className="text-sm text-[#596579] leading-relaxed">
+        <div className="text-sm text-[#526779] leading-relaxed">
           {message}
         </div>
       </div>

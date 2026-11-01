@@ -94,7 +94,7 @@ export function ConfidenceBlock({
 
   const containerStyle =
     variant === 'card'
-      ? 'p-4 bg-white border border-[#D9DEE5] rounded-lg shadow-2xs space-y-3'
+      ? 'p-4 bg-white border border-[#D8E2EA] rounded-lg shadow-2xs space-y-3'
       : 'space-y-3';
 
   return (
@@ -111,15 +111,15 @@ export function ConfidenceBlock({
               isHigh
                 ? 'bg-[#2E7D5B]'
                 : isMedium
-                ? 'bg-[#D98B32]'
-                : 'bg-[#B5473C]'
+                ? 'bg-[#845006]'
+                : 'bg-[#A24335]'
             }`}
             aria-hidden="true"
           />
 
           {/* Simple text score + status label */}
           <div className="flex items-baseline gap-2">
-            <span className="font-mono text-xl sm:text-2xl font-bold text-[#172033]">
+            <span className="font-mono text-xl sm:text-2xl font-bold text-[#142C3F]">
               {score}%
             </span>
             <span
@@ -128,7 +128,7 @@ export function ConfidenceBlock({
                   ? 'text-[#2E7D5B]'
                   : isMedium
                   ? 'text-[#8C5311]'
-                  : 'text-[#B5473C]'
+                  : 'text-[#A24335]'
               }`}
             >
               {isHigh
@@ -151,9 +151,9 @@ export function ConfidenceBlock({
 
       {/* HIGH CONFIDENCE (>= 90%): Why? + 4 checkmarks */}
       {isHigh && (
-        <div className="pt-2 border-t border-[#D9DEE5] space-y-2">
+        <div className="pt-2 border-t border-[#D8E2EA] space-y-2">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-[#172033] uppercase tracking-wider">
+            <span className="text-xs font-bold text-[#142C3F] uppercase tracking-wider">
               Why?
             </span>
             <span className="text-[11px] text-[#2E7D5B] font-medium">
@@ -165,12 +165,12 @@ export function ConfidenceBlock({
             {effectiveFactors.map((factor, idx) => (
               <li
                 key={idx}
-                className="flex items-center gap-2 p-2 rounded bg-[#F7FBF9] border border-[#D1EADC] text-[#172033]"
+                className="flex items-center gap-2 p-2 rounded bg-[#F7FBF9] border border-[#D1EADC] text-[#142C3F]"
               >
-                <span className="w-4 h-4 rounded-full bg-[#EDF7F2] text-[#2E7D5B] flex items-center justify-center shrink-0">
+                <span className="w-4 h-4 rounded-full bg-[#E4F4EC] text-[#2E7D5B] flex items-center justify-center shrink-0">
                   <Check className="w-3 h-3 stroke-[3]" />
                 </span>
-                <span className="font-medium text-[#172033]">{factor.label}</span>
+                <span className="font-medium text-[#142C3F]">{factor.label}</span>
               </li>
             ))}
           </ul>
@@ -179,9 +179,9 @@ export function ConfidenceBlock({
 
       {/* MEDIUM CONFIDENCE (70% - 89%): Show alternative activities */}
       {isMedium && (
-        <div className="pt-2 border-t border-[#D9DEE5] space-y-2">
+        <div className="pt-2 border-t border-[#D8E2EA] space-y-2">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-[#172033] uppercase tracking-wider">
+            <span className="text-xs font-bold text-[#142C3F] uppercase tracking-wider">
               Alternative Activities
             </span>
             <span className="text-[11px] text-[#8C5311] font-semibold">
@@ -193,11 +193,11 @@ export function ConfidenceBlock({
             {effectiveAlternatives.map((alt) => (
               <div
                 key={alt.activityId}
-                className="p-3 rounded-lg border border-[#D9DEE5] bg-[#FDFDFD] hover:border-[#176B87] hover:bg-white transition-colors flex items-center justify-between gap-2 text-xs"
+                className="p-3 rounded-lg border border-[#D8E2EA] bg-[#FDFDFD] hover:border-[#0F6B68] hover:bg-white transition-colors flex items-center justify-between gap-2 text-xs"
               >
                 <div className="min-w-0 space-y-0.5">
                   <div className="flex items-center gap-2 flex-wrap">
-                    <span className="font-mono font-bold text-[#176B87]">
+                    <span className="font-mono font-bold text-[#0F6B68]">
                       {alt.activityId}
                     </span>
                     {alt.confidence !== undefined && (
@@ -209,11 +209,11 @@ export function ConfidenceBlock({
                       </span>
                     )}
                   </div>
-                  <div className="text-xs text-[#172033] font-medium truncate">
+                  <div className="text-xs text-[#142C3F] font-medium truncate">
                     {alt.activityName}
                   </div>
                   {alt.reasons && alt.reasons.length > 0 && (
-                    <div className="text-[10px] text-[#596579] truncate">
+                    <div className="text-[10px] text-[#526779] truncate">
                       {alt.reasons.join(' · ')}
                     </div>
                   )}
@@ -223,7 +223,7 @@ export function ConfidenceBlock({
                   <button
                     type="button"
                     onClick={() => onSelectAlternative(alt.activityId)}
-                    className="px-3 py-1 bg-[#172033] hover:bg-[#0E1524] text-white rounded text-[11px] font-semibold shrink-0 transition-colors shadow-2xs"
+                    className="px-3 py-1 bg-[#142C3F] hover:bg-[#0E1524] text-white rounded text-[11px] font-semibold shrink-0 transition-colors shadow-2xs"
                   >
                     Select
                   </button>
@@ -236,12 +236,12 @@ export function ConfidenceBlock({
 
       {/* LOW CONFIDENCE (< 70%): Explain that no sufficiently strong match exists */}
       {isLow && (
-        <div className="pt-2 border-t border-[#D9DEE5] space-y-2">
-          <div className="flex items-center gap-2 text-xs font-bold text-[#B5473C]">
-            <XCircle className="w-4 h-4 shrink-0 text-[#B5473C]" />
+        <div className="pt-2 border-t border-[#D8E2EA] space-y-2">
+          <div className="flex items-center gap-2 text-xs font-bold text-[#A24335]">
+            <XCircle className="w-4 h-4 shrink-0 text-[#A24335]" />
             <span>No sufficiently strong match exists</span>
           </div>
-          <p className="text-xs text-[#596579] leading-relaxed">
+          <p className="text-xs text-[#526779] leading-relaxed">
             {unmatchedExplanation ||
               `The match confidence of ${score}% falls below the 70% threshold required for automated schedule association. Work does not directly map to an active baseline activity. Manual WBS activity assignment is required.`}
           </p>

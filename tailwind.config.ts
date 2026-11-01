@@ -11,51 +11,79 @@ const config: Config = {
       colors: {
         plnex: {
           bg: {
-            page: '#F7F8FA',
+            page: '#F3F6FA',
             surface: '#FFFFFF',
             surfaceRaised: '#FFFFFF',
-            surfaceSunken: '#F1F3F5',
-            overlay: 'rgba(23, 32, 51, 0.4)'
+            surfaceSunken: '#EAF0F5',
+            overlay: 'rgba(20, 44, 63, 0.4)'
           },
           text: {
-            primary: '#172033',
-            secondary: '#596579',
-            muted: '#7B8798',
-            tertiary: '#7B8798',
+            primary: '#142C3F',
+            secondary: '#526779',
+            muted: '#526779',
+            tertiary: '#526779',
             disabled: '#A0ABBA',
             inverse: '#FFFFFF',
-            link: '#176B87'
+            link: '#4066C8'
           },
           accent: {
-            primary: '#176B87',
-            primaryHover: '#135A72',
-            primaryActive: '#0F4A5E'
+            primary: '#0F6B68',
+            primaryHover: '#0C5754',
+            primaryActive: '#094341'
+          },
+          brand: {
+            primary: '#0F6B68',
+            link: '#4066C8',
+            warm: '#C98925',
+            forecast: '#8057B7'
           },
           status: {
-            success: '#2E7D5B',
-            successBg: '#EDF7F2',
-            successBorder: '#B8DCC9',
-            warning: '#D98B32',
-            warningBg: '#FDF6ED',
-            warningBorder: '#F0D4A6',
-            critical: '#B5473C',
-            criticalBg: '#FBEFEE',
-            criticalBorder: '#E4B0AA',
-            info: '#3B6EA8',
-            infoBg: '#EDF5F8',
-            infoBorder: '#B3CBE0'
+            verified: '#176B53',
+            verifiedBg: '#E4F4EC',
+            verifiedBorder: '#BDE4D0',
+            onTrack: '#176F7A',
+            onTrackBg: '#E2F2F4',
+            onTrackBorder: '#BCE1E5',
+            atRisk: '#845006',
+            atRiskBg: '#FFF1D3',
+            atRiskBorder: '#F8DDA2',
+            delayed: '#A24335',
+            delayedBg: '#FCE8E4',
+            delayedBorder: '#F6C7BE',
+            blocked: '#8D3143',
+            blockedBg: '#F8E6EA',
+            blockedBorder: '#EEC4CE',
+            pendingReview: '#3B55A3',
+            pendingReviewBg: '#E9EEFF',
+            pendingReviewBorder: '#C5D2FC',
+            unmatched: '#66528F',
+            unmatchedBg: '#F0EBF8',
+            unmatchedBorder: '#DACFF0',
+            // Aliases
+            success: '#176B53',
+            successBg: '#E4F4EC',
+            successBorder: '#BDE4D0',
+            warning: '#845006',
+            warningBg: '#FFF1D3',
+            warningBorder: '#F8DDA2',
+            critical: '#A24335',
+            criticalBg: '#FCE8E4',
+            criticalBorder: '#F6C7BE',
+            info: '#3B55A3',
+            infoBg: '#E9EEFF',
+            infoBorder: '#C5D2FC'
           },
           border: {
-            default: '#D9DEE5',
-            strong: '#7B8798',
-            focus: '#176B87',
-            subtle: '#E8EBF0'
+            default: '#D8E2EA',
+            strong: '#526779',
+            focus: '#0F6B68',
+            subtle: '#D8E2EA'
           },
           interactive: {
-            hover: '#F1F3F5',
-            active: '#E8EBF0',
-            selected: '#EDF5F8',
-            selectedStrong: '#D6EBF0'
+            hover: '#EAF0F5',
+            active: '#D8E2EA',
+            selected: '#EAF0F5',
+            selectedStrong: '#DCE7EE'
           }
         }
       },
@@ -68,8 +96,15 @@ const config: Config = {
         'content': '84rem',
       },
       fontFamily: {
-        sans: ["'Inter'", "system-ui", "-apple-system", "BlinkMacSystemFont", "'Segoe UI'", "Roboto", "'Helvetica Neue'", "Arial", "sans-serif"],
-        mono: ["'JetBrains Mono'", "'Cascadia Code'", "Consolas", "monospace"],
+        sans: ["'Manrope'", "system-ui", "-apple-system", "BlinkMacSystemFont", "'Segoe UI'", "Roboto", "sans-serif"],
+        mono: ["'IBM Plex Mono'", "'Cascadia Code'", "Consolas", "monospace"],
+      },
+      fontSize: {
+        'page-title': ['1.875rem', { lineHeight: '2.25rem', fontWeight: '700' }], // 30px (28-32px)
+        'section-heading': ['1.25rem', { lineHeight: '1.75rem', fontWeight: '600' }], // 20px (18-20px)
+        'body': ['0.9375rem', { lineHeight: '1.5rem', fontWeight: '400' }], // 15px (14-16px)
+        'table-dense': ['0.8125rem', { lineHeight: '1.25rem', fontWeight: '500' }], // 13px (at least 13px)
+        'tech-id': ['0.8125rem', { lineHeight: '1.25rem', fontWeight: '600' }], // 13px IBM Plex Mono
       },
       borderRadius: {
         none: '0',

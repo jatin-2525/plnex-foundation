@@ -27,10 +27,10 @@ function ToastItem({ toast, onDismiss }: { toast: ToastMessage; onDismiss: () =>
       case 'success':
         return <CheckCircle2 className="w-5 h-5 text-[#2E7D5B] flex-shrink-0" />;
       case 'warning':
-        return <AlertTriangle className="w-5 h-5 text-[#D98B32] flex-shrink-0" />;
+        return <AlertTriangle className="w-5 h-5 text-[#845006] flex-shrink-0" />;
       case 'critical':
       case 'error':
-        return <AlertCircle className="w-5 h-5 text-[#B5473C] flex-shrink-0" />;
+        return <AlertCircle className="w-5 h-5 text-[#A24335] flex-shrink-0" />;
       case 'info':
       default:
         return <Info className="w-5 h-5 text-[#3B6EA8] flex-shrink-0" />;
@@ -48,7 +48,7 @@ function ToastItem({ toast, onDismiss }: { toast: ToastMessage; onDismiss: () =>
         return 'border-[#E4B0AA]';
       case 'info':
       default:
-        return 'border-[#B3CBE0]';
+        return 'border-[#D8E2EA]';
     }
   };
 
@@ -58,14 +58,14 @@ function ToastItem({ toast, onDismiss }: { toast: ToastMessage; onDismiss: () =>
     >
       {getIcon()}
       <div className="flex-1 text-xs">
-        <p className="font-semibold text-[#172033]">{toast.title}</p>
+        <p className="font-semibold text-[#142C3F]">{toast.title}</p>
         {toast.description && (
-          <p className="text-[#596579] mt-0.5 leading-relaxed">{toast.description}</p>
+          <p className="text-[#526779] mt-0.5 leading-relaxed">{toast.description}</p>
         )}
       </div>
       <button
         onClick={onDismiss}
-        className="text-[#7B8798] hover:text-[#172033] p-0.5 rounded transition-colors"
+        className="text-[#7B8798] hover:text-[#142C3F] p-0.5 rounded transition-colors"
         aria-label="Dismiss toast"
       >
         <X className="w-4 h-4" />

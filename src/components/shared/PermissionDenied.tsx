@@ -20,23 +20,23 @@ export function PermissionDenied({
 }: PermissionDeniedProps) {
   return (
     <div
-      className={`bg-white border border-[#D9DEE5] rounded-lg p-8 md:p-12 flex flex-col items-center text-center ${className}`}
+      className={`bg-white border border-[#D8E2EA] rounded-lg p-8 md:p-12 flex flex-col items-center text-center ${className}`}
     >
-      <div className="w-12 h-12 rounded-lg bg-[#FDF6ED] border border-[#F0D4A6] flex items-center justify-center text-[#8C5311] mb-4">
+      <div className="w-12 h-12 rounded-lg bg-[#FFF1D3] border border-[#F0D4A6] flex items-center justify-center text-[#8C5311] mb-4">
         <ShieldAlert className="w-6 h-6" />
       </div>
-      <h3 className="text-base font-semibold text-[#172033] mb-2">
+      <h3 className="text-base font-semibold text-[#142C3F] mb-2">
         Access Restricted — Project Controls Policy
       </h3>
-      <p className="text-sm text-[#596579] max-w-md mb-4 leading-relaxed">
+      <p className="text-sm text-[#526779] max-w-md mb-4 leading-relaxed">
         {message}
       </p>
 
       <div className="flex flex-wrap items-center justify-center gap-2 mb-6">
-        <span className="px-3 py-1 bg-[#F1F3F5] border border-[#D9DEE5] rounded text-xs font-mono text-[#172033]">
+        <span className="px-3 py-1 bg-[#EAF0F5] border border-[#D8E2EA] rounded text-xs font-mono text-[#142C3F]">
           Current Role: <strong className="uppercase">{role}</strong>
         </span>
-        <span className="px-3 py-1 bg-[#FDF6ED] border border-[#F0D4A6] rounded text-xs font-mono text-[#8C5311]">
+        <span className="px-3 py-1 bg-[#FFF1D3] border border-[#F0D4A6] rounded text-xs font-mono text-[#8C5311]">
           Required: <code className="font-semibold">{requiredPermission}</code>
         </span>
       </div>
@@ -44,9 +44,9 @@ export function PermissionDenied({
       {onGoBack && (
         <button
           onClick={onGoBack}
-          className="inline-flex items-center gap-2 px-4 py-2 bg-white hover:bg-[#F1F3F5] text-[#172033] border border-[#D9DEE5] text-sm font-medium rounded-md transition-colors"
+          className="inline-flex items-center gap-2 px-4 py-2 bg-white hover:bg-[#EAF0F5] text-[#142C3F] border border-[#D8E2EA] text-sm font-medium rounded-md transition-colors"
         >
-          <ArrowLeft className="w-4 h-4 text-[#596579]" />
+          <ArrowLeft className="w-4 h-4 text-[#526779]" />
           Return to Overview
         </button>
       )}

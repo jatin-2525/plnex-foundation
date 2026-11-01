@@ -527,14 +527,14 @@ export default function ExecutionIntelligencePage() {
       case 'Matched':
         return 'border-l-4 border-l-[#2E7D5B]';
       case 'Needs Review':
-        return 'border-l-4 border-l-[#D98B32]';
+        return 'border-l-4 border-l-[#845006]';
       case 'Conflict':
       case 'Duplicate':
       case 'Stale':
-        return 'border-l-4 border-l-[#B5473C]';
+        return 'border-l-4 border-l-[#A24335]';
       case 'Unmatched':
       default:
-        return 'border-l-4 border-l-[#596579]';
+        return 'border-l-4 border-l-[#526779]';
     }
   };
 
@@ -549,23 +549,23 @@ export default function ExecutionIntelligencePage() {
         <Breadcrumbs items={breadcrumbs} />
 
         {/* PAGE HEADER */}
-        <div className="bg-white border border-[#D9DEE5] border-l-4 border-l-[#176B87] rounded-lg p-4 sm:p-6 shadow-xs">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-[#D9DEE5]/60">
+        <div className="bg-white border border-[#D8E2EA] border-l-4 border-l-[#0F6B68] rounded-lg p-4 sm:p-6 shadow-xs">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-[#D8E2EA]/60">
             <div>
               <div className="flex items-center gap-2 mb-1 flex-wrap">
-                <span className="inline-flex items-center gap-2 px-3 py-0.5 rounded text-[11px] font-bold tracking-wider uppercase bg-[#176B87]/10 text-[#176B87]">
+                <span className="inline-flex items-center gap-2 px-3 py-0.5 rounded text-[11px] font-bold tracking-wider uppercase bg-[#0F6B68]/10 text-[#0F6B68]">
                   <Cpu className="w-3.5 h-3.5" />
                   Project Controls Intelligence
                 </span>
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-medium bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]">
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-medium bg-[#E4F4EC] text-[#2E7D5B] border border-[#B8DCC9]">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#2E7D5B]" />
                   Deterministic WBS Linking
                 </span>
               </div>
-              <h1 className="text-[28px] sm:text-3xl font-bold text-[#172033] tracking-tight">
+              <h1 className="text-[28px] sm:text-3xl font-bold text-[#142C3F] tracking-tight">
                 Execution Intelligence
               </h1>
-              <p className="text-xs sm:text-sm text-[#596579] mt-0.5">
+              <p className="text-xs sm:text-sm text-[#526779] mt-0.5">
                 First-class execution events linking site observations to schedule activities through distinct extraction, matching, and verification stages.
               </p>
             </div>
@@ -574,14 +574,14 @@ export default function ExecutionIntelligencePage() {
             <div className="flex items-center gap-2 flex-wrap">
               <Link
                 href="/field/capture"
-                className="min-h-[44px] inline-flex items-center gap-2 px-3.5 py-2 text-xs font-semibold text-[#172033] bg-white border border-[#D9DEE5] hover:bg-[#F1F3F5] rounded-lg transition-colors shadow-2xs"
+                className="min-h-[44px] inline-flex items-center gap-2 px-3.5 py-2 text-xs font-semibold text-[#142C3F] bg-white border border-[#D8E2EA] hover:bg-[#EAF0F5] rounded-lg transition-colors shadow-2xs"
               >
-                <Camera className="w-3.5 h-3.5 text-[#176B87]" />
+                <Camera className="w-3.5 h-3.5 text-[#0F6B68]" />
                 <span>Field Capture</span>
               </Link>
               <Link
                 href="/review"
-                className="min-h-[44px] inline-flex items-center gap-2 px-4 py-2 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] rounded-lg shadow-xs transition-colors"
+                className="min-h-[44px] inline-flex items-center gap-2 px-4 py-2 text-xs font-bold text-white bg-[#0F6B68] hover:bg-[#135A72] rounded-lg shadow-xs transition-colors"
               >
                 <ShieldCheck className="w-3.5 h-3.5" />
                 <span>Review Queue</span>
@@ -591,50 +591,50 @@ export default function ExecutionIntelligencePage() {
 
           {/* VISUAL SEPARATION OF CONCEPTS (Pipeline Definition Strip) */}
           <div className="pt-4">
-            <div className="text-[10px] font-semibold uppercase tracking-wider text-[#596579] mb-2 flex items-center justify-between">
-              <span className="font-bold text-[#172033]">Three Separated Project-Control Stages (Auditable Lifecycle Flow)</span>
-              <span className="font-mono text-[#176B87] font-bold">Canonical Flow: Extraction → Matching → Verification</span>
+            <div className="text-[10px] font-semibold uppercase tracking-wider text-[#526779] mb-2 flex items-center justify-between">
+              <span className="font-bold text-[#142C3F]">Three Separated Project-Control Stages (Auditable Lifecycle Flow)</span>
+              <span className="font-mono text-[#0F6B68] font-bold">Canonical Flow: Extraction → Matching → Verification</span>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
               {/* STAGE 1: Extraction */}
-              <div className="p-4 rounded-lg border border-[#B3CBE0] border-l-4 border-l-[#176B87] bg-[#EDF5F8]/40 space-y-2">
+              <div className="p-4 rounded-lg border border-[#D8E2EA] border-l-4 border-l-[#0F6B68] bg-[#EAF0F5]/40 space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="font-bold text-[#176B87] flex items-center gap-2">
-                    <span className="w-5 h-5 rounded-full bg-[#176B87] text-white text-[10px] font-bold flex items-center justify-center">
+                  <span className="font-bold text-[#0F6B68] flex items-center gap-2">
+                    <span className="w-5 h-5 rounded-full bg-[#0F6B68] text-white text-[10px] font-bold flex items-center justify-center">
                       1
                     </span>
                     Extraction
                   </span>
-                  <span className="text-[10px] font-bold text-[#176B87] bg-white px-2 py-0.5 rounded border border-[#B3CBE0]">
+                  <span className="text-[10px] font-bold text-[#0F6B68] bg-white px-2 py-0.5 rounded border border-[#D8E2EA]">
                     Field Reality
                   </span>
                 </div>
-                <p className="text-[11px] text-[#596579] leading-relaxed">
+                <p className="text-[11px] text-[#526779] leading-relaxed">
                   Parses quantities, units, work areas, disciplines, and shift observations directly from DPRs, voice logs, and site diaries.
                 </p>
               </div>
 
               {/* STAGE 2: Matching */}
-              <div className="p-4 rounded-lg border border-[#D9DEE5] border-l-4 border-l-[#3B6EA8] bg-[#F7F8FA] space-y-2">
+              <div className="p-4 rounded-lg border border-[#D8E2EA] border-l-4 border-l-[#3B6EA8] bg-[#F3F6FA] space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="font-bold text-[#172033] flex items-center gap-2">
+                  <span className="font-bold text-[#142C3F] flex items-center gap-2">
                     <span className="w-5 h-5 rounded-full bg-[#3B6EA8] text-white text-[10px] font-bold flex items-center justify-center">
                       2
                     </span>
                     Matching
                   </span>
-                  <span className="text-[10px] font-bold text-[#3B6EA8] bg-white px-2 py-0.5 rounded border border-[#D9DEE5]">
+                  <span className="text-[10px] font-bold text-[#3B6EA8] bg-white px-2 py-0.5 rounded border border-[#D8E2EA]">
                     Schedule Link
                   </span>
                 </div>
-                <p className="text-[11px] text-[#596579] leading-relaxed">
+                <p className="text-[11px] text-[#526779] leading-relaxed">
                   Binds extracted events to Primavera P6 Level 5 baseline activities using deterministic asset IDs and temporal windows.
                 </p>
               </div>
 
               {/* STAGE 3: Verification */}
-              <div className="p-4 rounded-lg border border-[#B8DCC9] border-l-4 border-l-[#2E7D5B] bg-[#EDF7F2]/40 space-y-2">
+              <div className="p-4 rounded-lg border border-[#B8DCC9] border-l-4 border-l-[#2E7D5B] bg-[#E4F4EC]/40 space-y-2">
                 <div className="flex items-center justify-between">
                   <span className="font-bold text-[#2E7D5B] flex items-center gap-2">
                     <span className="w-5 h-5 rounded-full bg-[#2E7D5B] text-white text-[10px] font-bold flex items-center justify-center">
@@ -646,7 +646,7 @@ export default function ExecutionIntelligencePage() {
                     QC Governance
                   </span>
                 </div>
-                <p className="text-[11px] text-[#596579] leading-relaxed">
+                <p className="text-[11px] text-[#526779] leading-relaxed">
                   Enforces human engineer sign-offs, evidence ticket validation, and conflict gates before committing progress to the Schedule Twin.
                 </p>
               </div>
@@ -661,20 +661,20 @@ export default function ExecutionIntelligencePage() {
             onClick={() => setSelectedStatusFilter('ALL')}
             className={`p-4 rounded-lg border text-left transition-all ${
               selectedStatusFilter === 'ALL'
-                ? 'bg-[#EDF5F8] border-[#176B87] shadow-2xs'
-                : 'bg-white border-[#D9DEE5] hover:bg-[#F7F8FA]'
+                ? 'bg-[#EAF0F5] border-[#0F6B68] shadow-2xs'
+                : 'bg-white border-[#D8E2EA] hover:bg-[#F3F6FA]'
             }`}
           >
-            <span className="text-[10px] font-semibold uppercase tracking-wider text-[#596579] block">
+            <span className="text-[10px] font-semibold uppercase tracking-wider text-[#526779] block">
               Total Execution Events
             </span>
             <div className="flex items-baseline gap-2 mt-1">
-              <span className="text-2xl font-bold text-[#172033] font-mono">
+              <span className="text-2xl font-bold text-[#142C3F] font-mono">
                 {metrics.total}
               </span>
-              <span className="text-[11px] text-[#596579]">captured</span>
+              <span className="text-[11px] text-[#526779]">captured</span>
             </div>
-            <span className="text-[11px] text-[#176B87] mt-1 block">
+            <span className="text-[11px] text-[#0F6B68] mt-1 block">
               All Sources
             </span>
           </button>
@@ -684,18 +684,18 @@ export default function ExecutionIntelligencePage() {
             onClick={() => setSelectedStatusFilter('Matched')}
             className={`p-4 rounded-lg border text-left transition-all ${
               selectedStatusFilter === 'Matched'
-                ? 'bg-[#EDF7F2] border-[#2E7D5B] shadow-2xs'
-                : 'bg-white border-[#D9DEE5] hover:bg-[#F7F8FA]'
+                ? 'bg-[#E4F4EC] border-[#2E7D5B] shadow-2xs'
+                : 'bg-white border-[#D8E2EA] hover:bg-[#F3F6FA]'
             }`}
           >
-            <span className="text-[10px] font-semibold uppercase tracking-wider text-[#596579] block">
+            <span className="text-[10px] font-semibold uppercase tracking-wider text-[#526779] block">
               Matched & Verified
             </span>
             <div className="flex items-baseline gap-2 mt-1">
               <span className="text-2xl font-bold text-[#2E7D5B] font-mono">
                 {metrics.matched}
               </span>
-              <span className="text-[11px] text-[#596579]">linked</span>
+              <span className="text-[11px] text-[#526779]">linked</span>
             </div>
             <span className="text-[11px] text-[#2E7D5B] mt-1 block">
               Confidence &ge; 90%
@@ -707,20 +707,20 @@ export default function ExecutionIntelligencePage() {
             onClick={() => setSelectedStatusFilter('Needs Review')}
             className={`p-4 rounded-lg border text-left transition-all ${
               selectedStatusFilter === 'Needs Review'
-                ? 'bg-[#FDF6ED] border-[#D98B32] shadow-2xs'
-                : 'bg-white border-[#D9DEE5] hover:bg-[#F7F8FA]'
+                ? 'bg-[#FFF1D3] border-[#845006] shadow-2xs'
+                : 'bg-white border-[#D8E2EA] hover:bg-[#F3F6FA]'
             }`}
           >
-            <span className="text-[10px] font-semibold uppercase tracking-wider text-[#596579] block">
+            <span className="text-[10px] font-semibold uppercase tracking-wider text-[#526779] block">
               Needs Review
             </span>
             <div className="flex items-baseline gap-2 mt-1">
-              <span className="text-2xl font-bold text-[#D98B32] font-mono">
+              <span className="text-2xl font-bold text-[#845006] font-mono">
                 {metrics.review}
               </span>
-              <span className="text-[11px] text-[#596579]">pending</span>
+              <span className="text-[11px] text-[#526779]">pending</span>
             </div>
-            <span className="text-[11px] text-[#D98B32] mt-1 block">
+            <span className="text-[11px] text-[#845006] mt-1 block">
               Confidence 70–89%
             </span>
           </button>
@@ -730,20 +730,20 @@ export default function ExecutionIntelligencePage() {
             onClick={() => setSelectedStatusFilter('Unmatched')}
             className={`p-4 rounded-lg border text-left transition-all ${
               selectedStatusFilter === 'Unmatched'
-                ? 'bg-[#F1F3F5] border-[#596579] shadow-2xs'
-                : 'bg-white border-[#D9DEE5] hover:bg-[#F7F8FA]'
+                ? 'bg-[#EAF0F5] border-[#526779] shadow-2xs'
+                : 'bg-white border-[#D8E2EA] hover:bg-[#F3F6FA]'
             }`}
           >
-            <span className="text-[10px] font-semibold uppercase tracking-wider text-[#596579] block">
+            <span className="text-[10px] font-semibold uppercase tracking-wider text-[#526779] block">
               Unmatched Events
             </span>
             <div className="flex items-baseline gap-2 mt-1">
-              <span className="text-2xl font-bold text-[#596579] font-mono">
+              <span className="text-2xl font-bold text-[#526779] font-mono">
                 {metrics.unmatched}
               </span>
-              <span className="text-[11px] text-[#596579]">orphans</span>
+              <span className="text-[11px] text-[#526779]">orphans</span>
             </div>
-            <span className="text-[11px] text-[#596579] mt-1 block">
+            <span className="text-[11px] text-[#526779] mt-1 block">
               Confidence &lt; 70%
             </span>
           </button>
@@ -753,27 +753,27 @@ export default function ExecutionIntelligencePage() {
             onClick={() => setSelectedStatusFilter('Conflict')}
             className={`p-4 rounded-lg border text-left transition-all col-span-2 sm:col-span-1 ${
               selectedStatusFilter === 'Conflict'
-                ? 'bg-[#FBEFEE] border-[#B5473C] shadow-2xs'
-                : 'bg-white border-[#D9DEE5] hover:bg-[#F7F8FA]'
+                ? 'bg-[#FCE8E4] border-[#A24335] shadow-2xs'
+                : 'bg-white border-[#D8E2EA] hover:bg-[#F3F6FA]'
             }`}
           >
-            <span className="text-[10px] font-semibold uppercase tracking-wider text-[#596579] block">
+            <span className="text-[10px] font-semibold uppercase tracking-wider text-[#526779] block">
               Conflicts & Holds
             </span>
             <div className="flex items-baseline gap-2 mt-1">
-              <span className="text-2xl font-bold text-[#B5473C] font-mono">
+              <span className="text-2xl font-bold text-[#A24335] font-mono">
                 {metrics.conflicts}
               </span>
-              <span className="text-[11px] text-[#596579]">stoppages</span>
+              <span className="text-[11px] text-[#526779]">stoppages</span>
             </div>
-            <span className="text-[11px] text-[#B5473C] mt-1 block font-medium">
+            <span className="text-[11px] text-[#A24335] mt-1 block font-medium">
               Dependency Holds
             </span>
           </button>
         </div>
 
         {/* CONTROLS & FILTER BAR */}
-        <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-3 text-xs">
+        <div className="bg-white border border-[#D8E2EA] rounded-lg p-4 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-3 text-xs">
           <div className="flex items-center gap-2 flex-1">
             <div className="relative flex-1 max-w-md">
               <Search className="w-4 h-4 text-[#7B8798] absolute left-3 top-1/2 -translate-y-1/2" />
@@ -782,13 +782,13 @@ export default function ExecutionIntelligencePage() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search by event ID, statement, activity, or work area..."
-                className="w-full pl-9 pr-3 py-2 bg-[#FAFAFA] focus:bg-white border border-[#D9DEE5] focus:border-[#176B87] rounded-lg text-xs outline-hidden transition-all"
+                className="w-full pl-9 pr-3 py-2 bg-[#FAFAFA] focus:bg-white border border-[#D8E2EA] focus:border-[#0F6B68] rounded-lg text-xs outline-hidden transition-all"
               />
               {searchQuery && (
                 <button
                   type="button"
                   onClick={() => setSearchQuery('')}
-                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[#7B8798] hover:text-[#172033]"
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[#7B8798] hover:text-[#142C3F]"
                 >
                   <X className="w-3.5 h-3.5" />
                 </button>
@@ -798,14 +798,14 @@ export default function ExecutionIntelligencePage() {
 
           <div className="flex items-center gap-2 flex-wrap">
             {/* View Mode Switcher */}
-            <div className="flex items-center bg-[#F1F3F5] p-0.5 rounded-lg border border-[#D9DEE5]">
+            <div className="flex items-center bg-[#EAF0F5] p-0.5 rounded-lg border border-[#D8E2EA]">
               <button
                 type="button"
                 onClick={() => setViewMode('cards')}
                 className={`px-3 py-1.5 text-xs rounded-md font-semibold transition-all cursor-pointer ${
                   viewMode === 'cards'
-                    ? 'bg-white text-[#172033] shadow-2xs font-bold'
-                    : 'text-[#596579] hover:text-[#172033]'
+                    ? 'bg-white text-[#142C3F] shadow-2xs font-bold'
+                    : 'text-[#526779] hover:text-[#142C3F]'
                 }`}
               >
                 Event Objects (Cards)
@@ -815,8 +815,8 @@ export default function ExecutionIntelligencePage() {
                 onClick={() => setViewMode('table')}
                 className={`px-3 py-1.5 text-xs rounded-md font-semibold transition-all cursor-pointer ${
                   viewMode === 'table'
-                    ? 'bg-white text-[#172033] shadow-2xs font-bold'
-                    : 'text-[#596579] hover:text-[#172033]'
+                    ? 'bg-white text-[#142C3F] shadow-2xs font-bold'
+                    : 'text-[#526779] hover:text-[#142C3F]'
                 }`}
               >
                 Canonical Table
@@ -829,7 +829,7 @@ export default function ExecutionIntelligencePage() {
               <select
                 value={selectedStatusFilter}
                 onChange={(e) => setSelectedStatusFilter(e.target.value)}
-                className="p-2 bg-[#FAFAFA] border border-[#D9DEE5] rounded-lg text-xs font-semibold text-[#172033]"
+                className="p-2 bg-[#FAFAFA] border border-[#D8E2EA] rounded-lg text-xs font-semibold text-[#142C3F]"
               >
                 <option value="ALL">All ({metrics.total})</option>
                 <option value="Matched">Matched ({metrics.matched})</option>
@@ -847,7 +847,7 @@ export default function ExecutionIntelligencePage() {
               <select
                 value={selectedDisciplineFilter}
                 onChange={(e) => setSelectedDisciplineFilter(e.target.value)}
-                className="p-2 bg-[#FAFAFA] border border-[#D9DEE5] rounded-lg text-xs font-semibold text-[#172033]"
+                className="p-2 bg-[#FAFAFA] border border-[#D8E2EA] rounded-lg text-xs font-semibold text-[#142C3F]"
               >
                 <option value="ALL">All Disciplines</option>
                 <option value="Piping">Piping</option>
@@ -865,12 +865,12 @@ export default function ExecutionIntelligencePage() {
         {viewMode === 'cards' && (
           <div className="space-y-4">
             {filteredEvents.length === 0 ? (
-              <div className="p-10 text-center bg-white border border-[#D9DEE5] rounded-lg">
+              <div className="p-10 text-center bg-white border border-[#D8E2EA] rounded-lg">
                 <HelpCircle className="w-8 h-8 text-[#7B8798] mx-auto mb-2" />
-                <p className="font-semibold text-sm text-[#172033]">
+                <p className="font-semibold text-sm text-[#142C3F]">
                   {events.length === 0 ? 'No execution events yet' : 'No execution events match your filters'}
                 </p>
-                <p className="text-xs text-[#596579] mt-1 max-w-sm mx-auto">
+                <p className="text-xs text-[#526779] mt-1 max-w-sm mx-auto">
                   {events.length === 0
                     ? 'Field reports submitted for this project will appear here after processing.'
                     : 'No field logs match the active discipline, status, or search query.'}
@@ -882,7 +882,7 @@ export default function ExecutionIntelligencePage() {
                     setSelectedStatusFilter('ALL');
                     setSelectedDisciplineFilter('ALL');
                   }}
-                  className="mt-3 text-xs font-semibold text-[#176B87] hover:underline cursor-pointer"
+                  className="mt-3 text-xs font-semibold text-[#0F6B68] hover:underline cursor-pointer"
                 >
                   Reset All Filters
                 </button>
@@ -895,23 +895,23 @@ export default function ExecutionIntelligencePage() {
                 return (
                   <div
                     key={evt.id}
-                    className={`bg-white border border-[#D9DEE5] ${getEventBorderClass(
+                    className={`bg-white border border-[#D8E2EA] ${getEventBorderClass(
                       evt.status
-                    )} rounded-lg shadow-xs overflow-hidden transition-all hover:border-[#B3CBE0]`}
+                    )} rounded-lg shadow-xs overflow-hidden transition-all hover:border-[#D8E2EA]`}
                   >
                     {/* EVENT HEADER */}
-                    <div className="bg-[#F7F8FA] border-b border-[#D9DEE5] px-4 py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                    <div className="bg-[#F3F6FA] border-b border-[#D8E2EA] px-4 py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                       <div className="flex items-center gap-2 flex-wrap">
-                        <span className="font-mono font-bold text-xs text-[#176B87] bg-white px-3 py-1 rounded border border-[#D9DEE5]">
+                        <span className="font-mono font-bold text-xs text-[#0F6B68] bg-white px-3 py-1 rounded border border-[#D8E2EA]">
                           {evt.id}
                         </span>
-                        <span className="text-[11px] font-mono text-[#596579]">
+                        <span className="text-[11px] font-mono text-[#526779]">
                           {evt.createdAt}
                         </span>
-                        <span className="text-[10px] uppercase font-bold text-[#596579] bg-white px-2 py-0.5 rounded border border-[#D9DEE5]">
+                        <span className="text-[10px] uppercase font-bold text-[#526779] bg-white px-2 py-0.5 rounded border border-[#D8E2EA]">
                           {evt.source.replace(/_/g, ' ')}
                         </span>
-                        <span className="text-[10px] font-semibold text-[#596579]">
+                        <span className="text-[10px] font-semibold text-[#526779]">
                           Shift: {evt.shiftTime}
                         </span>
                       </div>
@@ -926,9 +926,9 @@ export default function ExecutionIntelligencePage() {
                       {/* -----------------------------------------------------------
                           1. EXTRACTION (Site Observation & Values)
                           ----------------------------------------------------------- */}
-                      <div className="lg:col-span-5 space-y-3 border-b lg:border-b-0 lg:border-r border-[#D9DEE5] pb-4 lg:pb-0 lg:pr-4">
+                      <div className="lg:col-span-5 space-y-3 border-b lg:border-b-0 lg:border-r border-[#D8E2EA] pb-4 lg:pb-0 lg:pr-4">
                         <div className="flex items-center gap-2">
-                          <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0]">
+                          <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-[#EAF0F5] text-[#0F6B68] border border-[#D8E2EA]">
                             1. Extraction
                           </span>
                           <span className="text-[11px] font-semibold text-[#7B8798]">Site Physical Record</span>
@@ -936,35 +936,35 @@ export default function ExecutionIntelligencePage() {
 
                         {/* Event Description (What happened in the field) */}
                         <div>
-                          <span className="text-[10px] uppercase font-bold text-[#596579] block mb-0.5">
+                          <span className="text-[10px] uppercase font-bold text-[#526779] block mb-0.5">
                             Event Description (What Happened)
                           </span>
-                          <p className="text-xs font-semibold text-[#172033] leading-relaxed bg-[#FAFAFA] p-3 rounded-lg border border-[#D9DEE5]">
+                          <p className="text-xs font-semibold text-[#142C3F] leading-relaxed bg-[#FAFAFA] p-3 rounded-lg border border-[#D8E2EA]">
                             "{evt.rawFieldStatement}"
                           </p>
                         </div>
 
                         {/* Extracted Quantity, Unit, Area, Discipline */}
                         <div className="grid grid-cols-2 gap-2 text-xs">
-                          <div className="bg-[#EDF5F8]/50 p-3 rounded-lg border border-[#B3CBE0]">
-                            <span className="text-[9px] uppercase font-bold text-[#176B87] block">
+                          <div className="bg-[#EAF0F5]/50 p-3 rounded-lg border border-[#D8E2EA]">
+                            <span className="text-[9px] uppercase font-bold text-[#0F6B68] block">
                               Extracted Quantity
                             </span>
-                            <span className="font-mono font-bold text-sm text-[#172033]">
+                            <span className="font-mono font-bold text-sm text-[#142C3F]">
                               {evt.extractedQuantity} {evt.unit}
                             </span>
                           </div>
-                          <div className="bg-[#F7F8FA] p-3 rounded-lg border border-[#D9DEE5]">
-                            <span className="text-[9px] uppercase font-semibold text-[#596579] block">
+                          <div className="bg-[#F3F6FA] p-3 rounded-lg border border-[#D8E2EA]">
+                            <span className="text-[9px] uppercase font-semibold text-[#526779] block">
                               Discipline
                             </span>
-                            <span className="font-bold text-xs text-[#172033]">{evt.discipline}</span>
+                            <span className="font-bold text-xs text-[#142C3F]">{evt.discipline}</span>
                           </div>
-                          <div className="col-span-2 bg-[#F7F8FA] p-3 rounded-lg border border-[#D9DEE5]">
-                            <span className="text-[9px] uppercase font-semibold text-[#596579] block">
+                          <div className="col-span-2 bg-[#F3F6FA] p-3 rounded-lg border border-[#D8E2EA]">
+                            <span className="text-[9px] uppercase font-semibold text-[#526779] block">
                               Area / Workfront
                             </span>
-                            <span className="font-semibold text-xs text-[#172033] truncate block">
+                            <span className="font-semibold text-xs text-[#142C3F] truncate block">
                               {evt.area}
                             </span>
                           </div>
@@ -974,10 +974,10 @@ export default function ExecutionIntelligencePage() {
                       {/* -----------------------------------------------------------
                           2. MATCHING (Schedule Linking)
                           ----------------------------------------------------------- */}
-                      <div className="lg:col-span-4 space-y-3 border-b lg:border-b-0 lg:border-r border-[#D9DEE5] pb-4 lg:pb-0 lg:pr-4">
+                      <div className="lg:col-span-4 space-y-3 border-b lg:border-b-0 lg:border-r border-[#D8E2EA] pb-4 lg:pb-0 lg:pr-4">
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-2">
-                            <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-[#F1F3F5] text-[#172033] border border-[#D9DEE5]">
+                            <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-[#EAF0F5] text-[#142C3F] border border-[#D8E2EA]">
                               2. Matching
                             </span>
                             <span className="text-[11px] font-semibold text-[#7B8798]">Schedule Link</span>
@@ -987,30 +987,30 @@ export default function ExecutionIntelligencePage() {
 
                         {/* Suggested Activity */}
                         <div>
-                          <span className="text-[10px] uppercase font-bold text-[#596579] block mb-0.5">
+                          <span className="text-[10px] uppercase font-bold text-[#526779] block mb-0.5">
                             Suggested Activity
                           </span>
                           {evt.candidateActivityId ? (
-                            <div className="bg-white p-3 rounded-lg border border-[#D9DEE5] border-l-4 border-l-[#176B87] space-y-1">
+                            <div className="bg-white p-3 rounded-lg border border-[#D8E2EA] border-l-4 border-l-[#0F6B68] space-y-1">
                               <div className="flex items-center justify-between">
                                 <button
                                   type="button"
                                   onClick={() => openActivityDrawer(evt.candidateActivityId!)}
-                                  className="font-mono font-bold text-xs text-[#176B87] hover:underline inline-flex items-center gap-1"
+                                  className="font-mono font-bold text-xs text-[#0F6B68] hover:underline inline-flex items-center gap-1"
                                 >
                                   <span>{evt.candidateActivityId}</span>
-                                  <ArrowUpRight className="w-3 h-3 text-[#176B87]" />
+                                  <ArrowUpRight className="w-3 h-3 text-[#0F6B68]" />
                                 </button>
-                                <span className="font-mono text-[10px] font-bold text-[#172033] bg-[#F1F3F5] px-1.5 py-0.5 rounded">
+                                <span className="font-mono text-[10px] font-bold text-[#142C3F] bg-[#EAF0F5] px-1.5 py-0.5 rounded">
                                   WBS {evt.candidateWbs}
                                 </span>
                               </div>
-                              <p className="font-bold text-xs text-[#172033] line-clamp-2">
+                              <p className="font-bold text-xs text-[#142C3F] line-clamp-2">
                                 {evt.candidateActivityName}
                               </p>
                             </div>
                           ) : (
-                            <div className="p-3 bg-[#FBEFEE] rounded-lg border border-[#E4B0AA] text-xs text-[#B5473C] font-semibold">
+                            <div className="p-3 bg-[#FCE8E4] rounded-lg border border-[#E4B0AA] text-xs text-[#A24335] font-semibold">
                               No schedule activity matched (Unmatched Candidate)
                             </div>
                           )}
@@ -1019,19 +1019,19 @@ export default function ExecutionIntelligencePage() {
                         {/* Progressive Disclosure Trigger: "Why this match?" */}
                         <div className="pt-1">
                           <div className="flex items-center justify-between">
-                            <span className="text-[10px] uppercase font-semibold text-[#596579]">
+                            <span className="text-[10px] uppercase font-semibold text-[#526779]">
                               Match Alignment:
                             </span>
                             <button
                               type="button"
                               onClick={() => toggleWhy(evt.id)}
-                              className="text-[11px] font-bold text-[#176B87] hover:underline inline-flex items-center gap-1 cursor-pointer"
+                              className="text-[11px] font-bold text-[#0F6B68] hover:underline inline-flex items-center gap-1 cursor-pointer"
                             >
                               <span>{isWhyExpanded ? 'Hide Why' : 'Why this match?'}</span>
                               <ChevronDown className={`w-3 h-3 ${isWhyExpanded ? 'rotate-180' : ''}`} />
                             </button>
                           </div>
-                          <p className="text-[11px] text-[#596579] line-clamp-2 mt-1 leading-relaxed">
+                          <p className="text-[11px] text-[#526779] line-clamp-2 mt-1 leading-relaxed">
                             {evt.reasons[0] || 'Matches baseline activity parameters.'}
                           </p>
                         </div>
@@ -1044,7 +1044,7 @@ export default function ExecutionIntelligencePage() {
                         <div className="space-y-3">
                           <div className="flex items-center justify-between">
                             <div className="flex items-center gap-2">
-                              <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]">
+                              <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-[#E4F4EC] text-[#2E7D5B] border border-[#B8DCC9]">
                                 3. Verification
                               </span>
                               <span className="text-[11px] text-[#7B8798]">QC & Gate</span>
@@ -1053,15 +1053,15 @@ export default function ExecutionIntelligencePage() {
 
                           {/* Verification State */}
                           <div>
-                            <span className="text-[10px] uppercase font-bold text-[#596579] block mb-0.5">
+                            <span className="text-[10px] uppercase font-bold text-[#526779] block mb-0.5">
                               Verification State
                             </span>
-                            <div className="p-2 bg-[#F7F8FA] border border-[#D9DEE5] rounded flex items-center justify-between text-xs">
-                              <span className="font-bold text-[#172033]">
+                            <div className="p-2 bg-[#F3F6FA] border border-[#D8E2EA] rounded flex items-center justify-between text-xs">
+                              <span className="font-bold text-[#142C3F]">
                                 {evt.verificationStatus.state}
                               </span>
                               {evt.verificationStatus.reviewer && (
-                                <span className="text-[10px] text-[#596579]">
+                                <span className="text-[10px] text-[#526779]">
                                   {evt.verificationStatus.reviewer}
                                 </span>
                               )}
@@ -1070,7 +1070,7 @@ export default function ExecutionIntelligencePage() {
 
                           {/* Evidence */}
                           <div>
-                            <span className="text-[10px] uppercase font-semibold text-[#596579] block mb-1">
+                            <span className="text-[10px] uppercase font-semibold text-[#526779] block mb-1">
                               Evidence ({evt.evidenceItems.length} proofs)
                             </span>
                             {evt.evidenceItems.length > 0 ? (
@@ -1078,13 +1078,13 @@ export default function ExecutionIntelligencePage() {
                                 {evt.evidenceItems.map((ev) => (
                                   <div
                                     key={ev.id}
-                                    className="p-2 bg-white border border-[#D9DEE5] rounded flex items-center justify-between text-[11px]"
+                                    className="p-2 bg-white border border-[#D8E2EA] rounded flex items-center justify-between text-[11px]"
                                   >
                                     <div className="flex items-center gap-2 truncate">
                                       {ev.type === 'PHOTO' ? (
-                                        <Camera className="w-3 h-3 text-[#176B87] shrink-0" />
+                                        <Camera className="w-3 h-3 text-[#0F6B68] shrink-0" />
                                       ) : (
-                                        <FileText className="w-3 h-3 text-[#596579] shrink-0" />
+                                        <FileText className="w-3 h-3 text-[#526779] shrink-0" />
                                       )}
                                       <span className="font-mono truncate">{ev.title}</span>
                                     </div>
@@ -1095,7 +1095,7 @@ export default function ExecutionIntelligencePage() {
                                 ))}
                               </div>
                             ) : (
-                              <div className="text-[11px] text-[#7B8798] italic p-2 bg-[#FAFAFA] rounded border border-[#D9DEE5]">
+                              <div className="text-[11px] text-[#7B8798] italic p-2 bg-[#FAFAFA] rounded border border-[#D8E2EA]">
                                 No evidence files attached
                               </div>
                             )}
@@ -1103,11 +1103,11 @@ export default function ExecutionIntelligencePage() {
                         </div>
 
                         {/* Event Drawer Action */}
-                        <div className="pt-2 border-t border-[#D9DEE5] flex items-center justify-between">
+                        <div className="pt-2 border-t border-[#D8E2EA] flex items-center justify-between">
                           <button
                             type="button"
                             onClick={() => setSelectedEventForDrawer(evt)}
-                            className="min-h-[44px] py-2 px-3 rounded text-xs font-bold text-[#176B87] hover:underline hover:bg-[#EDF5F8] inline-flex items-center gap-1 cursor-pointer transition-colors"
+                            className="min-h-[44px] py-2 px-3 rounded text-xs font-bold text-[#0F6B68] hover:underline hover:bg-[#EAF0F5] inline-flex items-center gap-1 cursor-pointer transition-colors"
                           >
                             <span>Inspect Event Detail</span>
                             <ArrowRight className="w-3.5 h-3.5" />
@@ -1120,16 +1120,16 @@ export default function ExecutionIntelligencePage() {
                         PROGRESSIVE DISCLOSURE: EXPANDABLE "WHY?"
                         ========================================================= */}
                     {isWhyExpanded && (
-                      <div className="bg-[#F7F8FA] border-t border-[#D9DEE5] p-4 text-xs space-y-3">
+                      <div className="bg-[#F3F6FA] border-t border-[#D8E2EA] p-4 text-xs space-y-3">
                         <div className="flex items-center justify-between flex-wrap gap-2">
-                          <span className="font-bold text-xs text-[#172033] flex items-center gap-2">
-                            <HelpCircle className="w-3.5 h-3.5 text-[#176B87]" />
+                          <span className="font-bold text-xs text-[#142C3F] flex items-center gap-2">
+                            <HelpCircle className="w-3.5 h-3.5 text-[#0F6B68]" />
                             Why this match? (Deterministic Alignment Logic)
                           </span>
                           <button
                             type="button"
                             onClick={() => openWhyExplanation(`confidence:${evt.id}`, evt.id)}
-                            className="text-[11px] font-bold text-[#176B87] hover:underline inline-flex items-center gap-1"
+                            className="text-[11px] font-bold text-[#0F6B68] hover:underline inline-flex items-center gap-1"
                           >
                             <span>Open Detailed Audit Dialogue</span>
                             <ExternalLink className="w-3 h-3" />
@@ -1140,34 +1140,34 @@ export default function ExecutionIntelligencePage() {
                         {evt.confidence >= 90 && (
                           <div className="bg-[#F7FBF9] border border-[#D1EADC] rounded-lg p-3 space-y-2">
                             <div className="flex items-center justify-between">
-                              <span className="font-bold text-xs text-[#172033] uppercase tracking-wider">
+                              <span className="font-bold text-xs text-[#142C3F] uppercase tracking-wider">
                                 Why?
                               </span>
                               <span className="text-[11px] text-[#2E7D5B] font-medium">
                                 4 of 4 dimensions verified
                               </span>
                             </div>
-                            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-[#172033]">
+                            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-[#142C3F]">
                               <li className="flex items-center gap-2">
-                                <span className="w-4 h-4 rounded-full bg-[#EDF7F2] text-[#2E7D5B] flex items-center justify-center shrink-0">
+                                <span className="w-4 h-4 rounded-full bg-[#E4F4EC] text-[#2E7D5B] flex items-center justify-center shrink-0">
                                   <Check className="w-3 h-3 stroke-[3]" />
                                 </span>
                                 <span className="font-medium">Activity match</span>
                               </li>
                               <li className="flex items-center gap-2">
-                                <span className="w-4 h-4 rounded-full bg-[#EDF7F2] text-[#2E7D5B] flex items-center justify-center shrink-0">
+                                <span className="w-4 h-4 rounded-full bg-[#E4F4EC] text-[#2E7D5B] flex items-center justify-center shrink-0">
                                   <Check className="w-3 h-3 stroke-[3]" />
                                 </span>
                                 <span className="font-medium">Area match</span>
                               </li>
                               <li className="flex items-center gap-2">
-                                <span className="w-4 h-4 rounded-full bg-[#EDF7F2] text-[#2E7D5B] flex items-center justify-center shrink-0">
+                                <span className="w-4 h-4 rounded-full bg-[#E4F4EC] text-[#2E7D5B] flex items-center justify-center shrink-0">
                                   <Check className="w-3 h-3 stroke-[3]" />
                                 </span>
                                 <span className="font-medium">Discipline match</span>
                               </li>
                               <li className="flex items-center gap-2">
-                                <span className="w-4 h-4 rounded-full bg-[#EDF7F2] text-[#2E7D5B] flex items-center justify-center shrink-0">
+                                <span className="w-4 h-4 rounded-full bg-[#E4F4EC] text-[#2E7D5B] flex items-center justify-center shrink-0">
                                   <Check className="w-3 h-3 stroke-[3]" />
                                 </span>
                                 <span className="font-medium">Context match</span>
@@ -1178,18 +1178,18 @@ export default function ExecutionIntelligencePage() {
 
                         {/* Medium Confidence (70-89%): Show Alternative Activities */}
                         {evt.confidence >= 70 && evt.confidence < 90 && (
-                          <div className="bg-[#FDF6ED] border border-[#F0D4A6] rounded-lg p-3 text-xs space-y-2">
+                          <div className="bg-[#FFF1D3] border border-[#F0D4A6] rounded-lg p-3 text-xs space-y-2">
                             <div className="flex items-center justify-between">
-                              <span className="font-bold text-xs text-[#D98B32] uppercase tracking-wider">
+                              <span className="font-bold text-xs text-[#845006] uppercase tracking-wider">
                                 Alternative Activities
                               </span>
                               <span className="text-[11px] text-[#7B8798]">Candidate activities for planner review</span>
                             </div>
                             <div className="space-y-2">
-                              <div className="p-2 bg-white rounded border border-[#D9DEE5] flex items-center justify-between gap-2">
+                              <div className="p-2 bg-white rounded border border-[#D8E2EA] flex items-center justify-between gap-2">
                                 <div>
-                                  <span className="font-mono font-bold text-[#176B87]">PIP-24-002</span>
-                                  <div className="text-[11px] text-[#596579]">Line 24 Tie-In Weld Inspection</div>
+                                  <span className="font-mono font-bold text-[#0F6B68]">PIP-24-002</span>
+                                  <div className="text-[11px] text-[#526779]">Line 24 Tie-In Weld Inspection</div>
                                 </div>
                                 <ConfidenceBadge score={68} size="sm" />
                               </div>
@@ -1199,9 +1199,9 @@ export default function ExecutionIntelligencePage() {
 
                         {/* Low Confidence (<70%): Explain that no sufficiently strong match exists */}
                         {evt.confidence < 70 && (
-                          <div className="bg-[#FBEFEE] border border-[#E4B0AA] rounded-lg p-3 text-xs text-[#B5473C] space-y-1">
+                          <div className="bg-[#FCE8E4] border border-[#E4B0AA] rounded-lg p-3 text-xs text-[#A24335] space-y-1">
                             <div className="flex items-center gap-2 font-bold">
-                              <AlertCircle className="w-4 h-4 shrink-0 text-[#B5473C]" />
+                              <AlertCircle className="w-4 h-4 shrink-0 text-[#A24335]" />
                               <span>No sufficiently strong match exists</span>
                             </div>
                             <p className="text-[11px] text-[#7A271A]">
@@ -1211,7 +1211,7 @@ export default function ExecutionIntelligencePage() {
                         )}
 
                         {/* Plain English Engineering Reasons */}
-                        <ul className="space-y-2 bg-white p-3 rounded-lg border border-[#D9DEE5] text-xs text-[#172033]">
+                        <ul className="space-y-2 bg-white p-3 rounded-lg border border-[#D8E2EA] text-xs text-[#142C3F]">
                           {evt.reasons.map((r, i) => (
                             <li key={i} className="flex items-start gap-2">
                               <CheckCircle2 className="w-3.5 h-3.5 text-[#2E7D5B] shrink-0 mt-0.5" />
@@ -1225,7 +1225,7 @@ export default function ExecutionIntelligencePage() {
                           <button
                             type="button"
                             onClick={() => toggleTechnical(evt.id)}
-                            className="text-[11px] font-semibold text-[#596579] hover:text-[#172033] inline-flex items-center gap-1 cursor-pointer"
+                            className="text-[11px] font-semibold text-[#526779] hover:text-[#142C3F] inline-flex items-center gap-1 cursor-pointer"
                           >
                             <span>{isTechExpanded ? 'Hide Technical Details' : 'Advanced: Technical Details'}</span>
                             <ChevronDown className={`w-3 h-3 ${isTechExpanded ? 'rotate-180' : ''}`} />
@@ -1234,24 +1234,24 @@ export default function ExecutionIntelligencePage() {
 
                         {/* ADVANCED TECHNICAL DETAILS (Non-prominent) */}
                         {isTechExpanded && (
-                          <div className="p-3 bg-white border border-[#D9DEE5] rounded-lg space-y-2 text-[11px]">
-                            <span className="font-semibold text-[#596579] uppercase tracking-wider text-[9px] block">
+                          <div className="p-3 bg-white border border-[#D8E2EA] rounded-lg space-y-2 text-[11px]">
+                            <span className="font-semibold text-[#526779] uppercase tracking-wider text-[9px] block">
                               Deterministic Weight Signals & Parsing Trace
                             </span>
-                            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-[#596579]">
+                            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-[#526779]">
                               {evt.signals.map((sig, idx) => (
-                                <div key={idx} className="p-2 bg-[#FAFAFA] rounded border border-[#D9DEE5]">
-                                  <span className="text-[9px] uppercase font-semibold text-[#596579] block truncate">
+                                <div key={idx} className="p-2 bg-[#FAFAFA] rounded border border-[#D8E2EA]">
+                                  <span className="text-[9px] uppercase font-semibold text-[#526779] block truncate">
                                     {sig.name}
                                   </span>
-                                  <strong className="text-[#172033] font-mono text-xs">
+                                  <strong className="text-[#142C3F] font-mono text-xs">
                                     {sig.score} / {sig.maxScore} pts
                                   </strong>
                                   <p className="text-[9px] text-[#7B8798] truncate mt-0.5">{sig.reason}</p>
                                 </div>
                               ))}
                             </div>
-                            <div className="pt-2 border-t border-[#D9DEE5]/60 flex items-center justify-between text-[10px] text-[#7B8798]">
+                            <div className="pt-2 border-t border-[#D8E2EA]/60 flex items-center justify-between text-[10px] text-[#7B8798]">
                               <span>Transformation: Strict non-probabilistic rulebook constraints</span>
                               <span>Source Payload: {evt.source} ({evt.shiftTime})</span>
                             </div>
@@ -1270,11 +1270,11 @@ export default function ExecutionIntelligencePage() {
             CANONICAL TABLE VIEW (Satisfies Priority 3 & Responsive Tests)
             ========================================================================= */}
         {viewMode === 'table' && (
-          <div className="bg-white border border-[#D9DEE5] rounded-lg overflow-hidden shadow-xs">
+          <div className="bg-white border border-[#D8E2EA] rounded-lg overflow-hidden shadow-xs">
             <div className="overflow-x-auto">
               <table className="w-full min-w-[850px] text-left text-sm border-collapse">
-                <thead className="sticky top-0 z-10 bg-[#F7F8FA]">
-                  <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[11px] font-bold uppercase tracking-wider text-[#596579] h-11">
+                <thead className="sticky top-0 z-10 bg-[#F3F6FA]">
+                  <tr className="bg-[#F3F6FA] border-b border-[#D8E2EA] text-[11px] font-bold uppercase tracking-wider text-[#526779] h-11">
                     <th className="p-4 whitespace-nowrap">Event ID</th>
                     <th className="p-4 min-w-[280px]">Field Statement</th>
                     <th className="p-4 min-w-[200px]">Activity</th>
@@ -1284,15 +1284,15 @@ export default function ExecutionIntelligencePage() {
                     <th className="p-4 whitespace-nowrap text-right">Action</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#D9DEE5]/60">
+                <tbody className="divide-y divide-[#D8E2EA]/60">
                   {filteredEvents.length === 0 ? (
                     <tr>
-                      <td colSpan={7} className="p-8 text-center text-[#596579]">
+                      <td colSpan={7} className="p-8 text-center text-[#526779]">
                         <HelpCircle className="w-8 h-8 text-[#7B8798] mx-auto mb-2" />
-                        <p className="font-semibold text-sm text-[#172033]">
+                        <p className="font-semibold text-sm text-[#142C3F]">
                           {events.length === 0 ? 'No execution events yet' : 'No execution events match your filters'}
                         </p>
-                        <p className="text-xs text-[#596579] mt-1 max-w-sm mx-auto">
+                        <p className="text-xs text-[#526779] mt-1 max-w-sm mx-auto">
                           {events.length === 0
                             ? 'Field reports submitted for this project will appear here after processing.'
                             : 'No field logs match the active discipline, status, or search query.'}
@@ -1304,7 +1304,7 @@ export default function ExecutionIntelligencePage() {
                             setSelectedStatusFilter('ALL');
                             setSelectedDisciplineFilter('ALL');
                           }}
-                          className="mt-3 text-xs font-semibold text-[#176B87] hover:underline cursor-pointer"
+                          className="mt-3 text-xs font-semibold text-[#0F6B68] hover:underline cursor-pointer"
                         >
                           Reset All Filters
                         </button>
@@ -1316,15 +1316,15 @@ export default function ExecutionIntelligencePage() {
                         <tr
                           key={evt.id}
                           onClick={() => setSelectedEventForDrawer(evt)}
-                          className="h-11 sm:h-12 hover:bg-[#EDF5F8]/50 transition-colors cursor-pointer group"
+                          className="h-11 sm:h-12 hover:bg-[#EAF0F5]/50 transition-colors cursor-pointer group"
                         >
                           {/* 1. Execution Event ID */}
-                          <td className="p-4 whitespace-nowrap font-mono font-bold text-[#176B87] group-hover:underline">
+                          <td className="p-4 whitespace-nowrap font-mono font-bold text-[#0F6B68] group-hover:underline">
                             {evt.id}
                           </td>
 
                           {/* 2. Field Statement */}
-                          <td className="p-4 text-[#172033] max-w-[320px]">
+                          <td className="p-4 text-[#142C3F] max-w-[320px]">
                             <p className="font-medium line-clamp-2" title={evt.rawFieldStatement}>
                               {evt.rawFieldStatement}
                             </p>
@@ -1343,13 +1343,13 @@ export default function ExecutionIntelligencePage() {
                                     e.stopPropagation();
                                     openActivityDrawer(evt.candidateActivityId!);
                                   }}
-                                  className="font-mono font-bold text-[#176B87] hover:underline inline-flex items-center gap-1 text-left"
+                                  className="font-mono font-bold text-[#0F6B68] hover:underline inline-flex items-center gap-1 text-left"
                                   title="Open Activity Detail Drawer"
                                 >
                                   <span>{evt.candidateActivityId}</span>
-                                  <ArrowUpRight className="w-3 h-3 text-[#176B87]" />
+                                  <ArrowUpRight className="w-3 h-3 text-[#0F6B68]" />
                                 </button>
-                                <p className="text-[11px] text-[#596579] truncate" title={evt.candidateActivityName || ''}>
+                                <p className="text-[11px] text-[#526779] truncate" title={evt.candidateActivityName || ''}>
                                   {evt.candidateActivityName}
                                 </p>
                               </div>
@@ -1379,7 +1379,7 @@ export default function ExecutionIntelligencePage() {
                           </td>
 
                           {/* 6. Date */}
-                          <td className="p-4 whitespace-nowrap text-[#596579] font-mono text-[11px]">
+                          <td className="p-4 whitespace-nowrap text-[#526779] font-mono text-[11px]">
                             {evt.createdAt}
                           </td>
 
@@ -1392,9 +1392,9 @@ export default function ExecutionIntelligencePage() {
                                   e.stopPropagation();
                                   setSelectedEventForDrawer(evt);
                                 }}
-                                className="min-h-[40px] px-3.5 py-1.5 text-xs font-semibold text-[#176B87] hover:bg-[#EDF5F8] border border-[#B3CBE0] rounded transition-colors inline-flex items-center gap-1 cursor-pointer"
+                                className="min-h-[40px] px-3.5 py-1.5 text-xs font-semibold text-[#0F6B68] hover:bg-[#EAF0F5] border border-[#D8E2EA] rounded transition-colors inline-flex items-center gap-1 cursor-pointer"
                               >
-                                <Eye className="w-3 h-3 text-[#176B87]" />
+                                <Eye className="w-3 h-3 text-[#0F6B68]" />
                                 <span>Inspect</span>
                               </button>
                             </div>
@@ -1407,7 +1407,7 @@ export default function ExecutionIntelligencePage() {
               </table>
             </div>
 
-            <div className="p-4 bg-[#F7F8FA] border-t border-[#D9DEE5] flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-[#596579]">
+            <div className="p-4 bg-[#F3F6FA] border-t border-[#D8E2EA] flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-[#526779]">
               <span>
                 Showing <strong>{filteredEvents.length}</strong> of <strong>{events.length}</strong> execution events
               </span>
@@ -1430,7 +1430,7 @@ export default function ExecutionIntelligencePage() {
               <button
                 type="button"
                 onClick={() => setSelectedEventForDrawer(null)}
-                className="w-full sm:w-auto min-h-[44px] px-4 py-2 font-semibold text-[#596579] hover:text-[#172033] bg-white border border-[#D9DEE5] rounded-lg inline-flex items-center justify-center cursor-pointer"
+                className="w-full sm:w-auto min-h-[44px] px-4 py-2 font-semibold text-[#526779] hover:text-[#142C3F] bg-white border border-[#D8E2EA] rounded-lg inline-flex items-center justify-center cursor-pointer"
               >
                 Close Drawer
               </button>
@@ -1438,7 +1438,7 @@ export default function ExecutionIntelligencePage() {
               <div className="flex items-center gap-2 w-full sm:w-auto justify-end">
                 <Link
                   href="/review"
-                  className="w-full sm:w-auto min-h-[44px] px-4 py-2 font-bold text-white bg-[#176B87] hover:bg-[#135A72] rounded-lg shadow-xs inline-flex items-center justify-center gap-2 cursor-pointer"
+                  className="w-full sm:w-auto min-h-[44px] px-4 py-2 font-bold text-white bg-[#0F6B68] hover:bg-[#135A72] rounded-lg shadow-xs inline-flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <span>Open in Review Queue</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -1448,46 +1448,46 @@ export default function ExecutionIntelligencePage() {
           }
         >
           {selectedEventForDrawer && (
-            <div className="space-y-6 text-xs text-[#172033]">
+            <div className="space-y-6 text-xs text-[#142C3F]">
               {/* STATUS & CONFIDENCE BANNER */}
-              <div className="p-4 rounded-lg border border-[#D9DEE5] bg-[#F7F8FA] flex items-center justify-between flex-wrap gap-2">
+              <div className="p-4 rounded-lg border border-[#D8E2EA] bg-[#F3F6FA] flex items-center justify-between flex-wrap gap-2">
                 <div>
                   <StatusBadge status={selectedEventForDrawer.status} size="sm" />
                 </div>
 
                 <div className="flex items-center gap-2">
-                  <span className="text-[#596579] uppercase font-semibold text-[10px]">Confidence:</span>
+                  <span className="text-[#526779] uppercase font-semibold text-[10px]">Confidence:</span>
                   <ConfidenceBadge score={selectedEventForDrawer.confidence} size="md" />
                 </div>
               </div>
 
               {/* 1. EXTRACTION BREAKDOWN */}
               <div>
-                <h4 className="font-semibold text-xs uppercase tracking-wider text-[#172033] mb-2 flex items-center gap-2">
-                  <span className="w-4 h-4 rounded-full bg-[#176B87] text-white text-[9px] font-bold flex items-center justify-center">
+                <h4 className="font-semibold text-xs uppercase tracking-wider text-[#142C3F] mb-2 flex items-center gap-2">
+                  <span className="w-4 h-4 rounded-full bg-[#0F6B68] text-white text-[9px] font-bold flex items-center justify-center">
                     1
                   </span>
                   Extraction: What Happened
                 </h4>
-                <div className="p-4 bg-white border border-[#D9DEE5] rounded-lg space-y-3">
-                  <p className="text-xs font-medium text-[#172033] leading-relaxed bg-[#F7F8FA] p-3 rounded-lg border border-[#D9DEE5]/60">
+                <div className="p-4 bg-white border border-[#D8E2EA] rounded-lg space-y-3">
+                  <p className="text-xs font-medium text-[#142C3F] leading-relaxed bg-[#F3F6FA] p-3 rounded-lg border border-[#D8E2EA]/60">
                     "{selectedEventForDrawer.rawFieldStatement}"
                   </p>
 
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
-                    <div className="p-3 bg-[#FAFAFA] border border-[#D9DEE5] rounded">
-                      <span className="text-[9px] uppercase font-semibold text-[#596579] block">Quantity & Unit</span>
-                      <span className="font-bold font-mono text-[#172033]">
+                    <div className="p-3 bg-[#FAFAFA] border border-[#D8E2EA] rounded">
+                      <span className="text-[9px] uppercase font-semibold text-[#526779] block">Quantity & Unit</span>
+                      <span className="font-bold font-mono text-[#142C3F]">
                         {selectedEventForDrawer.extractedQuantity} {selectedEventForDrawer.unit}
                       </span>
                     </div>
-                    <div className="p-3 bg-[#FAFAFA] border border-[#D9DEE5] rounded">
-                      <span className="text-[9px] uppercase font-semibold text-[#596579] block">Discipline</span>
-                      <span className="font-bold text-[#172033]">{selectedEventForDrawer.discipline}</span>
+                    <div className="p-3 bg-[#FAFAFA] border border-[#D8E2EA] rounded">
+                      <span className="text-[9px] uppercase font-semibold text-[#526779] block">Discipline</span>
+                      <span className="font-bold text-[#142C3F]">{selectedEventForDrawer.discipline}</span>
                     </div>
-                    <div className="p-3 bg-[#FAFAFA] border border-[#D9DEE5] rounded col-span-2">
-                      <span className="text-[9px] uppercase font-semibold text-[#596579] block">Area</span>
-                      <span className="font-bold text-[#172033] truncate block">{selectedEventForDrawer.area}</span>
+                    <div className="p-3 bg-[#FAFAFA] border border-[#D8E2EA] rounded col-span-2">
+                      <span className="text-[9px] uppercase font-semibold text-[#526779] block">Area</span>
+                      <span className="font-bold text-[#142C3F] truncate block">{selectedEventForDrawer.area}</span>
                     </div>
                   </div>
                 </div>
@@ -1495,36 +1495,36 @@ export default function ExecutionIntelligencePage() {
 
               {/* 2. MATCHING & WHY */}
               <div>
-                <h4 className="font-bold text-xs uppercase tracking-wider text-[#172033] mb-2 flex items-center gap-2">
-                  <span className="w-4 h-4 rounded-full bg-[#172033] text-white text-[9px] font-bold flex items-center justify-center">
+                <h4 className="font-bold text-xs uppercase tracking-wider text-[#142C3F] mb-2 flex items-center gap-2">
+                  <span className="w-4 h-4 rounded-full bg-[#142C3F] text-white text-[9px] font-bold flex items-center justify-center">
                     2
                   </span>
                   Matching: Schedule Activity & Why
                 </h4>
-                <div className="p-4 bg-white border border-[#D9DEE5] rounded-lg space-y-3">
+                <div className="p-4 bg-white border border-[#D8E2EA] rounded-lg space-y-3">
                   {selectedEventForDrawer.candidateActivityId ? (
                     <div>
                       <div className="flex items-center justify-between">
-                        <span className="font-mono font-bold text-[#176B87] text-sm">
+                        <span className="font-mono font-bold text-[#0F6B68] text-sm">
                           {selectedEventForDrawer.candidateActivityId}
                         </span>
                         <span className="text-[11px] font-mono text-[#7B8798]">
                           WBS {selectedEventForDrawer.candidateWbs}
                         </span>
                       </div>
-                      <p className="font-bold text-xs text-[#172033] mt-0.5">
+                      <p className="font-bold text-xs text-[#142C3F] mt-0.5">
                         {selectedEventForDrawer.candidateActivityName}
                       </p>
                     </div>
                   ) : (
-                    <div className="p-3 bg-[#FBEFEE] rounded border border-[#E4B0AA] text-xs text-[#B5473C] font-semibold">
+                    <div className="p-3 bg-[#FCE8E4] rounded border border-[#E4B0AA] text-xs text-[#A24335] font-semibold">
                       No matching activity in schedule
                     </div>
                   )}
 
                   {/* Why this match? */}
-                  <div className="pt-2 border-t border-[#D9DEE5]/60 space-y-2">
-                    <span className="font-bold text-[11px] text-[#172033] block">
+                  <div className="pt-2 border-t border-[#D8E2EA]/60 space-y-2">
+                    <span className="font-bold text-[11px] text-[#142C3F] block">
                       Why this match?
                     </span>
                     <ul className="space-y-1 text-[11px]">
@@ -1547,25 +1547,25 @@ export default function ExecutionIntelligencePage() {
                   </span>
                   Verification & Physical Evidence
                 </h4>
-                <div className="p-4 bg-white border border-[#D9DEE5] rounded-lg space-y-3">
+                <div className="p-4 bg-white border border-[#D8E2EA] rounded-lg space-y-3">
                   <div className="flex items-center justify-between">
-                    <span className="font-bold text-xs text-[#172033]">
+                    <span className="font-bold text-xs text-[#142C3F]">
                       State: {selectedEventForDrawer.verificationStatus.state}
                     </span>
                     {selectedEventForDrawer.verificationStatus.reviewer && (
-                      <span className="text-[11px] text-[#596579]">
+                      <span className="text-[11px] text-[#526779]">
                         Reviewer: {selectedEventForDrawer.verificationStatus.reviewer}
                       </span>
                     )}
                   </div>
                   {selectedEventForDrawer.verificationStatus.notes && (
-                    <p className="text-[11px] text-[#596579] bg-[#FAFAFA] p-2 rounded border border-[#D9DEE5]">
+                    <p className="text-[11px] text-[#526779] bg-[#FAFAFA] p-2 rounded border border-[#D8E2EA]">
                       {selectedEventForDrawer.verificationStatus.notes}
                     </p>
                   )}
 
                   <div>
-                    <span className="text-[10px] uppercase font-semibold text-[#596579] block mb-1">
+                    <span className="text-[10px] uppercase font-semibold text-[#526779] block mb-1">
                       Attached Physical Evidence ({selectedEventForDrawer.evidenceItems.length})
                     </span>
                     {selectedEventForDrawer.evidenceItems.length > 0 ? (
@@ -1573,13 +1573,13 @@ export default function ExecutionIntelligencePage() {
                         {selectedEventForDrawer.evidenceItems.map((ev) => (
                           <div
                             key={ev.id}
-                            className="p-2 bg-[#FAFAFA] border border-[#D9DEE5] rounded flex items-center justify-between text-xs"
+                            className="p-2 bg-[#FAFAFA] border border-[#D8E2EA] rounded flex items-center justify-between text-xs"
                           >
                             <div className="flex items-center gap-2 truncate">
                               {ev.type === 'PHOTO' ? (
-                                <Camera className="w-3.5 h-3.5 text-[#176B87] shrink-0" />
+                                <Camera className="w-3.5 h-3.5 text-[#0F6B68] shrink-0" />
                               ) : (
-                                <FileText className="w-3.5 h-3.5 text-[#596579] shrink-0" />
+                                <FileText className="w-3.5 h-3.5 text-[#526779] shrink-0" />
                               )}
                               <span className="font-mono truncate">{ev.title}</span>
                             </div>
@@ -1595,22 +1595,22 @@ export default function ExecutionIntelligencePage() {
               </div>
 
               {/* ADVANCED COLLAPSIBLE: PROCESSING TIMELINE */}
-              <div className="pt-2 border-t border-[#D9DEE5]">
+              <div className="pt-2 border-t border-[#D8E2EA]">
                 <details className="text-xs group">
-                  <summary className="font-bold text-[#596579] cursor-pointer hover:text-[#172033] flex items-center justify-between">
+                  <summary className="font-bold text-[#526779] cursor-pointer hover:text-[#142C3F] flex items-center justify-between">
                     <span>Technical Details</span>
                     <ChevronDown className="w-3.5 h-3.5 group-open:rotate-180" />
                   </summary>
-                  <div className="mt-3 border border-[#D9DEE5] rounded-lg overflow-hidden divide-y divide-[#D9DEE5] bg-white">
+                  <div className="mt-3 border border-[#D8E2EA] rounded-lg overflow-hidden divide-y divide-[#D8E2EA] bg-white">
                     {selectedEventForDrawer.processingHistory.map((h, idx) => (
                       <div key={idx} className="p-3 text-xs flex items-start gap-2">
-                        <div className="w-2 h-2 rounded-full bg-[#176B87] mt-1 shrink-0" />
+                        <div className="w-2 h-2 rounded-full bg-[#0F6B68] mt-1 shrink-0" />
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center justify-between">
-                            <span className="font-bold text-[#172033]">{h.step}</span>
+                            <span className="font-bold text-[#142C3F]">{h.step}</span>
                             <span className="font-mono text-[10px] text-[#7B8798]">{h.timestamp}</span>
                           </div>
-                          <p className="text-[11px] text-[#596579]">{h.details}</p>
+                          <p className="text-[11px] text-[#526779]">{h.details}</p>
                           <span className="text-[10px] text-[#7B8798]">By {h.actor}</span>
                         </div>
                       </div>

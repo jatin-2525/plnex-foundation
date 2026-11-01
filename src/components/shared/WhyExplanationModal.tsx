@@ -58,19 +58,19 @@ export function WhyExplanationModal({
   const getTypeIcon = () => {
     switch (data.type) {
       case 'progress':
-        return <Activity className="w-5 h-5 text-[#176B87]" />;
+        return <Activity className="w-5 h-5 text-[#0F6B68]" />;
       case 'confidence':
-        return <Target className="w-5 h-5 text-[#176B87]" />;
+        return <Target className="w-5 h-5 text-[#0F6B68]" />;
       case 'health':
-        return <ShieldCheck className="w-5 h-5 text-[#D98B32]" />;
+        return <ShieldCheck className="w-5 h-5 text-[#845006]" />;
       case 'variance':
-        return <TrendingDown className="w-5 h-5 text-[#B5473C]" />;
+        return <TrendingDown className="w-5 h-5 text-[#A24335]" />;
       case 'delay':
-        return <TrendingDown className="w-5 h-5 text-[#B5473C]" />;
+        return <TrendingDown className="w-5 h-5 text-[#A24335]" />;
       case 'impact':
-        return <GitBranch className="w-5 h-5 text-[#B5473C]" />;
+        return <GitBranch className="w-5 h-5 text-[#A24335]" />;
       default:
-        return <HelpCircle className="w-5 h-5 text-[#176B87]" />;
+        return <HelpCircle className="w-5 h-5 text-[#0F6B68]" />;
     }
   };
 
@@ -96,19 +96,19 @@ export function WhyExplanationModal({
   const getBadgeStyle = () => {
     switch (data.type) {
       case 'progress':
-        return 'bg-[#EDF5F8] text-[#176B87] border-[#B3CBE0]';
+        return 'bg-[#EAF0F5] text-[#0F6B68] border-[#D8E2EA]';
       case 'confidence':
-        return 'bg-[#EDF5F8] text-[#176B87] border-[#B3CBE0]';
+        return 'bg-[#EAF0F5] text-[#0F6B68] border-[#D8E2EA]';
       case 'health':
-        return 'bg-[#FDF6ED] text-[#8C5311] border-[#F0D4A6]';
+        return 'bg-[#FFF1D3] text-[#8C5311] border-[#F0D4A6]';
       case 'variance':
-        return 'bg-[#FBEFEE] text-[#B5473C] border-[#E4B0AA]';
+        return 'bg-[#FCE8E4] text-[#A24335] border-[#E4B0AA]';
       case 'delay':
-        return 'bg-[#FBEFEE] text-[#B5473C] border-[#E4B0AA]';
+        return 'bg-[#FCE8E4] text-[#A24335] border-[#E4B0AA]';
       case 'impact':
-        return 'bg-[#FBEFEE] text-[#B5473C] border-[#E4B0AA]';
+        return 'bg-[#FCE8E4] text-[#A24335] border-[#E4B0AA]';
       default:
-        return 'bg-[#F1F3F5] text-[#172033] border-[#D9DEE5]';
+        return 'bg-[#EAF0F5] text-[#142C3F] border-[#D8E2EA]';
     }
   };
 
@@ -121,7 +121,7 @@ export function WhyExplanationModal({
       width="md"
       footer={
         <div className="flex items-center justify-between w-full text-xs">
-          <div className="flex items-center gap-2 text-[#596579] font-mono text-[11px] truncate max-w-xs">
+          <div className="flex items-center gap-2 text-[#526779] font-mono text-[11px] truncate max-w-xs">
             <Clock className="w-3.5 h-3.5 text-[#7B8798] shrink-0" />
             <span className="truncate">{data.timestamp || 'Live Schedule Snapshot'}</span>
           </div>
@@ -134,7 +134,7 @@ export function WhyExplanationModal({
                   onClose();
                   onOpenActivityDrawer(data.subjectId);
                 }}
-                className="px-3 py-1.5 bg-[#EDF5F8] hover:bg-[#DCEBF1] text-[#176B87] border border-[#B3CBE0] rounded-lg font-semibold shadow-2xs transition-colors flex items-center gap-2 cursor-pointer text-xs"
+                className="px-3 py-1.5 bg-[#EAF0F5] hover:bg-[#DCEBF1] text-[#0F6B68] border border-[#D8E2EA] rounded-lg font-semibold shadow-2xs transition-colors flex items-center gap-2 cursor-pointer text-xs"
               >
                 <Layers className="w-3.5 h-3.5" />
                 <span>Open Activity</span>
@@ -144,7 +144,7 @@ export function WhyExplanationModal({
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-1.5 bg-[#172033] hover:bg-[#0E1524] text-white rounded-lg font-semibold shadow-xs transition-colors cursor-pointer text-xs"
+              className="px-4 py-1.5 bg-[#142C3F] hover:bg-[#0E1524] text-white rounded-lg font-semibold shadow-xs transition-colors cursor-pointer text-xs"
             >
               Done
             </button>
@@ -154,16 +154,16 @@ export function WhyExplanationModal({
     >
       <div className="space-y-4 text-xs">
         {/* Metric Summary Header Card */}
-        <div className="p-4 rounded-lg bg-[#F7F8FA] border border-[#D9DEE5] flex items-center justify-between gap-3">
+        <div className="p-4 rounded-lg bg-[#F3F6FA] border border-[#D8E2EA] flex items-center justify-between gap-3">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-white border border-[#D9DEE5] flex items-center justify-center shrink-0 shadow-2xs">
+            <div className="w-10 h-10 rounded-lg bg-white border border-[#D8E2EA] flex items-center justify-center shrink-0 shadow-2xs">
               {getTypeIcon()}
             </div>
             <div>
-              <span className="text-[11px] uppercase font-semibold text-[#596579] tracking-wider block">
+              <span className="text-[11px] uppercase font-semibold text-[#526779] tracking-wider block">
                 {data.metricLabel}
               </span>
-              <div className="text-xl font-bold font-mono text-[#172033] mt-0.5">
+              <div className="text-xl font-bold font-mono text-[#142C3F] mt-0.5">
                 {data.metricValue}
               </div>
             </div>
@@ -177,11 +177,11 @@ export function WhyExplanationModal({
         </div>
 
         {/* Executive Plain English Summary */}
-        <div className="p-4 rounded-lg bg-white border border-[#D9DEE5] space-y-1">
-          <span className="text-[11px] uppercase font-semibold text-[#596579] tracking-wider block">
+        <div className="p-4 rounded-lg bg-white border border-[#D8E2EA] space-y-1">
+          <span className="text-[11px] uppercase font-semibold text-[#526779] tracking-wider block">
             Executive Summary
           </span>
-          <p className="text-xs text-[#172033] leading-relaxed">
+          <p className="text-xs text-[#142C3F] leading-relaxed">
             {data.summary}
           </p>
         </div>
@@ -189,13 +189,13 @@ export function WhyExplanationModal({
         {/* Contributing Factors Breakdown (Core Explainability) */}
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <span className="text-[11px] uppercase font-semibold text-[#596579] tracking-wider">
+            <span className="text-[11px] uppercase font-semibold text-[#526779] tracking-wider">
               Contributing Factors ({data.factors.length})
             </span>
-            <span className="text-[11px] text-[#596579] font-mono">Impact / Contribution</span>
+            <span className="text-[11px] text-[#526779] font-mono">Impact / Contribution</span>
           </div>
 
-          <div className="divide-y divide-[#D9DEE5] border border-[#D9DEE5] rounded-lg overflow-hidden bg-white">
+          <div className="divide-y divide-[#D8E2EA] border border-[#D8E2EA] rounded-lg overflow-hidden bg-white">
             {data.factors.map((f, idx) => (
               <div key={idx} className="p-3 hover:bg-[#F9FAFC] transition-colors space-y-1">
                 <div className="flex items-center justify-between gap-2">
@@ -203,25 +203,25 @@ export function WhyExplanationModal({
                     {f.status === 'positive' ? (
                       <CheckCircle2 className="w-3.5 h-3.5 text-[#2E7D5B] shrink-0" />
                     ) : f.status === 'negative' ? (
-                      <AlertTriangle className="w-3.5 h-3.5 text-[#B5473C] shrink-0" />
+                      <AlertTriangle className="w-3.5 h-3.5 text-[#A24335] shrink-0" />
                     ) : (
-                      <Info className="w-3.5 h-3.5 text-[#176B87] shrink-0" />
+                      <Info className="w-3.5 h-3.5 text-[#0F6B68] shrink-0" />
                     )}
-                    <span className="font-semibold text-[#172033] text-xs">{f.factor}</span>
+                    <span className="font-semibold text-[#142C3F] text-xs">{f.factor}</span>
                   </div>
                   <span
                     className={`font-mono font-semibold text-[11px] px-2 py-0.5 rounded border shrink-0 ${
                       f.status === 'positive'
-                        ? 'bg-[#EDF7F2] text-[#2E7D5B] border-[#B8DCC9]'
+                        ? 'bg-[#E4F4EC] text-[#2E7D5B] border-[#B8DCC9]'
                         : f.status === 'negative'
-                        ? 'bg-[#FBEFEE] text-[#B5473C] border-[#E4B0AA]'
-                        : 'bg-[#EDF5F8] text-[#176B87] border-[#B3CBE0]'
+                        ? 'bg-[#FCE8E4] text-[#A24335] border-[#E4B0AA]'
+                        : 'bg-[#EAF0F5] text-[#0F6B68] border-[#D8E2EA]'
                     }`}
                   >
                     {f.contribution}
                   </span>
                 </div>
-                <p className="text-[11px] text-[#596579] pl-5 leading-normal">
+                <p className="text-[11px] text-[#526779] pl-5 leading-normal">
                   {f.reason}
                 </p>
               </div>
@@ -231,12 +231,12 @@ export function WhyExplanationModal({
 
         {/* Actionable Next Step */}
         {data.recommendation && (
-          <div className="p-4 rounded-lg bg-[#EDF7F2] border border-[#B8DCC9] space-y-1">
+          <div className="p-4 rounded-lg bg-[#E4F4EC] border border-[#B8DCC9] space-y-1">
             <div className="flex items-center gap-2 font-semibold text-[#2E7D5B] text-xs">
               <CheckCircle2 className="w-4 h-4 text-[#2E7D5B]" />
               <span>Recommended Operational Next Step</span>
             </div>
-            <p className="text-xs text-[#172033] leading-relaxed">
+            <p className="text-xs text-[#142C3F] leading-relaxed">
               {data.recommendation}
             </p>
           </div>
@@ -244,11 +244,11 @@ export function WhyExplanationModal({
 
         {/* Progressive Disclosure: Technical Details (Collapsed by Default) */}
         {data.algorithmOrRule && (
-          <div className="pt-2 border-t border-[#D9DEE5]/80">
+          <div className="pt-2 border-t border-[#D8E2EA]/80">
             <button
               type="button"
               onClick={() => setShowTechnicalDetails(!showTechnicalDetails)}
-              className="w-full flex items-center justify-between p-2 rounded text-[11px] font-medium text-[#596579] hover:text-[#172033] hover:bg-[#F1F3F5] transition-colors cursor-pointer"
+              className="w-full flex items-center justify-between p-2 rounded text-[11px] font-medium text-[#526779] hover:text-[#142C3F] hover:bg-[#EAF0F5] transition-colors cursor-pointer"
             >
               <span className="flex items-center gap-2">
                 <Cpu className="w-3.5 h-3.5 text-[#7B8798]" />
@@ -262,14 +262,14 @@ export function WhyExplanationModal({
             </button>
 
             {showTechnicalDetails && (
-              <div className="mt-2 p-3 rounded-lg bg-[#F7F8FA] border border-[#D9DEE5] space-y-2 text-[11px] font-mono">
+              <div className="mt-2 p-3 rounded-lg bg-[#F3F6FA] border border-[#D8E2EA] space-y-2 text-[11px] font-mono">
                 <div className="flex items-start justify-between gap-2">
                   <span className="text-[#7B8798]">Calculation Baseline:</span>
-                  <span className="font-bold text-[#172033] text-right">{data.algorithmOrRule}</span>
+                  <span className="font-bold text-[#142C3F] text-right">{data.algorithmOrRule}</span>
                 </div>
                 <div className="flex items-center justify-between text-[#7B8798]">
                   <span>Verification Signature:</span>
-                  <span className="text-[#176B87]">Verified Schedule Twin Calculation</span>
+                  <span className="text-[#0F6B68]">Verified Schedule Twin Calculation</span>
                 </div>
               </div>
             )}

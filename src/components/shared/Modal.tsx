@@ -53,24 +53,24 @@ export function Modal({
     <div className="fixed inset-0 z-50 overflow-y-auto" role="dialog" aria-modal="true">
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-[#172033]/40"
+        className="fixed inset-0 bg-[#142C3F]/40"
         onClick={onClose}
         aria-hidden="true"
       />
 
       <div className="flex min-h-full items-center justify-center p-3 sm:p-4">
         <div
-          className={`relative w-full ${maxWidthClass} bg-white rounded-lg border border-[#D9DEE5] shadow-lg overflow-hidden`}
+          className={`relative w-full ${maxWidthClass} bg-white rounded-lg border border-[#D8E2EA] shadow-lg overflow-hidden`}
         >
           {/* Header */}
-          <div className="flex items-start justify-between px-4 sm:px-6 py-3 sm:py-4 border-b border-[#D9DEE5] bg-white">
+          <div className="flex items-start justify-between px-4 sm:px-6 py-3 sm:py-4 border-b border-[#D8E2EA] bg-white">
             <div className="min-w-0 pr-2">
-              <h2 className="text-base font-semibold text-[#172033] leading-snug">{title}</h2>
-              {subtitle && <p className="text-xs text-[#596579] mt-0.5">{subtitle}</p>}
+              <h2 className="text-base font-semibold text-[#142C3F] leading-snug">{title}</h2>
+              {subtitle && <p className="text-xs text-[#526779] mt-0.5">{subtitle}</p>}
             </div>
             <button
               onClick={onClose}
-              className="min-w-[44px] min-h-[44px] flex items-center justify-center p-2 text-[#596579] hover:text-[#172033] hover:bg-[#F1F3F5] rounded-md transition-colors -mr-1 flex-shrink-0 cursor-pointer"
+              className="min-w-[44px] min-h-[44px] flex items-center justify-center p-2 text-[#526779] hover:text-[#142C3F] hover:bg-[#EAF0F5] rounded-md transition-colors -mr-1 flex-shrink-0 cursor-pointer"
               aria-label="Close dialog"
             >
               <X className="w-5 h-5" />
@@ -78,13 +78,13 @@ export function Modal({
           </div>
 
           {/* Body */}
-          <div className="px-4 sm:px-6 py-3 sm:py-4 max-h-[75vh] overflow-y-auto text-[#172033] text-sm">
+          <div className="px-4 sm:px-6 py-3 sm:py-4 max-h-[75vh] overflow-y-auto text-[#142C3F] text-sm">
             {children}
           </div>
 
           {/* Footer */}
           {footer && (
-            <div className="flex flex-wrap items-center justify-end gap-2 sm:gap-3 px-4 sm:px-6 py-3 border-t border-[#D9DEE5] bg-[#F7F8FA]">
+            <div className="flex flex-wrap items-center justify-end gap-2 sm:gap-3 px-4 sm:px-6 py-3 border-t border-[#D8E2EA] bg-[#F3F6FA]">
               {footer}
             </div>
           )}

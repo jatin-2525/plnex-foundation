@@ -224,26 +224,26 @@ export function HorizontalBarChart({
   const plotW = width - padLeft - padRight;
 
   return (
-    <div className={`bg-white rounded-lg border border-[#D9DEE5] p-4 sm:p-6 shadow-xs text-[#172033] ${className}`}>
+    <div className={`bg-white rounded-lg border border-[#D8E2EA] p-4 sm:p-6 shadow-xs text-[#142C3F] ${className}`}>
       {/* Header */}
-      <div className="flex flex-col lg:flex-row lg:items-center justify-between pb-3 border-b border-[#D9DEE5] gap-3">
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between pb-3 border-b border-[#D8E2EA] gap-3">
         <div>
           <div className="flex items-center gap-2 flex-wrap">
-            <h3 className="text-base font-bold text-[#172033] tracking-tight">{displayTitle}</h3>
-            <span className="px-2 py-0.5 rounded bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0] text-[10px] font-mono font-bold">
+            <h3 className="text-base font-bold text-[#142C3F] tracking-tight">{displayTitle}</h3>
+            <span className="px-2 py-0.5 rounded bg-[#EAF0F5] text-[#0F6B68] border border-[#D8E2EA] text-[10px] font-mono font-bold">
               Unit: {effectiveUnit}
             </span>
-            <span className="px-2 py-0.5 rounded bg-[#F1F3F5] text-[#596579] border border-[#D9DEE5] text-[10px] font-mono">
+            <span className="px-2 py-0.5 rounded bg-[#F3F6FA] text-[#526779] border border-[#D8E2EA] text-[10px] font-mono">
               {timeRange}
             </span>
           </div>
-          <p className="text-xs text-[#596579] mt-0.5">{displaySubtitle}</p>
+          <p className="text-xs text-[#526779] mt-0.5">{displaySubtitle}</p>
         </div>
 
         {/* Project Question Banner (only if explicitly provided) */}
         {projectQuestion && (
-          <div className="px-3 py-1.5 rounded bg-[#EDF5F8] border border-[#B3CBE0] text-xs font-mono text-[#176B87] font-semibold self-start lg:self-auto max-w-md">
-            <span className="font-sans font-bold text-[#172033] block text-[10px] uppercase tracking-wide">
+          <div className="px-3 py-1.5 rounded bg-[#EAF0F5] border border-[#D8E2EA] text-xs font-mono text-[#0F6B68] font-semibold self-start lg:self-auto max-w-md">
+            <span className="font-sans font-bold text-[#142C3F] block text-[10px] uppercase tracking-wide">
               Project Question:
             </span>
             {displayQuestion}
@@ -270,7 +270,7 @@ export function HorizontalBarChart({
                     y1={padTop}
                     x2={x}
                     y2={height - padBottom}
-                    stroke="#E5E9F0"
+                    stroke={CHART_TOKENS.neutral.grid}
                     strokeWidth="1"
                     strokeDasharray={ratio === 0 ? undefined : '3,3'}
                   />
@@ -279,7 +279,7 @@ export function HorizontalBarChart({
                     y={height - padBottom + 16}
                     textAnchor="middle"
                     fontSize="10"
-                    fill="#596579"
+                    fill="#526779"
                     fontFamily="inherit"
                   >
                     {variant === 'top-variances' ? `-${tickVal}%` : `${tickVal} ${effectiveUnit}`}
@@ -295,7 +295,7 @@ export function HorizontalBarChart({
               textAnchor="middle"
               fontSize="10"
               fontWeight="bold"
-              fill="#596579"
+              fill="#526779"
             >
               {variant === 'delayed-activities'
                 ? `Schedule Delay Duration (${effectiveUnit})`
@@ -416,7 +416,7 @@ export function HorizontalBarChart({
       </div>
 
       {/* Legend & Summary with Multi-Channel Symbols */}
-      <div className="flex flex-wrap items-center justify-between gap-4 mt-3 pt-3 border-t border-[#F1F3F5] text-xs text-[#596579]">
+      <div className="flex flex-wrap items-center justify-between gap-4 mt-3 pt-3 border-t border-[#D8E2EA] text-xs text-[#526779]">
         <div className="flex items-center gap-4 flex-wrap">
           {variant === 'delayed-activities' ? (
             <>
@@ -427,7 +427,7 @@ export function HorizontalBarChart({
                 >
                   ✕
                 </span>
-                <span className="font-semibold text-[#172033]">Critical Path Delay (Zero Float)</span>
+                <span className="font-semibold text-[#142C3F]">Critical Path Delay (Zero Float)</span>
               </div>
               <div className="flex items-center gap-2">
                 <span
@@ -448,7 +448,7 @@ export function HorizontalBarChart({
                 >
                   ✕
                 </span>
-                <span className="font-semibold text-[#172033]">Severe Variance (&ge; 12% Slip)</span>
+                <span className="font-semibold text-[#142C3F]">Severe Variance (&ge; 12% Slip)</span>
               </div>
               <div className="flex items-center gap-2">
                 <span
@@ -469,7 +469,7 @@ export function HorizontalBarChart({
                 >
                   ✕
                 </span>
-                <span className="font-semibold text-[#172033]">High Priority Backlog (&ge; 6 Items)</span>
+                <span className="font-semibold text-[#142C3F]">High Priority Backlog (&ge; 6 Items)</span>
               </div>
               <div className="flex items-center gap-2">
                 <span
@@ -484,7 +484,7 @@ export function HorizontalBarChart({
           )}
         </div>
 
-        <div className="text-[11px] text-[#596579] font-mono">
+        <div className="text-[11px] text-[#526779] font-mono">
           Showing Top {displayList.length} Drivers • Primavera P6 Live Model
         </div>
       </div>

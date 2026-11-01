@@ -22,18 +22,18 @@ export function ErrorState({
 }: ErrorStateProps) {
   return (
     <div
-      className={`bg-white border border-[#D9DEE5] rounded-lg p-6 sm:p-8 flex flex-col items-center text-center max-w-lg mx-auto ${className}`}
+      className={`bg-white border border-[#D8E2EA] rounded-lg p-6 sm:p-8 flex flex-col items-center text-center max-w-lg mx-auto ${className}`}
       role="alert"
     >
-      <div className="w-10 h-10 rounded-full bg-[#FBEFEE] border border-[#E4B0AA] flex items-center justify-center text-[#B5473C] mb-3 shrink-0">
+      <div className="w-10 h-10 rounded-full bg-[#FCE8E4] border border-[#E4B0AA] flex items-center justify-center text-[#A24335] mb-3 shrink-0">
         <AlertCircle className="w-5 h-5 stroke-[2]" />
       </div>
-      <h3 className="text-sm sm:text-base font-semibold text-[#172033] mb-1.5">{title}</h3>
-      <p className="text-xs text-[#596579] max-w-sm mb-4 leading-relaxed">
+      <h3 className="text-sm sm:text-base font-semibold text-[#142C3F] mb-1.5">{title}</h3>
+      <p className="text-xs text-[#526779] max-w-sm mb-4 leading-relaxed">
         {message}
       </p>
       {code && (
-        <span className="inline-block px-2.5 py-0.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded text-[11px] font-mono text-[#596579] mb-4">
+        <span className="inline-block px-2.5 py-0.5 bg-[#F3F6FA] border border-[#D8E2EA] rounded text-[11px] font-mono text-[#526779] mb-4">
           Diagnostic Code: {code}
         </span>
       )}
@@ -41,7 +41,7 @@ export function ErrorState({
         <button
           type="button"
           onClick={onRetry}
-          className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-semibold rounded-md shadow-2xs transition-colors cursor-pointer"
+          className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-[#0F6B68] hover:bg-[#135A72] text-white text-xs font-semibold rounded-md shadow-2xs transition-colors cursor-pointer"
         >
           <RotateCcw className="w-3.5 h-3.5" />
           <span>{retryLabel}</span>

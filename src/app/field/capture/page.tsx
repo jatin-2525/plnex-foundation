@@ -265,41 +265,41 @@ export default function FieldCapturePage() {
 
         {/* OFFLINE MODE BANNER */}
         {isOffline && (
-          <div className="p-3 rounded-lg bg-[#FDF6ED] border border-[#F0D4A6] flex items-center justify-between gap-3 text-xs text-[#8C5311]">
+          <div className="p-3 rounded-lg bg-[#FFF1D3] border border-[#F0D4A6] flex items-center justify-between gap-3 text-xs text-[#8C5311]">
             <div className="flex items-center gap-2">
-              <span className="px-2 py-0.5 rounded bg-[#D98B32] text-white font-mono font-bold text-[10px] uppercase">
+              <span className="px-2 py-0.5 rounded bg-[#845006] text-white font-mono font-bold text-[10px] uppercase">
                 OFFLINE MODE
               </span>
               <span className="font-semibold">
                 Updates will be synchronized when online mode is restored.
               </span>
             </div>
-            <span className="text-[11px] font-mono text-[#D98B32] shrink-0">
+            <span className="text-[11px] font-mono text-[#845006] shrink-0">
               Saved locally
             </span>
           </div>
         )}
 
         {/* PAGE HEADER: Mobile-First, Calm, Uncluttered */}
-        <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 shadow-xs">
+        <div className="bg-white border border-[#D8E2EA] rounded-lg p-4 sm:p-6 shadow-xs">
           <div className="flex items-center justify-between gap-2">
             <div>
-              <div className="flex items-center gap-2 text-xs text-[#596579]">
-                <HardHat className="w-4 h-4 text-[#176B87]" />
-                <span className="font-mono font-bold text-[#176B87]">
+              <div className="flex items-center gap-2 text-xs text-[#526779]">
+                <HardHat className="w-4 h-4 text-[#0F6B68]" />
+                <span className="font-mono font-bold text-[#0F6B68]">
                   {activeProject.code}
                 </span>
                 <span>•</span>
-                <span className="font-mono text-[#172033]">
+                <span className="font-mono text-[#142C3F]">
                   {formatProjectDate(PROJECT_REPORT_DATE, true)}
                 </span>
               </div>
-              <h1 className="text-[28px] sm:text-3xl font-bold text-[#172033] tracking-tight mt-1">
+              <h1 className="text-[28px] sm:text-3xl font-bold text-[#142C3F] tracking-tight mt-1">
                 Field Capture
               </h1>
-              <p className="text-xs text-[#596579] mt-0.5">
+              <p className="text-xs text-[#526779] mt-0.5">
                 Quick mobile telemetry entry for single events • For end-of-shift contractor submission, use{' '}
-                <Link href="/field/dpr" className="text-[#176B87] underline font-medium hover:text-[#135A72]">
+                <Link href="/field/dpr" className="text-[#0F6B68] underline font-medium hover:text-[#135A72]">
                   Daily Progress Report (DPR)
                 </Link>
               </p>
@@ -307,7 +307,7 @@ export default function FieldCapturePage() {
 
             <Link
               href="/engineer"
-              className="min-h-[40px] px-3.5 py-2 text-xs text-[#172033] bg-white hover:bg-[#F1F3F5] border border-[#D9DEE5] rounded-lg transition-colors font-semibold shrink-0 inline-flex items-center justify-center shadow-2xs"
+              className="min-h-[40px] px-3.5 py-2 text-xs text-[#142C3F] bg-white hover:bg-[#EAF0F5] border border-[#D8E2EA] rounded-lg transition-colors font-semibold shrink-0 inline-flex items-center justify-center shadow-2xs"
             >
               Engineer Dashboard
             </Link>
@@ -316,15 +316,15 @@ export default function FieldCapturePage() {
 
         {/* DEMO PRESET / CLEAR CONTROL TOOLBAR */}
         {!isCompleted && (
-          <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 text-xs shadow-2xs">
+          <div className="p-3 bg-[#F3F6FA] border border-[#D8E2EA] rounded-lg flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 text-xs shadow-2xs">
             <div className="flex items-center gap-2">
-              <span className="font-semibold text-[#172033]">Form Mode:</span>
+              <span className="font-semibold text-[#142C3F]">Form Mode:</span>
               {isSampleLoaded ? (
-                <span className="px-2 py-0.5 rounded bg-[#FDF6ED] text-[#8C5311] border border-[#F0D4A6] text-[11px] font-mono font-bold">
+                <span className="px-2 py-0.5 rounded bg-[#FFF1D3] text-[#8C5311] border border-[#F0D4A6] text-[11px] font-mono font-bold">
                   Sample Demo Content Loaded
                 </span>
               ) : (
-                <span className="px-2 py-0.5 rounded bg-white text-[#596579] border border-[#D9DEE5] text-[11px] font-mono">
+                <span className="px-2 py-0.5 rounded bg-white text-[#526779] border border-[#D8E2EA] text-[11px] font-mono">
                   Blank Form (Ready for Site Input)
                 </span>
               )}
@@ -334,7 +334,7 @@ export default function FieldCapturePage() {
                 <button
                   type="button"
                   onClick={handleLoadSample}
-                  className="px-3 py-1.5 bg-white hover:bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0] rounded font-semibold text-xs transition-colors cursor-pointer"
+                  className="px-3 py-1.5 bg-white hover:bg-[#EAF0F5] text-[#0F6B68] border border-[#D8E2EA] rounded font-semibold text-xs transition-colors cursor-pointer"
                 >
                   Load Sample Preset (Line 24)
                 </button>
@@ -342,7 +342,7 @@ export default function FieldCapturePage() {
                 <button
                   type="button"
                   onClick={handleClearForm}
-                  className="px-3 py-1.5 bg-white hover:bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA] rounded font-semibold text-xs transition-colors cursor-pointer"
+                  className="px-3 py-1.5 bg-white hover:bg-[#FCE8E4] text-[#A24335] border border-[#E4B0AA] rounded font-semibold text-xs transition-colors cursor-pointer"
                 >
                   Clear Form & Start Blank
                 </button>
@@ -353,42 +353,42 @@ export default function FieldCapturePage() {
 
         {/* COMPLETED SUCCESS STATE */}
         {isCompleted ? (
-          <div className="bg-white border border-[#D9DEE5] rounded-lg p-6 sm:p-8 text-center space-y-4">
-            <div className="w-14 h-14 rounded-full bg-[#EDF7F2] border border-[#B8DCC9] flex items-center justify-center text-[#2E7D5B] mx-auto">
+          <div className="bg-white border border-[#D8E2EA] rounded-lg p-6 sm:p-8 text-center space-y-4">
+            <div className="w-14 h-14 rounded-full bg-[#E4F4EC] border border-[#B8DCC9] flex items-center justify-center text-[#2E7D5B] mx-auto">
               <CheckCircle2 className="w-8 h-8" />
             </div>
 
             <div className="space-y-1">
-              <h2 className="text-xl font-bold text-[#172033]">
+              <h2 className="text-xl font-bold text-[#142C3F]">
                 Field Report Recorded
               </h2>
-              <p className="text-xs text-[#596579]">
+              <p className="text-xs text-[#526779]">
                 {isOffline
                   ? 'Saved locally to IndexedDB queue. Updates will be synchronized when online mode is restored.'
                   : 'Successfully submitted and verified against master schedule baseline.'}
               </p>
             </div>
 
-            <div className="p-4 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg max-w-sm mx-auto text-xs text-left font-mono space-y-2">
+            <div className="p-4 bg-[#F3F6FA] border border-[#D8E2EA] rounded-lg max-w-sm mx-auto text-xs text-left font-mono space-y-2">
               <div className="flex justify-between">
-                <span className="text-[#596579]">Target Activity:</span>
-                <strong className="text-[#176B87]">{activityId}</strong>
+                <span className="text-[#526779]">Target Activity:</span>
+                <strong className="text-[#0F6B68]">{activityId}</strong>
               </div>
               <div className="flex justify-between">
-                <span className="text-[#596579]">Quantity Logged:</span>
-                <strong className="text-[#172033]">{quantity} {unit}</strong>
+                <span className="text-[#526779]">Quantity Logged:</span>
+                <strong className="text-[#142C3F]">{quantity} {unit}</strong>
               </div>
               <div className="flex justify-between">
-                <span className="text-[#596579]">Area / Line:</span>
-                <strong className="text-[#172033]">{area}</strong>
+                <span className="text-[#526779]">Area / Line:</span>
+                <strong className="text-[#142C3F]">{area}</strong>
               </div>
               <div className="flex justify-between">
-                <span className="text-[#596579]">Evidence Attached:</span>
+                <span className="text-[#526779]">Evidence Attached:</span>
                 <strong className="text-[#2E7D5B]">{attachedPhoto ? '1 Photo' : 'None'}</strong>
               </div>
-              <div className="flex justify-between border-t border-[#D9DEE5] pt-2">
-                <span className="text-[#596579]">Sync Status:</span>
-                <strong className={isOffline ? 'text-[#D98B32]' : 'text-[#2E7D5B]'}>
+              <div className="flex justify-between border-t border-[#D8E2EA] pt-2">
+                <span className="text-[#526779]">Sync Status:</span>
+                <strong className={isOffline ? 'text-[#845006]' : 'text-[#2E7D5B]'}>
                   {isOffline ? 'Saved locally' : 'Server Confirmed'}
                 </strong>
               </div>
@@ -404,7 +404,7 @@ export default function FieldCapturePage() {
                   setAttachedDoc(null);
                   setIsCompleted(false);
                 }}
-                className="w-full sm:w-auto min-h-[44px] px-4 sm:px-6 py-2 text-xs font-bold text-[#172033] bg-[#F7F8FA] hover:bg-[#F1F3F5] border border-[#D9DEE5] rounded-lg transition-colors inline-flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full sm:w-auto min-h-[44px] px-4 sm:px-6 py-2 text-xs font-bold text-[#142C3F] bg-[#F3F6FA] hover:bg-[#EAF0F5] border border-[#D8E2EA] rounded-lg transition-colors inline-flex items-center justify-center gap-2 cursor-pointer"
               >
                 <Plus className="w-4 h-4" />
                 <span>Record Another Entry</span>
@@ -412,7 +412,7 @@ export default function FieldCapturePage() {
 
               <Link
                 href="/engineer"
-                className="w-full sm:w-auto min-h-[44px] px-4 sm:px-6 py-2 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] rounded-lg transition-colors inline-flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full sm:w-auto min-h-[44px] px-4 sm:px-6 py-2 text-xs font-bold text-white bg-[#0F6B68] hover:bg-[#135A72] rounded-lg transition-colors inline-flex items-center justify-center gap-2 cursor-pointer"
               >
                 <span>Return to Engineer Dashboard</span>
                 <ArrowRight className="w-4 h-4" />
@@ -425,9 +425,9 @@ export default function FieldCapturePage() {
             {/* ========================================================= */}
             {/* 1. WHAT HAPPENED? */}
             {/* ========================================================= */}
-            <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-4 sm:p-6 space-y-3">
+            <div className="bg-white border border-[#D8E2EA] rounded-lg p-4 sm:p-4 sm:p-6 space-y-3">
               <div className="flex items-center justify-between">
-                <label className="text-base font-bold text-[#172033] block">
+                <label className="text-base font-bold text-[#142C3F] block">
                   1. What happened?
                 </label>
                 <button
@@ -435,18 +435,18 @@ export default function FieldCapturePage() {
                   onClick={toggleVoiceRecording}
                   className={`min-h-[44px] h-11 px-4 text-xs font-semibold rounded-lg border transition-all inline-flex items-center gap-2 cursor-pointer ${
                     isRecordingVoice
-                      ? 'bg-[#FBEFEE] text-[#B5473C] border-[#B5473C] font-bold'
-                      : 'bg-[#F7F8FA] text-[#176B87] border-[#D9DEE5] hover:bg-[#EDF5F8]'
+                      ? 'bg-[#FCE8E4] text-[#A24335] border-[#A24335] font-bold'
+                      : 'bg-[#F3F6FA] text-[#0F6B68] border-[#D8E2EA] hover:bg-[#EAF0F5]'
                   }`}
                 >
                   {isRecordingVoice ? (
                     <>
-                      <MicOff className="w-4 h-4 text-[#B5473C]" />
+                      <MicOff className="w-4 h-4 text-[#A24335]" />
                       <span>Stop ({voiceSeconds}s)</span>
                     </>
                   ) : (
                     <>
-                      <Mic className="w-4 h-4 text-[#176B87]" />
+                      <Mic className="w-4 h-4 text-[#0F6B68]" />
                       <span>Record Voice</span>
                     </>
                   )}
@@ -459,12 +459,12 @@ export default function FieldCapturePage() {
                 value={whatHappened}
                 onChange={(e) => setWhatHappened(e.target.value)}
                 placeholder="Type or dictate what was completed on site today..."
-                className="w-full p-4 text-sm sm:text-base bg-[#F7F8FA] focus:bg-white border-2 border-[#D9DEE5] focus:border-[#176B87] rounded-lg text-[#172033] placeholder-[#7B8798] outline-none transition-colors leading-relaxed"
+                className="w-full p-4 text-sm sm:text-base bg-[#F3F6FA] focus:bg-white border-2 border-[#D8E2EA] focus:border-[#0F6B68] rounded-lg text-[#142C3F] placeholder-[#7B8798] outline-none transition-colors leading-relaxed"
               />
 
               {/* Quick Tap Chips to minimize typing */}
               <div className="space-y-2 pt-1">
-                <span className="text-[11px] font-bold text-[#596579] block">
+                <span className="text-[11px] font-bold text-[#526779] block">
                   Quick Tap Presets:
                 </span>
                 <div className="flex flex-wrap gap-2">
@@ -473,7 +473,7 @@ export default function FieldCapturePage() {
                       key={idx}
                       type="button"
                       onClick={() => setWhatHappened(chip)}
-                      className="min-h-[44px] py-2 px-4 text-xs rounded-full bg-[#F1F3F5] hover:bg-[#EDF5F8] text-[#172033] hover:text-[#176B87] border border-[#D9DEE5] transition-colors text-left inline-flex items-center"
+                      className="min-h-[44px] py-2 px-4 text-xs rounded-full bg-[#EAF0F5] hover:bg-[#EAF0F5] text-[#142C3F] hover:text-[#0F6B68] border border-[#D8E2EA] transition-colors text-left inline-flex items-center"
                     >
                       + {chip}
                     </button>
@@ -485,8 +485,8 @@ export default function FieldCapturePage() {
             {/* ========================================================= */}
             {/* 2. QUANTITY (Large, Thumb-Friendly Stepper) */}
             {/* ========================================================= */}
-            <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 space-y-3">
-              <label className="text-base font-bold text-[#172033] block">
+            <div className="bg-white border border-[#D8E2EA] rounded-lg p-4 sm:p-6 space-y-3">
+              <label className="text-base font-bold text-[#142C3F] block">
                 2. Quantity
               </label>
 
@@ -495,7 +495,7 @@ export default function FieldCapturePage() {
                 <button
                   type="button"
                   onClick={() => handleQuantityDelta(-1)}
-                  className="min-h-[44px] h-12 w-14 rounded-lg bg-[#F1F3F5] hover:bg-[#D9DEE5] active:bg-[#C5CCD6] border border-[#D9DEE5] font-black text-xl text-[#172033] flex items-center justify-center cursor-pointer transition-colors"
+                  className="min-h-[44px] h-12 w-14 rounded-lg bg-[#EAF0F5] hover:bg-[#D8E2EA] active:bg-[#C5CCD6] border border-[#D8E2EA] font-black text-xl text-[#142C3F] flex items-center justify-center cursor-pointer transition-colors"
                   aria-label="Decrease quantity"
                 >
                   <Minus className="w-5 h-5" />
@@ -507,14 +507,14 @@ export default function FieldCapturePage() {
                     min="1"
                     value={quantity}
                     onChange={(e) => setQuantity(Math.max(1, parseInt(e.target.value, 10) || 1))}
-                    className="w-full min-h-[44px] h-12 text-center font-mono font-bold text-2xl bg-[#F7F8FA] border-2 border-[#D9DEE5] focus:border-[#176B87] rounded-lg text-[#172033] outline-none"
+                    className="w-full min-h-[44px] h-12 text-center font-mono font-bold text-2xl bg-[#F3F6FA] border-2 border-[#D8E2EA] focus:border-[#0F6B68] rounded-lg text-[#142C3F] outline-none"
                   />
                 </div>
 
                 <button
                   type="button"
                   onClick={() => handleQuantityDelta(1)}
-                  className="min-h-[44px] h-12 w-14 rounded-lg bg-[#F1F3F5] hover:bg-[#D9DEE5] active:bg-[#C5CCD6] border border-[#D9DEE5] font-black text-xl text-[#172033] flex items-center justify-center cursor-pointer transition-colors"
+                  className="min-h-[44px] h-12 w-14 rounded-lg bg-[#EAF0F5] hover:bg-[#D8E2EA] active:bg-[#C5CCD6] border border-[#D8E2EA] font-black text-xl text-[#142C3F] flex items-center justify-center cursor-pointer transition-colors"
                   aria-label="Increase quantity"
                 >
                   <Plus className="w-5 h-5" />
@@ -523,7 +523,7 @@ export default function FieldCapturePage() {
 
               {/* Quick Count Preset Pills */}
               <div className="flex flex-wrap items-center gap-2 pt-1">
-                <span className="text-[11px] font-bold text-[#596579] mr-1">Count:</span>
+                <span className="text-[11px] font-bold text-[#526779] mr-1">Count:</span>
                 {[1, 4, 8, 12, 20, 45, 100].map((num) => (
                   <button
                     key={num}
@@ -531,8 +531,8 @@ export default function FieldCapturePage() {
                     onClick={() => setQuantity(num)}
                     className={`min-h-[44px] px-4 text-xs font-mono font-bold rounded-md border transition-colors inline-flex items-center justify-center ${
                       quantity === num
-                        ? 'bg-[#176B87] text-white border-[#176B87]'
-                        : 'bg-[#F7F8FA] text-[#172033] border-[#D9DEE5] hover:bg-[#F1F3F5]'
+                        ? 'bg-[#0F6B68] text-white border-[#0F6B68]'
+                        : 'bg-[#F3F6FA] text-[#142C3F] border-[#D8E2EA] hover:bg-[#EAF0F5]'
                     }`}
                   >
                     {num}
@@ -544,8 +544,8 @@ export default function FieldCapturePage() {
             {/* ========================================================= */}
             {/* 3. UNIT (Touch-Friendly Pills) */}
             {/* ========================================================= */}
-            <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-4 sm:p-6 space-y-3">
-              <label className="text-base font-bold text-[#172033] block">
+            <div className="bg-white border border-[#D8E2EA] rounded-lg p-4 sm:p-4 sm:p-6 space-y-3">
+              <label className="text-base font-bold text-[#142C3F] block">
                 3. Unit
               </label>
 
@@ -560,8 +560,8 @@ export default function FieldCapturePage() {
                     }}
                     className={`min-h-[44px] h-11 px-4 text-xs font-bold rounded-lg border transition-colors cursor-pointer ${
                       unit === u && !showCustomUnit
-                        ? 'bg-[#176B87] text-white border-[#176B87]'
-                        : 'bg-[#F7F8FA] text-[#172033] border-[#D9DEE5] hover:bg-[#F1F3F5]'
+                        ? 'bg-[#0F6B68] text-white border-[#0F6B68]'
+                        : 'bg-[#F3F6FA] text-[#142C3F] border-[#D8E2EA] hover:bg-[#EAF0F5]'
                     }`}
                   >
                     {u}
@@ -573,8 +573,8 @@ export default function FieldCapturePage() {
                   onClick={() => setShowCustomUnit(!showCustomUnit)}
                   className={`min-h-[44px] h-11 px-4 text-xs font-semibold rounded-lg border transition-colors cursor-pointer ${
                     showCustomUnit
-                      ? 'bg-[#176B87] text-white border-[#176B87]'
-                      : 'bg-white text-[#596579] border-[#D9DEE5] hover:bg-[#F1F3F5]'
+                      ? 'bg-[#0F6B68] text-white border-[#0F6B68]'
+                      : 'bg-white text-[#526779] border-[#D8E2EA] hover:bg-[#EAF0F5]'
                   }`}
                 >
                   + Other Unit
@@ -591,7 +591,7 @@ export default function FieldCapturePage() {
                       setUnit(e.target.value);
                     }}
                     placeholder="Enter custom engineering unit..."
-                    className="w-full min-h-[44px] h-11 px-3 text-xs bg-white border border-[#D9DEE5] rounded-lg text-[#172033] outline-none"
+                    className="w-full min-h-[44px] h-11 px-3 text-xs bg-white border border-[#D8E2EA] rounded-lg text-[#142C3F] outline-none"
                   />
                 </div>
               )}
@@ -600,8 +600,8 @@ export default function FieldCapturePage() {
             {/* ========================================================= */}
             {/* 4. AREA (Touch-Friendly Location Pills) */}
             {/* ========================================================= */}
-            <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-4 sm:p-6 space-y-3">
-              <label className="text-base font-bold text-[#172033] block">
+            <div className="bg-white border border-[#D8E2EA] rounded-lg p-4 sm:p-4 sm:p-6 space-y-3">
+              <label className="text-base font-bold text-[#142C3F] block">
                 4. Area &amp; Workfront
               </label>
 
@@ -616,8 +616,8 @@ export default function FieldCapturePage() {
                     }}
                     className={`min-h-[44px] h-11 px-4 text-xs font-bold rounded-lg border transition-colors cursor-pointer ${
                       area === a && !showCustomArea
-                        ? 'bg-[#176B87] text-white border-[#176B87]'
-                        : 'bg-[#F7F8FA] text-[#172033] border-[#D9DEE5] hover:bg-[#F1F3F5]'
+                        ? 'bg-[#0F6B68] text-white border-[#0F6B68]'
+                        : 'bg-[#F3F6FA] text-[#142C3F] border-[#D8E2EA] hover:bg-[#EAF0F5]'
                     }`}
                   >
                     {a}
@@ -629,8 +629,8 @@ export default function FieldCapturePage() {
                   onClick={() => setShowCustomArea(!showCustomArea)}
                   className={`min-h-[44px] h-11 px-4 text-xs font-semibold rounded-lg border transition-colors cursor-pointer ${
                     showCustomArea
-                      ? 'bg-[#176B87] text-white border-[#176B87]'
-                      : 'bg-white text-[#596579] border-[#D9DEE5] hover:bg-[#F1F3F5]'
+                      ? 'bg-[#0F6B68] text-white border-[#0F6B68]'
+                      : 'bg-white text-[#526779] border-[#D8E2EA] hover:bg-[#EAF0F5]'
                   }`}
                 >
                   + Other Area
@@ -647,7 +647,7 @@ export default function FieldCapturePage() {
                       setArea(e.target.value);
                     }}
                     placeholder="Enter area or line name..."
-                    className="w-full min-h-[44px] h-11 px-3 text-xs bg-white border border-[#D9DEE5] rounded-lg text-[#172033] outline-none"
+                    className="w-full min-h-[44px] h-11 px-3 text-xs bg-white border border-[#D8E2EA] rounded-lg text-[#142C3F] outline-none"
                   />
                 </div>
               )}
@@ -656,15 +656,15 @@ export default function FieldCapturePage() {
             {/* ========================================================= */}
             {/* 5. EVIDENCE (Secondary Action: Add Evidence) */}
             {/* ========================================================= */}
-            <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-4 sm:p-6 space-y-3">
+            <div className="bg-white border border-[#D8E2EA] rounded-lg p-4 sm:p-4 sm:p-6 space-y-3">
               <div className="flex items-center justify-between">
-                <label className="text-base font-bold text-[#172033] block">
+                <label className="text-base font-bold text-[#142C3F] block">
                   5. Evidence
                 </label>
                 <button
                   type="button"
                   onClick={() => setShowEvidenceTray(!showEvidenceTray)}
-                  className="min-h-[44px] h-11 px-3 text-xs font-semibold text-[#176B87] hover:underline cursor-pointer"
+                  className="min-h-[44px] h-11 px-3 text-xs font-semibold text-[#0F6B68] hover:underline cursor-pointer"
                 >
                   {showEvidenceTray ? 'Done' : 'Add Evidence'}
                 </button>
@@ -682,9 +682,9 @@ export default function FieldCapturePage() {
                       description: 'Geotagged site image attached.',
                     });
                   }}
-                  className="min-h-[44px] h-11 px-4 text-xs font-bold text-[#172033] bg-[#F7F8FA] hover:bg-[#EDF5F8] border border-[#D9DEE5] rounded-lg transition-colors inline-flex items-center justify-center gap-2 cursor-pointer"
+                  className="min-h-[44px] h-11 px-4 text-xs font-bold text-[#142C3F] bg-[#F3F6FA] hover:bg-[#EAF0F5] border border-[#D8E2EA] rounded-lg transition-colors inline-flex items-center justify-center gap-2 cursor-pointer"
                 >
-                  <Camera className="w-4 h-4 text-[#176B87]" />
+                  <Camera className="w-4 h-4 text-[#0F6B68]" />
                   <span>Photo</span>
                 </button>
 
@@ -698,16 +698,16 @@ export default function FieldCapturePage() {
                       description: 'Shift inspection report attached.',
                     });
                   }}
-                  className="min-h-[44px] h-11 px-4 text-xs font-bold text-[#172033] bg-[#F7F8FA] hover:bg-[#EDF5F8] border border-[#D9DEE5] rounded-lg transition-colors inline-flex items-center justify-center gap-2 cursor-pointer"
+                  className="min-h-[44px] h-11 px-4 text-xs font-bold text-[#142C3F] bg-[#F3F6FA] hover:bg-[#EAF0F5] border border-[#D8E2EA] rounded-lg transition-colors inline-flex items-center justify-center gap-2 cursor-pointer"
                 >
-                  <Paperclip className="w-4 h-4 text-[#176B87]" />
+                  <Paperclip className="w-4 h-4 text-[#0F6B68]" />
                   <span>Document</span>
                 </button>
               </div>
 
               {/* Attached Evidence Pills */}
               {(attachedPhoto || attachedDoc) ? (
-                <div className="p-3 bg-[#EDF7F2] border border-[#B8DCC9] rounded-lg space-y-2 text-xs text-[#2E7D5B]">
+                <div className="p-3 bg-[#E4F4EC] border border-[#B8DCC9] rounded-lg space-y-2 text-xs text-[#2E7D5B]">
                   <div className="flex items-center justify-between">
                     <span className="font-bold flex items-center gap-2">
                       <CheckCircle2 className="w-4 h-4" />
@@ -719,7 +719,7 @@ export default function FieldCapturePage() {
                         setAttachedPhoto(null);
                         setAttachedDoc(null);
                       }}
-                      className="text-[11px] text-[#B5473C] font-semibold hover:underline"
+                      className="text-[11px] text-[#A24335] font-semibold hover:underline"
                     >
                       Clear
                     </button>
@@ -740,33 +740,33 @@ export default function FieldCapturePage() {
                   )}
                 </div>
               ) : (
-                <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg text-xs text-[#7B8798] text-center">
+                <div className="p-3 bg-[#F3F6FA] border border-[#D8E2EA] rounded-lg text-xs text-[#7B8798] text-center">
                   Optional: Attach photo or shift sign-off sheet for rapid QA verification.
                 </div>
               )}
             </div>
 
             {/* VERIFICATION STATE & TARGET MAPPING (Compact, inline preview) */}
-            <div className="bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg p-4 flex items-center justify-between gap-3 text-xs">
+            <div className="bg-[#F3F6FA] border border-[#D8E2EA] rounded-lg p-4 flex items-center justify-between gap-3 text-xs">
               <div>
-                <span className="text-[10px] uppercase font-bold text-[#596579] block">
+                <span className="text-[10px] uppercase font-bold text-[#526779] block">
                   Target WBS Activity
                 </span>
-                <span className="font-mono font-bold text-[#176B87]">
+                <span className="font-mono font-bold text-[#0F6B68]">
                   {activityId}
                 </span>
-                <span className="text-[#596579] ml-2 hidden sm:inline">
+                <span className="text-[#526779] ml-2 hidden sm:inline">
                   • Erect Line 24-XX Header
                 </span>
               </div>
 
               {/* Verification State Dropdown (Confirmed | Needs Confirmation | Unknown | Conflict) */}
               <div className="flex items-center gap-2">
-                <span className="text-[11px] text-[#596579] font-medium hidden sm:inline">State:</span>
+                <span className="text-[11px] text-[#526779] font-medium hidden sm:inline">State:</span>
                 <select
                   value={verificationState}
                   onChange={(e) => setVerificationState(e.target.value as FieldVerificationState)}
-                  className="min-h-[44px] px-3 py-2 text-xs font-semibold bg-white border border-[#D9DEE5] rounded-md text-[#172033] outline-none"
+                  className="min-h-[44px] px-3 py-2 text-xs font-semibold bg-white border border-[#D8E2EA] rounded-md text-[#142C3F] outline-none"
                 >
                   <option value="Confirmed">Confirmed</option>
                   <option value="Needs Confirmation">Needs Confirmation</option>
@@ -784,7 +784,7 @@ export default function FieldCapturePage() {
                 type="button"
                 onClick={handleSaveReport}
                 disabled={isSubmitting}
-                className="w-full min-h-[48px] py-2.5 px-4 text-sm font-bold text-white bg-[#176B87] hover:bg-[#135A72] border border-[#176B87] rounded-lg shadow-xs transition-colors inline-flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+                className="w-full min-h-[48px] py-2.5 px-4 text-sm font-bold text-white bg-[#0F6B68] hover:bg-[#135A72] border border-[#0F6B68] rounded-lg shadow-xs transition-colors inline-flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
               >
                 {isSubmitting ? (
                   <>
@@ -808,12 +808,12 @@ export default function FieldCapturePage() {
         {/* MOBILE STICKY BOTTOM BAR (Always Thumb-Reachable with One Hand) */}
         {/* ========================================================= */}
         {!isCompleted && (
-          <div className="fixed bottom-0 left-0 right-0 p-3 bg-white border-t border-[#D9DEE5] md:hidden shadow-lg z-30">
+          <div className="fixed bottom-0 left-0 right-0 p-3 bg-white border-t border-[#D8E2EA] md:hidden shadow-lg z-30">
             <button
               type="button"
               onClick={handleSaveReport}
               disabled={isSubmitting}
-              className="w-full min-h-[48px] py-2.5 px-4 text-sm font-bold text-white bg-[#176B87] hover:bg-[#135A72] border border-[#176B87] rounded-lg shadow-xs flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+              className="w-full min-h-[48px] py-2.5 px-4 text-sm font-bold text-white bg-[#0F6B68] hover:bg-[#135A72] border border-[#0F6B68] rounded-lg shadow-xs flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
             >
               {isSubmitting ? (
                 <>

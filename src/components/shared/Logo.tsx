@@ -34,7 +34,7 @@ export function Logo({ size = 'md', showWordmark = true, className = '' }: LogoP
         aria-hidden="true"
       >
         {/* Rounded square container with subtle surface tone */}
-        <rect width="28" height="28" rx="6" fill="#0F6574" />
+        <rect width="28" height="28" rx="6" fill="#0F6B68" />
         
         {/* Soft grid background dots */}
         <circle cx="6" cy="6" r="1" fill="#FFFFFF" fillOpacity="0.25" />
@@ -54,12 +54,12 @@ export function Logo({ size = 'md', showWordmark = true, className = '' }: LogoP
 
         {/* Plan vs Field synchronization nexus node */}
         <circle cx="15" cy="11" r="2.5" fill="#FFFFFF" />
-        <circle cx="15" cy="11" r="1.2" fill="#0F6574" />
+        <circle cx="15" cy="11" r="1.2" fill="#0F6B68" />
       </svg>
 
       {showWordmark && (
-        <span className={`font-bold tracking-tight text-[#172B3A] leading-none ${textSizes[size]}`}>
-          PL<span className="text-[#0F6574]">n</span>EX
+        <span className={`font-bold tracking-tight text-[#142C3F] leading-none ${textSizes[size]}`}>
+          PL<span className="text-[#0F6B68]">n</span>EX
         </span>
       )}
     </div>

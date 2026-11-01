@@ -230,23 +230,23 @@ export default function OfflineSyncCenterPage() {
         return {
           icon: HardHat,
           label: 'Field Update',
-          bg: 'bg-[#EDF5F8]',
-          border: 'border-[#B3CBE0]',
-          text: 'text-[#176B87]',
+          bg: 'bg-[#EAF0F5]',
+          border: 'border-[#D8E2EA]',
+          text: 'text-[#0F6B68]',
         };
       case 'Photo':
         return {
           icon: ImageIcon,
           label: 'Photo',
-          bg: 'bg-[#EDF5F8]',
-          border: 'border-[#B3CBE0]',
+          bg: 'bg-[#EAF0F5]',
+          border: 'border-[#D8E2EA]',
           text: 'text-[#3B6EA8]',
         };
       case 'DPR':
         return {
           icon: FileCheck,
           label: 'DPR',
-          bg: 'bg-[#EDF7F2]',
+          bg: 'bg-[#E4F4EC]',
           border: 'border-[#B8DCC9]',
           text: 'text-[#2E7D5B]',
         };
@@ -254,18 +254,18 @@ export default function OfflineSyncCenterPage() {
         return {
           icon: ShieldCheck,
           label: 'Evidence',
-          bg: 'bg-[#F1F3F5]',
-          border: 'border-[#D9DEE5]',
-          text: 'text-[#172033]',
+          bg: 'bg-[#EAF0F5]',
+          border: 'border-[#D8E2EA]',
+          text: 'text-[#142C3F]',
         };
       case 'Execution Event':
       default:
         return {
           icon: Zap,
           label: 'Execution Event',
-          bg: 'bg-[#FDF6ED]',
+          bg: 'bg-[#FFF1D3]',
           border: 'border-[#F0D4A6]',
-          text: 'text-[#D98B32]',
+          text: 'text-[#845006]',
         };
     }
   };
@@ -277,28 +277,28 @@ export default function OfflineSyncCenterPage() {
     switch (clearState) {
       case 'Saved Locally':
         return (
-          <span className="inline-flex items-center gap-2 px-3 py-0.5 rounded text-[11px] font-semibold bg-[#F1F3F5] text-[#596579] border border-[#D9DEE5]">
+          <span className="inline-flex items-center gap-2 px-3 py-0.5 rounded text-[11px] font-semibold bg-[#EAF0F5] text-[#526779] border border-[#D8E2EA]">
             <span className="w-2 h-2 rounded-full bg-[#7B8798]" />
             Saved Locally
           </span>
         );
       case 'Queued':
         return (
-          <span className="inline-flex items-center gap-2 px-3 py-0.5 rounded text-[11px] font-semibold bg-[#FDF6ED] text-[#B86E1B] border border-[#F0D4A6]">
-            <span className="w-2 h-2 rounded-full bg-[#D98B32]" />
+          <span className="inline-flex items-center gap-2 px-3 py-0.5 rounded text-[11px] font-semibold bg-[#FFF1D3] text-[#B86E1B] border border-[#F0D4A6]">
+            <span className="w-2 h-2 rounded-full bg-[#845006]" />
             Queued
           </span>
         );
       case 'Uploading':
         return (
-          <span className="inline-flex items-center gap-2 px-3 py-0.5 rounded text-[11px] font-semibold bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0]">
-            <span className="w-2 h-2 rounded-full bg-[#176B87]" />
+          <span className="inline-flex items-center gap-2 px-3 py-0.5 rounded text-[11px] font-semibold bg-[#EAF0F5] text-[#0F6B68] border border-[#D8E2EA]">
+            <span className="w-2 h-2 rounded-full bg-[#0F6B68]" />
             Uploading
           </span>
         );
       case 'Uploaded':
         return (
-          <span className="inline-flex items-center gap-2 px-3 py-0.5 rounded text-[11px] font-semibold bg-[#EDF5F8] text-[#2D5B94] border border-[#B3CBE0]">
+          <span className="inline-flex items-center gap-2 px-3 py-0.5 rounded text-[11px] font-semibold bg-[#EAF0F5] text-[#2D5B94] border border-[#D8E2EA]">
             <span className="w-2 h-2 rounded-full bg-[#3B6EA8]" />
             Uploaded
           </span>
@@ -312,7 +312,7 @@ export default function OfflineSyncCenterPage() {
         );
       case 'Confirmed':
         return (
-          <span className="inline-flex items-center gap-2 px-3 py-0.5 rounded text-[11px] font-semibold bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]">
+          <span className="inline-flex items-center gap-2 px-3 py-0.5 rounded text-[11px] font-semibold bg-[#E4F4EC] text-[#2E7D5B] border border-[#B8DCC9]">
             <span className="w-2 h-2 rounded-full bg-[#2E7D5B]" />
             Confirmed
           </span>
@@ -320,8 +320,8 @@ export default function OfflineSyncCenterPage() {
       case 'Needs Attention':
       default:
         return (
-          <span className="inline-flex items-center gap-2 px-3 py-0.5 rounded text-[11px] font-semibold bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
-            <span className="w-2 h-2 rounded-full bg-[#B5473C]" />
+          <span className="inline-flex items-center gap-2 px-3 py-0.5 rounded text-[11px] font-semibold bg-[#FCE8E4] text-[#A24335] border border-[#E4B0AA]">
+            <span className="w-2 h-2 rounded-full bg-[#A24335]" />
             Needs Attention
           </span>
         );
@@ -347,47 +347,47 @@ export default function OfflineSyncCenterPage() {
             HEADER & CONNECTION STATUS
             Clean, professional header without exaggerated graphics
             ========================================================================= */}
-        <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 shadow-xs space-y-4">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-[#D9DEE5]/60">
+        <div className="bg-white border border-[#D8E2EA] rounded-lg p-4 sm:p-6 shadow-xs space-y-4">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-[#D8E2EA]/60">
             <div>
               <div className="flex items-center gap-2 mb-2 flex-wrap">
-                <span className="inline-flex items-center gap-2 px-3 py-0.5 rounded text-[11px] font-semibold uppercase tracking-wider bg-[#176B87]/10 text-[#176B87]">
+                <span className="inline-flex items-center gap-2 px-3 py-0.5 rounded text-[11px] font-semibold uppercase tracking-wider bg-[#0F6B68]/10 text-[#0F6B68]">
                   Field Synchronization Engine
                 </span>
 
                 {/* Simple status indicator for connection state */}
                 {effectiveStatus === 'ONLINE' ? (
-                  <span className="inline-flex items-center gap-2 px-3 py-0.5 rounded-full text-[11px] font-semibold bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]">
+                  <span className="inline-flex items-center gap-2 px-3 py-0.5 rounded-full text-[11px] font-semibold bg-[#E4F4EC] text-[#2E7D5B] border border-[#B8DCC9]">
                     <span className="w-2 h-2 rounded-full bg-[#2E7D5B]" />
                     Online · Connected
                   </span>
                 ) : effectiveStatus === 'OFFLINE' ? (
-                  <span className="inline-flex items-center gap-2 px-3 py-0.5 rounded-full text-[11px] font-semibold bg-[#FDF6ED] text-[#8C5311] border border-[#F0D4A6]">
-                    <span className="w-2 h-2 rounded-full bg-[#D98B32]" />
+                  <span className="inline-flex items-center gap-2 px-3 py-0.5 rounded-full text-[11px] font-semibold bg-[#FFF1D3] text-[#8C5311] border border-[#F0D4A6]">
+                    <span className="w-2 h-2 rounded-full bg-[#845006]" />
                     Offline · Local Storage Active
                   </span>
                 ) : (
-                  <span className="inline-flex items-center gap-2 px-3 py-0.5 rounded-full text-[11px] font-semibold bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0]">
-                    <span className="w-2 h-2 rounded-full bg-[#176B87]" />
+                  <span className="inline-flex items-center gap-2 px-3 py-0.5 rounded-full text-[11px] font-semibold bg-[#EAF0F5] text-[#0F6B68] border border-[#D8E2EA]">
+                    <span className="w-2 h-2 rounded-full bg-[#0F6B68]" />
                     Syncing · Transmitting Payloads
                   </span>
                 )}
               </div>
 
-              <h1 className="text-[28px] sm:text-3xl font-bold text-[#172033] tracking-tight">
+              <h1 className="text-[28px] sm:text-3xl font-bold text-[#142C3F] tracking-tight">
                 Offline / Sync Center
               </h1>
-              <p className="text-sm text-[#596579] mt-0.5 max-w-2xl">
+              <p className="text-sm text-[#526779] mt-0.5 max-w-2xl">
                 Reliable synchronization queue for remote construction corridors. Field captures are buffered locally and synchronized when network connectivity is established.
               </p>
             </div>
 
             {/* Connection Mode Controls */}
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2">
-              <span className="text-[11px] uppercase font-semibold text-[#596579]">
+              <span className="text-[11px] uppercase font-semibold text-[#526779]">
                 connectionMode:
               </span>
-              <div className="flex items-center bg-[#F1F3F5] p-1 rounded-lg border border-[#D9DEE5] text-xs">
+              <div className="flex items-center bg-[#EAF0F5] p-1 rounded-lg border border-[#D8E2EA] text-xs">
                 <button
                   type="button"
                   onClick={() => {
@@ -400,8 +400,8 @@ export default function OfflineSyncCenterPage() {
                   }}
                   className={`px-3 py-1 rounded font-medium transition-colors flex items-center gap-2 ${
                     connectionMode === 'AUTOMATIC'
-                      ? 'bg-white text-[#176B87] shadow-xs font-bold'
-                      : 'text-[#596579] hover:text-[#172033]'
+                      ? 'bg-white text-[#0F6B68] shadow-xs font-bold'
+                      : 'text-[#526779] hover:text-[#142C3F]'
                   }`}
                 >
                   <Wifi className="w-3.5 h-3.5" />
@@ -421,7 +421,7 @@ export default function OfflineSyncCenterPage() {
                   className={`px-3 py-1 rounded font-medium transition-colors flex items-center gap-2 ${
                     connectionMode === 'ONLINE'
                       ? 'bg-white text-[#2E7D5B] shadow-xs font-bold'
-                      : 'text-[#596579] hover:text-[#172033]'
+                      : 'text-[#526779] hover:text-[#142C3F]'
                   }`}
                 >
                   <UploadCloud className="w-3.5 h-3.5" />
@@ -441,7 +441,7 @@ export default function OfflineSyncCenterPage() {
                   className={`px-3 py-1 rounded font-medium transition-colors flex items-center gap-2 ${
                     connectionMode === 'OFFLINE'
                       ? 'bg-white text-[#8C5311] shadow-xs font-bold'
-                      : 'text-[#596579] hover:text-[#172033]'
+                      : 'text-[#526779] hover:text-[#142C3F]'
                   }`}
                 >
                   <WifiOff className="w-3.5 h-3.5" />
@@ -457,36 +457,36 @@ export default function OfflineSyncCenterPage() {
               Saved Locally | Queued | Uploading | Uploaded | Processing | Confirmed | Needs Attention
               ========================================================================= */}
           <div className="space-y-2">
-            <div className="flex items-center justify-between text-xs text-[#596579] font-medium flex-wrap gap-2">
-              <span className="text-[10px] uppercase font-semibold text-[#596579] tracking-wider">
+            <div className="flex items-center justify-between text-xs text-[#526779] font-medium flex-wrap gap-2">
+              <span className="text-[10px] uppercase font-semibold text-[#526779] tracking-wider">
                 Current Queue State at a Glance:
               </span>
               <div className="flex items-center gap-2 text-[11px] font-mono">
-                <Clock className="w-3 h-3 text-[#176B87]" />
+                <Clock className="w-3 h-3 text-[#0F6B68]" />
                 <span>Last server sync:</span>
-                <span className="font-semibold text-[#172033]">
+                <span className="font-semibold text-[#142C3F]">
                   {lastSuccessfulSyncTime || '18 Sep 2026, 17:30 IST'}
                 </span>
               </div>
             </div>
 
             {/* 7 Clear Status States Quick-Filter Strip */}
-            <div className="border border-[#D9DEE5] rounded-md bg-white overflow-hidden grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 divide-y sm:divide-y-0 sm:divide-x divide-[#D9DEE5]">
+            <div className="border border-[#D8E2EA] rounded-md bg-white overflow-hidden grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 divide-y sm:divide-y-0 sm:divide-x divide-[#D8E2EA]">
               {/* 1. Saved Locally */}
               <button
                 type="button"
                 onClick={() => setStatusFilter(statusFilter === 'Saved Locally' ? 'ALL' : 'Saved Locally')}
                 className={`p-3 text-left transition-all ${
                   statusFilter === 'Saved Locally'
-                    ? 'bg-[#F1F3F5]'
-                    : 'hover:bg-[#F7F8FA]'
+                    ? 'bg-[#EAF0F5]'
+                    : 'hover:bg-[#F3F6FA]'
                 }`}
               >
                 <div className="flex items-center gap-2 mb-1">
                   <span className="w-2 h-2 rounded-full bg-[#7B8798]" />
-                  <span className="text-[10px] font-bold uppercase text-[#596579] truncate">Saved Locally</span>
+                  <span className="text-[10px] font-bold uppercase text-[#526779] truncate">Saved Locally</span>
                 </div>
-                <div className="text-lg font-bold font-mono text-[#172033]">
+                <div className="text-lg font-bold font-mono text-[#142C3F]">
                   {clearCounts['Saved Locally']}
                 </div>
               </button>
@@ -497,15 +497,15 @@ export default function OfflineSyncCenterPage() {
                 onClick={() => setStatusFilter(statusFilter === 'Queued' ? 'ALL' : 'Queued')}
                 className={`p-3 text-left transition-all ${
                   statusFilter === 'Queued'
-                    ? 'bg-[#FDF6ED]'
-                    : 'hover:bg-[#F7F8FA]'
+                    ? 'bg-[#FFF1D3]'
+                    : 'hover:bg-[#F3F6FA]'
                 }`}
               >
                 <div className="flex items-center gap-2 mb-1">
-                  <span className="w-2 h-2 rounded-full bg-[#D98B32]" />
+                  <span className="w-2 h-2 rounded-full bg-[#845006]" />
                   <span className="text-[10px] font-bold uppercase text-[#B86E1B] truncate">Queued</span>
                 </div>
-                <div className="text-lg font-bold font-mono text-[#D98B32]">
+                <div className="text-lg font-bold font-mono text-[#845006]">
                   {clearCounts['Queued']}
                 </div>
               </button>
@@ -516,15 +516,15 @@ export default function OfflineSyncCenterPage() {
                 onClick={() => setStatusFilter(statusFilter === 'Uploading' ? 'ALL' : 'Uploading')}
                 className={`p-3 text-left transition-all ${
                   statusFilter === 'Uploading'
-                    ? 'bg-[#EDF5F8]'
-                    : 'hover:bg-[#F7F8FA]'
+                    ? 'bg-[#EAF0F5]'
+                    : 'hover:bg-[#F3F6FA]'
                 }`}
               >
                 <div className="flex items-center gap-2 mb-1">
-                  <span className="w-2 h-2 rounded-full bg-[#176B87]" />
-                  <span className="text-[10px] font-bold uppercase text-[#176B87] truncate">Uploading</span>
+                  <span className="w-2 h-2 rounded-full bg-[#0F6B68]" />
+                  <span className="text-[10px] font-bold uppercase text-[#0F6B68] truncate">Uploading</span>
                 </div>
-                <div className="text-lg font-bold font-mono text-[#176B87]">
+                <div className="text-lg font-bold font-mono text-[#0F6B68]">
                   {clearCounts['Uploading']}
                 </div>
               </button>
@@ -535,8 +535,8 @@ export default function OfflineSyncCenterPage() {
                 onClick={() => setStatusFilter(statusFilter === 'Uploaded' ? 'ALL' : 'Uploaded')}
                 className={`p-3 text-left transition-all ${
                   statusFilter === 'Uploaded'
-                    ? 'bg-[#EDF5F8]'
-                    : 'hover:bg-[#F7F8FA]'
+                    ? 'bg-[#EAF0F5]'
+                    : 'hover:bg-[#F3F6FA]'
                 }`}
               >
                 <div className="flex items-center gap-2 mb-1">
@@ -555,7 +555,7 @@ export default function OfflineSyncCenterPage() {
                 className={`p-3 text-left transition-all ${
                   statusFilter === 'Processing'
                     ? 'bg-[#EEF2FF]'
-                    : 'hover:bg-[#F7F8FA]'
+                    : 'hover:bg-[#F3F6FA]'
                 }`}
               >
                 <div className="flex items-center gap-2 mb-1">
@@ -573,8 +573,8 @@ export default function OfflineSyncCenterPage() {
                 onClick={() => setStatusFilter(statusFilter === 'Confirmed' ? 'ALL' : 'Confirmed')}
                 className={`p-3 text-left transition-all ${
                   statusFilter === 'Confirmed'
-                    ? 'bg-[#EDF7F2]'
-                    : 'hover:bg-[#F7F8FA]'
+                    ? 'bg-[#E4F4EC]'
+                    : 'hover:bg-[#F3F6FA]'
                 }`}
               >
                 <div className="flex items-center gap-2 mb-1">
@@ -592,15 +592,15 @@ export default function OfflineSyncCenterPage() {
                 onClick={() => setStatusFilter(statusFilter === 'Needs Attention' ? 'ALL' : 'Needs Attention')}
                 className={`p-3 text-left transition-all ${
                   statusFilter === 'Needs Attention'
-                    ? 'bg-[#FBEFEE]'
-                    : 'hover:bg-[#F7F8FA]'
+                    ? 'bg-[#FCE8E4]'
+                    : 'hover:bg-[#F3F6FA]'
                 }`}
               >
                 <div className="flex items-center gap-2 mb-1">
-                  <span className="w-2 h-2 rounded-full bg-[#B5473C]" />
-                  <span className="text-[10px] font-bold uppercase text-[#B5473C] truncate">Needs Attention</span>
+                  <span className="w-2 h-2 rounded-full bg-[#A24335]" />
+                  <span className="text-[10px] font-bold uppercase text-[#A24335] truncate">Needs Attention</span>
                 </div>
-                <div className="text-lg font-bold font-mono text-[#B5473C]">
+                <div className="text-lg font-bold font-mono text-[#A24335]">
                   {clearCounts['Needs Attention']}
                 </div>
               </button>
@@ -618,34 +618,34 @@ export default function OfflineSyncCenterPage() {
           <div
             onClick={() => setStatusFilter(statusFilter === 'Queued' ? 'ALL' : 'Queued')}
             className={`p-4 rounded-lg border bg-white shadow-xs cursor-pointer transition-colors ${
-              statusFilter === 'Queued' ? 'border-[#D98B32] ring-2 ring-[#D98B32]/20' : 'hover:border-[#F0D4A6]'
+              statusFilter === 'Queued' ? 'border-[#845006] ring-2 ring-[#845006]/20' : 'hover:border-[#F0D4A6]'
             }`}
           >
             <div className="flex items-center justify-between mb-1">
-              <span className="text-[10px] uppercase font-semibold text-[#596579]">Pending</span>
-              <Clock className="w-3.5 h-3.5 text-[#D98B32]" />
+              <span className="text-[10px] uppercase font-semibold text-[#526779]">Pending</span>
+              <Clock className="w-3.5 h-3.5 text-[#845006]" />
             </div>
-            <div className="text-xl font-bold font-mono text-[#D98B32]">
+            <div className="text-xl font-bold font-mono text-[#845006]">
               {metrics.pendingUploads}
             </div>
-            <span className="text-[11px] text-[#596579] mt-0.5 block">Buffered locally</span>
+            <span className="text-[11px] text-[#526779] mt-0.5 block">Buffered locally</span>
           </div>
 
           {/* 2. Uploading */}
           <div
             onClick={() => setStatusFilter(statusFilter === 'Uploading' ? 'ALL' : 'Uploading')}
             className={`p-4 rounded-lg border bg-white shadow-xs cursor-pointer transition-colors ${
-              statusFilter === 'Uploading' ? 'border-[#176B87] ring-2 ring-[#176B87]/20' : 'hover:border-[#B3CBE0]'
+              statusFilter === 'Uploading' ? 'border-[#0F6B68] ring-2 ring-[#0F6B68]/20' : 'hover:border-[#D8E2EA]'
             }`}
           >
             <div className="flex items-center justify-between mb-1">
-              <span className="text-[10px] uppercase font-semibold text-[#596579]">Uploading</span>
-              <UploadCloud className="w-3.5 h-3.5 text-[#176B87]" />
+              <span className="text-[10px] uppercase font-semibold text-[#526779]">Uploading</span>
+              <UploadCloud className="w-3.5 h-3.5 text-[#0F6B68]" />
             </div>
-            <div className="text-xl font-bold font-mono text-[#176B87]">
+            <div className="text-xl font-bold font-mono text-[#0F6B68]">
               {metrics.syncingCount}
             </div>
-            <span className="text-[11px] text-[#596579] mt-0.5 block">Active transfer</span>
+            <span className="text-[11px] text-[#526779] mt-0.5 block">Active transfer</span>
           </div>
 
           {/* 3. Confirmed */}
@@ -656,47 +656,47 @@ export default function OfflineSyncCenterPage() {
             }`}
           >
             <div className="flex items-center justify-between mb-1">
-              <span className="text-[10px] uppercase font-semibold text-[#596579]">Confirmed</span>
+              <span className="text-[10px] uppercase font-semibold text-[#526779]">Confirmed</span>
               <CheckCircle2 className="w-3.5 h-3.5 text-[#2E7D5B]" />
             </div>
             <div className="text-xl font-bold font-mono text-[#2E7D5B]">
               {metrics.syncedToday}
             </div>
-            <span className="text-[11px] text-[#596579] mt-0.5 block">Committed to ledger</span>
+            <span className="text-[11px] text-[#526779] mt-0.5 block">Committed to ledger</span>
           </div>
 
           {/* 4. Failed */}
           <div
             onClick={() => setStatusFilter(statusFilter === 'Failed' ? 'ALL' : 'Failed')}
             className={`p-4 rounded-lg border bg-white shadow-xs cursor-pointer transition-colors ${
-              statusFilter === 'Failed' ? 'border-[#B5473C] ring-2 ring-[#B5473C]/20' : 'hover:border-[#E4B0AA]'
+              statusFilter === 'Failed' ? 'border-[#A24335] ring-2 ring-[#A24335]/20' : 'hover:border-[#E4B0AA]'
             }`}
           >
             <div className="flex items-center justify-between mb-1">
-              <span className="text-[10px] uppercase font-semibold text-[#596579]">Failed</span>
-              <AlertCircle className="w-3.5 h-3.5 text-[#B5473C]" />
+              <span className="text-[10px] uppercase font-semibold text-[#526779]">Failed</span>
+              <AlertCircle className="w-3.5 h-3.5 text-[#A24335]" />
             </div>
-            <div className="text-xl font-bold font-mono text-[#B5473C]">
+            <div className="text-xl font-bold font-mono text-[#A24335]">
               {metrics.failedCount}
             </div>
-            <span className="text-[11px] text-[#596579] mt-0.5 block">Network timeout</span>
+            <span className="text-[11px] text-[#526779] mt-0.5 block">Network timeout</span>
           </div>
 
           {/* 5. Conflicts */}
           <div
             onClick={() => setStatusFilter(statusFilter === 'Conflict' ? 'ALL' : 'Conflict')}
             className={`p-4 rounded-lg border bg-white shadow-xs cursor-pointer transition-colors ${
-              statusFilter === 'Conflict' ? 'border-[#B5473C] ring-2 ring-[#B5473C]/20' : 'hover:border-[#E4B0AA]'
+              statusFilter === 'Conflict' ? 'border-[#A24335] ring-2 ring-[#A24335]/20' : 'hover:border-[#E4B0AA]'
             }`}
           >
             <div className="flex items-center justify-between mb-1">
-              <span className="text-[10px] uppercase font-semibold text-[#596579]">Conflicts</span>
-              <AlertTriangle className="w-3.5 h-3.5 text-[#B5473C]" />
+              <span className="text-[10px] uppercase font-semibold text-[#526779]">Conflicts</span>
+              <AlertTriangle className="w-3.5 h-3.5 text-[#A24335]" />
             </div>
-            <div className="text-xl font-bold font-mono text-[#B5473C]">
+            <div className="text-xl font-bold font-mono text-[#A24335]">
               {metrics.conflictCount}
             </div>
-            <span className="text-[11px] text-[#596579] mt-0.5 block">Review required</span>
+            <span className="text-[11px] text-[#526779] mt-0.5 block">Review required</span>
           </div>
         </div>
 
@@ -705,13 +705,13 @@ export default function OfflineSyncCenterPage() {
             Actions: Sync Now, Retry Failed, Resolve Conflicts
             Filters: Type, Status (7 Clear States), Search
             ========================================================================= */}
-        <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 shadow-xs space-y-4">
+        <div className="bg-white border border-[#D8E2EA] rounded-lg p-4 shadow-xs space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div>
-              <h2 className="text-xs font-bold text-[#172033] uppercase tracking-wider">
+              <h2 className="text-xs font-bold text-[#142C3F] uppercase tracking-wider">
                 Synchronization Queue Management
               </h2>
-              <p className="text-xs text-[#596579] mt-0.5">
+              <p className="text-xs text-[#526779] mt-0.5">
                 Trigger sync with central database, re-attempt failed transmissions, or resolve version discrepancies.
               </p>
             </div>
@@ -722,7 +722,7 @@ export default function OfflineSyncCenterPage() {
                 type="button"
                 onClick={handleSyncNow}
                 disabled={isSyncing || effectiveStatus === 'OFFLINE'}
-                className="px-4 py-2 bg-[#176B87] hover:bg-[#135A72] border border-[#176B87] text-white text-xs font-bold rounded-lg shadow-xs transition-colors flex items-center gap-2 disabled:opacity-50"
+                className="px-4 py-2 bg-[#0F6B68] hover:bg-[#135A72] border border-[#0F6B68] text-white text-xs font-bold rounded-lg shadow-xs transition-colors flex items-center gap-2 disabled:opacity-50"
               >
                 <RefreshCw className="w-3.5 h-3.5" />
                 <span>{isSyncing ? 'Syncing...' : 'Trigger Manual Sync'}</span>
@@ -733,9 +733,9 @@ export default function OfflineSyncCenterPage() {
                 type="button"
                 onClick={handleRetryFailed}
                 disabled={metrics.failedCount === 0}
-                className="px-4 py-2 bg-white hover:bg-[#F1F3F5] text-[#172033] border border-[#D9DEE5] text-xs font-semibold rounded-lg shadow-2xs transition-colors flex items-center gap-2 disabled:opacity-50"
+                className="px-4 py-2 bg-white hover:bg-[#EAF0F5] text-[#142C3F] border border-[#D8E2EA] text-xs font-semibold rounded-lg shadow-2xs transition-colors flex items-center gap-2 disabled:opacity-50"
               >
-                <RotateCcw className="w-3.5 h-3.5 text-[#596579]" />
+                <RotateCcw className="w-3.5 h-3.5 text-[#526779]" />
                 <span>Retry Failed Items ({metrics.failedCount})</span>
               </button>
 
@@ -747,9 +747,9 @@ export default function OfflineSyncCenterPage() {
                     const firstConflict = syncQueue.find((i: SyncQueueItem) => i.status === 'Conflict');
                     if (firstConflict) handleOpenConflictModal(firstConflict);
                   }}
-                  className="px-4 py-2 bg-[#FBEFEE] hover:bg-[#FBEFEE]/80 text-[#B5473C] border border-[#E4B0AA] text-xs font-semibold rounded-lg shadow-2xs transition-colors flex items-center gap-2"
+                  className="px-4 py-2 bg-[#FCE8E4] hover:bg-[#FCE8E4]/80 text-[#A24335] border border-[#E4B0AA] text-xs font-semibold rounded-lg shadow-2xs transition-colors flex items-center gap-2"
                 >
-                  <AlertTriangle className="w-3.5 h-3.5 text-[#B5473C]" />
+                  <AlertTriangle className="w-3.5 h-3.5 text-[#A24335]" />
                   <span>Resolve Conflicts ({metrics.conflictCount})</span>
                 </button>
               )}
@@ -757,13 +757,13 @@ export default function OfflineSyncCenterPage() {
           </div>
 
           {/* FILTERS & SEARCH */}
-          <div className="pt-3 border-t border-[#D9DEE5]/60 flex items-center justify-between flex-wrap gap-3 text-xs">
+          <div className="pt-3 border-t border-[#D8E2EA]/60 flex items-center justify-between flex-wrap gap-3 text-xs">
             <div className="flex items-center gap-2 flex-wrap">
               {/* Type Filter */}
               <select
                 value={typeFilter}
                 onChange={(e) => setTypeFilter(e.target.value)}
-                className="px-3 py-1.5 bg-white border border-[#D9DEE5] rounded-lg text-xs font-medium text-[#172033] outline-none"
+                className="px-3 py-1.5 bg-white border border-[#D8E2EA] rounded-lg text-xs font-medium text-[#142C3F] outline-none"
               >
                 <option value="ALL">All Types</option>
                 <option value="Field Update">Field Update</option>
@@ -777,7 +777,7 @@ export default function OfflineSyncCenterPage() {
               <select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
-                className="px-3 py-1.5 bg-white border border-[#D9DEE5] rounded-lg text-xs font-medium text-[#172033] outline-none"
+                className="px-3 py-1.5 bg-white border border-[#D8E2EA] rounded-lg text-xs font-medium text-[#142C3F] outline-none"
               >
                 <option value="ALL">All Status States</option>
                 <option value="Saved Locally">Saved Locally</option>
@@ -796,7 +796,7 @@ export default function OfflineSyncCenterPage() {
                   setStatusFilter('ALL');
                   setSearchQuery('');
                 }}
-                className="text-xs text-[#596579] hover:text-[#172033] flex items-center gap-1 font-medium transition-colors ml-1"
+                className="text-xs text-[#526779] hover:text-[#142C3F] flex items-center gap-1 font-medium transition-colors ml-1"
               >
                 <RotateCcw className="w-3 h-3" />
                 <span>Reset</span>
@@ -811,7 +811,7 @@ export default function OfflineSyncCenterPage() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search ID, title, or error note..."
-                className="w-full pl-8 pr-3 py-1 text-xs bg-white border border-[#D9DEE5] rounded-lg text-[#172033] outline-none focus:border-[#176B87]"
+                className="w-full pl-8 pr-3 py-1 text-xs bg-white border border-[#D8E2EA] rounded-lg text-[#142C3F] outline-none focus:border-[#0F6B68]"
               />
             </div>
           </div>
@@ -830,11 +830,11 @@ export default function OfflineSyncCenterPage() {
             - Error / Transmission Note
             - Actions
             ========================================================================= */}
-        <div className="bg-white border border-[#D9DEE5] rounded-lg shadow-xs overflow-hidden">
+        <div className="bg-white border border-[#D8E2EA] rounded-lg shadow-xs overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full min-w-[880px] text-left border-collapse text-sm">
-              <thead className="sticky top-0 z-10 bg-[#F7F8FA]">
-                <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[11px] sm:text-xs uppercase font-semibold text-[#596579] tracking-wider h-11">
+              <thead className="sticky top-0 z-10 bg-[#F3F6FA]">
+                <tr className="bg-[#F3F6FA] border-b border-[#D8E2EA] text-[11px] sm:text-xs uppercase font-semibold text-[#526779] tracking-wider h-11">
                   <th className="py-3 px-4">Sync Item ID</th>
                   <th className="py-3 px-4">Type</th>
                   <th className="py-3 px-4">Payload Scope / Title</th>
@@ -846,20 +846,20 @@ export default function OfflineSyncCenterPage() {
                   <th className="py-3 px-4 text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#D9DEE5]/60">
+              <tbody className="divide-y divide-[#D8E2EA]/60">
                 {filteredItems.length === 0 ? (
                   <tr>
-                    <td colSpan={9} className="py-8 px-4 text-center text-[#596579]">
+                    <td colSpan={9} className="py-8 px-4 text-center text-[#526779]">
                       <CheckCircle2 className="w-8 h-8 text-[#2E7D5B] mx-auto mb-2" />
-                      <p className="font-semibold text-sm text-[#172033]">No items in sync queue</p>
-                      <p className="text-xs text-[#596579] mt-1 max-w-sm mx-auto">
+                      <p className="font-semibold text-sm text-[#142C3F]">No items in sync queue</p>
+                      <p className="text-xs text-[#526779] mt-1 max-w-sm mx-auto">
                         All offline payloads have been synchronized with the central database, or no items match your active filter.
                       </p>
                       {statusFilter !== 'ALL' && (
                         <button
                           type="button"
                           onClick={() => setStatusFilter('ALL')}
-                          className="mt-3 text-xs font-semibold text-[#176B87] hover:underline cursor-pointer"
+                          className="mt-3 text-xs font-semibold text-[#0F6B68] hover:underline cursor-pointer"
                         >
                           Reset Status Filter
                         </button>
@@ -875,11 +875,11 @@ export default function OfflineSyncCenterPage() {
                     <tr
                       key={item.id}
                       onClick={() => setInspectItem(item)}
-                      className="h-11 sm:h-12 hover:bg-[#F1F3F5]/60 transition-colors cursor-pointer group"
+                      className="h-11 sm:h-12 hover:bg-[#EAF0F5]/60 transition-colors cursor-pointer group"
                     >
                       {/* Sync Item ID */}
-                      <td className="py-3 px-4 font-mono font-bold text-[#176B87]">
-                        <span className="px-2 py-0.5 rounded bg-[#EDF5F8] border border-[#B3CBE0]">
+                      <td className="py-3 px-4 font-mono font-bold text-[#0F6B68]">
+                        <span className="px-2 py-0.5 rounded bg-[#EAF0F5] border border-[#D8E2EA]">
                           {item.id}
                         </span>
                       </td>
@@ -896,16 +896,16 @@ export default function OfflineSyncCenterPage() {
 
                       {/* Payload Title */}
                       <td className="py-3 px-4 max-w-xs">
-                        <div className="font-semibold text-[#172033] truncate">{item.title}</div>
+                        <div className="font-semibold text-[#142C3F] truncate">{item.title}</div>
                         {item.payload.activityId && (
-                          <span className="text-[11px] font-mono text-[#596579]">
+                          <span className="text-[11px] font-mono text-[#526779]">
                             Activity: {item.payload.activityId}
                           </span>
                         )}
                       </td>
 
                       {/* Local Created At */}
-                      <td className="py-3 px-4 font-mono text-[#596579] whitespace-nowrap">
+                      <td className="py-3 px-4 font-mono text-[#526779] whitespace-nowrap">
                         {item.localCreatedAt}
                       </td>
 
@@ -915,23 +915,23 @@ export default function OfflineSyncCenterPage() {
                       </td>
 
                       {/* Retry Count */}
-                      <td className="py-3 px-4 font-mono text-[#596579]">
+                      <td className="py-3 px-4 font-mono text-[#526779]">
                         {item.retryCount > 0 ? (
-                          <span className="text-[#B5473C] font-semibold">{item.retryCount} / 3</span>
+                          <span className="text-[#A24335] font-semibold">{item.retryCount} / 3</span>
                         ) : (
                           <span>0</span>
                         )}
                       </td>
 
                       {/* Last Attempt */}
-                      <td className="py-3 px-4 font-mono text-[#596579] whitespace-nowrap">
+                      <td className="py-3 px-4 font-mono text-[#526779] whitespace-nowrap">
                         {item.lastAttempt || 'None'}
                       </td>
 
                       {/* Error or Note */}
                       <td className="py-3 px-4 max-w-xs">
                         {item.error ? (
-                          <p className="text-[11px] text-[#B5473C] font-mono line-clamp-2 leading-tight">
+                          <p className="text-[11px] text-[#A24335] font-mono line-clamp-2 leading-tight">
                             {item.error}
                           </p>
                         ) : (
@@ -950,7 +950,7 @@ export default function OfflineSyncCenterPage() {
                             <button
                               type="button"
                               onClick={() => handleOpenConflictModal(item)}
-                              className="px-3 py-1 rounded bg-[#B5473C] hover:bg-[#9B3C32] text-white text-[11px] font-semibold shadow-xs transition-colors flex items-center gap-1"
+                              className="px-3 py-1 rounded bg-[#A24335] hover:bg-[#9B3C32] text-white text-[11px] font-semibold shadow-xs transition-colors flex items-center gap-1"
                               title="Resolve Version Conflict"
                             >
                               <AlertTriangle className="w-3 h-3" />
@@ -970,7 +970,7 @@ export default function OfflineSyncCenterPage() {
                                   description: `Re-queued ${item.id} for sync.`,
                                 });
                               }}
-                              className="px-3 py-1 rounded bg-[#176B87] hover:bg-[#135A72] text-white text-[11px] font-semibold shadow-xs transition-colors"
+                              className="px-3 py-1 rounded bg-[#0F6B68] hover:bg-[#135A72] text-white text-[11px] font-semibold shadow-xs transition-colors"
                               title="Retry Transmission"
                             >
                               Retry
@@ -981,7 +981,7 @@ export default function OfflineSyncCenterPage() {
                           <button
                             type="button"
                             onClick={() => setInspectItem(item)}
-                            className="p-1 rounded border border-[#D9DEE5] hover:bg-[#F1F3F5] text-[#596579] transition-colors"
+                            className="p-1 rounded border border-[#D8E2EA] hover:bg-[#EAF0F5] text-[#526779] transition-colors"
                             title="Inspect Payload"
                           >
                             <Eye className="w-3.5 h-3.5" />
@@ -1002,32 +1002,32 @@ export default function OfflineSyncCenterPage() {
             Hidden for standard Site Engineers unless user is Admin or testMode is active
             ========================================================================= */}
         {(userSession?.role === 'admin' || testMode.isEnabled) && (
-          <div className="bg-white border border-[#176B87]/30 rounded-lg p-4 sm:p-6 shadow-xs space-y-4">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#D9DEE5]/60 pb-3">
+          <div className="bg-white border border-[#0F6B68]/30 rounded-lg p-4 sm:p-6 shadow-xs space-y-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#D8E2EA]/60 pb-3">
               <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-lg bg-[#EDF5F8] text-[#176B87] flex items-center justify-center font-bold">
+                <div className="w-8 h-8 rounded-lg bg-[#EAF0F5] text-[#0F6B68] flex items-center justify-center font-bold">
                   <Sliders className="w-4 h-4" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-sm text-[#172033]">
+                  <h3 className="font-bold text-sm text-[#142C3F]">
                     Admin / Developer Synchronization Test Sandbox
                   </h3>
-                  <p className="text-xs text-[#596579]">
+                  <p className="text-xs text-[#526779]">
                     Simulate network anomalies, forced server rejections, and version divergence.
                   </p>
                 </div>
               </div>
-              <span className="px-3 py-1 rounded bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0] text-[10px] font-mono font-bold uppercase">
+              <span className="px-3 py-1 rounded bg-[#EAF0F5] text-[#0F6B68] border border-[#D8E2EA] text-[10px] font-mono font-bold uppercase">
                 Admin Testing Mode
               </span>
             </div>
 
             {/* Test Simulation Toggles */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-              <label className="p-3 rounded-lg border border-[#D9DEE5] bg-[#F7F8FA] flex items-center justify-between cursor-pointer hover:bg-white transition-colors">
+              <label className="p-3 rounded-lg border border-[#D8E2EA] bg-[#F3F6FA] flex items-center justify-between cursor-pointer hover:bg-white transition-colors">
                 <div>
-                  <span className="font-semibold text-[#172033] block">Simulate Server Failure on Sync</span>
-                  <span className="text-[11px] text-[#596579]">Simulates server rejection; items marked Failed.</span>
+                  <span className="font-semibold text-[#142C3F] block">Simulate Server Failure on Sync</span>
+                  <span className="text-[11px] text-[#526779]">Simulates server rejection; items marked Failed.</span>
                 </div>
                 <input
                   type="checkbox"
@@ -1039,14 +1039,14 @@ export default function OfflineSyncCenterPage() {
                       simulateConflict: e.target.checked ? false : prev.simulateConflict,
                     }))
                   }
-                  className="w-4 h-4 rounded text-[#B5473C]"
+                  className="w-4 h-4 rounded text-[#A24335]"
                 />
               </label>
 
-              <label className="p-3 rounded-lg border border-[#D9DEE5] bg-[#F7F8FA] flex items-center justify-between cursor-pointer hover:bg-white transition-colors">
+              <label className="p-3 rounded-lg border border-[#D8E2EA] bg-[#F3F6FA] flex items-center justify-between cursor-pointer hover:bg-white transition-colors">
                 <div>
-                  <span className="font-semibold text-[#172033] block">Simulate Version Conflict on Sync</span>
-                  <span className="text-[11px] text-[#596579]">Injects diverging values to trigger Conflict resolution modal.</span>
+                  <span className="font-semibold text-[#142C3F] block">Simulate Version Conflict on Sync</span>
+                  <span className="text-[11px] text-[#526779]">Injects diverging values to trigger Conflict resolution modal.</span>
                 </div>
                 <input
                   type="checkbox"
@@ -1058,14 +1058,14 @@ export default function OfflineSyncCenterPage() {
                       simulateServerFailure: e.target.checked ? false : prev.simulateServerFailure,
                     }))
                   }
-                  className="w-4 h-4 rounded text-[#D98B32]"
+                  className="w-4 h-4 rounded text-[#845006]"
                 />
               </label>
             </div>
 
             {/* 6 Automated Acceptance Test Runner Buttons */}
-            <div className="pt-2 border-t border-[#D9DEE5]/60 space-y-2">
-              <span className="text-[10px] uppercase font-semibold text-[#596579] tracking-wider block">
+            <div className="pt-2 border-t border-[#D8E2EA]/60 space-y-2">
+              <span className="text-[10px] uppercase font-semibold text-[#526779] tracking-wider block">
                 Verification Scenarios:
               </span>
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
@@ -1076,10 +1076,10 @@ export default function OfflineSyncCenterPage() {
                     setTestScenarioResult(res);
                     addToast({ type: 'success', title: 'Scenario 1', description: res });
                   }}
-                  className="p-2 bg-white border border-[#D9DEE5] rounded-lg hover:border-[#176B87] hover:bg-[#EDF5F8] text-left text-xs transition-colors"
+                  className="p-2 bg-white border border-[#D8E2EA] rounded-lg hover:border-[#0F6B68] hover:bg-[#EAF0F5] text-left text-xs transition-colors"
                 >
-                  <span className="font-bold block text-[#172033] text-[11px]">1. Online Capture</span>
-                  <span className="text-[10px] text-[#596579] block truncate">Immediate confirmation</span>
+                  <span className="font-bold block text-[#142C3F] text-[11px]">1. Online Capture</span>
+                  <span className="text-[10px] text-[#526779] block truncate">Immediate confirmation</span>
                 </button>
 
                 <button
@@ -1089,10 +1089,10 @@ export default function OfflineSyncCenterPage() {
                     setTestScenarioResult(res);
                     addToast({ type: 'warning', title: 'Scenario 2', description: res });
                   }}
-                  className="p-2 bg-white border border-[#D9DEE5] rounded-lg hover:border-[#D98B32] hover:bg-[#FDF6ED] text-left text-xs transition-colors"
+                  className="p-2 bg-white border border-[#D8E2EA] rounded-lg hover:border-[#845006] hover:bg-[#FFF1D3] text-left text-xs transition-colors"
                 >
-                  <span className="font-bold block text-[#172033] text-[11px]">2. Offline Capture</span>
-                  <span className="text-[10px] text-[#596579] block truncate">Saves locally</span>
+                  <span className="font-bold block text-[#142C3F] text-[11px]">2. Offline Capture</span>
+                  <span className="text-[10px] text-[#526779] block truncate">Saves locally</span>
                 </button>
 
                 <button
@@ -1102,10 +1102,10 @@ export default function OfflineSyncCenterPage() {
                     setTestScenarioResult(res);
                     addToast({ type: 'warning', title: 'Scenario 3', description: res });
                   }}
-                  className="p-2 bg-white border border-[#D9DEE5] rounded-lg hover:border-[#D98B32] hover:bg-[#FDF6ED] text-left text-xs transition-colors"
+                  className="p-2 bg-white border border-[#D8E2EA] rounded-lg hover:border-[#845006] hover:bg-[#FFF1D3] text-left text-xs transition-colors"
                 >
-                  <span className="font-bold block text-[#172033] text-[11px]">3. Multi Offline</span>
-                  <span className="text-[10px] text-[#596579] block truncate">Queues multiple</span>
+                  <span className="font-bold block text-[#142C3F] text-[11px]">3. Multi Offline</span>
+                  <span className="text-[10px] text-[#526779] block truncate">Queues multiple</span>
                 </button>
 
                 <button
@@ -1115,10 +1115,10 @@ export default function OfflineSyncCenterPage() {
                     setTestScenarioResult(res);
                     addToast({ type: 'success', title: 'Scenario 4', description: res });
                   }}
-                  className="p-2 bg-white border border-[#D9DEE5] rounded-lg hover:border-[#2E7D5B] hover:bg-[#EDF7F2] text-left text-xs transition-colors"
+                  className="p-2 bg-white border border-[#D8E2EA] rounded-lg hover:border-[#2E7D5B] hover:bg-[#E4F4EC] text-left text-xs transition-colors"
                 >
-                  <span className="font-bold block text-[#172033] text-[11px]">4. Return & Sync</span>
-                  <span className="text-[10px] text-[#596579] block truncate">Queue synchronizes</span>
+                  <span className="font-bold block text-[#142C3F] text-[11px]">4. Return & Sync</span>
+                  <span className="text-[10px] text-[#526779] block truncate">Queue synchronizes</span>
                 </button>
 
                 <button
@@ -1128,10 +1128,10 @@ export default function OfflineSyncCenterPage() {
                     setTestScenarioResult(res);
                     addToast({ type: 'error', title: 'Scenario 5', description: res });
                   }}
-                  className="p-2 bg-white border border-[#D9DEE5] rounded-lg hover:border-[#B5473C] hover:bg-[#FBEFEE] text-left text-xs transition-colors"
+                  className="p-2 bg-white border border-[#D8E2EA] rounded-lg hover:border-[#A24335] hover:bg-[#FCE8E4] text-left text-xs transition-colors"
                 >
-                  <span className="font-bold block text-[#172033] text-[11px]">5. Server Failure</span>
-                  <span className="text-[10px] text-[#596579] block truncate">Item remains Failed</span>
+                  <span className="font-bold block text-[#142C3F] text-[11px]">5. Server Failure</span>
+                  <span className="text-[10px] text-[#526779] block truncate">Item remains Failed</span>
                 </button>
 
                 <button
@@ -1141,15 +1141,15 @@ export default function OfflineSyncCenterPage() {
                     setTestScenarioResult(res);
                     addToast({ type: 'error', title: 'Scenario 6', description: res });
                   }}
-                  className="p-2 bg-white border border-[#D9DEE5] rounded-lg hover:border-[#B5473C] hover:bg-[#FBEFEE] text-left text-xs transition-colors"
+                  className="p-2 bg-white border border-[#D8E2EA] rounded-lg hover:border-[#A24335] hover:bg-[#FCE8E4] text-left text-xs transition-colors"
                 >
-                  <span className="font-bold block text-[#172033] text-[11px]">6. Conflict UI</span>
-                  <span className="text-[10px] text-[#596579] block truncate">Triggers divergence</span>
+                  <span className="font-bold block text-[#142C3F] text-[11px]">6. Conflict UI</span>
+                  <span className="text-[10px] text-[#526779] block truncate">Triggers divergence</span>
                 </button>
               </div>
 
               {testScenarioResult && (
-                <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg text-xs font-mono text-[#172033]">
+                <div className="p-3 bg-[#F3F6FA] border border-[#D8E2EA] rounded-lg text-xs font-mono text-[#142C3F]">
                   <strong>Execution Log:</strong> {testScenarioResult}
                 </div>
               )}
@@ -1175,35 +1175,35 @@ export default function OfflineSyncCenterPage() {
           maxWidth="2xl"
           footer={
             <div className="flex items-center justify-between w-full text-xs">
-              <span className="text-[#596579] font-mono text-[11px] hidden sm:inline">
+              <span className="text-[#526779] font-mono text-[11px] hidden sm:inline">
                 Schedule Baseline: Rev 3.2 (P6 XML)
               </span>
               <div className="flex items-center gap-2 flex-wrap justify-end w-full sm:w-auto">
                 <button
                   type="button"
                   onClick={() => setConflictItem(null)}
-                  className="px-4 py-2 font-semibold text-[#596579] hover:text-[#172033] bg-white border border-[#D9DEE5] hover:bg-[#F7F8FA] rounded-lg transition-colors"
+                  className="px-4 py-2 font-semibold text-[#526779] hover:text-[#142C3F] bg-white border border-[#D8E2EA] hover:bg-[#F3F6FA] rounded-lg transition-colors"
                 >
                   Cancel
                 </button>
                 <button
                   type="button"
                   onClick={() => handleResolveConflictChoice('server')}
-                  className="px-4 py-2 font-semibold text-[#172033] bg-white hover:bg-[#F1F3F5] border border-[#D9DEE5] rounded-lg shadow-2xs transition-colors"
+                  className="px-4 py-2 font-semibold text-[#142C3F] bg-white hover:bg-[#EAF0F5] border border-[#D8E2EA] rounded-lg shadow-2xs transition-colors"
                 >
                   Keep Server
                 </button>
                 <button
                   type="button"
                   onClick={() => handleResolveConflictChoice('local')}
-                  className="px-4 py-2 font-semibold text-[#172033] bg-white hover:bg-[#F1F3F5] border border-[#D9DEE5] rounded-lg shadow-2xs transition-colors"
+                  className="px-4 py-2 font-semibold text-[#142C3F] bg-white hover:bg-[#EAF0F5] border border-[#D8E2EA] rounded-lg shadow-2xs transition-colors"
                 >
                   Keep Local
                 </button>
                 <button
                   type="button"
                   onClick={() => handleResolveConflictChoice('custom')}
-                  className="px-4 py-2 bg-[#176B87] hover:bg-[#135A72] border border-[#176B87] text-white font-bold rounded-lg shadow-xs transition-colors"
+                  className="px-4 py-2 bg-[#0F6B68] hover:bg-[#135A72] border border-[#0F6B68] text-white font-bold rounded-lg shadow-xs transition-colors"
                 >
                   Merge Changes &amp; Resolve
                 </button>
@@ -1214,28 +1214,28 @@ export default function OfflineSyncCenterPage() {
           {conflictItem && conflictItem.conflictData && (
             <div className="space-y-4 text-xs">
               {/* DIFFERENCE BOX */}
-              <div className="p-4 rounded-lg bg-[#FDF6ED] border border-[#F0D4A6] text-xs space-y-1">
-                <div className="flex items-center gap-2 font-bold text-[#D98B32]">
-                  <AlertTriangle className="w-4 h-4 text-[#D98B32]" />
+              <div className="p-4 rounded-lg bg-[#FFF1D3] border border-[#F0D4A6] text-xs space-y-1">
+                <div className="flex items-center gap-2 font-bold text-[#845006]">
+                  <AlertTriangle className="w-4 h-4 text-[#845006]" />
                   <span>Version Divergence Detected</span>
                 </div>
-                <p className="text-[#172033] leading-relaxed">
+                <p className="text-[#142C3F] leading-relaxed">
                   {conflictItem.conflictData.differenceSummary}
                 </p>
-                <p className="text-[11px] text-[#D98B32] font-medium pt-1 border-t border-[#F0D4A6]/60">
+                <p className="text-[11px] text-[#845006] font-medium pt-1 border-t border-[#F0D4A6]/60">
                   Do not silently overwrite. Review the changed fields below and choose to Keep Local, Keep Server, or Merge.
                 </p>
               </div>
 
               {/* CHANGED FIELDS MATRIX */}
-              <div className="p-4 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg space-y-2">
-                <span className="text-[10px] uppercase font-semibold text-[#596579] tracking-wider block">
+              <div className="p-4 bg-[#F3F6FA] border border-[#D8E2EA] rounded-lg space-y-2">
+                <span className="text-[10px] uppercase font-semibold text-[#526779] tracking-wider block">
                   Changed Fields & Discrepancy Matrix
                 </span>
                 <div className="space-y-2 text-xs">
-                  <div className="grid grid-cols-3 gap-2 py-1.5 border-b border-[#D9DEE5]/60 font-mono text-[11px]">
-                    <span className="text-[#596579] font-medium">Quantity</span>
-                    <span className="font-bold text-[#176B87]">
+                  <div className="grid grid-cols-3 gap-2 py-1.5 border-b border-[#D8E2EA]/60 font-mono text-[11px]">
+                    <span className="text-[#526779] font-medium">Quantity</span>
+                    <span className="font-bold text-[#0F6B68]">
                       Local: {conflictItem.conflictData.localVersion.quantity} {conflictItem.conflictData.localVersion.unit}
                     </span>
                     <span className="font-bold text-[#2E7D5B]">
@@ -1243,9 +1243,9 @@ export default function OfflineSyncCenterPage() {
                     </span>
                   </div>
 
-                  <div className="grid grid-cols-3 gap-2 py-1.5 border-b border-[#D9DEE5]/60 font-mono text-[11px]">
-                    <span className="text-[#596579] font-medium">Progress %</span>
-                    <span className="font-bold text-[#176B87]">
+                  <div className="grid grid-cols-3 gap-2 py-1.5 border-b border-[#D8E2EA]/60 font-mono text-[11px]">
+                    <span className="text-[#526779] font-medium">Progress %</span>
+                    <span className="font-bold text-[#0F6B68]">
                       Local: {conflictItem.conflictData.localVersion.progressPercent}%
                     </span>
                     <span className="font-bold text-[#2E7D5B]">
@@ -1254,11 +1254,11 @@ export default function OfflineSyncCenterPage() {
                   </div>
 
                   <div className="grid grid-cols-3 gap-2 py-1 text-[11px]">
-                    <span className="text-[#596579] font-medium font-mono">Logged By</span>
-                    <span className="text-[#172033] font-medium truncate">
+                    <span className="text-[#526779] font-medium font-mono">Logged By</span>
+                    <span className="text-[#142C3F] font-medium truncate">
                       {conflictItem.conflictData.localVersion.engineer}
                     </span>
-                    <span className="text-[#172033] font-medium truncate">
+                    <span className="text-[#142C3F] font-medium truncate">
                       {conflictItem.conflictData.serverVersion.engineer}
                     </span>
                   </div>
@@ -1272,12 +1272,12 @@ export default function OfflineSyncCenterPage() {
                   onClick={() => setConflictResolutionChoice('local')}
                   className={`p-4 rounded-lg border cursor-pointer transition-all space-y-2 ${
                     conflictResolutionChoice === 'local'
-                      ? 'border-[#176B87] ring-2 ring-[#176B87]/20 bg-[#EDF5F8]/40'
-                      : 'border-[#D9DEE5] bg-white hover:border-[#B3CBE0]'
+                      ? 'border-[#0F6B68] ring-2 ring-[#0F6B68]/20 bg-[#EAF0F5]/40'
+                      : 'border-[#D8E2EA] bg-white hover:border-[#D8E2EA]'
                   }`}
                 >
                   <div className="flex items-center justify-between">
-                    <span className="font-bold text-xs uppercase tracking-wider text-[#176B87]">
+                    <span className="font-bold text-xs uppercase tracking-wider text-[#0F6B68]">
                       Local Field Draft
                     </span>
                     <input
@@ -1285,26 +1285,26 @@ export default function OfflineSyncCenterPage() {
                       name="conflictChoice"
                       checked={conflictResolutionChoice === 'local'}
                       onChange={() => setConflictResolutionChoice('local')}
-                      className="accent-[#176B87]"
+                      className="accent-[#0F6B68]"
                     />
                   </div>
 
                   <div className="space-y-2 text-xs">
                     <div className="flex justify-between text-[#7B8798]">
                       <span>Captured By:</span>
-                      <span className="font-semibold text-[#172033]">
+                      <span className="font-semibold text-[#142C3F]">
                         {conflictItem.conflictData.localVersion.engineer}
                       </span>
                     </div>
                     <div className="flex justify-between text-[#7B8798]">
                       <span>Timestamp:</span>
-                      <span className="font-mono text-[#172033]">
+                      <span className="font-mono text-[#142C3F]">
                         {conflictItem.conflictData.localVersion.timestamp}
                       </span>
                     </div>
                     <div className="flex justify-between text-[#7B8798]">
                       <span>Reported Quantity:</span>
-                      <span className="font-mono font-bold text-[#176B87]">
+                      <span className="font-mono font-bold text-[#0F6B68]">
                         {conflictItem.conflictData.localVersion.quantity}{' '}
                         {conflictItem.conflictData.localVersion.unit}
                       </span>
@@ -1317,7 +1317,7 @@ export default function OfflineSyncCenterPage() {
                     </div>
                   </div>
 
-                  <div className="p-3 rounded bg-white border border-[#D9DEE5] text-[11px] text-[#596579]">
+                  <div className="p-3 rounded bg-white border border-[#D8E2EA] text-[11px] text-[#526779]">
                     &ldquo;{conflictItem.conflictData.localVersion.notes}&rdquo;
                   </div>
                 </div>
@@ -1327,12 +1327,12 @@ export default function OfflineSyncCenterPage() {
                   onClick={() => setConflictResolutionChoice('server')}
                   className={`p-4 rounded-lg border cursor-pointer transition-all space-y-2 ${
                     conflictResolutionChoice === 'server'
-                      ? 'border-[#176B87] ring-2 ring-[#176B87]/20 bg-[#EDF5F8]/40'
-                      : 'border-[#D9DEE5] bg-white hover:border-[#B3CBE0]'
+                      ? 'border-[#0F6B68] ring-2 ring-[#0F6B68]/20 bg-[#EAF0F5]/40'
+                      : 'border-[#D8E2EA] bg-white hover:border-[#D8E2EA]'
                   }`}
                 >
                   <div className="flex items-center justify-between">
-                    <span className="font-bold text-xs uppercase tracking-wider text-[#596579]">
+                    <span className="font-bold text-xs uppercase tracking-wider text-[#526779]">
                       Server Baseline
                     </span>
                     <input
@@ -1340,39 +1340,39 @@ export default function OfflineSyncCenterPage() {
                       name="conflictChoice"
                       checked={conflictResolutionChoice === 'server'}
                       onChange={() => setConflictResolutionChoice('server')}
-                      className="accent-[#176B87]"
+                      className="accent-[#0F6B68]"
                     />
                   </div>
 
                   <div className="space-y-2 text-xs">
                     <div className="flex justify-between text-[#7B8798]">
                       <span>Updated By:</span>
-                      <span className="font-semibold text-[#172033]">
+                      <span className="font-semibold text-[#142C3F]">
                         {conflictItem.conflictData.serverVersion.engineer}
                       </span>
                     </div>
                     <div className="flex justify-between text-[#7B8798]">
                       <span>Timestamp:</span>
-                      <span className="font-mono text-[#172033]">
+                      <span className="font-mono text-[#142C3F]">
                         {conflictItem.conflictData.serverVersion.timestamp}
                       </span>
                     </div>
                     <div className="flex justify-between text-[#7B8798]">
                       <span>Reported Quantity:</span>
-                      <span className="font-mono font-bold text-[#172033]">
+                      <span className="font-mono font-bold text-[#142C3F]">
                         {conflictItem.conflictData.serverVersion.quantity}{' '}
                         {conflictItem.conflictData.serverVersion.unit}
                       </span>
                     </div>
                     <div className="flex justify-between text-[#7B8798]">
                       <span>Progress:</span>
-                      <span className="font-mono font-bold text-[#596579]">
+                      <span className="font-mono font-bold text-[#526779]">
                         {conflictItem.conflictData.serverVersion.progressPercent}%
                       </span>
                     </div>
                   </div>
 
-                  <div className="p-3 rounded bg-white border border-[#D9DEE5] text-[11px] text-[#596579]">
+                  <div className="p-3 rounded bg-white border border-[#D8E2EA] text-[11px] text-[#526779]">
                     &ldquo;{conflictItem.conflictData.serverVersion.notes}&rdquo;
                   </div>
                 </div>
@@ -1383,8 +1383,8 @@ export default function OfflineSyncCenterPage() {
                 onClick={() => setConflictResolutionChoice('custom')}
                 className={`p-4 rounded-lg border cursor-pointer transition-all space-y-2 ${
                   conflictResolutionChoice === 'custom'
-                    ? 'border-[#176B87] ring-2 ring-[#176B87]/20 bg-[#EDF5F8]/40'
-                    : 'border-[#D9DEE5] bg-white hover:border-[#B3CBE0]'
+                    ? 'border-[#0F6B68] ring-2 ring-[#0F6B68]/20 bg-[#EAF0F5]/40'
+                    : 'border-[#D8E2EA] bg-white hover:border-[#D8E2EA]'
                 }`}
               >
                 <div className="flex items-center justify-between">
@@ -1394,13 +1394,13 @@ export default function OfflineSyncCenterPage() {
                       name="conflictChoice"
                       checked={conflictResolutionChoice === 'custom'}
                       onChange={() => setConflictResolutionChoice('custom')}
-                      className="accent-[#176B87]"
+                      className="accent-[#0F6B68]"
                     />
-                    <span className="font-bold text-xs text-[#172033]">
+                    <span className="font-bold text-xs text-[#142C3F]">
                       Reconcile / Custom Merge Option
                     </span>
                   </div>
-                  <span className="text-[10px] text-[#596579] uppercase font-semibold">
+                  <span className="text-[10px] text-[#526779] uppercase font-semibold">
                     Engineering Discretion
                   </span>
                 </div>
@@ -1409,38 +1409,38 @@ export default function OfflineSyncCenterPage() {
                   <div className="space-y-3 pt-2">
                     <div className="grid grid-cols-2 gap-3">
                       <div>
-                        <label className="text-[10px] font-semibold uppercase text-[#596579] block mb-1">
+                        <label className="text-[10px] font-semibold uppercase text-[#526779] block mb-1">
                           Reconciled Quantity (Welds)
                         </label>
                         <input
                           type="number"
                           value={customQuantity}
                           onChange={(e) => setCustomQuantity(parseInt(e.target.value, 10))}
-                          className="w-full px-3 py-1.5 bg-white border border-[#D9DEE5] rounded-lg font-mono text-xs text-[#172033] outline-none"
+                          className="w-full px-3 py-1.5 bg-white border border-[#D8E2EA] rounded-lg font-mono text-xs text-[#142C3F] outline-none"
                         />
                       </div>
                       <div>
-                        <label className="text-[10px] font-semibold uppercase text-[#596579] block mb-1">
+                        <label className="text-[10px] font-semibold uppercase text-[#526779] block mb-1">
                           Calculated Progress %
                         </label>
                         <input
                           type="text"
                           disabled
                           value={`${Math.round((customQuantity / 24) * 100)}%`}
-                          className="w-full px-3 py-1.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg font-mono text-xs text-[#596579]"
+                          className="w-full px-3 py-1.5 bg-[#F3F6FA] border border-[#D8E2EA] rounded-lg font-mono text-xs text-[#526779]"
                         />
                       </div>
                     </div>
 
                     <div>
-                      <label className="text-[10px] font-semibold uppercase text-[#596579] block mb-1">
+                      <label className="text-[10px] font-semibold uppercase text-[#526779] block mb-1">
                         Merged Engineering Notes
                       </label>
                       <textarea
                         rows={2}
                         value={customNotes}
                         onChange={(e) => setCustomNotes(e.target.value)}
-                        className="w-full px-3 py-1.5 bg-white border border-[#D9DEE5] rounded-lg text-xs text-[#172033] outline-none resize-none"
+                        className="w-full px-3 py-1.5 bg-white border border-[#D8E2EA] rounded-lg text-xs text-[#142C3F] outline-none resize-none"
                       />
                     </div>
                   </div>
@@ -1462,15 +1462,15 @@ export default function OfflineSyncCenterPage() {
         >
           {inspectItem && (
             <div className="space-y-6 text-xs p-1">
-              <div className="p-4 rounded-lg bg-[#F7F8FA] border border-[#D9DEE5] space-y-2">
+              <div className="p-4 rounded-lg bg-[#F3F6FA] border border-[#D8E2EA] space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="font-mono font-bold text-[#176B87]">
+                  <span className="font-mono font-bold text-[#0F6B68]">
                     {inspectItem.id}
                   </span>
                   {getClearStatusIndicator(inspectItem)}
                 </div>
-                <h4 className="font-bold text-sm text-[#172033]">{inspectItem.title}</h4>
-                <div className="flex items-center gap-2 text-[11px] text-[#596579]">
+                <h4 className="font-bold text-sm text-[#142C3F]">{inspectItem.title}</h4>
+                <div className="flex items-center gap-2 text-[11px] text-[#526779]">
                   <span>Type: <strong>{inspectItem.type}</strong></span>
                   <span>•</span>
                   <span>Created: {inspectItem.localCreatedAt}</span>
@@ -1478,21 +1478,21 @@ export default function OfflineSyncCenterPage() {
               </div>
 
               {/* PAYLOAD DETAILS */}
-              <div className="p-4 rounded-lg bg-white border border-[#D9DEE5] space-y-2">
-                <span className="text-[10px] uppercase font-semibold text-[#596579] tracking-wider block">
+              <div className="p-4 rounded-lg bg-white border border-[#D8E2EA] space-y-2">
+                <span className="text-[10px] uppercase font-semibold text-[#526779] tracking-wider block">
                   Buffered Local Payload
                 </span>
                 <div className="space-y-2 text-xs font-mono">
                   {inspectItem.payload.activityId && (
                     <div className="flex justify-between">
                       <span className="text-[#7B8798]">Activity:</span>
-                      <span className="font-bold text-[#172033]">{inspectItem.payload.activityId}</span>
+                      <span className="font-bold text-[#142C3F]">{inspectItem.payload.activityId}</span>
                     </div>
                   )}
                   {inspectItem.payload.quantity && (
                     <div className="flex justify-between">
                       <span className="text-[#7B8798]">Quantity:</span>
-                      <span className="font-bold text-[#176B87]">
+                      <span className="font-bold text-[#0F6B68]">
                         {inspectItem.payload.quantity} {inspectItem.payload.unit}
                       </span>
                     </div>
@@ -1500,45 +1500,45 @@ export default function OfflineSyncCenterPage() {
                   {inspectItem.payload.filename && (
                     <div className="flex justify-between">
                       <span className="text-[#7B8798]">File:</span>
-                      <span className="text-[#172033] truncate max-w-[200px]">{inspectItem.payload.filename}</span>
+                      <span className="text-[#142C3F] truncate max-w-[200px]">{inspectItem.payload.filename}</span>
                     </div>
                   )}
                   {inspectItem.payload.sha256 && (
-                    <details className="pt-1 border-t border-[#D9DEE5] text-[10px]">
-                      <summary className="text-[#176B87] cursor-pointer hover:underline font-semibold">Technical Details</summary>
+                    <details className="pt-1 border-t border-[#D8E2EA] text-[10px]">
+                      <summary className="text-[#0F6B68] cursor-pointer hover:underline font-semibold">Technical Details</summary>
                       <div className="mt-1">
                         <span className="text-[#7B8798] block">Verification Hash:</span>
-                        <span className="text-[#596579] break-all font-mono">{inspectItem.payload.sha256}</span>
+                        <span className="text-[#526779] break-all font-mono">{inspectItem.payload.sha256}</span>
                       </div>
                     </details>
                   )}
                 </div>
 
                 {inspectItem.payload.notes && (
-                  <div className="p-3 rounded bg-[#F7F8FA] border border-[#D9DEE5] text-[11px] text-[#596579] mt-2">
+                  <div className="p-3 rounded bg-[#F3F6FA] border border-[#D8E2EA] text-[11px] text-[#526779] mt-2">
                     {inspectItem.payload.notes}
                   </div>
                 )}
               </div>
 
               {/* TRANSMISSION TELEMETRY */}
-              <div className="p-4 rounded-lg bg-white border border-[#D9DEE5] space-y-2">
-                <span className="text-[10px] uppercase font-semibold text-[#596579] tracking-wider block">
+              <div className="p-4 rounded-lg bg-white border border-[#D8E2EA] space-y-2">
+                <span className="text-[10px] uppercase font-semibold text-[#526779] tracking-wider block">
                   Transmission Telemetry
                 </span>
                 <div className="space-y-1 text-[11px]">
                   <div className="flex justify-between">
                     <span className="text-[#7B8798]">Retry Counter:</span>
-                    <span className="font-mono font-bold text-[#172033]">{inspectItem.retryCount} / 3</span>
+                    <span className="font-mono font-bold text-[#142C3F]">{inspectItem.retryCount} / 3</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-[#7B8798]">Last Upload Attempt:</span>
-                    <span className="font-mono text-[#596579]">{inspectItem.lastAttempt || 'None'}</span>
+                    <span className="font-mono text-[#526779]">{inspectItem.lastAttempt || 'None'}</span>
                   </div>
                 </div>
 
                 {inspectItem.error && (
-                  <div className="p-3 rounded bg-[#FBEFEE] border border-[#E4B0AA] text-[11px] text-[#B5473C] mt-2">
+                  <div className="p-3 rounded bg-[#FCE8E4] border border-[#E4B0AA] text-[11px] text-[#A24335] mt-2">
                     <strong>Error:</strong> {inspectItem.error}
                   </div>
                 )}
@@ -1552,7 +1552,7 @@ export default function OfflineSyncCenterPage() {
                     handleOpenConflictModal(inspectItem);
                     setInspectItem(null);
                   }}
-                  className="w-full py-2 bg-[#B5473C] hover:bg-[#9B3C32] text-white font-bold rounded-lg text-xs flex items-center justify-center gap-2 shadow-xs"
+                  className="w-full py-2 bg-[#A24335] hover:bg-[#9B3C32] text-white font-bold rounded-lg text-xs flex items-center justify-center gap-2 shadow-xs"
                 >
                   <AlertTriangle className="w-3.5 h-3.5" />
                   <span>Launch Conflict Resolution Studio</span>

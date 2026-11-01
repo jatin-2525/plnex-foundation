@@ -12,12 +12,12 @@ export interface BreadcrumbsProps {
 
 export function Breadcrumbs({ items, className = '' }: BreadcrumbsProps) {
   return (
-    <nav aria-label="Breadcrumb" className={`flex items-center text-xs text-[#596579] mb-4 ${className}`}>
+    <nav aria-label="Breadcrumb" className={`flex items-center text-xs text-[#526779] mb-4 ${className}`}>
       <ol className="flex items-center gap-2 flex-wrap">
         <li className="flex items-center">
           <Link
             href="/"
-            className="flex items-center gap-1 text-[#596579] hover:text-[#172033] transition-colors"
+            className="flex items-center gap-1 text-[#526779] hover:text-[#142C3F] transition-colors"
           >
             <Home className="w-3.5 h-3.5" />
             <span className="sr-only">Home</span>
@@ -32,13 +32,13 @@ export function Breadcrumbs({ items, className = '' }: BreadcrumbsProps) {
               {item.href && !isLast ? (
                 <Link
                   href={item.href}
-                  className="text-[#596579] hover:text-[#172033] transition-colors"
+                  className="text-[#526779] hover:text-[#142C3F] transition-colors"
                 >
                   {item.label}
                 </Link>
               ) : (
                 <span
-                  className={isLast ? 'font-semibold text-[#172033]' : 'text-[#596579]'}
+                  className={isLast ? 'font-semibold text-[#142C3F]' : 'text-[#526779]'}
                   aria-current={isLast ? 'page' : undefined}
                 >
                   {item.label}

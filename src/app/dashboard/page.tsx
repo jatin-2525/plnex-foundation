@@ -235,25 +235,25 @@ export default function ManagerDashboardPage() {
             1. PAGE HEADER
             Project context, canonical schedule version, reporting date, connection status
             ========================================================================= */}
-        <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 shadow-xs">
+        <div className="bg-white border border-[#D8E2EA] rounded-lg p-4 sm:p-6 shadow-xs">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
             <div className="space-y-1">
               <div className="flex items-center gap-2 flex-wrap">
-                <span className="px-2 py-0.5 rounded bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0] text-[11px] font-mono font-bold">
+                <span className="px-2 py-0.5 rounded bg-[#EAF0F5] text-[#0F6B68] border border-[#D8E2EA] text-[11px] font-mono font-bold">
                   PROJECT ID: {activeProject.code}
                 </span>
-                <span className="text-xs text-[#596579]">
-                  Schedule: <strong className="text-[#172033] font-mono">{CANONICAL_SCHEDULE_VERSION_LABEL}</strong>
+                <span className="text-xs text-[#526779]">
+                  Schedule: <strong className="text-[#142C3F] font-mono">{CANONICAL_SCHEDULE_VERSION_LABEL}</strong>
                 </span>
                 <span className="text-[#7B8798] hidden sm:inline">•</span>
-                <span className="text-xs text-[#596579]">
-                  Reporting Date: <strong className="text-[#172033] font-mono">{formatProjectDate(PROJECT_REPORT_DATE, true)}</strong>
+                <span className="text-xs text-[#526779]">
+                  Reporting Date: <strong className="text-[#142C3F] font-mono">{formatProjectDate(PROJECT_REPORT_DATE, true)}</strong>
                 </span>
               </div>
-              <h1 className="text-2xl sm:text-3xl font-bold text-[#172033] tracking-tight">
+              <h1 className="text-2xl sm:text-3xl font-bold text-[#142C3F] tracking-tight">
                 {activeProject.name}
               </h1>
-              <p className="text-sm text-[#596579]">
+              <p className="text-sm text-[#526779]">
                 Executive Project Controls & Schedule Decision Cockpit • <strong>Oil India Limited</strong>
               </p>
             </div>
@@ -263,14 +263,14 @@ export default function ManagerDashboardPage() {
               <div
                 className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-md border text-xs font-semibold ${
                   effectiveStatus === 'OFFLINE'
-                    ? 'bg-[#FBEFEE] border-[#E4B0AA] text-[#B5473C]'
-                    : 'bg-[#EDF7F2] border-[#B8DCC9] text-[#2E7D5B]'
+                    ? 'bg-[#FCE8E4] border-[#E4B0AA] text-[#A24335]'
+                    : 'bg-[#E4F4EC] border-[#B8DCC9] text-[#2E7D5B]'
                 }`}
                 title={`Application operating mode: ${effectiveStatus}`}
               >
                 <span
                   className={`w-2 h-2 rounded-full ${
-                    effectiveStatus === 'OFFLINE' ? 'bg-[#B5473C]' : 'bg-[#2E7D5B]'
+                    effectiveStatus === 'OFFLINE' ? 'bg-[#A24335]' : 'bg-[#2E7D5B]'
                   }`}
                 />
                 <span className="font-mono uppercase tracking-wider text-[11px]">
@@ -281,16 +281,16 @@ export default function ManagerDashboardPage() {
               {/* Secondary Navigation */}
               <Link
                 href="/schedule-twin"
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-[#172033] bg-white border border-[#D9DEE5] hover:bg-[#F1F3F5] rounded-lg transition-colors shadow-2xs"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-[#142C3F] bg-white border border-[#D8E2EA] hover:bg-[#EAF0F5] rounded-lg transition-colors shadow-2xs"
               >
-                <GitCommit className="w-3.5 h-3.5 text-[#176B87]" />
+                <GitCommit className="w-3.5 h-3.5 text-[#0F6B68]" />
                 <span>Schedule Twin</span>
               </Link>
 
               {/* Primary Action */}
               <Link
                 href="/review"
-                className="inline-flex items-center gap-2 px-4 py-2 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] border border-[#176B87] rounded-lg transition-colors shadow-xs"
+                className="inline-flex items-center gap-2 px-4 py-2 text-xs font-bold text-white bg-[#0F6B68] hover:bg-[#135A72] border border-[#0F6B68] rounded-lg transition-colors shadow-xs"
               >
                 <ShieldCheck className="w-4 h-4" />
                 <span>Review Pending Events ({reviewEvents.length})</span>
@@ -303,20 +303,20 @@ export default function ManagerDashboardPage() {
             FEATURE 15: DASHBOARD LAYOUT & DENSITY CONTROLS
             Allows the Project Manager to customize density and show/hide sections
             ========================================================================= */}
-        <div className="bg-white border border-[#D7E1E8] rounded-lg p-3 shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+        <div className="bg-white border border-[#D8E2EA] rounded-lg p-3 shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
           <div className="flex items-center gap-2">
-            <span className="font-semibold text-[#172B3A] flex items-center gap-1.5 text-xs">
-              <SlidersHorizontal className="w-3.5 h-3.5 text-[#0F6574]" />
+            <span className="font-semibold text-[#142C3F] flex items-center gap-1.5 text-xs">
+              <SlidersHorizontal className="w-3.5 h-3.5 text-[#0F6B68]" />
               Layout & Density:
             </span>
-            <div className="flex rounded border border-[#D7E1E8] p-0.5 bg-[#F4F7FA]">
+            <div className="flex rounded border border-[#D8E2EA] p-0.5 bg-[#F3F6FA]">
               <button
                 type="button"
                 onClick={() => setDashboardDensity('comfortable')}
                 className={`px-2 py-0.5 rounded text-[11px] font-medium transition-colors cursor-pointer ${
                   dashboardDensity === 'comfortable'
-                    ? 'bg-white text-[#0F6574] font-bold shadow-2xs'
-                    : 'text-[#526779] hover:text-[#172B3A]'
+                    ? 'bg-white text-[#0F6B68] font-bold shadow-2xs'
+                    : 'text-[#526779] hover:text-[#142C3F]'
                 }`}
               >
                 Comfortable
@@ -326,8 +326,8 @@ export default function ManagerDashboardPage() {
                 onClick={() => setDashboardDensity('compact')}
                 className={`px-2 py-0.5 rounded text-[11px] font-medium transition-colors cursor-pointer ${
                   dashboardDensity === 'compact'
-                    ? 'bg-white text-[#0F6574] font-bold shadow-2xs'
-                    : 'text-[#526779] hover:text-[#172B3A]'
+                    ? 'bg-white text-[#0F6B68] font-bold shadow-2xs'
+                    : 'text-[#526779] hover:text-[#142C3F]'
                 }`}
               >
                 Compact
@@ -354,8 +354,8 @@ export default function ManagerDashboardPage() {
                 }
                 className={`px-2 py-0.5 rounded text-[11px] font-medium border transition-colors cursor-pointer ${
                   (visibleSections as any)[sec.id]
-                    ? 'bg-[#EDF5F8] text-[#0F6574] border-[#B3CBE0] font-semibold'
-                    : 'bg-white text-[#7B8798] border-[#D7E1E8]'
+                    ? 'bg-[#EAF0F5] text-[#0F6B68] border-[#D8E2EA] font-semibold'
+                    : 'bg-white text-[#7B8798] border-[#D8E2EA]'
                 }`}
               >
                 {(visibleSections as any)[sec.id] ? `✓ ${sec.label}` : sec.label}
@@ -370,8 +370,8 @@ export default function ManagerDashboardPage() {
         {visibleSections.kpis && (
           <section aria-labelledby="kpi-heading" className="space-y-2">
             <div className="flex items-center justify-between">
-              <h2 id="kpi-heading" className="text-xs font-semibold uppercase tracking-wider text-[#596579] flex items-center gap-1.5">
-                <BarChart3 className="w-3.5 h-3.5 text-[#0F6574]" />
+              <h2 id="kpi-heading" className="text-xs font-semibold uppercase tracking-wider text-[#526779] flex items-center gap-1.5">
+                <BarChart3 className="w-3.5 h-3.5 text-[#0F6B68]" />
                 Executive Performance Indicators
               </h2>
               <span className="text-[11px] text-[#7B8798] font-mono hidden sm:inline">
@@ -379,11 +379,11 @@ export default function ManagerDashboardPage() {
               </span>
             </div>
 
-            <div className="border border-[#D7E1E8] rounded-lg shadow-xs overflow-hidden grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-px bg-[#D7E1E8]">
+            <div className="border border-[#D8E2EA] rounded-lg shadow-xs overflow-hidden grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-px bg-[#D8E2EA]">
               {/* 1. Schedule Health */}
               <div className={`${dashboardDensity === 'compact' ? 'p-3' : 'p-4 lg:p-5'} bg-white hover:bg-[#F9FAFC] transition-colors flex flex-col justify-between group`}>
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-semibold uppercase tracking-wider text-[#596579] flex items-center gap-1">
+                  <span className="text-xs font-semibold uppercase tracking-wider text-[#526779] flex items-center gap-1">
                     Schedule Health
                     <TermHelp term="spi" />
                   </span>
@@ -392,25 +392,25 @@ export default function ManagerDashboardPage() {
                       onClick={() => openWhyExplanation('health:PRJ-OIL-2026-01')}
                       title="Why is schedule health 82%?"
                     />
-                    <div className="p-1 rounded bg-[#FDF6ED] text-[#D98B32]">
+                    <div className="p-1 rounded bg-[#FFF1D3] text-[#845006]">
                       <Activity className="w-3.5 h-3.5" />
                     </div>
                   </div>
                 </div>
                 <div className="my-2">
                   <div className="flex items-baseline gap-2">
-                    <span className="text-2xl sm:text-3xl font-bold font-mono text-[#D98B32] leading-none">
+                    <span className="text-2xl sm:text-3xl font-bold font-mono text-[#845006] leading-none">
                       82%
                     </span>
-                    <span className="text-xs font-semibold text-[#D98B32] flex items-center gap-0.5">
+                    <span className="text-xs font-semibold text-[#845006] flex items-center gap-0.5">
                       <AlertTriangle className="w-3 h-3" /> Warning
                     </span>
                   </div>
-                  <p className="text-[11px] text-[#596579] mt-1">
+                  <p className="text-[11px] text-[#526779] mt-1">
                     Needs Attention — 5 Warnings
                   </p>
                 </div>
-                <Link href="/health" className="text-[11px] text-[#0F6574] group-hover:underline font-semibold flex items-center gap-1">
+                <Link href="/health" className="text-[11px] text-[#0F6B68] group-hover:underline font-semibold flex items-center gap-1">
                   Inspect Health &rarr;
                 </Link>
               </div>
@@ -418,7 +418,7 @@ export default function ManagerDashboardPage() {
               {/* 2. Verified Progress */}
               <div className={`${dashboardDensity === 'compact' ? 'p-3' : 'p-4 lg:p-5'} bg-white hover:bg-[#F9FAFC] transition-colors flex flex-col justify-between group`}>
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-semibold uppercase tracking-wider text-[#596579] flex items-center gap-1">
+                  <span className="text-xs font-semibold uppercase tracking-wider text-[#526779] flex items-center gap-1">
                     Verified Progress
                     <TermHelp term="verified_progress" />
                   </span>
@@ -427,23 +427,23 @@ export default function ManagerDashboardPage() {
                       onClick={() => openWhyExplanation('progress:verified')}
                       title="Why is verified progress 73.0%?"
                     />
-                    <div className="p-1 rounded bg-[#EDF5F8] text-[#0F6574]">
+                    <div className="p-1 rounded bg-[#EAF0F5] text-[#0F6B68]">
                       <CheckCircle2 className="w-3.5 h-3.5" />
                     </div>
                   </div>
                 </div>
                 <div className="my-2">
                   <div className="flex items-baseline gap-2">
-                    <span className="text-2xl sm:text-3xl font-bold font-mono text-[#187A6A] leading-none">
+                    <span className="text-2xl sm:text-3xl font-bold font-mono text-[#176B53] leading-none">
                       {activeProject.overallProgress}%
                     </span>
-                    <span className="text-xs text-[#596579]">Actual</span>
+                    <span className="text-xs text-[#526779]">Actual</span>
                   </div>
-                  <p className="text-[11px] text-[#596579] mt-1">
+                  <p className="text-[11px] text-[#526779] mt-1">
                     Baseline Target: <strong>{activeProject.plannedProgress}%</strong>
                   </p>
                 </div>
-                <Link href="/progress" className="text-[11px] text-[#0F6574] group-hover:underline font-semibold flex items-center gap-1">
+                <Link href="/progress" className="text-[11px] text-[#0F6B68] group-hover:underline font-semibold flex items-center gap-1">
                   Progress Matrix &rarr;
                 </Link>
               </div>
@@ -454,26 +454,26 @@ export default function ManagerDashboardPage() {
                 className={`${dashboardDensity === 'compact' ? 'p-3' : 'p-4 lg:p-5'} bg-white hover:bg-[#F9FAFC] transition-colors flex flex-col justify-between group`}
               >
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-semibold uppercase tracking-wider text-[#596579] flex items-center gap-1">
+                  <span className="text-xs font-semibold uppercase tracking-wider text-[#526779] flex items-center gap-1">
                     Activities At Risk
                     <TermHelp term="critical_path" />
                   </span>
-                  <div className="p-1 rounded bg-[#FBEFEE] text-[#B43D47]">
+                  <div className="p-1 rounded bg-[#FCE8E4] text-[#A24335]">
                     <AlertTriangle className="w-3.5 h-3.5" />
                   </div>
                 </div>
                 <div className="my-2">
                   <div className="flex items-baseline gap-2">
-                    <span className="text-2xl sm:text-3xl font-bold font-mono text-[#B43D47] leading-none">
+                    <span className="text-2xl sm:text-3xl font-bold font-mono text-[#A24335] leading-none">
                       3
                     </span>
-                    <span className="text-xs font-bold text-[#B43D47]">Alert</span>
+                    <span className="text-xs font-bold text-[#A24335]">Alert</span>
                   </div>
-                  <p className="text-[11px] text-[#596579] mt-1">
+                  <p className="text-[11px] text-[#526779] mt-1">
                     1 Critical Path • 2 Near-Critical
                   </p>
                 </div>
-                <span className="text-[11px] text-[#0F6574] group-hover:underline font-semibold flex items-center gap-1">
+                <span className="text-[11px] text-[#0F6B68] group-hover:underline font-semibold flex items-center gap-1">
                   CPM Risk Network &rarr;
                 </span>
               </Link>
@@ -484,25 +484,25 @@ export default function ManagerDashboardPage() {
                 className={`${dashboardDensity === 'compact' ? 'p-3' : 'p-4 lg:p-5'} bg-white hover:bg-[#F9FAFC] transition-colors flex flex-col justify-between group`}
               >
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-semibold uppercase tracking-wider text-[#596579]">
+                  <span className="text-xs font-semibold uppercase tracking-wider text-[#526779]">
                     Pending Review
                   </span>
-                  <div className="p-1 rounded bg-[#FDF6ED] text-[#D98B32]">
+                  <div className="p-1 rounded bg-[#FFF1D3] text-[#845006]">
                     <Clock className="w-3.5 h-3.5" />
                   </div>
                 </div>
                 <div className="my-2">
                   <div className="flex items-baseline gap-2">
-                    <span className="text-2xl sm:text-3xl font-bold font-mono text-[#D98B32] leading-none">
+                    <span className="text-2xl sm:text-3xl font-bold font-mono text-[#845006] leading-none">
                       {reviewEvents.length}
                     </span>
-                    <span className="text-xs font-bold text-[#D98B32]">Events</span>
+                    <span className="text-xs font-bold text-[#845006]">Events</span>
                   </div>
-                  <p className="text-[11px] text-[#596579] mt-1">
+                  <p className="text-[11px] text-[#526779] mt-1">
                     Awaiting Planner Sign-off
                   </p>
                 </div>
-                <span className="text-[11px] text-[#0F6574] group-hover:underline font-semibold flex items-center gap-1">
+                <span className="text-[11px] text-[#0F6B68] group-hover:underline font-semibold flex items-center gap-1">
                   Review Center &rarr;
                 </span>
               </Link>
@@ -510,7 +510,7 @@ export default function ManagerDashboardPage() {
               {/* 5. Schedule Variance */}
               <div className={`${dashboardDensity === 'compact' ? 'p-3' : 'p-4 lg:p-5'} bg-[#FFFDFD] hover:bg-[#FFF8F8] transition-colors flex flex-col justify-between sm:col-span-2 lg:col-span-1`}>
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-semibold uppercase tracking-wider text-[#B43D47] flex items-center gap-1">
+                  <span className="text-xs font-semibold uppercase tracking-wider text-[#A24335] flex items-center gap-1">
                     Schedule Variance
                     <TermHelp term="variance" />
                   </span>
@@ -519,23 +519,23 @@ export default function ManagerDashboardPage() {
                       onClick={() => openWhyExplanation('variance:portfolio')}
                       title="Why is variance -7%?"
                     />
-                    <div className="p-1 rounded bg-[#FBEFEE] text-[#B43D47]">
+                    <div className="p-1 rounded bg-[#FCE8E4] text-[#A24335]">
                       <TrendingDown className="w-3.5 h-3.5" />
                     </div>
                   </div>
                 </div>
                 <div className="my-2">
                   <div className="flex items-baseline gap-2">
-                    <span className="text-2xl sm:text-3xl font-bold font-mono text-[#B43D47] leading-none">
+                    <span className="text-2xl sm:text-3xl font-bold font-mono text-[#A24335] leading-none">
                       {activeProject.variance}%
                     </span>
-                    <span className="text-xs font-bold text-[#B43D47]">Slip</span>
+                    <span className="text-xs font-bold text-[#A24335]">Slip</span>
                   </div>
-                  <p className="text-[11px] text-[#B43D47] font-semibold mt-1">
+                  <p className="text-[11px] text-[#A24335] font-semibold mt-1">
                     +2 Days Behind Baseline Finish
                   </p>
                 </div>
-                <a href="#variance-table" className="text-[11px] text-[#0F6574] hover:underline font-semibold flex items-center gap-1">
+                <a href="#variance-table" className="text-[11px] text-[#0F6B68] hover:underline font-semibold flex items-center gap-1">
                   Inspect Variance Table &rarr;
                 </a>
               </div>
@@ -548,18 +548,18 @@ export default function ManagerDashboardPage() {
             Prioritized #1 URGENT, #2 HIGH, #3 HIGH, #4 MEDIUM with single 1-click actions
             ========================================================================= */}
         {visibleSections.attention && (
-          <section aria-labelledby="attention-heading" className="bg-[#FFFDF7] border-2 border-[#D98B32] border-l-4 border-l-[#B43D47] rounded-lg p-4 sm:p-6 shadow-xs space-y-4">
+          <section aria-labelledby="attention-heading" className="bg-[#FFFDF7] border-2 border-[#845006] border-l-4 border-l-[#A24335] rounded-lg p-4 sm:p-6 shadow-xs space-y-4">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#F0D4A6] gap-2">
               <div className="flex items-center gap-2">
-                <div className="p-1.5 rounded-md bg-[#FBEFEE] text-[#B43D47] border border-[#E8B6BA]">
+                <div className="p-1.5 rounded-md bg-[#FCE8E4] text-[#A24335] border border-[#E8B6BA]">
                   <AlertOctagon className="w-5 h-5" />
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
-                    <h2 id="attention-heading" className="text-base sm:text-lg font-bold text-[#172B3A] tracking-tight">
+                    <h2 id="attention-heading" className="text-base sm:text-lg font-bold text-[#142C3F] tracking-tight">
                       What Needs My Attention
                     </h2>
-                    <span className="px-2 py-0.5 rounded bg-[#FBEFEE] text-[#B43D47] border border-[#E8B6BA] text-[10px] font-mono font-bold uppercase">
+                    <span className="px-2 py-0.5 rounded bg-[#FCE8E4] text-[#A24335] border border-[#E8B6BA] text-[10px] font-mono font-bold uppercase">
                       PRIORITIZED DECISION BACKLOG
                     </span>
                   </div>
@@ -570,13 +570,13 @@ export default function ManagerDashboardPage() {
               </div>
 
               <div className="flex items-center gap-2">
-                <span className="px-2.5 py-1 rounded-full bg-[#B43D47] text-white text-xs font-mono font-bold flex items-center gap-1 shadow-2xs">
+                <span className="px-2.5 py-1 rounded-full bg-[#A24335] text-white text-xs font-mono font-bold flex items-center gap-1 shadow-2xs">
                   <ShieldAlert className="w-3.5 h-3.5" />
                   4 Action Items
                 </span>
                 <Link
                   href="/review"
-                  className="px-3 py-1.5 bg-[#0F6574] hover:bg-[#0c505c] text-white text-xs font-bold rounded shadow-xs transition-colors inline-flex items-center gap-1.5"
+                  className="px-3 py-1.5 bg-[#0F6B68] hover:bg-[#0c505c] text-white text-xs font-bold rounded shadow-xs transition-colors inline-flex items-center gap-1.5"
                 >
                   <span>Full Review Queue</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -587,83 +587,83 @@ export default function ManagerDashboardPage() {
             {/* High-Signal Action Cards (Feature 16: Prioritized order with single clear action) */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
               {/* Card 1: #1 URGENT - Critical Path Header Erection Slip */}
-              <div className="p-4 rounded-lg bg-white border border-[#E8B6BA] hover:border-[#B43D47] transition-all shadow-2xs flex flex-col justify-between space-y-3 border-l-4 border-l-[#B43D47]">
+              <div className="p-4 rounded-lg bg-white border border-[#E8B6BA] hover:border-[#A24335] transition-all shadow-2xs flex flex-col justify-between space-y-3 border-l-4 border-l-[#A24335]">
                 <div className="space-y-1.5">
                   <div className="flex items-center justify-between">
-                    <span className="px-2 py-0.5 rounded text-[11px] font-mono font-bold uppercase bg-[#FBEFEE] text-[#B43D47] border border-[#E8B6BA] flex items-center gap-1">
-                      <AlertOctagon className="w-3.5 h-3.5 text-[#B43D47]" />
+                    <span className="px-2 py-0.5 rounded text-[11px] font-mono font-bold uppercase bg-[#FCE8E4] text-[#A24335] border border-[#E8B6BA] flex items-center gap-1">
+                      <AlertOctagon className="w-3.5 h-3.5 text-[#A24335]" />
                       #1 URGENT
                     </span>
-                    <span className="text-xs font-mono font-bold text-[#B43D47] bg-[#FBEFEE] px-1.5 rounded border border-[#E8B6BA]">+2d Slip</span>
+                    <span className="text-xs font-mono font-bold text-[#A24335] bg-[#FCE8E4] px-1.5 rounded border border-[#E8B6BA]">+2d Slip</span>
                   </div>
-                  <h3 className="text-sm font-bold text-[#172B3A] leading-snug">
+                  <h3 className="text-sm font-bold text-[#142C3F] leading-snug">
                     PIP-24-001: Header Erection
                   </h3>
                   <p className="text-xs text-[#526779] leading-relaxed">
                     <strong>Reason:</strong> Zero-float critical activity slipped 2 days. Pushes downstream hydrostatic testing and threatens 15 Dec COD.
                   </p>
                   <div className="pt-1">
-                    <span className="text-[11px] font-mono font-semibold px-2 py-0.5 rounded bg-[#FBEFEE] text-[#B43D47] border border-[#E8B6BA]">
+                    <span className="text-[11px] font-mono font-semibold px-2 py-0.5 rounded bg-[#FCE8E4] text-[#A24335] border border-[#E8B6BA]">
                       COD Slip Risk: +2 Days
                     </span>
                   </div>
                 </div>
                 <Link
                   href="/what-if?activity=PIP-24-001"
-                  className="w-full py-2 px-3 bg-[#B43D47] hover:bg-[#922E37] text-white text-xs font-bold rounded text-center transition-colors block mt-2 shadow-xs"
+                  className="w-full py-2 px-3 bg-[#A24335] hover:bg-[#922E37] text-white text-xs font-bold rounded text-center transition-colors block mt-2 shadow-xs"
                 >
                   Inspect Delay Chain &rarr;
                 </Link>
               </div>
 
               {/* Card 2: #2 HIGH - Field Matches Awaiting Sign-off */}
-              <div className="p-4 rounded-lg bg-white border border-[#F0D4A6] hover:border-[#9C5A08] transition-all shadow-2xs flex flex-col justify-between space-y-3 border-l-4 border-l-[#9C5A08]">
+              <div className="p-4 rounded-lg bg-white border border-[#F0D4A6] hover:border-[#845006] transition-all shadow-2xs flex flex-col justify-between space-y-3 border-l-4 border-l-[#845006]">
                 <div className="space-y-1.5">
                   <div className="flex items-center justify-between">
-                    <span className="px-2 py-0.5 rounded text-[11px] font-mono font-bold uppercase bg-[#FFF8E6] text-[#9C5A08] border border-[#F0D4A6] flex items-center gap-1">
-                      <ShieldAlert className="w-3.5 h-3.5 text-[#9C5A08]" />
+                    <span className="px-2 py-0.5 rounded text-[11px] font-mono font-bold uppercase bg-[#FFF8E6] text-[#845006] border border-[#F0D4A6] flex items-center gap-1">
+                      <ShieldAlert className="w-3.5 h-3.5 text-[#845006]" />
                       #2 HIGH
                     </span>
-                    <span className="text-xs font-mono font-bold text-[#9C5A08]">{reviewEvents.length} Pending</span>
+                    <span className="text-xs font-mono font-bold text-[#845006]">{reviewEvents.length} Pending</span>
                   </div>
-                  <h3 className="text-sm font-bold text-[#172B3A] leading-snug">
+                  <h3 className="text-sm font-bold text-[#142C3F] leading-snug">
                     Field Matches Awaiting Sign-off
                   </h3>
                   <p className="text-xs text-[#526779] leading-relaxed">
                     <strong>Reason:</strong> 3 field updates in 70%–89% confidence band pause live Schedule Twin synchronization until committed.
                   </p>
                   <div className="pt-1">
-                    <span className="text-[11px] font-mono font-semibold px-2 py-0.5 rounded bg-[#FFF8E6] text-[#9C5A08] border border-[#F0D4A6]">
+                    <span className="text-[11px] font-mono font-semibold px-2 py-0.5 rounded bg-[#FFF8E6] text-[#845006] border border-[#F0D4A6]">
                       Schedule Twin Sync Paused
                     </span>
                   </div>
                 </div>
                 <Link
                   href="/review"
-                  className="w-full py-2 px-3 bg-[#0F6574] hover:bg-[#0c505c] text-white text-xs font-bold rounded text-center transition-colors block mt-2 shadow-xs"
+                  className="w-full py-2 px-3 bg-[#0F6B68] hover:bg-[#0c505c] text-white text-xs font-bold rounded text-center transition-colors block mt-2 shadow-xs"
                 >
                   Review Matches ({reviewEvents.length}) &rarr;
                 </Link>
               </div>
 
               {/* Card 3: #3 HIGH - Unmatched Field Spool */}
-              <div className="p-4 rounded-lg bg-white border border-[#F0D4A6] hover:border-[#9C5A08] transition-all shadow-2xs flex flex-col justify-between space-y-3 border-l-4 border-l-[#9C5A08]">
+              <div className="p-4 rounded-lg bg-white border border-[#F0D4A6] hover:border-[#845006] transition-all shadow-2xs flex flex-col justify-between space-y-3 border-l-4 border-l-[#845006]">
                 <div className="space-y-1.5">
                   <div className="flex items-center justify-between">
-                    <span className="px-2 py-0.5 rounded text-[11px] font-mono font-bold uppercase bg-[#FFF8E6] text-[#9C5A08] border border-[#F0D4A6] flex items-center gap-1">
-                      <AlertTriangle className="w-3.5 h-3.5 text-[#9C5A08]" />
+                    <span className="px-2 py-0.5 rounded text-[11px] font-mono font-bold uppercase bg-[#FFF8E6] text-[#845006] border border-[#F0D4A6] flex items-center gap-1">
+                      <AlertTriangle className="w-3.5 h-3.5 text-[#845006]" />
                       #3 HIGH
                     </span>
-                    <span className="text-xs font-mono font-bold text-[#B43D47] bg-[#FBEFEE] px-1.5 rounded">47% Score</span>
+                    <span className="text-xs font-mono font-bold text-[#A24335] bg-[#FCE8E4] px-1.5 rounded">47% Score</span>
                   </div>
-                  <h3 className="text-sm font-bold text-[#172B3A] leading-snug">
+                  <h3 className="text-sm font-bold text-[#142C3F] leading-snug">
                     EVT-2026-004: Unit B Drain Line
                   </h3>
                   <p className="text-xs text-[#526779] leading-relaxed">
                     <strong>Reason:</strong> Unlinked spool code submitted. Requires manager target assignment to credit physical earned progress.
                   </p>
                   <div className="pt-1">
-                    <span className="text-[11px] font-mono font-semibold px-2 py-0.5 rounded bg-[#FBEFEE] text-[#B43D47] border border-[#E8B6BA]">
+                    <span className="text-[11px] font-mono font-semibold px-2 py-0.5 rounded bg-[#FCE8E4] text-[#A24335] border border-[#E8B6BA]">
                       Progress Uncredited (1.0 spool)
                     </span>
                   </div>
@@ -671,37 +671,37 @@ export default function ManagerDashboardPage() {
                 <button
                   type="button"
                   onClick={() => setSelectedReviewModalEvent(unmatchedEvent)}
-                  className="w-full py-2 px-3 bg-white hover:bg-[#EDF5F8] text-[#0F6574] border border-[#0F6574] text-xs font-bold rounded text-center transition-colors block cursor-pointer mt-2"
+                  className="w-full py-2 px-3 bg-white hover:bg-[#EAF0F5] text-[#0F6B68] border border-[#0F6B68] text-xs font-bold rounded text-center transition-colors block cursor-pointer mt-2"
                 >
                   Assign Target Activity &rarr;
                 </button>
               </div>
 
               {/* Card 4: #4 MEDIUM - Downstream Ripple / Simulation */}
-              <div className="p-4 rounded-lg bg-white border border-[#D7E1E8] hover:border-[#0F6574] transition-all shadow-2xs flex flex-col justify-between space-y-3 border-l-4 border-l-[#3D73B5]">
+              <div className="p-4 rounded-lg bg-white border border-[#D8E2EA] hover:border-[#0F6B68] transition-all shadow-2xs flex flex-col justify-between space-y-3 border-l-4 border-l-[#3D73B5]">
                 <div className="space-y-1.5">
                   <div className="flex items-center justify-between">
-                    <span className="px-2 py-0.5 rounded text-[11px] font-mono font-bold uppercase bg-[#EDF5F8] text-[#0F6574] border border-[#B3CBE0] flex items-center gap-1">
-                      <TrendingDown className="w-3.5 h-3.5 text-[#0F6574]" />
+                    <span className="px-2 py-0.5 rounded text-[11px] font-mono font-bold uppercase bg-[#EAF0F5] text-[#0F6B68] border border-[#D8E2EA] flex items-center gap-1">
+                      <TrendingDown className="w-3.5 h-3.5 text-[#0F6B68]" />
                       #4 MEDIUM
                     </span>
-                    <span className="text-xs font-mono font-bold text-[#3D73B5] bg-[#EDF5F8] px-1.5 rounded">3 Downstream</span>
+                    <span className="text-xs font-mono font-bold text-[#3D73B5] bg-[#EAF0F5] px-1.5 rounded">3 Downstream</span>
                   </div>
-                  <h3 className="text-sm font-bold text-[#172B3A] leading-snug">
+                  <h3 className="text-sm font-bold text-[#142C3F] leading-snug">
                     Downstream Cascade Simulation
                   </h3>
                   <p className="text-xs text-[#526779] leading-relaxed">
                     <strong>Reason:</strong> Foundation slip absorbs total float on MEC-08-003. Evaluates schedule compression options.
                   </p>
                   <div className="pt-1">
-                    <span className="text-[11px] font-mono font-semibold px-2 py-0.5 rounded bg-[#EDF5F8] text-[#0F6574] border border-[#B3CBE0]">
+                    <span className="text-[11px] font-mono font-semibold px-2 py-0.5 rounded bg-[#EAF0F5] text-[#0F6B68] border border-[#D8E2EA]">
                       Float Buffer: 0 Days Left
                     </span>
                   </div>
                 </div>
                 <Link
                   href="/what-if"
-                  className="w-full py-2 px-3 bg-white hover:bg-[#F4F7FA] text-[#172B3A] border border-[#D7E1E8] text-xs font-bold rounded text-center transition-colors block mt-2"
+                  className="w-full py-2 px-3 bg-white hover:bg-[#F3F6FA] text-[#142C3F] border border-[#D8E2EA] text-xs font-bold rounded text-center transition-colors block mt-2"
                 >
                   Run What-If Simulation &rarr;
                 </Link>
@@ -728,17 +728,17 @@ export default function ManagerDashboardPage() {
             5. SUPPORTING ANALYTICAL CHARTS SUITE (Secondary Analysis)
             ========================================================================= */}
         {visibleSections.analytics && (
-          <details className="group bg-white border border-[#D7E1E8] rounded-lg shadow-xs overflow-hidden" open>
+          <details className="group bg-white border border-[#D8E2EA] rounded-lg shadow-xs overflow-hidden" open>
             <summary className="p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between cursor-pointer list-none hover:bg-[#F9FAFC] transition-colors gap-3 select-none">
               <div className="space-y-0.5">
                 <span className="text-[11px] font-mono font-medium uppercase text-[#526779] tracking-wider">
                   Supporting Schedule Analytics
                 </span>
                 <div className="flex items-center gap-2">
-                  <h2 id="analytics-heading" className="text-base sm:text-lg font-bold text-[#172B3A] tracking-tight">
+                  <h2 id="analytics-heading" className="text-base sm:text-lg font-bold text-[#142C3F] tracking-tight">
                     Dimensional Analysis & Deep-Dive Charts
                   </h2>
-                  <span className="text-xs px-2 py-0.5 rounded bg-[#EDF5F8] text-[#0F6574] font-semibold hidden sm:inline">
+                  <span className="text-xs px-2 py-0.5 rounded bg-[#EAF0F5] text-[#0F6B68] font-semibold hidden sm:inline">
                     Discipline • Site Area • Trend • Delays
                   </span>
                 </div>
@@ -746,16 +746,16 @@ export default function ManagerDashboardPage() {
                   Multi-perspective breakdowns across engineering disciplines, site zones, and variance trajectories.
                 </p>
               </div>
-              <div className="flex items-center gap-2 text-xs font-bold text-[#0F6574] self-start sm:self-center">
+              <div className="flex items-center gap-2 text-xs font-bold text-[#0F6B68] self-start sm:self-center">
                 <span className="group-open:hidden">Expand Analysis &darr;</span>
                 <span className="hidden group-open:inline">Collapse Analysis &uarr;</span>
               </div>
             </summary>
 
-            <div className="p-4 sm:p-6 border-t border-[#D7E1E8] space-y-4">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D7E1E8] gap-3">
+            <div className="p-4 sm:p-6 border-t border-[#D8E2EA] space-y-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D8E2EA] gap-3">
                 <div>
-                  <h3 className="text-sm font-bold text-[#172B3A]">
+                  <h3 className="text-sm font-bold text-[#142C3F]">
                     Interactive Performance Dimensions
                   </h3>
                   <p className="text-xs text-[#526779]">
@@ -764,14 +764,14 @@ export default function ManagerDashboardPage() {
                 </div>
 
                 {/* Perspective Selector Tabs */}
-                <div className="flex items-center gap-1 p-1 bg-[#F4F7FA] border border-[#D7E1E8] rounded-lg self-start sm:self-center overflow-x-auto max-w-full">
+                <div className="flex items-center gap-1 p-1 bg-[#F3F6FA] border border-[#D8E2EA] rounded-lg self-start sm:self-center overflow-x-auto max-w-full">
                   <button
                     type="button"
                     onClick={() => setActiveChartTab('discipline')}
                     className={`px-3 py-1.5 text-xs font-semibold rounded-md transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer ${
                       activeChartTab === 'discipline'
-                        ? 'bg-white text-[#0F6574] shadow-2xs border border-[#D7E1E8]'
-                        : 'text-[#526779] hover:text-[#172B3A]'
+                        ? 'bg-white text-[#0F6B68] shadow-2xs border border-[#D8E2EA]'
+                        : 'text-[#526779] hover:text-[#142C3F]'
                     }`}
                   >
                     <Layers className="w-3.5 h-3.5" />
@@ -783,8 +783,8 @@ export default function ManagerDashboardPage() {
                     onClick={() => setActiveChartTab('area')}
                     className={`px-3 py-1.5 text-xs font-semibold rounded-md transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer ${
                       activeChartTab === 'area'
-                        ? 'bg-white text-[#0F6574] shadow-2xs border border-[#D7E1E8]'
-                        : 'text-[#526779] hover:text-[#172B3A]'
+                        ? 'bg-white text-[#0F6B68] shadow-2xs border border-[#D8E2EA]'
+                        : 'text-[#526779] hover:text-[#142C3F]'
                     }`}
                   >
                     <MapPin className="w-3.5 h-3.5" />
@@ -796,8 +796,8 @@ export default function ManagerDashboardPage() {
                     onClick={() => setActiveChartTab('variance-trend')}
                     className={`px-3 py-1.5 text-xs font-semibold rounded-md transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer ${
                       activeChartTab === 'variance-trend'
-                        ? 'bg-white text-[#0F6574] shadow-2xs border border-[#D7E1E8]'
-                        : 'text-[#526779] hover:text-[#172B3A]'
+                        ? 'bg-white text-[#0F6B68] shadow-2xs border border-[#D8E2EA]'
+                        : 'text-[#526779] hover:text-[#142C3F]'
                     }`}
                   >
                     <LineChartIcon className="w-3.5 h-3.5" />
@@ -809,8 +809,8 @@ export default function ManagerDashboardPage() {
                     onClick={() => setActiveChartTab('delays')}
                     className={`px-3 py-1.5 text-xs font-semibold rounded-md transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer ${
                       activeChartTab === 'delays'
-                        ? 'bg-white text-[#0F6574] shadow-2xs border border-[#D7E1E8]'
-                        : 'text-[#526779] hover:text-[#172B3A]'
+                        ? 'bg-white text-[#0F6B68] shadow-2xs border border-[#D8E2EA]'
+                        : 'text-[#526779] hover:text-[#142C3F]'
                     }`}
                   >
                     <Clock className="w-3.5 h-3.5" />
@@ -866,14 +866,14 @@ export default function ManagerDashboardPage() {
         {/* Compact, crisp activity-level tracking with highlighted CPM rows */}
         {/* ========================================================= */}
         {visibleSections.variance && (
-          <section id="variance-table" aria-labelledby="variance-table-heading" className="bg-white border border-[#D7E1E8] border-l-4 border-l-[#0F6574] rounded-lg p-4 sm:p-6 shadow-xs space-y-4">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D7E1E8] gap-2">
+          <section id="variance-table" aria-labelledby="variance-table-heading" className="bg-white border border-[#D8E2EA] border-l-4 border-l-[#0F6B68] rounded-lg p-4 sm:p-6 shadow-xs space-y-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D8E2EA] gap-2">
               <div>
                 <span className="text-[11px] font-mono font-medium uppercase text-[#526779] tracking-wider">
                   Critical Path Activity Tracking
                 </span>
                 <div className="flex items-center gap-2">
-                  <h2 id="variance-table-heading" className="text-base sm:text-lg font-bold text-[#172B3A] tracking-tight">
+                  <h2 id="variance-table-heading" className="text-base sm:text-lg font-bold text-[#142C3F] tracking-tight">
                     Schedule Variance Control Table
                   </h2>
                   <TermHelp term="variance" />
@@ -885,7 +885,7 @@ export default function ManagerDashboardPage() {
 
               {/* Feature 18: Saved Table Views & Preset Filters */}
               <div className="flex items-center gap-2 flex-wrap">
-                <div className="flex items-center gap-1 bg-[#F4F7FA] border border-[#D7E1E8] rounded p-0.5 text-xs">
+                <div className="flex items-center gap-1 bg-[#F3F6FA] border border-[#D8E2EA] rounded p-0.5 text-xs">
                   <span className="text-[11px] font-medium text-[#526779] px-1.5 flex items-center gap-1">
                     <Filter className="w-3 h-3 text-[#526779]" /> Filter:
                   </span>
@@ -901,8 +901,8 @@ export default function ManagerDashboardPage() {
                       onClick={() => setVarianceTableFilter(preset.id as any)}
                       className={`px-2 py-0.5 rounded text-[11px] font-medium transition-colors cursor-pointer ${
                         varianceTableFilter === preset.id
-                          ? 'bg-[#0F6574] text-white font-bold shadow-2xs'
-                          : 'text-[#526779] hover:text-[#172B3A]'
+                          ? 'bg-[#0F6B68] text-white font-bold shadow-2xs'
+                          : 'text-[#526779] hover:text-[#142C3F]'
                       }`}
                     >
                       {preset.label}
@@ -912,16 +912,16 @@ export default function ManagerDashboardPage() {
 
                 <Link
                   href="/variance"
-                  className="text-xs text-[#0F6574] hover:underline font-semibold inline-flex items-center gap-1"
+                  className="text-xs text-[#0F6B68] hover:underline font-semibold inline-flex items-center gap-1"
                 >
                   Full Ledger <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
               </div>
             </div>
 
-            <div className="overflow-x-auto border border-[#D7E1E8] rounded-lg">
+            <div className="overflow-x-auto border border-[#D8E2EA] rounded-lg">
               <table className="w-full min-w-[640px] text-left border-collapse text-xs">
-                <thead className="bg-[#F4F7FA] border-b border-[#D7E1E8] text-[#526779] uppercase font-semibold text-[11px] tracking-wider h-10">
+                <thead className="bg-[#F3F6FA] border-b border-[#D8E2EA] text-[#526779] uppercase font-semibold text-[11px] tracking-wider h-10">
                   <tr>
                     <th className="py-2.5 px-3">Activity</th>
                     <th className="py-2.5 px-3">Planned Finish</th>
@@ -934,7 +934,7 @@ export default function ManagerDashboardPage() {
                     <th className="py-2.5 px-3 text-right">Action</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#D7E1E8]/60 text-[#172B3A]">
+                <tbody className="divide-y divide-[#D8E2EA]/60 text-[#142C3F]">
                   {filteredVarianceItems.map((item) => (
                     <tr
                       key={item.id}
@@ -944,19 +944,19 @@ export default function ManagerDashboardPage() {
                     >
                       <td className="py-2.5 px-3 font-medium">
                         <div className="flex items-center gap-2">
-                          <span className="font-mono font-bold text-[#0F6574]">{item.id}</span>
-                          <span className="text-[#172B3A] truncate max-w-xs">{item.name}</span>
+                          <span className="font-mono font-bold text-[#0F6B68]">{item.id}</span>
+                          <span className="text-[#142C3F] truncate max-w-xs">{item.name}</span>
                           {item.isCriticalPath && (
-                            <span className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-[#FBEFEE] text-[#B43D47] border border-[#E8B6BA]">
+                            <span className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-[#FCE8E4] text-[#A24335] border border-[#E8B6BA]">
                               CPM
                             </span>
                           )}
                         </div>
                       </td>
                       <td className="py-2.5 px-3 font-mono text-[#526779]">{item.plannedFinish}</td>
-                      <td className="py-2.5 px-3 font-mono font-medium text-[#172B3A]">{item.actualFinish}</td>
+                      <td className="py-2.5 px-3 font-mono font-medium text-[#142C3F]">{item.actualFinish}</td>
                       <td className="py-2.5 px-3">
-                        <span className={`font-mono font-bold px-1.5 py-0.5 rounded ${item.varianceDays > 0 ? 'bg-[#FBEFEE] text-[#B43D47] border border-[#E8B6BA]' : 'text-[#187A6A]'}`}>
+                        <span className={`font-mono font-bold px-1.5 py-0.5 rounded ${item.varianceDays > 0 ? 'bg-[#FCE8E4] text-[#A24335] border border-[#E8B6BA]' : 'text-[#176B53]'}`}>
                           {item.varianceDays === 0 ? '0d' : `+${item.varianceDays}d`}
                         </span>
                       </td>
@@ -967,7 +967,7 @@ export default function ManagerDashboardPage() {
                         <button
                           type="button"
                           onClick={() => openActivityDrawer(item.id)}
-                          className="px-2.5 py-1 text-xs text-[#0F6574] hover:bg-[#EDF5F8] border border-[#B3CBE0] rounded font-medium transition-colors cursor-pointer"
+                          className="px-2.5 py-1 text-xs text-[#0F6B68] hover:bg-[#EAF0F5] border border-[#D8E2EA] rounded font-medium transition-colors cursor-pointer"
                         >
                           Inspect
                         </button>
@@ -986,51 +986,51 @@ export default function ManagerDashboardPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
           {/* Column 1: Pending Match Approvals */}
           {visibleSections.pendingMatches && (
-            <section aria-labelledby="pending-approvals-heading" className="bg-white border border-[#D7E1E8] rounded-lg p-4 sm:p-5 shadow-xs space-y-3">
-              <div className="flex items-center justify-between pb-2 border-b border-[#D7E1E8]">
+            <section aria-labelledby="pending-approvals-heading" className="bg-white border border-[#D8E2EA] rounded-lg p-4 sm:p-5 shadow-xs space-y-3">
+              <div className="flex items-center justify-between pb-2 border-b border-[#D8E2EA]">
                 <div className="flex items-center gap-2">
-                  <ShieldCheck className="w-4 h-4 text-[#0F6574]" />
-                  <h2 id="pending-approvals-heading" className="text-sm sm:text-base font-bold text-[#172B3A]">
+                  <ShieldCheck className="w-4 h-4 text-[#0F6B68]" />
+                  <h2 id="pending-approvals-heading" className="text-sm sm:text-base font-bold text-[#142C3F]">
                     Pending Schedule Links
                   </h2>
-                  <span className="px-2 py-0.5 rounded-full bg-[#FFF8E6] text-[#9C5A08] border border-[#F0D4A6] text-[10px] font-mono font-bold">
+                  <span className="px-2 py-0.5 rounded-full bg-[#FFF8E6] text-[#845006] border border-[#F0D4A6] text-[10px] font-mono font-bold">
                     {reviewEvents.length} Actions
                   </span>
                 </div>
-                <Link href="/review" className="text-xs text-[#0F6574] hover:underline font-semibold">
+                <Link href="/review" className="text-xs text-[#0F6B68] hover:underline font-semibold">
                   Open Review Center &rarr;
                 </Link>
               </div>
 
               {reviewEvents.length === 0 ? (
-                <div className="p-6 text-center bg-[#F4F7FA] border border-[#D7E1E8] rounded-lg">
-                  <CheckCircle2 className="w-6 h-6 text-[#187A6A] mx-auto mb-1.5" />
-                  <p className="text-xs font-bold text-[#172B3A]">No pending review items</p>
+                <div className="p-6 text-center bg-[#F3F6FA] border border-[#D8E2EA] rounded-lg">
+                  <CheckCircle2 className="w-6 h-6 text-[#176B53] mx-auto mb-1.5" />
+                  <p className="text-xs font-bold text-[#142C3F]">No pending review items</p>
                   <p className="text-[11px] text-[#526779] mt-0.5">
                     All field updates are linked and verified with the baseline.
                   </p>
                 </div>
               ) : (
-                <div className="divide-y divide-[#D7E1E8]">
+                <div className="divide-y divide-[#D8E2EA]">
                   {reviewEvents.slice(0, 3).map((evt) => (
                     <div key={evt.id} className="py-2.5 flex items-center justify-between gap-3 text-xs">
                       <div className="min-w-0 space-y-0.5">
                         <div className="flex items-center gap-2">
-                          <span className="font-mono font-bold text-[#0F6574] text-[11px]">{evt.id}</span>
+                          <span className="font-mono font-bold text-[#0F6B68] text-[11px]">{evt.id}</span>
                           <ConfidenceBadge score={evt.confidence} size="sm" />
                         </div>
-                        <p className="text-xs text-[#172B3A] font-medium truncate max-w-sm">
+                        <p className="text-xs text-[#142C3F] font-medium truncate max-w-sm">
                           {evt.rawText}
                         </p>
                         <div className="text-[10px] text-[#526779] flex items-center gap-1">
                           <span>Target:</span>
-                          <strong className="text-[#172B3A] font-mono">{evt.matchedActivityId || 'Unassigned'}</strong>
+                          <strong className="text-[#142C3F] font-mono">{evt.matchedActivityId || 'Unassigned'}</strong>
                         </div>
                       </div>
                       <button
                         type="button"
                         onClick={() => setSelectedReviewModalEvent(evt)}
-                        className="px-2.5 py-1 text-xs bg-white hover:bg-[#EDF5F8] text-[#0F6574] border border-[#B3CBE0] rounded font-semibold transition-colors flex-shrink-0 cursor-pointer shadow-2xs"
+                        className="px-2.5 py-1 text-xs bg-white hover:bg-[#EAF0F5] text-[#0F6B68] border border-[#D8E2EA] rounded font-semibold transition-colors flex-shrink-0 cursor-pointer shadow-2xs"
                       >
                         Review
                       </button>
@@ -1043,32 +1043,32 @@ export default function ManagerDashboardPage() {
 
           {/* Column 2: Verified Milestones Sync History (Collapsible Historical Stream) */}
           {visibleSections.milestones && (
-            <details className="group bg-white border border-[#D7E1E8] rounded-lg p-4 sm:p-5 shadow-xs" open>
+            <details className="group bg-white border border-[#D8E2EA] rounded-lg p-4 sm:p-5 shadow-xs" open>
               <summary className="flex items-center justify-between cursor-pointer list-none select-none">
                 <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-[#187A6A]" />
-                  <h2 id="milestones-heading" className="text-sm sm:text-base font-bold text-[#172B3A]">
+                  <CheckCircle2 className="w-4 h-4 text-[#176B53]" />
+                  <h2 id="milestones-heading" className="text-sm sm:text-base font-bold text-[#142C3F]">
                     Verified Progress History ({verifiedMilestones.length})
                   </h2>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="text-xs text-[#0F6574] font-semibold group-open:hidden">View History &darr;</span>
-                  <span className="text-xs text-[#0F6574] font-semibold hidden group-open:inline">Hide History &uarr;</span>
+                  <span className="text-xs text-[#0F6B68] font-semibold group-open:hidden">View History &darr;</span>
+                  <span className="text-xs text-[#0F6B68] font-semibold hidden group-open:inline">Hide History &uarr;</span>
                 </div>
               </summary>
 
-              <div className="pt-3 mt-3 border-t border-[#D7E1E8] divide-y divide-[#D7E1E8]">
+              <div className="pt-3 mt-3 border-t border-[#D8E2EA] divide-y divide-[#D8E2EA]">
                 {verifiedMilestones.map((m) => (
                   <div key={m.id} className="py-2.5 flex items-center justify-between gap-3 text-xs">
                     <div className="min-w-0 space-y-0.5">
                       <div className="flex items-center gap-2">
-                        <span className="font-mono font-bold text-[#187A6A] text-[11px] flex items-center gap-1">
-                          <Check className="w-3 h-3 text-[#187A6A]" />
+                        <span className="font-mono font-bold text-[#176B53] text-[11px] flex items-center gap-1">
+                          <Check className="w-3 h-3 text-[#176B53]" />
                           {m.activityId}
                         </span>
                         <span className="text-[10px] text-[#526779] font-mono">{m.verifiedDate}</span>
                       </div>
-                      <p className="text-xs text-[#172B3A] font-medium">{m.title}</p>
+                      <p className="text-xs text-[#142C3F] font-medium">{m.title}</p>
                       <p className="text-[11px] text-[#526779]">{m.progress} • Certified by {m.auditor}</p>
                     </div>
                   </div>
@@ -1096,7 +1096,7 @@ export default function ManagerDashboardPage() {
                 onClick={() => {
                   setSelectedEventForRejection(selectedReviewModalEvent);
                 }}
-                className="px-3 py-1.5 text-xs text-[#B5473C] hover:bg-[#FBEFEE] rounded border border-[#E4B0AA] font-semibold transition-colors cursor-pointer"
+                className="px-3 py-1.5 text-xs text-[#A24335] hover:bg-[#FCE8E4] rounded border border-[#E4B0AA] font-semibold transition-colors cursor-pointer"
               >
                 Reject Match
               </button>
@@ -1104,14 +1104,14 @@ export default function ManagerDashboardPage() {
                 <button
                   type="button"
                   onClick={() => setSelectedReviewModalEvent(null)}
-                  className="px-3 py-1.5 text-xs text-[#596579] hover:text-[#172033] rounded border border-[#D9DEE5] cursor-pointer"
+                  className="px-3 py-1.5 text-xs text-[#526779] hover:text-[#142C3F] rounded border border-[#D8E2EA] cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="button"
                   onClick={() => handleApproveEvent(selectedReviewModalEvent)}
-                  className="px-4 py-1.5 text-xs bg-[#176B87] hover:bg-[#135A72] text-white rounded font-bold shadow-xs transition-colors cursor-pointer"
+                  className="px-4 py-1.5 text-xs bg-[#0F6B68] hover:bg-[#135A72] text-white rounded font-bold shadow-xs transition-colors cursor-pointer"
                 >
                   Approve & Commit Match
                 </button>
@@ -1121,29 +1121,29 @@ export default function ManagerDashboardPage() {
         >
           <div className="space-y-4 text-xs">
             {/* Field Statement */}
-            <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg">
-              <span className="text-[10px] font-mono font-semibold text-[#596579] uppercase block">
+            <div className="p-3 bg-[#F3F6FA] border border-[#D8E2EA] rounded-lg">
+              <span className="text-[10px] font-mono font-semibold text-[#526779] uppercase block">
                 Raw Field Statement
               </span>
-              <p className="text-xs font-semibold text-[#172033] mt-1 leading-relaxed">
+              <p className="text-xs font-semibold text-[#142C3F] mt-1 leading-relaxed">
                 &ldquo;{selectedReviewModalEvent.rawText}&rdquo;
               </p>
-              <div className="mt-2 text-[10px] font-mono text-[#596579]">
+              <div className="mt-2 text-[10px] font-mono text-[#526779]">
                 Source: {selectedReviewModalEvent.source} • Date: {selectedReviewModalEvent.eventDate} • Creator: {selectedReviewModalEvent.createdBy}
               </div>
             </div>
 
             {/* Candidate Target */}
-            <div className="p-3 bg-white border border-[#D9DEE5] rounded-lg space-y-2">
-              <span className="text-[10px] font-mono font-semibold text-[#596579] uppercase block">
+            <div className="p-3 bg-white border border-[#D8E2EA] rounded-lg space-y-2">
+              <span className="text-[10px] font-mono font-semibold text-[#526779] uppercase block">
                 Target Schedule Activity
               </span>
               <div className="flex items-center justify-between">
                 <div>
-                  <span className="font-mono font-bold text-sm text-[#176B87]">
+                  <span className="font-mono font-bold text-sm text-[#0F6B68]">
                     {selectedReviewModalEvent.matchedActivityId || 'NO TARGET ASSIGNED'}
                   </span>
-                  <p className="text-xs font-semibold text-[#172033] mt-0.5">
+                  <p className="text-xs font-semibold text-[#142C3F] mt-0.5">
                     {selectedReviewModalEvent.matchedActivityName || 'Awaiting planner manual assignment'}
                   </p>
                 </div>
@@ -1151,9 +1151,9 @@ export default function ManagerDashboardPage() {
               </div>
 
               {selectedReviewModalEvent.matchedReasons && selectedReviewModalEvent.matchedReasons.length > 0 && (
-                <div className="mt-2 pt-2 border-t border-[#D9DEE5] space-y-1">
-                  <span className="text-[10px] font-semibold text-[#596579]">Match Justification:</span>
-                  <ul className="list-disc list-inside text-[11px] text-[#596579] space-y-0.5">
+                <div className="mt-2 pt-2 border-t border-[#D8E2EA] space-y-1">
+                  <span className="text-[10px] font-semibold text-[#526779]">Match Justification:</span>
+                  <ul className="list-disc list-inside text-[11px] text-[#526779] space-y-0.5">
                     {selectedReviewModalEvent.matchedReasons.map((r, rIdx) => (
                       <li key={rIdx}>{r}</li>
                     ))}
@@ -1164,7 +1164,7 @@ export default function ManagerDashboardPage() {
 
             {/* Evidence Link */}
             {selectedReviewModalEvent.evidenceIds.length > 0 && (
-              <div className="p-3 bg-[#EDF7F2] border border-[#B8DCC9] rounded-md text-xs text-[#2E7D5B] flex items-center justify-between">
+              <div className="p-3 bg-[#E4F4EC] border border-[#B8DCC9] rounded-md text-xs text-[#2E7D5B] flex items-center justify-between">
                 <span className="font-medium">Attached Audit Evidence: {selectedReviewModalEvent.evidenceIds.join(', ')}</span>
                 <Link href="/evidence" className="underline font-bold text-[11px]">
                   View Evidence &rarr;
@@ -1187,14 +1187,14 @@ export default function ManagerDashboardPage() {
               <button
                 type="button"
                 onClick={() => setSelectedEventForRejection(null)}
-                className="px-3 py-1.5 text-xs text-[#596579] hover:text-[#172033] rounded border border-[#D9DEE5] cursor-pointer"
+                className="px-3 py-1.5 text-xs text-[#526779] hover:text-[#142C3F] rounded border border-[#D8E2EA] cursor-pointer"
               >
                 Cancel
               </button>
               <button
                 type="button"
                 onClick={handleRejectEvent}
-                className="px-4 py-1.5 text-xs bg-[#B5473C] hover:bg-[#973930] text-white rounded font-medium shadow-xs cursor-pointer"
+                className="px-4 py-1.5 text-xs bg-[#A24335] hover:bg-[#973930] text-white rounded font-medium shadow-xs cursor-pointer"
               >
                 Confirm Rejection
               </button>
@@ -1202,7 +1202,7 @@ export default function ManagerDashboardPage() {
           }
         >
           <div className="space-y-3 text-xs">
-            <p className="text-[#596579]">
+            <p className="text-[#526779]">
               Provide a justification for rejecting this match. It will be recorded into the append-only audit trail.
             </p>
             <textarea
@@ -1210,7 +1210,7 @@ export default function ManagerDashboardPage() {
               onChange={(e) => setRejectReason(e.target.value)}
               placeholder="e.g. Activity does not belong to active package scope..."
               rows={3}
-              className="w-full p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded outline-none focus:border-[#176B87]"
+              className="w-full p-3 bg-[#F3F6FA] border border-[#D8E2EA] rounded outline-none focus:border-[#0F6B68]"
             />
           </div>
         </Modal>

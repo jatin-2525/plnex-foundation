@@ -47,9 +47,9 @@ export function ProgressBar({
   return (
     <div className={`w-full ${className}`}>
       {showLabels && (
-        <div className="flex items-center justify-between text-xs text-[#596579] mb-1 font-mono">
-          <span className="font-sans font-medium text-[#172033]">
-            Actual: <strong className="font-mono text-[#172033]">{clampedActual}%</strong>
+        <div className="flex items-center justify-between text-xs text-[#526779] mb-1 font-mono">
+          <span className="font-sans font-medium text-[#142C3F]">
+            Actual: <strong className="font-mono text-[#142C3F]">{clampedActual}%</strong>
           </span>
           {clampedPlanned !== undefined && (
             <span>
@@ -59,7 +59,7 @@ export function ProgressBar({
         </div>
       )}
       <div
-        className={`w-full bg-[#D9DEE5] rounded-full overflow-hidden relative ${heightClasses}`}
+        className={`w-full bg-[#D8E2EA] rounded-full overflow-hidden relative ${heightClasses}`}
         role="progressbar"
         aria-valuenow={clampedActual}
         aria-valuemin={0}
@@ -68,7 +68,7 @@ export function ProgressBar({
         {/* Planned target marker */}
         {clampedPlanned !== undefined && (
           <div
-            className="absolute top-0 bottom-0 w-0.5 bg-[#172033] z-10 opacity-70"
+            className="absolute top-0 bottom-0 w-0.5 bg-[#142C3F] z-10 opacity-70"
             style={{ left: `${clampedPlanned}%` }}
             title={`Planned Target: ${clampedPlanned}%`}
           />

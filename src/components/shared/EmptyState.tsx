@@ -26,13 +26,13 @@ export function EmptyState({
 }: EmptyStateProps) {
   return (
     <div
-      className={`flex flex-col items-center justify-center p-8 md:p-12 text-center bg-white border border-[#D9DEE5] rounded-lg shadow-xs ${className}`}
+      className={`flex flex-col items-center justify-center p-8 md:p-12 text-center bg-white border border-[#D8E2EA] rounded-lg shadow-xs ${className}`}
     >
-      <div className="w-12 h-12 rounded-lg bg-[#F1F3F5] border border-[#D9DEE5] flex items-center justify-center text-[#176B87] mb-4 flex-shrink-0">
+      <div className="w-12 h-12 rounded-lg bg-[#EAF0F5] border border-[#D8E2EA] flex items-center justify-center text-[#0F6B68] mb-4 flex-shrink-0">
         <Icon className="w-6 h-6" />
       </div>
-      <h3 className="text-lg sm:text-xl font-bold text-[#172033] mb-2 tracking-tight">{title}</h3>
-      <p className="text-sm sm:text-base text-[#596579] max-w-md mb-6 leading-relaxed">
+      <h3 className="text-lg sm:text-xl font-bold text-[#142C3F] mb-2 tracking-tight">{title}</h3>
+      <p className="text-sm sm:text-base text-[#526779] max-w-md mb-6 leading-relaxed">
         {description}
       </p>
       {(action || secondaryAction) && (
@@ -40,7 +40,7 @@ export function EmptyState({
           {action && (
             <button
               onClick={action.onClick}
-              className="inline-flex items-center gap-2 px-4 py-2 bg-[#176B87] hover:bg-[#135A72] text-white text-xs sm:text-sm font-medium rounded-lg shadow-xs transition-colors cursor-pointer"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-[#0F6B68] hover:bg-[#135A72] text-white text-xs sm:text-sm font-medium rounded-lg shadow-xs transition-colors cursor-pointer"
             >
               {action.icon && <action.icon className="w-4 h-4" />}
               <span>{action.label}</span>

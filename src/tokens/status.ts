@@ -65,46 +65,46 @@ export function getActivityStatusConfig(status: ActivityStatus): StatusBadgeConf
     case 'in-progress':
       return {
         label: 'On Track',
-        color: colors.status.success,
-        bgColor: colors.status.successBg,
-        borderColor: colors.status.successBorder,
+        color: '#176F7A',
+        bgColor: '#E2F2F4',
+        borderColor: '#BCE1E5',
       };
     case 'at-risk':
       return {
         label: 'At Risk',
-        color: colors.status.warningText,
-        bgColor: colors.status.warningBg,
-        borderColor: colors.status.warningBorder,
+        color: '#845006',
+        bgColor: '#FFF1D3',
+        borderColor: '#F8DDA2',
       };
     case 'delayed':
       return {
         label: 'Delayed',
-        color: colors.status.critical,
-        bgColor: colors.status.criticalBg,
-        borderColor: colors.status.criticalBorder,
+        color: '#A24335',
+        bgColor: '#FCE8E4',
+        borderColor: '#F6C7BE',
       };
     case 'completed':
       return {
         label: 'Completed',
-        color: colors.status.infoText,
-        bgColor: colors.status.infoBg,
-        borderColor: colors.status.infoBorder,
+        color: '#176B53',
+        bgColor: '#E4F4EC',
+        borderColor: '#BDE4D0',
       };
     case 'blocked':
       return {
         label: 'Blocked',
-        color: '#9A2D23',
-        bgColor: '#FDF2F2',
-        borderColor: '#EAA29B',
+        color: '#8D3143',
+        bgColor: '#F8E6EA',
+        borderColor: '#EEC4CE',
       };
     case 'pending':
     case 'not-started':
     default:
       return {
         label: 'Pending Review',
-        color: colors.status.warningText,
-        bgColor: colors.status.warningBg,
-        borderColor: colors.status.warningBorder,
+        color: '#3B55A3',
+        bgColor: '#E9EEFF',
+        borderColor: '#C5D2FC',
       };
   }
 }
@@ -115,25 +115,31 @@ export function getEventStatusConfig(status: EventStatus): StatusBadgeConfig {
     case 'approved':
       return {
         label: 'Verified',
-        color: colors.status.success,
-        bgColor: colors.status.successBg,
-        borderColor: colors.status.successBorder,
+        color: '#176B53',
+        bgColor: '#E4F4EC',
+        borderColor: '#BDE4D0',
       };
     case 'pending-review':
     case 'pending-verification':
-    case 'rematched':
       return {
         label: 'Pending Review',
-        color: colors.status.warningText,
-        bgColor: colors.status.warningBg,
-        borderColor: colors.status.warningBorder,
+        color: '#3B55A3',
+        bgColor: '#E9EEFF',
+        borderColor: '#C5D2FC',
+      };
+    case 'rematched':
+      return {
+        label: 'Unmatched',
+        color: '#66528F',
+        bgColor: '#F0EBF8',
+        borderColor: '#DACFF0',
       };
     case 'rejected':
       return {
         label: 'Blocked',
-        color: colors.status.critical,
-        bgColor: colors.status.criticalBg,
-        borderColor: colors.status.criticalBorder,
+        color: '#8D3143',
+        bgColor: '#F8E6EA',
+        borderColor: '#EEC4CE',
       };
   }
 }

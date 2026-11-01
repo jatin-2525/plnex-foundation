@@ -91,7 +91,7 @@ export default function FieldPage() {
       accessorKey: 'id',
       width: '120px',
       cell: ({ row }) => (
-        <span className="font-mono text-xs font-bold text-[#596579] bg-[#F1F3F5] px-2 py-0.5 rounded">
+        <span className="font-mono text-xs font-bold text-[#526779] bg-[#EAF0F5] px-2 py-0.5 rounded">
           {row.id}
         </span>
       ),
@@ -101,8 +101,8 @@ export default function FieldPage() {
       header: 'Raw Field Statement',
       cell: ({ row }) => (
         <div>
-          <p className="text-xs font-medium text-[#172033] leading-snug">{row.rawText}</p>
-          <div className="flex items-center gap-2 text-[11px] text-[#596579] font-mono mt-1">
+          <p className="text-xs font-medium text-[#142C3F] leading-snug">{row.rawText}</p>
+          <div className="flex items-center gap-2 text-[11px] text-[#526779] font-mono mt-1">
             <span>Source: {row.source}</span>
             <span>•</span>
             <span>{row.eventDate} {row.eventTime}</span>
@@ -116,11 +116,11 @@ export default function FieldPage() {
       cell: ({ row }) => (
         <div className="text-xs space-y-0.5 font-mono">
           <div>
-            <strong className="text-[#172033]">{row.discipline}</strong>
-            <span className="text-[#596579]"> • {row.extractedFields.workType}</span>
+            <strong className="text-[#142C3F]">{row.discipline}</strong>
+            <span className="text-[#526779]"> • {row.extractedFields.workType}</span>
           </div>
-          <div className="text-[#596579]">
-            Qty: <strong className="text-[#172033]">{row.quantity} {row.unit}</strong> • {row.area}
+          <div className="text-[#526779]">
+            Qty: <strong className="text-[#142C3F]">{row.quantity} {row.unit}</strong> • {row.area}
           </div>
         </div>
       ),
@@ -132,10 +132,10 @@ export default function FieldPage() {
         <div>
           {row.matchedActivityId ? (
             <>
-              <span className="font-mono text-xs font-bold text-[#176B87]">
+              <span className="font-mono text-xs font-bold text-[#0F6B68]">
                 {row.matchedActivityId}
               </span>
-              <p className="text-[11px] text-[#596579] truncate">{row.matchedActivityName}</p>
+              <p className="text-[11px] text-[#526779] truncate">{row.matchedActivityName}</p>
             </>
           ) : (
             <span className="text-xs text-[#7B8798] italic">Unmatched (Routed to Review)</span>
@@ -176,14 +176,14 @@ export default function FieldPage() {
           <div className="flex items-center gap-2 flex-wrap">
             <Link
               href="/field/capture"
-              className="min-h-[44px] inline-flex items-center gap-2 px-4 py-2 bg-white hover:bg-[#F1F3F5] text-[#172033] border border-[#D9DEE5] text-xs font-bold rounded-lg shadow-2xs transition-colors"
+              className="min-h-[44px] inline-flex items-center gap-2 px-4 py-2 bg-white hover:bg-[#EAF0F5] text-[#142C3F] border border-[#D8E2EA] text-xs font-bold rounded-lg shadow-2xs transition-colors"
             >
-              <Target className="w-3.5 h-3.5 text-[#176B87]" />
+              <Target className="w-3.5 h-3.5 text-[#0F6B68]" />
               <span>Field Capture</span>
             </Link>
             <Link
               href="/field/dpr"
-              className="min-h-[44px] inline-flex items-center gap-2 px-4 py-2 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-bold rounded-lg shadow-xs transition-colors"
+              className="min-h-[44px] inline-flex items-center gap-2 px-4 py-2 bg-[#0F6B68] hover:bg-[#135A72] text-white text-xs font-bold rounded-lg shadow-xs transition-colors"
             >
               <FileText className="w-3.5 h-3.5" />
               <span>DPR / Time Agent</span>
@@ -207,9 +207,9 @@ export default function FieldPage() {
         emptyDescription="Activities assigned to your discipline crew for today will appear here for status reporting. Check your assigned package or reset filters to view all tasks."
       >
         {/* Ingestion Console */}
-        <div className="bg-white border border-[#D9DEE5] rounded-lg overflow-hidden">
+        <div className="bg-white border border-[#D8E2EA] rounded-lg overflow-hidden">
           {/* Method Tabs */}
-          <div className="flex border-b border-[#D9DEE5] bg-[#F7F8FA] overflow-x-auto">
+          <div className="flex border-b border-[#D8E2EA] bg-[#F3F6FA] overflow-x-auto">
             {[
               { id: 'quick', label: 'One-Click Quick Field Update', icon: Send },
               { id: 'dpr', label: 'Daily Progress Report (DPR PDF)', icon: FileText },
@@ -221,8 +221,8 @@ export default function FieldPage() {
                 onClick={() => setActiveTab(tab.id as any)}
                 className={`flex items-center gap-2 px-4 py-3 text-xs font-medium border-b-2 whitespace-nowrap transition-colors ${
                   activeTab === tab.id
-                    ? 'border-[#176B87] text-[#176B87] bg-white'
-                    : 'border-transparent text-[#596579] hover:text-[#172033] hover:bg-[#F1F3F5]'
+                    ? 'border-[#0F6B68] text-[#0F6B68] bg-white'
+                    : 'border-transparent text-[#526779] hover:text-[#142C3F] hover:bg-[#EAF0F5]'
                 }`}
               >
                 <tab.icon className="w-3.5 h-3.5" />
@@ -234,10 +234,10 @@ export default function FieldPage() {
           <div className="p-4 md:p-6 space-y-4">
             <div>
               <div className="flex items-center justify-between mb-2">
-                <label className="text-xs font-bold uppercase tracking-wider text-[#172033]">
+                <label className="text-xs font-bold uppercase tracking-wider text-[#142C3F]">
                   Field Statement / Site Diary Extract
                 </label>
-                <div className="flex items-center gap-2 text-xs text-[#596579]">
+                <div className="flex items-center gap-2 text-xs text-[#526779]">
                   <span className="text-[11px]">Load Sample:</span>
                   <button
                     onClick={() =>
@@ -245,7 +245,7 @@ export default function FieldPage() {
                         'Line 24-XX spool erection completed today. 12 spools erected with crane at Area Unit A.'
                       )
                     }
-                    className="text-[11px] text-[#176B87] hover:underline"
+                    className="text-[11px] text-[#0F6B68] hover:underline"
                   >
                     [Piping Erection]
                   </button>
@@ -255,7 +255,7 @@ export default function FieldPage() {
                         'Line 24 spool welding completed 8 joints today at Unit A header.'
                       )
                     }
-                    className="text-[11px] text-[#176B87] hover:underline"
+                    className="text-[11px] text-[#0F6B68] hover:underline"
                   >
                     [Welding]
                   </button>
@@ -265,7 +265,7 @@ export default function FieldPage() {
                         'Cable ladder tray installation done 45 meters from substation to compressor bay.'
                       )
                     }
-                    className="text-[11px] text-[#176B87] hover:underline"
+                    className="text-[11px] text-[#0F6B68] hover:underline"
                   >
                     [Cable Tray]
                   </button>
@@ -283,19 +283,19 @@ export default function FieldPage() {
                     : "Enter site execution update (discipline, activity description, quantities, area, line)..."
                 }
                 rows={3}
-                className="w-full p-3 text-xs bg-[#F7F8FA] border border-[#D9DEE5] rounded-md focus:border-[#176B87] focus:bg-white text-[#172033] outline-none transition-colors"
+                className="w-full p-3 text-xs bg-[#F3F6FA] border border-[#D8E2EA] rounded-md focus:border-[#0F6B68] focus:bg-white text-[#142C3F] outline-none transition-colors"
               />
             </div>
 
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2">
-              <div className="text-[11px] text-[#596579] font-mono">
+              <div className="text-[11px] text-[#526779] font-mono">
                 Extracted Fields: <strong>Discipline</strong> → <strong>Asset Tag</strong> → <strong>Action</strong> → <strong>Quantity</strong>
               </div>
 
               <button
                 onClick={handleIngest}
                 disabled={isSubmitting}
-                className="w-full sm:w-auto min-h-[44px] inline-flex items-center justify-center gap-2 px-4 py-2 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-semibold rounded-md shadow-xs transition-colors disabled:opacity-50"
+                className="w-full sm:w-auto min-h-[44px] inline-flex items-center justify-center gap-2 px-4 py-2 bg-[#0F6B68] hover:bg-[#135A72] text-white text-xs font-semibold rounded-md shadow-xs transition-colors disabled:opacity-50"
               >
                 <CheckSquare className="w-3.5 h-3.5" />
                 {isSubmitting ? 'Extracting & Matching...' : 'Process Field Update & Match Activity'}
@@ -307,12 +307,12 @@ export default function FieldPage() {
         {/* Recent Ingested Events Section */}
         <div className="space-y-3">
           <div className="flex items-center justify-between">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-[#596579]">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-[#526779]">
               Captured Field Execution Events ({filteredEvents.length})
             </h3>
             <Link
               href="/matching"
-              className="text-xs text-[#176B87] hover:underline font-medium inline-flex items-center gap-1"
+              className="text-xs text-[#0F6B68] hover:underline font-medium inline-flex items-center gap-1"
             >
               Open Planner Review Queue <ArrowRight className="w-3 h-3" />
             </Link>
@@ -325,7 +325,7 @@ export default function FieldPage() {
             totalResults={filteredEvents.length}
           />
 
-          <div className="overflow-x-auto border border-[#D9DEE5] rounded-lg">
+          <div className="overflow-x-auto border border-[#D8E2EA] rounded-lg">
             <div className="min-w-[700px]">
               <DataTable
                 data={filteredEvents}

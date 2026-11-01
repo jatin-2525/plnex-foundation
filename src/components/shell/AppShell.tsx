@@ -77,13 +77,13 @@ export function AppShell({ children }: AppShellProps) {
   // While initializing authentication from storage, show clean minimal loader
   if (!isAuthReady) {
     return (
-      <div className="min-h-screen bg-[#F7F8FA] flex items-center justify-center p-4">
+      <div className="min-h-screen bg-[#F3F6FA] flex items-center justify-center p-4">
         <div className="flex flex-col items-center gap-2">
-          <div className="w-9 h-9 rounded bg-[#176B87] text-white flex items-center justify-center font-bold text-sm">
+          <div className="w-9 h-9 rounded bg-[#0F6B68] text-white flex items-center justify-center font-bold text-sm">
             PX
           </div>
-          <div className="flex items-center gap-2 text-xs font-mono text-[#596579]">
-            <Loader2 className="w-3.5 h-3.5 animate-spin text-[#176B87]" />
+          <div className="flex items-center gap-2 text-xs font-mono text-[#526779]">
+            <Loader2 className="w-3.5 h-3.5 animate-spin text-[#0F6B68]" />
             <span>Initializing PLnEX security gateway...</span>
           </div>
         </div>
@@ -94,7 +94,7 @@ export function AppShell({ children }: AppShellProps) {
   // Dedicated clean layout for authentication pages
   if (isAuthRoute) {
     return (
-      <div className="min-h-screen bg-[#F7F8FA] text-[#172033] flex flex-col font-sans">
+      <div className="min-h-screen bg-[#F3F6FA] text-[#142C3F] flex flex-col font-sans">
         <ToastContainer />
         <main className="flex-1 flex flex-col items-center justify-center p-4">
           {children}
@@ -106,7 +106,7 @@ export function AppShell({ children }: AppShellProps) {
   // Root route renders its own role redirection logic cleanly
   if (isRootRoute) {
     return (
-      <div className="min-h-screen bg-[#F7F8FA] text-[#172033] flex flex-col font-sans">
+      <div className="min-h-screen bg-[#F3F6FA] text-[#142C3F] flex flex-col font-sans">
         <ToastContainer />
         {children}
       </div>
@@ -116,7 +116,7 @@ export function AppShell({ children }: AppShellProps) {
   // Access denied page layout
   if (isAccessDeniedRoute) {
     return (
-      <div className="min-h-screen bg-[#F7F8FA] text-[#172033] flex flex-col font-sans">
+      <div className="min-h-screen bg-[#F3F6FA] text-[#142C3F] flex flex-col font-sans">
         {isAuthenticated && (
           <TopHeader onMobileToggle={() => setMobileMenuOpen(!mobileMenuOpen)} />
         )}
@@ -131,9 +131,9 @@ export function AppShell({ children }: AppShellProps) {
   // If not authenticated on a protected route, hold rendering while redirecting to /login
   if (!isAuthenticated || !userSession) {
     return (
-      <div className="min-h-screen bg-[#F7F8FA] flex items-center justify-center p-4">
-        <div className="flex flex-col items-center gap-2 text-xs font-mono text-[#596579]">
-          <Loader2 className="w-4 h-4 animate-spin text-[#176B87]" />
+      <div className="min-h-screen bg-[#F3F6FA] flex items-center justify-center p-4">
+        <div className="flex flex-col items-center gap-2 text-xs font-mono text-[#526779]">
+          <Loader2 className="w-4 h-4 animate-spin text-[#0F6B68]" />
           <span>Restricted resource: redirecting to sign in...</span>
         </div>
       </div>
@@ -143,9 +143,9 @@ export function AppShell({ children }: AppShellProps) {
   // If user role is not allowed on this route, hold rendering while redirecting to /access-denied
   if (!canAccessRoute(userSession.role, pathname)) {
     return (
-      <div className="min-h-screen bg-[#F7F8FA] flex items-center justify-center p-4">
-        <div className="flex flex-col items-center gap-2 text-xs font-mono text-[#B5473C]">
-          <Loader2 className="w-4 h-4 animate-spin text-[#B5473C]" />
+      <div className="min-h-screen bg-[#F3F6FA] flex items-center justify-center p-4">
+        <div className="flex flex-col items-center gap-2 text-xs font-mono text-[#A24335]">
+          <Loader2 className="w-4 h-4 animate-spin text-[#A24335]" />
           <span>Access verification: redirecting to security gateway...</span>
         </div>
       </div>
@@ -154,7 +154,7 @@ export function AppShell({ children }: AppShellProps) {
 
   // Fully authenticated and authorized workspace shell
   return (
-    <div className="min-h-screen bg-[#F7F8FA] text-[#172033] flex flex-col font-sans overflow-x-hidden">
+    <div className="min-h-screen bg-[#F3F6FA] text-[#142C3F] flex flex-col font-sans overflow-x-hidden">
       {/* Top Header */}
       <TopHeader
         onToggleSidebar={() => {
@@ -188,7 +188,7 @@ export function AppShell({ children }: AppShellProps) {
       {/* Mobile Backdrop */}
       {mobileMenuOpen && (
         <div
-          className="fixed inset-0 bg-[#172033]/40 z-20 md:hidden transition-opacity"
+          className="fixed inset-0 bg-[#142C3F]/40 z-20 md:hidden transition-opacity"
           onClick={() => setMobileMenuOpen(false)}
           aria-hidden="true"
         />

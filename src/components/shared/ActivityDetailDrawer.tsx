@@ -131,17 +131,17 @@ export function ActivityDetailDrawer({
   const getDisciplineTheme = (disc: string) => {
     switch (disc) {
       case 'Piping':
-        return { bg: 'bg-[#EDF5F8]', text: 'text-[#176B87]', border: 'border-[#B3CBE0]' };
+        return { bg: 'bg-[#EAF0F5]', text: 'text-[#0F6B68]', border: 'border-[#D8E2EA]' };
       case 'Civil':
-        return { bg: 'bg-[#FDF6ED]', text: 'text-[#8C5311]', border: 'border-[#F0D4A6]' };
+        return { bg: 'bg-[#FFF1D3]', text: 'text-[#8C5311]', border: 'border-[#F0D4A6]' };
       case 'Mechanical':
-        return { bg: 'bg-[#EDF5F8]', text: 'text-[#3B6EA8]', border: 'border-[#B3CBE0]' };
+        return { bg: 'bg-[#EAF0F5]', text: 'text-[#3B6EA8]', border: 'border-[#D8E2EA]' };
       case 'Electrical':
-        return { bg: 'bg-[#EDF7F2]', text: 'text-[#2E7D5B]', border: 'border-[#B8DCC9]' };
+        return { bg: 'bg-[#E4F4EC]', text: 'text-[#2E7D5B]', border: 'border-[#B8DCC9]' };
       case 'Instrumentation':
-        return { bg: 'bg-[#FBEFEE]', text: 'text-[#B5473C]', border: 'border-[#E4B0AA]' };
+        return { bg: 'bg-[#FCE8E4]', text: 'text-[#A24335]', border: 'border-[#E4B0AA]' };
       default:
-        return { bg: 'bg-[#F1F3F5]', text: 'text-[#596579]', border: 'border-[#D9DEE5]' };
+        return { bg: 'bg-[#EAF0F5]', text: 'text-[#526779]', border: 'border-[#D8E2EA]' };
     }
   };
 
@@ -195,31 +195,31 @@ export function ActivityDetailDrawer({
     <div className="fixed inset-0 z-50 overflow-hidden" role="dialog" aria-modal="true">
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-[#172033]/50"
+        className="fixed inset-0 bg-[#142C3F]/50"
         onClick={handleClose}
         aria-hidden="true"
       />
 
       {/* Container: Fullscreen sheet on mobile, slide-over drawer (420–520px) on desktop */}
       <div className="fixed inset-0 sm:inset-y-0 sm:right-0 sm:left-auto max-w-full flex z-50">
-        <div className="w-full sm:w-[480px] sm:max-w-[500px] h-full bg-white sm:border-l border-[#D9DEE5] shadow-xl flex flex-col">
+        <div className="w-full sm:w-[480px] sm:max-w-[500px] h-full bg-white sm:border-l border-[#D8E2EA] shadow-xl flex flex-col">
           
           {/* =========================================================================
               HEADER:
               Focused, non-dashboard header with Activity ID, Status, Name, and Quick Context
               ========================================================================= */}
-          <div className="px-4 sm:px-6 py-4 border-b border-[#D9DEE5] bg-white flex flex-col gap-2 flex-shrink-0">
+          <div className="px-4 sm:px-6 py-4 border-b border-[#D8E2EA] bg-white flex flex-col gap-2 flex-shrink-0">
             <div className="flex items-start justify-between gap-3">
               <div className="space-y-2 min-w-0 flex-1">
                 <div className="flex items-center gap-2 flex-wrap">
                   {/* Activity ID */}
-                  <span className="font-mono font-bold text-sm text-[#176B87] tracking-tight bg-[#EDF5F8] px-2 py-0.5 rounded border border-[#B3CBE0]">
+                  <span className="font-mono font-bold text-sm text-[#0F6B68] tracking-tight bg-[#EAF0F5] px-2 py-0.5 rounded border border-[#D8E2EA]">
                     {activity.id}
                   </span>
 
                   {/* Critical Path Badge */}
                   {activity.isCritical && (
-                    <span className="text-[11px] font-semibold px-2 py-0.5 rounded bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA] uppercase tracking-wider inline-flex items-center gap-1">
+                    <span className="text-[11px] font-semibold px-2 py-0.5 rounded bg-[#FCE8E4] text-[#A24335] border border-[#E4B0AA] uppercase tracking-wider inline-flex items-center gap-1">
                       <AlertTriangle className="w-3 h-3" />
                       <span>Critical (Float: 0d)</span>
                     </span>
@@ -237,7 +237,7 @@ export function ActivityDetailDrawer({
                 </div>
 
                 {/* Activity Name */}
-                <h2 className="text-lg font-semibold text-[#172033] leading-snug line-clamp-2">
+                <h2 className="text-lg font-semibold text-[#142C3F] leading-snug line-clamp-2">
                   {activity.name}
                 </h2>
               </div>
@@ -246,7 +246,7 @@ export function ActivityDetailDrawer({
               <button
                 type="button"
                 onClick={handleClose}
-                className="min-w-[44px] min-h-[44px] flex items-center justify-center p-2 text-[#596579] hover:text-[#172033] hover:bg-[#F1F3F5] rounded-lg transition-colors -mr-1 flex-shrink-0 cursor-pointer"
+                className="min-w-[44px] min-h-[44px] flex items-center justify-center p-2 text-[#526779] hover:text-[#142C3F] hover:bg-[#EAF0F5] rounded-lg transition-colors -mr-1 flex-shrink-0 cursor-pointer"
                 aria-label="Close activity detail drawer"
               >
                 <X className="w-5 h-5" />
@@ -254,26 +254,26 @@ export function ActivityDetailDrawer({
             </div>
 
             {/* Quick Context Subhead: WBS, Area, Line */}
-            <div className="flex items-center gap-2 text-[13px] text-[#596579] font-mono flex-wrap pt-0.5">
-              <span>WBS: <strong className="text-[#172033] font-semibold">{activity.wbs}</strong> ({activity.wbsLevel})</span>
+            <div className="flex items-center gap-2 text-[13px] text-[#526779] font-mono flex-wrap pt-0.5">
+              <span>WBS: <strong className="text-[#142C3F] font-semibold">{activity.wbs}</strong> ({activity.wbsLevel})</span>
               <span>•</span>
-              <span className="truncate">Area: <strong className="text-[#172033] font-semibold">{activity.area}</strong></span>
+              <span className="truncate">Area: <strong className="text-[#142C3F] font-semibold">{activity.area}</strong></span>
               {activity.line && (
                 <>
                   <span>•</span>
-                  <span>Line: <strong className="text-[#172033] font-semibold">{activity.line}</strong></span>
+                  <span>Line: <strong className="text-[#142C3F] font-semibold">{activity.line}</strong></span>
                 </>
               )}
             </div>
 
             {/* Quick Summary Pill Strip */}
-            <div className="flex items-center justify-between text-[11px] bg-[#F7F8FA] border border-[#D9DEE5] rounded px-3 py-1 text-[#596579] font-mono mt-0.5">
+            <div className="flex items-center justify-between text-[11px] bg-[#F3F6FA] border border-[#D8E2EA] rounded px-3 py-1 text-[#526779] font-mono mt-0.5">
               <span>
-                Progress: <strong className="text-[#172033]">{activity.actualProgress}%</strong> (Plan: {activity.plannedProgress}%)
+                Progress: <strong className="text-[#142C3F]">{activity.actualProgress}%</strong> (Plan: {activity.plannedProgress}%)
               </span>
               <span>
                 {activity.delayDays > 0 ? (
-                  <span className="text-[#B5473C] font-semibold">+{activity.delayDays}d Delay</span>
+                  <span className="text-[#A24335] font-semibold">+{activity.delayDays}d Delay</span>
                 ) : (
                   <span className="text-[#2E7D5B] font-semibold">On Schedule</span>
                 )}
@@ -285,7 +285,7 @@ export function ActivityDetailDrawer({
               NAVIGATION TABS:
               Overview | Progress | Execution | Evidence | Dependencies | History
               ========================================================================= */}
-          <div className="px-4 border-b border-[#D9DEE5] bg-[#F7F8FA] flex items-center gap-1 overflow-x-auto scrollbar-none flex-shrink-0">
+          <div className="px-4 border-b border-[#D8E2EA] bg-[#F3F6FA] flex items-center gap-1 overflow-x-auto scrollbar-none flex-shrink-0">
             {TABS.map((tab) => {
               const Icon = tab.icon;
               const isActive = activeTab === tab.id;
@@ -296,8 +296,8 @@ export function ActivityDetailDrawer({
                   onClick={() => setActiveTab(tab.id)}
                   className={`min-h-[44px] flex items-center gap-2 py-2.5 px-3 text-xs font-semibold whitespace-nowrap border-b-2 transition-colors cursor-pointer ${
                     isActive
-                      ? 'border-[#176B87] text-[#176B87] bg-white font-bold'
-                      : 'border-transparent text-[#596579] hover:text-[#172033] hover:bg-[#F1F3F5]'
+                      ? 'border-[#0F6B68] text-[#0F6B68] bg-white font-bold'
+                      : 'border-transparent text-[#526779] hover:text-[#142C3F] hover:bg-[#EAF0F5]'
                   }`}
                 >
                   <Icon className="w-3.5 h-3.5" />
@@ -306,8 +306,8 @@ export function ActivityDetailDrawer({
                     <span
                       className={`ml-0.5 px-1.5 py-0.5 rounded-full text-[11px] font-mono ${
                         isActive
-                          ? 'bg-[#176B87] text-white'
-                          : 'bg-[#D9DEE5] text-[#596579]'
+                          ? 'bg-[#0F6B68] text-white'
+                          : 'bg-[#D8E2EA] text-[#526779]'
                       }`}
                     >
                       {tab.count}
@@ -321,7 +321,7 @@ export function ActivityDetailDrawer({
           {/* =========================================================================
               BODY CONTENT: Progressive Disclosure within 420–520px Width
               ========================================================================= */}
-          <div className="flex-1 px-4 sm:px-6 py-4 overflow-y-auto text-[#172033] text-sm space-y-4">
+          <div className="flex-1 px-4 sm:px-6 py-4 overflow-y-auto text-[#142C3F] text-sm space-y-4">
             
             {/* ---------------------------------------------------------------------
                 SECTION 1: OVERVIEW
@@ -331,44 +331,44 @@ export function ActivityDetailDrawer({
             {activeTab === 'overview' && (
               <div className="space-y-4">
                 {/* Primary: Scope Description */}
-                <div className="p-4 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg space-y-2">
-                  <span className="text-[11px] uppercase font-semibold text-[#596579] tracking-wider block">
+                <div className="p-4 bg-[#F3F6FA] border border-[#D8E2EA] rounded-lg space-y-2">
+                  <span className="text-[11px] uppercase font-semibold text-[#526779] tracking-wider block">
                     Scope Description
                   </span>
-                  <p className="text-sm text-[#172033] leading-relaxed">
+                  <p className="text-sm text-[#142C3F] leading-relaxed">
                     {activity.description || 'No detailed scope description registered.'}
                   </p>
                 </div>
 
                 {/* Primary: Key Work Parameters */}
-                <div className="p-4 bg-white border border-[#D9DEE5] rounded-lg space-y-2">
-                  <span className="text-[11px] uppercase font-semibold text-[#596579] tracking-wider block">
+                <div className="p-4 bg-white border border-[#D8E2EA] rounded-lg space-y-2">
+                  <span className="text-[11px] uppercase font-semibold text-[#526779] tracking-wider block">
                     Execution Classification
                   </span>
                   <div className="space-y-2 text-sm">
-                    <div className="flex justify-between items-center py-1 border-b border-[#D9DEE5]/60">
-                      <span className="text-[#596579]">Engineering Discipline:</span>
+                    <div className="flex justify-between items-center py-1 border-b border-[#D8E2EA]/60">
+                      <span className="text-[#526779]">Engineering Discipline:</span>
                       <span className={`font-semibold px-2 py-0.5 rounded text-[11px] border ${discTheme.bg} ${discTheme.text} ${discTheme.border}`}>
                         {activity.discipline}
                       </span>
                     </div>
-                    <div className="flex justify-between items-center py-1 border-b border-[#D9DEE5]/60">
-                      <span className="text-[#596579]">Target Quantity:</span>
-                      <strong className="font-mono text-[#172033]">
+                    <div className="flex justify-between items-center py-1 border-b border-[#D8E2EA]/60">
+                      <span className="text-[#526779]">Target Quantity:</span>
+                      <strong className="font-mono text-[#142C3F]">
                         {activity.plannedQuantity} {activity.unit}
                       </strong>
                     </div>
-                    <div className="flex justify-between items-center py-1 border-b border-[#D9DEE5]/60">
-                      <span className="text-[#596579]">Work Breakdown (WBS):</span>
-                      <strong className="font-mono text-[#176B87]">{activity.wbs}</strong>
+                    <div className="flex justify-between items-center py-1 border-b border-[#D8E2EA]/60">
+                      <span className="text-[#526779]">Work Breakdown (WBS):</span>
+                      <strong className="font-mono text-[#0F6B68]">{activity.wbs}</strong>
                     </div>
-                    <div className="flex justify-between items-center py-1 border-b border-[#D9DEE5]/60">
-                      <span className="text-[#596579]">Work Area &amp; Grid:</span>
-                      <span className="text-[#172033] font-medium">{activity.area}</span>
+                    <div className="flex justify-between items-center py-1 border-b border-[#D8E2EA]/60">
+                      <span className="text-[#526779]">Work Area &amp; Grid:</span>
+                      <span className="text-[#142C3F] font-medium">{activity.area}</span>
                     </div>
                     <div className="flex justify-between items-center py-1">
-                      <span className="text-[#596579]">Assigned Field Lead:</span>
-                      <span className="font-semibold text-[#176B87] flex items-center gap-1">
+                      <span className="text-[#526779]">Assigned Field Lead:</span>
+                      <span className="font-semibold text-[#0F6B68] flex items-center gap-1">
                         <HardHat className="w-3 h-3" />
                         {activity.assignedEngineer}
                       </span>
@@ -377,48 +377,48 @@ export function ActivityDetailDrawer({
                 </div>
 
                 {/* Progressive Disclosure 1: Full L1–L6 WBS Hierarchy (Expandable) */}
-                <div className="border border-[#D9DEE5] rounded-lg bg-white overflow-hidden">
+                <div className="border border-[#D8E2EA] rounded-lg bg-white overflow-hidden">
                   <button
                     type="button"
                     onClick={() => setShowFullWBS(!showFullWBS)}
-                    className="w-full px-4 py-2 bg-[#F7F8FA] hover:bg-[#F1F3F5] text-left flex items-center justify-between text-xs font-semibold text-[#172033] transition-colors"
+                    className="w-full px-4 py-2 bg-[#F3F6FA] hover:bg-[#EAF0F5] text-left flex items-center justify-between text-xs font-semibold text-[#142C3F] transition-colors"
                   >
                     <span className="flex items-center gap-2">
-                      <Layers className="w-3.5 h-3.5 text-[#176B87]" />
+                      <Layers className="w-3.5 h-3.5 text-[#0F6B68]" />
                       <span>Full WBS Hierarchy (L1–L6)</span>
                     </span>
-                    <span className="text-[11px] text-[#596579] flex items-center gap-1">
+                    <span className="text-[11px] text-[#526779] flex items-center gap-1">
                       <span>{showFullWBS ? 'Collapse' : 'Expand (6 Levels)'}</span>
                       {showFullWBS ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
                     </span>
                   </button>
 
                   {showFullWBS && (
-                    <div className="p-3 space-y-2 border-t border-[#D9DEE5] bg-white divide-y divide-[#D9DEE5]/60">
+                    <div className="p-3 space-y-2 border-t border-[#D8E2EA] bg-white divide-y divide-[#D8E2EA]/60">
                       {hierarchy.map((step) => {
                         const isTarget = step.isCurrent;
                         return (
                           <div
                             key={step.level}
                             className={`pt-2 first:pt-0 pb-2 last:pb-0 flex items-start gap-2 ${
-                              isTarget ? 'bg-[#EDF5F8]/50 -mx-1 px-1.5 rounded' : ''
+                              isTarget ? 'bg-[#EAF0F5]/50 -mx-1 px-1.5 rounded' : ''
                             }`}
                           >
                             <span
                               className={`font-mono text-[11px] font-semibold px-1.5 py-0.5 rounded border flex-shrink-0 ${
                                 isTarget
-                                  ? 'bg-[#176B87] text-white border-[#176B87]'
-                                  : 'bg-[#F1F3F5] text-[#596579] border-[#D9DEE5]'
+                                  ? 'bg-[#0F6B68] text-white border-[#0F6B68]'
+                                  : 'bg-[#EAF0F5] text-[#526779] border-[#D8E2EA]'
                               }`}
                             >
                               {step.level}
                             </span>
                             <div className="flex-1 min-w-0 text-[11px]">
                               <div className="flex justify-between text-[#7B8798]">
-                                <span className="font-mono font-semibold text-[#172033]">{step.code}</span>
+                                <span className="font-mono font-semibold text-[#142C3F]">{step.code}</span>
                                 <span className="uppercase text-[11px] font-semibold">{step.category}</span>
                               </div>
-                              <p className={`mt-0.5 truncate ${isTarget ? 'font-bold text-[#176B87]' : 'text-[#596579]'}`}>
+                              <p className={`mt-0.5 truncate ${isTarget ? 'font-bold text-[#0F6B68]' : 'text-[#526779]'}`}>
                                 {step.name}
                               </p>
                             </div>
@@ -430,36 +430,36 @@ export function ActivityDetailDrawer({
                 </div>
 
                 {/* Progressive Disclosure 2: Project Metadata (Expandable) */}
-                <div className="border border-[#D9DEE5] rounded-lg bg-white overflow-hidden">
+                <div className="border border-[#D8E2EA] rounded-lg bg-white overflow-hidden">
                   <button
                     type="button"
                     onClick={() => setShowProjectMetadata(!showProjectMetadata)}
-                    className="w-full px-4 py-2 bg-[#F7F8FA] hover:bg-[#F1F3F5] text-left flex items-center justify-between text-xs font-semibold text-[#172033] transition-colors"
+                    className="w-full px-4 py-2 bg-[#F3F6FA] hover:bg-[#EAF0F5] text-left flex items-center justify-between text-xs font-semibold text-[#142C3F] transition-colors"
                   >
                     <span>Project &amp; Schedule Baseline Reference</span>
-                    <span className="text-[11px] text-[#596579] flex items-center gap-1">
+                    <span className="text-[11px] text-[#526779] flex items-center gap-1">
                       <span>{showProjectMetadata ? 'Collapse' : 'Expand'}</span>
                       {showProjectMetadata ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
                     </span>
                   </button>
 
                   {showProjectMetadata && (
-                    <div className="p-3 border-t border-[#D9DEE5] space-y-2 text-xs bg-white">
+                    <div className="p-3 border-t border-[#D8E2EA] space-y-2 text-xs bg-white">
                       <div className="flex justify-between">
-                        <span className="text-[#596579]">Project Name:</span>
-                        <strong className="text-[#172033]">{projectName}</strong>
+                        <span className="text-[#526779]">Project Name:</span>
+                        <strong className="text-[#142C3F]">{projectName}</strong>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-[#596579]">Project Code:</span>
-                        <span className="font-mono text-[#176B87]">{projectCode}</span>
+                        <span className="text-[#526779]">Project Code:</span>
+                        <span className="font-mono text-[#0F6B68]">{projectCode}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-[#596579]">Field Location:</span>
-                        <span className="text-[#172033]">{location}</span>
+                        <span className="text-[#526779]">Field Location:</span>
+                        <span className="text-[#142C3F]">{location}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-[#596579]">Baseline Spec:</span>
-                        <span className="font-mono text-[#596579]">Rev 3.2 (P6 XML)</span>
+                        <span className="text-[#526779]">Baseline Spec:</span>
+                        <span className="font-mono text-[#526779]">Rev 3.2 (P6 XML)</span>
                       </div>
                     </div>
                   )}
@@ -475,11 +475,11 @@ export function ActivityDetailDrawer({
             {(activeTab === 'progress' || activeTab === 'plan-vs-actual') && (
               <div className="space-y-4">
                 {/* Primary Progress Card */}
-                <div className="p-4 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg space-y-3">
+                <div className="p-4 bg-[#F3F6FA] border border-[#D8E2EA] rounded-lg space-y-3">
                   <div className="flex items-center justify-between">
                     <div>
                       <div className="flex items-center gap-2">
-                        <span className="text-[11px] uppercase font-semibold text-[#596579] tracking-wider block">
+                        <span className="text-[11px] uppercase font-semibold text-[#526779] tracking-wider block">
                           Physical Progress
                         </span>
                         <WhyButton
@@ -488,10 +488,10 @@ export function ActivityDetailDrawer({
                         />
                       </div>
                       <div className="flex items-baseline gap-2 mt-0.5">
-                        <span className="text-[28px] font-bold text-[#172033] font-mono leading-none">
+                        <span className="text-[28px] font-bold text-[#142C3F] font-mono leading-none">
                           {activity.actualProgress}%
                         </span>
-                        <span className="text-xs text-[#596579] font-mono">
+                        <span className="text-xs text-[#526779] font-mono">
                           Planned: <strong className="font-semibold">{activity.plannedProgress}%</strong>
                         </span>
                       </div>
@@ -506,7 +506,7 @@ export function ActivityDetailDrawer({
                         />
                       </div>
                       {activity.delayDays > 0 && (
-                        <span className="text-[11px] font-mono font-semibold text-[#B5473C] block mt-0.5">
+                        <span className="text-[11px] font-mono font-semibold text-[#A24335] block mt-0.5">
                           +{activity.delayDays}d Slippage
                         </span>
                       )}
@@ -521,32 +521,32 @@ export function ActivityDetailDrawer({
                     showLabels={false}
                   />
 
-                  <div className="flex justify-between text-[11px] text-[#596579] font-mono pt-1 border-t border-[#D9DEE5]">
+                  <div className="flex justify-between text-[11px] text-[#526779] font-mono pt-1 border-t border-[#D8E2EA]">
                     <span>Executed: <strong>{activity.actualQuantity}</strong> {activity.unit}</span>
                     <span>Target: <strong>{activity.plannedQuantity}</strong> {activity.unit}</span>
                   </div>
                 </div>
 
                 {/* Primary Milestone Dates Card */}
-                <div className="p-4 bg-white border border-[#D9DEE5] rounded-lg space-y-2">
-                  <span className="text-[11px] uppercase font-semibold text-[#596579] tracking-wider block">
+                <div className="p-4 bg-white border border-[#D8E2EA] rounded-lg space-y-2">
+                  <span className="text-[11px] uppercase font-semibold text-[#526779] tracking-wider block">
                     Schedule Dates &amp; Milestone Milestones
                   </span>
                   <div className="grid grid-cols-2 gap-3 text-xs">
-                    <div className="p-3 rounded bg-[#F7F8FA] border border-[#D9DEE5] space-y-1">
-                      <span className="text-[11px] uppercase font-semibold text-[#596579] block">Planned Start</span>
-                      <strong className="font-mono text-[#172033] block">{activity.plannedStart}</strong>
-                      <span className="text-[11px] uppercase font-semibold text-[#596579] block pt-1">Planned Finish</span>
-                      <strong className="font-mono text-[#172033] block">{activity.plannedFinish}</strong>
+                    <div className="p-3 rounded bg-[#F3F6FA] border border-[#D8E2EA] space-y-1">
+                      <span className="text-[11px] uppercase font-semibold text-[#526779] block">Planned Start</span>
+                      <strong className="font-mono text-[#142C3F] block">{activity.plannedStart}</strong>
+                      <span className="text-[11px] uppercase font-semibold text-[#526779] block pt-1">Planned Finish</span>
+                      <strong className="font-mono text-[#142C3F] block">{activity.plannedFinish}</strong>
                     </div>
 
-                    <div className="p-3 rounded bg-[#EDF5F8]/40 border border-[#B3CBE0] space-y-1">
-                      <span className="text-[11px] uppercase font-semibold text-[#176B87] block">Actual Start</span>
-                      <strong className="font-mono text-[#172033] block">
+                    <div className="p-3 rounded bg-[#EAF0F5]/40 border border-[#D8E2EA] space-y-1">
+                      <span className="text-[11px] uppercase font-semibold text-[#0F6B68] block">Actual Start</span>
+                      <strong className="font-mono text-[#142C3F] block">
                         {activity.actualStart || 'Pending Start'}
                       </strong>
-                      <span className="text-[11px] uppercase font-semibold text-[#176B87] block pt-1">Actual Finish</span>
-                      <strong className={`font-mono block ${activity.actualFinish ? 'text-[#2E7D5B]' : 'text-[#B5473C]'}`}>
+                      <span className="text-[11px] uppercase font-semibold text-[#0F6B68] block pt-1">Actual Finish</span>
+                      <strong className={`font-mono block ${activity.actualFinish ? 'text-[#2E7D5B]' : 'text-[#A24335]'}`}>
                         {activity.actualFinish || 'In Progress (Active)'}
                       </strong>
                     </div>
@@ -555,8 +555,8 @@ export function ActivityDetailDrawer({
 
                 {/* Variance Explanation if delayed */}
                 {activity.delayDays > 0 && (
-                  <div className="p-4 bg-[#FBEFEE] border border-[#E4B0AA] rounded-lg space-y-2 text-xs text-[#8A382F]">
-                    <div className="flex items-center gap-2 font-bold text-[#B5473C]">
+                  <div className="p-4 bg-[#FCE8E4] border border-[#E4B0AA] rounded-lg space-y-2 text-xs text-[#8A382F]">
+                    <div className="flex items-center gap-2 font-bold text-[#A24335]">
                       <AlertTriangle className="w-3.5 h-3.5 flex-shrink-0" />
                       <span>Variance Driving Cause</span>
                     </div>
@@ -568,25 +568,25 @@ export function ActivityDetailDrawer({
 
                 {/* Progressive Disclosure: Progress History */}
                 {activity.progressHistory && activity.progressHistory.length > 0 && (
-                  <div className="border border-[#D9DEE5] rounded-lg bg-white overflow-hidden">
+                  <div className="border border-[#D8E2EA] rounded-lg bg-white overflow-hidden">
                     <button
                       type="button"
                       onClick={() => setShowProgressHistory(!showProgressHistory)}
-                      className="w-full px-4 py-2 bg-[#F7F8FA] hover:bg-[#F1F3F5] text-left flex items-center justify-between text-xs font-semibold text-[#172033] transition-colors"
+                      className="w-full px-4 py-2 bg-[#F3F6FA] hover:bg-[#EAF0F5] text-left flex items-center justify-between text-xs font-semibold text-[#142C3F] transition-colors"
                     >
                       <span>Progress Checkpoints &amp; Historical Cutoffs</span>
-                      <span className="text-[11px] text-[#596579] flex items-center gap-1">
+                      <span className="text-[11px] text-[#526779] flex items-center gap-1">
                         <span>{showProgressHistory ? 'Collapse' : 'Expand'}</span>
                         {showProgressHistory ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
                       </span>
                     </button>
 
                     {showProgressHistory && (
-                      <div className="p-3 border-t border-[#D9DEE5] space-y-2 bg-white">
+                      <div className="p-3 border-t border-[#D8E2EA] space-y-2 bg-white">
                         {activity.progressHistory.map((item, idx) => (
-                          <div key={idx} className="flex justify-between items-center text-xs py-1 border-b last:border-b-0 border-[#D9DEE5]/60 font-mono">
-                            <span className="text-[#596579]">{item.formattedAsOf}</span>
-                            <span className="font-bold text-[#172033]">{item.progress}%</span>
+                          <div key={idx} className="flex justify-between items-center text-xs py-1 border-b last:border-b-0 border-[#D8E2EA]/60 font-mono">
+                            <span className="text-[#526779]">{item.formattedAsOf}</span>
+                            <span className="font-bold text-[#142C3F]">{item.progress}%</span>
                           </div>
                         ))}
                       </div>
@@ -604,26 +604,26 @@ export function ActivityDetailDrawer({
             {activeTab === 'execution' && (
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <span className="text-[11px] uppercase font-semibold text-[#596579] tracking-wider">
+                  <span className="text-[11px] uppercase font-semibold text-[#526779] tracking-wider">
                     Execution Events ({linkedExecutionEvents.length})
                   </span>
                   <Link
                     href="/execution"
-                    className="text-[11px] font-semibold text-[#176B87] hover:underline"
+                    className="text-[11px] font-semibold text-[#0F6B68] hover:underline"
                   >
                     Open Execution Intel →
                   </Link>
                 </div>
 
                 {linkedExecutionEvents.length === 0 ? (
-                  <div className="p-6 text-center border border-dashed border-[#D9DEE5] rounded-lg bg-[#F7F8FA] space-y-1">
-                    <p className="text-xs font-semibold text-[#172033]">No execution events matched yet</p>
-                    <p className="text-[11px] text-[#596579] max-w-xs mx-auto">
+                  <div className="p-6 text-center border border-dashed border-[#D8E2EA] rounded-lg bg-[#F3F6FA] space-y-1">
+                    <p className="text-xs font-semibold text-[#142C3F]">No execution events matched yet</p>
+                    <p className="text-[11px] text-[#526779] max-w-xs mx-auto">
                       Field reports submitted for this project will appear here after automated matching and verification.
                     </p>
                     <Link
                       href="/execution"
-                      className="inline-block mt-2 text-xs font-semibold text-[#176B87] hover:underline"
+                      className="inline-block mt-2 text-xs font-semibold text-[#0F6B68] hover:underline"
                     >
                       Open Execution Intel Feed →
                     </Link>
@@ -633,15 +633,15 @@ export function ActivityDetailDrawer({
                     {linkedExecutionEvents.map((evt) => (
                       <div
                         key={evt.id}
-                        className="p-4 bg-white border border-[#D9DEE5] rounded-lg space-y-2 shadow-2xs hover:border-[#176B87] transition-colors"
+                        className="p-4 bg-white border border-[#D8E2EA] rounded-lg space-y-2 shadow-2xs hover:border-[#0F6B68] transition-colors"
                       >
                         {/* Event ID, Source, Date */}
                         <div className="flex items-center justify-between flex-wrap gap-2">
                           <div className="flex items-center gap-2">
-                            <span className="font-mono font-bold text-xs text-[#176B87] bg-[#EDF5F8] px-2 py-0.5 rounded border border-[#B3CBE0]">
+                            <span className="font-mono font-bold text-xs text-[#0F6B68] bg-[#EAF0F5] px-2 py-0.5 rounded border border-[#D8E2EA]">
                               {evt.id}
                             </span>
-                            <span className="text-[11px] font-semibold px-1.5 py-0.5 rounded bg-[#F1F3F5] text-[#596579] uppercase">
+                            <span className="text-[11px] font-semibold px-1.5 py-0.5 rounded bg-[#EAF0F5] text-[#526779] uppercase">
                               {evt.source.replace('_', ' ')}
                             </span>
                           </div>
@@ -660,18 +660,18 @@ export function ActivityDetailDrawer({
                               title={`Why is match confidence ${evt.confidence}%?`}
                             />
                           </div>
-                          <span className="font-mono font-semibold text-[#172033]">
+                          <span className="font-mono font-semibold text-[#142C3F]">
                             {evt.quantity} {evt.unit}
                           </span>
                         </div>
 
                         {/* Raw observation statement */}
-                        <p className="p-3 bg-[#F7F8FA] rounded border border-[#D9DEE5] text-xs text-[#172033] leading-relaxed italic">
+                        <p className="p-3 bg-[#F3F6FA] rounded border border-[#D8E2EA] text-xs text-[#142C3F] leading-relaxed italic">
                           &quot;{evt.rawText}&quot;
                         </p>
 
                         {/* Progressive Disclosure: Why this match? */}
-                        <div className="pt-1 border-t border-[#D9DEE5]/60">
+                        <div className="pt-1 border-t border-[#D8E2EA]/60">
                           <button
                             type="button"
                             onClick={() =>
@@ -679,7 +679,7 @@ export function ActivityDetailDrawer({
                                 expandedMatchEventId === evt.id ? null : evt.id
                               )
                             }
-                            className="text-xs font-semibold text-[#176B87] hover:underline flex items-center justify-between w-full"
+                            className="text-xs font-semibold text-[#0F6B68] hover:underline flex items-center justify-between w-full"
                           >
                             <span>Why this match? (Match Factors)</span>
                             <span className="text-[11px]">
@@ -689,7 +689,7 @@ export function ActivityDetailDrawer({
 
                           {expandedMatchEventId === evt.id && (
                             <div className="mt-2 space-y-2 text-[11px]">
-                              <div className="p-3 bg-[#EDF7F2] border border-[#B8DCC9] rounded text-[#2E7D5B] space-y-1">
+                              <div className="p-3 bg-[#E4F4EC] border border-[#B8DCC9] rounded text-[#2E7D5B] space-y-1">
                                 <span className="font-semibold uppercase text-[11px] block">Verified Feature Matches:</span>
                                 <div className="space-y-0.5">
                                    <div className="flex items-center gap-2">
@@ -737,26 +737,26 @@ export function ActivityDetailDrawer({
              {activeTab === 'evidence' && (
                <div className="space-y-4">
                  <div className="flex items-center justify-between">
-                   <span className="text-[11px] uppercase font-semibold text-[#596579] tracking-wider">
+                   <span className="text-[11px] uppercase font-semibold text-[#526779] tracking-wider">
                      Evidence Records ({linkedEvidenceItems.length})
                    </span>
                    <Link
                      href={`/evidence?activityId=${encodeURIComponent(activity.id)}`}
-                     className="text-[11px] font-semibold text-[#176B87] hover:underline"
+                     className="text-[11px] font-semibold text-[#0F6B68] hover:underline"
                    >
                      Open Evidence &amp; Audit →
                    </Link>
                  </div>
 
                  {linkedEvidenceItems.length === 0 ? (
-                   <div className="p-6 text-center border border-dashed border-[#D9DEE5] rounded-lg bg-[#F7F8FA] space-y-1">
-                     <p className="text-xs font-semibold text-[#172033]">No physical evidence linked</p>
-                     <p className="text-[11px] text-[#596579] max-w-xs mx-auto">
+                   <div className="p-6 text-center border border-dashed border-[#D8E2EA] rounded-lg bg-[#F3F6FA] space-y-1">
+                     <p className="text-xs font-semibold text-[#142C3F]">No physical evidence linked</p>
+                     <p className="text-[11px] text-[#526779] max-w-xs mx-auto">
                        Photographic logs and QA/QC certificates linked to this activity will appear here after verification.
                      </p>
                      <Link
                        href={`/evidence?activityId=${encodeURIComponent(activity.id)}`}
-                       className="inline-block mt-2 text-xs font-semibold text-[#176B87] hover:underline"
+                       className="inline-block mt-2 text-xs font-semibold text-[#0F6B68] hover:underline"
                      >
                        Open Evidence &amp; Audit →
                      </Link>
@@ -766,15 +766,15 @@ export function ActivityDetailDrawer({
                      {linkedEvidenceItems.map((item) => (
                        <div
                          key={item.id}
-                         className="p-4 bg-white border border-[#D9DEE5] rounded-lg space-y-2 shadow-2xs hover:border-[#176B87] transition-colors"
+                         className="p-4 bg-white border border-[#D8E2EA] rounded-lg space-y-2 shadow-2xs hover:border-[#0F6B68] transition-colors"
                        >
                          <div className="flex items-start justify-between gap-2">
                            <div className="space-y-1 min-w-0">
                              <div className="flex items-center gap-2 flex-wrap">
-                               <span className="font-mono font-bold text-xs text-[#176B87] bg-[#EDF5F8] px-2 py-0.5 rounded border border-[#B3CBE0]">
+                               <span className="font-mono font-bold text-xs text-[#0F6B68] bg-[#EAF0F5] px-2 py-0.5 rounded border border-[#D8E2EA]">
                                  {item.id}
                                </span>
-                               <span className="text-[11px] font-semibold px-1.5 py-0.5 rounded bg-[#F1F3F5] text-[#596579] uppercase">
+                               <span className="text-[11px] font-semibold px-1.5 py-0.5 rounded bg-[#EAF0F5] text-[#526779] uppercase">
                                  {item.type}
                                </span>
                                <StatusBadge
@@ -782,8 +782,8 @@ export function ActivityDetailDrawer({
                                  size="xs"
                                />
                              </div>
-                             <h4 className="font-semibold text-sm text-[#172033] pt-0.5 truncate">{item.title}</h4>
-                             <span className="text-[11px] text-[#596579] font-mono block">
+                             <h4 className="font-semibold text-sm text-[#142C3F] pt-0.5 truncate">{item.title}</h4>
+                             <span className="text-[11px] text-[#526779] font-mono block">
                                {item.filename} ({item.fileSize})
                              </span>
                            </div>
@@ -791,7 +791,7 @@ export function ActivityDetailDrawer({
                            <button
                              type="button"
                              onClick={() => setPreviewEvidenceModal(item)}
-                             className="p-2 text-[#596579] hover:text-[#172033] border border-[#D9DEE5] rounded hover:bg-[#F1F3F5] transition-colors flex-shrink-0"
+                             className="p-2 text-[#526779] hover:text-[#142C3F] border border-[#D8E2EA] rounded hover:bg-[#EAF0F5] transition-colors flex-shrink-0"
                              title="Preview file"
                            >
                              <Eye className="w-4 h-4" />
@@ -799,13 +799,13 @@ export function ActivityDetailDrawer({
                          </div>
 
                          {item.notes && (
-                           <p className="text-xs text-[#596579] bg-[#F7F8FA] p-2 rounded border border-[#D9DEE5] italic">
+                           <p className="text-xs text-[#526779] bg-[#F3F6FA] p-2 rounded border border-[#D8E2EA] italic">
                              &quot;{item.notes}&quot;
                            </p>
                          )}
 
                          {/* Progressive Disclosure: Cryptographic & Telemetry Metadata */}
-                         <div className="pt-1 border-t border-[#D9DEE5]/60">
+                         <div className="pt-1 border-t border-[#D8E2EA]/60">
                            <button
                              type="button"
                              onClick={() =>
@@ -813,26 +813,26 @@ export function ActivityDetailDrawer({
                                  expandedEvidenceId === item.id ? null : item.id
                                )
                              }
-                             className="text-[11px] font-semibold text-[#176B87] hover:underline flex items-center justify-between w-full"
+                             className="text-[11px] font-semibold text-[#0F6B68] hover:underline flex items-center justify-between w-full"
                            >
                              <span>Technical Details</span>
                              <span>{expandedEvidenceId === item.id ? 'Hide ▲' : 'Expand ▼'}</span>
                            </button>
 
                            {expandedEvidenceId === item.id && (
-                             <div className="mt-2 p-2 bg-[#F7F8FA] rounded border border-[#D9DEE5] space-y-1 text-[11px] font-mono">
+                             <div className="mt-2 p-2 bg-[#F3F6FA] rounded border border-[#D8E2EA] space-y-1 text-[11px] font-mono">
                                <div className="flex justify-between">
-                                 <span className="text-[#596579]">Uploader:</span>
-                                 <span className="text-[#172033] font-semibold">{item.uploader}</span>
+                                 <span className="text-[#526779]">Uploader:</span>
+                                 <span className="text-[#142C3F] font-semibold">{item.uploader}</span>
                                </div>
                                <div className="flex justify-between">
-                                 <span className="text-[#596579]">Timestamp:</span>
-                                 <span className="text-[#172033]">{item.timestamp}</span>
+                                 <span className="text-[#526779]">Timestamp:</span>
+                                 <span className="text-[#142C3F]">{item.timestamp}</span>
                                </div>
                                {item.sha256Hash && (
-                                 <div className="pt-1 border-t border-[#D9DEE5]">
-                                   <span className="text-[#596579] block">Verification Hash (SHA-256):</span>
-                                   <span className="text-[#596579] break-all">{item.sha256Hash}</span>
+                                 <div className="pt-1 border-t border-[#D8E2EA]">
+                                   <span className="text-[#526779] block">Verification Hash (SHA-256):</span>
+                                   <span className="text-[#526779] break-all">{item.sha256Hash}</span>
                                  </div>
                                )}
                              </div>
@@ -853,18 +853,18 @@ export function ActivityDetailDrawer({
             {activeTab === 'dependencies' && (
               <div className="space-y-4">
                 {/* Float & Critical Path Summary */}
-                <div className="p-4 bg-[#FDF6ED] border border-[#F0D4A6] rounded-lg flex items-center justify-between text-xs">
+                <div className="p-4 bg-[#FFF1D3] border border-[#F0D4A6] rounded-lg flex items-center justify-between text-xs">
                   <div>
                     <span className="text-[11px] uppercase font-semibold text-[#8C5311] block">
                       CPM Float Analysis
                     </span>
-                    <strong className="text-sm font-semibold text-[#172033]">
+                    <strong className="text-sm font-semibold text-[#142C3F]">
                       Total Float: {impactData.totalFloatDays}d
                     </strong>
                   </div>
                   <div className="flex items-center gap-2">
                     <span className={`px-2 py-1 rounded text-xs font-semibold uppercase ${
-                      activity.isCritical ? 'bg-[#FBEFEE] text-[#B5473C]' : 'bg-[#EDF7F2] text-[#2E7D5B]'
+                      activity.isCritical ? 'bg-[#FCE8E4] text-[#A24335]' : 'bg-[#E4F4EC] text-[#2E7D5B]'
                     }`}>
                       {activity.isCritical ? 'Critical Path' : 'Non-Critical'}
                     </span>
@@ -877,12 +877,12 @@ export function ActivityDetailDrawer({
 
                 {/* Predecessors List */}
                 <div className="space-y-2">
-                  <span className="text-[11px] uppercase font-semibold text-[#596579] tracking-wider block">
+                  <span className="text-[11px] uppercase font-semibold text-[#526779] tracking-wider block">
                     Predecessors ({detailedPredecessors.length})
                   </span>
 
                   {detailedPredecessors.length === 0 ? (
-                    <p className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg text-xs text-[#7B8798] italic">
+                    <p className="p-3 bg-[#F3F6FA] border border-[#D8E2EA] rounded-lg text-xs text-[#7B8798] italic">
                       None (Project Inception Milestone)
                     </p>
                   ) : (
@@ -890,20 +890,20 @@ export function ActivityDetailDrawer({
                       {detailedPredecessors.map((pred) => (
                         <div
                           key={pred.id}
-                          className="p-3 bg-white border border-[#D9DEE5] rounded-lg space-y-2 hover:border-[#176B87] transition-colors"
+                          className="p-3 bg-white border border-[#D8E2EA] rounded-lg space-y-2 hover:border-[#0F6B68] transition-colors"
                         >
                           <div className="flex items-center justify-between">
                             <button
                               type="button"
                               onClick={() => openActivityDrawer(pred.id)}
-                              className="font-mono font-bold text-xs text-[#176B87] hover:underline"
+                              className="font-mono font-bold text-xs text-[#0F6B68] hover:underline"
                             >
                               {pred.id}
                             </button>
                             <StatusBadge status={pred.status as any} />
                           </div>
-                          <p className="text-xs font-semibold text-[#172033]">{pred.name}</p>
-                          <div className="flex justify-between text-[11px] text-[#596579] font-mono">
+                          <p className="text-xs font-semibold text-[#142C3F]">{pred.name}</p>
+                          <div className="flex justify-between text-[11px] text-[#526779] font-mono">
                             <span>{pred.type}</span>
                             <span>{pred.plannedPeriod}</span>
                           </div>
@@ -915,12 +915,12 @@ export function ActivityDetailDrawer({
 
                 {/* Successors List */}
                 <div className="space-y-2">
-                  <span className="text-[11px] uppercase font-semibold text-[#596579] tracking-wider block">
+                  <span className="text-[11px] uppercase font-semibold text-[#526779] tracking-wider block">
                     Successors ({detailedSuccessors.length})
                   </span>
 
                   {detailedSuccessors.length === 0 ? (
-                    <p className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg text-xs text-[#7B8798] italic">
+                    <p className="p-3 bg-[#F3F6FA] border border-[#D8E2EA] rounded-lg text-xs text-[#7B8798] italic">
                       None (Project Final Milestone)
                     </p>
                   ) : (
@@ -928,20 +928,20 @@ export function ActivityDetailDrawer({
                       {detailedSuccessors.map((succ) => (
                         <div
                           key={succ.id}
-                          className="p-3 bg-white border border-[#D9DEE5] rounded-lg space-y-2 hover:border-[#176B87] transition-colors"
+                          className="p-3 bg-white border border-[#D8E2EA] rounded-lg space-y-2 hover:border-[#0F6B68] transition-colors"
                         >
                           <div className="flex items-center justify-between">
                             <button
                               type="button"
                               onClick={() => openActivityDrawer(succ.id)}
-                              className="font-mono font-bold text-xs text-[#176B87] hover:underline"
+                              className="font-mono font-bold text-xs text-[#0F6B68] hover:underline"
                             >
                               {succ.id}
                             </button>
                             <StatusBadge status={succ.status as any} />
                           </div>
-                          <p className="text-xs font-semibold text-[#172033]">{succ.name}</p>
-                          <div className="flex justify-between text-[11px] text-[#596579] font-mono">
+                          <p className="text-xs font-semibold text-[#142C3F]">{succ.name}</p>
+                          <div className="flex justify-between text-[11px] text-[#526779] font-mono">
                             <span>{succ.type}</span>
                             <span>{succ.plannedPeriod}</span>
                           </div>
@@ -952,29 +952,29 @@ export function ActivityDetailDrawer({
                 </div>
 
                 {/* Progressive Disclosure: Schedule Impact & Mitigation Details */}
-                <div className="border border-[#D9DEE5] rounded-lg bg-white overflow-hidden">
+                <div className="border border-[#D8E2EA] rounded-lg bg-white overflow-hidden">
                   <button
                     type="button"
                     onClick={() => setShowFullLogic(!showFullLogic)}
-                    className="w-full px-4 py-2 bg-[#F7F8FA] hover:bg-[#F1F3F5] text-left flex items-center justify-between text-xs font-semibold text-[#172033] transition-colors"
+                    className="w-full px-4 py-2 bg-[#F3F6FA] hover:bg-[#EAF0F5] text-left flex items-center justify-between text-xs font-semibold text-[#142C3F] transition-colors"
                   >
                     <span>Schedule Impact &amp; Mitigation Notes</span>
-                    <span className="text-[11px] text-[#596579] flex items-center gap-1">
+                    <span className="text-[11px] text-[#526779] flex items-center gap-1">
                       <span>{showFullLogic ? 'Collapse' : 'Expand'}</span>
                       {showFullLogic ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
                     </span>
                   </button>
 
                   {showFullLogic && (
-                    <div className="p-3 border-t border-[#D9DEE5] space-y-2 text-xs bg-white">
-                      <p className="text-[#172033] leading-relaxed">
+                    <div className="p-3 border-t border-[#D8E2EA] space-y-2 text-xs bg-white">
+                      <p className="text-[#142C3F] leading-relaxed">
                         {impactData.projectedScheduleImpact}
                       </p>
-                      <div className="p-3 bg-[#F7F8FA] rounded border border-[#D9DEE5] space-y-1 text-[11px]">
+                      <div className="p-3 bg-[#F3F6FA] rounded border border-[#D8E2EA] space-y-1 text-[11px]">
                         <span className="text-[#8C5311] font-semibold block uppercase text-[11px]">Active Mitigation:</span>
-                        <p className="text-[#172033]">{impactData.currentMitigation}</p>
-                        <span className="text-[#176B87] font-semibold block uppercase text-[11px] pt-1">Recommended Action:</span>
-                        <p className="text-[#172033]">{impactData.recommendedAction}</p>
+                        <p className="text-[#142C3F]">{impactData.currentMitigation}</p>
+                        <span className="text-[#0F6B68] font-semibold block uppercase text-[11px] pt-1">Recommended Action:</span>
+                        <p className="text-[#142C3F]">{impactData.recommendedAction}</p>
                       </div>
                     </div>
                   )}
@@ -990,50 +990,50 @@ export function ActivityDetailDrawer({
             {activeTab === 'history' && (
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <span className="text-[11px] uppercase font-semibold text-[#596579] tracking-wider">
+                  <span className="text-[11px] uppercase font-semibold text-[#526779] tracking-wider">
                     History &amp; Audit Trail ({auditHistory.length})
                   </span>
                   <span className="text-[11px] font-mono text-[#7B8798]">Tamper-Evident</span>
                 </div>
 
                 {auditHistory.length === 0 ? (
-                  <div className="p-6 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg text-center space-y-1">
-                    <p className="font-semibold text-xs text-[#172033]">No historical modifications recorded yet</p>
-                    <p className="text-[11px] text-[#596579]">
+                  <div className="p-6 bg-[#F3F6FA] border border-[#D8E2EA] rounded-lg text-center space-y-1">
+                    <p className="font-semibold text-xs text-[#142C3F]">No historical modifications recorded yet</p>
+                    <p className="text-[11px] text-[#526779]">
                       Baseline revisions and verified actual modifications for this activity will be logged here.
                     </p>
                   </div>
                 ) : (
-                  <div className="space-y-3 relative before:absolute before:inset-y-0 before:left-3 before:w-0.5 before:bg-[#D9DEE5]">
+                  <div className="space-y-3 relative before:absolute before:inset-y-0 before:left-3 before:w-0.5 before:bg-[#D8E2EA]">
                     {auditHistory.map((log) => (
                       <div key={log.id} className="relative pl-7 space-y-2">
-                        <div className="absolute left-1.5 top-2.5 w-3 h-3 rounded-full bg-[#176B87] border-2 border-white -translate-x-1/2" />
+                        <div className="absolute left-1.5 top-2.5 w-3 h-3 rounded-full bg-[#0F6B68] border-2 border-white -translate-x-1/2" />
 
-                        <div className="p-3 bg-white border border-[#D9DEE5] rounded-lg space-y-2 shadow-2xs hover:bg-[#F7F8FA] transition-colors">
+                        <div className="p-3 bg-white border border-[#D8E2EA] rounded-lg space-y-2 shadow-2xs hover:bg-[#F3F6FA] transition-colors">
                           <div className="flex items-center justify-between flex-wrap gap-1">
-                            <span className="px-2 py-0.5 rounded text-[11px] font-semibold bg-[#F1F3F5] text-[#596579] border border-[#D9DEE5]">
+                            <span className="px-2 py-0.5 rounded text-[11px] font-semibold bg-[#EAF0F5] text-[#526779] border border-[#D8E2EA]">
                               {log.actionCategory || log.action}
                             </span>
                             <span className="font-mono text-[11px] text-[#7B8798]">{log.timestamp}</span>
                           </div>
 
-                          <div className="text-xs text-[#172033]">
-                            <span>Actor: <strong className="text-[#176B87]">{log.actor}</strong> ({log.role})</span>
+                          <div className="text-xs text-[#142C3F]">
+                            <span>Actor: <strong className="text-[#0F6B68]">{log.actor}</strong> ({log.role})</span>
                           </div>
 
                           {log.whatChanged && (
-                            <p className="text-xs text-[#172033] bg-[#F7F8FA] p-2 rounded border border-[#D9DEE5]">
+                            <p className="text-xs text-[#142C3F] bg-[#F3F6FA] p-2 rounded border border-[#D8E2EA]">
                               {log.whatChanged}
                             </p>
                           )}
 
                           {(log.before || log.previousValue) && (
                             <div className="grid grid-cols-2 gap-2 text-[11px] font-mono pt-0.5">
-                              <div className="p-2 bg-[#FBEFEE] text-[#B5473C] rounded border border-[#E4B0AA]">
+                              <div className="p-2 bg-[#FCE8E4] text-[#A24335] rounded border border-[#E4B0AA]">
                                 <span className="block text-[11px] uppercase font-semibold">Before:</span>
                                 <span>{log.before || log.previousValue}</span>
                               </div>
-                              <div className="p-2 bg-[#EDF7F2] text-[#2E7D5B] rounded border border-[#B8DCC9]">
+                              <div className="p-2 bg-[#E4F4EC] text-[#2E7D5B] rounded border border-[#B8DCC9]">
                                 <span className="block text-[11px] uppercase font-semibold">After:</span>
                                 <span>{log.after || log.newValue}</span>
                               </div>
@@ -1041,7 +1041,7 @@ export function ActivityDetailDrawer({
                           )}
 
                           {/* Progressive Disclosure: Telemetry & Record ID */}
-                          <div className="pt-1 border-t border-[#D9DEE5]/60 flex items-center justify-between text-[11px] text-[#7B8798]">
+                          <div className="pt-1 border-t border-[#D8E2EA]/60 flex items-center justify-between text-[11px] text-[#7B8798]">
                             <button
                               type="button"
                               onClick={() =>
@@ -1049,7 +1049,7 @@ export function ActivityDetailDrawer({
                                   expandedAuditId === log.id ? null : log.id
                                 )
                               }
-                              className="font-mono text-[#176B87] hover:underline"
+                              className="font-mono text-[#0F6B68] hover:underline"
                             >
                               Log ID: {log.id} {expandedAuditId === log.id ? '▲' : '▼'}
                             </button>
@@ -1071,15 +1071,15 @@ export function ActivityDetailDrawer({
               Compact, accessible action toolbar
               Capture Update | Review Match | Open Evidence | View Dependency Impact
               ========================================================================= */}
-          <div className="px-4 sm:px-6 py-3 border-t border-[#D9DEE5] bg-[#F7F8FA] flex items-center justify-between gap-2 flex-shrink-0">
+          <div className="px-4 sm:px-6 py-3 border-t border-[#D8E2EA] bg-[#F3F6FA] flex items-center justify-between gap-2 flex-shrink-0">
             <div className="flex items-center gap-2 flex-wrap">
               <button
                 type="button"
                 onClick={handleViewDependencyImpact}
                 className={`min-h-[44px] px-3.5 py-2 text-xs font-semibold rounded-lg border transition-colors inline-flex items-center justify-center cursor-pointer ${
                   activeTab === 'dependencies'
-                    ? 'bg-[#176B87] text-white border-[#176B87]'
-                    : 'bg-white text-[#596579] hover:text-[#172033] border-[#D9DEE5] hover:bg-[#F1F3F5]'
+                    ? 'bg-[#0F6B68] text-white border-[#0F6B68]'
+                    : 'bg-white text-[#526779] hover:text-[#142C3F] border-[#D8E2EA] hover:bg-[#EAF0F5]'
                 }`}
                 title="View upstream and downstream dependencies"
               >
@@ -1091,8 +1091,8 @@ export function ActivityDetailDrawer({
                 onClick={handleOpenEvidence}
                 className={`min-h-[44px] px-3.5 py-2 text-xs font-semibold rounded-lg border transition-colors inline-flex items-center justify-center cursor-pointer ${
                   activeTab === 'evidence'
-                    ? 'bg-[#176B87] text-white border-[#176B87]'
-                    : 'bg-white text-[#596579] hover:text-[#172033] border-[#D9DEE5] hover:bg-[#F1F3F5]'
+                    ? 'bg-[#0F6B68] text-white border-[#0F6B68]'
+                    : 'bg-white text-[#526779] hover:text-[#142C3F] border-[#D8E2EA] hover:bg-[#EAF0F5]'
                 }`}
                 title="View linked evidence"
               >
@@ -1102,7 +1102,7 @@ export function ActivityDetailDrawer({
               <button
                 type="button"
                 onClick={handleReviewMatch}
-                className="min-h-[44px] px-3.5 py-2 text-xs font-semibold bg-white text-[#176B87] border border-[#176B87] hover:bg-[#EDF5F8] rounded-lg transition-colors inline-flex items-center justify-center cursor-pointer"
+                className="min-h-[44px] px-3.5 py-2 text-xs font-semibold bg-white text-[#0F6B68] border border-[#0F6B68] hover:bg-[#EAF0F5] rounded-lg transition-colors inline-flex items-center justify-center cursor-pointer"
                 title="Review candidate matches"
               >
                 Review Match
@@ -1112,7 +1112,7 @@ export function ActivityDetailDrawer({
             <button
               type="button"
               onClick={handleCaptureUpdate}
-              className="min-h-[44px] px-4 py-2 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] rounded-lg shadow-xs transition-colors inline-flex items-center justify-center gap-2 flex-shrink-0 cursor-pointer"
+              className="min-h-[44px] px-4 py-2 text-xs font-bold text-white bg-[#0F6B68] hover:bg-[#135A72] rounded-lg shadow-xs transition-colors inline-flex items-center justify-center gap-2 flex-shrink-0 cursor-pointer"
               title="Capture physical site progress"
             >
               <Plus className="w-3.5 h-3.5" />
@@ -1126,35 +1126,35 @@ export function ActivityDetailDrawer({
       {previewEvidenceModal && (
         <div className="fixed inset-0 z-60 overflow-y-auto flex items-center justify-center p-4">
           <div
-            className="fixed inset-0 bg-[#172033]/60 transition-opacity"
+            className="fixed inset-0 bg-[#142C3F]/60 transition-opacity"
             onClick={() => setPreviewEvidenceModal(null)}
           />
-          <div className="relative w-full max-w-sm bg-white rounded-lg border border-[#D9DEE5] shadow-lg p-4 space-y-3">
-            <div className="flex items-center justify-between border-b border-[#D9DEE5] pb-2">
-              <span className="font-mono font-bold text-xs text-[#176B87]">{previewEvidenceModal.id}</span>
+          <div className="relative w-full max-w-sm bg-white rounded-lg border border-[#D8E2EA] shadow-lg p-4 space-y-3">
+            <div className="flex items-center justify-between border-b border-[#D8E2EA] pb-2">
+              <span className="font-mono font-bold text-xs text-[#0F6B68]">{previewEvidenceModal.id}</span>
               <button
                 type="button"
                 onClick={() => setPreviewEvidenceModal(null)}
-                className="text-[#596579] hover:text-[#172033]"
+                className="text-[#526779] hover:text-[#142C3F]"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
 
             <div>
-              <h4 className="font-semibold text-sm text-[#172033]">{previewEvidenceModal.title}</h4>
-              <p className="text-[11px] text-[#596579] font-mono mt-0.5">
+              <h4 className="font-semibold text-sm text-[#142C3F]">{previewEvidenceModal.title}</h4>
+              <p className="text-[11px] text-[#526779] font-mono mt-0.5">
                 {previewEvidenceModal.filename} • {previewEvidenceModal.fileSize}
               </p>
             </div>
 
-            <div className="p-3 bg-[#F7F8FA] rounded-lg border border-[#D9DEE5] text-center space-y-1">
+            <div className="p-3 bg-[#F3F6FA] rounded-lg border border-[#D8E2EA] text-center space-y-1">
               <Camera className="w-8 h-8 text-[#7B8798] mx-auto" />
-              <p className="text-[11px] font-semibold text-[#172033]">Verified Onsite Evidence</p>
-              <p className="text-[10px] text-[#596579]">Signed and validated during field inspection.</p>
+              <p className="text-[11px] font-semibold text-[#142C3F]">Verified Onsite Evidence</p>
+              <p className="text-[10px] text-[#526779]">Signed and validated during field inspection.</p>
               <details className="pt-2 text-left">
-                <summary className="text-[11px] text-[#176B87] cursor-pointer hover:underline font-medium">Technical Details</summary>
-                <div className="mt-1 font-mono text-[10px] text-[#7B8798] break-all bg-white p-2 rounded border border-[#D9DEE5]">
+                <summary className="text-[11px] text-[#0F6B68] cursor-pointer hover:underline font-medium">Technical Details</summary>
+                <div className="mt-1 font-mono text-[10px] text-[#7B8798] break-all bg-white p-2 rounded border border-[#D8E2EA]">
                   Verification Hash: {previewEvidenceModal.sha256Hash || 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'}
                 </div>
               </details>
@@ -1164,7 +1164,7 @@ export function ActivityDetailDrawer({
               <button
                 type="button"
                 onClick={() => setPreviewEvidenceModal(null)}
-                className="px-3 py-1 text-xs font-semibold text-[#596579] hover:text-[#172033] border border-[#D9DEE5] rounded-lg"
+                className="px-3 py-1 text-xs font-semibold text-[#526779] hover:text-[#142C3F] border border-[#D8E2EA] rounded-lg"
               >
                 Close
               </button>

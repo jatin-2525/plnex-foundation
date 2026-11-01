@@ -256,27 +256,27 @@ export default function ScheduleHealthPage() {
         {/* =========================================================================
             HEADER & AUDIT ENGINE
             ========================================================================= */}
-        <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 shadow-xs space-y-4">
+        <div className="bg-white border border-[#D8E2EA] rounded-lg p-4 sm:p-6 shadow-xs space-y-4">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
             <div>
               <div className="flex items-center gap-2 mb-2 flex-wrap">
-                <span className="inline-flex items-center gap-2 px-3 py-0.5 rounded text-[11px] font-bold tracking-wider uppercase bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0]">
+                <span className="inline-flex items-center gap-2 px-3 py-0.5 rounded text-[11px] font-bold tracking-wider uppercase bg-[#EAF0F5] text-[#0F6B68] border border-[#D8E2EA]">
                   <Activity className="w-3.5 h-3.5" />
                   Audit Engine
                 </span>
-                <span className="inline-flex items-center gap-1 px-3 py-0.5 rounded text-[11px] font-medium bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]">
+                <span className="inline-flex items-center gap-1 px-3 py-0.5 rounded text-[11px] font-medium bg-[#E4F4EC] text-[#2E7D5B] border border-[#B8DCC9]">
                   <CheckCircle2 className="w-3 h-3 text-[#2E7D5B]" />
                   Quality Guard Active
                 </span>
-                <span className="inline-flex items-center gap-1 px-3 py-0.5 rounded text-[11px] text-[#596579] bg-[#F7F8FA] border border-[#D9DEE5]">
+                <span className="inline-flex items-center gap-1 px-3 py-0.5 rounded text-[11px] text-[#526779] bg-[#F3F6FA] border border-[#D8E2EA]">
                   {activeProject?.code || 'OIL-DUL-01'} · Rev 3.2 (P6 XML)
                 </span>
               </div>
 
-              <h1 className="text-[28px] sm:text-3xl font-bold text-[#172033] tracking-tight">
+              <h1 className="text-[28px] sm:text-3xl font-bold text-[#142C3F] tracking-tight">
                 Schedule Health
               </h1>
-              <p className="text-sm text-[#596579] mt-1 max-w-3xl">
+              <p className="text-sm text-[#526779] mt-1 max-w-3xl">
                 Independent audit engine separating baseline CPM schedule logic from field execution data quality.
               </p>
             </div>
@@ -285,9 +285,9 @@ export default function ScheduleHealthPage() {
             <div className="flex items-center gap-2 flex-wrap">
               <Link
                 href="/reports"
-                className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-[#172033] bg-white border border-[#D9DEE5] hover:bg-[#F1F3F5] rounded-lg shadow-2xs transition-colors"
+                className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-[#142C3F] bg-white border border-[#D8E2EA] hover:bg-[#EAF0F5] rounded-lg shadow-2xs transition-colors"
               >
-                <FileText className="w-3.5 h-3.5 text-[#596579]" />
+                <FileText className="w-3.5 h-3.5 text-[#526779]" />
                 <span>Diagnostic Ledger</span>
               </Link>
 
@@ -295,7 +295,7 @@ export default function ScheduleHealthPage() {
                 type="button"
                 onClick={handleRunHealthScan}
                 disabled={isScanning}
-                className="px-4 py-2 bg-[#176B87] hover:bg-[#135A72] border border-[#176B87] text-white text-xs font-bold rounded-lg shadow-xs transition-colors flex items-center gap-2 disabled:opacity-50"
+                className="px-4 py-2 bg-[#0F6B68] hover:bg-[#135A72] border border-[#0F6B68] text-white text-xs font-bold rounded-lg shadow-xs transition-colors flex items-center gap-2 disabled:opacity-50"
               >
                 <RefreshCw className={`w-3.5 h-3.5 ${isScanning ? 'animate-spin' : ''}`} />
                 <span>{isScanning ? 'Running Audit...' : 'Run Schedule Health Audit'}</span>
@@ -307,8 +307,8 @@ export default function ScheduleHealthPage() {
               PRIMARY TABS: Schedule Health | Execution Data Quality
               Strict Category Separation - Do Not Mix
               ========================================================================= */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between pt-3 border-t border-[#D9DEE5]/60 gap-3">
-            <div className="flex items-center bg-[#F1F3F5] p-1 rounded-lg border border-[#D9DEE5] self-start">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between pt-3 border-t border-[#D8E2EA]/60 gap-3">
+            <div className="flex items-center bg-[#EAF0F5] p-1 rounded-lg border border-[#D8E2EA] self-start">
               {/* Tab 1: Schedule Health */}
               <button
                 type="button"
@@ -318,17 +318,17 @@ export default function ScheduleHealthPage() {
                 }}
                 className={`flex items-center gap-2 px-4 sm:px-6 py-2 text-xs font-bold rounded-md transition-all ${
                   activeTab === 'Schedule Health'
-                    ? 'bg-white text-[#172033] shadow-xs border border-[#D9DEE5]'
-                    : 'text-[#596579] hover:text-[#172033]'
+                    ? 'bg-white text-[#142C3F] shadow-xs border border-[#D8E2EA]'
+                    : 'text-[#526779] hover:text-[#142C3F]'
                 }`}
               >
-                <Calendar className="w-4 h-4 text-[#176B87]" />
+                <Calendar className="w-4 h-4 text-[#0F6B68]" />
                 <span>Schedule Health</span>
                 <span
                   className={`px-2 py-0.5 rounded text-[11px] font-mono font-semibold ${
                     activeTab === 'Schedule Health'
-                      ? 'bg-[#EDF5F8] text-[#176B87]'
-                      : 'bg-[#D9DEE5] text-[#596579]'
+                      ? 'bg-[#EAF0F5] text-[#0F6B68]'
+                      : 'bg-[#D8E2EA] text-[#526779]'
                   }`}
                 >
                   {issues.filter((i) => i.category === 'Schedule Health' && i.status === 'Open').length} Open
@@ -344,17 +344,17 @@ export default function ScheduleHealthPage() {
                 }}
                 className={`flex items-center gap-2 px-4 sm:px-6 py-2 text-xs font-bold rounded-md transition-all ${
                   activeTab === 'Execution Data Quality'
-                    ? 'bg-white text-[#172033] shadow-xs border border-[#D9DEE5]'
-                    : 'text-[#596579] hover:text-[#172033]'
+                    ? 'bg-white text-[#142C3F] shadow-xs border border-[#D8E2EA]'
+                    : 'text-[#526779] hover:text-[#142C3F]'
                 }`}
               >
-                <FileText className="w-4 h-4 text-[#176B87]" />
+                <FileText className="w-4 h-4 text-[#0F6B68]" />
                 <span>Execution Data Quality</span>
                 <span
                   className={`px-2 py-0.5 rounded text-[11px] font-mono font-semibold ${
                     activeTab === 'Execution Data Quality'
-                      ? 'bg-[#EDF5F8] text-[#176B87]'
-                      : 'bg-[#D9DEE5] text-[#596579]'
+                      ? 'bg-[#EAF0F5] text-[#0F6B68]'
+                      : 'bg-[#D8E2EA] text-[#526779]'
                   }`}
                 >
                   {issues.filter((i) => i.category === 'Execution Data Quality' && i.status === 'Open').length} Open
@@ -369,21 +369,21 @@ export default function ScheduleHealthPage() {
                 title="Why is schedule health in Warning state?"
               />
               <div
-                className="px-3 py-1.5 rounded bg-[#EDF7F2] border border-[#B8DCC9] text-[#2E7D5B] font-bold flex items-center gap-2"
+                className="px-3 py-1.5 rounded bg-[#E4F4EC] border border-[#B8DCC9] text-[#2E7D5B] font-bold flex items-center gap-2"
                 title="Checks in healthy state with zero open violations"
               >
                 <CheckCircle2 className="w-3.5 h-3.5 text-[#2E7D5B]" />
                 <span>{metrics.healthyCount} Healthy</span>
               </div>
               <div
-                className="px-3 py-1.5 rounded bg-[#FDF6ED] border border-[#F0D4A6] text-[#8C5311] font-bold flex items-center gap-2"
+                className="px-3 py-1.5 rounded bg-[#FFF1D3] border border-[#F0D4A6] text-[#8C5311] font-bold flex items-center gap-2"
                 title="Moderate risk or data hygiene warning requiring review"
               >
                 <AlertCircle className="w-3.5 h-3.5 text-[#8C5311]" />
                 <span>{metrics.warningCount} Warning</span>
               </div>
               <div
-                className="px-3 py-1.5 rounded bg-[#FBEFEE] border border-[#E4B0AA] text-[#9E332A] font-bold flex items-center gap-2"
+                className="px-3 py-1.5 rounded bg-[#FCE8E4] border border-[#E4B0AA] text-[#9E332A] font-bold flex items-center gap-2"
                 title="Critical CPM logic breakdown or severe data integrity failure"
               >
                 <AlertTriangle className="w-3.5 h-3.5 text-[#9E332A]" />
@@ -410,25 +410,25 @@ export default function ScheduleHealthPage() {
               - unmatched event
               - duplicate event
             ========================================================================= */}
-        <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 shadow-xs space-y-3">
-          <div className="flex items-center justify-between pb-2 border-b border-[#D9DEE5]/60 flex-wrap gap-2">
+        <div className="bg-white border border-[#D8E2EA] rounded-lg p-4 shadow-xs space-y-3">
+          <div className="flex items-center justify-between pb-2 border-b border-[#D8E2EA]/60 flex-wrap gap-2">
             <div className="flex items-center gap-2">
-              <span className="text-xs font-bold text-[#172033] uppercase tracking-wider">
+              <span className="text-xs font-bold text-[#142C3F] uppercase tracking-wider">
                 {activeTab} Checks (6 Categories):
               </span>
-              <span className="text-[11px] text-[#596579]">
+              <span className="text-[11px] text-[#526779]">
                 {activeTab === 'Schedule Health'
                   ? 'CPM network logic, calendar constraints & WBS structure'
                   : 'Field diary completeness, measurement units & matching hygiene'}
               </span>
             </div>
-            <span className="text-[11px] text-[#596579]">
+            <span className="text-[11px] text-[#526779]">
               Click any check to filter the Issue Table
             </span>
           </div>
 
           {/* Segmented Check Category Strip */}
-          <div className="border border-[#D9DEE5] rounded-md bg-white overflow-hidden grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 divide-y sm:divide-y-0 sm:divide-x divide-[#D9DEE5]">
+          <div className="border border-[#D8E2EA] rounded-md bg-white overflow-hidden grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 divide-y sm:divide-y-0 sm:divide-x divide-[#D8E2EA]">
             {currentRules.map((ruleItem) => {
               const ruleIssues = issues.filter(
                 (i) => i.category === activeTab && i.rule === ruleItem.rule && i.status === 'Open'
@@ -449,18 +449,18 @@ export default function ScheduleHealthPage() {
                   }
                   className={`p-3 text-left transition-all flex flex-col justify-between ${
                     isSelected
-                      ? 'bg-[#EDF5F8]'
-                      : 'hover:bg-[#F7F8FA]'
+                      ? 'bg-[#EAF0F5]'
+                      : 'hover:bg-[#F3F6FA]'
                   }`}
                 >
                   <div className="flex items-center justify-between mb-2">
                     <span
                       className={`text-[11px] font-mono px-1.5 py-0.5 rounded font-medium uppercase flex items-center gap-1 ${
                         ruleSeverity === 'Healthy'
-                          ? 'bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]'
+                          ? 'bg-[#E4F4EC] text-[#2E7D5B] border border-[#B8DCC9]'
                           : ruleSeverity === 'Critical'
-                          ? 'bg-[#FBEFEE] text-[#9E332A] border border-[#E4B0AA]'
-                          : 'bg-[#FDF6ED] text-[#8C5311] border border-[#F0D4A6]'
+                          ? 'bg-[#FCE8E4] text-[#9E332A] border border-[#E4B0AA]'
+                          : 'bg-[#FFF1D3] text-[#8C5311] border border-[#F0D4A6]'
                       }`}
                     >
                       {ruleSeverity === 'Healthy' && <CheckCircle2 className="w-2.5 h-2.5" />}
@@ -468,16 +468,16 @@ export default function ScheduleHealthPage() {
                       {ruleSeverity === 'Warning' && <AlertCircle className="w-2.5 h-2.5" />}
                       {ruleSeverity}
                     </span>
-                    <span className="text-[11px] font-mono text-[#596579]">
+                    <span className="text-[11px] font-mono text-[#526779]">
                       {ruleIssues.length} open
                     </span>
                   </div>
 
                   <div>
-                    <div className="text-xs font-medium text-[#172033] line-clamp-1" title={ruleItem.name}>
+                    <div className="text-xs font-medium text-[#142C3F] line-clamp-1" title={ruleItem.name}>
                       {ruleItem.name}
                     </div>
-                    <div className="text-[11px] font-mono text-[#596579] mt-0.5">
+                    <div className="text-[11px] font-mono text-[#526779] mt-0.5">
                       {ruleItem.canonicalTerm}
                     </div>
                   </div>
@@ -490,7 +490,7 @@ export default function ScheduleHealthPage() {
         {/* =========================================================================
             SEARCH & SECONDARY FILTER BAR
             ========================================================================= */}
-        <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 shadow-xs space-y-3">
+        <div className="bg-white border border-[#D8E2EA] rounded-lg p-4 shadow-xs space-y-3">
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
             <div className="relative flex-1 max-w-md">
               <Search className="w-3.5 h-3.5 text-[#7B8798] absolute left-3 top-2.5" />
@@ -499,7 +499,7 @@ export default function ScheduleHealthPage() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search issues by rule, object ID, or description..."
-                className="w-full pl-8 pr-3 py-1.5 text-xs bg-white border border-[#D9DEE5] rounded-lg text-[#172033] outline-none focus:border-[#176B87]"
+                className="w-full pl-8 pr-3 py-1.5 text-xs bg-white border border-[#D8E2EA] rounded-lg text-[#142C3F] outline-none focus:border-[#0F6B68]"
               />
             </div>
 
@@ -508,7 +508,7 @@ export default function ScheduleHealthPage() {
               <select
                 value={severityFilter}
                 onChange={(e) => setSeverityFilter(e.target.value as any)}
-                className="px-3 py-1.5 bg-white border border-[#D9DEE5] rounded-lg text-xs font-medium text-[#172033] outline-none"
+                className="px-3 py-1.5 bg-white border border-[#D8E2EA] rounded-lg text-xs font-medium text-[#142C3F] outline-none"
               >
                 <option value="ALL">All Severities</option>
                 <option value="Critical">Critical</option>
@@ -520,7 +520,7 @@ export default function ScheduleHealthPage() {
               <select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value as any)}
-                className="px-3 py-1.5 bg-white border border-[#D9DEE5] rounded-lg text-xs font-medium text-[#172033] outline-none"
+                className="px-3 py-1.5 bg-white border border-[#D8E2EA] rounded-lg text-xs font-medium text-[#142C3F] outline-none"
               >
                 <option value="ALL">All Statuses</option>
                 <option value="Open">Pending Review (Open)</option>
@@ -532,7 +532,7 @@ export default function ScheduleHealthPage() {
                 <button
                   type="button"
                   onClick={handleResetFilters}
-                  className="px-3 py-1 text-xs text-[#9E332A] hover:bg-[#FBEFEE] border border-[#E4B0AA] rounded-lg transition-colors flex items-center gap-1"
+                  className="px-3 py-1 text-xs text-[#9E332A] hover:bg-[#FCE8E4] border border-[#E4B0AA] rounded-lg transition-colors flex items-center gap-1"
                 >
                   <RotateCcw className="w-3 h-3" />
                   <span>Reset</span>
@@ -549,11 +549,11 @@ export default function ScheduleHealthPage() {
             Actions (Exact 4):
             View | Fix | Review | Resolve
             ========================================================================= */}
-        <div className="bg-white border border-[#D9DEE5] rounded-lg shadow-xs overflow-hidden">
+        <div className="bg-white border border-[#D8E2EA] rounded-lg shadow-xs overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full min-w-[800px] text-left border-collapse text-sm">
-              <thead className="sticky top-0 z-10 bg-[#F7F8FA]">
-                <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[11px] sm:text-xs uppercase font-semibold text-[#596579] tracking-wider h-11">
+              <thead className="sticky top-0 z-10 bg-[#F3F6FA]">
+                <tr className="bg-[#F3F6FA] border-b border-[#D8E2EA] text-[11px] sm:text-xs uppercase font-semibold text-[#526779] tracking-wider h-11">
                   <th className="py-3 px-4 whitespace-nowrap">Issue</th>
                   <th className="py-3 px-3 whitespace-nowrap">Severity</th>
                   <th className="py-3 px-4 whitespace-nowrap">Object</th>
@@ -563,20 +563,20 @@ export default function ScheduleHealthPage() {
                   <th className="py-3 px-4 whitespace-nowrap text-right">Action</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#D9DEE5]/60">
+              <tbody className="divide-y divide-[#D8E2EA]/60">
                 {filteredIssues.length === 0 ? (
                   <tr>
-                    <td colSpan={7} className="py-8 px-4 text-center text-[#596579]">
+                    <td colSpan={7} className="py-8 px-4 text-center text-[#526779]">
                       <CheckCircle2 className="w-8 h-8 text-[#2E7D5B] mx-auto mb-2" />
-                      <p className="font-semibold text-sm text-[#172033]">No health integrity issues found</p>
-                      <p className="text-xs text-[#596579] mt-1 max-w-sm mx-auto">
+                      <p className="font-semibold text-sm text-[#142C3F]">No health integrity issues found</p>
+                      <p className="text-xs text-[#526779] mt-1 max-w-sm mx-auto">
                         All schedule activities satisfy the active health rule criteria, or no issues match your filter.
                       </p>
                       {(severityFilter !== 'ALL' || statusFilter !== 'ALL' || selectedRuleFilter !== 'ALL' || searchQuery) && (
                         <button
                           type="button"
                           onClick={handleResetFilters}
-                          className="mt-3 text-xs font-semibold text-[#176B87] hover:underline cursor-pointer"
+                          className="mt-3 text-xs font-semibold text-[#0F6B68] hover:underline cursor-pointer"
                         >
                           Reset Filters
                         </button>
@@ -596,10 +596,10 @@ export default function ScheduleHealthPage() {
                       {/* 1. Issue (Rule + Issue ID) */}
                       <td className="py-3 px-4 align-top whitespace-nowrap">
                         <div className="space-y-0.5">
-                          <span className="font-semibold text-[#172033] block">
+                          <span className="font-semibold text-[#142C3F] block">
                             {issue.rule}
                           </span>
-                          <span className="font-mono text-[11px] text-[#176B87] bg-[#EDF5F8] px-1.5 py-0.5 rounded border border-[#B3CBE0] inline-block font-semibold">
+                          <span className="font-mono text-[11px] text-[#0F6B68] bg-[#EAF0F5] px-1.5 py-0.5 rounded border border-[#D8E2EA] inline-block font-semibold">
                             {issue.id}
                           </span>
                         </div>
@@ -609,17 +609,17 @@ export default function ScheduleHealthPage() {
                       <td className="py-3 px-3 align-top whitespace-nowrap">
                         <div className="flex items-center gap-2">
                           {effectiveSeverity === 'Critical' ? (
-                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold uppercase bg-[#FBEFEE] text-[#9E332A] border border-[#E4B0AA]">
+                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold uppercase bg-[#FCE8E4] text-[#9E332A] border border-[#E4B0AA]">
                               <AlertTriangle className="w-3 h-3" />
                               Critical
                             </span>
                           ) : effectiveSeverity === 'Warning' ? (
-                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold uppercase bg-[#FDF6ED] text-[#8C5311] border border-[#F0D4A6]">
+                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold uppercase bg-[#FFF1D3] text-[#8C5311] border border-[#F0D4A6]">
                               <AlertCircle className="w-3 h-3" />
                               Warning
                             </span>
                           ) : (
-                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold uppercase bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]">
+                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold uppercase bg-[#E4F4EC] text-[#2E7D5B] border border-[#B8DCC9]">
                               <CheckCircle2 className="w-3 h-3" />
                               Healthy
                             </span>
@@ -634,10 +634,10 @@ export default function ScheduleHealthPage() {
                       {/* 3. Object */}
                       <td className="py-3 px-4 align-top max-w-[200px]">
                         <div>
-                          <span className="font-mono font-bold text-[#176B87] block truncate">
+                          <span className="font-mono font-bold text-[#0F6B68] block truncate">
                             {issue.objectId}
                           </span>
-                          <span className="text-[13px] text-[#596579] line-clamp-1">
+                          <span className="text-[13px] text-[#526779] line-clamp-1">
                             {issue.objectName}
                           </span>
                         </div>
@@ -645,16 +645,16 @@ export default function ScheduleHealthPage() {
 
                       {/* 4. Description */}
                       <td className="py-3 px-4 align-top">
-                        <p className="text-sm text-[#172033] leading-relaxed">
+                        <p className="text-sm text-[#142C3F] leading-relaxed">
                           {issue.description}
                         </p>
-                        <p className="text-[13px] text-[#596579] mt-0.5 italic">
+                        <p className="text-[13px] text-[#526779] mt-0.5 italic">
                           Impact: {issue.impactExplanation}
                         </p>
                       </td>
 
                       {/* 5. Detected */}
-                      <td className="py-3 px-3 align-top whitespace-nowrap font-mono text-[11px] text-[#596579]">
+                      <td className="py-3 px-3 align-top whitespace-nowrap font-mono text-[11px] text-[#526779]">
                         {issue.detected || issue.detectedAt}
                       </td>
 
@@ -673,7 +673,7 @@ export default function ScheduleHealthPage() {
                           <button
                             type="button"
                             onClick={() => handleViewIssue(issue)}
-                            className="px-2 py-1 text-[11px] font-semibold text-[#596579] hover:text-[#172033] hover:bg-[#F1F3F5] border border-[#D9DEE5] rounded transition-colors"
+                            className="px-2 py-1 text-[11px] font-semibold text-[#526779] hover:text-[#142C3F] hover:bg-[#EAF0F5] border border-[#D8E2EA] rounded transition-colors"
                             title="View complete issue details"
                           >
                             View
@@ -684,7 +684,7 @@ export default function ScheduleHealthPage() {
                             <button
                               type="button"
                               onClick={() => handleOpenFixModal(issue)}
-                              className="px-2 py-1 text-[11px] font-bold text-[#176B87] hover:bg-[#EDF5F8] border border-[#B3CBE0] rounded transition-colors"
+                              className="px-2 py-1 text-[11px] font-bold text-[#0F6B68] hover:bg-[#EAF0F5] border border-[#D8E2EA] rounded transition-colors"
                               title="Apply suggested data repair"
                             >
                               Fix
@@ -696,7 +696,7 @@ export default function ScheduleHealthPage() {
                             <button
                               type="button"
                               onClick={() => handleReviewIssue(issue)}
-                              className="px-2 py-1 text-[11px] font-bold text-[#8C5311] hover:bg-[#FDF6ED] border border-[#F0D4A6] rounded transition-colors"
+                              className="px-2 py-1 text-[11px] font-bold text-[#8C5311] hover:bg-[#FFF1D3] border border-[#F0D4A6] rounded transition-colors"
                               title="Inspect in review queue"
                             >
                               Review
@@ -708,7 +708,7 @@ export default function ScheduleHealthPage() {
                             <button
                               type="button"
                               onClick={() => handleResolveIssue(issue)}
-                              className="px-2 py-1 text-[11px] font-bold text-[#2E7D5B] hover:bg-[#EDF7F2] border border-[#B8DCC9] rounded transition-colors"
+                              className="px-2 py-1 text-[11px] font-bold text-[#2E7D5B] hover:bg-[#E4F4EC] border border-[#B8DCC9] rounded transition-colors"
                               title="Mark issue resolved"
                             >
                               Resolve
@@ -728,9 +728,9 @@ export default function ScheduleHealthPage() {
             </table>
           </div>
 
-          <div className="px-4 py-3 bg-[#F7F8FA] border-t border-[#D9DEE5] flex items-center justify-between text-xs text-[#596579]">
-            <span>Category: <strong className="text-[#172033]">{activeTab}</strong></span>
-            <span>Total Shown: <strong className="font-mono text-[#172033]">{filteredIssues.length}</strong></span>
+          <div className="px-4 py-3 bg-[#F3F6FA] border-t border-[#D8E2EA] flex items-center justify-between text-xs text-[#526779]">
+            <span>Category: <strong className="text-[#142C3F]">{activeTab}</strong></span>
+            <span>Total Shown: <strong className="font-mono text-[#142C3F]">{filteredIssues.length}</strong></span>
           </div>
         </div>
 
@@ -746,37 +746,37 @@ export default function ScheduleHealthPage() {
         >
           {selectedIssueForDetail && (
             <div className="space-y-6 text-xs p-1">
-              <div className="p-4 bg-[#F7F8FA] rounded-lg border border-[#D9DEE5] space-y-2">
+              <div className="p-4 bg-[#F3F6FA] rounded-lg border border-[#D8E2EA] space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-semibold uppercase text-[#596579]">Affected Object</span>
-                  <span className="px-2 py-0.5 rounded font-mono text-[10px] font-bold bg-[#EDF5F8] text-[#176B87]">
+                  <span className="text-[10px] font-semibold uppercase text-[#526779]">Affected Object</span>
+                  <span className="px-2 py-0.5 rounded font-mono text-[10px] font-bold bg-[#EAF0F5] text-[#0F6B68]">
                     {selectedIssueForDetail.objectType}
                   </span>
                 </div>
-                <div className="font-mono font-bold text-sm text-[#172033]">
+                <div className="font-mono font-bold text-sm text-[#142C3F]">
                   {selectedIssueForDetail.objectId}
                 </div>
-                <div className="text-xs text-[#596579]">
+                <div className="text-xs text-[#526779]">
                   {selectedIssueForDetail.objectName}
                 </div>
               </div>
 
               <div className="space-y-1">
-                <span className="text-[10px] font-semibold uppercase text-[#596579]">Problem Description</span>
-                <p className="text-xs text-[#172033] leading-relaxed p-3 bg-white border border-[#D9DEE5] rounded-lg">
+                <span className="text-[10px] font-semibold uppercase text-[#526779]">Problem Description</span>
+                <p className="text-xs text-[#142C3F] leading-relaxed p-3 bg-white border border-[#D8E2EA] rounded-lg">
                   {selectedIssueForDetail.description}
                 </p>
               </div>
 
               <div className="space-y-1">
-                <span className="text-[10px] font-semibold uppercase text-[#596579]">Project CPM / EVM Impact</span>
-                <p className="text-xs text-[#9E332A] leading-relaxed p-3 bg-[#FBEFEE] border border-[#E4B0AA] rounded-lg">
+                <span className="text-[10px] font-semibold uppercase text-[#526779]">Project CPM / EVM Impact</span>
+                <p className="text-xs text-[#9E332A] leading-relaxed p-3 bg-[#FCE8E4] border border-[#E4B0AA] rounded-lg">
                   {selectedIssueForDetail.impactExplanation}
                 </p>
               </div>
 
               {selectedIssueForDetail.fixPayload && (
-                <div className="space-y-2 p-4 bg-[#EDF7F2] border border-[#B8DCC9] rounded-lg">
+                <div className="space-y-2 p-4 bg-[#E4F4EC] border border-[#B8DCC9] rounded-lg">
                   <span className="text-[10px] font-bold uppercase text-[#2E7D5B] block">
                     Suggested Remediation
                   </span>
@@ -815,14 +815,14 @@ export default function ScheduleHealthPage() {
               <button
                 type="button"
                 onClick={() => setFixingIssue(null)}
-                className="px-3 py-1.5 text-xs text-[#596579] hover:text-[#172033] bg-white border border-[#D9DEE5] hover:bg-[#F7F8FA] rounded-lg transition-colors"
+                className="px-3 py-1.5 text-xs text-[#526779] hover:text-[#142C3F] bg-white border border-[#D8E2EA] hover:bg-[#F3F6FA] rounded-lg transition-colors"
               >
                 Cancel
               </button>
               <button
                 type="button"
                 onClick={handleApplyFix}
-                className="px-4 py-2 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] border border-[#176B87] rounded-lg shadow-xs transition-colors"
+                className="px-4 py-2 text-xs font-bold text-white bg-[#0F6B68] hover:bg-[#135A72] border border-[#0F6B68] rounded-lg shadow-xs transition-colors"
               >
                 Apply &amp; Resolve Issue
               </button>
@@ -831,20 +831,20 @@ export default function ScheduleHealthPage() {
         >
           {fixingIssue && (
             <div className="space-y-4 text-xs">
-              <p className="text-[#596579]">
+              <p className="text-[#526779]">
                 Updating <strong>{fixingIssue.fixPayload?.fieldToFix}</strong> on object{' '}
                 <strong className="font-mono">{fixingIssue.objectId}</strong>.
               </p>
 
               <div>
-                <label className="block text-[11px] font-bold text-[#172033] mb-1">
+                <label className="block text-[11px] font-bold text-[#142C3F] mb-1">
                   New Value:
                 </label>
                 <input
                   type="text"
                   value={fixedValue}
                   onChange={(e) => setFixedValue(e.target.value)}
-                  className="w-full px-3 py-2 text-xs bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg font-mono outline-none focus:border-[#176B87]"
+                  className="w-full px-3 py-2 text-xs bg-[#F3F6FA] border border-[#D8E2EA] rounded-lg font-mono outline-none focus:border-[#0F6B68]"
                 />
               </div>
             </div>

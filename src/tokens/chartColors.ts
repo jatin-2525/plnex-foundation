@@ -3,12 +3,12 @@
  *
  * Strict Design System Rules:
  * 1. Restrained Palette:
- *    - Planned:  neutral/primary (#176B87 / #E0EEF2)
+ *    - Planned:  neutral/primary (#0F6B68 / #E0EEF2)
  *    - Actual:   primary/semantic contrast (#2E7D5B)
  *    - Forecast: dashed neutral/secondary (#7B8798, dashArray: "5,4")
  *    - Positive: green (#2E7D5B)
- *    - Warning:  amber (#D98B32)
- *    - Critical: red (#B5473C)
+ *    - Warning:  amber (#845006)
+ *    - Critical: red (#A24335)
  * 2. Do not use random colors per page.
  * 3. Do not use gradients (flat, solid SVG fills and strokes only).
  * 4. Do not use 8–12 colors in one chart (max 3–4 restrained tokens per chart).
@@ -18,84 +18,107 @@
  */
 
 export const CHART_TOKENS = {
-  // Planned: blue series (#3D73B5)
+  // Planned: blue series (#5274B8)
   planned: {
-    stroke: '#3D73B5',        // Planned schedule blue
-    fill: '#EDF5FC',          // Soft blue fill for bars
-    text: '#3D73B5',
-    label: 'Planned Target',
+    stroke: '#5274B8',        // Planned schedule baseline blue
+    fill: '#EBF1FA',          // Soft blue fill for bars
+    text: '#5274B8',
+    label: 'Planned Baseline',
     glyph: '■',               // Square node / marker
     strokeWidth: 2.5,
   },
 
-  // Actual: verified teal/green (#187A6A)
+  // Actual: verified actual teal/green (#0D8879)
   actual: {
-    stroke: '#187A6A',        // High-contrast verified teal
-    fill: '#187A6A',
-    text: '#187A6A',
+    stroke: '#0D8879',        // High-contrast verified actual
+    fill: '#0D8879',
+    text: '#0D8879',
     label: 'Verified Actual',
     glyph: '●',               // Solid circle node / marker
     strokeWidth: 3.5,
   },
 
-  // Forecast: dashed violet series (#7655A6)
+  // Forecast: dashed violet series (#8057B7)
   forecast: {
-    stroke: '#7655A6',        // Forecast violet
-    strokeAlt: '#7655A6',     // Consistent violet marker
+    stroke: '#8057B7',        // Forecast accent violet
+    strokeAlt: '#8057B7',     // Consistent violet marker
     dashArray: '5,4',         // Strictly dashed
     fill: '#FFFFFF',
-    text: '#7655A6',
+    text: '#8057B7',
     label: 'Forecast Trajectory',
     glyph: '▲',               // Secondary triangle / dashed marker
     strokeWidth: 2.5,
   },
 
-  // Positive: green (#187A6A)
+  // Variance / slip: (#A24335)
+  variance: {
+    stroke: '#A24335',
+    fill: '#A24335',
+    bg: '#FCE8E4',
+    border: '#F6C7BE',
+    text: '#A24335',
+    label: 'Variance / Slip',
+    glyph: '✕',
+    prefix: '-',
+  },
+
+  // Milestones: (#C98925)
+  milestone: {
+    stroke: '#C98925',
+    fill: '#C98925',
+    bg: '#FFF1D3',
+    border: '#F8DDA2',
+    text: '#C98925',
+    label: 'Milestones',
+    glyph: '◆',
+  },
+
+  // Positive: green (#0D8879 / #176B53)
   positive: {
-    stroke: '#187A6A',
-    fill: '#187A6A',
-    bg: '#E8F5F2',
-    border: '#B1DBD2',
-    text: '#105B4F',
+    stroke: '#0D8879',
+    fill: '#0D8879',
+    bg: '#E4F4EC',
+    border: '#BDE4D0',
+    text: '#176B53',
     label: 'Ahead of Schedule',
     glyph: '✓',
     prefix: '+',
   },
 
-  // Warning: amber (#9C5A08)
+  // Warning: amber (#C98925 / #845006)
   warning: {
-    stroke: '#9C5A08',
-    fill: '#9C5A08',
-    bg: '#FDF6ED',
-    border: '#F0D4A6',
-    text: '#7B4504',
+    stroke: '#C98925',
+    fill: '#C98925',
+    bg: '#FFF1D3',
+    border: '#F8DDA2',
+    text: '#845006',
     label: 'Buffer Consumed',
     glyph: '▲',
     prefix: '▲',
   },
 
-  // Critical: red (#B43D47)
+  // Critical / slip: (#A24335)
   critical: {
-    stroke: '#B43D47',
-    fill: '#B43D47',
-    bg: '#FBEFEE',
-    border: '#E8B6BA',
-    text: '#922E37',
+    stroke: '#A24335',
+    fill: '#A24335',
+    bg: '#FCE8E4',
+    border: '#F6C7BE',
+    text: '#A24335',
     label: 'Critical Path Slip',
     glyph: '✕',
     prefix: '-',
   },
 
-  // Neutral / Axis / Grid lines
+  // Neutral / Axis / Grid lines (#DFE7EE)
   neutral: {
-    grid: '#E2EAF0',
-    gridDark: '#172B3A',
+    grid: '#DFE7EE',
+    gridDark: '#142C3F',
     axis: '#526779',
     text: '#526779',
-    heading: '#172B3A',
-    bg: '#F4F7FA',
-    border: '#D7E1E8',
-    dataDate: '#172B3A',
+    heading: '#142C3F',
+    bg: '#F3F6FA',
+    border: '#D8E2EA',
+    dataDate: '#142C3F',
   },
 } as const;
 
@@ -191,8 +214,8 @@ export function getChartStatusDescriptor(
   }
   return {
     color: CHART_TOKENS.planned.text,
-    bg: '#F7F8FA',
-    border: '#D9DEE5',
+    bg: '#F3F6FA',
+    border: '#D8E2EA',
     label: 'In Progress',
     glyph: '●',
     textDisplay: `${value.toFixed(0)}% [● In Progress]`,

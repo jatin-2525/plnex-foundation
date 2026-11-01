@@ -547,9 +547,9 @@ export default function EngineerDashboardPage() {
 
         {/* OFFLINE MODE BANNER */}
         {isOffline && (
-          <div className="p-4 rounded-lg bg-[#FDF6ED] border border-[#F0D4A6] flex items-center justify-between gap-3 text-xs text-[#8C5311]">
+          <div className="p-4 rounded-lg bg-[#FFF1D3] border border-[#F0D4A6] flex items-center justify-between gap-3 text-xs text-[#8C5311]">
             <div className="flex items-center gap-2">
-              <span className="px-2 py-0.5 rounded bg-[#D98B32] text-white font-mono font-bold text-[10px] uppercase">
+              <span className="px-2 py-0.5 rounded bg-[#845006] text-white font-mono font-bold text-[10px] uppercase">
                 OFFLINE MODE
               </span>
               <span className="font-semibold">
@@ -558,7 +558,7 @@ export default function EngineerDashboardPage() {
             </div>
             <Link
               href="/sync"
-              className="px-3 py-1 bg-white border border-[#F0D4A6] rounded text-[#8C5311] hover:bg-[#FDF6ED] font-mono font-bold text-[11px] whitespace-nowrap"
+              className="px-3 py-1 bg-white border border-[#F0D4A6] rounded text-[#8C5311] hover:bg-[#FFF1D3] font-mono font-bold text-[11px] whitespace-nowrap"
             >
               {metrics.pendingUploads} Queued for Sync
             </Link>
@@ -569,21 +569,21 @@ export default function EngineerDashboardPage() {
         {/* HEADER & PRACTICAL FIELD CONTEXT */}
         {/* Site Engineer Greeting, Shift, Location & Primary Action Triggers */}
         {/* ========================================================= */}
-        <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 shadow-xs">
+        <div className="bg-white border border-[#D8E2EA] rounded-lg p-4 sm:p-6 shadow-xs">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
             <div>
               {/* Engineer identity & connection indicator */}
               <div className="flex items-center gap-2 mb-2 flex-wrap">
-                <span className="text-sm sm:text-base font-bold text-[#172033]">
-                  {greeting}, <strong className="text-[#176B87]">{currentUserName}</strong>
+                <span className="text-sm sm:text-base font-bold text-[#142C3F]">
+                  {greeting}, <strong className="text-[#0F6B68]">{currentUserName}</strong>
                 </span>
                 <span className="text-[#7B8798] hidden sm:inline">•</span>
                 {userSession?.role === 'admin' ? (
-                  <span className="px-2 py-0.5 rounded bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0] text-xs font-semibold">
+                  <span className="px-2 py-0.5 rounded bg-[#EAF0F5] text-[#0F6B68] border border-[#D8E2EA] text-xs font-semibold">
                     Admin Previewing Engineer Workspace
                   </span>
                 ) : (
-                  <span className="text-xs font-semibold text-[#596579]">
+                  <span className="text-xs font-semibold text-[#526779]">
                     Site Field Construction Engineer
                   </span>
                 )}
@@ -591,13 +591,13 @@ export default function EngineerDashboardPage() {
                 <div
                   className={`inline-flex items-center gap-2 px-2 py-0.5 rounded-md text-[11px] font-mono font-bold border ${
                     effectiveStatus === 'OFFLINE'
-                      ? 'bg-[#FBEFEE] border-[#E4B0AA] text-[#B5473C]'
-                      : 'bg-[#EDF7F2] border-[#B8DCC9] text-[#2E7D5B]'
+                      ? 'bg-[#FCE8E4] border-[#E4B0AA] text-[#A24335]'
+                      : 'bg-[#E4F4EC] border-[#B8DCC9] text-[#2E7D5B]'
                   }`}
                 >
                   <span
                     className={`w-2 h-2 rounded-full ${
-                      effectiveStatus === 'OFFLINE' ? 'bg-[#B5473C]' : 'bg-[#2E7D5B]'
+                      effectiveStatus === 'OFFLINE' ? 'bg-[#A24335]' : 'bg-[#2E7D5B]'
                     }`}
                   />
                   <span>{effectiveStatus === 'OFFLINE' ? 'Offline' : 'Online'}</span>
@@ -605,23 +605,23 @@ export default function EngineerDashboardPage() {
               </div>
 
               {/* Project title */}
-              <h1 className="text-[28px] sm:text-3xl font-bold text-[#172033] tracking-tight">
+              <h1 className="text-[28px] sm:text-3xl font-bold text-[#142C3F] tracking-tight">
                 {activeProject.name}
               </h1>
 
               {/* Practical site context */}
-              <div className="flex items-center gap-3 text-xs text-[#596579] mt-2 flex-wrap">
+              <div className="flex items-center gap-3 text-xs text-[#526779] mt-2 flex-wrap">
                 <span className="inline-flex items-center gap-1">
-                  <MapPin className="w-3.5 h-3.5 text-[#176B87]" />
-                  <span>Area / Scope: <strong className="text-[#172033]">Unit A & Substation (Multi-Discipline Field Execution)</strong></span>
+                  <MapPin className="w-3.5 h-3.5 text-[#0F6B68]" />
+                  <span>Area / Scope: <strong className="text-[#142C3F]">Unit A & Substation (Multi-Discipline Field Execution)</strong></span>
                 </span>
                 <span>•</span>
                 <span className="inline-flex items-center gap-1">
-                  <Clock className="w-3.5 h-3.5 text-[#596579]" />
-                  <span>Shift: <strong className="text-[#172033]">Shift A (Day)</strong></span>
+                  <Clock className="w-3.5 h-3.5 text-[#526779]" />
+                  <span>Shift: <strong className="text-[#142C3F]">Shift A (Day)</strong></span>
                 </span>
                 <span>•</span>
-                <span>Reporting Date: <strong className="text-[#172033] font-mono">{formatProjectDate(PROJECT_REPORT_DATE, true)}</strong></span>
+                <span>Reporting Date: <strong className="text-[#142C3F] font-mono">{formatProjectDate(PROJECT_REPORT_DATE, true)}</strong></span>
               </div>
             </div>
 
@@ -633,7 +633,7 @@ export default function EngineerDashboardPage() {
                   setSelectedActivityForCapture('PIP-24-002');
                   setIsCaptureModalOpen(true);
                 }}
-                className="flex-1 sm:flex-initial min-h-[44px] px-4 py-2 text-xs sm:text-sm font-bold text-white bg-[#176B87] hover:bg-[#135A72] active:scale-98 rounded-lg shadow-xs transition-all inline-flex items-center justify-center gap-2 cursor-pointer"
+                className="flex-1 sm:flex-initial min-h-[44px] px-4 py-2 text-xs sm:text-sm font-bold text-white bg-[#0F6B68] hover:bg-[#135A72] active:scale-98 rounded-lg shadow-xs transition-all inline-flex items-center justify-center gap-2 cursor-pointer"
               >
                 <Plus className="w-4 h-4 stroke-[2.5]" />
                 <span>CAPTURE UPDATE</span>
@@ -641,9 +641,9 @@ export default function EngineerDashboardPage() {
 
               <Link
                 href="/field/dpr"
-                className="flex-1 sm:flex-initial min-h-[44px] px-4 py-2 text-xs sm:text-sm font-bold text-[#172033] bg-white hover:bg-[#F1F3F5] active:scale-98 border border-[#D9DEE5] rounded-lg transition-all inline-flex items-center justify-center gap-2 cursor-pointer"
+                className="flex-1 sm:flex-initial min-h-[44px] px-4 py-2 text-xs sm:text-sm font-bold text-[#142C3F] bg-white hover:bg-[#EAF0F5] active:scale-98 border border-[#D8E2EA] rounded-lg transition-all inline-flex items-center justify-center gap-2 cursor-pointer"
               >
-                <FileText className="w-4 h-4 text-[#596579]" />
+                <FileText className="w-4 h-4 text-[#526779]" />
                 <span>CONTINUE DPR</span>
               </Link>
             </div>
@@ -655,58 +655,58 @@ export default function EngineerDashboardPage() {
         {/* Real-time counters: Assigned Today, Pending Uploads, Awaiting Review, High Priority */}
         {/* ========================================================= */}
         <section aria-label="Operational status counters" className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-          <div className="bg-white border border-[#D9DEE5] rounded-lg p-3 sm:p-4 shadow-2xs">
-            <div className="flex items-center justify-between text-xs text-[#596579] mb-1">
+          <div className="bg-white border border-[#D8E2EA] rounded-lg p-3 sm:p-4 shadow-2xs">
+            <div className="flex items-center justify-between text-xs text-[#526779] mb-1">
               <span className="font-semibold uppercase tracking-wider text-[11px]">Assigned Today</span>
-              <HardHat className="w-4 h-4 text-[#176B87]" />
+              <HardHat className="w-4 h-4 text-[#0F6B68]" />
             </div>
             <div className="flex items-baseline gap-1.5">
-              <span className="text-2xl font-bold font-mono text-[#172033]">{todayActivities.length}</span>
-              <span className="text-xs text-[#596579]">packages</span>
+              <span className="text-2xl font-bold font-mono text-[#142C3F]">{todayActivities.length}</span>
+              <span className="text-xs text-[#526779]">packages</span>
             </div>
-            <span className="text-[11px] text-[#596579] block mt-1">Direct site execution scope</span>
+            <span className="text-[11px] text-[#526779] block mt-1">Direct site execution scope</span>
           </div>
 
-          <div className="bg-white border border-[#D9DEE5] rounded-lg p-3 sm:p-4 shadow-2xs">
-            <div className="flex items-center justify-between text-xs text-[#596579] mb-1">
+          <div className="bg-white border border-[#D8E2EA] rounded-lg p-3 sm:p-4 shadow-2xs">
+            <div className="flex items-center justify-between text-xs text-[#526779] mb-1">
               <span className="font-semibold uppercase tracking-wider text-[11px]">Pending Uploads</span>
-              <UploadCloud className="w-4 h-4 text-[#D98B32]" />
+              <UploadCloud className="w-4 h-4 text-[#845006]" />
             </div>
             <div className="flex items-baseline gap-1.5">
-              <span className="text-2xl font-bold font-mono text-[#172033]">{metrics.pendingUploads}</span>
-              <span className="text-xs text-[#596579]">in queue</span>
+              <span className="text-2xl font-bold font-mono text-[#142C3F]">{metrics.pendingUploads}</span>
+              <span className="text-xs text-[#526779]">in queue</span>
             </div>
             <span className="text-[11px] text-[#8C5311] block mt-1">
               {isOffline ? 'Queued offline (IndexedDB)' : 'Ready for sync'}
             </span>
           </div>
 
-          <div className="bg-white border border-[#D9DEE5] rounded-lg p-3 sm:p-4 shadow-2xs">
-            <div className="flex items-center justify-between text-xs text-[#596579] mb-1">
+          <div className="bg-white border border-[#D8E2EA] rounded-lg p-3 sm:p-4 shadow-2xs">
+            <div className="flex items-center justify-between text-xs text-[#526779] mb-1">
               <span className="font-semibold uppercase tracking-wider text-[11px]">Awaiting Review</span>
-              <Clock className="w-4 h-4 text-[#176B87]" />
+              <Clock className="w-4 h-4 text-[#0F6B68]" />
             </div>
             <div className="flex items-baseline gap-1.5">
-              <span className="text-2xl font-bold font-mono text-[#172033]">
+              <span className="text-2xl font-bold font-mono text-[#142C3F]">
                 {pendingVerifications.filter((v) => v.status !== 'Verified').length}
               </span>
-              <span className="text-xs text-[#596579]">items</span>
+              <span className="text-xs text-[#526779]">items</span>
             </div>
-            <span className="text-[11px] text-[#596579] block mt-1">Pending QC & lead stamp</span>
+            <span className="text-[11px] text-[#526779] block mt-1">Pending QC & lead stamp</span>
           </div>
 
-          <div className="bg-white border border-[#D9DEE5] rounded-lg p-3 sm:p-4 shadow-2xs">
-            <div className="flex items-center justify-between text-xs text-[#596579] mb-1">
+          <div className="bg-white border border-[#D8E2EA] rounded-lg p-3 sm:p-4 shadow-2xs">
+            <div className="flex items-center justify-between text-xs text-[#526779] mb-1">
               <span className="font-semibold uppercase tracking-wider text-[11px]">High Priority</span>
-              <AlertCircle className="w-4 h-4 text-[#B5473C]" />
+              <AlertCircle className="w-4 h-4 text-[#A24335]" />
             </div>
             <div className="flex items-baseline gap-1.5">
-              <span className="text-2xl font-bold font-mono text-[#B5473C]">
+              <span className="text-2xl font-bold font-mono text-[#A24335]">
                 {todayActivities.filter((a) => a.priority === 'High').length}
               </span>
-              <span className="text-xs text-[#596579]">critical</span>
+              <span className="text-xs text-[#526779]">critical</span>
             </div>
-            <span className="text-[11px] text-[#B5473C] font-medium block mt-1">Immediate fit-up / weld priority</span>
+            <span className="text-[11px] text-[#A24335] font-medium block mt-1">Immediate fit-up / weld priority</span>
           </div>
         </section>
 
@@ -714,33 +714,33 @@ export default function EngineerDashboardPage() {
         {/* 1. TODAY'S WORK (ASSIGNED WORK PACKAGES) */}
         {/* Unified operational board with View Mode switcher (Cards vs Table) */}
         {/* ========================================================= */}
-        <section aria-labelledby="todays-work-heading" className="bg-white border border-[#D9DEE5] border-l-4 border-l-[#176B87] rounded-lg p-4 sm:p-6 shadow-xs space-y-4">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D9DEE5] gap-3">
+        <section aria-labelledby="todays-work-heading" className="bg-white border border-[#D8E2EA] border-l-4 border-l-[#0F6B68] rounded-lg p-4 sm:p-6 shadow-xs space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D8E2EA] gap-3">
             <div>
               <div className="flex items-center gap-2 flex-wrap">
-                <HardHat className="w-5 h-5 text-[#176B87]" />
-                <h2 id="todays-work-heading" className="text-base sm:text-lg font-bold text-[#172033] tracking-tight">
+                <HardHat className="w-5 h-5 text-[#0F6B68]" />
+                <h2 id="todays-work-heading" className="text-base sm:text-lg font-bold text-[#142C3F] tracking-tight">
                   Today&apos;s Work Assignments
                 </h2>
-                <span className="px-2 py-0.5 rounded bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0] text-xs font-mono font-bold">
+                <span className="px-2 py-0.5 rounded bg-[#EAF0F5] text-[#0F6B68] border border-[#D8E2EA] text-xs font-mono font-bold">
                   {todayActivities.length} PACKAGES ASSIGNED
                 </span>
               </div>
-              <p className="text-xs text-[#596579] mt-0.5">
+              <p className="text-xs text-[#526779] mt-0.5">
                 Work packages scheduled for site execution, fit-up verification, and welding logging today.
               </p>
             </div>
 
             {/* Filter pills and View Mode Switcher */}
             <div className="flex items-center gap-2 self-start sm:self-center flex-wrap">
-              <div className="flex items-center gap-1 bg-[#F1F3F5] p-1 rounded-md">
+              <div className="flex items-center gap-1 bg-[#EAF0F5] p-1 rounded-md">
                 <button
                   type="button"
                   onClick={() => setActivityFilter('all')}
                   className={`px-2.5 py-1 text-xs font-semibold rounded ${
                     activityFilter === 'all'
-                      ? 'bg-white text-[#176B87] shadow-2xs'
-                      : 'text-[#596579] hover:text-[#172033]'
+                      ? 'bg-white text-[#0F6B68] shadow-2xs'
+                      : 'text-[#526779] hover:text-[#142C3F]'
                   }`}
                 >
                   All ({todayActivities.length})
@@ -750,8 +750,8 @@ export default function EngineerDashboardPage() {
                   onClick={() => setActivityFilter('needs-update')}
                   className={`px-2.5 py-1 text-xs font-semibold rounded ${
                     activityFilter === 'needs-update'
-                      ? 'bg-[#D98B32] text-white'
-                      : 'text-[#596579] hover:text-[#172033]'
+                      ? 'bg-[#845006] text-white'
+                      : 'text-[#526779] hover:text-[#142C3F]'
                   }`}
                 >
                   Needs Update ({updatesRequiredCount})
@@ -762,7 +762,7 @@ export default function EngineerDashboardPage() {
                   className={`px-2.5 py-1 text-xs font-semibold rounded ${
                     activityFilter === 'completed'
                       ? 'bg-[#2E7D5B] text-white'
-                      : 'text-[#596579] hover:text-[#172033]'
+                      : 'text-[#526779] hover:text-[#142C3F]'
                   }`}
                 >
                   Done ({completedActivitiesCount})
@@ -770,14 +770,14 @@ export default function EngineerDashboardPage() {
               </div>
 
               {/* View Toggle */}
-              <div className="flex items-center gap-1 border border-[#D9DEE5] p-0.5 rounded-md">
+              <div className="flex items-center gap-1 border border-[#D8E2EA] p-0.5 rounded-md">
                 <button
                   type="button"
                   onClick={() => setViewMode('cards')}
                   className={`px-2 py-1 text-xs font-semibold rounded ${
                     viewMode === 'cards'
-                      ? 'bg-[#176B87] text-white'
-                      : 'text-[#596579] hover:text-[#172033]'
+                      ? 'bg-[#0F6B68] text-white'
+                      : 'text-[#526779] hover:text-[#142C3F]'
                   }`}
                 >
                   Cards
@@ -787,8 +787,8 @@ export default function EngineerDashboardPage() {
                   onClick={() => setViewMode('table')}
                   className={`px-2 py-1 text-xs font-semibold rounded ${
                     viewMode === 'table'
-                      ? 'bg-[#176B87] text-white'
-                      : 'text-[#596579] hover:text-[#172033]'
+                      ? 'bg-[#0F6B68] text-white'
+                      : 'text-[#526779] hover:text-[#142C3F]'
                   }`}
                 >
                   Table
@@ -805,24 +805,24 @@ export default function EngineerDashboardPage() {
                   key={act.id}
                   className={`p-4 rounded-lg border bg-white transition-all shadow-2xs flex flex-col justify-between space-y-3 group ${
                     act.priority === 'High'
-                      ? 'border-[#E4B0AA] border-l-4 border-l-[#B5473C]'
-                      : 'border-[#D9DEE5] hover:border-[#176B87]'
+                      ? 'border-[#E4B0AA] border-l-4 border-l-[#A24335]'
+                      : 'border-[#D8E2EA] hover:border-[#0F6B68]'
                   }`}
                 >
                   <div className="space-y-2">
                     {/* Top Bar: Activity ID, Priority & Status */}
                     <div className="flex items-center justify-between gap-2">
                       <div className="flex items-center gap-1.5">
-                        <span className="font-mono text-xs font-bold text-[#176B87] px-2 py-0.5 rounded bg-[#EDF5F8] border border-[#B3CBE0]">
+                        <span className="font-mono text-xs font-bold text-[#0F6B68] px-2 py-0.5 rounded bg-[#EAF0F5] border border-[#D8E2EA]">
                           {act.id}
                         </span>
                         <span
                           className={`text-[10px] font-mono font-bold uppercase px-1.5 py-0.5 rounded border ${
                             act.priority === 'High'
-                              ? 'bg-[#FBEFEE] text-[#B5473C] border-[#E4B0AA]'
+                              ? 'bg-[#FCE8E4] text-[#A24335] border-[#E4B0AA]'
                               : act.priority === 'Medium'
-                              ? 'bg-[#FDF6ED] text-[#8C5311] border-[#F0D4A6]'
-                              : 'bg-[#F1F3F5] text-[#596579] border-[#D9DEE5]'
+                              ? 'bg-[#FFF1D3] text-[#8C5311] border-[#F0D4A6]'
+                              : 'bg-[#EAF0F5] text-[#526779] border-[#D8E2EA]'
                           }`}
                         >
                           {act.priority} Priority
@@ -832,27 +832,27 @@ export default function EngineerDashboardPage() {
                     </div>
 
                     {/* Title */}
-                    <h3 className="text-xs sm:text-sm font-bold text-[#172033] leading-snug">
+                    <h3 className="text-xs sm:text-sm font-bold text-[#142C3F] leading-snug">
                       {act.name}
                     </h3>
 
                     {/* Operational Context: Area & Discipline */}
-                    <div className="flex items-center gap-2 text-xs text-[#596579] flex-wrap">
+                    <div className="flex items-center gap-2 text-xs text-[#526779] flex-wrap">
                       <span className="inline-flex items-center gap-1">
-                        <MapPin className="w-3 h-3 text-[#176B87]" />
+                        <MapPin className="w-3 h-3 text-[#0F6B68]" />
                         <span>{act.area}</span>
                       </span>
                       <span>•</span>
-                      <span className="font-medium text-[#172033]">{act.discipline}</span>
+                      <span className="font-medium text-[#142C3F]">{act.discipline}</span>
                     </div>
 
                     {/* Progress Bar with highlighted delta */}
                     <div className="space-y-1 pt-1">
                       <div className="flex items-center justify-between text-[11px] font-mono">
-                        <span className="font-bold text-[#172033]">
-                          Progress: <strong className="text-[#176B87]">{act.actualProgress}%</strong>
+                        <span className="font-bold text-[#142C3F]">
+                          Progress: <strong className="text-[#0F6B68]">{act.actualProgress}%</strong>
                         </span>
-                        <span className={act.actualProgress < act.plannedProgress ? 'text-[#B5473C] font-bold' : 'text-[#596579]'}>
+                        <span className={act.actualProgress < act.plannedProgress ? 'text-[#A24335] font-bold' : 'text-[#526779]'}>
                           Target: {act.plannedProgress}% {act.actualProgress < act.plannedProgress ? '(Delayed)' : ''}
                         </span>
                       </div>
@@ -867,14 +867,14 @@ export default function EngineerDashboardPage() {
                   </div>
 
                   {/* Card Action & Last Update */}
-                  <div className="flex items-center justify-between pt-2 border-t border-[#F1F3F5] text-xs">
+                  <div className="flex items-center justify-between pt-2 border-t border-[#EAF0F5] text-xs">
                     <span className="text-[11px] font-mono text-[#7B8798]">
                       {act.lastUpdateText}
                     </span>
                     <button
                       type="button"
                       onClick={() => handleOpenCaptureForActivity(act.id)}
-                      className="min-h-[36px] px-3 py-1.5 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] active:scale-95 rounded-md transition-all inline-flex items-center gap-1.5 shadow-2xs cursor-pointer"
+                      className="min-h-[36px] px-3 py-1.5 text-xs font-bold text-white bg-[#0F6B68] hover:bg-[#135A72] active:scale-95 rounded-md transition-all inline-flex items-center gap-1.5 shadow-2xs cursor-pointer"
                     >
                       <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
                       <span>Capture Update</span>
@@ -885,9 +885,9 @@ export default function EngineerDashboardPage() {
             </div>
           ) : (
             /* COMPACT TABLE VIEW */
-            <div className="overflow-x-auto border border-[#D9DEE5] rounded-lg">
+            <div className="overflow-x-auto border border-[#D8E2EA] rounded-lg">
               <table className="w-full min-w-[700px] text-left border-collapse text-xs">
-                <thead className="sticky top-0 z-10 bg-[#F7F8FA] border-b border-[#D9DEE5] text-[#596579] font-semibold text-[11px] uppercase tracking-wider h-10">
+                <thead className="sticky top-0 z-10 bg-[#F3F6FA] border-b border-[#D8E2EA] text-[#526779] font-semibold text-[11px] uppercase tracking-wider h-10">
                   <tr>
                     <th className="py-2.5 px-3">Activity</th>
                     <th className="py-2.5 px-3">Area</th>
@@ -896,30 +896,30 @@ export default function EngineerDashboardPage() {
                     <th className="py-2.5 px-3 text-right">Action</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#D9DEE5]/60 text-[#172033]">
+                <tbody className="divide-y divide-[#D8E2EA]/60 text-[#142C3F]">
                   {filteredActivities.map((act) => (
                     <tr key={act.id} className="h-10 hover:bg-[#F9FAFC] transition-colors">
                       <td className="py-2.5 px-3 font-medium">
                         <div className="flex items-center gap-2">
-                          <span className="font-mono font-bold text-[#176B87]">{act.id}</span>
-                          <span className="text-[#172033] font-semibold">{act.name}</span>
+                          <span className="font-mono font-bold text-[#0F6B68]">{act.id}</span>
+                          <span className="text-[#142C3F] font-semibold">{act.name}</span>
                           {act.priority === 'High' && (
-                            <span className="text-[9px] font-mono font-bold px-1 rounded bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
+                            <span className="text-[9px] font-mono font-bold px-1 rounded bg-[#FCE8E4] text-[#A24335] border border-[#E4B0AA]">
                               HIGH
                             </span>
                           )}
                         </div>
-                        <span className="text-[11px] text-[#596579]">{act.discipline}</span>
+                        <span className="text-[11px] text-[#526779]">{act.discipline}</span>
                       </td>
-                      <td className="py-2.5 px-3 text-[#596579] whitespace-nowrap">{act.area}</td>
+                      <td className="py-2.5 px-3 text-[#526779] whitespace-nowrap">{act.area}</td>
                       <td className="py-2.5 px-3 whitespace-nowrap">
                         <StatusBadge status={act.status} size="sm" />
                       </td>
                       <td className="py-2.5 px-3">
                         <div className="space-y-1">
                           <div className="flex justify-between font-mono text-[11px]">
-                            <span className="font-bold text-[#172033]">{act.actualProgress}%</span>
-                            <span className="text-[#596579]">Target: {act.plannedProgress}%</span>
+                            <span className="font-bold text-[#142C3F]">{act.actualProgress}%</span>
+                            <span className="text-[#526779]">Target: {act.plannedProgress}%</span>
                           </div>
                           <ProgressBar
                             actual={act.actualProgress}
@@ -934,7 +934,7 @@ export default function EngineerDashboardPage() {
                         <button
                           type="button"
                           onClick={() => handleOpenCaptureForActivity(act.id)}
-                          className="px-2.5 py-1 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] rounded transition-colors inline-flex items-center gap-1 shadow-2xs cursor-pointer"
+                          className="px-2.5 py-1 text-xs font-bold text-white bg-[#0F6B68] hover:bg-[#135A72] rounded transition-colors inline-flex items-center gap-1 shadow-2xs cursor-pointer"
                         >
                           <Plus className="w-3 h-3 stroke-[2.5]" />
                           <span>Capture</span>
@@ -954,7 +954,7 @@ export default function EngineerDashboardPage() {
         {/* ========================================================= */}
         <section aria-labelledby="quick-actions-heading" className="space-y-2">
           <div className="flex items-center justify-between">
-            <h2 id="quick-actions-heading" className="text-xs font-semibold uppercase tracking-wider text-[#596579]">
+            <h2 id="quick-actions-heading" className="text-xs font-semibold uppercase tracking-wider text-[#526779]">
               Fast Field Actions
             </h2>
             <span className="text-[11px] text-[#7B8798] font-mono">
@@ -970,16 +970,16 @@ export default function EngineerDashboardPage() {
                 setSelectedActivityForCapture('PIP-24-002');
                 setIsCaptureModalOpen(true);
               }}
-              className="p-3.5 bg-white hover:bg-[#F9FAFC] border-2 border-[#176B87]/30 hover:border-[#176B87] rounded-lg shadow-2xs text-left transition-all flex items-center gap-3 cursor-pointer group"
+              className="p-3.5 bg-white hover:bg-[#F9FAFC] border-2 border-[#0F6B68]/30 hover:border-[#0F6B68] rounded-lg shadow-2xs text-left transition-all flex items-center gap-3 cursor-pointer group"
             >
-              <div className="w-10 h-10 rounded-lg bg-[#EDF5F8] group-hover:bg-[#176B87] text-[#176B87] group-hover:text-white flex items-center justify-center flex-shrink-0 transition-colors">
+              <div className="w-10 h-10 rounded-lg bg-[#EAF0F5] group-hover:bg-[#0F6B68] text-[#0F6B68] group-hover:text-white flex items-center justify-center flex-shrink-0 transition-colors">
                 <Plus className="w-5 h-5 stroke-[2.5]" />
               </div>
               <div className="min-w-0 flex-1">
-                <span className="text-xs sm:text-sm font-bold text-[#172033] block">
+                <span className="text-xs sm:text-sm font-bold text-[#142C3F] block">
                   Capture Field Work
                 </span>
-                <span className="text-[11px] text-[#596579] block truncate">
+                <span className="text-[11px] text-[#526779] block truncate">
                   Record joints, spools, or fit-up
                 </span>
               </div>
@@ -988,21 +988,21 @@ export default function EngineerDashboardPage() {
             {/* Action 2: Create DPR */}
             <Link
               href="/field/dpr"
-              className="p-3.5 bg-white hover:bg-[#F9FAFC] border border-[#D9DEE5] hover:border-[#D98B32] rounded-lg shadow-2xs text-left transition-all flex items-center gap-3 group"
+              className="p-3.5 bg-white hover:bg-[#F9FAFC] border border-[#D8E2EA] hover:border-[#845006] rounded-lg shadow-2xs text-left transition-all flex items-center gap-3 group"
             >
-              <div className="w-10 h-10 rounded-lg bg-[#FDF6ED] group-hover:bg-[#D98B32] text-[#8C5311] group-hover:text-white flex items-center justify-center flex-shrink-0 transition-colors">
+              <div className="w-10 h-10 rounded-lg bg-[#FFF1D3] group-hover:bg-[#845006] text-[#8C5311] group-hover:text-white flex items-center justify-center flex-shrink-0 transition-colors">
                 <FileText className="w-5 h-5" />
               </div>
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-2">
-                  <span className="text-xs sm:text-sm font-bold text-[#172033]">
+                  <span className="text-xs sm:text-sm font-bold text-[#142C3F]">
                     Create / Edit DPR
                   </span>
-                  <span className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-[#FDF6ED] text-[#8C5311] border border-[#F0D4A6]">
+                  <span className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-[#FFF1D3] text-[#8C5311] border border-[#F0D4A6]">
                     65% Draft
                   </span>
                 </div>
-                <span className="text-[11px] text-[#596579] block truncate">
+                <span className="text-[11px] text-[#526779] block truncate">
                   Continue Shift A daily diary
                 </span>
               </div>
@@ -1021,16 +1021,16 @@ export default function EngineerDashboardPage() {
                 setSelectedActivityForCapture('PIP-24-002');
                 setIsCaptureModalOpen(true);
               }}
-              className="p-3.5 bg-white hover:bg-[#F9FAFC] border border-[#D9DEE5] hover:border-[#176B87] rounded-lg shadow-2xs text-left transition-all flex items-center gap-3 cursor-pointer group"
+              className="p-3.5 bg-white hover:bg-[#F9FAFC] border border-[#D8E2EA] hover:border-[#0F6B68] rounded-lg shadow-2xs text-left transition-all flex items-center gap-3 cursor-pointer group"
             >
-              <div className="w-10 h-10 rounded-lg bg-[#F1F3F5] group-hover:bg-[#176B87] text-[#596579] group-hover:text-white flex items-center justify-center flex-shrink-0 transition-colors">
+              <div className="w-10 h-10 rounded-lg bg-[#EAF0F5] group-hover:bg-[#0F6B68] text-[#526779] group-hover:text-white flex items-center justify-center flex-shrink-0 transition-colors">
                 <Camera className="w-5 h-5" />
               </div>
               <div className="min-w-0 flex-1">
-                <span className="text-xs sm:text-sm font-bold text-[#172033] block">
+                <span className="text-xs sm:text-sm font-bold text-[#142C3F] block">
                   Add Site Evidence
                 </span>
-                <span className="text-[11px] text-[#596579] block truncate">
+                <span className="text-[11px] text-[#526779] block truncate">
                   Attach geotagged photo or certificate
                 </span>
               </div>
@@ -1042,26 +1042,26 @@ export default function EngineerDashboardPage() {
         {/* 3. PENDING VERIFICATION */}
         {/* Highlighted items awaiting inspection sign-off */}
         {/* ========================================================= */}
-        <section aria-labelledby="pending-verification-heading" className="bg-white border border-[#D9DEE5] border-l-4 border-l-[#D98B32] rounded-lg p-4 sm:p-6 shadow-xs space-y-4">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D9DEE5] gap-2">
+        <section aria-labelledby="pending-verification-heading" className="bg-white border border-[#D8E2EA] border-l-4 border-l-[#845006] rounded-lg p-4 sm:p-6 shadow-xs space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D8E2EA] gap-2">
             <div>
               <div className="flex items-center gap-2">
-                <FileCheck className="w-5 h-5 text-[#D98B32]" />
-                <h2 id="pending-verification-heading" className="text-base sm:text-lg font-bold text-[#172033] tracking-tight">
+                <FileCheck className="w-5 h-5 text-[#845006]" />
+                <h2 id="pending-verification-heading" className="text-base sm:text-lg font-bold text-[#142C3F] tracking-tight">
                   Pending Verification & Inspection Sign-off
                 </h2>
               </div>
-              <p className="text-xs text-[#596579] mt-0.5">
+              <p className="text-xs text-[#526779] mt-0.5">
                 Site submissions awaiting quality stamp, NDT report, or supervisor sign-off before schedule twin credit.
               </p>
             </div>
 
-            <span className="text-xs font-mono text-[#596579] self-start sm:self-center">
+            <span className="text-xs font-mono text-[#526779] self-start sm:self-center">
               {pendingVerifications.filter((v) => v.status !== 'Verified').length} Awaiting Sign-off
             </span>
           </div>
 
-          <div className="divide-y divide-[#D9DEE5]">
+          <div className="divide-y divide-[#D8E2EA]">
             {pendingVerifications.map((item) => (
               <div
                 key={item.id}
@@ -1069,19 +1069,19 @@ export default function EngineerDashboardPage() {
               >
                 <div className="min-w-0 flex-1 space-y-1">
                   <div className="flex items-center gap-2 flex-wrap">
-                    <span className="font-bold text-[#172033]">{item.item}</span>
+                    <span className="font-bold text-[#142C3F]">{item.item}</span>
                     <span className="text-[#7B8798] font-mono">•</span>
-                    <span className="text-xs text-[#596579]">
-                      Suggested: <strong className="font-mono text-[#176B87]">{item.activityId}</strong>
+                    <span className="text-xs text-[#526779]">
+                      Suggested: <strong className="font-mono text-[#0F6B68]">{item.activityId}</strong>
                     </span>
                     <span className="text-[11px] text-[#7B8798] font-mono">• {item.submittedAt}</span>
                   </div>
-                  <p className="text-[11px] text-[#596579]">
+                  <p className="text-[11px] text-[#526779]">
                     {item.notes}
                   </p>
-                  <div className="flex items-center gap-2 text-[11px] text-[#596579] flex-wrap">
-                    <span>Reviewer: <strong className="text-[#172033]">{item.assignedReviewer}</strong> ({item.reviewerRole})</span>
-                    <span>• Area: <strong className="text-[#172033]">{item.area}</strong></span>
+                  <div className="flex items-center gap-2 text-[11px] text-[#526779] flex-wrap">
+                    <span>Reviewer: <strong className="text-[#142C3F]">{item.assignedReviewer}</strong> ({item.reviewerRole})</span>
+                    <span>• Area: <strong className="text-[#142C3F]">{item.area}</strong></span>
                   </div>
                 </div>
 
@@ -1091,7 +1091,7 @@ export default function EngineerDashboardPage() {
 
                   <Link
                     href={`/review?activityId=${item.activityId}`}
-                    className="px-3 py-1 text-xs font-semibold text-[#176B87] hover:bg-[#EDF5F8] border border-[#B3CBE0] rounded transition-colors inline-flex items-center gap-1 cursor-pointer"
+                    className="px-3 py-1 text-xs font-semibold text-[#0F6B68] hover:bg-[#EAF0F5] border border-[#D8E2EA] rounded transition-colors inline-flex items-center gap-1 cursor-pointer"
                   >
                     <span>Review</span>
                     <ChevronRight className="w-3.5 h-3.5" />
@@ -1106,16 +1106,16 @@ export default function EngineerDashboardPage() {
         {/* 4. RECENT EXECUTION EVENTS (SITE EVENT LOG) */}
         {/* Chronological site observations, logs, and sync states */}
         {/* ========================================================= */}
-        <section aria-labelledby="recent-events-heading" className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 shadow-xs space-y-4">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D9DEE5] gap-2">
+        <section aria-labelledby="recent-events-heading" className="bg-white border border-[#D8E2EA] rounded-lg p-4 sm:p-6 shadow-xs space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D8E2EA] gap-2">
             <div>
               <div className="flex items-center gap-2">
-                <Clock className="w-5 h-5 text-[#176B87]" />
-                <h2 id="recent-events-heading" className="text-base sm:text-lg font-bold text-[#172033] tracking-tight">
+                <Clock className="w-5 h-5 text-[#0F6B68]" />
+                <h2 id="recent-events-heading" className="text-base sm:text-lg font-bold text-[#142C3F] tracking-tight">
                   Recent Execution Log & Observations
                 </h2>
               </div>
-              <p className="text-xs text-[#596579] mt-0.5">
+              <p className="text-xs text-[#526779] mt-0.5">
                 Execution events recorded from the field today with local IndexedDB queue status.
               </p>
             </div>
@@ -1125,7 +1125,7 @@ export default function EngineerDashboardPage() {
                 type="button"
                 onClick={handleSyncNow}
                 disabled={isSyncing || metrics.pendingUploads === 0}
-                className="px-3 py-1.5 text-xs font-bold text-[#172033] bg-white border border-[#D9DEE5] hover:bg-[#F1F3F5] disabled:opacity-50 rounded transition-colors inline-flex items-center gap-2 shadow-2xs cursor-pointer"
+                className="px-3 py-1.5 text-xs font-bold text-[#142C3F] bg-white border border-[#D8E2EA] hover:bg-[#EAF0F5] disabled:opacity-50 rounded transition-colors inline-flex items-center gap-2 shadow-2xs cursor-pointer"
               >
                 <RefreshCw className={`w-3.5 h-3.5 ${isSyncing ? 'animate-spin' : ''}`} />
                 <span>{isSyncing ? 'Syncing...' : `Sync Queue (${metrics.pendingUploads})`}</span>
@@ -1133,7 +1133,7 @@ export default function EngineerDashboardPage() {
             </div>
           </div>
 
-          <div className="divide-y divide-[#D9DEE5]">
+          <div className="divide-y divide-[#D8E2EA]">
             {todaySubmissions.map((sub) => (
               <div
                 key={sub.id}
@@ -1141,17 +1141,17 @@ export default function EngineerDashboardPage() {
               >
                 <div className="min-w-0 flex-1 space-y-0.5">
                   <div className="flex items-center gap-2 flex-wrap">
-                    <span className="font-mono font-bold text-[#176B87]">{sub.activityId}</span>
-                    <span className="font-semibold text-[#172033] truncate max-w-xs">{sub.activityName}</span>
+                    <span className="font-mono font-bold text-[#0F6B68]">{sub.activityId}</span>
+                    <span className="font-semibold text-[#142C3F] truncate max-w-xs">{sub.activityName}</span>
                     <span className="text-[11px] text-[#7B8798] font-mono">• {sub.time}</span>
                   </div>
-                  <p className="text-[11px] text-[#596579] truncate max-w-xl">
+                  <p className="text-[11px] text-[#526779] truncate max-w-xl">
                     &ldquo;{sub.statement}&rdquo;
                   </p>
                   <div className="flex items-center gap-2 text-[10px] font-mono">
-                    <span className="text-[#172033] font-bold">{sub.quantity}</span>
+                    <span className="text-[#142C3F] font-bold">{sub.quantity}</span>
                     <span>•</span>
-                    <span className="text-[#596579]">{sub.discipline} ({sub.area})</span>
+                    <span className="text-[#526779]">{sub.discipline} ({sub.area})</span>
                     <span>•</span>
                     {sub.isSynced ? (
                       <span className="text-[#2E7D5B] font-bold flex items-center gap-0.5">
@@ -1159,7 +1159,7 @@ export default function EngineerDashboardPage() {
                         Server confirmed
                       </span>
                     ) : (
-                      <span className="text-[#8C5311] font-bold bg-[#FDF6ED] px-1.5 py-0.5 rounded border border-[#F0D4A6]">
+                      <span className="text-[#8C5311] font-bold bg-[#FFF1D3] px-1.5 py-0.5 rounded border border-[#F0D4A6]">
                         Saved locally
                       </span>
                     )}
@@ -1170,7 +1170,7 @@ export default function EngineerDashboardPage() {
                   <button
                     type="button"
                     onClick={() => setSelectedDetailUpdate(sub)}
-                    className="px-3 py-1 text-xs font-medium text-[#176B87] hover:bg-[#EDF5F8] border border-[#B3CBE0] rounded transition-colors inline-flex items-center gap-1 cursor-pointer"
+                    className="px-3 py-1 text-xs font-medium text-[#0F6B68] hover:bg-[#EAF0F5] border border-[#D8E2EA] rounded transition-colors inline-flex items-center gap-1 cursor-pointer"
                   >
                     <Eye className="w-3.5 h-3.5" />
                     <span>View Details</span>
@@ -1185,16 +1185,16 @@ export default function EngineerDashboardPage() {
         {/* 5. EVIDENCE (GEOTAGGED PHOTOS & TEST CERTIFICATES) */}
         {/* Visual gallery grid of site photos and inspection proofs */}
         {/* ========================================================= */}
-        <section aria-labelledby="evidence-heading" className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 shadow-xs space-y-4">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D9DEE5] gap-2">
+        <section aria-labelledby="evidence-heading" className="bg-white border border-[#D8E2EA] rounded-lg p-4 sm:p-6 shadow-xs space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D8E2EA] gap-2">
             <div>
               <div className="flex items-center gap-2">
-                <ShieldCheck className="w-5 h-5 text-[#176B87]" />
-                <h2 id="evidence-heading" className="text-base sm:text-lg font-bold text-[#172033] tracking-tight">
+                <ShieldCheck className="w-5 h-5 text-[#0F6B68]" />
+                <h2 id="evidence-heading" className="text-base sm:text-lg font-bold text-[#142C3F] tracking-tight">
                   Field Evidence & Site Media
                 </h2>
               </div>
-              <p className="text-xs text-[#596579] mt-0.5">
+              <p className="text-xs text-[#526779] mt-0.5">
                 Geotagged site photography, weld inspection cards, and test records.
               </p>
             </div>
@@ -1202,7 +1202,7 @@ export default function EngineerDashboardPage() {
             <div className="flex items-center gap-2 self-start sm:self-center">
               <Link
                 href="/evidence"
-                className="px-3 py-1.5 text-xs font-semibold text-[#176B87] hover:bg-[#EDF5F8] border border-[#B3CBE0] rounded transition-colors inline-flex items-center gap-1 cursor-pointer"
+                className="px-3 py-1.5 text-xs font-semibold text-[#0F6B68] hover:bg-[#EAF0F5] border border-[#D8E2EA] rounded transition-colors inline-flex items-center gap-1 cursor-pointer"
               >
                 <span>Evidence Vault</span>
                 <ChevronRight className="w-3.5 h-3.5" />
@@ -1215,35 +1215,35 @@ export default function EngineerDashboardPage() {
               <div
                 key={ev.id}
                 onClick={() => setSelectedEvidence(ev)}
-                className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] hover:border-[#176B87] rounded-lg transition-all cursor-pointer space-y-2 flex flex-col justify-between"
+                className="p-3 bg-[#F3F6FA] border border-[#D8E2EA] hover:border-[#0F6B68] rounded-lg transition-all cursor-pointer space-y-2 flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-center justify-between mb-2">
-                    <span className="font-mono text-[10px] font-bold text-[#176B87] px-1.5 py-0.5 bg-white border border-[#D9DEE5] rounded">
+                    <span className="font-mono text-[10px] font-bold text-[#0F6B68] px-1.5 py-0.5 bg-white border border-[#D8E2EA] rounded">
                       {ev.activityId}
                     </span>
                     <StatusBadge status={ev.verified ? 'Verified' : 'Pending Review'} size="xs" />
                   </div>
 
-                  <h3 className="text-xs font-bold text-[#172033] line-clamp-1">
+                  <h3 className="text-xs font-bold text-[#142C3F] line-clamp-1">
                     {ev.title}
                   </h3>
-                  <p className="text-[11px] text-[#596579] mt-0.5 line-clamp-2">
+                  <p className="text-[11px] text-[#526779] mt-0.5 line-clamp-2">
                     {ev.notes}
                   </p>
                 </div>
 
-                <div className="pt-2 border-t border-[#D9DEE5] space-y-1 text-[10px] font-mono text-[#7B8798]">
+                <div className="pt-2 border-t border-[#D8E2EA] space-y-1 text-[10px] font-mono text-[#7B8798]">
                   <div className="flex items-center justify-between">
                     <span className="truncate">{ev.fileName}</span>
-                    <span className="text-[#176B87] font-semibold underline">Inspect</span>
+                    <span className="text-[#0F6B68] font-semibold underline">Inspect</span>
                   </div>
-                  <div className="flex items-center justify-between gap-1 text-[#596579]">
+                  <div className="flex items-center justify-between gap-1 text-[#526779]">
                     <span className="truncate inline-flex items-center gap-1">
-                      <MapPin className="w-3 h-3 text-[#176B87]" />
+                      <MapPin className="w-3 h-3 text-[#0F6B68]" />
                       <span>{ev.gps}</span>
                     </span>
-                    <span className="text-[#172033] font-medium whitespace-nowrap">{ev.timestamp}</span>
+                    <span className="text-[#142C3F] font-medium whitespace-nowrap">{ev.timestamp}</span>
                   </div>
                 </div>
               </div>
@@ -1254,33 +1254,33 @@ export default function EngineerDashboardPage() {
         {/* ========================================================= */}
         {/* 6. DAILY PROGRESS & SHIFT SUMMARY (Expandable Shift Context) */}
         {/* ========================================================= */}
-        <details className="group bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 shadow-xs space-y-4">
+        <details className="group bg-white border border-[#D8E2EA] rounded-lg p-4 sm:p-6 shadow-xs space-y-4">
           <summary className="flex flex-col sm:flex-row sm:items-center justify-between cursor-pointer list-none select-none gap-2">
             <div>
               <div className="flex items-center gap-2">
-                <FileSpreadsheet className="w-5 h-5 text-[#176B87]" />
-                <h2 id="shift-summary-heading" className="text-base sm:text-lg font-bold text-[#172033] tracking-tight">
+                <FileSpreadsheet className="w-5 h-5 text-[#0F6B68]" />
+                <h2 id="shift-summary-heading" className="text-base sm:text-lg font-bold text-[#142C3F] tracking-tight">
                   Daily Progress & Shift Summary
                 </h2>
-                <span className="text-xs px-2 py-0.5 rounded bg-[#EDF5F8] text-[#176B87] font-semibold hidden sm:inline">
+                <span className="text-xs px-2 py-0.5 rounded bg-[#EAF0F5] text-[#0F6B68] font-semibold hidden sm:inline">
                   Weather • Manpower • Equipment • Handover
                 </span>
               </div>
-              <p className="text-xs text-[#596579] mt-0.5">
+              <p className="text-xs text-[#526779] mt-0.5">
                 Site staffing, equipment utilization, work permits, and cross-shift handover notes.
               </p>
             </div>
             <div className="flex items-center gap-3 self-start sm:self-center">
-              <span className="text-xs font-bold text-[#176B87] group-open:hidden">Expand Shift Details &darr;</span>
-              <span className="text-xs font-bold text-[#176B87] hidden group-open:inline">Collapse Shift Details &uarr;</span>
+              <span className="text-xs font-bold text-[#0F6B68] group-open:hidden">Expand Shift Details &darr;</span>
+              <span className="text-xs font-bold text-[#0F6B68] hidden group-open:inline">Collapse Shift Details &uarr;</span>
             </div>
           </summary>
 
-          <div className="pt-3 border-t border-[#D9DEE5] space-y-4">
+          <div className="pt-3 border-t border-[#D8E2EA] space-y-4">
             <div className="flex justify-end">
               <Link
                 href="/field/dpr"
-                className="text-xs font-semibold text-[#176B87] hover:underline inline-flex items-center gap-1"
+                className="text-xs font-semibold text-[#0F6B68] hover:underline inline-flex items-center gap-1"
               >
                 <span>Open Full Daily Progress Report (DPR)</span>
                 <ChevronRight className="w-3.5 h-3.5" />
@@ -1289,80 +1289,80 @@ export default function EngineerDashboardPage() {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
               {/* Shift Logistics & Permits */}
-              <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg space-y-2">
-                <span className="text-[11px] font-bold uppercase tracking-wider text-[#596579] block">
+              <div className="p-3 bg-[#F3F6FA] border border-[#D8E2EA] rounded-lg space-y-2">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-[#526779] block">
                   Shift Logistics & Permits
                 </span>
                 <div className="space-y-1.5 text-xs">
                   <div className="flex justify-between">
-                    <span className="text-[#596579]">Shift Schedule:</span>
-                    <span className="font-semibold text-[#172033]">Shift A (07:00 - 15:30 IST)</span>
+                    <span className="text-[#526779]">Shift Schedule:</span>
+                    <span className="font-semibold text-[#142C3F]">Shift A (07:00 - 15:30 IST)</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-[#596579]">Hot Work Permit:</span>
+                    <span className="text-[#526779]">Hot Work Permit:</span>
                     <span className="font-mono text-[#2E7D5B] font-semibold">#HWP-2026-0918 (Active)</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-[#596579]">Site Weather:</span>
-                    <span className="text-[#172033] font-medium">Clear · 28°C · Wind 6 km/h</span>
+                    <span className="text-[#526779]">Site Weather:</span>
+                    <span className="text-[#142C3F] font-medium">Clear · 28°C · Wind 6 km/h</span>
                   </div>
                 </div>
               </div>
 
               {/* Manpower & Resources */}
-              <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg space-y-2">
-                <span className="text-[11px] font-bold uppercase tracking-wider text-[#596579] block">
+              <div className="p-3 bg-[#F3F6FA] border border-[#D8E2EA] rounded-lg space-y-2">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-[#526779] block">
                   Manpower On Site
                 </span>
                 <div className="space-y-1.5 text-xs">
                   <div className="flex justify-between">
-                    <span className="text-[#596579]">Pipefitters & Fabricators:</span>
-                    <span className="font-mono font-bold text-[#172033]">18 personnel</span>
+                    <span className="text-[#526779]">Pipefitters & Fabricators:</span>
+                    <span className="font-mono font-bold text-[#142C3F]">18 personnel</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-[#596579]">6G Certified Welders:</span>
-                    <span className="font-mono font-bold text-[#172033]">6 personnel</span>
+                    <span className="text-[#526779]">6G Certified Welders:</span>
+                    <span className="font-mono font-bold text-[#142C3F]">6 personnel</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-[#596579]">QC & NDT Level II:</span>
-                    <span className="font-mono font-bold text-[#172033]">2 inspectors</span>
+                    <span className="text-[#526779]">QC & NDT Level II:</span>
+                    <span className="font-mono font-bold text-[#142C3F]">2 inspectors</span>
                   </div>
                 </div>
               </div>
 
               {/* Active Plant & Equipment */}
-              <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg space-y-2">
-                <span className="text-[11px] font-bold uppercase tracking-wider text-[#596579] block">
+              <div className="p-3 bg-[#F3F6FA] border border-[#D8E2EA] rounded-lg space-y-2">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-[#526779] block">
                   Plant & Heavy Equipment
                 </span>
                 <div className="space-y-1.5 text-xs">
                   <div className="flex justify-between">
-                    <span className="text-[#596579]">Hydraulic Mobile Crane:</span>
-                    <span className="font-semibold text-[#172033]">1x 50-Ton (Operating)</span>
+                    <span className="text-[#526779]">Hydraulic Mobile Crane:</span>
+                    <span className="font-semibold text-[#142C3F]">1x 50-Ton (Operating)</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-[#596579]">Inverter TIG Welding Sets:</span>
-                    <span className="font-semibold text-[#172033]">4x 400A Active</span>
+                    <span className="text-[#526779]">Inverter TIG Welding Sets:</span>
+                    <span className="font-semibold text-[#142C3F]">4x 400A Active</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-[#596579]">Hydrostatic Test Skid:</span>
-                    <span className="font-semibold text-[#172033]">1x 250-bar (Standby)</span>
+                    <span className="text-[#526779]">Hydrostatic Test Skid:</span>
+                    <span className="font-semibold text-[#142C3F]">1x 250-bar (Standby)</span>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* Cross-Shift Handover Note */}
-            <div className="p-3 bg-[#EDF5F8] border border-[#B3CBE0] rounded-lg text-xs flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <div className="p-3 bg-[#EAF0F5] border border-[#D8E2EA] rounded-lg text-xs flex flex-col sm:flex-row sm:items-center justify-between gap-2">
               <div className="space-y-0.5">
-                <span className="font-bold text-[#176B87] uppercase text-[10px] tracking-wider block">
+                <span className="font-bold text-[#0F6B68] uppercase text-[10px] tracking-wider block">
                   Shift Handover Note
                 </span>
-                <p className="text-[#172033]">
+                <p className="text-[#142C3F]">
                   Shift A completed root & hot passes on Line 24 joints #05–#08. Joints handed over to Shift B for radiographic testing (RT) and capping passes.
                 </p>
               </div>
-              <span className="text-[11px] font-mono text-[#596579] whitespace-nowrap self-start sm:self-center">
+              <span className="text-[11px] font-mono text-[#526779] whitespace-nowrap self-start sm:self-center">
                 Logged by: D. Borah
               </span>
             </div>
@@ -1372,23 +1372,23 @@ export default function EngineerDashboardPage() {
         {/* ========================================================= */}
         {/* MOBILE STICKY BOTTOM ACTION BAR (One-Hand Reachable) */}
         {/* ========================================================= */}
-        <div className="fixed bottom-0 left-0 right-0 p-3 bg-white border-t border-[#D9DEE5] md:hidden shadow-lg z-30 flex items-center gap-2">
+        <div className="fixed bottom-0 left-0 right-0 p-3 bg-white border-t border-[#D8E2EA] md:hidden shadow-lg z-30 flex items-center gap-2">
           <button
             type="button"
             onClick={() => {
               setSelectedActivityForCapture('PIP-24-002');
               setIsCaptureModalOpen(true);
             }}
-            className="flex-1 min-h-[44px] py-3 px-4 text-xs font-bold text-white bg-[#176B87] active:bg-[#135A72] rounded-lg shadow-sm flex items-center justify-center gap-2 cursor-pointer"
+            className="flex-1 min-h-[44px] py-3 px-4 text-xs font-bold text-white bg-[#0F6B68] active:bg-[#135A72] rounded-lg shadow-sm flex items-center justify-center gap-2 cursor-pointer"
           >
             <Plus className="w-4 h-4 stroke-[2.5]" />
             <span>CAPTURE UPDATE</span>
           </button>
           <Link
             href="/field/dpr"
-            className="min-h-[44px] py-3 px-4 text-xs font-bold text-[#172033] bg-[#F7F8FA] border border-[#D9DEE5] active:bg-[#D9DEE5] rounded-lg flex items-center justify-center gap-1 cursor-pointer"
+            className="min-h-[44px] py-3 px-4 text-xs font-bold text-[#142C3F] bg-[#F3F6FA] border border-[#D8E2EA] active:bg-[#D8E2EA] rounded-lg flex items-center justify-center gap-1 cursor-pointer"
           >
-            <FileText className="w-4 h-4 text-[#596579]" />
+            <FileText className="w-4 h-4 text-[#526779]" />
             <span>DPR (65%)</span>
           </Link>
         </div>
@@ -1404,7 +1404,7 @@ export default function EngineerDashboardPage() {
           maxWidth="lg"
           footer={
             <div className="flex items-center justify-between w-full">
-              <span className="text-[11px] text-[#596579] font-mono">
+              <span className="text-[11px] text-[#526779] font-mono">
                 {isOffline ? 'Offline mode: saving locally' : 'Online mode'}
               </span>
 
@@ -1413,7 +1413,7 @@ export default function EngineerDashboardPage() {
                   type="button"
                   onClick={() => setIsCaptureModalOpen(false)}
                   disabled={isSubmittingCapture}
-                  className="px-4 py-2 text-xs font-medium text-[#596579] hover:text-[#172033] border border-[#D9DEE5] rounded cursor-pointer"
+                  className="px-4 py-2 text-xs font-medium text-[#526779] hover:text-[#142C3F] border border-[#D8E2EA] rounded cursor-pointer"
                 >
                   Cancel
                 </button>
@@ -1421,7 +1421,7 @@ export default function EngineerDashboardPage() {
                   type="button"
                   onClick={handleSubmitFastCapture}
                   disabled={isSubmittingCapture || !customStatement.trim()}
-                  className="px-4 py-2 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] rounded transition-all inline-flex items-center gap-2 shadow-xs disabled:opacity-50 cursor-pointer"
+                  className="px-4 py-2 text-xs font-bold text-white bg-[#0F6B68] hover:bg-[#135A72] rounded transition-all inline-flex items-center gap-2 shadow-xs disabled:opacity-50 cursor-pointer"
                 >
                   {isSubmittingCapture ? (
                     <>
@@ -1442,8 +1442,8 @@ export default function EngineerDashboardPage() {
           <form onSubmit={handleSubmitFastCapture} className="space-y-4 text-xs">
             {/* Target Activity */}
             <div>
-              <label className="block text-xs font-bold text-[#172033] mb-1">
-                Target Scheduled Activity <span className="text-[#B5473C]">*</span>
+              <label className="block text-xs font-bold text-[#142C3F] mb-1">
+                Target Scheduled Activity <span className="text-[#A24335]">*</span>
               </label>
               <select
                 value={selectedActivityForCapture}
@@ -1452,7 +1452,7 @@ export default function EngineerDashboardPage() {
                   const act = todayActivities.find((a) => a.id === e.target.value);
                   if (act) setQuantityUnit(act.unit || 'joints');
                 }}
-                className="w-full px-3 py-2 text-xs bg-[#F7F8FA] border border-[#D9DEE5] focus:border-[#176B87] focus:bg-white rounded font-medium text-[#172033] outline-none"
+                className="w-full px-3 py-2 text-xs bg-[#F3F6FA] border border-[#D8E2EA] focus:border-[#0F6B68] focus:bg-white rounded font-medium text-[#142C3F] outline-none"
               >
                 {todayActivities.map((act) => (
                   <option key={act.id} value={act.id}>
@@ -1464,7 +1464,7 @@ export default function EngineerDashboardPage() {
 
             {/* Quick Observation Chips */}
             <div>
-              <label className="block text-[11px] font-bold text-[#596579] mb-2">
+              <label className="block text-[11px] font-bold text-[#526779] mb-2">
                 Quick Observation Chips (Tap to Insert):
               </label>
               <div className="flex flex-wrap gap-2">
@@ -1478,7 +1478,7 @@ export default function EngineerDashboardPage() {
                     key={idx}
                     type="button"
                     onClick={() => setCustomStatement(chip)}
-                    className="px-3 py-1 text-[11px] rounded bg-[#F1F3F5] hover:bg-[#EDF5F8] hover:text-[#176B87] text-[#596579] border border-[#D9DEE5] transition-colors text-left cursor-pointer"
+                    className="px-3 py-1 text-[11px] rounded bg-[#EAF0F5] hover:bg-[#EAF0F5] hover:text-[#0F6B68] text-[#526779] border border-[#D8E2EA] transition-colors text-left cursor-pointer"
                   >
                     + {chip}
                   </button>
@@ -1489,8 +1489,8 @@ export default function EngineerDashboardPage() {
             {/* Field Statement */}
             <div>
               <div className="flex items-center justify-between mb-1">
-                <label className="text-xs font-bold text-[#172033]">
-                  Field Statement / Site Observation <span className="text-[#B5473C]">*</span>
+                <label className="text-xs font-bold text-[#142C3F]">
+                  Field Statement / Site Observation <span className="text-[#A24335]">*</span>
                 </label>
                 <button
                   type="button"
@@ -1504,9 +1504,9 @@ export default function EngineerDashboardPage() {
                       description: 'Simulated voice memo parsed into statement.',
                     });
                   }}
-                  className="text-[11px] text-[#176B87] hover:underline inline-flex items-center gap-1 font-semibold cursor-pointer"
+                  className="text-[11px] text-[#0F6B68] hover:underline inline-flex items-center gap-1 font-semibold cursor-pointer"
                 >
-                  <Mic className="w-3.5 h-3.5 text-[#176B87]" />
+                  <Mic className="w-3.5 h-3.5 text-[#0F6B68]" />
                   <span>Simulate Voice Note</span>
                 </button>
               </div>
@@ -1515,22 +1515,22 @@ export default function EngineerDashboardPage() {
                 value={customStatement}
                 onChange={(e) => setCustomStatement(e.target.value)}
                 placeholder="Type or dictate what was completed on site today..."
-                className="w-full p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded focus:border-[#176B87] focus:bg-white text-[#172033] outline-none"
+                className="w-full p-3 bg-[#F3F6FA] border border-[#D8E2EA] rounded focus:border-[#0F6B68] focus:bg-white text-[#142C3F] outline-none"
                 required
               />
             </div>
 
             {/* Quantity Stepper & Unit */}
-            <div className="grid grid-cols-2 gap-3 p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded">
+            <div className="grid grid-cols-2 gap-3 p-3 bg-[#F3F6FA] border border-[#D8E2EA] rounded">
               <div>
-                <label className="block text-[11px] font-bold text-[#172033] mb-1">
+                <label className="block text-[11px] font-bold text-[#142C3F] mb-1">
                   Quantity Completed
                 </label>
                 <div className="flex items-center gap-2">
                   <button
                     type="button"
                     onClick={() => setQuantityValue(Math.max(1, quantityValue - 1))}
-                    className="w-7 h-7 bg-white border border-[#D9DEE5] hover:bg-[#D9DEE5] rounded text-sm font-bold flex items-center justify-center text-[#172033] cursor-pointer"
+                    className="w-7 h-7 bg-white border border-[#D8E2EA] hover:bg-[#D8E2EA] rounded text-sm font-bold flex items-center justify-center text-[#142C3F] cursor-pointer"
                   >
                     -
                   </button>
@@ -1538,12 +1538,12 @@ export default function EngineerDashboardPage() {
                     type="number"
                     value={quantityValue}
                     onChange={(e) => setQuantityValue(Number(e.target.value))}
-                    className="w-16 text-center font-mono font-bold text-sm bg-white border border-[#D9DEE5] rounded py-1"
+                    className="w-16 text-center font-mono font-bold text-sm bg-white border border-[#D8E2EA] rounded py-1"
                   />
                   <button
                     type="button"
                     onClick={() => setQuantityValue(quantityValue + 1)}
-                    className="w-7 h-7 bg-white border border-[#D9DEE5] hover:bg-[#D9DEE5] rounded text-sm font-bold flex items-center justify-center text-[#172033] cursor-pointer"
+                    className="w-7 h-7 bg-white border border-[#D8E2EA] hover:bg-[#D8E2EA] rounded text-sm font-bold flex items-center justify-center text-[#142C3F] cursor-pointer"
                   >
                     +
                   </button>
@@ -1551,23 +1551,23 @@ export default function EngineerDashboardPage() {
               </div>
 
               <div>
-                <label className="block text-[11px] font-bold text-[#172033] mb-1">
+                <label className="block text-[11px] font-bold text-[#142C3F] mb-1">
                   Unit
                 </label>
                 <input
                   type="text"
                   value={quantityUnit}
                   onChange={(e) => setQuantityUnit(e.target.value)}
-                  className="w-full px-3 py-1 text-xs bg-white border border-[#D9DEE5] rounded font-mono"
+                  className="w-full px-3 py-1 text-xs bg-white border border-[#D8E2EA] rounded font-mono"
                 />
               </div>
             </div>
 
             {/* Photo Attachment */}
-            <div className="flex items-center justify-between p-3 bg-[#F1F3F5] border border-[#D9DEE5] rounded">
+            <div className="flex items-center justify-between p-3 bg-[#EAF0F5] border border-[#D8E2EA] rounded">
               <div className="flex items-center gap-2">
-                <Camera className="w-4 h-4 text-[#176B87]" />
-                <span className="text-[11px] text-[#172033] font-medium">
+                <Camera className="w-4 h-4 text-[#0F6B68]" />
+                <span className="text-[11px] text-[#142C3F] font-medium">
                   {attachedPhotoName ? attachedPhotoName : 'Attach Geotagged Site Photo'}
                 </span>
               </div>
@@ -1582,7 +1582,7 @@ export default function EngineerDashboardPage() {
                     description: 'Captured image with embedded field coordinates.',
                   });
                 }}
-                className="px-3 py-1 text-[11px] font-semibold text-[#176B87] bg-white border border-[#D9DEE5] hover:bg-[#EDF5F8] rounded transition-colors cursor-pointer"
+                className="px-3 py-1 text-[11px] font-semibold text-[#0F6B68] bg-white border border-[#D8E2EA] hover:bg-[#EAF0F5] rounded transition-colors cursor-pointer"
               >
                 {attachedPhotoName ? 'Replace Photo' : 'Capture Photo'}
               </button>
@@ -1604,49 +1604,49 @@ export default function EngineerDashboardPage() {
               <button
                 type="button"
                 onClick={() => setSelectedDetailUpdate(null)}
-                className="px-4 py-1.5 text-xs font-semibold text-white bg-[#176B87] hover:bg-[#135A72] rounded shadow-xs ml-auto cursor-pointer"
+                className="px-4 py-1.5 text-xs font-semibold text-white bg-[#0F6B68] hover:bg-[#135A72] rounded shadow-xs ml-auto cursor-pointer"
               >
                 Close
               </button>
             }
           >
             <div className="space-y-3 text-xs">
-              <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg">
-                <span className="text-[10px] font-mono font-semibold text-[#596579] uppercase block">
+              <div className="p-3 bg-[#F3F6FA] border border-[#D8E2EA] rounded-lg">
+                <span className="text-[10px] font-mono font-semibold text-[#526779] uppercase block">
                   Activity Target
                 </span>
-                <span className="font-mono font-bold text-[#176B87] block mt-0.5">
+                <span className="font-mono font-bold text-[#0F6B68] block mt-0.5">
                   {selectedDetailUpdate.activityId}
                 </span>
-                <p className="font-semibold text-[#172033] mt-0.5">
+                <p className="font-semibold text-[#142C3F] mt-0.5">
                   {selectedDetailUpdate.activityName}
                 </p>
               </div>
 
-              <div className="p-3 bg-white border border-[#D9DEE5] rounded-lg space-y-2">
-                <span className="text-[10px] font-mono font-semibold text-[#596579] uppercase block">
+              <div className="p-3 bg-white border border-[#D8E2EA] rounded-lg space-y-2">
+                <span className="text-[10px] font-mono font-semibold text-[#526779] uppercase block">
                   Field Statement
                 </span>
-                <p className="text-xs text-[#172033] italic leading-relaxed">
+                <p className="text-xs text-[#142C3F] italic leading-relaxed">
                   &ldquo;{selectedDetailUpdate.statement}&rdquo;
                 </p>
-                <div className="pt-2 border-t border-[#D9DEE5] flex items-center justify-between text-[11px]">
-                  <span className="text-[#596579]">Quantity: <strong className="text-[#172033]">{selectedDetailUpdate.quantity}</strong></span>
-                  <span className="text-[#596579]">Discipline: <strong className="text-[#172033]">{selectedDetailUpdate.discipline}</strong></span>
+                <div className="pt-2 border-t border-[#D8E2EA] flex items-center justify-between text-[11px]">
+                  <span className="text-[#526779]">Quantity: <strong className="text-[#142C3F]">{selectedDetailUpdate.quantity}</strong></span>
+                  <span className="text-[#526779]">Discipline: <strong className="text-[#142C3F]">{selectedDetailUpdate.discipline}</strong></span>
                 </div>
               </div>
 
-              <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded flex items-center justify-between text-xs">
-                <span className="text-[#596579]">Sync Status:</span>
+              <div className="p-3 bg-[#F3F6FA] border border-[#D8E2EA] rounded flex items-center justify-between text-xs">
+                <span className="text-[#526779]">Sync Status:</span>
                 {selectedDetailUpdate.isSynced ? (
                   <span className="text-[#2E7D5B] font-bold font-mono">Server confirmed</span>
                 ) : (
-                  <span className="text-[#D98B32] font-bold font-mono">Saved locally (IndexedDB)</span>
+                  <span className="text-[#845006] font-bold font-mono">Saved locally (IndexedDB)</span>
                 )}
               </div>
 
               {selectedDetailUpdate.photoUrl && (
-                <div className="p-3 bg-[#EDF7F2] border border-[#B8DCC9] rounded text-xs text-[#2E7D5B] flex items-center gap-2">
+                <div className="p-3 bg-[#E4F4EC] border border-[#B8DCC9] rounded text-xs text-[#2E7D5B] flex items-center gap-2">
                   <Camera className="w-4 h-4" />
                   <span>Attached Photo: <strong>{selectedDetailUpdate.photoUrl}</strong></span>
                 </div>
@@ -1669,44 +1669,44 @@ export default function EngineerDashboardPage() {
               <button
                 type="button"
                 onClick={() => setSelectedEvidence(null)}
-                className="px-4 py-1.5 text-xs font-semibold text-white bg-[#176B87] hover:bg-[#135A72] rounded shadow-xs ml-auto cursor-pointer"
+                className="px-4 py-1.5 text-xs font-semibold text-white bg-[#0F6B68] hover:bg-[#135A72] rounded shadow-xs ml-auto cursor-pointer"
               >
                 Close
               </button>
             }
           >
             <div className="space-y-3 text-xs">
-              <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg">
-                <span className="text-[10px] font-mono font-semibold text-[#596579] uppercase block">
+              <div className="p-3 bg-[#F3F6FA] border border-[#D8E2EA] rounded-lg">
+                <span className="text-[10px] font-mono font-semibold text-[#526779] uppercase block">
                   Subject & Target Activity
                 </span>
-                <span className="font-bold text-[#172033] text-sm block mt-0.5">
+                <span className="font-bold text-[#142C3F] text-sm block mt-0.5">
                   {selectedEvidence.title}
                 </span>
-                <p className="font-mono text-[#176B87] text-[11px] mt-0.5">
+                <p className="font-mono text-[#0F6B68] text-[11px] mt-0.5">
                   {selectedEvidence.activityId} — {selectedEvidence.activityName}
                 </p>
               </div>
 
-              <div className="p-3 bg-white border border-[#D9DEE5] rounded-lg space-y-2">
-                <span className="text-[10px] font-mono font-semibold text-[#596579] uppercase block">
+              <div className="p-3 bg-white border border-[#D8E2EA] rounded-lg space-y-2">
+                <span className="text-[10px] font-mono font-semibold text-[#526779] uppercase block">
                   Inspection Notes & Geotag
                 </span>
-                <p className="text-xs text-[#172033] leading-relaxed">
+                <p className="text-xs text-[#142C3F] leading-relaxed">
                   {selectedEvidence.notes}
                 </p>
-                <div className="pt-2 border-t border-[#D9DEE5] flex items-center justify-between text-[11px]">
-                  <span className="text-[#596579]">GPS Tag: <strong className="font-mono text-[#172033]">{selectedEvidence.gps}</strong></span>
-                  <span className="text-[#596579]">Type: <strong className="uppercase text-[#172033]">{selectedEvidence.type}</strong></span>
+                <div className="pt-2 border-t border-[#D8E2EA] flex items-center justify-between text-[11px]">
+                  <span className="text-[#526779]">GPS Tag: <strong className="font-mono text-[#142C3F]">{selectedEvidence.gps}</strong></span>
+                  <span className="text-[#526779]">Type: <strong className="uppercase text-[#142C3F]">{selectedEvidence.type}</strong></span>
                 </div>
               </div>
 
-              <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded flex items-center justify-between text-xs">
-                <span className="text-[#596579]">QC Sign-off:</span>
+              <div className="p-3 bg-[#F3F6FA] border border-[#D8E2EA] rounded flex items-center justify-between text-xs">
+                <span className="text-[#526779]">QC Sign-off:</span>
                 {selectedEvidence.verified ? (
                   <span className="text-[#2E7D5B] font-bold font-mono">QC Verified & Stamped</span>
                 ) : (
-                  <span className="text-[#D98B32] font-bold font-mono">Awaiting QC Stamp</span>
+                  <span className="text-[#845006] font-bold font-mono">Awaiting QC Stamp</span>
                 )}
               </div>
             </div>

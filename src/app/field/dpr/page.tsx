@@ -613,9 +613,9 @@ export default function DPRPage() {
 
         {/* OFFLINE MODE BANNER */}
         {isOffline && (
-          <div className="p-4 rounded-lg bg-[#FDF6ED] border border-[#F0D4A6] flex items-center justify-between gap-3 text-xs text-[#8C5311]">
+          <div className="p-4 rounded-lg bg-[#FFF1D3] border border-[#F0D4A6] flex items-center justify-between gap-3 text-xs text-[#8C5311]">
             <div className="flex items-center gap-2">
-              <span className="px-2 py-0.5 rounded bg-[#D98B32] text-white font-mono font-bold text-[10px] uppercase">
+              <span className="px-2 py-0.5 rounded bg-[#845006] text-white font-mono font-bold text-[10px] uppercase">
                 OFFLINE MODE
               </span>
               <span className="font-semibold">
@@ -629,12 +629,12 @@ export default function DPRPage() {
         )}
 
         {/* DEMO SAMPLE DATA BANNER */}
-        <div className="p-3 bg-[#EDF5F8] border border-[#B3CBE0] rounded-lg flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+        <div className="p-3 bg-[#EAF0F5] border border-[#D8E2EA] rounded-lg flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
           <div className="flex items-center gap-2">
-            <span className="px-2 py-0.5 rounded bg-[#176B87] text-white font-mono font-bold text-[10px] uppercase">
+            <span className="px-2 py-0.5 rounded bg-[#0F6B68] text-white font-mono font-bold text-[10px] uppercase">
               Demo Sample Data
             </span>
-            <span className="text-[#172033] font-medium">
+            <span className="text-[#142C3F] font-medium">
               This DPR form is pre-loaded with simulated field execution records for 18 Sep 2026 Shift A.
             </span>
           </div>
@@ -652,7 +652,7 @@ export default function DPRPage() {
                   description: 'Sample DPR contents cleared. Ready for fresh blank entry.',
                 });
               }}
-              className="px-2.5 py-1 text-[11px] font-semibold text-[#596579] hover:text-[#172033] bg-white border border-[#D9DEE5] rounded transition-colors"
+              className="px-2.5 py-1 text-[11px] font-semibold text-[#526779] hover:text-[#142C3F] bg-white border border-[#D8E2EA] rounded transition-colors"
             >
               Clear to Blank
             </button>
@@ -662,27 +662,27 @@ export default function DPRPage() {
         {/* =========================================================================
             SECTION 1: DAILY PROGRESS REPORT (Document Header & Top Actions)
             ========================================================================= */}
-        <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 md:p-6 shadow-xs">
-          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-[#D9DEE5] pb-4">
+        <div className="bg-white border border-[#D8E2EA] rounded-lg p-4 sm:p-6 md:p-6 shadow-xs">
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-[#D8E2EA] pb-4">
             <div>
               <div className="flex items-center gap-2 mb-2 flex-wrap">
-                <span className="font-mono text-xs font-bold px-3 py-0.5 rounded bg-[#F1F3F5] text-[#172033] border border-[#D9DEE5]">
+                <span className="font-mono text-xs font-bold px-3 py-0.5 rounded bg-[#EAF0F5] text-[#142C3F] border border-[#D8E2EA]">
                   {dprDocumentNo}
                 </span>
-                <span className="font-mono text-[11px] text-[#596579] bg-[#FAFAFA] px-2 py-0.5 rounded border border-[#E5E7EB]">
+                <span className="font-mono text-[11px] text-[#526779] bg-[#FAFAFA] px-2 py-0.5 rounded border border-[#E5E7EB]">
                   {dprRevision}
                 </span>
                 <span
                   className={`text-xs font-bold px-3 py-0.5 rounded border inline-flex items-center gap-2 ${
                     submissionState === 'Submitted'
-                      ? 'bg-[#EDF7F2] text-[#2E7D5B] border-[#B8DCC9]'
+                      ? 'bg-[#E4F4EC] text-[#2E7D5B] border-[#B8DCC9]'
                       : submissionState === 'Saved locally'
-                      ? 'bg-[#FDF6ED] text-[#8C5311] border-[#F0D4A6]'
+                      ? 'bg-[#FFF1D3] text-[#8C5311] border-[#F0D4A6]'
                       : submissionState === 'Processing'
-                      ? 'bg-[#EDF5F8] text-[#176B87] border-[#B3CBE0]'
+                      ? 'bg-[#EAF0F5] text-[#0F6B68] border-[#D8E2EA]'
                       : submissionState === 'Needs Confirmation'
-                      ? 'bg-[#FDF6ED] text-[#8C5311] border-[#F0D4A6]'
-                      : 'bg-[#F1F3F5] text-[#172033] border-[#D9DEE5]'
+                      ? 'bg-[#FFF1D3] text-[#8C5311] border-[#F0D4A6]'
+                      : 'bg-[#EAF0F5] text-[#142C3F] border-[#D8E2EA]'
                   }`}
                 >
                   <span className="w-1.5 h-1.5 rounded-full bg-current" />
@@ -690,15 +690,15 @@ export default function DPRPage() {
                 </span>
 
                 {/* Feature 20: Persistent Autosave Status Indicator */}
-                <span className="text-[11px] font-mono text-[#526779] bg-[#F4F7FA] px-2.5 py-0.5 rounded border border-[#D7E1E8] flex items-center gap-1.5">
-                  <span className="w-2 h-2 rounded-full bg-[#187A6A] animate-pulse" />
+                <span className="text-[11px] font-mono text-[#526779] bg-[#F3F6FA] px-2.5 py-0.5 rounded border border-[#D8E2EA] flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-[#176B53] animate-pulse" />
                   <span>Autosaved to local cache at {lastSavedTime}</span>
                 </span>
               </div>
-              <h1 className="text-[28px] sm:text-3xl font-bold text-[#172033] tracking-tight">
+              <h1 className="text-[28px] sm:text-3xl font-bold text-[#142C3F] tracking-tight">
                 Daily Progress Report (DPR)
               </h1>
-              <p className="text-xs sm:text-sm text-[#596579] mt-1">
+              <p className="text-xs sm:text-sm text-[#526779] mt-1">
                 Official EPC project site execution record, labor allocation, quantity progress, and CPM Schedule Twin log sheet.
               </p>
             </div>
@@ -708,9 +708,9 @@ export default function DPRPage() {
               <button
                 type="button"
                 onClick={handleSaveDraft}
-                className="flex-1 sm:flex-none justify-center min-h-[44px] px-4 py-2 text-xs font-semibold text-[#172033] bg-white border border-[#D9DEE5] hover:bg-[#F1F3F5] rounded-lg inline-flex items-center gap-2 transition-colors cursor-pointer shadow-2xs"
+                className="flex-1 sm:flex-none justify-center min-h-[44px] px-4 py-2 text-xs font-semibold text-[#142C3F] bg-white border border-[#D8E2EA] hover:bg-[#EAF0F5] rounded-lg inline-flex items-center gap-2 transition-colors cursor-pointer shadow-2xs"
               >
-                <Save className="w-4 h-4 text-[#596579]" />
+                <Save className="w-4 h-4 text-[#526779]" />
                 <span>Save DPR Draft</span>
               </button>
 
@@ -718,7 +718,7 @@ export default function DPRPage() {
                 type="button"
                 onClick={handleSubmitDPR}
                 disabled={submissionState === 'Processing'}
-                className="flex-1 sm:flex-none justify-center min-h-[48px] px-4 py-2 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] border border-[#176B87] disabled:opacity-50 rounded-lg inline-flex items-center gap-2 transition-colors cursor-pointer shadow-xs"
+                className="flex-1 sm:flex-none justify-center min-h-[48px] px-4 py-2 text-xs font-bold text-white bg-[#0F6B68] hover:bg-[#135A72] border border-[#0F6B68] disabled:opacity-50 rounded-lg inline-flex items-center gap-2 transition-colors cursor-pointer shadow-xs"
               >
                 <Send className="w-4 h-4" />
                 <span>Sign & Submit Daily Report</span>
@@ -728,46 +728,46 @@ export default function DPRPage() {
 
           {/* Structured Document Metadata Strip / Section Quick Jumps */}
           <div className="mt-4 pt-1 flex flex-col md:flex-row md:items-center justify-between gap-3 text-xs">
-            <div className="flex items-center gap-4 text-[#596579] flex-wrap">
+            <div className="flex items-center gap-4 text-[#526779] flex-wrap">
               <span>
-                Project: <strong className="text-[#172033]">{projectCode}</strong>
+                Project: <strong className="text-[#142C3F]">{projectCode}</strong>
               </span>
               <span>•</span>
               <span>
-                Date: <strong className="text-[#172033]">{reportingDate}</strong> ({reportingShift})
+                Date: <strong className="text-[#142C3F]">{reportingDate}</strong> ({reportingShift})
               </span>
               <span>•</span>
               <span>
-                Engineer: <strong className="text-[#172033]">{siteEngineer}</strong>
+                Engineer: <strong className="text-[#142C3F]">{siteEngineer}</strong>
               </span>
               <span>•</span>
               <span>
-                Crew: <strong className="text-[#172033]">{totalHeadcount} Pax</strong>
+                Crew: <strong className="text-[#142C3F]">{totalHeadcount} Pax</strong>
               </span>
             </div>
 
             {/* Stepper Touch Target Buttons */}
             <div className="flex items-center gap-2 self-start md:self-auto">
-              <span className="text-[11px] font-semibold text-[#596579] mr-1 hidden sm:inline">
+              <span className="text-[11px] font-semibold text-[#526779] mr-1 hidden sm:inline">
                 Section Jump:
               </span>
               <button
                 type="button"
                 disabled={activeStep <= 1}
                 onClick={() => setActiveStep((prev) => Math.max(1, prev - 1))}
-                className="min-h-[44px] min-w-[44px] p-2 rounded-lg border border-[#D9DEE5] bg-white text-[#172033] hover:bg-[#F1F3F5] active:bg-[#E5E7EB] disabled:opacity-40 flex items-center justify-center transition-colors cursor-pointer"
+                className="min-h-[44px] min-w-[44px] p-2 rounded-lg border border-[#D8E2EA] bg-white text-[#142C3F] hover:bg-[#EAF0F5] active:bg-[#E5E7EB] disabled:opacity-40 flex items-center justify-center transition-colors cursor-pointer"
                 aria-label="Previous section"
               >
                 <ArrowLeft className="w-4 h-4" />
               </button>
-              <span className="font-mono text-xs px-3 py-1.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-md font-bold text-[#176B87] truncate max-w-[170px] sm:max-w-none">
+              <span className="font-mono text-xs px-3 py-1.5 bg-[#F3F6FA] border border-[#D8E2EA] rounded-md font-bold text-[#0F6B68] truncate max-w-[170px] sm:max-w-none">
                 {activeStep} / 9: {stepsConfig[activeStep - 1]?.title}
               </span>
               <button
                 type="button"
                 disabled={activeStep >= 9}
                 onClick={() => setActiveStep((prev) => Math.min(9, prev + 1))}
-                className="min-h-[44px] min-w-[44px] p-2 rounded-lg border border-[#D9DEE5] bg-white text-[#172033] hover:bg-[#F1F3F5] active:bg-[#E5E7EB] disabled:opacity-40 flex items-center justify-center transition-colors cursor-pointer"
+                className="min-h-[44px] min-w-[44px] p-2 rounded-lg border border-[#D8E2EA] bg-white text-[#142C3F] hover:bg-[#EAF0F5] active:bg-[#E5E7EB] disabled:opacity-40 flex items-center justify-center transition-colors cursor-pointer"
                 aria-label="Next section"
               >
                 <ArrowRight className="w-4 h-4" />
@@ -776,22 +776,22 @@ export default function DPRPage() {
           </div>
 
           {/* Feature 22: Live Responsive Shift Summary Counters */}
-          <div className="mt-4 pt-3 border-t border-[#D9DEE5]/70 grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-xs">
-            <div className="bg-[#F4F7FA] border border-[#D7E1E8] rounded p-2.5">
+          <div className="mt-4 pt-3 border-t border-[#D8E2EA]/70 grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-xs">
+            <div className="bg-[#F3F6FA] border border-[#D8E2EA] rounded p-2.5">
               <span className="text-[10px] uppercase font-bold text-[#526779] block">Deployed Crew</span>
-              <span className="font-bold font-mono text-base text-[#0F6574]">{totalHeadcount} Pax</span>
+              <span className="font-bold font-mono text-base text-[#0F6B68]">{totalHeadcount} Pax</span>
             </div>
-            <div className="bg-[#F4F7FA] border border-[#D7E1E8] rounded p-2.5">
+            <div className="bg-[#F3F6FA] border border-[#D8E2EA] rounded p-2.5">
               <span className="text-[10px] uppercase font-bold text-[#526779] block">Total Shift Man-Hours</span>
-              <span className="font-bold font-mono text-base text-[#172B3A]">{totalShiftManHours} hrs</span>
+              <span className="font-bold font-mono text-base text-[#142C3F]">{totalShiftManHours} hrs</span>
             </div>
-            <div className="bg-[#F4F7FA] border border-[#D7E1E8] rounded p-2.5">
+            <div className="bg-[#F3F6FA] border border-[#D8E2EA] rounded p-2.5">
               <span className="text-[10px] uppercase font-bold text-[#526779] block">Logged Work Hours</span>
-              <span className="font-bold font-mono text-base text-[#187A6A]">{totalWorkHoursLogged} hrs</span>
+              <span className="font-bold font-mono text-base text-[#176B53]">{totalWorkHoursLogged} hrs</span>
             </div>
-            <div className="bg-[#F4F7FA] border border-[#D7E1E8] rounded p-2.5">
+            <div className="bg-[#F3F6FA] border border-[#D8E2EA] rounded p-2.5">
               <span className="text-[10px] uppercase font-bold text-[#526779] block">Quantities Installed</span>
-              <span className="font-bold font-mono text-base text-[#172B3A]">{quantitiesLoggedCount} items</span>
+              <span className="font-bold font-mono text-base text-[#142C3F]">{quantitiesLoggedCount} items</span>
             </div>
           </div>
         </div>
@@ -801,22 +801,22 @@ export default function DPRPage() {
           {/* =========================================================================
               SECTION 2: DATE
               ========================================================================= */}
-          <section id="sec-project-date" className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 md:p-6 shadow-xs space-y-4">
-            <div className="border-b border-[#D9DEE5] pb-3 flex items-center justify-between">
+          <section id="sec-project-date" className="bg-white border border-[#D8E2EA] rounded-lg p-4 sm:p-6 md:p-6 shadow-xs space-y-4">
+            <div className="border-b border-[#D8E2EA] pb-3 flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <span className="w-6 h-6 rounded-md bg-[#EDF5F8] text-[#176B87] font-bold text-xs flex items-center justify-center">
+                <span className="w-6 h-6 rounded-md bg-[#EAF0F5] text-[#0F6B68] font-bold text-xs flex items-center justify-center">
                   1
                 </span>
-                <h2 className="text-base font-bold text-[#172033]">
+                <h2 className="text-base font-bold text-[#142C3F]">
                   Date & Shift Information
                 </h2>
               </div>
-              <span className="text-xs text-[#596579]">Shift Working Baseline</span>
+              <span className="text-xs text-[#526779]">Shift Working Baseline</span>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
               <div className="space-y-1">
-                <label className="font-bold text-[#172033] uppercase tracking-wider text-[11px] block">
+                <label className="font-bold text-[#142C3F] uppercase tracking-wider text-[11px] block">
                   Reporting Date
                 </label>
                 <div className="relative">
@@ -824,19 +824,19 @@ export default function DPRPage() {
                     type="date"
                     value={reportingDate}
                     onChange={(e) => setReportingDate(e.target.value)}
-                    className="w-full p-3 bg-white border border-[#D9DEE5] rounded-lg text-xs font-bold text-[#172033] outline-hidden focus:border-[#176B87]"
+                    className="w-full p-3 bg-white border border-[#D8E2EA] rounded-lg text-xs font-bold text-[#142C3F] outline-hidden focus:border-[#0F6B68]"
                   />
                 </div>
               </div>
 
               <div className="space-y-1">
-                <label className="font-bold text-[#172033] uppercase tracking-wider text-[11px] block">
+                <label className="font-bold text-[#142C3F] uppercase tracking-wider text-[11px] block">
                   Shift Timing
                 </label>
                 <select
                   value={reportingShift}
                   onChange={(e) => setReportingShift(e.target.value as any)}
-                  className="w-full p-3 bg-white border border-[#D9DEE5] rounded-lg text-xs font-semibold text-[#172033] outline-hidden focus:border-[#176B87]"
+                  className="w-full p-3 bg-white border border-[#D8E2EA] rounded-lg text-xs font-semibold text-[#142C3F] outline-hidden focus:border-[#0F6B68]"
                 >
                   <option value="Shift A">Shift A (Day: 07:00 – 16:30)</option>
                   <option value="Shift B">Shift B (Evening: 16:30 – 00:00)</option>
@@ -845,7 +845,7 @@ export default function DPRPage() {
               </div>
 
               <div className="space-y-1">
-                <label className="font-bold text-[#172033] uppercase tracking-wider text-[11px] block">
+                <label className="font-bold text-[#142C3F] uppercase tracking-wider text-[11px] block">
                   Working Hours
                 </label>
                 <div className="flex items-center gap-2">
@@ -854,20 +854,20 @@ export default function DPRPage() {
                     step="0.5"
                     value={shiftHours}
                     onChange={(e) => setShiftHours(e.target.value)}
-                    className="w-full p-3 bg-white border border-[#D9DEE5] rounded-lg text-xs font-bold text-[#172033] outline-hidden focus:border-[#176B87]"
+                    className="w-full p-3 bg-white border border-[#D8E2EA] rounded-lg text-xs font-bold text-[#142C3F] outline-hidden focus:border-[#0F6B68]"
                   />
-                  <span className="text-[#596579] font-medium shrink-0">Hours</span>
+                  <span className="text-[#526779] font-medium shrink-0">Hours</span>
                 </div>
               </div>
 
               <div className="space-y-1">
-                <label className="font-bold text-[#172033] uppercase tracking-wider text-[11px] block">
+                <label className="font-bold text-[#142C3F] uppercase tracking-wider text-[11px] block">
                   Ground Condition
                 </label>
                 <select
                   value={groundCondition}
                   onChange={(e) => setGroundCondition(e.target.value as any)}
-                  className="w-full p-3 bg-white border border-[#D9DEE5] rounded-lg text-xs font-semibold text-[#172033] outline-hidden focus:border-[#176B87]"
+                  className="w-full p-3 bg-white border border-[#D8E2EA] rounded-lg text-xs font-semibold text-[#142C3F] outline-hidden focus:border-[#0F6B68]"
                 >
                   <option value="Wet / Saturated">Wet / Saturated (Monsoon)</option>
                   <option value="Dry">Dry / Stable</option>
@@ -876,14 +876,14 @@ export default function DPRPage() {
               </div>
 
               <div className="sm:col-span-2 lg:col-span-4 space-y-1">
-                <label className="font-bold text-[#172033] uppercase tracking-wider text-[11px] block">
+                <label className="font-bold text-[#142C3F] uppercase tracking-wider text-[11px] block">
                   Weather & Environmental Parameters
                 </label>
                 <input
                   type="text"
                   value={weatherCondition}
                   onChange={(e) => setWeatherCondition(e.target.value)}
-                  className="w-full p-3 bg-white border border-[#D9DEE5] rounded-lg text-xs font-medium text-[#172033] outline-hidden focus:border-[#176B87]"
+                  className="w-full p-3 bg-white border border-[#D8E2EA] rounded-lg text-xs font-medium text-[#142C3F] outline-hidden focus:border-[#0F6B68]"
                   placeholder="e.g. Temperature, rainfall, humidity, wind conditions"
                 />
               </div>
@@ -893,79 +893,79 @@ export default function DPRPage() {
           {/* =========================================================================
               SECTION 3: PROJECT
               ========================================================================= */}
-          <section id="sec-project" className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 md:p-6 shadow-xs space-y-4">
-            <div className="border-b border-[#D9DEE5] pb-3 flex items-center justify-between">
+          <section id="sec-project" className="bg-white border border-[#D8E2EA] rounded-lg p-4 sm:p-6 md:p-6 shadow-xs space-y-4">
+            <div className="border-b border-[#D8E2EA] pb-3 flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <span className="w-6 h-6 rounded-md bg-[#EDF5F8] text-[#176B87] font-bold text-xs flex items-center justify-center">
+                <span className="w-6 h-6 rounded-md bg-[#EAF0F5] text-[#0F6B68] font-bold text-xs flex items-center justify-center">
                   2
                 </span>
-                <h2 className="text-base font-bold text-[#172033]">
+                <h2 className="text-base font-bold text-[#142C3F]">
                   Project Particulars
                 </h2>
               </div>
-              <span className="font-mono text-xs text-[#176B87] font-semibold">
+              <span className="font-mono text-xs text-[#0F6B68] font-semibold">
                 {scheduleBaseline}
               </span>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-xs">
               <div className="space-y-1">
-                <label className="font-semibold text-[#596579] uppercase tracking-wider text-[10px] block">
+                <label className="font-semibold text-[#526779] uppercase tracking-wider text-[10px] block">
                   Project Code & Name
                 </label>
-                <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg">
-                  <span className="font-mono font-bold text-[#172033] block">{projectCode}</span>
-                  <span className="text-[#596579] font-medium text-[11px]">{projectName}</span>
+                <div className="p-3 bg-[#F3F6FA] border border-[#D8E2EA] rounded-lg">
+                  <span className="font-mono font-bold text-[#142C3F] block">{projectCode}</span>
+                  <span className="text-[#526779] font-medium text-[11px]">{projectName}</span>
                 </div>
               </div>
 
               <div className="space-y-1">
-                <label className="font-semibold text-[#596579] uppercase tracking-wider text-[10px] block">
+                <label className="font-semibold text-[#526779] uppercase tracking-wider text-[10px] block">
                   Contract / Package
                 </label>
-                <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg">
-                  <span className="font-bold text-[#172033] block">{contractPackage}</span>
-                  <span className="text-[#596579] text-[11px]">Client: {clientOwner}</span>
+                <div className="p-3 bg-[#F3F6FA] border border-[#D8E2EA] rounded-lg">
+                  <span className="font-bold text-[#142C3F] block">{contractPackage}</span>
+                  <span className="text-[#526779] text-[11px]">Client: {clientOwner}</span>
                 </div>
               </div>
 
               <div className="space-y-1">
-                <label className="font-semibold text-[#596579] uppercase tracking-wider text-[10px] block">
+                <label className="font-semibold text-[#526779] uppercase tracking-wider text-[10px] block">
                   Executing EPC Contractor
                 </label>
-                <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg">
-                  <span className="font-bold text-[#172033] block">{contractorName}</span>
-                  <span className="text-[#596579] text-[11px]">Consortium Partner: Brahmaputra Infra Ltd</span>
+                <div className="p-3 bg-[#F3F6FA] border border-[#D8E2EA] rounded-lg">
+                  <span className="font-bold text-[#142C3F] block">{contractorName}</span>
+                  <span className="text-[#526779] text-[11px]">Consortium Partner: Brahmaputra Infra Ltd</span>
                 </div>
               </div>
 
               <div className="space-y-1">
-                <label className="font-semibold text-[#596579] uppercase tracking-wider text-[10px] block">
+                <label className="font-semibold text-[#526779] uppercase tracking-wider text-[10px] block">
                   Site Execution Engineer
                 </label>
-                <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg">
-                  <span className="font-bold text-[#172033] block">{siteEngineer}</span>
-                  <span className="text-[#596579] text-[11px]">{siteRole}</span>
+                <div className="p-3 bg-[#F3F6FA] border border-[#D8E2EA] rounded-lg">
+                  <span className="font-bold text-[#142C3F] block">{siteEngineer}</span>
+                  <span className="text-[#526779] text-[11px]">{siteRole}</span>
                 </div>
               </div>
 
               <div className="space-y-1">
-                <label className="font-semibold text-[#596579] uppercase tracking-wider text-[10px] block">
+                <label className="font-semibold text-[#526779] uppercase tracking-wider text-[10px] block">
                   Schedule Twin Integration
                 </label>
-                <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg">
+                <div className="p-3 bg-[#F3F6FA] border border-[#D8E2EA] rounded-lg">
                   <span className="font-bold text-[#2E7D5B] block">Connected & Synchronized</span>
-                  <span className="text-[#596579] text-[11px]">Primavera P6 XML / Level 5 WBS</span>
+                  <span className="text-[#526779] text-[11px]">Primavera P6 XML / Level 5 WBS</span>
                 </div>
               </div>
 
               <div className="space-y-1">
-                <label className="font-semibold text-[#596579] uppercase tracking-wider text-[10px] block">
+                <label className="font-semibold text-[#526779] uppercase tracking-wider text-[10px] block">
                   Contract Status
                 </label>
-                <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg">
-                  <span className="font-bold text-[#172033] block">Active Execution (Month 7 of 18)</span>
-                  <span className="text-[#596579] text-[11px] block mt-0.5">
+                <div className="p-3 bg-[#F3F6FA] border border-[#D8E2EA] rounded-lg">
+                  <span className="font-bold text-[#142C3F] block">Active Execution (Month 7 of 18)</span>
+                  <span className="text-[#526779] text-[11px] block mt-0.5">
                     Phase 1 Substantial COD: 15 Dec 2026 · Facility Closeout: 31 March 2027
                   </span>
                 </div>
@@ -976,28 +976,28 @@ export default function DPRPage() {
           {/* =========================================================================
               SECTION 4: AREA
               ========================================================================= */}
-          <section id="sec-area" className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 md:p-6 shadow-xs space-y-4">
-            <div className="border-b border-[#D9DEE5] pb-3 flex items-center justify-between">
+          <section id="sec-area" className="bg-white border border-[#D8E2EA] rounded-lg p-4 sm:p-6 md:p-6 shadow-xs space-y-4">
+            <div className="border-b border-[#D8E2EA] pb-3 flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <span className="w-6 h-6 rounded-md bg-[#EDF5F8] text-[#176B87] font-bold text-xs flex items-center justify-center">
+                <span className="w-6 h-6 rounded-md bg-[#EAF0F5] text-[#0F6B68] font-bold text-xs flex items-center justify-center">
                   3
                 </span>
-                <h2 className="text-base font-bold text-[#172033]">
+                <h2 className="text-base font-bold text-[#142C3F]">
                   Area & Workfront Location
                 </h2>
               </div>
-              <span className="text-xs text-[#596579]">Site Zones & Active Fronts</span>
+              <span className="text-xs text-[#526779]">Site Zones & Active Fronts</span>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
               <div className="space-y-1">
-                <label className="font-bold text-[#172033] uppercase tracking-wider text-[11px] block">
+                <label className="font-bold text-[#142C3F] uppercase tracking-wider text-[11px] block">
                   Primary Site Area / Plant Section
                 </label>
                 <select
                   value={selectedArea}
                   onChange={(e) => setSelectedArea(e.target.value)}
-                  className="w-full p-3 bg-white border border-[#D9DEE5] rounded-lg text-xs font-semibold text-[#172033] outline-hidden focus:border-[#176B87]"
+                  className="w-full p-3 bg-white border border-[#D8E2EA] rounded-lg text-xs font-semibold text-[#142C3F] outline-hidden focus:border-[#0F6B68]"
                 >
                   <option value="Unit A - Gas Processing Area">Unit A - Gas Processing Area</option>
                   <option value="Unit B - Compressor & Compression Station">Unit B - Compressor & Compression Station</option>
@@ -1009,27 +1009,27 @@ export default function DPRPage() {
               </div>
 
               <div className="space-y-1 md:col-span-2">
-                <label className="font-bold text-[#172033] uppercase tracking-wider text-[11px] block">
+                <label className="font-bold text-[#142C3F] uppercase tracking-wider text-[11px] block">
                   Specific Workfront / Isometric Grid / Chainage
                 </label>
                 <input
                   type="text"
                   value={specificWorkfront}
                   onChange={(e) => setSpecificWorkfront(e.target.value)}
-                  className="w-full p-3 bg-white border border-[#D9DEE5] rounded-lg text-xs font-medium text-[#172033] outline-hidden focus:border-[#176B87]"
+                  className="w-full p-3 bg-white border border-[#D8E2EA] rounded-lg text-xs font-medium text-[#142C3F] outline-hidden focus:border-[#0F6B68]"
                 />
               </div>
 
               <div className="space-y-1 md:col-span-3">
-                <label className="font-bold text-[#172033] uppercase tracking-wider text-[11px] block">
+                <label className="font-bold text-[#142C3F] uppercase tracking-wider text-[11px] block">
                   Permit to Work (PTW) Coverage
                 </label>
-                <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <div className="p-3 bg-[#F3F6FA] border border-[#D8E2EA] rounded-lg flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                   <div className="flex items-center gap-2">
                     <span className="w-2 h-2 rounded-full bg-[#2E7D5B]" />
-                    <span className="font-mono font-medium text-[#172033]">{ptwPermits}</span>
+                    <span className="font-mono font-medium text-[#142C3F]">{ptwPermits}</span>
                   </div>
-                  <span className="text-[11px] text-[#2E7D5B] font-bold bg-[#EDF7F2] border border-[#B8DCC9] px-2 py-0.5 rounded">
+                  <span className="text-[11px] text-[#2E7D5B] font-bold bg-[#E4F4EC] border border-[#B8DCC9] px-2 py-0.5 rounded">
                     PTW Valid until 18:00 IST
                   </span>
                 </div>
@@ -1040,24 +1040,24 @@ export default function DPRPage() {
           {/* =========================================================================
               SECTION 5: DISCIPLINE
               ========================================================================= */}
-          <section id="sec-discipline" className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 md:p-6 shadow-xs space-y-4">
-            <div className="border-b border-[#D9DEE5] pb-3 flex items-center justify-between">
+          <section id="sec-discipline" className="bg-white border border-[#D8E2EA] rounded-lg p-4 sm:p-6 md:p-6 shadow-xs space-y-4">
+            <div className="border-b border-[#D8E2EA] pb-3 flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <span className="w-6 h-6 rounded-md bg-[#EDF5F8] text-[#176B87] font-bold text-xs flex items-center justify-center">
+                <span className="w-6 h-6 rounded-md bg-[#EAF0F5] text-[#0F6B68] font-bold text-xs flex items-center justify-center">
                   4
                 </span>
-                <h2 className="text-base font-bold text-[#172033]">
+                <h2 className="text-base font-bold text-[#142C3F]">
                   Discipline & Manpower Deployment
                 </h2>
               </div>
-              <span className="text-xs font-bold text-[#172033]">
+              <span className="text-xs font-bold text-[#142C3F]">
                 Total Site Deployment: {totalHeadcount} Pax
               </span>
             </div>
 
             {/* Discipline Checkboxes */}
             <div className="space-y-2">
-              <label className="font-bold text-[#172033] uppercase tracking-wider text-[11px] block">
+              <label className="font-bold text-[#142C3F] uppercase tracking-wider text-[11px] block">
                 Disciplines Active Today
               </label>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
@@ -1068,8 +1068,8 @@ export default function DPRPage() {
                       key={d}
                       className={`p-3 rounded-lg border flex items-center gap-2 cursor-pointer transition-colors ${
                         isChecked
-                          ? 'border-[#176B87] bg-[#EDF5F8] text-[#176B87] font-bold'
-                          : 'border-[#D9DEE5] bg-white text-[#596579] hover:bg-[#F7F8FA]'
+                          ? 'border-[#0F6B68] bg-[#EAF0F5] text-[#0F6B68] font-bold'
+                          : 'border-[#D8E2EA] bg-white text-[#526779] hover:bg-[#F3F6FA]'
                       }`}
                     >
                       <input
@@ -1080,7 +1080,7 @@ export default function DPRPage() {
                             isChecked ? prev.filter((item) => item !== d) : [...prev, d]
                           );
                         }}
-                        className="w-4 h-4 text-[#176B87] rounded border-[#D9DEE5]"
+                        className="w-4 h-4 text-[#0F6B68] rounded border-[#D8E2EA]"
                       />
                       <span>{d}</span>
                     </label>
@@ -1090,58 +1090,58 @@ export default function DPRPage() {
             </div>
 
             {/* Manpower Breakdown Table */}
-            <div className="border border-[#D9DEE5] rounded-lg overflow-hidden text-xs">
-              <div className="bg-[#F7F8FA] p-3 border-b border-[#D9DEE5] font-bold text-[#172033] flex items-center justify-between">
+            <div className="border border-[#D8E2EA] rounded-lg overflow-hidden text-xs">
+              <div className="bg-[#F3F6FA] p-3 border-b border-[#D8E2EA] font-bold text-[#142C3F] flex items-center justify-between">
                 <span>Discipline Crew Allocation</span>
-                <span className="text-[11px] text-[#596579] font-normal">Active Direct Labor on Site</span>
+                <span className="text-[11px] text-[#526779] font-normal">Active Direct Labor on Site</span>
               </div>
-              <div className="divide-y divide-[#D9DEE5] p-3 space-y-2">
+              <div className="divide-y divide-[#D8E2EA] p-3 space-y-2">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                  <span className="font-bold text-[#172033] w-32 shrink-0">Piping Crew:</span>
+                  <span className="font-bold text-[#142C3F] w-32 shrink-0">Piping Crew:</span>
                   <input
                     type="text"
                     value={pipingCrew}
                     onChange={(e) => setPipingCrew(e.target.value)}
-                    className="w-full p-2 bg-[#FAFAFA] border border-[#D9DEE5] rounded text-xs text-[#172033]"
+                    className="w-full p-2 bg-[#FAFAFA] border border-[#D8E2EA] rounded text-xs text-[#142C3F]"
                   />
-                  <span className="font-mono font-bold text-[#176B87] shrink-0 text-right w-16">
+                  <span className="font-mono font-bold text-[#0F6B68] shrink-0 text-right w-16">
                     {selectedDisciplines.includes('Piping') ? '15 Pax' : '0 Pax'}
                   </span>
                 </div>
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pt-2">
-                  <span className="font-bold text-[#172033] w-32 shrink-0">Civil Crew:</span>
+                  <span className="font-bold text-[#142C3F] w-32 shrink-0">Civil Crew:</span>
                   <input
                     type="text"
                     value={civilCrew}
                     onChange={(e) => setCivilCrew(e.target.value)}
-                    className="w-full p-2 bg-[#FAFAFA] border border-[#D9DEE5] rounded text-xs text-[#172033]"
+                    className="w-full p-2 bg-[#FAFAFA] border border-[#D8E2EA] rounded text-xs text-[#142C3F]"
                   />
-                  <span className="font-mono font-bold text-[#176B87] shrink-0 text-right w-16">
+                  <span className="font-mono font-bold text-[#0F6B68] shrink-0 text-right w-16">
                     {selectedDisciplines.some((d) => d.includes('Civil')) ? '10 Pax' : '0 Pax'}
                   </span>
                 </div>
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pt-2">
-                  <span className="font-bold text-[#172033] w-32 shrink-0">E&amp;I Crew:</span>
+                  <span className="font-bold text-[#142C3F] w-32 shrink-0">E&amp;I Crew:</span>
                   <input
                     type="text"
                     value={electricalCrew}
                     onChange={(e) => setElectricalCrew(e.target.value)}
-                    className={`w-full p-2 border border-[#D9DEE5] rounded text-xs ${
+                    className={`w-full p-2 border border-[#D8E2EA] rounded text-xs ${
                       selectedDisciplines.some((d) => d.includes('Electrical') || d.includes('E&I'))
-                        ? 'bg-[#FAFAFA] text-[#172033]'
+                        ? 'bg-[#FAFAFA] text-[#142C3F]'
                         : 'bg-gray-100 text-gray-400 italic'
                     }`}
                     placeholder="Not deployed today (0 Pax)"
                   />
-                  <span className="font-mono font-bold text-[#596579] shrink-0 text-right w-16">
+                  <span className="font-mono font-bold text-[#526779] shrink-0 text-right w-16">
                     {selectedDisciplines.some((d) => d.includes('Electrical') || d.includes('E&I'))
                       ? '4 Pax'
                       : '0 Pax (Inactive)'}
                   </span>
                 </div>
-                <div className="flex items-center justify-between pt-2 border-t-2 border-[#D9DEE5] text-xs font-bold text-[#172033]">
+                <div className="flex items-center justify-between pt-2 border-t-2 border-[#D8E2EA] text-xs font-bold text-[#142C3F]">
                   <span>Total Deployed Site Headcount:</span>
-                  <span className="font-mono text-sm text-[#176B87]">{totalHeadcount} Pax</span>
+                  <span className="font-mono text-sm text-[#0F6B68]">{totalHeadcount} Pax</span>
                 </div>
               </div>
             </div>
@@ -1150,13 +1150,13 @@ export default function DPRPage() {
           {/* =========================================================================
               SECTION 6: WORK COMPLETED
               ========================================================================= */}
-          <section id="sec-work-completed" className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 md:p-6 shadow-xs space-y-4">
-            <div className="border-b border-[#D9DEE5] pb-3 flex items-center justify-between">
+          <section id="sec-work-completed" className="bg-white border border-[#D8E2EA] rounded-lg p-4 sm:p-6 md:p-6 shadow-xs space-y-4">
+            <div className="border-b border-[#D8E2EA] pb-3 flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <span className="w-6 h-6 rounded-md bg-[#EDF5F8] text-[#176B87] font-bold text-xs flex items-center justify-center">
+                <span className="w-6 h-6 rounded-md bg-[#EAF0F5] text-[#0F6B68] font-bold text-xs flex items-center justify-center">
                   5
                 </span>
-                <h2 className="text-base font-bold text-[#172033]">
+                <h2 className="text-base font-bold text-[#142C3F]">
                   Work Completed Narrative
                 </h2>
               </div>
@@ -1185,7 +1185,7 @@ export default function DPRPage() {
                     description: 'Added work completed log for ELE-06-004.',
                   });
                 }}
-                className="px-3 py-1.5 text-xs font-semibold text-[#176B87] bg-[#EDF5F8] border border-[#B3CBE0] hover:bg-[#D6EBF0] rounded-lg inline-flex items-center gap-2 transition-colors cursor-pointer"
+                className="px-3 py-1.5 text-xs font-semibold text-[#0F6B68] bg-[#EAF0F5] border border-[#D8E2EA] hover:bg-[#D6EBF0] rounded-lg inline-flex items-center gap-2 transition-colors cursor-pointer"
               >
                 <Plus className="w-3.5 h-3.5" />
                 <span>Add Activity Narrative</span>
@@ -1196,29 +1196,29 @@ export default function DPRPage() {
               {workCompletedList.map((item, idx) => (
                 <div
                   key={item.id}
-                  className="p-4 rounded-lg border border-[#D9DEE5] bg-[#FAFAFA] space-y-2"
+                  className="p-4 rounded-lg border border-[#D8E2EA] bg-[#FAFAFA] space-y-2"
                 >
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#D9DEE5] pb-2">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#D8E2EA] pb-2">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <span className="font-mono font-bold text-[#176B87] bg-white px-2 py-0.5 rounded border border-[#D9DEE5]">
+                      <span className="font-mono font-bold text-[#0F6B68] bg-white px-2 py-0.5 rounded border border-[#D8E2EA]">
                         {item.activityId}
                       </span>
                       <span className="font-mono text-[10px] text-[#7B8798]">WBS {item.wbs}</span>
-                      <span className="font-bold text-[#172033]">{item.title}</span>
-                      <span className="text-[10px] font-semibold text-[#596579] bg-[#F1F3F5] px-2 py-0.5 rounded">
+                      <span className="font-bold text-[#142C3F]">{item.title}</span>
+                      <span className="text-[10px] font-semibold text-[#526779] bg-[#EAF0F5] px-2 py-0.5 rounded">
                         {item.discipline}
                       </span>
                     </div>
 
                     <div className="flex items-center gap-2">
-                      <span className="text-[11px] text-[#596579]">
+                      <span className="text-[11px] text-[#526779]">
                         {item.hoursWorked} hrs • {item.crewCount} crew
                       </span>
                       {workCompletedList.length > 1 && (
                         <button
                           type="button"
                           onClick={() => setWorkCompletedList(workCompletedList.filter((w) => w.id !== item.id))}
-                          className="text-[#7B8798] hover:text-[#B5473C] p-1 transition-colors"
+                          className="text-[#7B8798] hover:text-[#A24335] p-1 transition-colors"
                           title="Remove narrative"
                         >
                           <Trash2 className="w-3.5 h-3.5" />
@@ -1228,7 +1228,7 @@ export default function DPRPage() {
                   </div>
 
                   <div className="space-y-1">
-                    <label className="text-[10px] uppercase font-semibold text-[#596579] block">
+                    <label className="text-[10px] uppercase font-semibold text-[#526779] block">
                       Execution Narrative & Technical Observations
                     </label>
                     <textarea
@@ -1240,7 +1240,7 @@ export default function DPRPage() {
                           prev.map((w) => (w.id === item.id ? { ...w, narrative: val } : w))
                         );
                       }}
-                      className="w-full p-3 bg-white border border-[#D9DEE5] rounded-lg text-xs text-[#172033] leading-relaxed outline-hidden focus:border-[#176B87]"
+                      className="w-full p-3 bg-white border border-[#D8E2EA] rounded-lg text-xs text-[#142C3F] leading-relaxed outline-hidden focus:border-[#0F6B68]"
                     />
                   </div>
                 </div>
@@ -1251,26 +1251,26 @@ export default function DPRPage() {
           {/* =========================================================================
               SECTION 7: QUANTITY
               ========================================================================= */}
-          <section id="sec-quantity" className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 md:p-6 shadow-xs space-y-4">
-            <div className="border-b border-[#D9DEE5] pb-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <section id="sec-quantity" className="bg-white border border-[#D8E2EA] rounded-lg p-4 sm:p-6 md:p-6 shadow-xs space-y-4">
+            <div className="border-b border-[#D8E2EA] pb-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
               <div className="flex items-center gap-2">
-                <span className="w-6 h-6 rounded-md bg-[#EDF5F8] text-[#176B87] font-bold text-xs flex items-center justify-center">
+                <span className="w-6 h-6 rounded-md bg-[#EAF0F5] text-[#0F6B68] font-bold text-xs flex items-center justify-center">
                   6
                 </span>
-                <h2 className="text-base font-bold text-[#172033]">
+                <h2 className="text-base font-bold text-[#142C3F]">
                   Quantity Progress & Output Certification
                 </h2>
               </div>
-              <span className="text-xs text-[#596579]">
+              <span className="text-xs text-[#526779]">
                 Certified physical measures against baseline schedule
               </span>
             </div>
 
             {/* Quantity Table with horizontal scroll min-width */}
-            <div className="border border-[#D9DEE5] rounded-lg overflow-x-auto">
+            <div className="border border-[#D8E2EA] rounded-lg overflow-x-auto">
               <table className="w-full min-w-[700px] text-left text-sm border-collapse">
-                <thead className="sticky top-0 z-10 bg-[#F7F8FA]">
-                  <tr className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[11px] font-bold uppercase tracking-wider text-[#596579] h-11">
+                <thead className="sticky top-0 z-10 bg-[#F3F6FA]">
+                  <tr className="bg-[#F3F6FA] border-b border-[#D8E2EA] text-[11px] font-bold uppercase tracking-wider text-[#526779] h-11">
                     <th className="py-3 px-4">Activity ID</th>
                     <th className="py-3 px-4">Work Item Description</th>
                     <th className="py-3 px-4">Discipline</th>
@@ -1282,28 +1282,28 @@ export default function DPRPage() {
                     <th className="py-3 px-4 text-right">Action</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#D9DEE5]/60">
+                <tbody className="divide-y divide-[#D8E2EA]/60">
                   {quantityItems.map((q) => (
-                    <tr key={q.id} className="h-11 sm:h-12 hover:bg-[#F7F8FA]/60 transition-colors">
+                    <tr key={q.id} className="h-11 sm:h-12 hover:bg-[#F3F6FA]/60 transition-colors">
                       <td className="p-3">
-                        <div className="font-mono font-bold text-[#176B87]">{q.activityId}</div>
+                        <div className="font-mono font-bold text-[#0F6B68]">{q.activityId}</div>
                         {q.isCriticalPath && (
-                          <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA] inline-block mt-0.5">
+                          <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-[#FCE8E4] text-[#A24335] border border-[#E4B0AA] inline-block mt-0.5">
                             Critical Path
                           </span>
                         )}
                       </td>
                       <td className="p-3">
-                        <div className="font-semibold text-[#172033] max-w-[200px] truncate">
+                        <div className="font-semibold text-[#142C3F] max-w-[200px] truncate">
                           {q.description}
                         </div>
                       </td>
-                      <td className="p-3 text-[#596579]">
-                        <span className="px-2 py-0.5 rounded bg-[#F1F3F5] text-[11px] font-medium">
+                      <td className="p-3 text-[#526779]">
+                        <span className="px-2 py-0.5 rounded bg-[#EAF0F5] text-[11px] font-medium">
                           {q.discipline}
                         </span>
                       </td>
-                      <td className="p-3 text-center font-mono font-semibold text-[#596579]">
+                      <td className="p-3 text-center font-mono font-semibold text-[#526779]">
                         {q.plannedToday}
                       </td>
                       <td className="p-3 text-center">
@@ -1312,18 +1312,18 @@ export default function DPRPage() {
                           step="any"
                           value={q.actualToday}
                           onChange={(e) => handleUpdateQuantity(q.id, 'actualToday', e.target.value)}
-                          className="w-20 p-2 bg-white border border-[#D9DEE5] rounded font-mono font-bold text-xs text-[#172033] text-center focus:border-[#176B87]"
+                          className="w-20 p-2 bg-white border border-[#D8E2EA] rounded font-mono font-bold text-xs text-[#142C3F] text-center focus:border-[#0F6B68]"
                         />
                       </td>
-                      <td className="p-3 text-[#596579] font-medium">
+                      <td className="p-3 text-[#526779] font-medium">
                         <input
                           type="text"
                           value={q.unit}
                           onChange={(e) => handleUpdateQuantity(q.id, 'unit', e.target.value)}
-                          className="w-20 p-2 bg-transparent border-b border-dashed border-[#D9DEE5] text-xs font-medium text-[#172033]"
+                          className="w-20 p-2 bg-transparent border-b border-dashed border-[#D8E2EA] text-xs font-medium text-[#142C3F]"
                         />
                       </td>
-                      <td className="p-3 text-center font-mono text-[11px] text-[#596579]">
+                      <td className="p-3 text-center font-mono text-[11px] text-[#526779]">
                         {q.cumulativeQty} / {q.targetTotal}
                       </td>
                       <td className="p-3 text-center">
@@ -1333,7 +1333,7 @@ export default function DPRPage() {
                         <button
                           type="button"
                           onClick={() => setSelectedQuantityForDrawer(q)}
-                          className="min-h-[40px] px-2.5 py-1 text-[#176B87] hover:underline font-semibold text-xs inline-flex items-center cursor-pointer"
+                          className="min-h-[40px] px-2.5 py-1 text-[#0F6B68] hover:underline font-semibold text-xs inline-flex items-center cursor-pointer"
                         >
                           Inspect
                         </button>
@@ -1348,17 +1348,17 @@ export default function DPRPage() {
           {/* =========================================================================
               SECTION 8: ISSUES / BLOCKERS
               ========================================================================= */}
-          <section id="sec-issues" className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 md:p-6 shadow-xs space-y-4">
-            <div className="border-b border-[#D9DEE5] pb-3 flex items-center justify-between">
+          <section id="sec-issues" className="bg-white border border-[#D8E2EA] rounded-lg p-4 sm:p-6 md:p-6 shadow-xs space-y-4">
+            <div className="border-b border-[#D8E2EA] pb-3 flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <span className="w-6 h-6 rounded-md bg-[#EDF5F8] text-[#176B87] font-bold text-xs flex items-center justify-center">
+                <span className="w-6 h-6 rounded-md bg-[#EAF0F5] text-[#0F6B68] font-bold text-xs flex items-center justify-center">
                   7
                 </span>
-                <h2 className="text-base font-bold text-[#172033]">
+                <h2 className="text-base font-bold text-[#142C3F]">
                   Issues, Delays & Site Blockers
                 </h2>
               </div>
-              <span className="text-xs text-[#B5473C] font-semibold">
+              <span className="text-xs text-[#A24335] font-semibold">
                 {issuesList.length} Stoppages Recorded
               </span>
             </div>
@@ -1369,37 +1369,37 @@ export default function DPRPage() {
                   key={iss.id}
                   className={`p-4 rounded-lg border space-y-2 ${
                     iss.severity === 'High'
-                      ? 'bg-[#FBEFEE]/50 border-[#E4B0AA]'
-                      : 'bg-[#FDF6ED]/50 border-[#F0D4A6]'
+                      ? 'bg-[#FCE8E4]/50 border-[#E4B0AA]'
+                      : 'bg-[#FFF1D3]/50 border-[#F0D4A6]'
                   }`}
                 >
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-black/10 pb-2">
                     <div className="flex items-center gap-2">
-                      <span className="font-mono font-bold text-[#172033]">{iss.id}</span>
-                      <span className="font-mono font-bold text-[#176B87] bg-white px-2 py-0.5 rounded border border-[#D9DEE5]">
+                      <span className="font-mono font-bold text-[#142C3F]">{iss.id}</span>
+                      <span className="font-mono font-bold text-[#0F6B68] bg-white px-2 py-0.5 rounded border border-[#D8E2EA]">
                         {iss.activityId}
                       </span>
-                      <span className="px-2 py-0.5 rounded font-bold text-[10px] uppercase bg-white border border-[#D9DEE5] text-[#172033]">
+                      <span className="px-2 py-0.5 rounded font-bold text-[10px] uppercase bg-white border border-[#D8E2EA] text-[#142C3F]">
                         {iss.category}
                       </span>
                     </div>
 
                     <div className="flex items-center gap-2">
-                      <span className="font-bold text-[#B5473C]">
+                      <span className="font-bold text-[#A24335]">
                         {iss.durationHours} hrs Stoppage
                       </span>
                       {iss.requiresManagerReview && (
-                        <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
+                        <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-[#FCE8E4] text-[#A24335] border border-[#E4B0AA]">
                           Requires Manager Routing
                         </span>
                       )}
                     </div>
                   </div>
 
-                  <p className="text-[#172033] font-medium leading-relaxed">
+                  <p className="text-[#142C3F] font-medium leading-relaxed">
                     <strong>Cause:</strong> {iss.description}
                   </p>
-                  <p className="text-[#596579]">
+                  <p className="text-[#526779]">
                     <strong>Action Taken / Plan:</strong> {iss.actionTaken}
                   </p>
                 </div>
@@ -1407,7 +1407,7 @@ export default function DPRPage() {
             </div>
 
             {/* HSE / Safety Box */}
-            <div className="p-4 bg-[#EDF7F2] border border-[#B8DCC9] rounded-lg text-xs space-y-2">
+            <div className="p-4 bg-[#E4F4EC] border border-[#B8DCC9] rounded-lg text-xs space-y-2">
               <div className="flex items-center justify-between font-bold text-[#2E7D5B]">
                 <span className="flex items-center gap-2">
                   <ShieldCheck className="w-4 h-4" />
@@ -1415,7 +1415,7 @@ export default function DPRPage() {
                 </span>
                 <span>Zero LTI Logged</span>
               </div>
-              <p className="text-[#596579] text-[11px]">
+              <p className="text-[#526779] text-[11px]">
                 Toolbox Talk Topic: <strong>{safetyRecord.toolboxTopic}</strong> ({safetyRecord.toolboxAttendees} participants).
                 Zero First Aid, Zero Medical Treatment Cases, Zero Near Misses reported during this shift.
               </p>
@@ -1425,17 +1425,17 @@ export default function DPRPage() {
           {/* =========================================================================
               SECTION 9: EVIDENCE
               ========================================================================= */}
-          <section id="sec-evidence" className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 md:p-6 shadow-xs space-y-4">
-            <div className="border-b border-[#D9DEE5] pb-3 flex items-center justify-between">
+          <section id="sec-evidence" className="bg-white border border-[#D8E2EA] rounded-lg p-4 sm:p-6 md:p-6 shadow-xs space-y-4">
+            <div className="border-b border-[#D8E2EA] pb-3 flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <span className="w-6 h-6 rounded-md bg-[#EDF5F8] text-[#176B87] font-bold text-xs flex items-center justify-center">
+                <span className="w-6 h-6 rounded-md bg-[#EAF0F5] text-[#0F6B68] font-bold text-xs flex items-center justify-center">
                   8
                 </span>
-                <h2 className="text-base font-bold text-[#172033]">
+                <h2 className="text-base font-bold text-[#142C3F]">
                   Physical Evidence & Inspection Documents
                 </h2>
               </div>
-              <span className="text-xs text-[#596579]">
+              <span className="text-xs text-[#526779]">
                 {evidenceList.length} Verifiable Files Attached
               </span>
             </div>
@@ -1444,61 +1444,61 @@ export default function DPRPage() {
               {evidenceList.map((ev) => (
                 <div
                   key={ev.id}
-                  className="p-3 bg-[#FAFAFA] border border-[#D9DEE5] rounded-lg space-y-2 hover:bg-white transition-colors"
+                  className="p-3 bg-[#FAFAFA] border border-[#D8E2EA] rounded-lg space-y-2 hover:bg-white transition-colors"
                 >
                   <div className="flex items-center justify-between">
-                    <span className="font-mono text-[10px] font-bold text-[#176B87] bg-white px-2 py-0.5 rounded border border-[#D9DEE5]">
+                    <span className="font-mono text-[10px] font-bold text-[#0F6B68] bg-white px-2 py-0.5 rounded border border-[#D8E2EA]">
                       {ev.activityId}
                     </span>
                     <span className="text-[10px] text-[#7B8798]">{ev.timestamp}</span>
                   </div>
                   <div className="flex items-start gap-2 pt-1">
                     {ev.type === 'PHOTO' ? (
-                      <Camera className="w-4 h-4 text-[#176B87] shrink-0 mt-0.5" />
+                      <Camera className="w-4 h-4 text-[#0F6B68] shrink-0 mt-0.5" />
                     ) : (
-                      <FileText className="w-4 h-4 text-[#596579] shrink-0 mt-0.5" />
+                      <FileText className="w-4 h-4 text-[#526779] shrink-0 mt-0.5" />
                     )}
                     <div className="min-w-0">
-                      <p className="font-mono font-bold text-[#172033] truncate text-[11px]">
+                      <p className="font-mono font-bold text-[#142C3F] truncate text-[11px]">
                         {ev.name}
                       </p>
                       <p className="text-[10px] text-[#7B8798]">{ev.fileSize} • {ev.locationArea}</p>
                     </div>
                   </div>
                   {ev.geotag && (
-                    <div className="text-[10px] text-[#596579] font-mono flex items-center gap-1 pt-1 border-t border-[#D9DEE5]">
-                      <MapPin className="w-3 h-3 text-[#176B87]" />
+                    <div className="text-[10px] text-[#526779] font-mono flex items-center gap-1 pt-1 border-t border-[#D8E2EA]">
+                      <MapPin className="w-3 h-3 text-[#0F6B68]" />
                       <span>{ev.geotag}</span>
                     </div>
                   )}
                   {/* Feature 21: Distinct Evidence States (Verified, Awaiting Review, Uploaded) */}
                   {ev.signoffBy ? (
-                    <div className="text-[10px] text-[#187A6A] font-semibold pt-1 border-t border-[#D7E1E8] flex items-center justify-between">
+                    <div className="text-[10px] text-[#176B53] font-semibold pt-1 border-t border-[#D8E2EA] flex items-center justify-between">
                       <span className="flex items-center gap-1">
-                        <CheckCircle2 className="w-3 h-3 text-[#187A6A]" />
+                        <CheckCircle2 className="w-3 h-3 text-[#176B53]" />
                         <span>Signed off: {ev.signoffBy}</span>
                       </span>
-                      <span className="px-1.5 py-0.2 rounded text-[9px] font-bold bg-[#E8F5F2] text-[#187A6A] border border-[#B1DBD2]">
+                      <span className="px-1.5 py-0.2 rounded text-[9px] font-bold bg-[#E8F5F2] text-[#176B53] border border-[#B1DBD2]">
                         Verified
                       </span>
                     </div>
                   ) : ev.geotag ? (
-                    <div className="text-[10px] text-[#9C5A08] font-semibold pt-1 border-t border-[#D7E1E8] flex items-center justify-between">
+                    <div className="text-[10px] text-[#845006] font-semibold pt-1 border-t border-[#D8E2EA] flex items-center justify-between">
                       <span className="flex items-center gap-1">
-                        <Clock className="w-3 h-3 text-[#9C5A08]" />
+                        <Clock className="w-3 h-3 text-[#845006]" />
                         <span>Awaiting QC Sign-off</span>
                       </span>
-                      <span className="px-1.5 py-0.2 rounded text-[9px] font-bold bg-[#FFF8E6] text-[#9C5A08] border border-[#F0D4A6]">
+                      <span className="px-1.5 py-0.2 rounded text-[9px] font-bold bg-[#FFF8E6] text-[#845006] border border-[#F0D4A6]">
                         Awaiting Review
                       </span>
                     </div>
                   ) : (
-                    <div className="text-[10px] text-[#0F6574] font-semibold pt-1 border-t border-[#D7E1E8] flex items-center justify-between">
+                    <div className="text-[10px] text-[#0F6B68] font-semibold pt-1 border-t border-[#D8E2EA] flex items-center justify-between">
                       <span className="flex items-center gap-1">
-                        <FileText className="w-3 h-3 text-[#0F6574]" />
+                        <FileText className="w-3 h-3 text-[#0F6B68]" />
                         <span>Uploaded File</span>
                       </span>
-                      <span className="px-1.5 py-0.2 rounded text-[9px] font-bold bg-[#EDF5F8] text-[#0F6574] border border-[#B3CBE0]">
+                      <span className="px-1.5 py-0.2 rounded text-[9px] font-bold bg-[#EAF0F5] text-[#0F6B68] border border-[#D8E2EA]">
                         Uploaded
                       </span>
                     </div>
@@ -1508,7 +1508,7 @@ export default function DPRPage() {
             </div>
 
             {/* Attach Evidence Action Bar */}
-            <div className="p-4 border-2 border-dashed border-[#D9DEE5] rounded-lg text-center bg-[#F7F8FA]">
+            <div className="p-4 border-2 border-dashed border-[#D8E2EA] rounded-lg text-center bg-[#F3F6FA]">
               <input
                 type="file"
                 ref={fileInputRef}
@@ -1538,7 +1538,7 @@ export default function DPRPage() {
                   e.target.value = '';
                 }}
               />
-              <p className="text-xs font-semibold text-[#172033]">
+              <p className="text-xs font-semibold text-[#142C3F]">
                 Attach Geotagged Photos, Inspection Sheets, or Delivery Slips
               </p>
               <p className="text-[11px] text-[#7B8798] mt-0.5">
@@ -1548,7 +1548,7 @@ export default function DPRPage() {
                 <button
                   type="button"
                   onClick={() => fileInputRef.current?.click()}
-                  className="px-3 py-1.5 text-xs font-bold text-[#176B87] bg-white border border-[#B3CBE0] hover:bg-[#EDF5F8] rounded-lg inline-flex items-center gap-2 transition-colors cursor-pointer"
+                  className="px-3 py-1.5 text-xs font-bold text-[#0F6B68] bg-white border border-[#D8E2EA] hover:bg-[#EAF0F5] rounded-lg inline-flex items-center gap-2 transition-colors cursor-pointer"
                 >
                   <Plus className="w-3.5 h-3.5" />
                   <span>Browse & Attach File</span>
@@ -1573,9 +1573,9 @@ export default function DPRPage() {
                       description: `Added sample attachment ${newEv.name}`,
                     });
                   }}
-                  className="px-3 py-1.5 text-xs font-medium text-[#596579] bg-white border border-[#D9DEE5] hover:bg-[#F1F3F5] rounded-lg inline-flex items-center gap-2 transition-colors cursor-pointer"
+                  className="px-3 py-1.5 text-xs font-medium text-[#526779] bg-white border border-[#D8E2EA] hover:bg-[#EAF0F5] rounded-lg inline-flex items-center gap-2 transition-colors cursor-pointer"
                 >
-                  <Camera className="w-3.5 h-3.5 text-[#596579]" />
+                  <Camera className="w-3.5 h-3.5 text-[#526779]" />
                   <span>Add Sample Site Photo</span>
                 </button>
               </div>
@@ -1585,68 +1585,68 @@ export default function DPRPage() {
           {/* =========================================================================
               SECTION 10: GENERATED SUMMARY (Structured Generated-Summary Panel)
               ========================================================================= */}
-          <section id="sec-summary" className="bg-white border-2 border-[#176B87]/30 rounded-lg p-4 sm:p-6 md:p-6 shadow-xs space-y-6">
-            <div className="border-b border-[#D9DEE5] pb-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <section id="sec-summary" className="bg-white border-2 border-[#0F6B68]/30 rounded-lg p-4 sm:p-6 md:p-6 shadow-xs space-y-6">
+            <div className="border-b border-[#D8E2EA] pb-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
               <div className="flex items-center gap-2">
-                <span className="w-6 h-6 rounded-md bg-[#176B87] text-white font-bold text-xs flex items-center justify-center">
+                <span className="w-6 h-6 rounded-md bg-[#0F6B68] text-white font-bold text-xs flex items-center justify-center">
                   9
                 </span>
                 <div>
-                  <h2 className="text-base font-bold text-[#172033]">
+                  <h2 className="text-base font-bold text-[#142C3F]">
                     Generated Summary Panel
                   </h2>
-                  <p className="text-xs text-[#596579]">
+                  <p className="text-xs text-[#526779]">
                     Audited shift compilation and Schedule Twin synchronization preview
                   </p>
                 </div>
               </div>
 
-              <span className="font-mono text-xs text-[#176B87] font-bold bg-[#EDF5F8] px-3 py-1 rounded border border-[#B3CBE0]">
+              <span className="font-mono text-xs text-[#0F6B68] font-bold bg-[#EAF0F5] px-3 py-1 rounded border border-[#D8E2EA]">
                 Pre-Submission Audit Dossier
               </span>
             </div>
 
             {/* Structured Table: Audited Shift Deliverables */}
-            <div className="border border-[#D9DEE5] rounded-lg overflow-hidden text-sm">
+            <div className="border border-[#D8E2EA] rounded-lg overflow-hidden text-sm">
               <table className="w-full border-collapse">
-                <tbody className="divide-y divide-[#D9DEE5]/60">
+                <tbody className="divide-y divide-[#D8E2EA]/60">
                   <tr className="bg-[#FAFAFA] h-11 sm:h-12">
-                    <td className="py-3 px-4 font-semibold text-[#596579] w-1/3">Document Reference</td>
-                    <td className="py-3 px-4 font-mono font-bold text-[#172033]">
+                    <td className="py-3 px-4 font-semibold text-[#526779] w-1/3">Document Reference</td>
+                    <td className="py-3 px-4 font-mono font-bold text-[#142C3F]">
                       {dprDocumentNo} • {dprRevision}
                     </td>
                   </tr>
                   <tr className="h-11 sm:h-12">
-                    <td className="py-3 px-4 font-semibold text-[#596579]">Reporting Window</td>
-                    <td className="py-3 px-4 text-[#172033]">
+                    <td className="py-3 px-4 font-semibold text-[#526779]">Reporting Window</td>
+                    <td className="py-3 px-4 text-[#142C3F]">
                       {reportingDate} ({reportingShift}) • <strong>{summaryMetrics.totalManHours} Productive Man-Hours</strong> ({totalHeadcount} pax)
                     </td>
                   </tr>
                   <tr className="bg-[#FAFAFA] h-11 sm:h-12">
-                    <td className="py-3 px-4 font-semibold text-[#596579]">Activities Progressed</td>
-                    <td className="py-3 px-4 text-[#172033]">
+                    <td className="py-3 px-4 font-semibold text-[#526779]">Activities Progressed</td>
+                    <td className="py-3 px-4 text-[#142C3F]">
                       <span className="font-bold text-[#2E7D5B]">{summaryMetrics.completedTasks} Completed</span>,{' '}
-                      <span className="font-bold text-[#176B87]">{summaryMetrics.inProgressTasks} In Progress</span>,{' '}
-                      <span className="font-bold text-[#B5473C]">{summaryMetrics.blockedTasks} Blocked</span> (Total: {summaryMetrics.plannedTasks} activities worked)
+                      <span className="font-bold text-[#0F6B68]">{summaryMetrics.inProgressTasks} In Progress</span>,{' '}
+                      <span className="font-bold text-[#A24335]">{summaryMetrics.blockedTasks} Blocked</span> (Total: {summaryMetrics.plannedTasks} activities worked)
                     </td>
                   </tr>
                   <tr className="h-11 sm:h-12">
-                    <td className="py-3 px-4 font-semibold text-[#596579]">Schedule Twin Impact</td>
-                    <td className="py-3 px-4 text-[#172033]">
+                    <td className="py-3 px-4 font-semibold text-[#526779]">Schedule Twin Impact</td>
+                    <td className="py-3 px-4 text-[#142C3F]">
                       Advances project cumulative progress by <strong>+{summaryMetrics.scheduleDeltaPercent}%</strong>.
                       Line 24-XX critical path remains on baseline (0 days float deviation).
                     </td>
                   </tr>
                   <tr className="bg-[#FAFAFA] h-11 sm:h-12">
-                    <td className="py-3 px-4 font-semibold text-[#596579]">Physical Evidence Audit</td>
-                    <td className="py-3 px-4 text-[#172033]">
+                    <td className="py-3 px-4 font-semibold text-[#526779]">Physical Evidence Audit</td>
+                    <td className="py-3 px-4 text-[#142C3F]">
                       <span className="font-bold text-[#2E7D5B]">{summaryMetrics.verifiedProofsCount} Signed-Off Documents</span> and{' '}
                       <span className="font-bold text-[#8C5311]">{summaryMetrics.pendingSignoffCount} Uncertified Site Photos</span> ({summaryMetrics.totalAttachmentsCount} total attachments).
                     </td>
                   </tr>
                   <tr className="h-11 sm:h-12">
-                    <td className="py-3 px-4 font-semibold text-[#596579]">Variance / Stoppage Governance</td>
-                    <td className="py-3 px-4 text-[#172033]">
+                    <td className="py-3 px-4 font-semibold text-[#526779]">Variance / Stoppage Governance</td>
+                    <td className="py-3 px-4 text-[#142C3F]">
                       Activity <strong>PIP-24-003 Hydrostatic Testing</strong> variance flagged due to monsoon squall & flange requisition hold.
                       Routed to Manager Review Queue (/matching).
                     </td>
@@ -1656,24 +1656,24 @@ export default function DPRPage() {
             </div>
 
             {/* Engineer Formal Attestation & Governance Checkbox */}
-            <div className="p-4 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg space-y-2 text-xs">
+            <div className="p-4 bg-[#F3F6FA] border border-[#D8E2EA] rounded-lg space-y-2 text-xs">
               <label className="flex items-start gap-2 cursor-pointer">
                 <input
                   type="checkbox"
                   checked={engineerSignoffConfirmed}
                   onChange={(e) => setEngineerSignoffConfirmed(e.target.checked)}
-                  className="w-4 h-4 text-[#176B87] rounded border-[#D9DEE5] mt-0.5 cursor-pointer"
+                  className="w-4 h-4 text-[#0F6B68] rounded border-[#D8E2EA] mt-0.5 cursor-pointer"
                 />
                 <div>
-                  <span className="font-bold text-[#172033] block">
+                  <span className="font-bold text-[#142C3F] block">
                     Certified by: {userSession?.name || siteEngineer} ({userSession?.role ? userSession.role.toUpperCase() : siteRole})
                     {userSession?.name && userSession.name !== siteEngineer && (
-                      <span className="ml-2 font-normal text-[#596579] text-[11px]">
+                      <span className="ml-2 font-normal text-[#526779] text-[11px]">
                         (Attesting on behalf of Lead Field Engineer {siteEngineer})
                       </span>
                     )}
                   </span>
-                  <span className="text-[#596579] leading-relaxed">
+                  <span className="text-[#526779] leading-relaxed">
                     I certify that the stated quantities, man-hours, and physical evidence accurately reflect site execution at {projectName} on {reportingDate}.
                   </span>
                 </div>
@@ -1681,14 +1681,14 @@ export default function DPRPage() {
             </div>
 
             {/* Final Action Buttons Bar */}
-            <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 border-t border-[#D9DEE5]">
+            <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 border-t border-[#D8E2EA]">
               <div className="flex items-center gap-2 w-full sm:w-auto">
                 <button
                   type="button"
                   onClick={handleSaveDraft}
-                  className="w-full sm:w-auto min-h-[44px] px-4 py-2 text-xs font-semibold text-[#172033] bg-white border border-[#D9DEE5] hover:bg-[#F1F3F5] rounded-lg inline-flex items-center justify-center gap-2 transition-colors cursor-pointer shadow-2xs"
+                  className="w-full sm:w-auto min-h-[44px] px-4 py-2 text-xs font-semibold text-[#142C3F] bg-white border border-[#D8E2EA] hover:bg-[#EAF0F5] rounded-lg inline-flex items-center justify-center gap-2 transition-colors cursor-pointer shadow-2xs"
                 >
-                  <Save className="w-4 h-4 text-[#596579]" />
+                  <Save className="w-4 h-4 text-[#526779]" />
                   <span>Save DPR Draft</span>
                 </button>
               </div>
@@ -1698,7 +1698,7 @@ export default function DPRPage() {
                   type="button"
                   onClick={handleSubmitDPR}
                   disabled={submissionState === 'Processing'}
-                  className="w-full sm:w-auto min-h-[48px] px-4 py-2 text-xs font-bold text-white bg-[#176B87] hover:bg-[#135A72] border border-[#176B87] disabled:opacity-50 rounded-lg inline-flex items-center justify-center gap-2 transition-colors cursor-pointer shadow-xs"
+                  className="w-full sm:w-auto min-h-[48px] px-4 py-2 text-xs font-bold text-white bg-[#0F6B68] hover:bg-[#135A72] border border-[#0F6B68] disabled:opacity-50 rounded-lg inline-flex items-center justify-center gap-2 transition-colors cursor-pointer shadow-xs"
                 >
                   <Send className="w-4 h-4" />
                   <span>
@@ -1723,32 +1723,32 @@ export default function DPRPage() {
           width="md"
         >
           {selectedQuantityForDrawer && (
-            <div className="space-y-4 text-xs text-[#172033]">
-              <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg space-y-1">
-                <span className="text-[10px] uppercase font-semibold text-[#596579] block">Discipline & Status</span>
+            <div className="space-y-4 text-xs text-[#142C3F]">
+              <div className="p-3 bg-[#F3F6FA] border border-[#D8E2EA] rounded-lg space-y-1">
+                <span className="text-[10px] uppercase font-semibold text-[#526779] block">Discipline & Status</span>
                 <div className="flex items-center justify-between">
                   <span className="font-semibold">{selectedQuantityForDrawer.discipline}</span>
-                  <span className="font-bold text-[#176B87]">{selectedQuantityForDrawer.status}</span>
+                  <span className="font-bold text-[#0F6B68]">{selectedQuantityForDrawer.status}</span>
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-3">
-                <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg">
-                  <span className="text-[10px] uppercase font-semibold text-[#596579] block">Planned Target</span>
+                <div className="p-3 bg-[#F3F6FA] border border-[#D8E2EA] rounded-lg">
+                  <span className="text-[10px] uppercase font-semibold text-[#526779] block">Planned Target</span>
                   <span className="font-mono font-bold text-sm">
                     {selectedQuantityForDrawer.plannedToday} {selectedQuantityForDrawer.unit}
                   </span>
                 </div>
-                <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg">
-                  <span className="text-[10px] uppercase font-semibold text-[#596579] block">Actual Executed</span>
+                <div className="p-3 bg-[#F3F6FA] border border-[#D8E2EA] rounded-lg">
+                  <span className="text-[10px] uppercase font-semibold text-[#526779] block">Actual Executed</span>
                   <span className="font-mono font-bold text-sm text-[#2E7D5B]">
                     {selectedQuantityForDrawer.actualToday} {selectedQuantityForDrawer.unit}
                   </span>
                 </div>
               </div>
 
-              <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg space-y-1">
-                <span className="text-[10px] uppercase font-semibold text-[#596579] block">Schedule Cumulative Progress</span>
+              <div className="p-3 bg-[#F3F6FA] border border-[#D8E2EA] rounded-lg space-y-1">
+                <span className="text-[10px] uppercase font-semibold text-[#526779] block">Schedule Cumulative Progress</span>
                 <div className="flex items-center justify-between text-xs">
                   <span>To Date: <strong>{selectedQuantityForDrawer.cumulativeQty} {selectedQuantityForDrawer.unit}</strong></span>
                   <span>Scope Total: <strong>{selectedQuantityForDrawer.targetTotal} {selectedQuantityForDrawer.unit}</strong></span>

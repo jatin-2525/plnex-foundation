@@ -16,13 +16,13 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 export const BUTTON_VARIANTS: Record<ButtonVariant, string> = {
   primary:
-    'bg-[#176B87] hover:bg-[#135A72] active:bg-[#0F4A5E] text-white border border-[#176B87] shadow-xs disabled:bg-[#7B8798] disabled:border-[#7B8798]',
+    'bg-[#0F6B68] hover:bg-[#135A72] active:bg-[#0F4A5E] text-white border border-[#0F6B68] shadow-xs disabled:bg-[#7B8798] disabled:border-[#7B8798]',
   secondary:
-    'bg-white hover:bg-[#F1F3F5] active:bg-[#D9DEE5] text-[#172033] border border-[#D9DEE5] hover:border-[#CBD5E1] shadow-xs disabled:text-[#7B8798] disabled:border-[#D9DEE5]',
+    'bg-white hover:bg-[#EAF0F5] active:bg-[#D8E2EA] text-[#142C3F] border border-[#D8E2EA] hover:border-[#CBD5E1] shadow-xs disabled:text-[#7B8798] disabled:border-[#D8E2EA]',
   tertiary:
-    'bg-transparent hover:bg-[#F1F3F5] active:bg-[#D9DEE5] text-[#596579] hover:text-[#172033] border border-transparent disabled:text-[#7B8798]',
+    'bg-transparent hover:bg-[#EAF0F5] active:bg-[#D8E2EA] text-[#526779] hover:text-[#142C3F] border border-transparent disabled:text-[#7B8798]',
   danger:
-    'bg-[#FBEFEE] hover:bg-[#F8E3E1] active:bg-[#F4D0CC] text-[#B5473C] border border-[#E4B0AA] shadow-xs disabled:text-[#7B8798]',
+    'bg-[#FCE8E4] hover:bg-[#F8E3E1] active:bg-[#F4D0CC] text-[#A24335] border border-[#E4B0AA] shadow-xs disabled:text-[#7B8798]',
 };
 
 export const BUTTON_SIZES: Record<ButtonSize, string> = {

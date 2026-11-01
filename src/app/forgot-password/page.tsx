@@ -83,19 +83,19 @@ export default function ForgotPasswordPage() {
   return (
     <div className="w-full max-w-[420px] mx-auto py-8">
       {/* Centered Minimal Authentication Panel */}
-      <div className="bg-white border border-[#D9DEE5] rounded-lg shadow-sm overflow-hidden">
+      <div className="bg-white border border-[#D8E2EA] rounded-lg shadow-sm overflow-hidden">
         {/* Header with PLnEX branding */}
-        <div className="px-6 pt-7 pb-4 text-center border-b border-[#D9DEE5] bg-white">
-          <div className="inline-flex items-center justify-center w-10 h-10 rounded-md bg-[#176B87] text-white font-black text-lg tracking-tighter mb-3 shadow-xs">
+        <div className="px-6 pt-7 pb-4 text-center border-b border-[#D8E2EA] bg-white">
+          <div className="inline-flex items-center justify-center w-10 h-10 rounded-md bg-[#0F6B68] text-white font-black text-lg tracking-tighter mb-3 shadow-xs">
             PX
           </div>
-          <h1 className="text-xl font-bold text-[#172033] tracking-tight leading-snug">
-            PL<span className="text-[#176B87]">n</span>EX
+          <h1 className="text-xl font-bold text-[#142C3F] tracking-tight leading-snug">
+            PL<span className="text-[#0F6B68]">n</span>EX
           </h1>
-          <p className="text-xs font-semibold text-[#176B87] uppercase tracking-wider font-mono mt-0.5">
+          <p className="text-xs font-semibold text-[#0F6B68] uppercase tracking-wider font-mono mt-0.5">
             Planning-to-Execution Bridge
           </p>
-          <p className="text-[11px] text-[#596579] mt-1">
+          <p className="text-[11px] text-[#526779] mt-1">
             Oil India Limited • Project Access Recovery
           </p>
         </div>
@@ -103,38 +103,38 @@ export default function ForgotPasswordPage() {
         {/* State: request accepted (Success Message) */}
         {pageState === 'request_accepted' ? (
           <div className="p-6 md:p-8 space-y-6">
-            <div className="w-12 h-12 rounded-full bg-[#EDF7F2] border border-[#B8DCC9] flex items-center justify-center text-[#2E7D5B] mx-auto">
+            <div className="w-12 h-12 rounded-full bg-[#E4F4EC] border border-[#B8DCC9] flex items-center justify-center text-[#2E7D5B] mx-auto">
               <CheckCircle2 className="w-6 h-6" />
             </div>
 
             <div className="text-center space-y-2">
-              <h2 className="text-sm font-bold text-[#172033] leading-snug">
+              <h2 className="text-sm font-bold text-[#142C3F] leading-snug">
                 A password-reset instruction has been requested.
               </h2>
-              <p className="text-xs text-[#596579] leading-relaxed">
-                If <strong className="text-[#172033]">{email}</strong> is registered in the Oil India Project Controls directory, password recovery instructions and an authorization link have been dispatched.
+              <p className="text-xs text-[#526779] leading-relaxed">
+                If <strong className="text-[#142C3F]">{email}</strong> is registered in the Oil India Project Controls directory, password recovery instructions and an authorization link have been dispatched.
               </p>
             </div>
 
-            <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-md text-[11px] text-[#596579] space-y-1 font-mono">
+            <div className="p-3 bg-[#F3F6FA] border border-[#D8E2EA] rounded-md text-[11px] text-[#526779] space-y-1 font-mono">
               <div className="flex justify-between">
                 <span>Dispatch Mode:</span>
-                <span className="text-[#172033] font-semibold">Corporate Exchange</span>
+                <span className="text-[#142C3F] font-semibold">Corporate Exchange</span>
               </div>
               <div className="flex justify-between">
                 <span>Security Token:</span>
-                <span className="text-[#176B87] font-semibold">Single-Use Link</span>
+                <span className="text-[#0F6B68] font-semibold">Single-Use Link</span>
               </div>
               <div className="flex justify-between">
                 <span>Link Validity:</span>
-                <span className="text-[#172033]">60 Minutes</span>
+                <span className="text-[#142C3F]">60 Minutes</span>
               </div>
             </div>
 
             <div className="space-y-2 pt-1">
               <Link
                 href="/login"
-                className="w-full flex items-center justify-center gap-2 py-2 px-4 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-semibold rounded-md shadow-xs transition-colors"
+                className="w-full flex items-center justify-center gap-2 py-2 px-4 bg-[#0F6B68] hover:bg-[#135A72] text-white text-xs font-semibold rounded-md shadow-xs transition-colors"
               >
                 <ArrowLeft className="w-3.5 h-3.5" />
                 <span>Return to Sign In</span>
@@ -143,7 +143,7 @@ export default function ForgotPasswordPage() {
               <button
                 type="button"
                 onClick={() => setPageState('initial')}
-                className="w-full flex items-center justify-center gap-2 py-1.5 text-xs text-[#596579] hover:text-[#172033] transition-colors"
+                className="w-full flex items-center justify-center gap-2 py-1.5 text-xs text-[#526779] hover:text-[#142C3F] transition-colors"
               >
                 <RotateCcw className="w-3 h-3" />
                 <span>Request another reset link</span>
@@ -154,15 +154,15 @@ export default function ForgotPasswordPage() {
           /* Form for Initial / Submitting / Invalid Email / Server Error */
           <form onSubmit={handleSubmit} className="p-6 md:p-6 space-y-4">
             <div>
-              <h2 className="text-sm font-bold text-[#172033]">Forgot your password?</h2>
-              <p className="text-xs text-[#596579] mt-0.5 leading-relaxed">
+              <h2 className="text-sm font-bold text-[#142C3F]">Forgot your password?</h2>
+              <p className="text-xs text-[#526779] mt-0.5 leading-relaxed">
                 Enter your registered Oil India work email. We will generate password recovery instructions for your user account.
               </p>
             </div>
 
             {/* Server Error Alert Banner */}
             {pageState === 'server_error' && (
-              <div className="p-3 bg-[#FBEFEE] border border-[#E4B0AA] rounded-md flex items-start gap-2 text-xs text-[#B5473C]">
+              <div className="p-3 bg-[#FCE8E4] border border-[#E4B0AA] rounded-md flex items-start gap-2 text-xs text-[#A24335]">
                 <AlertTriangle className="w-4 h-4 flex-shrink-0 mt-0.5" />
                 <div>
                   <strong className="block font-semibold">IAM Dispatch Server Error (500)</strong>
@@ -175,8 +175,8 @@ export default function ForgotPasswordPage() {
 
             {/* Work Email Input */}
             <div className="space-y-2">
-              <label htmlFor="recovery-email" className="block text-xs font-semibold text-[#172033]">
-                Work Email <span className="text-[#B5473C]">*</span>
+              <label htmlFor="recovery-email" className="block text-xs font-semibold text-[#142C3F]">
+                Work Email <span className="text-[#A24335]">*</span>
               </label>
               <div className="relative">
                 <Mail className="w-4 h-4 text-[#7B8798] absolute left-3 top-1/2 -translate-y-1/2" />
@@ -192,15 +192,15 @@ export default function ForgotPasswordPage() {
                   disabled={pageState === 'submitting'}
                   placeholder="name@oilindia.in"
                   autoComplete="email"
-                  className={`w-full pl-9 pr-3 py-2 text-xs bg-[#F7F8FA] border rounded-md text-[#172033] placeholder-[#7B8798] focus:bg-white outline-none transition-colors ${
+                  className={`w-full pl-9 pr-3 py-2 text-xs bg-[#F3F6FA] border rounded-md text-[#142C3F] placeholder-[#7B8798] focus:bg-white outline-none transition-colors ${
                     emailError
-                      ? 'border-[#B5473C] focus:border-[#B5473C] bg-[#FBEFEE]/30'
-                      : 'border-[#D9DEE5] focus:border-[#176B87]'
+                      ? 'border-[#A24335] focus:border-[#A24335] bg-[#FCE8E4]/30'
+                      : 'border-[#D8E2EA] focus:border-[#0F6B68]'
                   }`}
                 />
               </div>
               {emailError && (
-                <p className="text-[11px] text-[#B5473C] flex items-center gap-1 mt-1 font-medium">
+                <p className="text-[11px] text-[#A24335] flex items-center gap-1 mt-1 font-medium">
                   <AlertCircle className="w-3 h-3 flex-shrink-0" />
                   <span>{emailError}</span>
                 </p>
@@ -211,7 +211,7 @@ export default function ForgotPasswordPage() {
             <button
               type="submit"
               disabled={pageState === 'submitting'}
-              className="w-full flex items-center justify-center gap-2 py-2 px-4 bg-[#176B87] hover:bg-[#135A72] disabled:bg-[#176B87]/60 text-white text-xs font-semibold rounded-md shadow-xs transition-colors cursor-pointer disabled:cursor-not-allowed mt-2"
+              className="w-full flex items-center justify-center gap-2 py-2 px-4 bg-[#0F6B68] hover:bg-[#135A72] disabled:bg-[#0F6B68]/60 text-white text-xs font-semibold rounded-md shadow-xs transition-colors cursor-pointer disabled:cursor-not-allowed mt-2"
             >
               {pageState === 'submitting' ? (
                 <>
@@ -227,17 +227,17 @@ export default function ForgotPasswordPage() {
             </button>
 
             {/* Back to Sign In Link */}
-            <div className="pt-3 border-t border-[#D9DEE5] flex items-center justify-between text-xs text-[#596579]">
+            <div className="pt-3 border-t border-[#D8E2EA] flex items-center justify-between text-xs text-[#526779]">
               <Link
                 href="/login"
-                className="inline-flex items-center gap-1 font-medium text-[#176B87] hover:underline"
+                className="inline-flex items-center gap-1 font-medium text-[#0F6B68] hover:underline"
               >
                 <ArrowLeft className="w-3.5 h-3.5" />
                 <span>Return to Sign In</span>
               </Link>
               <Link
                 href="/register"
-                className="text-xs text-[#596579] hover:text-[#172033] hover:underline"
+                className="text-xs text-[#526779] hover:text-[#142C3F] hover:underline"
               >
                 Create Account
               </Link>
@@ -246,16 +246,16 @@ export default function ForgotPasswordPage() {
         )}
 
         {/* Security & Compliance Footer */}
-        <div className="px-6 py-3 bg-[#F7F8FA] border-t border-[#D9DEE5] flex items-center justify-center gap-2 text-[11px] text-[#596579]">
-          <Shield className="w-3.5 h-3.5 text-[#176B87] flex-shrink-0" />
+        <div className="px-6 py-3 bg-[#F3F6FA] border-t border-[#D8E2EA] flex items-center justify-center gap-2 text-[11px] text-[#526779]">
+          <Shield className="w-3.5 h-3.5 text-[#0F6B68] flex-shrink-0" />
           <span>Restricted to Authorized Infrastructure Personnel</span>
         </div>
       </div>
 
       {/* Quick Testing Sandbox Bar (For evaluator testing of all requested states) */}
-      <div className="mt-4 p-3 bg-white border border-[#D9DEE5] rounded-lg text-xs space-y-2">
-        <div className="flex items-center justify-between text-[11px] text-[#596579]">
-          <span className="font-semibold uppercase tracking-wider text-[#172033]">
+      <div className="mt-4 p-3 bg-white border border-[#D8E2EA] rounded-lg text-xs space-y-2">
+        <div className="flex items-center justify-between text-[11px] text-[#526779]">
+          <span className="font-semibold uppercase tracking-wider text-[#142C3F]">
             Evaluation Shortcuts (Test States)
           </span>
           <span className="font-mono">All States Tested</span>
@@ -264,21 +264,21 @@ export default function ForgotPasswordPage() {
           <button
             type="button"
             onClick={() => handleQuickFill('valid')}
-            className="px-2 py-1 bg-[#F1F3F5] hover:bg-[#D9DEE5] text-[#172033] rounded text-[11px] font-mono transition-colors"
+            className="px-2 py-1 bg-[#EAF0F5] hover:bg-[#D8E2EA] text-[#142C3F] rounded text-[11px] font-mono transition-colors"
           >
             Valid Email
           </button>
           <button
             type="button"
             onClick={() => handleQuickFill('invalid')}
-            className="px-2 py-1 bg-[#FBEFEE] hover:bg-[#FBEFEE]/80 text-[#B5473C] border border-[#E4B0AA] rounded text-[11px] font-mono transition-colors"
+            className="px-2 py-1 bg-[#FCE8E4] hover:bg-[#FCE8E4]/80 text-[#A24335] border border-[#E4B0AA] rounded text-[11px] font-mono transition-colors"
           >
             Invalid Format
           </button>
           <button
             type="button"
             onClick={() => handleQuickFill('server')}
-            className="px-2 py-1 bg-[#FDF6ED] hover:bg-[#FDF6ED]/80 text-[#8C5311] border border-[#F0D4A6] rounded text-[11px] font-mono transition-colors"
+            className="px-2 py-1 bg-[#FFF1D3] hover:bg-[#FFF1D3]/80 text-[#8C5311] border border-[#F0D4A6] rounded text-[11px] font-mono transition-colors"
           >
             Server Error (500)
           </button>

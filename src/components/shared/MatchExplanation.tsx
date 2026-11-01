@@ -92,18 +92,18 @@ export interface MatchExplanationProps {
 function getFactorIcon(factor: ScoringFactorName) {
   switch (factor) {
     case 'Activity keywords':
-      return <FileText className="w-4 h-4 text-[#176B87]" />;
+      return <FileText className="w-4 h-4 text-[#0F6B68]" />;
     case 'Area / Line':
       return <MapPin className="w-4 h-4 text-[#0284C7]" />;
     case 'Discipline':
       return <Tag className="w-4 h-4 text-[#3B6EA8]" />;
     case 'Date / Context':
     case 'Context / Date':
-      return <Calendar className="w-4 h-4 text-[#D98B32]" />;
+      return <Calendar className="w-4 h-4 text-[#845006]" />;
     case 'Project / WBS':
       return <FolderGit2 className="w-4 h-4 text-[#2E7D5B]" />;
     default:
-      return <Target className="w-4 h-4 text-[#596579]" />;
+      return <Target className="w-4 h-4 text-[#526779]" />;
   }
 }
 
@@ -111,18 +111,18 @@ function getFactorIcon(factor: ScoringFactorName) {
 function getFactorAccentColor(factor: ScoringFactorName) {
   switch (factor) {
     case 'Activity keywords':
-      return '#176B87';
+      return '#0F6B68';
     case 'Area / Line':
       return '#0284C7';
     case 'Discipline':
       return '#3B6EA8';
     case 'Date / Context':
     case 'Context / Date':
-      return '#D98B32';
+      return '#845006';
     case 'Project / WBS':
       return '#2E7D5B';
     default:
-      return '#596579';
+      return '#526779';
   }
 }
 
@@ -136,9 +136,9 @@ function getEvidenceIcon(type: string) {
     return <FileSpreadsheet className="w-4 h-4 text-[#2E7D5B]" />;
   }
   if (lower.includes('voice') || lower.includes('audio')) {
-    return <Mic className="w-4 h-4 text-[#D98B32]" />;
+    return <Mic className="w-4 h-4 text-[#845006]" />;
   }
-  return <FileText className="w-4 h-4 text-[#176B87]" />;
+  return <FileText className="w-4 h-4 text-[#0F6B68]" />;
 }
 
 export function MatchExplanation({
@@ -228,7 +228,7 @@ export function MatchExplanation({
       return {
         label: '90–100 High Confidence',
         sublabel: 'Pending Human Verification',
-        badgeClass: 'bg-[#EDF7F2] text-[#2E7D5B] border-[#B8DCC9]',
+        badgeClass: 'bg-[#E4F4EC] text-[#2E7D5B] border-[#B8DCC9]',
         barColor: 'bg-[#2E7D5B]',
         icon: <CheckCircle2 className="w-4 h-4 text-[#2E7D5B]" />,
       };
@@ -237,44 +237,44 @@ export function MatchExplanation({
       return {
         label: '70–89 Review Required',
         sublabel: 'Planner Attestation Required',
-        badgeClass: 'bg-[#FDF6ED] text-[#8C5311] border-[#F0D4A6]',
-        barColor: 'bg-[#D98B32]',
-        icon: <AlertTriangle className="w-4 h-4 text-[#D98B32]" />,
+        badgeClass: 'bg-[#FFF1D3] text-[#8C5311] border-[#F0D4A6]',
+        barColor: 'bg-[#845006]',
+        icon: <AlertTriangle className="w-4 h-4 text-[#845006]" />,
       };
     }
     return {
       label: '<70 Unmatched',
       sublabel: 'Below Automated Threshold',
-      badgeClass: 'bg-[#FBEFEE] text-[#B5473C] border-[#E4B0AA]',
-      barColor: 'bg-[#B5473C]',
-      icon: <AlertCircle className="w-4 h-4 text-[#B5473C]" />,
+      badgeClass: 'bg-[#FCE8E4] text-[#A24335] border-[#E4B0AA]',
+      barColor: 'bg-[#A24335]',
+      icon: <AlertCircle className="w-4 h-4 text-[#A24335]" />,
     };
   }, [confidenceBracket]);
 
 
   return (
     <div
-      className={`bg-white rounded-lg border border-[#D9DEE5] overflow-hidden shadow-xs space-y-0 ${className}`}
+      className={`bg-white rounded-lg border border-[#D8E2EA] overflow-hidden shadow-xs space-y-0 ${className}`}
       data-testid="plnex-match-explanation"
     >
       {/* =========================================================================
           1. HEADER CARD: SUGGESTED ACTIVITY, CONFIDENCE & MATCH STATUS
           ========================================================================= */}
-      <div className="p-4 sm:p-4 sm:p-6 bg-[#F7F8FA] border-b border-[#D9DEE5] space-y-4">
+      <div className="p-4 sm:p-4 sm:p-6 bg-[#F3F6FA] border-b border-[#D8E2EA] space-y-4">
         {showHeading && (
           <div className="flex items-center justify-between flex-wrap gap-2">
             <div className="flex items-center gap-2">
-              <div className="w-7 h-7 rounded-lg bg-[#EDF5F8] border border-[#B3CBE0] flex items-center justify-center text-[#176B87]">
+              <div className="w-7 h-7 rounded-lg bg-[#EAF0F5] border border-[#D8E2EA] flex items-center justify-center text-[#0F6B68]">
                 <Target className="w-4 h-4" />
               </div>
               <div>
-                <h3 className="font-bold text-sm text-[#172033] flex items-center gap-2">
+                <h3 className="font-bold text-sm text-[#142C3F] flex items-center gap-2">
                   <span>Match Explanation</span>
-                  <span className="text-[10px] uppercase font-mono px-2 py-0.5 rounded bg-white border border-[#D9DEE5] text-[#596579]">
+                  <span className="text-[10px] uppercase font-mono px-2 py-0.5 rounded bg-white border border-[#D8E2EA] text-[#526779]">
                     Auditable Deterministic Scoring
                   </span>
                 </h3>
-                <p className="text-[11px] text-[#596579]">
+                <p className="text-[11px] text-[#526779]">
                   Decomposed across 5 explicit engineering signals with zero unexplained variance.
                 </p>
               </div>
@@ -282,7 +282,7 @@ export function MatchExplanation({
 
             {/* Match Status Badge */}
             <div className="flex items-center gap-2">
-              <span className="text-[10px] uppercase tracking-wider font-semibold text-[#596579]">
+              <span className="text-[10px] uppercase tracking-wider font-semibold text-[#526779]">
                 Match Status:
               </span>
               <StatusBadge status={matchStatus} size="sm" />
@@ -291,26 +291,26 @@ export function MatchExplanation({
         )}
 
         {/* Suggested Activity Presentation */}
-        <div className="p-4 bg-white border border-[#D9DEE5] rounded-lg shadow-xs space-y-2">
+        <div className="p-4 bg-white border border-[#D8E2EA] rounded-lg shadow-xs space-y-2">
           <div className="flex items-center justify-between flex-wrap gap-2">
-            <span className="text-[10px] uppercase tracking-wider font-semibold text-[#596579] flex items-center gap-2">
-              <Layers className="w-3.5 h-3.5 text-[#176B87]" />
+            <span className="text-[10px] uppercase tracking-wider font-semibold text-[#526779] flex items-center gap-2">
+              <Layers className="w-3.5 h-3.5 text-[#0F6B68]" />
               Suggested Activity
             </span>
 
             {suggestedActivity ? (
               <div className="flex items-center gap-2">
-                <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#EDF5F8] border border-[#B3CBE0] text-[#176B87] font-semibold">
+                <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#EAF0F5] border border-[#D8E2EA] text-[#0F6B68] font-semibold">
                   WBS {suggestedActivity.wbs}
                 </span>
                 {suggestedActivity.discipline && (
-                  <span className="text-[10px] font-medium px-2 py-0.5 rounded bg-[#F7F8FA] border border-[#D9DEE5] text-[#596579]">
+                  <span className="text-[10px] font-medium px-2 py-0.5 rounded bg-[#F3F6FA] border border-[#D8E2EA] text-[#526779]">
                     {suggestedActivity.discipline}
                   </span>
                 )}
               </div>
             ) : (
-              <span className="text-[10px] font-semibold px-2 py-0.5 rounded bg-[#FBEFEE] border border-[#E4B0AA] text-[#B5473C]">
+              <span className="text-[10px] font-semibold px-2 py-0.5 rounded bg-[#FCE8E4] border border-[#E4B0AA] text-[#A24335]">
                 No Schedule Link
               </span>
             )}
@@ -319,16 +319,16 @@ export function MatchExplanation({
           {suggestedActivity ? (
             <div className="space-y-2">
               <div className="flex items-baseline gap-2 flex-wrap">
-                <span className="font-mono font-bold text-sm text-[#176B87]">
+                <span className="font-mono font-bold text-sm text-[#0F6B68]">
                   {suggestedActivity.id}
                 </span>
-                <span className="font-bold text-sm text-[#172033]">
+                <span className="font-bold text-sm text-[#142C3F]">
                   {suggestedActivity.name}
                 </span>
               </div>
 
               {(suggestedActivity.area || suggestedActivity.line || suggestedActivity.plannedStart) && (
-                <div className="flex items-center gap-3 text-[11px] text-[#596579] flex-wrap pt-0.5">
+                <div className="flex items-center gap-3 text-[11px] text-[#526779] flex-wrap pt-0.5">
                   {suggestedActivity.area && (
                     <span className="inline-flex items-center gap-1">
                       <MapPin className="w-3 h-3 text-[#7B8798]" />
@@ -336,7 +336,7 @@ export function MatchExplanation({
                     </span>
                   )}
                   {suggestedActivity.line && (
-                    <span className="inline-flex items-center gap-1 font-mono text-[#172033]">
+                    <span className="inline-flex items-center gap-1 font-mono text-[#142C3F]">
                       Line: {suggestedActivity.line}
                     </span>
                   )}
@@ -354,7 +354,7 @@ export function MatchExplanation({
                   <button
                     type="button"
                     onClick={() => onOpenActivity(suggestedActivity.id)}
-                    className="text-xs font-semibold text-[#176B87] hover:underline inline-flex items-center gap-1"
+                    className="text-xs font-semibold text-[#0F6B68] hover:underline inline-flex items-center gap-1"
                   >
                     <span>Inspect in Activity Detail Drawer</span>
                     <ArrowRight className="w-3.5 h-3.5" />
@@ -363,7 +363,7 @@ export function MatchExplanation({
               )}
             </div>
           ) : (
-            <div className="p-3 bg-[#FBEFEE] border border-[#E4B0AA] rounded-lg text-xs text-[#B5473C] space-y-1">
+            <div className="p-3 bg-[#FCE8E4] border border-[#E4B0AA] rounded-lg text-xs text-[#A24335] space-y-1">
               <div className="flex items-center gap-2 font-bold">
                 <AlertCircle className="w-4 h-4" />
                 <span>No Baseline Activity Identified</span>
@@ -393,11 +393,11 @@ export function MatchExplanation({
 
         {/* Raw Field Observation Snippet if available */}
         {rawFieldStatement && (
-          <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg text-xs space-y-1">
-            <span className="text-[10px] uppercase font-semibold text-[#596579] block">
+          <div className="p-3 bg-[#F3F6FA] border border-[#D8E2EA] rounded-lg text-xs space-y-1">
+            <span className="text-[10px] uppercase font-semibold text-[#526779] block">
               Field Submission Source Text:
             </span>
-            <p className="text-[#172033] font-mono text-[11px] italic bg-white p-2 rounded border border-[#D9DEE5]/80">
+            <p className="text-[#142C3F] font-mono text-[11px] italic bg-white p-2 rounded border border-[#D8E2EA]/80">
               &ldquo;{rawFieldStatement}&rdquo;
             </p>
           </div>
@@ -408,18 +408,18 @@ export function MatchExplanation({
           2. STRICT DECOMPOSITION: "DO NOT SHOW AN UNEXPLAINED AI PERCENTAGE"
              Shows equation & stacked proportional breakdown bar
           ========================================================================= */}
-      <div className="p-4 sm:p-4 sm:p-6 border-b border-[#D9DEE5] bg-white space-y-3">
+      <div className="p-4 sm:p-4 sm:p-6 border-b border-[#D8E2EA] bg-white space-y-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <ShieldCheck className="w-4 h-4 text-[#176B87]" />
-            <h4 className="font-bold text-xs uppercase tracking-wider text-[#596579]">
+            <ShieldCheck className="w-4 h-4 text-[#0F6B68]" />
+            <h4 className="font-bold text-xs uppercase tracking-wider text-[#526779]">
               Deterministic Score Factor Breakdown
             </h4>
           </div>
           <button
             type="button"
             onClick={() => setIsEquationExpanded(!isEquationExpanded)}
-            className="text-[11px] font-semibold text-[#176B87] hover:underline flex items-center gap-1"
+            className="text-[11px] font-semibold text-[#0F6B68] hover:underline flex items-center gap-1"
           >
             <span>{isEquationExpanded ? 'Collapse Equation' : 'Expand Equation'}</span>
             {isEquationExpanded ? (
@@ -433,7 +433,7 @@ export function MatchExplanation({
         {/* Stacked Proportional Score Bar */}
         <div className="space-y-2">
           <div
-            className="w-full h-3 rounded-md overflow-hidden flex bg-[#F1F3F5] border border-[#D9DEE5]"
+            className="w-full h-3 rounded-md overflow-hidden flex bg-[#EAF0F5] border border-[#D8E2EA]"
             title="Score Composition by Signal Factor"
           >
             {scoringFactors.map((f, idx) => {
@@ -471,8 +471,8 @@ export function MatchExplanation({
                   onMouseLeave={() => setActiveFactorHighlight(null)}
                   className={`inline-flex items-center gap-2 px-2 py-0.5 rounded-md border text-[10px] font-medium transition-all ${
                     isHighlighted
-                      ? 'ring-2 ring-[#176B87] font-bold bg-white'
-                      : 'bg-[#F7F8FA] border-[#D9DEE5] text-[#596579] hover:bg-white'
+                      ? 'ring-2 ring-[#0F6B68] font-bold bg-white'
+                      : 'bg-[#F3F6FA] border-[#D8E2EA] text-[#526779] hover:bg-white'
                   }`}
                 >
                   <span
@@ -480,7 +480,7 @@ export function MatchExplanation({
                     style={{ backgroundColor: color }}
                   />
                   <span>{f.factor}:</span>
-                  <span className="font-mono font-bold text-[#172033]">
+                  <span className="font-mono font-bold text-[#142C3F]">
                     +{f.contribution} pts
                   </span>
                 </button>
@@ -491,16 +491,16 @@ export function MatchExplanation({
 
         {/* Expanded Mathematical Formula Display */}
         {isEquationExpanded && (
-          <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg space-y-2 text-xs">
-            <div className="flex items-center justify-between text-[11px] text-[#596579]">
-              <span className="font-semibold text-[#172033]">
+          <div className="p-3 bg-[#F3F6FA] border border-[#D8E2EA] rounded-lg space-y-2 text-xs">
+            <div className="flex items-center justify-between text-[11px] text-[#526779]">
+              <span className="font-semibold text-[#142C3F]">
                 Audit Formula Verification:
               </span>
               <span className="font-mono text-[10px] text-[#7B8798]">
                 Sum of discrete contributions = Total confidence
               </span>
             </div>
-            <div className="p-3 bg-white border border-[#D9DEE5] rounded-lg font-mono text-[11px] text-[#172033] overflow-x-auto flex items-center gap-2">
+            <div className="p-3 bg-white border border-[#D8E2EA] rounded-lg font-mono text-[11px] text-[#142C3F] overflow-x-auto flex items-center gap-2">
               <ConfidenceBadge score={confidence} size="sm" />
               <span>=</span>
               {scoringFactors.map((f, idx) => (
@@ -536,11 +536,11 @@ export function MatchExplanation({
              - Project / WBS
              Each showing: factor, contribution, reason
           ========================================================================= */}
-      <div className="p-4 sm:p-4 sm:p-6 border-b border-[#D9DEE5] bg-white space-y-3">
+      <div className="p-4 sm:p-4 sm:p-6 border-b border-[#D8E2EA] bg-white space-y-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Cpu className="w-4 h-4 text-[#176B87]" />
-            <h4 className="font-bold text-xs uppercase tracking-wider text-[#596579]">
+            <Cpu className="w-4 h-4 text-[#0F6B68]" />
+            <h4 className="font-bold text-xs uppercase tracking-wider text-[#526779]">
               Scoring Factors Breakdown ({scoringFactors.length})
             </h4>
           </div>
@@ -562,42 +562,42 @@ export function MatchExplanation({
                 onMouseLeave={() => setActiveFactorHighlight(null)}
                 className={`p-4 rounded-lg border transition-all ${
                   isHighlighted
-                    ? 'border-[#176B87] shadow-xs bg-[#EDF5F8]/30'
-                    : 'border-[#D9DEE5] bg-white hover:border-[#B3CBE0]'
+                    ? 'border-[#0F6B68] shadow-xs bg-[#EAF0F5]/30'
+                    : 'border-[#D8E2EA] bg-white hover:border-[#D8E2EA]'
                 }`}
               >
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex items-start gap-2 min-w-0">
-                    <div className="w-7 h-7 rounded-lg bg-[#F7F8FA] border border-[#D9DEE5] flex items-center justify-center shrink-0 mt-0.5">
+                    <div className="w-7 h-7 rounded-lg bg-[#F3F6FA] border border-[#D8E2EA] flex items-center justify-center shrink-0 mt-0.5">
                       {getFactorIcon(item.factor)}
                     </div>
                     <div className="min-w-0 space-y-1">
                       <div className="flex items-center gap-2 flex-wrap">
-                        <span className="font-bold text-xs text-[#172033]">
+                        <span className="font-bold text-xs text-[#142C3F]">
                           {item.factor}
                         </span>
                         <span className="text-[10px] font-mono text-[#7B8798]">
                           (Weight: {item.maxContribution} pts / {item.weightPercent}%)
                         </span>
                         {item.status === 'FULL_MATCH' && (
-                          <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]">
+                          <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-[#E4F4EC] text-[#2E7D5B] border border-[#B8DCC9]">
                             ✓ matched
                           </span>
                         )}
                         {item.status === 'PARTIAL_MATCH' && (
-                          <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-[#FDF6ED] text-[#8C5311] border border-[#F0D4A6]">
+                          <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-[#FFF1D3] text-[#8C5311] border border-[#F0D4A6]">
                             △ partial
                           </span>
                         )}
                         {(item.status === 'NO_MATCH' || item.status === 'PENALTY') && (
-                          <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
+                          <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-[#FCE8E4] text-[#A24335] border border-[#E4B0AA]">
                             ✕ mismatch
                           </span>
                         )}
                       </div>
 
                       {/* Explicit Deterministic Reason */}
-                      <p className="text-xs text-[#596579] leading-relaxed">
+                      <p className="text-xs text-[#526779] leading-relaxed">
                         {item.reason}
                       </p>
 
@@ -605,12 +605,12 @@ export function MatchExplanation({
                       {(item.extractedToken || item.targetBaselineToken) && (
                         <div className="pt-1 flex flex-wrap gap-2 text-[10px] font-mono">
                           {item.extractedToken && (
-                            <span className="px-2 py-0.5 rounded bg-[#F7F8FA] border border-[#D9DEE5] text-[#172033]">
+                            <span className="px-2 py-0.5 rounded bg-[#F3F6FA] border border-[#D8E2EA] text-[#142C3F]">
                               <strong className="text-[#7B8798] font-sans">Reported:</strong> {item.extractedToken}
                             </span>
                           )}
                           {item.targetBaselineToken && (
-                            <span className="px-2 py-0.5 rounded bg-[#EDF5F8] border border-[#B3CBE0] text-[#176B87]">
+                            <span className="px-2 py-0.5 rounded bg-[#EAF0F5] border border-[#D8E2EA] text-[#0F6B68]">
                               <strong className="text-[#7B8798] font-sans">Baseline:</strong> {item.targetBaselineToken}
                             </span>
                           )}
@@ -625,12 +625,12 @@ export function MatchExplanation({
                       <span
                         className={`text-sm font-bold ${
                           isNegative
-                            ? 'text-[#B5473C]'
+                            ? 'text-[#A24335]'
                             : item.contribution >= item.maxContribution * 0.9
                             ? 'text-[#2E7D5B]'
                             : item.contribution >= item.maxContribution * 0.5
-                            ? 'text-[#D98B32]'
-                            : 'text-[#596579]'
+                            ? 'text-[#845006]'
+                            : 'text-[#526779]'
                         }`}
                       >
                         {item.contribution > 0 ? `+${item.contribution}` : item.contribution}
@@ -641,16 +641,16 @@ export function MatchExplanation({
                     </div>
 
                     {/* Mini contribution bar */}
-                    <div className="w-full h-1.5 bg-[#F1F3F5] rounded-full overflow-hidden border border-[#D9DEE5]">
+                    <div className="w-full h-1.5 bg-[#EAF0F5] rounded-full overflow-hidden border border-[#D8E2EA]">
                       <div
                         className={`h-full rounded-full ${
                           isNegative
-                            ? 'bg-[#B5473C]'
+                            ? 'bg-[#A24335]'
                             : item.contribution >= item.maxContribution * 0.9
                             ? 'bg-[#2E7D5B]'
                             : item.contribution >= item.maxContribution * 0.5
-                            ? 'bg-[#D98B32]'
-                            : 'bg-[#B5473C]'
+                            ? 'bg-[#845006]'
+                            : 'bg-[#A24335]'
                         }`}
                         style={{
                           width: `${Math.min(100, Math.max(0, pct))}%`,
@@ -669,11 +669,11 @@ export function MatchExplanation({
           4. ALTERNATIVE CANDIDATES SECTION
           ========================================================================= */}
       {showAlternatives && (
-        <div className="p-4 sm:p-4 sm:p-6 border-b border-[#D9DEE5] bg-white space-y-3">
+        <div className="p-4 sm:p-4 sm:p-6 border-b border-[#D8E2EA] bg-white space-y-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <GitCompare className="w-4 h-4 text-[#176B87]" />
-              <h4 className="font-bold text-xs uppercase tracking-wider text-[#596579]">
+              <GitCompare className="w-4 h-4 text-[#0F6B68]" />
+              <h4 className="font-bold text-xs uppercase tracking-wider text-[#526779]">
                 Alternative Candidates Evaluated ({alternativeCandidates.length})
               </h4>
             </div>
@@ -683,9 +683,9 @@ export function MatchExplanation({
           </div>
 
           {alternativeCandidates.length === 0 ? (
-            <div className="p-4 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg text-center space-y-1">
-              <p className="font-semibold text-xs text-[#172033]">No alternative candidates evaluated</p>
-              <p className="text-[11px] text-[#596579]">
+            <div className="p-4 bg-[#F3F6FA] border border-[#D8E2EA] rounded-lg text-center space-y-1">
+              <p className="font-semibold text-xs text-[#142C3F]">No alternative candidates evaluated</p>
+              <p className="text-[11px] text-[#526779]">
                 No secondary baseline activities met the minimum candidate threshold (&gt; 25%) in this plant area.
               </p>
             </div>
@@ -694,30 +694,30 @@ export function MatchExplanation({
               {alternativeCandidates.map((alt) => (
                 <div
                   key={alt.activityId}
-                  className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg flex items-start justify-between gap-3 text-xs hover:border-[#B3CBE0] transition-colors"
+                  className="p-3 bg-[#F3F6FA] border border-[#D8E2EA] rounded-lg flex items-start justify-between gap-3 text-xs hover:border-[#D8E2EA] transition-colors"
                 >
                   <div className="space-y-1 min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <span className="font-mono font-bold text-[#176B87]">
+                      <span className="font-mono font-bold text-[#0F6B68]">
                         {alt.activityId}
                       </span>
-                      <span className="font-bold text-[#172033]">
+                      <span className="font-bold text-[#142C3F]">
                         {alt.activityName}
                       </span>
                       {alt.wbs && (
-                        <span className="text-[10px] font-mono text-[#596579] bg-white px-1.5 py-0.5 rounded border border-[#D9DEE5]">
+                        <span className="text-[10px] font-mono text-[#526779] bg-white px-1.5 py-0.5 rounded border border-[#D8E2EA]">
                           WBS {alt.wbs}
                         </span>
                       )}
                       {alt.discipline && (
-                        <span className="text-[10px] text-[#596579]">
+                        <span className="text-[10px] text-[#526779]">
                           ({alt.discipline})
                         </span>
                       )}
                     </div>
 
-                    <p className="text-[11px] text-[#596579]">
-                      <strong className="text-[#172033]">Ranking Rationale:</strong>{' '}
+                    <p className="text-[11px] text-[#526779]">
+                      <strong className="text-[#142C3F]">Ranking Rationale:</strong>{' '}
                       {alt.rejectionOrRankingReason}
                     </p>
                   </div>
@@ -728,7 +728,7 @@ export function MatchExplanation({
                       <button
                         type="button"
                         onClick={() => onSelectAlternative(alt.activityId)}
-                        className="px-3 py-1 text-[11px] font-bold text-[#176B87] hover:bg-[#EDF5F8] border border-[#B3CBE0] rounded-lg transition-colors"
+                        className="px-3 py-1 text-[11px] font-bold text-[#0F6B68] hover:bg-[#EAF0F5] border border-[#D8E2EA] rounded-lg transition-colors"
                       >
                         Select
                       </button>
@@ -745,29 +745,29 @@ export function MatchExplanation({
           5. EVIDENCE SOURCE SECTION
           ========================================================================= */}
       {showEvidenceSource && evidenceSource && (
-        <div className="p-4 sm:p-4 sm:p-6 border-b border-[#D9DEE5] bg-white space-y-3">
+        <div className="p-4 sm:p-4 sm:p-6 border-b border-[#D8E2EA] bg-white space-y-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <FileText className="w-4 h-4 text-[#176B87]" />
-              <h4 className="font-bold text-xs uppercase tracking-wider text-[#596579]">
+              <FileText className="w-4 h-4 text-[#0F6B68]" />
+              <h4 className="font-bold text-xs uppercase tracking-wider text-[#526779]">
                 Evidence Source & Lineage
               </h4>
             </div>
             {evidenceSource.type && (
-              <span className="text-[10px] uppercase font-bold px-2 py-0.5 rounded bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0]">
+              <span className="text-[10px] uppercase font-bold px-2 py-0.5 rounded bg-[#EAF0F5] text-[#0F6B68] border border-[#D8E2EA]">
                 {evidenceSource.type}
               </span>
             )}
           </div>
 
-          <div className="p-4 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg flex items-start justify-between gap-3 text-xs">
+          <div className="p-4 bg-[#F3F6FA] border border-[#D8E2EA] rounded-lg flex items-start justify-between gap-3 text-xs">
             <div className="flex items-start gap-2 min-w-0">
-              <div className="w-8 h-8 rounded-lg bg-white border border-[#D9DEE5] flex items-center justify-center shrink-0 mt-0.5">
+              <div className="w-8 h-8 rounded-lg bg-white border border-[#D8E2EA] flex items-center justify-center shrink-0 mt-0.5">
                 {getEvidenceIcon(evidenceSource.type)}
               </div>
               <div className="space-y-1 min-w-0">
                 <div className="flex items-center gap-2 flex-wrap">
-                  <span className="font-bold text-[#172033]">
+                  <span className="font-bold text-[#142C3F]">
                     {evidenceSource.title}
                   </span>
                   {evidenceSource.id && (
@@ -778,7 +778,7 @@ export function MatchExplanation({
                 </div>
 
                 {evidenceSource.filename && (
-                  <p className="font-mono text-[11px] text-[#596579]">
+                  <p className="font-mono text-[11px] text-[#526779]">
                     File: {evidenceSource.filename}
                   </p>
                 )}
@@ -799,7 +799,7 @@ export function MatchExplanation({
                 </div>
 
                 {evidenceSource.snippet && (
-                  <p className="text-[11px] text-[#596579] italic bg-white p-2 rounded border border-[#D9DEE5]/80 mt-1">
+                  <p className="text-[11px] text-[#526779] italic bg-white p-2 rounded border border-[#D8E2EA]/80 mt-1">
                     &ldquo;{evidenceSource.snippet}&rdquo;
                   </p>
                 )}
@@ -810,7 +810,7 @@ export function MatchExplanation({
               <button
                 type="button"
                 onClick={() => onViewEvidence(evidenceSource.id!)}
-                className="px-3 py-1 text-[11px] font-semibold text-[#176B87] hover:bg-white border border-[#B3CBE0] rounded-lg shrink-0 inline-flex items-center gap-1"
+                className="px-3 py-1 text-[11px] font-semibold text-[#0F6B68] hover:bg-white border border-[#D8E2EA] rounded-lg shrink-0 inline-flex items-center gap-1"
               >
                 <span>View Proof</span>
                 <ExternalLink className="w-3 h-3" />
@@ -824,21 +824,21 @@ export function MatchExplanation({
           6. TECHNICAL DETAILS (COLLAPSIBLE DISCLOSURE)
           ========================================================================= */}
       {showAlgorithmDetails && (
-        <details className="group border-t border-[#D9DEE5] bg-[#F7F8FA]">
-          <summary className="p-3 sm:px-6 flex items-center justify-between cursor-pointer text-xs font-semibold text-[#596579] hover:text-[#172033] hover:bg-[#F1F3F5] transition-colors list-none">
+        <details className="group border-t border-[#D8E2EA] bg-[#F3F6FA]">
+          <summary className="p-3 sm:px-6 flex items-center justify-between cursor-pointer text-xs font-semibold text-[#526779] hover:text-[#142C3F] hover:bg-[#EAF0F5] transition-colors list-none">
             <span className="flex items-center gap-2">
               <Binary className="w-3.5 h-3.5 text-[#7B8798]" />
               <span>Technical Details</span>
             </span>
             <span className="text-[11px] text-[#7B8798] group-open:rotate-180">▼</span>
           </summary>
-          <div className="p-4 sm:px-6 pt-0 text-[11px] text-[#596579] space-y-2">
+          <div className="p-4 sm:px-6 pt-0 text-[11px] text-[#526779] space-y-2">
             <div className="flex items-center justify-between flex-wrap gap-2">
               <div className="flex items-center gap-2">
-                <span className="font-bold text-[#172033]">
+                <span className="font-bold text-[#142C3F]">
                   {algorithmVersion.name}
                 </span>
-                <span className="font-mono text-[10px] px-1.5 py-0.5 rounded bg-white border border-[#D9DEE5] text-[#176B87]">
+                <span className="font-mono text-[10px] px-1.5 py-0.5 rounded bg-white border border-[#D8E2EA] text-[#0F6B68]">
                   {algorithmVersion.version}
                 </span>
                 <span className="text-[10px] text-[#7B8798]">
@@ -852,7 +852,7 @@ export function MatchExplanation({
               </div>
             </div>
 
-            <div className="flex items-center justify-between flex-wrap gap-2 text-[10px] text-[#7B8798] pt-1 border-t border-[#D9DEE5]/60">
+            <div className="flex items-center justify-between flex-wrap gap-2 text-[10px] text-[#7B8798] pt-1 border-t border-[#D8E2EA]/60">
               <p className="max-w-xl">
                 {algorithmVersion.description}
               </p>

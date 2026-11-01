@@ -184,11 +184,11 @@ export function TermHelp({
         }}
         aria-label={`Explain term: ${def.name}`}
         title={`Click for definition: ${def.name}`}
-        className={`inline-flex items-center gap-0.5 text-inherit hover:text-[#0F6574] transition-colors cursor-pointer border-b border-dotted border-[#526779] hover:border-[#0F6574] ${className}`}
+        className={`inline-flex items-center gap-0.5 text-inherit hover:text-[#0F6B68] transition-colors cursor-pointer border-b border-dotted border-[#526779] hover:border-[#0F6B68] ${className}`}
       >
         <span>{children || def.name}</span>
         {showIcon && (
-          <HelpCircle className="w-3 h-3 text-[#526779] hover:text-[#0F6574] shrink-0 ml-0.5 inline" />
+          <HelpCircle className="w-3 h-3 text-[#526779] hover:text-[#0F6B68] shrink-0 ml-0.5 inline" />
         )}
       </button>
 
@@ -197,19 +197,19 @@ export function TermHelp({
           ref={popoverRef}
           role="dialog"
           aria-label={def.name}
-          className="absolute z-50 left-0 bottom-full mb-2 w-80 sm:w-96 p-4 bg-white rounded-lg border border-[#D7E1E8] shadow-lg text-left text-xs font-normal text-[#172B3A] animate-in fade-in zoom-in-95 duration-100"
+          className="absolute z-50 left-0 bottom-full mb-2 w-80 sm:w-96 p-4 bg-white rounded-lg border border-[#D8E2EA] shadow-lg text-left text-xs font-normal text-[#142C3F] animate-in fade-in zoom-in-95 duration-100"
           style={{ maxWidth: 'calc(100vw - 32px)' }}
         >
           {/* Header */}
-          <div className="flex items-start justify-between gap-2 pb-2 border-b border-[#D7E1E8]">
+          <div className="flex items-start justify-between gap-2 pb-2 border-b border-[#D8E2EA]">
             <div className="flex items-center gap-1.5">
-              <BookOpen className="w-4 h-4 text-[#0F6574]" />
-              <span className="font-bold text-sm text-[#172B3A]">{def.name}</span>
+              <BookOpen className="w-4 h-4 text-[#0F6B68]" />
+              <span className="font-bold text-sm text-[#142C3F]">{def.name}</span>
             </div>
             <button
               type="button"
               onClick={() => setIsOpen(false)}
-              className="p-1 text-[#526779] hover:text-[#172B3A] rounded hover:bg-[#F4F7FA] transition-colors"
+              className="p-1 text-[#526779] hover:text-[#142C3F] rounded hover:bg-[#F3F6FA] transition-colors"
               aria-label="Close explanation"
             >
               <X className="w-3.5 h-3.5" />
@@ -218,12 +218,12 @@ export function TermHelp({
 
           {/* Body */}
           <div className="py-2.5 space-y-2">
-            <p className="text-[#172B3A] leading-relaxed">
+            <p className="text-[#142C3F] leading-relaxed">
               {def.detail}
             </p>
 
             {def.formula && (
-              <div className="p-2 rounded bg-[#F4F7FA] border border-[#D7E1E8] font-mono text-[11px] text-[#0F6574]">
+              <div className="p-2 rounded bg-[#F3F6FA] border border-[#D8E2EA] font-mono text-[11px] text-[#0F6B68]">
                 <strong className="text-[#526779] font-sans block text-[10px] uppercase tracking-wider mb-0.5">
                   Calculation Formula:
                 </strong>
@@ -233,9 +233,9 @@ export function TermHelp({
           </div>
 
           {/* Footer */}
-          <div className="pt-2 border-t border-[#D7E1E8] flex items-center justify-between text-[10px] text-[#526779]">
+          <div className="pt-2 border-t border-[#D8E2EA] flex items-center justify-between text-[10px] text-[#526779]">
             <span>Standard: {def.referenceStandard}</span>
-            <span className="font-mono text-[#0F6574]">PLnEX Controls</span>
+            <span className="font-mono text-[#0F6B68]">PLnEX Controls</span>
           </div>
         </div>
       )}

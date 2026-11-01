@@ -64,25 +64,25 @@ export function ToastProvider({ children }: { children: ReactNode }) {
               role="alert"
               className={`pointer-events-auto rounded-lg border p-3 shadow-lg transition-all duration-200 flex items-start gap-3 bg-white ${
                 isSuccess
-                  ? 'border-[#B1DBD2] text-[#172B3A]'
+                  ? 'border-[#B1DBD2] text-[#142C3F]'
                   : isWarning
-                  ? 'border-[#F0D4A6] text-[#172B3A]'
+                  ? 'border-[#F0D4A6] text-[#142C3F]'
                   : isCritical
-                  ? 'border-[#E8B6BA] text-[#172B3A]'
-                  : 'border-[#D7E1E8] text-[#172B3A]'
+                  ? 'border-[#E8B6BA] text-[#142C3F]'
+                  : 'border-[#D8E2EA] text-[#142C3F]'
               }`}
             >
               {/* Type Icon */}
               <div className="shrink-0 mt-0.5">
-                {isSuccess && <CheckCircle2 className="w-4 h-4 text-[#187A6A]" />}
-                {isWarning && <AlertTriangle className="w-4 h-4 text-[#9C5A08]" />}
-                {isCritical && <AlertCircle className="w-4 h-4 text-[#B43D47]" />}
-                {isInfo && <Info className="w-4 h-4 text-[#0F6574]" />}
+                {isSuccess && <CheckCircle2 className="w-4 h-4 text-[#176B53]" />}
+                {isWarning && <AlertTriangle className="w-4 h-4 text-[#845006]" />}
+                {isCritical && <AlertCircle className="w-4 h-4 text-[#A24335]" />}
+                {isInfo && <Info className="w-4 h-4 text-[#0F6B68]" />}
               </div>
 
               {/* Content */}
               <div className="flex-1 min-w-0">
-                <div className="text-xs font-bold leading-tight text-[#172B3A]">
+                <div className="text-xs font-bold leading-tight text-[#142C3F]">
                   {toast.title}
                 </div>
                 {toast.description && (
@@ -99,7 +99,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
                       toast.undoAction?.();
                       removeToast(toast.id);
                     }}
-                    className="inline-flex items-center gap-1 mt-2 text-[11px] font-bold text-[#0F6574] hover:text-[#0a444e] underline cursor-pointer"
+                    className="inline-flex items-center gap-1 mt-2 text-[11px] font-bold text-[#0F6B68] hover:text-[#0a444e] underline cursor-pointer"
                   >
                     <Undo2 className="w-3 h-3" />
                     <span>{toast.undoLabel || 'Undo action'}</span>
@@ -111,7 +111,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
               <button
                 type="button"
                 onClick={() => removeToast(toast.id)}
-                className="text-[#7B8798] hover:text-[#172B3A] shrink-0 p-0.5 rounded transition-colors cursor-pointer"
+                className="text-[#7B8798] hover:text-[#142C3F] shrink-0 p-0.5 rounded transition-colors cursor-pointer"
                 aria-label="Dismiss notification"
               >
                 <X className="w-3.5 h-3.5" />

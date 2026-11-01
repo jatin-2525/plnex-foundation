@@ -42,7 +42,7 @@ export default function AdminUsersPage() {
         actions={
           <button
             type="button"
-            className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#176B87] hover:bg-[#135A72] text-white rounded-md text-xs font-semibold shadow-xs transition-colors"
+            className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#0F6B68] hover:bg-[#135A72] text-white rounded-md text-xs font-semibold shadow-xs transition-colors"
           >
             <Plus className="w-3.5 h-3.5" />
             Provision New User
@@ -51,7 +51,7 @@ export default function AdminUsersPage() {
       />
 
       {/* Filter and Search Bar */}
-      <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+      <div className="bg-white border border-[#D8E2EA] rounded-lg p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div className="relative flex-1 max-w-sm">
           <Search className="w-4 h-4 text-[#7B8798] absolute left-3 top-1/2 -translate-y-1/2" />
           <input
@@ -59,16 +59,16 @@ export default function AdminUsersPage() {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Search by name, email, or designation..."
-            className="w-full pl-9 pr-3 py-1.5 text-xs bg-[#F7F8FA] border border-[#D9DEE5] rounded-md focus:bg-white focus:border-[#176B87] outline-none"
+            className="w-full pl-9 pr-3 py-1.5 text-xs bg-[#F3F6FA] border border-[#D8E2EA] rounded-md focus:bg-white focus:border-[#0F6B68] outline-none"
           />
         </div>
 
         <div className="flex items-center gap-2">
-          <span className="text-xs text-[#596579]">Filter Role:</span>
+          <span className="text-xs text-[#526779]">Filter Role:</span>
           <select
             value={roleFilter}
             onChange={(e) => setRoleFilter(e.target.value as any)}
-            className="px-3 py-1.5 text-xs bg-[#F7F8FA] border border-[#D9DEE5] rounded-md outline-none text-[#172033]"
+            className="px-3 py-1.5 text-xs bg-[#F3F6FA] border border-[#D8E2EA] rounded-md outline-none text-[#142C3F]"
           >
             <option value="all">All Roles</option>
             <option value="manager">Manager</option>
@@ -79,24 +79,24 @@ export default function AdminUsersPage() {
       </div>
 
       {/* Users Table */}
-      <div className="bg-white border border-[#D9DEE5] rounded-lg overflow-hidden">
-        <div className="p-4 border-b border-[#D9DEE5] bg-[#F7F8FA] flex items-center justify-between">
-          <h3 className="text-xs font-bold uppercase tracking-wider text-[#596579]">
+      <div className="bg-white border border-[#D8E2EA] rounded-lg overflow-hidden">
+        <div className="p-4 border-b border-[#D8E2EA] bg-[#F3F6FA] flex items-center justify-between">
+          <h3 className="text-xs font-bold uppercase tracking-wider text-[#526779]">
             Authorized Personnel ({filteredUsers.length})
           </h3>
-          <span className="text-xs text-[#176B87] font-mono">IAM Directory Sync Active</span>
+          <span className="text-xs text-[#0F6B68] font-mono">IAM Directory Sync Active</span>
         </div>
 
-        <div className="divide-y divide-[#D9DEE5]">
+        <div className="divide-y divide-[#D8E2EA]">
           {filteredUsers.map((u) => (
             <div key={u.email} className="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:bg-[#F9FAFC] transition-colors">
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-md bg-[#176B87] text-white flex items-center justify-center font-bold text-xs font-mono">
+                <div className="w-8 h-8 rounded-md bg-[#0F6B68] text-white flex items-center justify-center font-bold text-xs font-mono">
                   {u.avatar}
                 </div>
                 <div>
-                  <h4 className="text-xs font-bold text-[#172033]">{u.name}</h4>
-                  <p className="text-[11px] text-[#596579]">{u.email} • {u.title}</p>
+                  <h4 className="text-xs font-bold text-[#142C3F]">{u.name}</h4>
+                  <p className="text-[11px] text-[#526779]">{u.email} • {u.title}</p>
                   <p className="text-[10px] text-[#7B8798]">{u.organization}</p>
                 </div>
               </div>
@@ -105,10 +105,10 @@ export default function AdminUsersPage() {
                 <span
                   className={`px-3 py-0.5 rounded text-[11px] font-mono font-bold uppercase ${
                     u.role === 'admin'
-                      ? 'bg-[#EDF5F8] text-[#3B6EA8] border border-[#B3CBE0]'
+                      ? 'bg-[#EAF0F5] text-[#3B6EA8] border border-[#D8E2EA]'
                       : u.role === 'manager'
-                      ? 'bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0]'
-                      : 'bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9]'
+                      ? 'bg-[#EAF0F5] text-[#0F6B68] border border-[#D8E2EA]'
+                      : 'bg-[#E4F4EC] text-[#2E7D5B] border border-[#B8DCC9]'
                   }`}
                 >
                   {u.role}
@@ -116,7 +116,7 @@ export default function AdminUsersPage() {
 
                 <button
                   type="button"
-                  className="px-3 py-1 text-xs text-[#596579] hover:text-[#172033] hover:bg-[#F1F3F5] border border-[#D9DEE5] rounded transition-colors"
+                  className="px-3 py-1 text-xs text-[#526779] hover:text-[#142C3F] hover:bg-[#EAF0F5] border border-[#D8E2EA] rounded transition-colors"
                 >
                   Edit Permissions
                 </button>
