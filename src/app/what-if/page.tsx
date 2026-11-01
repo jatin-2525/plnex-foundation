@@ -55,6 +55,7 @@ export default function WhatIfSimulatorPage() {
   const [selectedActivityId, setSelectedActivityId] = useState<string>('CIV-11-001');
   const [delayDays, setDelayDays] = useState<number>(4);
   const [optionalDateChange, setOptionalDateChange] = useState<string>('');
+  const [isCustomName, setIsCustomName] = useState<boolean>(false);
   const [scenarioName, setScenarioName] = useState<string>('Foundation Block A Curing Hold (+4d)');
   const [scenarioDescription, setScenarioDescription] = useState<string>(
     'Testing impact of 4-day curing hold on downstream Column Installation and Equipment Installation.'
@@ -85,13 +86,21 @@ export default function WhatIfSimulatorPage() {
     );
   }, [selectedActivityId]);
 
-  // Sync optionalDateChange when activity or delayDays change
+  // Sync optionalDateChange and auto-update scenarioName/description if not custom edited
   useEffect(() => {
     if (selectedActivity) {
       const calculatedDate = addDaysToDateString(selectedActivity.plannedFinish, delayDays);
       setOptionalDateChange(calculatedDate);
+
+      if (!isCustomName) {
+        const sign = delayDays >= 0 ? `+${delayDays}` : `${delayDays}`;
+        setScenarioName(`${selectedActivity.name} (${sign}d)`);
+        setScenarioDescription(
+          `Testing simulated impact of ${sign} days perturbation on ${selectedActivity.name} (${selectedActivity.id}) and downstream handoffs.`
+        );
+      }
     }
-  }, [selectedActivityId, delayDays, selectedActivity]);
+  }, [selectedActivityId, delayDays, selectedActivity, isCustomName]);
 
   // Run simulation on initial mount with default scenario
   useEffect(() => {
@@ -186,8 +195,8 @@ export default function WhatIfSimulatorPage() {
     setIsSaveModalOpen(false);
     addToast({
       type: 'success',
-      title: 'Scenario Saved to Vault',
-      description: `Scenario "${scenarioName}" has been safely stored for future comparison.`,
+      title: 'Scenario Saved to Session',
+      description: `Scenario "${scenarioName}" stored in session memory for comparison.`,
     });
   };
 
@@ -200,6 +209,7 @@ export default function WhatIfSimulatorPage() {
   const handleReset = () => {
     setSelectedActivityId('CIV-11-001');
     setDelayDays(0);
+    setIsCustomName(false);
     setScenarioName('Baseline Schedule Rev 3.2 (P6 XML) (No Delay)');
     setScenarioDescription('Baseline schedule state with 0 days variance applied.');
     setSimulateError(false);
@@ -217,6 +227,7 @@ export default function WhatIfSimulatorPage() {
   const handleLoadScenario = (sc: SimulationScenario) => {
     setSelectedActivityId(sc.sourceActivityId);
     setDelayDays(sc.delayDays);
+    setIsCustomName(true);
     setScenarioName(sc.name);
     setScenarioDescription(sc.description || '');
     if (sc.optionalDateChange) {
@@ -245,7 +256,7 @@ export default function WhatIfSimulatorPage() {
     addToast({
       type: 'info',
       title: 'Scenario Removed',
-      description: `Scenario "${name}" removed from vault.`,
+      description: `Scenario "${name}" removed from session memory.`,
     });
   };
 
@@ -391,7 +402,7 @@ export default function WhatIfSimulatorPage() {
                     : 'text-[#596579] hover:text-[#172033]'
                 }`}
               >
-                <span>Saved Vault</span>
+                <span>Session Scenarios</span>
                 <span className="px-1.5 py-0.5 rounded-full text-[11px] bg-[#D9DEE5] text-[#172033] font-mono">
                   {savedScenarios.length}
                 </span>
@@ -439,7 +450,7 @@ export default function WhatIfSimulatorPage() {
                     Current Finish
                   </span>
                   <span className="px-1.5 py-0.5 rounded text-[11px] font-semibold uppercase bg-[#F1F3F5] text-[#596579] border border-[#D9DEE5]">
-                    Actual Baseline
+                    Planned Baseline
                   </span>
                 </div>
                 <div className="text-[28px] sm:text-3xl font-bold font-mono text-[#172033] leading-none">
@@ -480,11 +491,11 @@ export default function WhatIfSimulatorPage() {
                 </div>
               </div>
 
-              {/* Card 3: Projected Finish */}
+              {/* Card 3: Activity Projected Finish */}
               <div className="bg-white border-2 border-[#E4B0AA] rounded-lg p-4 shadow-xs">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-[11px] uppercase font-semibold text-[#B5473C] tracking-wider">
-                    Projected Finish
+                    Activity Projected Finish
                   </span>
                   <div className="flex items-center gap-2">
                     <span className="px-1.5 py-0.5 rounded text-[11px] font-semibold uppercase bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
@@ -500,39 +511,73 @@ export default function WhatIfSimulatorPage() {
                   {formatShortDate(projectedFinishDate)}
                 </div>
                 <div className="mt-2 pt-2 border-t border-[#E4B0AA]/60 text-xs text-[#596579] flex items-center justify-between">
-                  <span>Simulated finish:</span>
+                  <span>Selected activity simulated finish:</span>
                   <span className="font-mono font-medium text-[#172033]">
                     {formatFriendlyDate(projectedFinishDate)}
                   </span>
                 </div>
               </div>
 
-              {/* Card 4: Impact */}
-              <div className="bg-white border-2 border-[#E4B0AA] rounded-lg p-4 shadow-xs">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-[11px] uppercase font-semibold text-[#B5473C] tracking-wider">
-                    Impact
-                  </span>
-                  <div className="flex items-center gap-2">
-                    <span className="px-1.5 py-0.5 rounded text-[11px] font-semibold uppercase bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
-                      Critical Path
-                    </span>
-                    <WhyButton
-                      onClick={() => openWhyExplanation('impact:what-if')}
-                      title="Why is the simulated impact +4 days?"
-                    />
+              {/* Card 4: Impact on Project COD */}
+              {(() => {
+                const projectSlip = simulationResult?.differenceDays ?? 0;
+                const isCriticalSlip = projectSlip > 0;
+                const isAccelerated = projectSlip < 0;
+
+                const borderClass = isCriticalSlip
+                  ? 'border-[#E4B0AA]'
+                  : isAccelerated
+                  ? 'border-[#A8DEC7]'
+                  : 'border-[#F4E0A0]';
+                const textClass = isCriticalSlip
+                  ? 'text-[#B5473C]'
+                  : isAccelerated
+                  ? 'text-[#187A6A]'
+                  : 'text-[#9C5A08]';
+                const badgeBg = isCriticalSlip
+                  ? 'bg-[#FBEFEE] text-[#B5473C] border-[#E4B0AA]'
+                  : isAccelerated
+                  ? 'bg-[#EBF7F2] text-[#187A6A] border-[#A8DEC7]'
+                  : 'bg-[#FEF9E7] text-[#9C5A08] border-[#F4E0A0]';
+                const badgeLabel = isCriticalSlip
+                  ? 'Critical Path Slip'
+                  : isAccelerated
+                  ? 'Schedule Accelerated'
+                  : 'Float Absorbed';
+                const subtext = isCriticalSlip
+                  ? `Milestone COD slips +${projectSlip} days`
+                  : isAccelerated
+                  ? `Milestone COD advances ${Math.abs(projectSlip)} days`
+                  : 'Milestone COD unaffected (0 days)';
+
+                return (
+                  <div className={`bg-white border-2 ${borderClass} rounded-lg p-4 shadow-xs`}>
+                    <div className="flex items-center justify-between mb-2">
+                      <span className={`text-[11px] uppercase font-semibold ${textClass} tracking-wider`}>
+                        Project COD Impact
+                      </span>
+                      <div className="flex items-center gap-2">
+                        <span className={`px-1.5 py-0.5 rounded text-[11px] font-semibold uppercase ${badgeBg} border`}>
+                          {badgeLabel}
+                        </span>
+                        <WhyButton
+                          onClick={() => openWhyExplanation('impact:what-if')}
+                          title="Why does this impact occur?"
+                        />
+                      </div>
+                    </div>
+                    <div className={`text-[28px] sm:text-3xl font-bold font-mono ${textClass} leading-none`}>
+                      {projectSlip > 0 ? `+${projectSlip} days` : projectSlip < 0 ? `${projectSlip} days` : '0 days'}
+                    </div>
+                    <div className={`mt-2 pt-2 border-t ${borderClass}/60 text-xs text-[#596579] flex items-center justify-between`}>
+                      <span>Completion impact:</span>
+                      <span className={`font-mono font-semibold ${textClass}`}>
+                        {subtext}
+                      </span>
+                    </div>
                   </div>
-                </div>
-                <div className="text-[28px] sm:text-3xl font-bold font-mono text-[#B5473C] leading-none">
-                  {impactDisplay}
-                </div>
-                <div className="mt-2 pt-2 border-t border-[#E4B0AA]/60 text-xs text-[#596579] flex items-center justify-between">
-                  <span>Schedule slip:</span>
-                  <span className="font-mono font-semibold text-[#B5473C]">
-                    {impactDisplay}
-                  </span>
-                </div>
-              </div>
+                );
+              })()}
             </div>
 
             {/* =====================================================================
@@ -683,7 +728,10 @@ export default function WhatIfSimulatorPage() {
                     <input
                       type="text"
                       value={scenarioName}
-                      onChange={(e) => setScenarioName(e.target.value)}
+                      onChange={(e) => {
+                        setScenarioName(e.target.value);
+                        setIsCustomName(true);
+                      }}
                       placeholder="e.g. Foundation Block A Curing Hold (+4d)"
                       className="w-full px-3 py-2 text-xs bg-white border border-[#D9DEE5] rounded-lg text-[#172033] font-medium outline-hidden focus:border-[#176B87] focus:ring-1 focus:ring-[#176B87]"
                     />
@@ -694,6 +742,7 @@ export default function WhatIfSimulatorPage() {
                       <button
                         type="button"
                         onClick={() => {
+                          setIsCustomName(true);
                           setScenarioName('Foundation Block A Curing Hold (+4d)');
                           setSelectedActivityId('CIV-11-001');
                           setDelayDays(4);
@@ -705,6 +754,7 @@ export default function WhatIfSimulatorPage() {
                       <button
                         type="button"
                         onClick={() => {
+                          setIsCustomName(true);
                           setScenarioName('Monsoon Surge on HP Header (+7d)');
                           setSelectedActivityId('PIP-24-001');
                           setDelayDays(7);
@@ -716,6 +766,7 @@ export default function WhatIfSimulatorPage() {
                       <button
                         type="button"
                         onClick={() => {
+                          setIsCustomName(true);
                           setScenarioName('Double-Shift Welding Acceleration (-3d)');
                           setSelectedActivityId('PIP-24-002');
                           setDelayDays(-3);
@@ -832,40 +883,65 @@ export default function WhatIfSimulatorPage() {
             {simulationResult && (
               <div className="space-y-6">
                 {/* 1. Affected Activities Summary Banner */}
-                <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 shadow-xs space-y-3">
-                  <div className="flex items-center justify-between flex-wrap gap-2 pb-2 border-b border-[#D9DEE5]/60">
-                    <div>
-                      <h3 className="text-sm font-bold text-[#172033] uppercase tracking-wider">
-                        Affected activities
-                      </h3>
-                      <p className="text-xs text-[#596579] mt-0.5">
-                        Downstream handoffs and work packages shifted by the simulated {delayDays >= 0 ? `+${delayDays}d` : `${delayDays}d`} variance on {selectedActivityId}.
-                      </p>
-                    </div>
-                    <span className="px-3 py-1 rounded text-xs font-mono font-bold bg-[#F7F8FA] border border-[#D9DEE5] text-[#172033]">
-                      {simulationResult.affectedActivities.filter((a) => a.activityId !== selectedActivityId).length} Downstream Handoffs Impacted
-                    </span>
-                  </div>
+                {(() => {
+                  const downstreamAll = simulationResult.affectedActivities.filter((a) => a.activityId !== selectedActivityId);
+                  const shiftedList = downstreamAll.filter((a) => Math.abs(a.shiftDays) > 0);
+                  const absorbedList = downstreamAll.filter((a) => a.shiftDays === 0);
 
-                  {/* Explicit Badges of Affected Activities */}
-                  <div className="flex flex-wrap gap-2 pt-1">
-                    {simulationResult.affectedActivities
-                      .filter((a) => a.activityId !== selectedActivityId)
-                      .map((act) => (
-                        <span
-                          key={act.activityId}
-                          className="px-3 py-1 rounded-md text-xs font-medium bg-[#F7F8FA] text-[#172033] border border-[#D9DEE5] inline-flex items-center gap-2"
-                        >
-                          <span className="w-1.5 h-1.5 rounded-full bg-[#B5473C]" />
-                          <strong className="font-mono text-[#176B87]">{act.activityId}</strong>
-                          <span>{act.name}</span>
-                          <span className="font-mono text-[11px] text-[#B5473C] font-bold">
-                            (+{act.shiftDays}d)
-                          </span>
+                  return (
+                    <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 shadow-xs space-y-3">
+                      <div className="flex items-center justify-between flex-wrap gap-2 pb-2 border-b border-[#D9DEE5]/60">
+                        <div>
+                          <h3 className="text-sm font-bold text-[#172033] uppercase tracking-wider">
+                            Affected activities
+                          </h3>
+                          <p className="text-xs text-[#596579] mt-0.5">
+                            Downstream handoffs and work packages evaluated for simulated {delayDays >= 0 ? `+${delayDays}d` : `${delayDays}d`} perturbation on {selectedActivityId}.
+                          </p>
+                        </div>
+                        <span className="px-3 py-1 rounded text-xs font-mono font-bold bg-[#F7F8FA] border border-[#D9DEE5] text-[#172033]">
+                          {shiftedList.length} Shifted · {absorbedList.length} Float-Absorbed
                         </span>
-                      ))}
-                  </div>
-                </div>
+                      </div>
+
+                      {/* Explicit Badges of Affected Activities */}
+                      <div className="flex flex-wrap gap-2 pt-1">
+                        {downstreamAll.map((act) => {
+                          const hasShift = Math.abs(act.shiftDays) > 0;
+                          return (
+                            <span
+                              key={act.activityId}
+                              className={`px-3 py-1 rounded-md text-xs font-medium border inline-flex items-center gap-2 ${
+                                hasShift
+                                  ? 'bg-[#FBEFEE]/50 text-[#172033] border-[#E4B0AA]'
+                                  : 'bg-[#F7F8FA] text-[#596579] border-[#D9DEE5]'
+                              }`}
+                            >
+                              <span
+                                className={`w-1.5 h-1.5 rounded-full ${
+                                  hasShift ? 'bg-[#B5473C]' : 'bg-[#7B8798]'
+                                }`}
+                              />
+                              <strong className="font-mono text-[#176B87]">{act.activityId}</strong>
+                              <span>{act.name}</span>
+                              <span
+                                className={`font-mono text-[11px] font-bold ${
+                                  hasShift ? 'text-[#B5473C]' : 'text-[#596579]'
+                                }`}
+                              >
+                                {act.shiftDays > 0
+                                  ? `(+${act.shiftDays}d)`
+                                  : act.shiftDays < 0
+                                  ? `(${act.shiftDays}d)`
+                                  : '(0d · Absorbed)'}
+                              </span>
+                            </span>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  );
+                })()}
 
                 {/* 2. Downstream Dependency Chain Visualization (Static 2D Gantt/Timeline nodes) */}
                 <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 shadow-xs space-y-3">
@@ -1135,9 +1211,14 @@ export default function WhatIfSimulatorPage() {
           <div className="space-y-4">
             <div className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 shadow-xs flex items-center justify-between">
               <div>
-                <h2 className="text-base font-bold text-[#172033]">Saved Scenarios Vault</h2>
+                <div className="flex items-center gap-2">
+                  <h2 className="text-base font-bold text-[#172033]">Session Scenarios (Temporary)</h2>
+                  <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-[#F1F3F5] text-[#596579] border border-[#D9DEE5]">
+                    In-Memory Only
+                  </span>
+                </div>
                 <p className="text-xs text-[#596579] mt-0.5">
-                  Stored what-if simulations available for comparative analysis and management reviews.
+                  Stored what-if simulations available during current session for comparative analysis. Scenarios are held in browser memory and reset when session closes.
                 </p>
               </div>
               <button
@@ -1152,8 +1233,8 @@ export default function WhatIfSimulatorPage() {
             {savedScenarios.length === 0 ? (
               <EmptyState
                 icon={Sliders}
-                title="No saved scenarios in the vault"
-                description="Save simulations from the Scenario Sandbox to compare baseline variants and contingency options over time."
+                title="No saved scenarios in current session"
+                description="Save simulations from the Scenario Sandbox to compare baseline variants and contingency options during your session."
                 action={{
                   label: 'Switch to Simulator',
                   onClick: () => setActiveTab('simulator'),
@@ -1253,8 +1334,8 @@ export default function WhatIfSimulatorPage() {
         <Modal
           isOpen={isSaveModalOpen}
           onClose={() => setIsSaveModalOpen(false)}
-          title="Save Simulation Scenario to Vault"
-          subtitle="Save current parameters and calculated CPM impact for future comparative reviews."
+          title="Save Simulation Scenario to Current Session"
+          subtitle="Save parameters to current browser session memory for side-by-side comparison. Note: Session scenarios reset when session closes."
           maxWidth="md"
           footer={
             <div className="flex items-center justify-end gap-2 w-full">
@@ -1268,7 +1349,7 @@ export default function WhatIfSimulatorPage() {
                 onClick={handleSaveScenario}
                 className="px-4 py-2 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-bold rounded-lg shadow-xs border border-[#176B87] transition-colors"
               >
-                Save to Vault
+                Save to Session
               </button>
             </div>
           }
@@ -1279,7 +1360,10 @@ export default function WhatIfSimulatorPage() {
               <input
                 type="text"
                 value={scenarioName}
-                onChange={(e) => setScenarioName(e.target.value)}
+                onChange={(e) => {
+                  setScenarioName(e.target.value);
+                  setIsCustomName(true);
+                }}
                 className="w-full px-3 py-2 bg-white border border-[#D9DEE5] rounded-lg text-[#172033] outline-hidden focus:border-[#176B87]"
               />
             </div>
@@ -1288,7 +1372,10 @@ export default function WhatIfSimulatorPage() {
               <textarea
                 rows={3}
                 value={scenarioDescription}
-                onChange={(e) => setScenarioDescription(e.target.value)}
+                onChange={(e) => {
+                  setScenarioDescription(e.target.value);
+                  setIsCustomName(true);
+                }}
                 className="w-full px-3 py-2 bg-white border border-[#D9DEE5] rounded-lg text-[#172033] outline-hidden focus:border-[#176B87] resize-none"
               />
             </div>
@@ -1320,7 +1407,7 @@ export default function WhatIfSimulatorPage() {
           isOpen={isCompareModalOpen}
           onClose={() => setIsCompareModalOpen(false)}
           title="Multi-Scenario Schedule Comparison"
-          subtitle="Compare baseline schedule vs active simulation vs saved vault scenarios side-by-side."
+          subtitle="Compare baseline schedule vs active simulation vs saved session scenarios side-by-side."
           maxWidth="4xl"
           footer={
             <div className="flex items-center justify-end gap-2 w-full">
@@ -1359,7 +1446,7 @@ export default function WhatIfSimulatorPage() {
                     <td className="py-3 px-4 font-bold text-[#176B87]">Current Sandbox</td>
                     {savedScenarios.slice(0, 2).map((sc) => (
                       <td key={sc.id} className="py-3 px-4 text-[#596579]">
-                        Saved Vault ({sc.id})
+                        Session ({sc.id})
                       </td>
                     ))}
                   </tr>

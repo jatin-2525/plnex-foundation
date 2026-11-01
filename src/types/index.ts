@@ -49,6 +49,8 @@ export interface ScheduleActivity {
   variance: number; // actualProgress - plannedProgress
   status: ActivityStatus;
   delayDays: number;
+  totalFloat?: number;
+  freeFloat?: number;
   predecessors: string[];
   successors: string[];
   isCritical: boolean;

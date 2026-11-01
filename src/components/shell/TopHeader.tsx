@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import Link from 'next/link';
 import { useApp } from '../../context/AppContext';
 import { ProjectSelector } from './ProjectSelector';
@@ -18,6 +18,17 @@ export interface TopHeaderProps {
 
 export function TopHeader({ onToggleSidebar, onMobileToggle, onDesktopToggle }: TopHeaderProps) {
   const { setGlobalSearchOpen, userSession } = useApp();
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        setGlobalSearchOpen(true);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [setGlobalSearchOpen]);
 
   const handleToggle = () => {
     if (onToggleSidebar) {
@@ -71,14 +82,14 @@ export function TopHeader({ onToggleSidebar, onMobileToggle, onDesktopToggle }: 
           onClick={() => setGlobalSearchOpen(true)}
           className="hidden sm:flex items-center justify-between px-3 py-1.5 bg-[#F7F8FA] hover:bg-[#F1F3F5] border border-[#D9DEE5] rounded-md text-xs text-[#596579] transition-colors cursor-pointer w-44 md:w-56 lg:w-64"
           aria-label="Search"
-          title="Search activities, DPRs, evidence (⌘K)"
+          title="Search activities, DPRs, evidence (Ctrl+K or ⌘K)"
         >
           <div className="flex items-center gap-2 min-w-0">
             <Search className="w-3.5 h-3.5 text-[#7B8798] flex-shrink-0" />
             <span className="truncate text-xs text-[#7B8798]">Search...</span>
           </div>
           <kbd className="hidden md:inline-flex items-center px-1.5 py-0.5 text-[10px] font-mono text-[#7B8798] bg-white border border-[#D9DEE5] rounded leading-none">
-            ⌘K
+            Ctrl+K
           </kbd>
         </button>
 
@@ -87,7 +98,7 @@ export function TopHeader({ onToggleSidebar, onMobileToggle, onDesktopToggle }: 
           onClick={() => setGlobalSearchOpen(true)}
           className="sm:hidden min-h-[44px] min-w-[44px] flex items-center justify-center p-2 text-[#596579] hover:text-[#172033] hover:bg-[#F1F3F5] rounded-md transition-colors cursor-pointer"
           aria-label="Search"
-          title="Search activities (⌘K)"
+          title="Search activities (Ctrl+K or ⌘K)"
         >
           <Search className="w-4 h-4 text-[#596579]" />
         </button>

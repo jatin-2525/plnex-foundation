@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useRef } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useApp } from '../../../context/AppContext';
@@ -48,13 +48,15 @@ export type DPRSubmissionState =
 
 // Step / Section navigation config for engineering workflow
 export const stepsConfig = [
-  { step: 1, title: 'Project + Date', sectionId: 'sec-project-date' },
-  { step: 2, title: 'Area & Location', sectionId: 'sec-area' },
-  { step: 3, title: 'Discipline & Crew', sectionId: 'sec-discipline' },
-  { step: 4, title: 'Work Completed', sectionId: 'sec-work-completed' },
-  { step: 5, title: 'Quantity Log', sectionId: 'sec-quantity' },
-  { step: 6, title: 'Issues & Blockers', sectionId: 'sec-issues' },
-  { step: 7, title: 'Submit DPR', sectionId: 'sec-summary' },
+  { step: 1, title: 'Date & Shift', sectionId: 'sec-project-date' },
+  { step: 2, title: 'Project Context', sectionId: 'sec-project' },
+  { step: 3, title: 'Area & Location', sectionId: 'sec-area' },
+  { step: 4, title: 'Discipline & Crew', sectionId: 'sec-discipline' },
+  { step: 5, title: 'Work Narrative', sectionId: 'sec-work-completed' },
+  { step: 6, title: 'Quantity Log', sectionId: 'sec-quantity' },
+  { step: 7, title: 'Issues & Blockers', sectionId: 'sec-issues' },
+  { step: 8, title: 'Evidence & Proofs', sectionId: 'sec-evidence' },
+  { step: 9, title: 'Summary & Attestation', sectionId: 'sec-summary' },
 ];
 
 // Work narrative log item
@@ -81,7 +83,7 @@ export interface DPRQuantityItem {
   unit: string;
   cumulativeQty: number;
   targetTotal: number;
-  status: 'Completed' | 'In Progress' | 'Blocked' | 'On Track';
+  status: 'Completed' | 'In Progress' | 'Blocked' | 'On Track' | 'Behind';
   variance: number; // percentage variance
   isCriticalPath?: boolean;
 }
@@ -113,7 +115,7 @@ export interface DPREvidenceItem {
 
 export default function DPRPage() {
   const router = useRouter();
-  const { activeProject } = useApp();
+  const { activeProject, userSession } = useApp();
   const { addToast } = useToast();
   const { isOffline, captureDPR } = useOffline();
 
@@ -157,9 +159,18 @@ export default function DPRPage() {
   const [pipingCrew, setPipingCrew] = useState('1 Foreman, 4 Fitters, 4 Welders, 2 Riggers, 4 Helpers (15 Pax)');
   const [civilCrew, setCivilCrew] = useState('1 Supervisor, 2 Masons, 6 Helpers, 1 RMC Operator (10 Pax)');
   const [electricalCrew, setElectricalCrew] = useState('4 Cable Pullers (4 Pax)');
-  const totalHeadcount = 29;
 
-  // SECTION 6: Work Completed Log
+  // Dynamically compute deployment headcount strictly from selected disciplines
+  const totalHeadcount = useMemo(() => {
+    let count = 0;
+    if (selectedDisciplines.includes('Piping')) count += 15;
+    if (selectedDisciplines.includes('Civil / Structural') || selectedDisciplines.includes('Civil')) count += 10;
+    if (selectedDisciplines.includes('Electrical & Instrumentation') || selectedDisciplines.includes('Electrical') || selectedDisciplines.includes('E&I')) count += 4;
+    if (selectedDisciplines.includes('Mechanical')) count += 6;
+    return count > 0 ? count : 25;
+  }, [selectedDisciplines]);
+
+  // SECTION 6: Work Completed Log (4 activities worked: 2 completed, 1 in progress, 1 blocked)
   const [workCompletedList, setWorkCompletedList] = useState<DPRWorkItem[]>([
     {
       id: 'WRK-01',
@@ -197,6 +208,18 @@ export default function DPRPage() {
       hoursWorked: 6.0,
       crewCount: 10,
     },
+    {
+      id: 'WRK-04',
+      activityId: 'PIP-24-003',
+      wbs: '3.2.3',
+      title: 'Hydrostatic Test Section Line 24-XX (150 bar)',
+      discipline: 'Piping',
+      area: 'Unit A - Test Header Skid',
+      narrative:
+        'Hydrotest manifold setup and filling initiated. Testing temporarily suspended due to afternoon monsoon squall and blind flange material verification hold at central warehouse. Zero test volume pressurized today.',
+      hoursWorked: 2.0,
+      crewCount: 4,
+    },
   ]);
 
   // SECTION 7: Quantity Log
@@ -221,12 +244,12 @@ export default function DPRPage() {
       description: 'Weld Line 24-XX Field Joints & NDT Inspection',
       discipline: 'Piping',
       plannedToday: 4,
-      actualToday: 4,
+      actualToday: 2,
       unit: 'welds',
-      cumulativeQty: 18,
-      targetTotal: 24,
-      status: 'In Progress',
-      variance: 0,
+      cumulativeQty: 14,
+      targetTotal: 20,
+      status: 'Behind',
+      variance: -15,
       isCriticalPath: true,
     },
     {
@@ -366,19 +389,22 @@ export default function DPRPage() {
   const dprRevision = 'Rev 0 (Official Draft)';
 
   // Verification & Signoff State
-  const [engineerSignoffConfirmed, setEngineerSignoffConfirmed] = useState(true);
+  const [engineerSignoffConfirmed, setEngineerSignoffConfirmed] = useState(false);
   const [managerReviewRouteAcknowledged, setManagerReviewRouteAcknowledged] = useState(true);
 
-  // Detail drawer
+  // Detail drawer & File attachment refs
   const [selectedQuantityForDrawer, setSelectedQuantityForDrawer] = useState<DPRQuantityItem | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Computed summary metrics
   const summaryMetrics = useMemo(() => {
     const plannedTasks = quantityItems.length;
     const completedTasks = quantityItems.filter((q) => q.status === 'Completed').length;
-    const inProgressTasks = quantityItems.filter((q) => q.status === 'In Progress').length;
+    const inProgressTasks = quantityItems.filter((q) => q.status === 'In Progress' || q.status === 'Behind').length;
     const blockedTasks = quantityItems.filter((q) => q.status === 'Blocked').length;
     const totalManHours = totalHeadcount * parseFloat(shiftHours || '8.5');
+    const verifiedProofsCount = evidenceList.filter((e) => !!e.signoffBy).length;
+    const pendingSignoffCount = evidenceList.length - verifiedProofsCount;
 
     return {
       plannedTasks,
@@ -386,10 +412,12 @@ export default function DPRPage() {
       inProgressTasks,
       blockedTasks,
       totalManHours,
-      verifiedProofsCount: evidenceList.length,
+      verifiedProofsCount,
+      pendingSignoffCount,
+      totalAttachmentsCount: evidenceList.length,
       scheduleDeltaPercent: 0.42,
     };
-  }, [quantityItems, evidenceList, shiftHours]);
+  }, [quantityItems, evidenceList, shiftHours, totalHeadcount]);
 
   // Handler: Update quantity
   const handleUpdateQuantity = (id: string, field: 'actualToday' | 'unit', value: any) => {
@@ -693,12 +721,12 @@ export default function DPRPage() {
                 <ArrowLeft className="w-4 h-4" />
               </button>
               <span className="font-mono text-xs px-3 py-1.5 bg-[#F7F8FA] border border-[#D9DEE5] rounded-md font-bold text-[#176B87] truncate max-w-[170px] sm:max-w-none">
-                {activeStep} / 7: {stepsConfig[activeStep - 1]?.title}
+                {activeStep} / 9: {stepsConfig[activeStep - 1]?.title}
               </span>
               <button
                 type="button"
-                disabled={activeStep >= 7}
-                onClick={() => setActiveStep((prev) => Math.min(7, prev + 1))}
+                disabled={activeStep >= 9}
+                onClick={() => setActiveStep((prev) => Math.min(9, prev + 1))}
                 className="min-h-[44px] min-w-[44px] p-2 rounded-lg border border-[#D9DEE5] bg-white text-[#172033] hover:bg-[#F1F3F5] active:bg-[#E5E7EB] disabled:opacity-40 flex items-center justify-center transition-colors cursor-pointer"
                 aria-label="Next section"
               >
@@ -805,7 +833,7 @@ export default function DPRPage() {
           {/* =========================================================================
               SECTION 3: PROJECT
               ========================================================================= */}
-          <section className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 md:p-6 shadow-xs space-y-4">
+          <section id="sec-project" className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-6 md:p-6 shadow-xs space-y-4">
             <div className="border-b border-[#D9DEE5] pb-3 flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <span className="w-6 h-6 rounded-md bg-[#EDF5F8] text-[#176B87] font-bold text-xs flex items-center justify-center">
@@ -877,7 +905,9 @@ export default function DPRPage() {
                 </label>
                 <div className="p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg">
                   <span className="font-bold text-[#172033] block">Active Execution (Month 7 of 18)</span>
-                  <span className="text-[#596579] text-[11px]">Target COD: 31 March 2027</span>
+                  <span className="text-[#596579] text-[11px] block mt-0.5">
+                    Phase 1 Substantial COD: 15 Dec 2026 · Facility Closeout: 31 March 2027
+                  </span>
                 </div>
               </div>
             </div>
@@ -1364,9 +1394,15 @@ export default function DPRPage() {
                       <span>{ev.geotag}</span>
                     </div>
                   )}
-                  {ev.signoffBy && (
-                    <div className="text-[10px] text-[#2E7D5B] font-semibold pt-1 border-t border-[#D9DEE5]">
-                      Signoff: {ev.signoffBy}
+                  {ev.signoffBy ? (
+                    <div className="text-[10px] text-[#2E7D5B] font-semibold pt-1 border-t border-[#D9DEE5] flex items-center gap-1">
+                      <CheckCircle2 className="w-3 h-3 text-[#2E7D5B]" />
+                      <span>Signed off: {ev.signoffBy}</span>
+                    </div>
+                  ) : (
+                    <div className="text-[10px] text-[#9C5A08] font-semibold pt-1 border-t border-[#D9DEE5] flex items-center gap-1">
+                      <Clock className="w-3 h-3 text-[#9C5A08]" />
+                      <span>Photo Proof (Pending QC Sign-off)</span>
                     </div>
                   )}
                 </div>
@@ -1375,37 +1411,76 @@ export default function DPRPage() {
 
             {/* Attach Evidence Action Bar */}
             <div className="p-4 border-2 border-dashed border-[#D9DEE5] rounded-lg text-center bg-[#F7F8FA]">
+              <input
+                type="file"
+                ref={fileInputRef}
+                className="hidden"
+                accept=".jpg,.jpeg,.png,.pdf,.dwg"
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (file) {
+                    const isDoc = file.name.endsWith('.pdf') || file.name.endsWith('.dwg');
+                    const newEv: DPREvidenceItem = {
+                      id: `EVD-${Date.now()}`,
+                      name: file.name,
+                      type: isDoc ? 'DOCUMENT' : 'PHOTO',
+                      timestamp: '16:30',
+                      activityId: 'PIP-24-001',
+                      locationArea: selectedArea,
+                      fileSize: `${(file.size / (1024 * 1024)).toFixed(1)} MB`,
+                      geotag: isDoc ? undefined : '27.3513° N, 95.3130° E',
+                    };
+                    setEvidenceList((prev) => [...prev, newEv]);
+                    addToast({
+                      type: 'success',
+                      title: 'File Attached',
+                      description: `Attached ${file.name} to daily progress record.`,
+                    });
+                  }
+                  e.target.value = '';
+                }}
+              />
               <p className="text-xs font-semibold text-[#172033]">
                 Attach Geotagged Photos, Inspection Sheets, or Delivery Slips
               </p>
               <p className="text-[11px] text-[#7B8798] mt-0.5">
                 Supported: JPG, PNG, PDF, DWG (Max 25MB per file)
               </p>
-              <button
-                type="button"
-                onClick={() => {
-                  const newEv: DPREvidenceItem = {
-                    id: `EVD-${Date.now()}`,
-                    name: `IMG_${reportingDate.replace(/-/g, '')}_FIELD_CHECK.jpg`,
-                    type: 'PHOTO',
-                    timestamp: '16:30',
-                    activityId: 'PIP-24-001',
-                    locationArea: selectedArea,
-                    fileSize: '2.1 MB',
-                    geotag: '27.3513° N, 95.3130° E',
-                  };
-                  setEvidenceList([...evidenceList, newEv]);
-                  addToast({
-                    type: 'success',
-                    title: 'Evidence Attached',
-                    description: `Attached ${newEv.name}`,
-                  });
-                }}
-                className="mt-2 px-3 py-1.5 text-xs font-bold text-[#176B87] bg-white border border-[#B3CBE0] hover:bg-[#EDF5F8] rounded-lg inline-flex items-center gap-2 transition-colors cursor-pointer"
-              >
-                <Plus className="w-3.5 h-3.5" />
-                <span>Upload New File</span>
-              </button>
+              <div className="flex items-center justify-center gap-2 mt-2 flex-wrap">
+                <button
+                  type="button"
+                  onClick={() => fileInputRef.current?.click()}
+                  className="px-3 py-1.5 text-xs font-bold text-[#176B87] bg-white border border-[#B3CBE0] hover:bg-[#EDF5F8] rounded-lg inline-flex items-center gap-2 transition-colors cursor-pointer"
+                >
+                  <Plus className="w-3.5 h-3.5" />
+                  <span>Browse & Attach File</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    const newEv: DPREvidenceItem = {
+                      id: `EVD-${Date.now()}`,
+                      name: `IMG_${reportingDate.replace(/-/g, '')}_FIELD_CHECK.jpg`,
+                      type: 'PHOTO',
+                      timestamp: '16:30',
+                      activityId: 'PIP-24-001',
+                      locationArea: selectedArea,
+                      fileSize: '2.1 MB',
+                      geotag: '27.3513° N, 95.3130° E',
+                    };
+                    setEvidenceList((prev) => [...prev, newEv]);
+                    addToast({
+                      type: 'info',
+                      title: 'Sample Photo Added',
+                      description: `Added sample attachment ${newEv.name}`,
+                    });
+                  }}
+                  className="px-3 py-1.5 text-xs font-medium text-[#596579] bg-white border border-[#D9DEE5] hover:bg-[#F1F3F5] rounded-lg inline-flex items-center gap-2 transition-colors cursor-pointer"
+                >
+                  <Camera className="w-3.5 h-3.5 text-[#596579]" />
+                  <span>Add Sample Site Photo</span>
+                </button>
+              </div>
             </div>
           </section>
 
@@ -1467,7 +1542,8 @@ export default function DPRPage() {
                   <tr className="bg-[#FAFAFA] h-11 sm:h-12">
                     <td className="py-3 px-4 font-semibold text-[#596579]">Physical Evidence Audit</td>
                     <td className="py-3 px-4 text-[#172033]">
-                      <span className="font-bold text-[#2E7D5B]">{summaryMetrics.verifiedProofsCount} Verified Attachments</span> (Photographs with GPS coordinates, Crane lift tickets, Weld QC inspection sheets).
+                      <span className="font-bold text-[#2E7D5B]">{summaryMetrics.verifiedProofsCount} Signed-Off Documents</span> and{' '}
+                      <span className="font-bold text-[#8C5311]">{summaryMetrics.pendingSignoffCount} Uncertified Site Photos</span> ({summaryMetrics.totalAttachmentsCount} total attachments).
                     </td>
                   </tr>
                   <tr className="h-11 sm:h-12">
@@ -1492,7 +1568,12 @@ export default function DPRPage() {
                 />
                 <div>
                   <span className="font-bold text-[#172033] block">
-                    Certified by Lead Site Execution Engineer: {siteEngineer} ({siteRole})
+                    Certified by: {userSession?.name || siteEngineer} ({userSession?.role ? userSession.role.toUpperCase() : siteRole})
+                    {userSession?.name && userSession.name !== siteEngineer && (
+                      <span className="ml-2 font-normal text-[#596579] text-[11px]">
+                        (Attesting on behalf of Lead Field Engineer {siteEngineer})
+                      </span>
+                    )}
                   </span>
                   <span className="text-[#596579] leading-relaxed">
                     I certify that the stated quantities, man-hours, and physical evidence accurately reflect site execution at {projectName} on {reportingDate}.

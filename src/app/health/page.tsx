@@ -373,7 +373,7 @@ export default function ScheduleHealthPage() {
                 title="Checks in healthy state with zero open violations"
               >
                 <CheckCircle2 className="w-3.5 h-3.5 text-[#2E7D5B]" />
-                <span>Healthy</span>
+                <span>{metrics.healthyCount} Healthy</span>
               </div>
               <div
                 className="px-3 py-1.5 rounded bg-[#FDF6ED] border border-[#F0D4A6] text-[#8C5311] font-bold flex items-center gap-2"
@@ -504,7 +504,7 @@ export default function ScheduleHealthPage() {
             </div>
 
             <div className="flex items-center gap-2 flex-wrap text-xs">
-              {/* Severity Filter: Healthy | Warning | Critical */}
+              {/* Severity Filter */}
               <select
                 value={severityFilter}
                 onChange={(e) => setSeverityFilter(e.target.value as any)}
@@ -513,7 +513,7 @@ export default function ScheduleHealthPage() {
                 <option value="ALL">All Severities</option>
                 <option value="Critical">Critical</option>
                 <option value="Warning">Warning</option>
-                <option value="Healthy">Healthy</option>
+                <option value="Needs Attention">Needs Attention</option>
               </select>
 
               {/* Status Filter */}
@@ -523,9 +523,9 @@ export default function ScheduleHealthPage() {
                 className="px-3 py-1.5 bg-white border border-[#D9DEE5] rounded-lg text-xs font-medium text-[#172033] outline-none"
               >
                 <option value="ALL">All Statuses</option>
-                <option value="Open">Open</option>
+                <option value="Open">Pending Review (Open)</option>
                 <option value="Resolved">Resolved</option>
-                <option value="In Review">In Review</option>
+                <option value="Ignored">Ignored</option>
               </select>
 
               {(selectedRuleFilter !== 'ALL' || severityFilter !== 'ALL' || statusFilter !== 'ALL' || searchQuery) && (

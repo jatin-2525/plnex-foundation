@@ -488,6 +488,11 @@ export function executeWhatIfSimulation(
     }
   }
 
+  // Determine project-level impact from terminal milestone propagation
+  const terminalSlip = shiftsMap.get('MLS-100-COD')?.shiftDays ?? 0;
+  maxProjectSlipDays = terminalSlip;
+  criticalPenetration = terminalSlip > 0;
+
   // Calculate project finish dates
   const simulatedCOD = addDaysToDateString(BASELINE_COD, maxProjectSlipDays);
 
@@ -558,22 +563,50 @@ export function executeWhatIfSimulation(
   const mitigations: string[] = [];
 
   const affectedList = Array.from(shiftsMap.values()).filter((s) => s.activityId !== source.id);
+  const shiftedActivities = affectedList.filter((s) => Math.abs(s.shiftDays) > 0);
 
   if (calculatedDelayDays > 0) {
     if (criticalPenetration) {
       headline = `Critical Path Penetrated: Project Commercial Completion shifts by +${maxProjectSlipDays} days`;
-      downstreamNarrative = `A delay of +${calculatedDelayDays} days on source activity ${source.id} (${source.name}) directly cascades through ${affectedList.length} downstream successors. Because this activity lies on the zero-float critical path, the delay fully transmits to milestone COD.`;
-      criticalAssessment = `Zero total float available on this path. Every day of delay on ${source.id} equates to 1:1 contractual completion slippage from ${formatFriendlyDate(BASELINE_COD)} to ${formatFriendlyDate(simulatedCOD)}.`;
+      downstreamNarrative = `A delay of +${calculatedDelayDays} days on source activity ${source.id} (${source.name}) cascades through ${shiftedActivities.length} downstream successors with net completion shifts. Because this path penetrates the zero-float chain, the delay transmits directly to terminal milestone COD.`;
+      criticalAssessment = `Zero total float available on this path. Delay on ${source.id} causes 1:1 completion slippage from ${formatFriendlyDate(BASELINE_COD)} to ${formatFriendlyDate(simulatedCOD)}.`;
       floatNote = 'Zero buffer remaining. Total float = 0 days.';
-      mitigations.push(`Mobilize second welding & inspection shift on ${source.id} to compress duration by 40%.`);
-      mitigations.push(`Re-sequence downstream NDT to run concurrently with spool tie-ins instead of sequential Finish-to-Start.`);
-      mitigations.push(`Pre-fabricate instrument impulse tubes in vendor shop prior to field spool erection.`);
+
+      // Discipline-specific actionable mitigations
+      if (source.discipline === 'Civil') {
+        mitigations.push(`Apply rapid-hardening concrete accelerator additives and thermal curing blankets on ${source.id} to compress curing cycle by 48-72h.`);
+        mitigations.push(`Mobilize supplementary formwork and rebar fixing gangs to run dual-shift preparatory work for pedestal pours.`);
+        mitigations.push(`Pre-cast non-critical foundation components offsite to parallelize field civil erection with structural steel readiness.`);
+      } else if (source.discipline === 'Piping') {
+        mitigations.push(`Mobilize second welding & inspection shift on ${source.id} to compress duration by 40%.`);
+        mitigations.push(`Re-sequence downstream NDT to run concurrently with spool tie-ins instead of sequential Finish-to-Start.`);
+        mitigations.push(`Pre-fabricate piping spool tie-ins in fabrication workshop with automated orbital welding.`);
+      } else if (source.discipline === 'Mechanical') {
+        mitigations.push(`Mobilize tandem crane lift team and dual rigging crews to position equipment skids simultaneously.`);
+        mitigations.push(`Pre-align baseplates with laser coordinate measurement prior to heavy equipment arrival.`);
+        mitigations.push(`Fast-track OEM vendor technical field rep signoff for immediate mechanical completion clearance.`);
+      } else if (source.discipline === 'Electrical') {
+        mitigations.push(`Deploy motorized cable pull winches and dual termination gangs across cable galleries.`);
+        mitigations.push(`Pre-terminate multicore marshaling panels prior to field pulling.`);
+        mitigations.push(`Pre-commission switchgear on temporary generator power ahead of main utility feeder.`);
+      } else {
+        mitigations.push(`Pre-fabricate instrument impulse tubes and junction boxes in vendor shop prior to field erection.`);
+        mitigations.push(`Deploy automated loop calibrators to run parallel multi-channel signal validation with DCS operators.`);
+        mitigations.push(`Authorize 24/7 commissioning shift for loop-checks and interlock logic dry-runs.`);
+      }
     } else {
       headline = `Float Buffer Absorbed: Zero slip on Project Completion Date (${formatFriendlyDate(BASELINE_COD)})`;
-      downstreamNarrative = `A delay of +${calculatedDelayDays} days on ${source.id} (${source.name}) was absorbed by available path float (${source.totalFloat} days available). Downstream critical milestones remain protected.`;
+      downstreamNarrative = `A delay of +${calculatedDelayDays} days on ${source.id} (${source.name}) was absorbed by available downstream float. Milestone COD remains protected at ${formatFriendlyDate(BASELINE_COD)}.`;
       criticalAssessment = `Non-critical activity chain. Total float decreased from ${source.totalFloat} days to ${Math.max(0, source.totalFloat - calculatedDelayDays)} days.`;
       floatNote = `Float consumed: ${Math.min(calculatedDelayDays, source.totalFloat)} days. Remaining buffer: ${Math.max(0, source.totalFloat - calculatedDelayDays)} days.`;
-      mitigations.push(`Monitor successor mechanical package alignment closely to prevent remaining float from eroding further.`);
+      
+      if (source.discipline === 'Civil') {
+        mitigations.push(`Monitor structural column handoff dates closely to ensure remaining float buffer is not further eroded.`);
+      } else if (source.discipline === 'Piping') {
+        mitigations.push(`Track piping hydrotest prep to ensure hydro test pack documentation is signed off ahead of line completion.`);
+      } else {
+        mitigations.push(`Monitor successor handoffs closely to prevent remaining float buffer (${Math.max(0, source.totalFloat - calculatedDelayDays)}d) from eroding.`);
+      }
     }
   } else if (calculatedDelayDays < 0) {
     const accDays = Math.abs(calculatedDelayDays);
@@ -600,7 +633,7 @@ export function executeWhatIfSimulation(
     differenceDays: maxProjectSlipDays,
     criticalPathPenetrated: criticalPenetration,
     totalFloatConsumed: totalFloatConsumedSum,
-    affectedActivitiesCount: affectedList.length,
+    affectedActivitiesCount: shiftedActivities.length,
     affectedActivities: affectedList,
     dependencyChain: chainNodes,
     milestones,

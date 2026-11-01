@@ -386,11 +386,11 @@ export default function MatchingPage() {
             </div>
             <div>
               <span className="text-[11px] font-bold text-[#2E7D5B] font-mono px-1.5 py-0.5 rounded bg-[#EDF7F2] border border-[#B8DCC9]">
-                ≥ 90% AUTO-MATCH RECOMMENDATION
+                ≥ 90% CONFIDENCE RECOMMENDATION
               </span>
-              <p className="text-xs text-[#172033] font-bold mt-1">High-Confidence Alignment</p>
+              <p className="text-xs text-[#172033] font-bold mt-1">High-Confidence Candidate</p>
               <p className="text-[11px] text-[#596579] mt-0.5">
-                Exact alignment across line, area, and trade boundaries. Ready for 1-click commitment.
+                Exact alignment across line, area, and trade boundaries. Recommended for 1-click approval; remains pending in review queue until confirmed by engineer.
               </p>
             </div>
           </div>

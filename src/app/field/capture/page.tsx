@@ -297,6 +297,12 @@ export default function FieldCapturePage() {
               <h1 className="text-[28px] sm:text-3xl font-bold text-[#172033] tracking-tight mt-1">
                 Field Capture
               </h1>
+              <p className="text-xs text-[#596579] mt-0.5">
+                Quick mobile telemetry entry for single events • For end-of-shift contractor submission, use{' '}
+                <Link href="/field/dpr" className="text-[#176B87] underline font-medium hover:text-[#135A72]">
+                  Daily Progress Report (DPR)
+                </Link>
+              </p>
             </div>
 
             <Link

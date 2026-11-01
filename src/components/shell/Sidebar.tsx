@@ -42,6 +42,7 @@ interface SidebarNavItem {
   href: string;
   icon: React.ComponentType<{ className?: string }>;
   badge?: string | number;
+  subtitle?: string;
 }
 
 interface SidebarGroup {
@@ -92,43 +93,43 @@ export const managerNav: SidebarGroup[] = [
   {
     group: 'PROJECT',
     items: [
-      { label: 'Projects', href: '/projects', icon: FolderKanban },
-      { label: 'Schedule', href: '/schedule', icon: Calendar },
-      { label: 'Schedule Twin', href: '/schedule-twin', icon: Layers },
+      { label: 'Projects', href: '/projects', icon: FolderKanban, subtitle: 'Portfolio Projects Overview' },
+      { label: 'Schedule', href: '/schedule', icon: Calendar, subtitle: 'Committed Baseline CPM Network' },
+      { label: 'Schedule Twin', href: '/schedule-twin', icon: Layers, subtitle: 'Dynamic CPM Twin with Field Progress' },
     ],
   },
   {
     group: 'EXECUTION',
     items: [
-      { label: 'Execution Intelligence', href: '/execution', icon: Cpu },
-      { label: 'Review Queue', href: '/review', icon: ShieldCheck, badge: 3 },
-      { label: 'Progress & Variance', href: '/progress', icon: TrendingUp },
+      { label: 'Execution Intelligence', href: '/execution', icon: Cpu, subtitle: 'Live Site Telemetry & Unstructured Stream' },
+      { label: 'Review Queue', href: '/review', icon: ShieldCheck, badge: 3, subtitle: 'Pending Planner Verification Gate' },
+      { label: 'Progress & Variance', href: '/progress', icon: TrendingUp, subtitle: 'Earned Value S-Curve & Trend Analytics' },
     ],
   },
   {
     group: 'INTELLIGENCE',
     items: [
-      { label: 'Delay & Dependency Impact', href: '/risks', icon: TrendingDown },
-      { label: 'What-if', href: '/what-if', icon: Sliders },
+      { label: 'Delay & Dependency Impact', href: '/risks', icon: TrendingDown, subtitle: 'Float Consumption & Critical Chain Risks' },
+      { label: 'What-if', href: '/what-if', icon: Sliders, subtitle: 'Predictive Forward-Pass Sandbox' },
     ],
   },
   {
     group: 'TRUST',
     items: [
-      { label: 'Evidence & Audit', href: '/evidence', icon: ShieldCheck },
-      { label: 'Schedule Health', href: '/health', icon: Activity },
+      { label: 'Evidence & Audit', href: '/evidence', icon: ShieldCheck, subtitle: 'Immutable Ledger & Proof Repository' },
+      { label: 'Schedule Health', href: '/health', icon: Activity, subtitle: 'CPM Logic & Field Hygiene Rules' },
     ],
   },
   {
     group: 'KNOWLEDGE',
     items: [
-      { label: 'Reports & Memory', href: '/reports', icon: BookOpen },
+      { label: 'Reports & Memory', href: '/reports', icon: BookOpen, subtitle: 'Historical Variance Lessons & Cases' },
     ],
   },
   {
     group: 'SYSTEM',
     items: [
-      { label: 'Offline / Sync', href: '/sync', icon: Wifi },
+      { label: 'Offline / Sync', href: '/sync', icon: Wifi, subtitle: 'Local SQLite Cache & Cloud Replication' },
     ],
   },
 ];
@@ -137,28 +138,28 @@ export const engineerNav: SidebarGroup[] = [
   {
     group: 'WORKSPACE',
     items: [
-      { label: 'Site Engineer Dashboard', href: '/engineer', icon: HardHat },
-      { label: 'My Activities', href: '/activities', icon: ListChecks },
+      { label: 'Site Engineer Dashboard', href: '/engineer', icon: HardHat, subtitle: 'Daily Shift & Workfront Focus' },
+      { label: 'My Activities', href: '/activities', icon: ListChecks, subtitle: 'Direct Workfront Scope & Milestones' },
     ],
   },
   {
     group: 'EXECUTION',
     items: [
-      { label: 'Field Capture', href: '/field/capture', icon: Camera },
-      { label: 'DPR / Daily Progress', href: '/field/dpr', icon: FileText },
-      { label: 'Execution Intelligence', href: '/execution', icon: Cpu },
+      { label: 'Field Capture', href: '/field/capture', icon: Camera, subtitle: 'Fast Mobile Entry for Single Site Events' },
+      { label: 'DPR / Daily Progress', href: '/field/dpr', icon: FileText, subtitle: 'Official End-of-Shift Submission & Signoff' },
+      { label: 'Execution Intelligence', href: '/execution', icon: Cpu, subtitle: 'Live Site Telemetry & Unstructured Stream' },
     ],
   },
   {
     group: 'TRUST',
     items: [
-      { label: 'Evidence', href: '/evidence', icon: ShieldCheck },
+      { label: 'Evidence', href: '/evidence', icon: ShieldCheck, subtitle: 'Photographic Proofs & Lift Tickets' },
     ],
   },
   {
     group: 'SYSTEM',
     items: [
-      { label: 'Offline / Sync', href: '/sync', icon: Wifi },
+      { label: 'Offline / Sync', href: '/sync', icon: Wifi, subtitle: 'Local IndexedDB Cache & Replication' },
     ],
   },
 ];
@@ -167,54 +168,54 @@ export const adminNav: SidebarGroup[] = [
   {
     group: 'ADMINISTRATION',
     items: [
-      { label: 'Admin Dashboard', href: '/admin', icon: Shield },
-      { label: 'Users & Roles', href: '/admin/users', icon: Users },
-      { label: 'Organizations', href: '/admin/organizations', icon: Building2 },
+      { label: 'Admin Dashboard', href: '/admin', icon: Shield, subtitle: 'System Health & Security Control' },
+      { label: 'Users & Roles', href: '/admin/users', icon: Users, subtitle: 'User Directory & Persona Access' },
+      { label: 'Organizations', href: '/admin/organizations', icon: Building2, subtitle: 'Client & Contractor Tenants' },
     ],
   },
   {
     group: 'WORKSPACE ACCESS', // MANAGER VIEW & ENGINEER VIEW
     items: [
-      { label: 'Manager Dashboard', href: '/dashboard', icon: LayoutDashboard },
-      { label: 'Site Engineer Dashboard', href: '/engineer', icon: HardHat },
+      { label: 'Manager Dashboard', href: '/dashboard', icon: LayoutDashboard, subtitle: 'Project Executive Command View' },
+      { label: 'Site Engineer Dashboard', href: '/engineer', icon: HardHat, subtitle: 'Field Execution Workfront View' },
     ],
   },
   {
     group: 'PROJECT',
     items: [
-      { label: 'Projects', href: '/projects', icon: FolderKanban },
-      { label: 'Schedule', href: '/schedule', icon: Calendar },
-      { label: 'Schedule Twin', href: '/schedule-twin', icon: Layers },
+      { label: 'Projects', href: '/projects', icon: FolderKanban, subtitle: 'Portfolio Projects Overview' },
+      { label: 'Schedule', href: '/schedule', icon: Calendar, subtitle: 'Committed Baseline CPM Network' },
+      { label: 'Schedule Twin', href: '/schedule-twin', icon: Layers, subtitle: 'Dynamic CPM Twin with Field Progress' },
     ],
   },
   {
     group: 'EXECUTION',
     items: [
-      { label: 'Field Capture', href: '/field/capture', icon: Camera },
-      { label: 'DPR', href: '/field/dpr', icon: FileText },
-      { label: 'Execution Intelligence', href: '/execution', icon: Cpu },
-      { label: 'Review Queue', href: '/review', icon: ShieldCheck, badge: 3 },
+      { label: 'Field Capture', href: '/field/capture', icon: Camera, subtitle: 'Fast Mobile Entry for Single Site Events' },
+      { label: 'DPR', href: '/field/dpr', icon: FileText, subtitle: 'Official End-of-Shift Submission & Signoff' },
+      { label: 'Execution Intelligence', href: '/execution', icon: Cpu, subtitle: 'Live Site Telemetry & Unstructured Stream' },
+      { label: 'Review Queue', href: '/review', icon: ShieldCheck, badge: 3, subtitle: 'Pending Planner Verification Gate' },
     ],
   },
   {
     group: 'INTELLIGENCE',
     items: [
-      { label: 'Progress & Variance', href: '/progress', icon: TrendingUp },
-      { label: 'Delay & Dependency Impact', href: '/risks', icon: TrendingDown },
-      { label: 'What-if', href: '/what-if', icon: Sliders },
+      { label: 'Progress & Variance', href: '/progress', icon: TrendingUp, subtitle: 'Earned Value S-Curve & Trend Analytics' },
+      { label: 'Delay & Dependency Impact', href: '/risks', icon: TrendingDown, subtitle: 'Float Consumption & Critical Chain Risks' },
+      { label: 'What-if', href: '/what-if', icon: Sliders, subtitle: 'Predictive Forward-Pass Sandbox' },
     ],
   },
   {
     group: 'TRUST',
     items: [
-      { label: 'Evidence & Audit', href: '/evidence', icon: ShieldCheck },
-      { label: 'Schedule Health', href: '/health', icon: Activity },
+      { label: 'Evidence & Audit', href: '/evidence', icon: ShieldCheck, subtitle: 'Immutable Ledger & Proof Repository' },
+      { label: 'Schedule Health', href: '/health', icon: Activity, subtitle: 'CPM Logic & Field Hygiene Rules' },
     ],
   },
   {
     group: 'KNOWLEDGE',
     items: [
-      { label: 'Reports & Memory', href: '/reports', icon: BookOpen },
+      { label: 'Reports & Memory', href: '/reports', icon: BookOpen, subtitle: 'Historical Variance Lessons & Cases' },
     ],
   },
   {
@@ -374,7 +375,7 @@ export function Sidebar({ collapsed, onToggle, mobileMenuOpen, onCloseMobile }: 
                       ? 'bg-[#EDF5F8] text-[#176B87] font-semibold'
                       : 'text-[#596579] hover:bg-[#F1F3F5] hover:text-[#172033] font-normal'
                   }`}
-                  title={collapsed ? (item.badge !== undefined ? `${item.label} [${item.badge}]` : item.label) : undefined}
+                  title={item.subtitle ? `${item.label} — ${item.subtitle}` : (item.badge !== undefined ? `${item.label} [${item.badge}]` : item.label)}
                 >
                   {/* Left accent bar for active route */}
                   {isActive && (

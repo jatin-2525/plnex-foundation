@@ -40,6 +40,8 @@ export default function VariancePage() {
 
   // Delay chain for selected activity
   const delayChain = traceDelayChain(selectedActivityId, MOCK_ACTIVITIES);
+  const selectedActivity = MOCK_ACTIVITIES.find((a) => a.id === selectedActivityId) || MOCK_ACTIVITIES[0];
+  const delayedStepsCount = delayChain.filter((s) => s.delayDays > 0).length;
 
   const handleRunSimulation = () => {
     const res = projectService.simulateWhatIf(selectedActivityId, simDays);
@@ -81,9 +83,13 @@ export default function VariancePage() {
           <>
             <span className="font-mono">RULES ENGINE: Deterministic Predecessor-Successor Graph</span>
             <span>•</span>
-            <span>ACTIVE DELAYS: 2 Downstream Slips</span>
+            <span>ACTIVE DELAYS: {delayedStepsCount} Downstream Slip{delayedStepsCount === 1 ? '' : 's'}</span>
             <span>•</span>
-            <span>CRITICAL PATH FLOAT: 0 Days</span>
+            <span>
+              {selectedActivity?.isCritical
+                ? 'CRITICAL PATH (0 Days Float)'
+                : `FLOAT BUFFER: ${selectedActivity?.totalFloat ?? 0} Days`}
+            </span>
           </>
         }
       />
@@ -156,9 +162,15 @@ export default function VariancePage() {
                       </div>
                       <div className="flex items-center gap-2">
                         {step.delayDays > 0 && (
-                          <span className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
-                            CRITICAL PATH (0d float)
-                          </span>
+                          step.isCritical ? (
+                            <span className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
+                              CRITICAL PATH (0d float)
+                            </span>
+                          ) : (
+                            <span className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-[#FEF9E7] text-[#9C5A08] border border-[#F4E0A0]">
+                              FLOAT BUFFER ({step.totalFloat ?? 0}d float)
+                            </span>
+                          )
                         )}
                         <VarianceBadge daysDelay={step.delayDays} size="sm" />
                       </div>

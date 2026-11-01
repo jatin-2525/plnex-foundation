@@ -8,6 +8,8 @@ export interface DelayChainStep {
   delayDays: number;
   reason: string;
   impactOnSuccessor: string;
+  isCritical?: boolean;
+  totalFloat?: number;
 }
 
 export interface WhatIfSimulationResult {
@@ -102,6 +104,8 @@ export function traceDelayChain(
           delayDays: pred.delayDays,
           reason: `Discipline handoff delayed by ${pred.delayDays} days`,
           impactOnSuccessor: `Pushed start date of ${curr.name}`,
+          isCritical: pred.isCritical,
+          totalFloat: pred.totalFloat,
         });
       }
     }
@@ -117,6 +121,8 @@ export function traceDelayChain(
     delayDays: target.delayDays,
     reason: target.delayDays > 0 ? `Accumulated schedule slip of +${target.delayDays} days` : 'Current active stage',
     impactOnSuccessor: target.isCritical ? 'Impacts project critical milestone' : 'Consumes float',
+    isCritical: target.isCritical,
+    totalFloat: target.totalFloat,
   });
 
   return chain;
