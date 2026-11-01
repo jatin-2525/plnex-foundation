@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useApp } from '../../context/AppContext';
 import { ProjectSelector } from './ProjectSelector';
@@ -8,7 +8,8 @@ import { NotificationCenter } from './NotificationCenter';
 import { UserMenu } from './UserMenu';
 import { ConnectionStatusControl } from './ConnectionStatusControl';
 import { Logo } from '../shared/Logo';
-import { Search, PanelLeft } from 'lucide-react';
+import { Modal } from '../shared/Modal';
+import { Search, PanelLeft, Database, ShieldCheck, CheckCircle2, RotateCcw } from 'lucide-react';
 
 export interface TopHeaderProps {
   onToggleSidebar?: () => void;
@@ -18,6 +19,7 @@ export interface TopHeaderProps {
 
 export function TopHeader({ onToggleSidebar, onMobileToggle, onDesktopToggle }: TopHeaderProps) {
   const { setGlobalSearchOpen, userSession } = useApp();
+  const [sandboxModalOpen, setSandboxModalOpen] = useState(false);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -70,9 +72,15 @@ export function TopHeader({ onToggleSidebar, onMobileToggle, onDesktopToggle }: 
         </div>
 
         {/* Visible Demo / Sample Data indicator across all screen sizes and roles */}
-        <span className="inline-flex items-center text-[10px] sm:text-xs font-mono font-bold text-[#8C5311] bg-[#FDF6ED] px-2 py-0.5 rounded border border-[#F0D4A6] shrink-0" title="This prototype operates on simulated sample project data for evaluation">
-          Demo Data
-        </span>
+        <button
+          type="button"
+          onClick={() => setSandboxModalOpen(true)}
+          className="inline-flex items-center gap-1 text-[10px] sm:text-xs font-mono font-bold text-[#8C5311] bg-[#FDF6ED] hover:bg-[#FBEAD4] px-2 py-0.5 rounded border border-[#F0D4A6] shrink-0 transition-colors cursor-pointer"
+          title="Click to inspect Sample Data Mode and Sandbox Isolation details"
+        >
+          <Database className="w-3 h-3 text-[#8C5311]" />
+          <span>Demo Data</span>
+        </button>
       </div>
 
       {/* Right: Search + Notifications + Profile */}
@@ -114,6 +122,79 @@ export function TopHeader({ onToggleSidebar, onMobileToggle, onDesktopToggle }: 
           <ConnectionStatusControl />
         </span>
       </div>
+
+      {/* Feature 19: Clear Sample-Data Mode & Sandbox Isolation Modal */}
+      <Modal
+        isOpen={sandboxModalOpen}
+        onClose={() => setSandboxModalOpen(false)}
+        title="Sample Data Mode & Prototype Sandbox"
+        subtitle="Operational parameters and state isolation for evaluation"
+        maxWidth="lg"
+      >
+        <div className="space-y-4 text-xs text-[#172B3A]">
+          <div className="bg-[#EDF5F8] border border-[#B3CBE0] rounded-md p-3">
+            <div className="flex items-center gap-2 font-bold text-[#0F6574] mb-1">
+              <ShieldCheck className="w-4 h-4 text-[#0F6574]" />
+              <span>Simulated Evaluation Environment (No Live P6 Writes)</span>
+            </div>
+            <p className="text-[11px] text-[#526779] leading-relaxed">
+              This deployment is running in high-fidelity sample data mode. User actions (including DPR submissions, match approvals, risk status updates, and what-if simulation saves) are held safely in browser memory and local cache.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="border border-[#D7E1E8] rounded-md p-3 bg-[#F4F7FA]">
+              <div className="font-semibold text-[#172B3A] mb-1">Baseline Schedule</div>
+              <p className="text-[11px] text-[#526779]">
+                <strong>Rev 3.2 (Approved 15 May 2026)</strong> comprising 184 physical schedule activities across Piping, Civil, Mechanical, and Electrical packages.
+              </p>
+            </div>
+            <div className="border border-[#D7E1E8] rounded-md p-3 bg-[#F4F7FA]">
+              <div className="font-semibold text-[#172B3A] mb-1">Cutoff Reporting Date</div>
+              <p className="text-[11px] text-[#526779]">
+                <strong>18 Sep 2026 (Week 38)</strong>. All actuals, DPR logs, and inspection sign-offs are dated on or before this boundary. Future dates are deterministic forecasts.
+              </p>
+            </div>
+          </div>
+
+          <div className="border border-[#D7E1E8] rounded-md p-3 space-y-2">
+            <div className="font-semibold text-[#172B3A]">Verified Boundary Rules:</div>
+            <ul className="space-y-1 text-[11px] text-[#526779]">
+              <li className="flex items-start gap-1.5">
+                <CheckCircle2 className="w-3.5 h-3.5 text-[#187A6A] mt-0.5 shrink-0" />
+                <span>Simulated field updates never commit directly to external Primavera P6 or SAP ERP backends.</span>
+              </li>
+              <li className="flex items-start gap-1.5">
+                <CheckCircle2 className="w-3.5 h-3.5 text-[#187A6A] mt-0.5 shrink-0" />
+                <span>Resetting browser cache clears all temporary what-if scenarios and restores original baseline values.</span>
+              </li>
+            </ul>
+          </div>
+
+          <div className="flex justify-between items-center pt-2 border-t border-[#D7E1E8]">
+            <button
+              type="button"
+              onClick={() => {
+                if (typeof window !== 'undefined') {
+                  window.localStorage.clear();
+                  window.location.reload();
+                }
+              }}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-semibold text-[#B43D47] bg-[#FBEFEE] hover:bg-[#F6DFDE] border border-[#E8B6BA] transition-colors cursor-pointer"
+            >
+              <RotateCcw className="w-3.5 h-3.5" />
+              <span>Reset Prototype Cache</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setSandboxModalOpen(false)}
+              className="px-4 py-1.5 bg-[#0F6574] hover:bg-[#0c505c] text-white rounded font-medium text-xs transition-colors cursor-pointer"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </Modal>
     </header>
   );
 }

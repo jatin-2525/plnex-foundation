@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo, useRef } from 'react';
+import React, { useState, useMemo, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useApp } from '../../../context/AppContext';
@@ -119,6 +119,21 @@ export default function DPRPage() {
   const { addToast } = useToast();
   const { isOffline, captureDPR } = useOffline();
 
+  // Feature 20: DPR Autosave State & Unsaved-Changes Warning
+  const [lastSavedTime, setLastSavedTime] = useState<string>('14:35 IST');
+  const [isFormDirty, setIsFormDirty] = useState<boolean>(false);
+
+  useEffect(() => {
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      if (isFormDirty) {
+        e.preventDefault();
+        e.returnValue = '';
+      }
+    };
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+  }, [isFormDirty]);
+
   // Active step / focused section
   const [activeStep, setActiveStep] = useState<number>(1);
 
@@ -169,6 +184,12 @@ export default function DPRPage() {
     if (selectedDisciplines.includes('Mechanical')) count += 6;
     return count > 0 ? count : 25;
   }, [selectedDisciplines]);
+
+  // Feature 22: Live responsive calculations for DPR shift summary
+  const totalShiftManHours = useMemo(() => {
+    const hours = parseFloat(shiftHours) || 8.5;
+    return (totalHeadcount * hours).toFixed(1);
+  }, [totalHeadcount, shiftHours]);
 
   // SECTION 6: Work Completed Log (4 activities worked: 2 completed, 1 in progress, 1 blocked)
   const [workCompletedList, setWorkCompletedList] = useState<DPRWorkItem[]>([
@@ -281,6 +302,15 @@ export default function DPRPage() {
       isCriticalPath: false,
     },
   ]);
+
+  // Feature 22: Live responsive calculations for DPR shift summary
+  const totalWorkHoursLogged = useMemo(() => {
+    return workCompletedList.reduce((acc, curr) => acc + (curr.hoursWorked || 0), 0).toFixed(1);
+  }, [workCompletedList]);
+
+  const quantitiesLoggedCount = useMemo(() => {
+    return quantityItems.filter((q) => q.actualToday > 0).length;
+  }, [quantityItems]);
 
   // SECTION 8: Issues / Blockers
   const [issuesList, setIssuesList] = useState<DPRIssueItem[]>([
@@ -471,13 +501,17 @@ export default function DPRPage() {
         });
       }
       setSubmissionState('Draft');
+      setLastSavedTime(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + ' IST');
+      setIsFormDirty(false);
       addToast({
         type: 'success',
-        title: 'Draft Saved',
-        description: `Daily Progress Report ${dprDocumentNo} saved to local repository.`,
+        title: 'Draft Saved Locally',
+        description: `Daily Progress Report ${dprDocumentNo} saved to IndexedDB local repository.`,
       });
     } catch {
       setSubmissionState('Draft');
+      setLastSavedTime(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + ' IST');
+      setIsFormDirty(false);
       addToast({
         type: 'success',
         title: 'Draft Saved Locally',
@@ -654,6 +688,12 @@ export default function DPRPage() {
                   <span className="w-1.5 h-1.5 rounded-full bg-current" />
                   <span>{submissionState}</span>
                 </span>
+
+                {/* Feature 20: Persistent Autosave Status Indicator */}
+                <span className="text-[11px] font-mono text-[#526779] bg-[#F4F7FA] px-2.5 py-0.5 rounded border border-[#D7E1E8] flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-[#187A6A] animate-pulse" />
+                  <span>Autosaved to local cache at {lastSavedTime}</span>
+                </span>
               </div>
               <h1 className="text-[28px] sm:text-3xl font-bold text-[#172033] tracking-tight">
                 Daily Progress Report
@@ -732,6 +772,26 @@ export default function DPRPage() {
               >
                 <ArrowRight className="w-4 h-4" />
               </button>
+            </div>
+          </div>
+
+          {/* Feature 22: Live Responsive Shift Summary Counters */}
+          <div className="mt-4 pt-3 border-t border-[#D9DEE5]/70 grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-xs">
+            <div className="bg-[#F4F7FA] border border-[#D7E1E8] rounded p-2.5">
+              <span className="text-[10px] uppercase font-bold text-[#526779] block">Deployed Crew</span>
+              <span className="font-bold font-mono text-base text-[#0F6574]">{totalHeadcount} Pax</span>
+            </div>
+            <div className="bg-[#F4F7FA] border border-[#D7E1E8] rounded p-2.5">
+              <span className="text-[10px] uppercase font-bold text-[#526779] block">Total Shift Man-Hours</span>
+              <span className="font-bold font-mono text-base text-[#172B3A]">{totalShiftManHours} hrs</span>
+            </div>
+            <div className="bg-[#F4F7FA] border border-[#D7E1E8] rounded p-2.5">
+              <span className="text-[10px] uppercase font-bold text-[#526779] block">Logged Work Hours</span>
+              <span className="font-bold font-mono text-base text-[#187A6A]">{totalWorkHoursLogged} hrs</span>
+            </div>
+            <div className="bg-[#F4F7FA] border border-[#D7E1E8] rounded p-2.5">
+              <span className="text-[10px] uppercase font-bold text-[#526779] block">Quantities Installed</span>
+              <span className="font-bold font-mono text-base text-[#172B3A]">{quantitiesLoggedCount} items</span>
             </div>
           </div>
         </div>
@@ -1394,15 +1454,36 @@ export default function DPRPage() {
                       <span>{ev.geotag}</span>
                     </div>
                   )}
+                  {/* Feature 21: Distinct Evidence States (Verified, Awaiting Review, Uploaded) */}
                   {ev.signoffBy ? (
-                    <div className="text-[10px] text-[#2E7D5B] font-semibold pt-1 border-t border-[#D9DEE5] flex items-center gap-1">
-                      <CheckCircle2 className="w-3 h-3 text-[#2E7D5B]" />
-                      <span>Signed off: {ev.signoffBy}</span>
+                    <div className="text-[10px] text-[#187A6A] font-semibold pt-1 border-t border-[#D7E1E8] flex items-center justify-between">
+                      <span className="flex items-center gap-1">
+                        <CheckCircle2 className="w-3 h-3 text-[#187A6A]" />
+                        <span>Signed off: {ev.signoffBy}</span>
+                      </span>
+                      <span className="px-1.5 py-0.2 rounded text-[9px] font-bold bg-[#E8F5F2] text-[#187A6A] border border-[#B1DBD2]">
+                        Verified
+                      </span>
+                    </div>
+                  ) : ev.geotag ? (
+                    <div className="text-[10px] text-[#9C5A08] font-semibold pt-1 border-t border-[#D7E1E8] flex items-center justify-between">
+                      <span className="flex items-center gap-1">
+                        <Clock className="w-3 h-3 text-[#9C5A08]" />
+                        <span>Awaiting QC Sign-off</span>
+                      </span>
+                      <span className="px-1.5 py-0.2 rounded text-[9px] font-bold bg-[#FFF8E6] text-[#9C5A08] border border-[#F0D4A6]">
+                        Awaiting Review
+                      </span>
                     </div>
                   ) : (
-                    <div className="text-[10px] text-[#9C5A08] font-semibold pt-1 border-t border-[#D9DEE5] flex items-center gap-1">
-                      <Clock className="w-3 h-3 text-[#9C5A08]" />
-                      <span>Photo Proof (Pending QC Sign-off)</span>
+                    <div className="text-[10px] text-[#0F6574] font-semibold pt-1 border-t border-[#D7E1E8] flex items-center justify-between">
+                      <span className="flex items-center gap-1">
+                        <FileText className="w-3 h-3 text-[#0F6574]" />
+                        <span>Uploaded File</span>
+                      </span>
+                      <span className="px-1.5 py-0.2 rounded text-[9px] font-bold bg-[#EDF5F8] text-[#0F6574] border border-[#B3CBE0]">
+                        Uploaded
+                      </span>
                     </div>
                   )}
                 </div>

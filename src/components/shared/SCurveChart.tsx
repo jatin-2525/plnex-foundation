@@ -1,13 +1,35 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef, useId, useEffect } from 'react';
 import {
   TimeSeriesPoint,
   PROJECT_S_CURVE_DATA,
+  BASELINE_REV_3_1_DATA,
+  BASELINE_REV_3_0_DATA,
+  SAVED_SCENARIO_S_CURVE,
+  DISCIPLINE_S_CURVE_DATA,
+  AREA_S_CURVE_DATA,
   getSCurveSummary,
   getSCurveInterpretation,
 } from '@/lib/domain/sCurveData';
 import { CHART_TOKENS } from '@/tokens/chartColors';
+import { TermHelp } from './TermHelp';
+import {
+  Info,
+  Download,
+  Maximize2,
+  Minimize2,
+  RotateCcw,
+  SlidersHorizontal,
+  ChevronDown,
+  Calendar,
+  Layers,
+  FileSpreadsheet,
+  FileImage,
+  AlertTriangle,
+  Check,
+  X,
+} from 'lucide-react';
 
 export interface SCurveChartProps {
   data?: TimeSeriesPoint[];
@@ -20,7 +42,7 @@ export interface SCurveChartProps {
 }
 
 export function SCurveChart({
-  data = PROJECT_S_CURVE_DATA,
+  data: initialData = PROJECT_S_CURVE_DATA,
   variant = 'full',
   title = 'Project S-Curve — Planned vs. Actual vs. Forecast',
   subtitle = 'Cumulative physical progress curve across all WBS work packages',
@@ -28,340 +50,982 @@ export function SCurveChart({
   showLedgerByDefault = false,
   onSelectPeriod,
 }: SCurveChartProps) {
-  const summary = getSCurveSummary(data);
-  const dataDateIndex = data.findIndex((d) => d.isDataDate) !== -1 ? data.findIndex((d) => d.isDataDate) : 4;
+  const isCompact = variant === 'compact';
+  const svgRef = useRef<SVGSVGElement | null>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const liveRegionId = useId();
 
-  const [selectedPointIndex, setSelectedPointIndex] = useState<number>(dataDateIndex);
+  // --- 1. S-Curve Feature Controls State ---
+  // Feature 1: "What does this chart mean?" explanation drawer/popover
+  const [showExplanation, setShowExplanation] = useState(false);
+
+  // Feature 2: Series visibility toggles
+  const [seriesVisible, setSeriesVisible] = useState({
+    planned: true,
+    actual: true,
+    forecast: true,
+    comparison: true,
+  });
+
+  // Feature 3: "As of" Reporting Date & Baseline Revision
+  const [asOfDate, setAsOfDate] = useState<'18 Sep 2026' | '11 Sep 2026' | '04 Sep 2026' | '28 Aug 2026'>('18 Sep 2026');
+  const [baselineRevision, setBaselineRevision] = useState<'Rev 3.2' | 'Rev 3.1' | 'Rev 3.0'>('Rev 3.2');
+
+  // Feature 4: Dimensional Filters (Discipline & Area)
+  const [selectedDiscipline, setSelectedDiscipline] = useState<'All' | 'Piping' | 'Civil' | 'Mechanical' | 'Electrical'>('All');
+  const [selectedArea, setSelectedArea] = useState<'All' | 'Unit A - Gas Processing' | 'Unit B - Compressor House' | 'Offsites & Substation'>('All');
+
+  // Feature 7: Time-range options
+  const [timeRange, setTimeRange] = useState<'full' | '6m' | '3m'>('full');
+
+  // Feature 8: Comparison baseline / saved scenario
+  const [comparisonMode, setComparisonMode] = useState<'none' | 'rev31' | 'rev30' | 'monsoon'>('none');
+
+  // Feature 9: Cumulative S-Curve vs. Period Progress Switch
+  const [progressViewMode, setProgressViewMode] = useState<'cumulative' | 'period'>('cumulative');
+
+  // Feature 13: Fullscreen Modal
+  const [isFullscreen, setIsFullscreen] = useState(false);
+
+  // Feature 14: Compact Report Summary Toggle
+  const [showReportSummary, setShowReportSummary] = useState(false);
+
+  // Level 3 Ledger Toggle
+  const [showLedger, setShowLedger] = useState(showLedgerByDefault);
+
+  // Active Selected / Hovered Point
+  const [selectedPointIndex, setSelectedPointIndex] = useState<number>(4);
   const [hoveredPointIndex, setHoveredPointIndex] = useState<number | null>(null);
-  const [showLedger, setShowLedger] = useState<boolean>(showLedgerByDefault);
 
-  const activeIndex = hoveredPointIndex !== null ? hoveredPointIndex : selectedPointIndex;
-  const activePoint = data[activeIndex] || data[dataDateIndex];
+  // Filter & Dataset Derivation
+  let rawData = initialData;
+  if (selectedDiscipline !== 'All' && DISCIPLINE_S_CURVE_DATA[selectedDiscipline]) {
+    rawData = DISCIPLINE_S_CURVE_DATA[selectedDiscipline];
+  } else if (selectedArea !== 'All' && AREA_S_CURVE_DATA[selectedArea]) {
+    rawData = AREA_S_CURVE_DATA[selectedArea];
+  } else if (baselineRevision === 'Rev 3.1') {
+    rawData = BASELINE_REV_3_1_DATA;
+  } else if (baselineRevision === 'Rev 3.0') {
+    rawData = BASELINE_REV_3_0_DATA;
+  }
+
+  // Adjust for "As of" Date cutoff simulation
+  const activeDataset: TimeSeriesPoint[] = rawData.map((pt, idx) => {
+    let cutoffIdx = 4; // default 18 Sep 2026
+    if (asOfDate === '11 Sep 2026') cutoffIdx = 3;
+    if (asOfDate === '04 Sep 2026') cutoffIdx = 2;
+    if (asOfDate === '28 Aug 2026') cutoffIdx = 1;
+
+    const isCurrentDD = idx === cutoffIdx;
+    if (idx > cutoffIdx) {
+      return {
+        ...pt,
+        actual: null,
+        periodActualIncrement: null,
+        isDataDate: isCurrentDD,
+      };
+    }
+    return {
+      ...pt,
+      isDataDate: isCurrentDD,
+    };
+  });
+
+  // Time Range Slicing
+  let displayedData = activeDataset;
+  if (timeRange === '3m') {
+    displayedData = activeDataset.slice(2, 6); // Jul to Oct
+  } else if (timeRange === '6m') {
+    displayedData = activeDataset.slice(1, 7); // Jun to Nov
+  }
+
+  // Comparison Series Points
+  const comparisonData: TimeSeriesPoint[] | null = React.useMemo(() => {
+    if (comparisonMode === 'none') return null;
+    let compSource = PROJECT_S_CURVE_DATA;
+    if (comparisonMode === 'rev31') compSource = BASELINE_REV_3_1_DATA;
+    if (comparisonMode === 'rev30') compSource = BASELINE_REV_3_0_DATA;
+    if (comparisonMode === 'monsoon') compSource = SAVED_SCENARIO_S_CURVE;
+
+    if (timeRange === '3m') return compSource.slice(2, 6);
+    if (timeRange === '6m') return compSource.slice(1, 7);
+    return compSource;
+  }, [comparisonMode, timeRange]);
+
+  const summary = getSCurveSummary(displayedData);
+  const dataDateIndex = displayedData.findIndex((d) => d.isDataDate) !== -1 ? displayedData.findIndex((d) => d.isDataDate) : 4;
+
+  const activeIndex = hoveredPointIndex !== null ? hoveredPointIndex : Math.min(selectedPointIndex, displayedData.length - 1);
+  const activePoint = displayedData[activeIndex] || displayedData[0];
 
   // SVG Dimensions & Margins
-  const width = variant === 'compact' ? 640 : 760;
-  const height = variant === 'compact' ? 230 : 290;
-  const padLeft = 56;
+  const width = isFullscreen ? 1080 : isCompact ? 640 : 760;
+  const height = isFullscreen ? 400 : isCompact ? 240 : 310;
+  const padLeft = 58;
   const padRight = 36;
-  const padTop = 32;
-  const padBottom = 52;
+  const padTop = 36;
+  const padBottom = 54;
 
   const plotW = width - padLeft - padRight;
   const plotH = height - padTop - padBottom;
+  const n = displayedData.length;
 
-  const n = data.length;
-  const getX = (i: number) => padLeft + (i / (n - 1)) * plotW;
-  const getY = (val: number) => padTop + (1 - val / 100) * plotH;
+  const getX = (i: number) => padLeft + (i / Math.max(1, n - 1)) * plotW;
+  const getY = (val: number) => padTop + (1 - Math.min(100, Math.max(0, val)) / 100) * plotH;
 
-  // Build SVG Paths for the 3 Major Lines:
-  // 1. Planned Line (all points, solid teal #176B87)
-  const plannedPathD = data.reduce((acc, pt, idx) => {
+  // Build Paths for Cumulative Curves
+  const plannedPathD = displayedData.reduce((acc, pt, idx) => {
     const x = getX(idx);
     const y = getY(pt.planned);
     return idx === 0 ? `M ${x} ${y}` : `${acc} L ${x} ${y}`;
   }, '');
 
-  // 2. Actual Line (points up to data date, solid contrasting semantic #2E7D5B)
-  const actualPoints = data.filter((pt) => pt.actual !== null);
+  const actualPoints = displayedData.filter((pt) => pt.actual !== null);
   const actualPathD = actualPoints.reduce((acc, pt, idx) => {
     const x = getX(idx);
     const y = getY(pt.actual as number);
     return idx === 0 ? `M ${x} ${y}` : `${acc} L ${x} ${y}`;
   }, '');
 
-  // 3. Forecast Line (from data date onwards, dashed #D98B32)
-  const forecastPoints = data.slice(dataDateIndex);
+  const forecastPoints = displayedData.slice(dataDateIndex);
   const forecastPathD = forecastPoints.reduce((acc, pt, idx) => {
     const x = getX(dataDateIndex + idx);
     const y = getY(pt.forecast);
     return idx === 0 ? `M ${x} ${y}` : `${acc} L ${x} ${y}`;
   }, '');
 
-  // Data Date Coordinates
+  const comparisonPathD = comparisonData
+    ? comparisonData.reduce((acc, pt, idx) => {
+        const x = getX(idx);
+        const y = getY(comparisonMode === 'monsoon' ? pt.forecast : pt.planned);
+        return idx === 0 ? `M ${x} ${y}` : `${acc} L ${x} ${y}`;
+      }, '')
+    : '';
+
   const ddX = getX(dataDateIndex);
-  const ddPlannedY = getY(data[dataDateIndex].planned);
-  const ddActualY = getY(data[dataDateIndex].actual ?? data[dataDateIndex].planned);
+  const ddPlannedY = getY(displayedData[dataDateIndex]?.planned ?? 80);
+  const ddActualY = getY(displayedData[dataDateIndex]?.actual ?? displayedData[dataDateIndex]?.planned ?? 73);
 
-  const isCompact = variant === 'compact';
-  const interpretationText = getSCurveInterpretation(summary);
-
-  // Active Tooltip Point Metrics
   const activeVariance =
     activePoint.actual !== null
       ? Number((activePoint.actual - activePoint.planned).toFixed(1))
       : Number((activePoint.forecast - activePoint.planned).toFixed(1));
 
   const activeX = getX(activeIndex);
-  const tooltipWidth = 144;
-  const tooltipHeight = 78;
-  const tooltipX = activeX > width - tooltipWidth - 20 ? activeX - tooltipWidth - 10 : activeX + 12;
+  const tooltipWidth = 154;
+  const tooltipHeight = 84;
+  const tooltipX = activeX > width - tooltipWidth - 20 ? activeX - tooltipWidth - 12 : activeX + 12;
   const tooltipY = Math.max(padTop + 6, Math.min(height - padBottom - tooltipHeight - 6, getY(activePoint.planned) - 20));
 
-  const handlePointClick = (idx: number) => {
+  // Reset Filters to Baseline
+  const isFiltered =
+    selectedDiscipline !== 'All' ||
+    selectedArea !== 'All' ||
+    baselineRevision !== 'Rev 3.2' ||
+    asOfDate !== '18 Sep 2026' ||
+    timeRange !== 'full' ||
+    comparisonMode !== 'none';
+
+  const handleResetFilters = () => {
+    setSelectedDiscipline('All');
+    setSelectedArea('All');
+    setBaselineRevision('Rev 3.2');
+    setAsOfDate('18 Sep 2026');
+    setTimeRange('full');
+    setComparisonMode('none');
+  };
+
+  const handlePointSelect = (idx: number) => {
     setSelectedPointIndex(idx);
-    if (onSelectPeriod) {
-      onSelectPeriod(data[idx]);
+    if (onSelectPeriod && displayedData[idx]) {
+      onSelectPeriod(displayedData[idx]);
     }
+  };
+
+  // Keyboard navigation for accessible points
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'ArrowRight') {
+      e.preventDefault();
+      const nextIdx = Math.min(displayedData.length - 1, activeIndex + 1);
+      handlePointSelect(nextIdx);
+    } else if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      const prevIdx = Math.max(0, activeIndex - 1);
+      handlePointSelect(prevIdx);
+    } else if (e.key === 'Home') {
+      e.preventDefault();
+      handlePointSelect(0);
+    } else if (e.key === 'End') {
+      e.preventDefault();
+      handlePointSelect(displayedData.length - 1);
+    }
+  };
+
+  // Feature 13: Export CSV
+  const handleExportCSV = () => {
+    const headers = ['Period', 'Cutoff Date', 'Planned Cum %', 'Actual Cum %', 'Forecast Cum %', 'Period Plan %', 'Period Actual %', 'Milestone'];
+    const rows = displayedData.map((d) => [
+      d.period,
+      d.dateLabel,
+      d.planned.toFixed(1),
+      d.actual !== null ? d.actual.toFixed(1) : '',
+      d.forecast.toFixed(1),
+      d.periodPlannedIncrement.toFixed(1),
+      d.periodActualIncrement !== null ? d.periodActualIncrement.toFixed(1) : '',
+      `"${d.milestone || ''}"`,
+    ]);
+    const csvContent = [headers.join(','), ...rows.map((r) => r.join(','))].join('\n');
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.setAttribute('href', url);
+    link.setAttribute('download', `PLnEX_SCurve_${baselineRevision}_${asOfDate.replace(/\s+/g, '_')}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
+  // Feature 13: Export SVG
+  const handleExportSVG = () => {
+    if (!svgRef.current) return;
+    const svgData = new XMLSerializer().serializeToString(svgRef.current);
+    const blob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.setAttribute('href', url);
+    link.setAttribute('download', `PLnEX_SCurve_${asOfDate.replace(/\s+/g, '_')}.svg`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
   };
 
   return (
     <div
-      className={`bg-white rounded-lg border border-[#D9DEE5] shadow-xs text-[#172033] ${className}`}
+      ref={containerRef}
+      className={`bg-white rounded-lg border border-[#D7E1E8] text-[#172B3A] shadow-xs ${
+        isFullscreen ? 'fixed inset-4 z-50 overflow-y-auto bg-white shadow-2xl p-6 border-2 border-[#0F6574]' : className
+      }`}
       data-testid="s-curve-chart"
+      onKeyDown={handleKeyDown}
+      tabIndex={0}
+      role="region"
+      aria-label="Interactive S-Curve Project Performance Chart"
     >
-      {/* ========================================================= */}
-      {/* 1. HEADER: Title, Date & Prominent Summary Values */}
-      {/* Planned: XX% | Actual: XX% | Variance: XX% */}
-      {/* ========================================================= */}
-      <div className="p-4 border-b border-[#D9DEE5] flex flex-col lg:flex-row lg:items-center justify-between gap-3">
-        <div>
-          <div className="flex items-center gap-2 flex-wrap">
-            <h3 className="text-base font-bold text-[#172033] tracking-tight">{title}</h3>
-            <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0]">
-              Unit: %
-            </span>
-            <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-mono font-medium bg-[#F1F3F5] text-[#596579] border border-[#D9DEE5]">
-              Cutoff: {summary.dataDateLabel}
-            </span>
-          </div>
-          {!isCompact && (
-            <p className="text-xs text-[#526779] mt-0.5">{subtitle}</p>
-          )}
-        </div>
-
-        {/* Summary values above / beside chart with consistent palette */}
-        <div className="flex items-center flex-wrap gap-2 text-xs font-mono">
-          {/* Planned */}
-          <div className="px-3 py-1.5 rounded bg-[#F4F7FA] border border-[#D7E1E8] flex items-center gap-2 shadow-2xs">
-            <span className="text-[#526779] font-sans font-medium text-[11px]">Planned:</span>
-            <span className="font-bold text-[#3D73B5]">{summary.plannedAtDataDate.toFixed(1)}%</span>
-          </div>
-
-          {/* Actual */}
-          <div className="px-3 py-1.5 rounded bg-[#F4F7FA] border border-[#D7E1E8] flex items-center gap-2 shadow-2xs">
-            <span className="text-[#526779] font-sans font-medium text-[11px]">Actual:</span>
-            <span className="font-bold text-[#187A6A]">{summary.actualAtDataDate.toFixed(1)}%</span>
-          </div>
-
-          {/* Variance */}
-          <div
-            className={`px-3 py-1.5 rounded border flex items-center gap-2 shadow-2xs ${
-              summary.varianceAtDataDate < 0
-                ? 'bg-[#FBEFEE] border-[#E8B6BA]'
-                : 'bg-[#E8F5F2] border-[#B1DBD2]'
-            }`}
-          >
-            <span className="text-[#526779] font-sans font-medium text-[11px]">Variance:</span>
-            <span
-              className={`font-bold ${
-                summary.varianceAtDataDate < 0 ? 'text-[#B43D47]' : 'text-[#187A6A]'
-              }`}
-            >
-              {summary.varianceAtDataDate > 0
-                ? `+${summary.varianceAtDataDate.toFixed(1)}%`
-                : `${summary.varianceAtDataDate.toFixed(1)}% SLIP`}
-            </span>
-          </div>
-
-          {summary.forecastFinishDate && (
-            <div className="px-3 py-1.5 rounded bg-[#F4F7FA] border border-[#D7E1E8] flex items-center gap-2 shadow-2xs">
-              <span className="text-[#526779] font-sans font-medium text-[11px]">Forecast Finish:</span>
-              <span className="font-bold text-[#7655A6]">{summary.forecastFinishDate} (+{summary.forecastDelayDays}d)</span>
-            </div>
-          )}
-        </div>
+      {/* Screen reader live region */}
+      <div id={liveRegionId} className="sr-only" aria-live="polite">
+        {`Selected period ${activePoint.period}. Planned: ${activePoint.planned}%, ${
+          activePoint.actual !== null ? `Actual: ${activePoint.actual}%` : `Forecast: ${activePoint.forecast}%`
+        }, Variance: ${activeVariance}%`}
       </div>
 
       {/* ========================================================= */}
-      {/* 2. STATIC S-CURVE CANVAS AREA (Responsive SVG Container) */}
-      {/* Fluid scaling on all screen sizes, no horizontal scroll clipping */}
+      {/* 1. TOP HEADER & INTERACTIVE S-CURVE TOOLBAR */}
+      {/* ========================================================= */}
+      <div className="p-4 border-b border-[#D7E1E8] flex flex-col gap-3">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
+          <div>
+            <div className="flex items-center gap-2 flex-wrap">
+              <h3 className="text-base font-bold text-[#172B3A] tracking-tight">{title}</h3>
+              <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-[#EDF5F8] text-[#0F6574] border border-[#B3CBE0]">
+                Baseline: {baselineRevision} (P6 XML)
+              </span>
+              <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-medium bg-[#F4F7FA] text-[#526779] border border-[#D7E1E8]">
+                Cutoff: {asOfDate}
+              </span>
+
+              {/* Feature 1: "What does this chart mean?" ⓘ Hint */}
+              <button
+                type="button"
+                onClick={() => setShowExplanation(!showExplanation)}
+                className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-semibold text-[#0F6574] bg-[#E8F5F2] hover:bg-[#D5EFEA] border border-[#B1DBD2] transition-colors cursor-pointer"
+                title="Explain Planned, Verified Actual, Forecast, Data Date, and Variance"
+              >
+                <Info className="w-3.5 h-3.5" />
+                <span>What does this chart mean?</span>
+              </button>
+            </div>
+
+            {!isCompact && (
+              <p className="text-xs text-[#526779] mt-1">{subtitle}</p>
+            )}
+          </div>
+
+          {/* Action Tools: Reset, Mode Switch, CSV, SVG, Fullscreen */}
+          <div className="flex items-center flex-wrap gap-2 text-xs">
+            {/* Feature 9: Cumulative vs Period Switch */}
+            <div className="flex rounded-md border border-[#D7E1E8] overflow-hidden bg-[#F4F7FA] p-0.5">
+              <button
+                type="button"
+                onClick={() => setProgressViewMode('cumulative')}
+                className={`px-2.5 py-1 text-xs font-medium rounded transition-colors ${
+                  progressViewMode === 'cumulative'
+                    ? 'bg-white text-[#0F6574] shadow-xs font-semibold'
+                    : 'text-[#526779] hover:text-[#172B3A]'
+                }`}
+              >
+                Cumulative S-Curve
+              </button>
+              <button
+                type="button"
+                onClick={() => setProgressViewMode('period')}
+                className={`px-2.5 py-1 text-xs font-medium rounded transition-colors ${
+                  progressViewMode === 'period'
+                    ? 'bg-white text-[#0F6574] shadow-xs font-semibold'
+                    : 'text-[#526779] hover:text-[#172B3A]'
+                }`}
+              >
+                Period Progress (%/Mo)
+              </button>
+            </div>
+
+            {/* Feature 7: Time-range options */}
+            <div className="flex rounded-md border border-[#D7E1E8] overflow-hidden bg-[#F4F7FA] p-0.5">
+              {(['full', '6m', '3m'] as const).map((r) => (
+                <button
+                  key={r}
+                  type="button"
+                  onClick={() => setTimeRange(r)}
+                  className={`px-2 py-1 text-xs font-mono uppercase transition-colors ${
+                    timeRange === r ? 'bg-white text-[#0F6574] font-bold shadow-xs' : 'text-[#526779] hover:text-[#172B3A]'
+                  }`}
+                >
+                  {r === 'full' ? 'Full' : r}
+                </button>
+              ))}
+            </div>
+
+            {/* Feature 14: Report Summary Toggle */}
+            <button
+              type="button"
+              onClick={() => setShowReportSummary(!showReportSummary)}
+              className={`p-1.5 rounded border text-xs flex items-center gap-1 cursor-pointer transition-colors ${
+                showReportSummary
+                  ? 'bg-[#0F6574] text-white border-[#0F6574]'
+                  : 'bg-white text-[#526779] border-[#D7E1E8] hover:bg-[#F4F7FA]'
+              }`}
+              title="Toggle Executive Summary card for reports"
+            >
+              <FileSpreadsheet className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">Report Card</span>
+            </button>
+
+            {/* Feature 13: Export Options */}
+            <div className="flex items-center gap-1">
+              <button
+                type="button"
+                onClick={handleExportCSV}
+                className="p-1.5 rounded border border-[#D7E1E8] bg-white text-[#526779] hover:bg-[#F4F7FA] hover:text-[#172B3A] transition-colors cursor-pointer"
+                title="Download S-Curve Ledger CSV"
+              >
+                <Download className="w-3.5 h-3.5" />
+              </button>
+              <button
+                type="button"
+                onClick={handleExportSVG}
+                className="p-1.5 rounded border border-[#D7E1E8] bg-white text-[#526779] hover:bg-[#F4F7FA] hover:text-[#172B3A] transition-colors cursor-pointer"
+                title="Download S-Curve SVG Vector Image"
+              >
+                <FileImage className="w-3.5 h-3.5" />
+              </button>
+              <button
+                type="button"
+                onClick={() => setIsFullscreen(!isFullscreen)}
+                className="p-1.5 rounded border border-[#D7E1E8] bg-white text-[#526779] hover:bg-[#F4F7FA] hover:text-[#172B3A] transition-colors cursor-pointer"
+                title={isFullscreen ? 'Exit Fullscreen' : 'Fullscreen S-Curve Workspace'}
+              >
+                {isFullscreen ? <Minimize2 className="w-3.5 h-3.5 text-[#B43D47]" /> : <Maximize2 className="w-3.5 h-3.5" />}
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Feature 1: "What does this chart mean?" Collapsible Explanation Drawer */}
+        {showExplanation && (
+          <div className="bg-[#EDF5F8] border border-[#B3CBE0] rounded-md p-3 text-xs text-[#172B3A] animate-fadeIn">
+            <div className="flex items-start justify-between gap-2 mb-2">
+              <div className="flex items-center gap-1.5 font-bold text-[#0F6574]">
+                <Info className="w-4 h-4 text-[#0F6574]" />
+                <span>Understanding the Project S-Curve & Earned Value Metrics</span>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowExplanation(false)}
+                className="text-[#526779] hover:text-[#172B3A] cursor-pointer"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2.5">
+              <div className="bg-white p-2.5 rounded border border-[#D7E1E8]">
+                <div className="font-semibold text-[#3D73B5] mb-0.5 flex items-center gap-1.5">
+                  <span className="w-2.5 h-2.5 rounded-xs bg-[#3D73B5] inline-block" />
+                  Planned (Baseline)
+                </div>
+                <p className="text-[11px] text-[#526779]">
+                  Physical progress scheduled in Rev 3.2 baseline envelope. Frozen contract commitment.
+                </p>
+              </div>
+              <div className="bg-white p-2.5 rounded border border-[#D7E1E8]">
+                <div className="font-semibold text-[#187A6A] mb-0.5 flex items-center gap-1.5">
+                  <span className="w-2.5 h-2.5 rounded-full bg-[#187A6A] inline-block" />
+                  Verified Actual
+                </div>
+                <p className="text-[11px] text-[#526779]">
+                  Physical progress certified by site engineers and signed DPR evidence up to Data Date.
+                </p>
+              </div>
+              <div className="bg-white p-2.5 rounded border border-[#D7E1E8]">
+                <div className="font-semibold text-[#7655A6] mb-0.5 flex items-center gap-1.5">
+                  <span className="w-3 h-1 border-t-2 border-dashed border-[#7655A6] inline-block" />
+                  Forecast (CPM Logic)
+                </div>
+                <p className="text-[11px] text-[#526779]">
+                  Deterministic critical-path projection calculated from remaining durations and logic ties.
+                </p>
+              </div>
+              <div className="bg-white p-2.5 rounded border border-[#D7E1E8]">
+                <div className="font-semibold text-[#172B3A] mb-0.5 flex items-center gap-1.5">
+                  <span className="w-2.5 h-2.5 rounded-full border-2 border-[#172B3A] inline-block" />
+                  Data Date (Cutoff)
+                </div>
+                <p className="text-[11px] text-[#526779]">
+                  Current reporting boundary (18 Sep 2026). Actuals end here; future work is projected.
+                </p>
+              </div>
+              <div className="bg-white p-2.5 rounded border border-[#D7E1E8]">
+                <div className="font-semibold text-[#B43D47] mb-0.5 flex items-center gap-1.5">
+                  <span className="w-2.5 h-2.5 rounded-xs bg-[#B43D47] inline-block" />
+                  Variance (% Slip)
+                </div>
+                <p className="text-[11px] text-[#526779]">
+                  Calculated as: <span className="font-mono font-bold">Actual % - Planned %</span>. Negative values indicate schedule slip.
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Feature 2, 3, 4, 8: Interactive Filter Toolbar ("As of", Baselines, Discipline, Compare) */}
+        <div className="flex items-center justify-between flex-wrap gap-2 pt-2 border-t border-[#D7E1E8]/70 text-xs">
+          <div className="flex items-center flex-wrap gap-2">
+            {/* Feature 3: "As of" Reporting Date */}
+            <div className="flex items-center gap-1 bg-[#F4F7FA] border border-[#D7E1E8] rounded px-2 py-1">
+              <Calendar className="w-3.5 h-3.5 text-[#526779]" />
+              <span className="text-[#526779] font-medium text-[11px]">As of:</span>
+              <select
+                value={asOfDate}
+                onChange={(e) => setAsOfDate(e.target.value as any)}
+                className="bg-transparent font-medium text-[#172B3A] focus:outline-none cursor-pointer"
+              >
+                <option value="18 Sep 2026">18 Sep 2026 (Current Cutoff)</option>
+                <option value="11 Sep 2026">11 Sep 2026 (Week 37)</option>
+                <option value="04 Sep 2026">04 Sep 2026 (Week 36)</option>
+                <option value="28 Aug 2026">28 Aug 2026 (Week 35)</option>
+              </select>
+            </div>
+
+            {/* Feature 3: Baseline Revision */}
+            <div className="flex items-center gap-1 bg-[#F4F7FA] border border-[#D7E1E8] rounded px-2 py-1">
+              <span className="text-[#526779] font-medium text-[11px]">Baseline:</span>
+              <select
+                value={baselineRevision}
+                onChange={(e) => setBaselineRevision(e.target.value as any)}
+                className="bg-transparent font-medium text-[#172B3A] focus:outline-none cursor-pointer"
+              >
+                <option value="Rev 3.2">Rev 3.2 (Approved)</option>
+                <option value="Rev 3.1">Rev 3.1 (Aug 2026)</option>
+                <option value="Rev 3.0">Rev 3.0 (FID Contract)</option>
+              </select>
+            </div>
+
+            {/* Feature 4: Discipline Filter */}
+            <div className="flex items-center gap-1 bg-[#F4F7FA] border border-[#D7E1E8] rounded px-2 py-1">
+              <span className="text-[#526779] font-medium text-[11px]">Discipline:</span>
+              <select
+                value={selectedDiscipline}
+                onChange={(e) => {
+                  setSelectedDiscipline(e.target.value as any);
+                  if (e.target.value !== 'All') setSelectedArea('All');
+                }}
+                className="bg-transparent font-medium text-[#172B3A] focus:outline-none cursor-pointer"
+              >
+                <option value="All">All Disciplines</option>
+                <option value="Piping">Piping</option>
+                <option value="Civil">Civil</option>
+                <option value="Mechanical">Mechanical</option>
+                <option value="Electrical">Electrical</option>
+              </select>
+            </div>
+
+            {/* Feature 4: Area Filter */}
+            <div className="flex items-center gap-1 bg-[#F4F7FA] border border-[#D7E1E8] rounded px-2 py-1">
+              <span className="text-[#526779] font-medium text-[11px]">Area:</span>
+              <select
+                value={selectedArea}
+                onChange={(e) => {
+                  setSelectedArea(e.target.value as any);
+                  if (e.target.value !== 'All') setSelectedDiscipline('All');
+                }}
+                className="bg-transparent font-medium text-[#172B3A] focus:outline-none cursor-pointer"
+              >
+                <option value="All">All Areas</option>
+                <option value="Unit A - Gas Processing">Unit A (Gas Processing)</option>
+                <option value="Unit B - Compressor House">Unit B (Compressors)</option>
+                <option value="Offsites & Substation">Offsites & Substation</option>
+              </select>
+            </div>
+
+            {/* Feature 8: Compare Revisions or Saved Scenarios */}
+            <div className="flex items-center gap-1 bg-[#F4F7FA] border border-[#D7E1E8] rounded px-2 py-1">
+              <span className="text-[#526779] font-medium text-[11px]">Compare:</span>
+              <select
+                value={comparisonMode}
+                onChange={(e) => setComparisonMode(e.target.value as any)}
+                className="bg-transparent font-medium text-[#172B3A] focus:outline-none cursor-pointer"
+              >
+                <option value="none">None</option>
+                <option value="rev31">Rev 3.1 Baseline</option>
+                <option value="rev30">Rev 3.0 Baseline</option>
+                <option value="monsoon">Monsoon Slip Scenario</option>
+              </select>
+            </div>
+
+            {/* Reset Filters */}
+            {isFiltered && (
+              <button
+                type="button"
+                onClick={handleResetFilters}
+                className="inline-flex items-center gap-1 px-2 py-1 text-xs font-semibold text-[#B43D47] bg-[#FBEFEE] hover:bg-[#F6DFDE] border border-[#E8B6BA] rounded transition-colors cursor-pointer"
+                title="Reset all filters back to project baseline"
+              >
+                <RotateCcw className="w-3 h-3" />
+                <span>Reset</span>
+              </button>
+            )}
+          </div>
+
+          {/* Feature 2: Series Toggles (Checkboxes) */}
+          <div className="flex items-center gap-3">
+            <label className="inline-flex items-center gap-1.5 cursor-pointer text-[11px] font-semibold text-[#3D73B5]">
+              <input
+                type="checkbox"
+                checked={seriesVisible.planned}
+                onChange={(e) => setSeriesVisible((prev) => ({ ...prev, planned: e.target.checked }))}
+                className="rounded border-[#D7E1E8] text-[#3D73B5] focus:ring-0 cursor-pointer"
+              />
+              Planned
+            </label>
+            <label className="inline-flex items-center gap-1.5 cursor-pointer text-[11px] font-semibold text-[#187A6A]">
+              <input
+                type="checkbox"
+                checked={seriesVisible.actual}
+                onChange={(e) => setSeriesVisible((prev) => ({ ...prev, actual: e.target.checked }))}
+                className="rounded border-[#D7E1E8] text-[#187A6A] focus:ring-0 cursor-pointer"
+              />
+              Verified Actual
+            </label>
+            <label className="inline-flex items-center gap-1.5 cursor-pointer text-[11px] font-semibold text-[#7655A6]">
+              <input
+                type="checkbox"
+                checked={seriesVisible.forecast}
+                onChange={(e) => setSeriesVisible((prev) => ({ ...prev, forecast: e.target.checked }))}
+                className="rounded border-[#D7E1E8] text-[#7655A6] focus:ring-0 cursor-pointer"
+              />
+              Forecast
+            </label>
+            {comparisonMode !== 'none' && (
+              <label className="inline-flex items-center gap-1.5 cursor-pointer text-[11px] font-semibold text-[#9C5A08]">
+                <input
+                  type="checkbox"
+                  checked={seriesVisible.comparison}
+                  onChange={(e) => setSeriesVisible((prev) => ({ ...prev, comparison: e.target.checked }))}
+                  className="rounded border-[#D7E1E8] text-[#9C5A08] focus:ring-0 cursor-pointer"
+                />
+                Comparison
+              </label>
+            )}
+          </div>
+        </div>
+
+        {/* Feature 4: Scope Warning Banner when filtering */}
+        {(selectedDiscipline !== 'All' || selectedArea !== 'All') && (
+          <div className="bg-[#FFF8E6] border border-[#F0D4A6] rounded p-2 text-xs text-[#8C5311] flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <AlertTriangle className="w-4 h-4 text-[#8C5311] shrink-0" />
+              <span>
+                <strong>FILTERED PERSPECTIVE:</strong> Showing {selectedDiscipline !== 'All' ? `${selectedDiscipline} discipline` : selectedArea} work packages only. Progress figures reflect discipline scope and do not equal total EPC contract progress.
+              </span>
+            </div>
+            <button
+              type="button"
+              onClick={() => {
+                setSelectedDiscipline('All');
+                setSelectedArea('All');
+              }}
+              className="text-xs font-semibold text-[#8C5311] underline hover:text-[#5E3809] cursor-pointer shrink-0 ml-2"
+            >
+              Clear Filter
+            </button>
+          </div>
+        )}
+
+        {/* Feature 14: Compact Report Summary Card */}
+        {showReportSummary && (
+          <div className="bg-[#F4F7FA] border border-[#D7E1E8] rounded-md p-3 text-xs text-[#172B3A]">
+            <div className="flex items-center justify-between mb-2">
+              <span className="font-bold uppercase tracking-wider text-[11px] text-[#526779]">
+                Executive S-Curve Audit Report Card
+              </span>
+              <span className="font-mono text-[10px] text-[#526779]">Source: Rev 3.2 (P6 XML)</span>
+            </div>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
+              <div className="bg-white p-2 rounded border border-[#D7E1E8]">
+                <div className="text-[10px] text-[#526779]">Reporting Date</div>
+                <div className="font-bold text-[#172B3A]">{asOfDate}</div>
+              </div>
+              <div className="bg-white p-2 rounded border border-[#D7E1E8]">
+                <div className="text-[10px] text-[#526779]">Baseline Plan</div>
+                <div className="font-bold text-[#3D73B5]">{summary.plannedAtDataDate.toFixed(1)}%</div>
+              </div>
+              <div className="bg-white p-2 rounded border border-[#D7E1E8]">
+                <div className="text-[10px] text-[#526779]">Verified Actual</div>
+                <div className="font-bold text-[#187A6A]">{summary.actualAtDataDate.toFixed(1)}%</div>
+              </div>
+              <div className="bg-white p-2 rounded border border-[#D7E1E8]">
+                <div className="text-[10px] text-[#526779]">Schedule Variance</div>
+                <div className="font-bold text-[#B43D47]">{summary.varianceAtDataDate.toFixed(1)} pp slip</div>
+              </div>
+              <div className="bg-white p-2 rounded border border-[#D7E1E8]">
+                <div className="text-[10px] text-[#526779]">Schedule Perf Index (SPI)</div>
+                <div className="font-bold text-[#9C5A08]">0.91 (Critical)</div>
+              </div>
+              <div className="bg-white p-2 rounded border border-[#D7E1E8]">
+                <div className="text-[10px] text-[#526779]">Forecast COD Finish</div>
+                <div className="font-bold text-[#7655A6]">20 Dec 2026 (+5d)</div>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* ========================================================= */}
+      {/* 2. SVG CHART CANVAS (CUMULATIVE S-CURVE OR PERIOD BARS) */}
       {/* ========================================================= */}
       <div className="p-3 sm:p-4 w-full">
-        <div className="w-full">
-          <svg
-            viewBox={`0 0 ${width} ${height}`}
-            className="w-full h-auto select-none font-sans"
-            preserveAspectRatio="xMidYMid meet"
-            onMouseLeave={() => setHoveredPointIndex(null)}
+        <svg
+          ref={svgRef}
+          viewBox={`0 0 ${width} ${height}`}
+          className="w-full h-auto select-none font-sans"
+          preserveAspectRatio="xMidYMid meet"
+          onMouseLeave={() => setHoveredPointIndex(null)}
+        >
+          {/* Explicit Y-axis Title */}
+          <text
+            x={padLeft - 44}
+            y={padTop - 14}
+            textAnchor="start"
+            fontSize="10"
+            fontWeight="bold"
+            fill="#172B3A"
           >
-            {/* Explicit Y-axis Title */}
-            <text
-              x={padLeft - 40}
-              y={padTop - 14}
-              textAnchor="start"
-              fontSize="10"
-              fontWeight="bold"
-              fill="#172033"
-            >
-              Cumulative Progress (%)
-            </text>
+            {progressViewMode === 'cumulative' ? 'Cumulative Progress (%)' : 'Period Increment (%/Month)'}
+          </text>
 
-            {/* Horizontal Grid lines & Y-axis Progress Percentage */}
-            {[0, 25, 50, 75, 100].map((pct) => {
-              const y = getY(pct);
-              return (
-                <g key={pct}>
-                  <line
-                    x1={padLeft}
-                    y1={y}
-                    x2={width - padRight}
-                    y2={y}
-                    stroke="#E5E9F0"
-                    strokeWidth="1"
-                    strokeDasharray={pct === 0 || pct === 100 ? undefined : '3,3'}
-                  />
-                  <text
-                    x={padLeft - 8}
-                    y={y + 3.5}
-                    textAnchor="end"
-                    fontSize="10"
-                    fill="#596579"
-                    fontFamily="inherit"
-                    fontWeight="500"
-                  >
-                    {pct}%
-                  </text>
-                </g>
-              );
-            })}
-
-            {/* Data Date Vertical Reference Line */}
-            <line
-              x1={ddX}
-              y1={padTop}
-              x2={ddX}
-              y2={height - padBottom}
-              stroke="#172B3A"
-              strokeWidth="1.5"
-              strokeDasharray="4,3"
-            />
-            {/* Data Date Callout on top */}
-            <rect
-              x={ddX - 52}
-              y={padTop - 18}
-              width={104}
-              height={18}
-              rx={3}
-              fill="#172B3A"
-            />
-            <text
-              x={ddX}
-              y={padTop - 5}
-              textAnchor="middle"
-              fontSize="10"
-              fontWeight="bold"
-              fill="#FFFFFF"
-            >
-              DATA DATE (18 Sep)
-            </text>
-
-            {/* Variance Gap between Planned and Actual at Data Date */}
-            <line
-              x1={ddX}
-              y1={ddPlannedY}
-              x2={ddX}
-              y2={ddActualY}
-              stroke="#B43D47"
-              strokeWidth="3.5"
-            />
-            <rect
-              x={ddX + 6}
-              y={(ddPlannedY + ddActualY) / 2 - 10}
-              width={112}
-              height={20}
-              rx={3}
-              fill="#FBEFEE"
-              stroke="#E8B6BA"
-              strokeWidth="1"
-            />
-            <text
-              x={ddX + 62}
-              y={(ddPlannedY + ddActualY) / 2 + 4}
-              textAnchor="middle"
-              fontSize="10"
-              fontWeight="bold"
-              fill="#922E37"
-            >
-              -7.0% Slip [Critical]
-            </text>
-
-            {/* LINE 1: Planned Progress (Blue solid line #3D73B5) */}
-            <path
-              d={plannedPathD}
-              fill="none"
-              stroke={CHART_TOKENS.planned.stroke}
-              strokeWidth={CHART_TOKENS.planned.strokeWidth}
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-
-            {/* LINE 3: Forecast Progress (Violet dashed line #7655A6 from data date onwards) */}
-            <path
-              d={forecastPathD}
-              fill="none"
-              stroke={CHART_TOKENS.forecast.stroke}
-              strokeWidth={CHART_TOKENS.forecast.strokeWidth}
-              strokeDasharray={CHART_TOKENS.forecast.dashArray}
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-
-            {/* LINE 2: Actual Progress (Verified Teal solid line #187A6A) */}
-            <path
-              d={actualPathD}
-              fill="none"
-              stroke={CHART_TOKENS.actual.stroke}
-              strokeWidth={CHART_TOKENS.actual.strokeWidth}
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-
-            {/* X-axis ticks, period labels, and accessible keyboard hit columns */}
-            {data.map((pt, idx) => {
-              const x = getX(idx);
-              const isSelected = idx === activeIndex;
-              const isDD = pt.isDataDate;
-              const colW = plotW / (n - 1);
-
-              return (
-                <g
-                  key={pt.period}
-                  tabIndex={0}
-                  role="button"
-                  aria-label={`Reporting period ${pt.period}, Planned ${pt.planned}%, ${pt.actual !== null ? `Actual ${pt.actual}%` : `Forecast ${pt.forecast}%`}`}
-                  className="cursor-pointer focus:outline-none"
-                  onMouseEnter={() => setHoveredPointIndex(idx)}
-                  onClick={() => handlePointClick(idx)}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                      e.preventDefault();
-                      handlePointClick(idx);
-                    }
-                  }}
+          {/* Y-axis Grid Lines */}
+          {[0, 25, 50, 75, 100].map((pct) => {
+            const y = getY(pct);
+            return (
+              <g key={pct}>
+                <line
+                  x1={padLeft}
+                  y1={y}
+                  x2={width - padRight}
+                  y2={y}
+                  stroke="#E5E9F0"
+                  strokeWidth="1"
+                  strokeDasharray={pct === 0 || pct === 100 ? undefined : '3,3'}
+                />
+                <text
+                  x={padLeft - 8}
+                  y={y + 3.5}
+                  textAnchor="end"
+                  fontSize="10"
+                  fill="#526779"
+                  fontFamily="inherit"
+                  fontWeight="500"
                 >
-                  {/* Invisible wide hover hit target */}
-                  <rect
-                    x={x - colW / 2}
-                    y={padTop}
-                    width={colW}
-                    height={plotH}
-                    fill="transparent"
+                  {pct}%
+                </text>
+              </g>
+            );
+          })}
+
+          {/* Feature 11: Projected Forecast Region Background Shading after Data Date */}
+          <rect
+            x={ddX}
+            y={padTop}
+            width={width - padRight - ddX}
+            height={plotH}
+            fill="#F4F7FA"
+            opacity="0.75"
+          />
+          <text
+            x={ddX + (width - padRight - ddX) / 2}
+            y={padTop + 14}
+            textAnchor="middle"
+            fontSize="9"
+            fontWeight="bold"
+            fill="#7655A6"
+            letterSpacing="0.05em"
+          >
+            PROJECTED FORECAST REGION (DETERMINISTIC CPM)
+          </text>
+
+          {/* Feature 6: Data Date Vertical Reference Line & Prominent Callout */}
+          <line
+            x1={ddX}
+            y1={padTop}
+            x2={ddX}
+            y2={height - padBottom}
+            stroke="#172B3A"
+            strokeWidth="1.5"
+            strokeDasharray="4,3"
+          />
+          <rect
+            x={ddX - 58}
+            y={padTop - 20}
+            width={116}
+            height={20}
+            rx={3}
+            fill="#172B3A"
+          />
+          <text
+            x={ddX}
+            y={padTop - 6}
+            textAnchor="middle"
+            fontSize="10"
+            fontWeight="bold"
+            fill="#FFFFFF"
+          >
+            DATA DATE ({asOfDate.split(' ')[0]} {asOfDate.split(' ')[1]})
+          </text>
+
+          {/* Feature 6: Prominent Callout at Data Date: Planned, Actual, Variance */}
+          <line
+            x1={ddX}
+            y1={ddPlannedY}
+            x2={ddX}
+            y2={ddActualY}
+            stroke="#B43D47"
+            strokeWidth="3.5"
+          />
+          <rect
+            x={Math.min(width - padRight - 130, ddX + 8)}
+            y={(ddPlannedY + ddActualY) / 2 - 12}
+            width={124}
+            height={24}
+            rx={3}
+            fill="#FBEFEE"
+            stroke="#E8B6BA"
+            strokeWidth="1"
+          />
+          <text
+            x={Math.min(width - padRight - 130, ddX + 8) + 62}
+            y={(ddPlannedY + ddActualY) / 2 + 4}
+            textAnchor="middle"
+            fontSize="10"
+            fontWeight="bold"
+            fill="#922E37"
+          >
+            -7.0 pp Slip [Critical]
+          </text>
+
+          {/* ========================================================= */}
+          {/* CUMULATIVE S-CURVE VIEW MODE */}
+          {/* ========================================================= */}
+          {progressViewMode === 'cumulative' && (
+            <>
+              {/* Feature 8: Comparison Curve Path */}
+              {comparisonMode !== 'none' && seriesVisible.comparison && comparisonPathD && (
+                <path
+                  d={comparisonPathD}
+                  fill="none"
+                  stroke="#9C5A08"
+                  strokeWidth="2"
+                  strokeDasharray="5,4"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              )}
+
+              {/* Planned Line (Blue #3D73B5) */}
+              {seriesVisible.planned && (
+                <path
+                  d={plannedPathD}
+                  fill="none"
+                  stroke={CHART_TOKENS.planned.stroke}
+                  strokeWidth={CHART_TOKENS.planned.strokeWidth}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              )}
+
+              {/* Forecast Line (Violet dashed #7655A6) */}
+              {seriesVisible.forecast && (
+                <path
+                  d={forecastPathD}
+                  fill="none"
+                  stroke={CHART_TOKENS.forecast.stroke}
+                  strokeWidth={CHART_TOKENS.forecast.strokeWidth}
+                  strokeDasharray={CHART_TOKENS.forecast.dashArray}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              )}
+
+              {/* Actual Line (Verified Teal #187A6A) */}
+              {seriesVisible.actual && (
+                <path
+                  d={actualPathD}
+                  fill="none"
+                  stroke={CHART_TOKENS.actual.stroke}
+                  strokeWidth={CHART_TOKENS.actual.strokeWidth}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              )}
+            </>
+          )}
+
+          {/* ========================================================= */}
+          {/* Feature 9: PERIOD PROGRESS CLUSTERED BARS VIEW MODE */}
+          {/* ========================================================= */}
+          {progressViewMode === 'period' && (
+            <>
+              {displayedData.map((pt, idx) => {
+                const x = getX(idx);
+                const colW = (plotW / Math.max(1, n - 1)) * 0.55;
+                const barW = colW / 3;
+
+                const planY = getY(pt.periodPlannedIncrement * 3.5); // scale for visibility
+                const planH = Math.max(2, (height - padBottom) - planY);
+
+                const actY = pt.periodActualIncrement !== null ? getY(pt.periodActualIncrement * 3.5) : 0;
+                const actH = pt.periodActualIncrement !== null ? Math.max(2, (height - padBottom) - actY) : 0;
+
+                const fcstY = getY(pt.periodForecastIncrement * 3.5);
+                const fcstH = Math.max(2, (height - padBottom) - fcstY);
+
+                return (
+                  <g key={`bar-${pt.period}`}>
+                    {/* Planned increment bar */}
+                    {seriesVisible.planned && (
+                      <rect
+                        x={x - colW / 2}
+                        y={planY}
+                        width={barW - 1}
+                        height={planH}
+                        fill="#3D73B5"
+                        rx="1"
+                        opacity="0.85"
+                      />
+                    )}
+
+                    {/* Actual increment bar */}
+                    {seriesVisible.actual && pt.periodActualIncrement !== null && (
+                      <rect
+                        x={x - colW / 2 + barW}
+                        y={actY}
+                        width={barW - 1}
+                        height={actH}
+                        fill="#187A6A"
+                        rx="1"
+                      />
+                    )}
+
+                    {/* Forecast increment bar */}
+                    {seriesVisible.forecast && pt.periodActualIncrement === null && (
+                      <rect
+                        x={x - colW / 2 + barW * 2}
+                        y={fcstY}
+                        width={barW - 1}
+                        height={fcstH}
+                        fill="#7655A6"
+                        rx="1"
+                        strokeDasharray="2,2"
+                      />
+                    )}
+                  </g>
+                );
+              })}
+            </>
+          )}
+
+          {/* ========================================================= */}
+          {/* INTERACTIVE NODES & MILESTONES ON THE CURVE */}
+          {/* ========================================================= */}
+          {displayedData.map((pt, idx) => {
+            const x = getX(idx);
+            const isSelected = idx === activeIndex;
+            const isDD = pt.isDataDate;
+            const colW = plotW / Math.max(1, n - 1);
+
+            return (
+              <g
+                key={pt.period}
+                tabIndex={0}
+                role="button"
+                aria-label={`Reporting period ${pt.period}. Planned ${pt.planned}%, ${
+                  pt.actual !== null ? `Actual ${pt.actual}%` : `Forecast ${pt.forecast}%`
+                }`}
+                className="cursor-pointer focus:outline-none"
+                onMouseEnter={() => setHoveredPointIndex(idx)}
+                onClick={() => handlePointSelect(idx)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    handlePointSelect(idx);
+                  }
+                }}
+              >
+                {/* Wide invisible hit area */}
+                <rect
+                  x={x - colW / 2}
+                  y={padTop}
+                  width={colW}
+                  height={plotH}
+                  fill="transparent"
+                />
+
+                {/* Vertical Crosshair Guide */}
+                {isSelected && (
+                  <line
+                    x1={x}
+                    y1={padTop}
+                    x2={x}
+                    y2={height - padBottom}
+                    stroke="#526779"
+                    strokeWidth="1"
+                    strokeDasharray="2,2"
                   />
+                )}
 
-                  {/* Static Crosshair Guide on Active/Hovered Point */}
-                  {isSelected && (
-                    <line
-                      x1={x}
-                      y1={padTop}
-                      x2={x}
-                      y2={height - padBottom}
-                      stroke="#526779"
-                      strokeWidth="1"
-                      strokeDasharray="2,2"
+                {/* Feature 10: Milestone Diamond (◆) Markers */}
+                {pt.milestone && (
+                  <g transform={`translate(${x}, ${getY(pt.actual ?? pt.planned) - 14})`}>
+                    <polygon
+                      points="0,-6 6,0 0,6 -6,0"
+                      fill={pt.actual !== null ? '#187A6A' : pt.milestoneDetail?.status === 'Critical Slip' ? '#B43D47' : '#7655A6'}
+                      stroke="#FFFFFF"
+                      strokeWidth="1.5"
                     />
-                  )}
+                  </g>
+                )}
 
-                  {/* Planned Node Circle (Blue stroke #3D73B5) */}
+                {/* Planned Node Circle */}
+                {seriesVisible.planned && (
                   <circle
                     cx={x}
                     cy={getY(pt.planned)}
@@ -370,175 +1034,128 @@ export function SCurveChart({
                     stroke="#3D73B5"
                     strokeWidth="2"
                   />
+                )}
 
-                  {/* Actual Node Circle (Verified Teal fill #187A6A) */}
-                  {pt.actual !== null && (
-                    <circle
-                      cx={x}
-                      cy={getY(pt.actual)}
-                      r={isSelected ? 5 : 4}
-                      fill="#187A6A"
-                      stroke="#FFFFFF"
-                      strokeWidth="1.5"
-                    />
-                  )}
+                {/* Actual Node Circle */}
+                {seriesVisible.actual && pt.actual !== null && (
+                  <circle
+                    cx={x}
+                    cy={getY(pt.actual)}
+                    r={isSelected ? 5 : 4}
+                    fill="#187A6A"
+                    stroke="#FFFFFF"
+                    strokeWidth="1.5"
+                  />
+                )}
 
-                  {/* Forecast Node Circle (Consistent Violet fill #7655A6) */}
-                  {pt.actual === null && (
-                    <circle
-                      cx={x}
-                      cy={getY(pt.forecast)}
-                      r={isSelected ? 4.5 : 3.5}
-                      fill="#7655A6"
-                      stroke="#FFFFFF"
-                      strokeWidth="1.5"
-                    />
-                  )}
+                {/* Forecast Node Circle */}
+                {seriesVisible.forecast && pt.actual === null && (
+                  <circle
+                    cx={x}
+                    cy={getY(pt.forecast)}
+                    r={isSelected ? 4.5 : 3.5}
+                    fill="#7655A6"
+                    stroke="#FFFFFF"
+                    strokeWidth="1.5"
+                  />
+                )}
 
-                  {/* X-axis Period / Date Label */}
-                  <text
-                    x={x}
-                    y={height - padBottom + 16}
-                    textAnchor="middle"
-                    fontSize="11"
-                    fontWeight={isDD || isSelected ? '700' : '500'}
-                    fill={isSelected ? '#0F6574' : isDD ? '#172B3A' : '#526779'}
-                  >
-                    {pt.period}
-                  </text>
-
-                  {/* Milestone dot if present */}
-                  {pt.milestone && !isCompact && (
-                    <circle
-                      cx={x}
-                      cy={height - padBottom + 26}
-                      r="2"
-                      fill={pt.actual !== null ? '#187A6A' : '#7655A6'}
-                    />
-                  )}
-                </g>
-              );
-            })}
-
-            {/* Explicit X-axis Title */}
-            <text
-              x={padLeft + plotW / 2}
-              y={height - 6}
-              textAnchor="middle"
-              fontSize="11"
-              fontWeight="bold"
-              fill="#526779"
-            >
-              Timeline (Project Reporting Periods • Rev 3.2 (P6 XML) • Cutoff: 18 Sep 2026)
-            </text>
-
-            {/* ========================================================= */}
-            {/* STATIC TOOLTIP ON HOVER (NO ANIMATION) */}
-            {/* Shows: Date, Planned, Actual / Forecast, Variance */}
-            {/* ========================================================= */}
-            {hoveredPointIndex !== null && (
-              <g pointerEvents="none">
-                {/* Tooltip Card Background */}
-                <rect
-                  x={tooltipX}
-                  y={tooltipY}
-                  width={tooltipWidth + 8}
-                  height={tooltipHeight}
-                  rx={4}
-                  fill="#FFFFFF"
-                  stroke="#D7E1E8"
-                  strokeWidth="1.5"
-                  filter="drop-shadow(0 2px 4px rgba(23, 43, 58, 0.08))"
-                />
-
-                {/* Date */}
+                {/* X-axis Label */}
                 <text
-                  x={tooltipX + 10}
-                  y={tooltipY + 16}
+                  x={x}
+                  y={height - padBottom + 16}
+                  textAnchor="middle"
                   fontSize="11"
-                  fontWeight="bold"
-                  fill="#172B3A"
+                  fontWeight={isDD || isSelected ? '700' : '500'}
+                  fill={isSelected ? '#0F6574' : isDD ? '#172B3A' : '#526779'}
                 >
-                  {activePoint.dateLabel}
-                </text>
-
-                {/* Planned */}
-                <text
-                  x={tooltipX + 10}
-                  y={tooltipY + 33}
-                  fontSize="11"
-                  fontWeight="500"
-                  fill="#526779"
-                >
-                  Planned: <tspan fontWeight="bold" fill="#3D73B5">{activePoint.planned.toFixed(1)}%</tspan>
-                </text>
-
-                {/* Actual / Forecast */}
-                <text
-                  x={tooltipX + 10}
-                  y={tooltipY + 48}
-                  fontSize="11"
-                  fontWeight="500"
-                  fill="#526779"
-                >
-                  {activePoint.actual !== null ? (
-                    <>
-                      Actual: <tspan fontWeight="bold" fill="#187A6A">{activePoint.actual.toFixed(1)}%</tspan>
-                    </>
-                  ) : (
-                    <>
-                      Forecast: <tspan fontWeight="bold" fill="#7655A6">{activePoint.forecast.toFixed(1)}%</tspan>
-                    </>
-                  )}
-                </text>
-
-                {/* Variance */}
-                <text
-                  x={tooltipX + 10}
-                  y={tooltipY + 63}
-                  fontSize="11"
-                  fontWeight="500"
-                  fill="#526779"
-                >
-                  Variance:{' '}
-                  <tspan
-                    fontWeight="bold"
-                    fill={activeVariance < 0 ? '#B43D47' : '#187A6A'}
-                  >
-                    {activeVariance > 0 ? `+${activeVariance}%` : `${activeVariance}%`}
-                    {activePoint.actual === null ? ' (Fcst)' : ''}
-                  </tspan>
+                  {pt.period}
                 </text>
               </g>
-            )}
-          </svg>
-        </div>
+            );
+          })}
 
-        {/* Clear Legend (Planned, Verified Actual, Forecast, Data Date) */}
+          {/* X-axis Title */}
+          <text
+            x={padLeft + plotW / 2}
+            y={height - 8}
+            textAnchor="middle"
+            fontSize="10"
+            fontWeight="bold"
+            fill="#526779"
+          >
+            Project Reporting Timeline • Cutoff: {asOfDate} • Baseline: {baselineRevision}
+          </text>
+
+          {/* Hover Tooltip */}
+          {hoveredPointIndex !== null && (
+            <g pointerEvents="none">
+              <rect
+                x={tooltipX}
+                y={tooltipY}
+                width={tooltipWidth}
+                height={tooltipHeight}
+                rx={4}
+                fill="#FFFFFF"
+                stroke="#D7E1E8"
+                strokeWidth="1.5"
+                filter="drop-shadow(0 2px 4px rgba(23, 43, 58, 0.08))"
+              />
+              <text x={tooltipX + 10} y={tooltipY + 16} fontSize="11" fontWeight="bold" fill="#172B3A">
+                {activePoint.dateLabel}
+              </text>
+              <text x={tooltipX + 10} y={tooltipY + 33} fontSize="11" fontWeight="500" fill="#526779">
+                Planned: <tspan fontWeight="bold" fill="#3D73B5">{activePoint.planned.toFixed(1)}%</tspan>
+              </text>
+              <text x={tooltipX + 10} y={tooltipY + 48} fontSize="11" fontWeight="500" fill="#526779">
+                {activePoint.actual !== null ? (
+                  <>Actual: <tspan fontWeight="bold" fill="#187A6A">{activePoint.actual.toFixed(1)}%</tspan></>
+                ) : (
+                  <>Forecast: <tspan fontWeight="bold" fill="#7655A6">{activePoint.forecast.toFixed(1)}%</tspan></>
+                )}
+              </text>
+              <text x={tooltipX + 10} y={tooltipY + 63} fontSize="11" fontWeight="500" fill="#526779">
+                Variance:{' '}
+                <tspan fontWeight="bold" fill={activeVariance < 0 ? '#B43D47' : '#187A6A'}>
+                  {activeVariance > 0 ? `+${activeVariance}%` : `${activeVariance}%`}
+                  {activePoint.actual === null ? ' (Fcst)' : ''}
+                </tspan>
+              </text>
+              <text x={tooltipX + 10} y={tooltipY + 76} fontSize="9" fill="#7655A6" fontWeight="bold">
+                {activePoint.milestone ? `◆ ${activePoint.milestone.substring(0, 18)}...` : ''}
+              </text>
+            </g>
+          )}
+        </svg>
+
+        {/* Legend */}
         <div className="flex flex-wrap items-center justify-between gap-4 mt-2 pt-3 border-t border-[#D7E1E8] text-xs text-[#526779]">
           <div className="flex items-center gap-4 flex-wrap">
-            {/* Planned Line Legend */}
             <div className="flex items-center gap-2">
               <span className="w-3.5 h-1 bg-[#3D73B5] inline-block rounded-xs" />
-              <span className="font-semibold text-[#172B3A]">■ Planned Target</span>
+              <span className="font-semibold text-[#172B3A]">■ Planned Baseline</span>
             </div>
-
-            {/* Actual Line Legend */}
             <div className="flex items-center gap-2">
               <span className="w-3.5 h-1.5 bg-[#187A6A] inline-block rounded-xs" />
               <span className="font-semibold text-[#172B3A]">● Verified Actual</span>
             </div>
-
-            {/* Forecast Line Legend */}
             <div className="flex items-center gap-2">
               <span className="w-4 h-0.5 border-t-2 border-dashed border-[#7655A6] inline-block" />
-              <span className="font-semibold text-[#172B3A]">▲ Forecast</span>
+              <span className="font-semibold text-[#172B3A]">▲ Forecast (CPM)</span>
             </div>
-
-            {/* Data Date Marker Legend */}
+            {comparisonMode !== 'none' && (
+              <div className="flex items-center gap-2">
+                <span className="w-4 h-0.5 border-t-2 border-dashed border-[#9C5A08] inline-block" />
+                <span className="font-semibold text-[#9C5A08]">◇ Comparison Series</span>
+              </div>
+            )}
+            <div className="flex items-center gap-2">
+              <span className="text-[#187A6A] font-bold">◆</span>
+              <span className="font-semibold text-[#172B3A]">Milestone Marker</span>
+            </div>
             <div className="flex items-center gap-2">
               <span className="w-2.5 h-2.5 rounded-full border-2 border-[#172B3A] inline-block" />
-              <span className="font-semibold text-[#172B3A]">Cutoff Data Date</span>
+              <span className="font-semibold text-[#172B3A]">Data Date Cutoff</span>
             </div>
           </div>
 
@@ -556,118 +1173,178 @@ export function SCurveChart({
       </div>
 
       {/* ========================================================= */}
-      {/* 3. SHORT INTERPRETATION BELOW */}
-      {/* "Actual progress is 7.0 percentage points behind planned progress." */}
+      {/* 3. SHORT INTERPRETATION STRIP */}
       {/* ========================================================= */}
-      <div className="mx-4 mb-4 p-3 bg-[#F7F8FA] border border-[#D9DEE5] rounded text-xs text-[#172033] flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+      <div className="mx-4 mb-3 p-3 bg-[#F4F7FA] border border-[#D7E1E8] rounded text-xs text-[#172B3A] flex flex-col sm:flex-row sm:items-center justify-between gap-2">
         <div className="flex items-center gap-2">
           <span
             className={`w-2.5 h-2.5 rounded-full shrink-0 ${
-              summary.varianceAtDataDate < 0 ? 'bg-[#B5473C]' : 'bg-[#2E7D5B]'
+              summary.varianceAtDataDate < 0 ? 'bg-[#B43D47]' : 'bg-[#187A6A]'
             }`}
           />
-          <p className="font-medium text-[#172033]">
-            {interpretationText}
+          <p className="font-medium text-[#172B3A]">
+            {getSCurveInterpretation(summary)}
           </p>
         </div>
-        <span className="text-[11px] font-mono text-[#596579] shrink-0">
-          Cutoff: {summary.dataDateLabel} (Rev 3.2 (P6 XML))
+        <span className="text-[11px] font-mono text-[#526779] shrink-0">
+          Cutoff: {asOfDate} ({baselineRevision})
         </span>
       </div>
 
-      {/* Level 2: Selected Period Context ("Why?") */}
-      {!isCompact && (
-        <div className="px-4 py-3 bg-[#F7F8FA] border-t border-[#D9DEE5] flex flex-col md:flex-row md:items-center justify-between gap-2 text-xs">
-          <div className="flex items-start md:items-center gap-2">
-            <span className="font-semibold text-[#172033] whitespace-nowrap">
-              {activePoint.dateLabel}
-            </span>
-            {activePoint.milestone && (
-              <span className="text-[#596579] border-l border-[#D9DEE5] pl-2">
-                <strong className="text-[#172033]">Milestone:</strong> {activePoint.milestone}
+      {/* ========================================================= */}
+      {/* Feature 5: SELECTABLE POINT INTERACTIVE DRAWER / CONTEXT */}
+      {/* Numbers, Period Delta, Milestones, and Contributed Work Items */}
+      {/* ========================================================= */}
+      <div className="px-4 py-3 bg-[#F4F7FA] border-t border-[#D7E1E8] text-xs">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 mb-2 pb-2 border-b border-[#D7E1E8]/60">
+          <div className="flex items-center gap-2 flex-wrap">
+            <span className="font-bold text-[#172B3A] text-sm">{activePoint.period}</span>
+            <span className="text-[#526779] text-xs font-mono">({activePoint.dateLabel})</span>
+            {activePoint.isDataDate && (
+              <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-[#172B3A] text-white">
+                CURRENT REPORTING CUTOFF
               </span>
             )}
           </div>
-
-          <div className="flex items-center flex-wrap gap-x-4 gap-y-1 text-[#596579]">
+          <div className="flex items-center gap-3 font-mono text-xs">
             <span>
-              Plan: <strong className="font-mono text-[#176B87]">{activePoint.planned.toFixed(1)}%</strong>
+              Cumulative Plan: <strong className="text-[#3D73B5]">{activePoint.planned.toFixed(1)}%</strong>
             </span>
             {activePoint.actual !== null ? (
               <span>
-                Actual: <strong className="font-mono text-[#2E7D5B]">{activePoint.actual.toFixed(1)}%</strong> (Var:{' '}
-                <strong
-                  className={`font-mono ${
-                    activeVariance < 0 ? 'text-[#B5473C]' : 'text-[#2E7D5B]'
-                  }`}
-                >
+                Verified Actual: <strong className="text-[#187A6A]">{activePoint.actual.toFixed(1)}%</strong> (
+                <strong className={activeVariance < 0 ? 'text-[#B43D47]' : 'text-[#187A6A]'}>
                   {activeVariance > 0 ? `+${activeVariance}%` : `${activeVariance}%`}
                 </strong>
                 )
               </span>
             ) : (
               <span>
-                Forecast: <strong className="font-mono text-[#D98B32]">{activePoint.forecast.toFixed(1)}%</strong>
+                Forecast: <strong className="text-[#7655A6]">{activePoint.forecast.toFixed(1)}%</strong>
               </span>
+            )}
+            <span className="border-l border-[#D7E1E8] pl-3 text-[#526779]">
+              Period Work: <strong className="text-[#172B3A]">+{activePoint.periodPlannedIncrement.toFixed(1)}%</strong> plan /{' '}
+              <strong className="text-[#187A6A]">
+                {activePoint.periodActualIncrement !== null ? `+${activePoint.periodActualIncrement.toFixed(1)}%` : '—'}
+              </strong>{' '}
+              actual
+            </span>
+          </div>
+        </div>
+
+        {/* Milestone & Work Items Detail */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-2">
+          {/* Milestone Detail */}
+          <div className="bg-white p-2.5 rounded border border-[#D7E1E8]">
+            <div className="flex items-center justify-between mb-1">
+              <span className="font-semibold text-[#172B3A] flex items-center gap-1.5 text-xs">
+                <span className="text-[#0F6574]">◆</span> Milestone in this Period:
+              </span>
+              {activePoint.milestoneDetail && (
+                <span
+                  className={`text-[10px] font-bold px-1.5 py-0.5 rounded ${
+                    activePoint.milestoneDetail.status === 'Completed'
+                      ? 'bg-[#E8F5F2] text-[#187A6A]'
+                      : activePoint.milestoneDetail.status === 'Critical Slip'
+                      ? 'bg-[#FBEFEE] text-[#B43D47]'
+                      : 'bg-[#F4F7FA] text-[#526779]'
+                  }`}
+                >
+                  {activePoint.milestoneDetail.status}
+                </span>
+              )}
+            </div>
+            {activePoint.milestoneDetail ? (
+              <div className="text-xs space-y-1">
+                <p className="font-medium text-[#172B3A]">{activePoint.milestoneDetail.name}</p>
+                <div className="flex items-center gap-3 text-[11px] text-[#526779]">
+                  <span>Baseline: <strong>{activePoint.milestoneDetail.baselineDate}</strong></span>
+                  <span>Forecast: <strong>{activePoint.milestoneDetail.forecastDate}</strong></span>
+                  <span>Float: <strong className={activePoint.milestoneDetail.floatDays < 0 ? 'text-[#B43D47]' : 'text-[#187A6A]'}>{activePoint.milestoneDetail.floatDays}d</strong></span>
+                </div>
+              </div>
+            ) : (
+              <p className="text-xs text-[#7B8798] italic">No major project milestone scheduled in this cycle.</p>
             )}
           </div>
 
-          {activePoint.notes && (
-            <p className="text-[11px] text-[#596579] italic max-w-md truncate">
-              {activePoint.notes}
-            </p>
-          )}
+          {/* Work Package Contribution */}
+          <div className="bg-white p-2.5 rounded border border-[#D7E1E8]">
+            <span className="font-semibold text-[#172B3A] text-xs block mb-1">
+              Contributing WBS Work Packages ({activePoint.workItems?.length || 0}):
+            </span>
+            {activePoint.workItems && activePoint.workItems.length > 0 ? (
+              <ul className="space-y-1 text-xs">
+                {activePoint.workItems.map((item) => (
+                  <li key={item.id} className="flex items-center justify-between text-[11px] border-b border-gray-100 pb-0.5 last:border-0">
+                    <span className="font-medium text-[#172B3A] truncate max-w-[200px]" title={item.name}>
+                      <span className="font-mono text-[#0F6574] mr-1">{item.id}</span>
+                      {item.name}
+                    </span>
+                    <span className="font-mono text-[#526779] shrink-0 ml-2">
+                      {item.actualQty} / {item.plannedQty}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="text-xs text-[#7B8798] italic">Detailed work package ledger available in WBS matrix.</p>
+            )}
+          </div>
         </div>
-      )}
+      </div>
 
-      {/* Level 3: Expandable Cumulative Progress Ledger */}
+      {/* ========================================================= */}
+      {/* LEVEL 3 AUDIT TRAIL LEDGER */}
+      {/* ========================================================= */}
       {showLedger && !isCompact && (
-        <div className="p-4 border-t border-[#D9DEE5] bg-white">
+        <div className="p-4 border-t border-[#D7E1E8] bg-white">
           <div className="flex items-center justify-between mb-2">
-            <h4 className="text-xs font-semibold uppercase text-[#596579] tracking-wider">
+            <h4 className="text-xs font-semibold uppercase text-[#526779] tracking-wider">
               Level 3 — Cumulative Physical Progress Ledger (Audit Trail)
             </h4>
-            <span className="text-[11px] text-[#7B8798]">Source: Rev 3.2 (P6 XML)</span>
+            <span className="text-[11px] text-[#7B8798]">Source: {baselineRevision} (P6 XML)</span>
           </div>
 
-          <div className="overflow-x-auto rounded border border-[#D9DEE5]">
+          <div className="overflow-x-auto rounded border border-[#D7E1E8]">
             <table className="w-full min-w-[720px] text-left text-sm border-collapse">
-              <thead className="sticky top-0 z-10 bg-[#F1F3F5]">
-                <tr className="bg-[#F1F3F5] text-[#172033] border-b border-[#D9DEE5] h-11">
-                  <th className="py-3 px-4 font-semibold">Period</th>
-                  <th className="py-3 px-4 font-semibold">Cutoff Date</th>
-                  <th className="py-3 px-4 font-semibold text-right">Planned Cum %</th>
-                  <th className="py-3 px-4 font-semibold text-right">Actual Cum %</th>
-                  <th className="py-3 px-4 font-semibold text-right">Forecast Cum %</th>
-                  <th className="py-3 px-4 font-semibold text-right">Variance %</th>
-                  <th className="py-3 px-4 font-semibold">Work Package / Milestone Notes</th>
+              <thead className="sticky top-0 z-10 bg-[#F4F7FA]">
+                <tr className="bg-[#F4F7FA] text-[#172B3A] border-b border-[#D7E1E8] h-10 text-xs">
+                  <th className="py-2.5 px-3 font-semibold">Period</th>
+                  <th className="py-2.5 px-3 font-semibold">Cutoff Date</th>
+                  <th className="py-2.5 px-3 font-semibold text-right">Planned Cum %</th>
+                  <th className="py-2.5 px-3 font-semibold text-right">Actual Cum %</th>
+                  <th className="py-2.5 px-3 font-semibold text-right">Forecast Cum %</th>
+                  <th className="py-2.5 px-3 font-semibold text-right">Variance %</th>
+                  <th className="py-2.5 px-3 font-semibold">Work Package / Milestone Notes</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#D9DEE5]/60">
-                {data.map((row) => {
+              <tbody className="divide-y divide-[#D7E1E8]/60 text-xs">
+                {displayedData.map((row) => {
                   const varVal = row.actual !== null ? Number((row.actual - row.planned).toFixed(1)) : null;
                   const isCurrentDD = row.isDataDate;
                   return (
                     <tr
                       key={row.period}
-                      className={`h-11 sm:h-12 hover:bg-[#F7F8FA] transition-colors ${
+                      className={`hover:bg-[#F4F7FA] transition-colors ${
                         isCurrentDD ? 'bg-[#EDF5F8] font-medium' : ''
                       }`}
                     >
-                      <td className="py-3 px-4 whitespace-nowrap">
+                      <td className="py-2.5 px-3 whitespace-nowrap">
                         {row.period}
                         {isCurrentDD && (
-                          <span className="ml-2 inline-block px-1.5 py-0.5 rounded text-[10px] font-semibold bg-[#176B87] text-white">
+                          <span className="ml-2 inline-block px-1.5 py-0.5 rounded text-[10px] font-semibold bg-[#0F6574] text-white">
                             Current
                           </span>
                         )}
                       </td>
-                      <td className="py-2 px-3 text-[#596579] whitespace-nowrap">{row.dateLabel}</td>
-                      <td className="py-2 px-3 font-mono text-right text-[#176B87] font-semibold">{row.planned.toFixed(1)}%</td>
-                      <td className="py-2 px-3 font-mono text-right text-[#2E7D5B] font-semibold">
+                      <td className="py-2 px-3 text-[#526779] whitespace-nowrap">{row.dateLabel}</td>
+                      <td className="py-2 px-3 font-mono text-right text-[#3D73B5] font-semibold">{row.planned.toFixed(1)}%</td>
+                      <td className="py-2 px-3 font-mono text-right text-[#187A6A] font-semibold">
                         {row.actual !== null ? `${row.actual.toFixed(1)}%` : '—'}
                       </td>
-                      <td className="py-2 px-3 font-mono text-right text-[#D98B32]">
+                      <td className="py-2 px-3 font-mono text-right text-[#7655A6]">
                         {row.forecast.toFixed(1)}%
                       </td>
                       <td
@@ -675,14 +1352,14 @@ export function SCurveChart({
                           varVal === null
                             ? 'text-[#7B8798]'
                             : varVal < 0
-                            ? 'text-[#B5473C]'
-                            : 'text-[#2E7D5B]'
+                            ? 'text-[#B43D47]'
+                            : 'text-[#187A6A]'
                         }`}
                       >
                         {varVal !== null ? (varVal > 0 ? `+${varVal}%` : `${varVal}%`) : '—'}
                       </td>
-                      <td className="py-2 px-3 text-[#596579]">
-                        <span className="font-medium text-[#172033]">{row.milestone}</span>
+                      <td className="py-2 px-3 text-[#526779]">
+                        <span className="font-medium text-[#172B3A]">{row.milestone}</span>
                         {row.notes && <span className="block text-[11px] text-[#7B8798]">{row.notes}</span>}
                       </td>
                     </tr>

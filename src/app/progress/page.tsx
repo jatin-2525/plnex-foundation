@@ -14,6 +14,7 @@ import { SCurveChart } from '../../components/shared/SCurveChart';
 import { BarChart, LineChart, HorizontalBarChart } from '../../components/shared/charts';
 import { DisciplineType } from '../../types';
 import { WhyButton } from '../../components/shared/WhyButton';
+import { TermHelp } from '../../components/shared/TermHelp';
 import { CANONICAL_SCHEDULE_VERSION_LABEL } from '../../lib/domain/canonicalModels';
 import { formatProjectDateTime, PROJECT_REPORT_DATE } from '../../lib/domain/dateUtils';
 import {
@@ -962,8 +963,9 @@ export default function ProgressVariancePage() {
             {/* 1. Planned Progress */}
             <div className="p-4 sm:p-6 flex flex-col justify-between">
               <div>
-                <span className="text-xs font-semibold uppercase tracking-wider text-[#596579] block">
+                <span className="text-xs font-semibold uppercase tracking-wider text-[#596579] flex items-center gap-1">
                   Planned Progress
+                  <TermHelp term="wbs" />
                 </span>
                 <div className="flex items-baseline gap-2 mt-2">
                   <span className="text-[28px] sm:text-3xl font-bold text-[#172033] font-mono leading-none">
@@ -981,8 +983,9 @@ export default function ProgressVariancePage() {
             <div className="p-4 sm:p-6 flex flex-col justify-between">
               <div>
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-semibold uppercase tracking-wider text-[#2E7D5B] block">
+                  <span className="text-xs font-semibold uppercase tracking-wider text-[#2E7D5B] flex items-center gap-1">
                     Actual Verified Progress
+                    <TermHelp term="cpi" />
                   </span>
                   <WhyButton
                     onClick={() => openWhyExplanation('progress:verified')}
@@ -1005,8 +1008,9 @@ export default function ProgressVariancePage() {
             <div className="p-4 sm:p-6 flex flex-col justify-between">
               <div>
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-semibold uppercase tracking-wider text-[#B5473C] block">
+                  <span className="text-xs font-semibold uppercase tracking-wider text-[#B5473C] flex items-center gap-1">
                     Variance
+                    <TermHelp term="variance" />
                   </span>
                   <WhyButton
                     onClick={() => openWhyExplanation('variance:portfolio')}
@@ -1031,8 +1035,9 @@ export default function ProgressVariancePage() {
             <div className="p-4 sm:p-6 flex flex-col justify-between">
               <div>
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-semibold uppercase tracking-wider text-[#D98B32] block">
+                  <span className="text-xs font-semibold uppercase tracking-wider text-[#D98B32] flex items-center gap-1">
                     Forecast Finish Date
+                    <TermHelp term="forecast" />
                   </span>
                   <WhyButton
                     onClick={() => openWhyExplanation('impact:forecast')}

@@ -13,6 +13,7 @@ import { SCurveChart } from '../../components/shared/SCurveChart';
 import { BarChart, HorizontalBarChart, LineChart, StatusDonutChart } from '../../components/shared/charts';
 import { Modal } from '../../components/shared/Modal';
 import { WhyButton } from '../../components/shared/WhyButton';
+import { TermHelp } from '../../components/shared/TermHelp';
 import { projectService } from '../../lib/api/projectService';
 import { MOCK_EXECUTION_EVENTS } from '../../lib/api/mockData';
 import { ExecutionEvent } from '../../types';
@@ -37,6 +38,9 @@ import {
   GitCommit,
   Check,
   Calendar,
+  SlidersHorizontal,
+  LayoutGrid,
+  Filter,
 } from 'lucide-react';
 
 export default function ManagerDashboardPage() {
@@ -51,6 +55,21 @@ export default function ManagerDashboardPage() {
   const [reviewEvents, setReviewEvents] = useState<ExecutionEvent[]>(
     MOCK_EXECUTION_EVENTS.filter((e) => e.status === 'pending-review' || e.status === 'pending-verification')
   );
+
+  // Feature 15: Dashboard Layout Controls (Density & Section Visibility)
+  const [dashboardDensity, setDashboardDensity] = useState<'comfortable' | 'compact'>('comfortable');
+  const [visibleSections, setVisibleSections] = useState({
+    kpis: true,
+    attention: true,
+    scurve: true,
+    analytics: false, // Default collapsed to reduce manager overload
+    variance: true,
+    pendingMatches: true,
+    milestones: false, // Default collapsed
+  });
+
+  // Feature 18: Saved Table Views Preset for Schedule Variance Table
+  const [varianceTableFilter, setVarianceTableFilter] = useState<'all' | 'critical' | 'delayed' | 'completed'>('all');
 
   // Modal & Drawer Interaction States
   const [selectedReviewModalEvent, setSelectedReviewModalEvent] = useState<ExecutionEvent | null>(null);
@@ -151,6 +170,14 @@ export default function ManagerDashboardPage() {
       isCriticalPath: true,
     },
   ];
+
+  // Feature 18: Filtered Variance Table items according to saved view preset
+  const filteredVarianceItems = scheduleVarianceItems.filter((item) => {
+    if (varianceTableFilter === 'critical') return item.isCriticalPath;
+    if (varianceTableFilter === 'delayed') return item.varianceDays > 0;
+    if (varianceTableFilter === 'completed') return item.status === 'completed';
+    return true;
+  });
 
   // Specific event for Unmatched Item in Section 2
   const unmatchedEvent = MOCK_EXECUTION_EVENTS.find((e) => e.id === 'EVT-2026-004') || MOCK_EXECUTION_EVENTS[2];
@@ -273,707 +300,782 @@ export default function ManagerDashboardPage() {
         </div>
 
         {/* =========================================================================
-            2. PROJECT PERFORMANCE KPIS (5 Visual KPI Cards with Icons & Trends)
+            FEATURE 15: DASHBOARD LAYOUT & DENSITY CONTROLS
+            Allows the Project Manager to customize density and show/hide sections
             ========================================================================= */}
-        <section aria-labelledby="kpi-heading" className="space-y-2">
-          <div className="flex items-center justify-between">
-            <h2 id="kpi-heading" className="text-xs font-semibold uppercase tracking-wider text-[#596579] flex items-center gap-1.5">
-              <BarChart3 className="w-3.5 h-3.5 text-[#176B87]" />
-              Executive Performance Indicators
-            </h2>
-            <span className="text-[11px] text-[#7B8798] font-mono hidden sm:inline">
-              P6 XML Target vs Field Actuals
+        <div className="bg-white border border-[#D7E1E8] rounded-lg p-3 shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+          <div className="flex items-center gap-2">
+            <span className="font-semibold text-[#172B3A] flex items-center gap-1.5 text-xs">
+              <SlidersHorizontal className="w-3.5 h-3.5 text-[#0F6574]" />
+              Layout & Density:
             </span>
-          </div>
-
-          <div className="border border-[#D9DEE5] rounded-lg shadow-xs overflow-hidden grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-px bg-[#D9DEE5]">
-            {/* 1. Schedule Health */}
-            <div className="p-4 lg:p-5 bg-white hover:bg-[#F9FAFC] transition-colors flex flex-col justify-between group">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-semibold uppercase tracking-wider text-[#596579]">
-                  Schedule Health
-                </span>
-                <div className="flex items-center gap-1.5">
-                  <WhyButton
-                    onClick={() => openWhyExplanation('health:PRJ-OIL-2026-01')}
-                    title="Why is schedule health 82%?"
-                  />
-                  <div className="p-1 rounded bg-[#FDF6ED] text-[#D98B32]">
-                    <Activity className="w-3.5 h-3.5" />
-                  </div>
-                </div>
-              </div>
-              <div className="my-2">
-                <div className="flex items-baseline gap-2">
-                  <span className="text-2xl sm:text-3xl font-bold font-mono text-[#D98B32] leading-none">
-                    82%
-                  </span>
-                  <span className="text-xs font-semibold text-[#D98B32] flex items-center gap-0.5">
-                    <AlertTriangle className="w-3 h-3" /> Warning
-                  </span>
-                </div>
-                <p className="text-[11px] text-[#596579] mt-1">
-                  Needs Attention — 5 Warnings
-                </p>
-              </div>
-              <Link href="/health" className="text-[11px] text-[#176B87] group-hover:underline font-semibold flex items-center gap-1">
-                Inspect Health &rarr;
-              </Link>
-            </div>
-
-            {/* 2. Verified Progress */}
-            <div className="p-4 lg:p-5 bg-white hover:bg-[#F9FAFC] transition-colors flex flex-col justify-between group">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-semibold uppercase tracking-wider text-[#596579]">
-                  Verified Progress
-                </span>
-                <div className="flex items-center gap-1.5">
-                  <WhyButton
-                    onClick={() => openWhyExplanation('progress:verified')}
-                    title="Why is verified progress 68.4%?"
-                  />
-                  <div className="p-1 rounded bg-[#EDF2F8] text-[#176B87]">
-                    <CheckCircle2 className="w-3.5 h-3.5" />
-                  </div>
-                </div>
-              </div>
-              <div className="my-2">
-                <div className="flex items-baseline gap-2">
-                  <span className="text-2xl sm:text-3xl font-bold font-mono text-[#176B87] leading-none">
-                    {activeProject.overallProgress}%
-                  </span>
-                  <span className="text-xs text-[#596579]">Actual</span>
-                </div>
-                <p className="text-[11px] text-[#596579] mt-1">
-                  Baseline Target: <strong>{activeProject.plannedProgress}%</strong>
-                </p>
-              </div>
-              <Link href="/progress" className="text-[11px] text-[#176B87] group-hover:underline font-semibold flex items-center gap-1">
-                Progress Matrix &rarr;
-              </Link>
-            </div>
-
-            {/* 3. Activities At Risk */}
-            <Link
-              href="/risks"
-              className="p-4 lg:p-5 bg-white hover:bg-[#F9FAFC] transition-colors flex flex-col justify-between group"
-            >
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-semibold uppercase tracking-wider text-[#596579]">
-                  Activities At Risk
-                </span>
-                <div className="p-1 rounded bg-[#FBEFEE] text-[#B5473C]">
-                  <AlertTriangle className="w-3.5 h-3.5" />
-                </div>
-              </div>
-              <div className="my-2">
-                <div className="flex items-baseline gap-2">
-                  <span className="text-2xl sm:text-3xl font-bold font-mono text-[#B5473C] leading-none">
-                    3
-                  </span>
-                  <span className="text-xs font-bold text-[#B5473C]">Alert</span>
-                </div>
-                <p className="text-[11px] text-[#596579] mt-1">
-                  1 Critical Path • 2 Near-Critical
-                </p>
-              </div>
-              <span className="text-[11px] text-[#176B87] group-hover:underline font-semibold flex items-center gap-1">
-                CPM Risk Network &rarr;
-              </span>
-            </Link>
-
-            {/* 4. Pending Review */}
-            <Link
-              href="/review"
-              className="p-4 lg:p-5 bg-white hover:bg-[#F9FAFC] transition-colors flex flex-col justify-between group"
-            >
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-semibold uppercase tracking-wider text-[#596579]">
-                  Pending Review
-                </span>
-                <div className="p-1 rounded bg-[#FDF6ED] text-[#D98B32]">
-                  <Clock className="w-3.5 h-3.5" />
-                </div>
-              </div>
-              <div className="my-2">
-                <div className="flex items-baseline gap-2">
-                  <span className="text-2xl sm:text-3xl font-bold font-mono text-[#D98B32] leading-none">
-                    {reviewEvents.length}
-                  </span>
-                  <span className="text-xs font-bold text-[#D98B32]">Events</span>
-                </div>
-                <p className="text-[11px] text-[#596579] mt-1">
-                  Awaiting Planner Sign-off
-                </p>
-              </div>
-              <span className="text-[11px] text-[#176B87] group-hover:underline font-semibold flex items-center gap-1">
-                Review Center &rarr;
-              </span>
-            </Link>
-
-            {/* 5. Schedule Variance */}
-            <div className="p-4 lg:p-5 bg-[#FFFDFD] hover:bg-[#FFF8F8] transition-colors flex flex-col justify-between sm:col-span-2 lg:col-span-1">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-semibold uppercase tracking-wider text-[#B5473C]">
-                  Schedule Variance
-                </span>
-                <div className="flex items-center gap-1.5">
-                  <WhyButton
-                    onClick={() => openWhyExplanation('variance:portfolio')}
-                    title="Why is variance -7%?"
-                  />
-                  <div className="p-1 rounded bg-[#FBEFEE] text-[#B5473C]">
-                    <TrendingDown className="w-3.5 h-3.5" />
-                  </div>
-                </div>
-              </div>
-              <div className="my-2">
-                <div className="flex items-baseline gap-2">
-                  <span className="text-2xl sm:text-3xl font-bold font-mono text-[#B5473C] leading-none">
-                    {activeProject.variance}%
-                  </span>
-                  <span className="text-xs font-bold text-[#B5473C]">Slip</span>
-                </div>
-                <p className="text-[11px] text-[#B5473C] font-semibold mt-1">
-                  +2 Days Behind Baseline Finish
-                </p>
-              </div>
-              <a href="#variance-table" className="text-[11px] text-[#176B87] hover:underline font-semibold flex items-center gap-1">
-                Inspect Variance Table &rarr;
-              </a>
-            </div>
-          </div>
-        </section>
-
-        {/* =========================================================================
-            3. WHAT NEEDS MY ATTENTION (Streamlined Executive Priority Grid + Donut Chart)
-            Replaces verbose contractor essay paragraphs with clear, high-signal action cards
-            ========================================================================= */}
-        <section aria-labelledby="attention-heading" className="bg-[#FFFDF7] border-2 border-[#D98B32] border-l-4 border-l-[#B5473C] rounded-lg p-4 sm:p-6 shadow-xs space-y-4">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#F0D4A6] gap-2">
-            <div className="flex items-center gap-2">
-              <div className="p-1.5 rounded-md bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
-                <AlertOctagon className="w-5 h-5" />
-              </div>
-              <div>
-                <div className="flex items-center gap-2">
-                  <h2 id="attention-heading" className="text-base sm:text-lg font-bold text-[#172033] tracking-tight">
-                    What Needs My Attention
-                  </h2>
-                  <span className="px-2 py-0.5 rounded bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA] text-[10px] font-mono font-bold uppercase">
-                    URGENT INTERVENTION
-                  </span>
-                </div>
-                <p className="text-xs text-[#596579]">
-                  Prioritized decision backlog requiring project manager intervention
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-2">
-              <span className="px-2.5 py-1 rounded-full bg-[#B5473C] text-white text-xs font-mono font-bold flex items-center gap-1 shadow-2xs">
-                <ShieldAlert className="w-3.5 h-3.5" />
-                4 Action Items
-              </span>
-              <Link
-                href="/review"
-                className="px-3 py-1.5 bg-[#176B87] hover:bg-[#135A72] text-white text-xs font-bold rounded shadow-xs transition-colors inline-flex items-center gap-1.5"
-              >
-                <span>Full Review Queue</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </Link>
-            </div>
-          </div>
-
-          {/* High-Signal Action Cards (Direct 4-Column Manager Focus Grid) */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
-            {/* Card 1: Review Validation */}
-            <div className="p-4 rounded-lg bg-white border border-[#F0D4A6] hover:border-[#D98B32] transition-all shadow-2xs flex flex-col justify-between space-y-3">
-              <div className="space-y-1.5">
-                <div className="flex items-center justify-between">
-                  <span className="px-2 py-0.5 rounded text-[11px] font-mono font-bold uppercase bg-[#FDF6ED] text-[#8C5311] border border-[#F0D4A6] flex items-center gap-1">
-                    <ShieldAlert className="w-3.5 h-3.5 text-[#D98B32]" />
-                    Match Validation
-                  </span>
-                  <span className="text-xs font-mono font-bold text-[#D98B32]">{reviewEvents.length} Pending</span>
-                </div>
-                <h3 className="text-sm font-bold text-[#172033] leading-snug">
-                  Field Matches Awaiting Sign-off
-                </h3>
-                <p className="text-xs text-[#596579] leading-relaxed">
-                  Events in the 70%–89% confidence band pause live Schedule Twin synchronization until approved.
-                </p>
-                <div className="pt-1">
-                  <span className="text-[11px] font-mono font-semibold px-2 py-0.5 rounded bg-[#FDF6ED] text-[#8C5311] border border-[#F0D4A6]">
-                    Schedule Twin Sync Paused
-                  </span>
-                </div>
-              </div>
-              <Link
-                href="/review"
-                className="w-full py-2 px-3 bg-white hover:bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0] text-xs font-bold rounded text-center transition-colors block mt-2"
-              >
-                Review Matches ({reviewEvents.length}) &rarr;
-              </Link>
-            </div>
-
-            {/* Card 2: Critical Path Slip */}
-            <div className="p-4 rounded-lg bg-white border border-[#E4B0AA] hover:border-[#B5473C] transition-all shadow-2xs flex flex-col justify-between space-y-3 border-l-4 border-l-[#B5473C]">
-              <div className="space-y-1.5">
-                <div className="flex items-center justify-between">
-                  <span className="px-2 py-0.5 rounded text-[11px] font-mono font-bold uppercase bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA] flex items-center gap-1">
-                    <AlertOctagon className="w-3.5 h-3.5 text-[#B5473C]" />
-                    Critical Slip
-                  </span>
-                  <span className="text-xs font-mono font-bold text-[#B5473C] bg-[#FBEFEE] px-1.5 rounded border border-[#E4B0AA]">+2d Slip</span>
-                </div>
-                <h3 className="text-sm font-bold text-[#172033] leading-snug">
-                  PIP-24-001: Header Erection
-                </h3>
-                <p className="text-xs text-[#596579] leading-relaxed">
-                  Zero-float activity slipped 2 days. Pushes downstream hydrostatic testing milestone day-for-day.
-                </p>
-                <div className="pt-1">
-                  <span className="text-[11px] font-mono font-semibold px-2 py-0.5 rounded bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
-                    Milestone Impact: +2 Days
-                  </span>
-                </div>
-              </div>
-              <a
-                href="#variance-table"
-                className="w-full py-2 px-3 bg-white hover:bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA] text-xs font-bold rounded text-center transition-colors block mt-2"
-              >
-                Inspect Delay Impact &rarr;
-              </a>
-            </div>
-
-            {/* Card 3: Unmatched Field Spool */}
-            <div className="p-4 rounded-lg bg-white border border-[#E4B0AA] hover:border-[#B5473C] transition-all shadow-2xs flex flex-col justify-between space-y-3">
-              <div className="space-y-1.5">
-                <div className="flex items-center justify-between">
-                  <span className="px-2 py-0.5 rounded text-[11px] font-mono font-bold uppercase bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA] flex items-center gap-1">
-                    <AlertTriangle className="w-3.5 h-3.5 text-[#B5473C]" />
-                    Unmatched Event
-                  </span>
-                  <span className="text-xs font-mono font-bold text-[#B5473C] bg-[#FBEFEE] px-1.5 rounded">47% Score</span>
-                </div>
-                <h3 className="text-sm font-bold text-[#172033] leading-snug">
-                  EVT-2026-004: Unit B Drain Line
-                </h3>
-                <p className="text-xs text-[#596579] leading-relaxed">
-                  Unlinked spool code syntax submitted. Requires planner target assignment to credit progress.
-                </p>
-                <div className="pt-1">
-                  <span className="text-[11px] font-mono font-semibold px-2 py-0.5 rounded bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
-                    Progress Uncredited (1.0 spool)
-                  </span>
-                </div>
-              </div>
+            <div className="flex rounded border border-[#D7E1E8] p-0.5 bg-[#F4F7FA]">
               <button
                 type="button"
-                onClick={() => setSelectedReviewModalEvent(unmatchedEvent)}
-                className="w-full py-2 px-3 bg-white hover:bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0] text-xs font-bold rounded text-center transition-colors block cursor-pointer mt-2"
+                onClick={() => setDashboardDensity('comfortable')}
+                className={`px-2 py-0.5 rounded text-[11px] font-medium transition-colors cursor-pointer ${
+                  dashboardDensity === 'comfortable'
+                    ? 'bg-white text-[#0F6574] font-bold shadow-2xs'
+                    : 'text-[#526779] hover:text-[#172B3A]'
+                }`}
               >
-                Assign Activity Target &rarr;
+                Comfortable
+              </button>
+              <button
+                type="button"
+                onClick={() => setDashboardDensity('compact')}
+                className={`px-2 py-0.5 rounded text-[11px] font-medium transition-colors cursor-pointer ${
+                  dashboardDensity === 'compact'
+                    ? 'bg-white text-[#0F6574] font-bold shadow-2xs'
+                    : 'text-[#526779] hover:text-[#172B3A]'
+                }`}
+              >
+                Compact
               </button>
             </div>
+          </div>
 
-            {/* Card 4: Downstream Ripple / Simulation */}
-            <div className="p-4 rounded-lg bg-white border border-[#F0D4A6] hover:border-[#D98B32] transition-all shadow-2xs flex flex-col justify-between space-y-3">
-              <div className="space-y-1.5">
+          <div className="flex items-center gap-1.5 flex-wrap">
+            <span className="text-[11px] text-[#526779]">Visible Sections:</span>
+            {[
+              { id: 'kpis', label: 'KPIs' },
+              { id: 'attention', label: 'Attention' },
+              { id: 'scurve', label: 'S-Curve' },
+              { id: 'analytics', label: 'Analytics' },
+              { id: 'variance', label: 'Variance' },
+              { id: 'pendingMatches', label: 'Matches' },
+              { id: 'milestones', label: 'History' },
+            ].map((sec) => (
+              <button
+                key={sec.id}
+                type="button"
+                onClick={() =>
+                  setVisibleSections((prev: any) => ({ ...prev, [sec.id]: !prev[sec.id] }))
+                }
+                className={`px-2 py-0.5 rounded text-[11px] font-medium border transition-colors cursor-pointer ${
+                  (visibleSections as any)[sec.id]
+                    ? 'bg-[#EDF5F8] text-[#0F6574] border-[#B3CBE0] font-semibold'
+                    : 'bg-white text-[#7B8798] border-[#D7E1E8]'
+                }`}
+              >
+                {(visibleSections as any)[sec.id] ? `✓ ${sec.label}` : sec.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* =========================================================================
+            2. PROJECT PERFORMANCE KPIS (5 Visual KPI Cards with Icons & Trends)
+            ========================================================================= */}
+        {visibleSections.kpis && (
+          <section aria-labelledby="kpi-heading" className="space-y-2">
+            <div className="flex items-center justify-between">
+              <h2 id="kpi-heading" className="text-xs font-semibold uppercase tracking-wider text-[#596579] flex items-center gap-1.5">
+                <BarChart3 className="w-3.5 h-3.5 text-[#0F6574]" />
+                Executive Performance Indicators
+              </h2>
+              <span className="text-[11px] text-[#7B8798] font-mono hidden sm:inline">
+                P6 XML Target vs Field Actuals
+              </span>
+            </div>
+
+            <div className="border border-[#D7E1E8] rounded-lg shadow-xs overflow-hidden grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-px bg-[#D7E1E8]">
+              {/* 1. Schedule Health */}
+              <div className={`${dashboardDensity === 'compact' ? 'p-3' : 'p-4 lg:p-5'} bg-white hover:bg-[#F9FAFC] transition-colors flex flex-col justify-between group`}>
                 <div className="flex items-center justify-between">
-                  <span className="px-2 py-0.5 rounded text-[11px] font-mono font-bold uppercase bg-[#FDF6ED] text-[#8C5311] border border-[#F0D4A6] flex items-center gap-1">
-                    <TrendingDown className="w-3.5 h-3.5 text-[#D98B32]" />
-                    Ripple Impact
+                  <span className="text-xs font-semibold uppercase tracking-wider text-[#596579] flex items-center gap-1">
+                    Schedule Health
+                    <TermHelp term="spi" />
                   </span>
-                  <span className="text-xs font-mono font-bold text-[#D98B32] bg-[#FDF6ED] px-1.5 rounded">3 Downstream</span>
-                </div>
-                <h3 className="text-sm font-bold text-[#172033] leading-snug">
-                  Critical Ripple: Hydro-test & Loops
-                </h3>
-                <p className="text-xs text-[#596579] leading-relaxed">
-                  Successor activities PIP-24-002 and INS-04-015 impacted. Commercial milestone shifts from 30 Nov to 02 Dec.
-                </p>
-                <div className="pt-1">
-                  <span className="text-[11px] font-mono font-semibold px-2 py-0.5 rounded bg-[#FDF6ED] text-[#8C5311] border border-[#F0D4A6]">
-                    Target Shift: 30 Nov &rarr; 02 Dec
-                  </span>
-                </div>
-              </div>
-              <Link
-                href="/what-if"
-                className="w-full py-2 px-3 bg-white hover:bg-[#F1F3F5] text-[#172033] border border-[#D9DEE5] text-xs font-bold rounded text-center transition-colors block mt-2"
-              >
-                Run What-If Simulation &rarr;
-              </Link>
-            </div>
-          </div>
-        </section>
-
-        {/* =========================================================================
-            4. MANDATORY STATIC S-CURVE (Executive Physical Earned Trajectory)
-            Single concise summary integrated with the trajectory chart
-            ========================================================================= */}
-        <section aria-labelledby="scurve-heading" className="bg-white border border-[#D9DEE5] border-l-4 border-l-[#176B87] rounded-lg p-4 sm:p-6 shadow-xs space-y-4">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D9DEE5] gap-2">
-            <div>
-              <span className="text-[11px] font-mono font-medium uppercase text-[#596579] tracking-wider">
-                Earned Value & Cumulative Trajectory
-              </span>
-              <h2 id="scurve-heading" className="text-base sm:text-lg font-bold text-[#172033] tracking-tight">
-                Project S-Curve — Baseline vs. Actual Earned vs. Forecast
-              </h2>
-              <p className="text-xs text-[#596579] mt-0.5">
-                Physical earned progress curve across all WBS work packages compared to P6 baseline envelope.
-              </p>
-            </div>
-            <div className="flex items-center gap-3">
-              <span className="text-xs text-[#596579]">
-                Data Date: <strong className="font-mono text-[#172033]">18 Sep 2026</strong>
-              </span>
-              <Link
-                href="/variance"
-                className="px-3 py-1.5 bg-[#F1F3F5] hover:bg-[#E5E8EB] text-[#172033] border border-[#D9DEE5] text-xs font-semibold rounded transition-colors inline-flex items-center gap-1"
-              >
-                <span>Full Variance Ledger</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </Link>
-            </div>
-          </div>
-
-          <SCurveChart
-            variant="full"
-            title="Project S-Curve — Baseline vs. Actual Earned vs. Forecast"
-            subtitle="Rev 3.2 (P6 XML) Physical Earned Progress (Data Date: 18 Sep 2026)"
-          />
-        </section>
-
-        {/* =========================================================================
-            5. SUPPORTING ANALYTICAL CHARTS SUITE (Expandable Section)
-            Supporting analysis moved to expandable section to keep manager focus on decisions
-            ========================================================================= */}
-        <details className="group bg-white border border-[#D9DEE5] rounded-lg shadow-xs overflow-hidden">
-          <summary className="p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between cursor-pointer list-none hover:bg-[#F9FAFC] transition-colors gap-3 select-none">
-            <div className="space-y-0.5">
-              <span className="text-[11px] font-mono font-medium uppercase text-[#596579] tracking-wider">
-                Supporting Schedule Analytics
-              </span>
-              <div className="flex items-center gap-2">
-                <h2 id="analytics-heading" className="text-base sm:text-lg font-bold text-[#172033] tracking-tight">
-                  Dimensional Analysis & Deep-Dive Charts
-                </h2>
-                <span className="text-xs px-2 py-0.5 rounded bg-[#EDF5F8] text-[#176B87] font-semibold hidden sm:inline">
-                  Discipline • Site Area • Trend • Delays
-                </span>
-              </div>
-              <p className="text-xs text-[#596579]">
-                Expand to inspect multi-perspective breakdowns across engineering disciplines, site zones, and variance trajectories.
-              </p>
-            </div>
-            <div className="flex items-center gap-2 text-xs font-bold text-[#176B87] self-start sm:self-center">
-              <span className="group-open:hidden">Expand Analysis &darr;</span>
-              <span className="hidden group-open:inline">Collapse Analysis &uarr;</span>
-            </div>
-          </summary>
-
-          <div className="p-4 sm:p-6 border-t border-[#D9DEE5] space-y-4">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D9DEE5] gap-3">
-              <div>
-                <h3 className="text-sm font-bold text-[#172033]">
-                  Interactive Performance Dimensions
-                </h3>
-                <p className="text-xs text-[#596579]">
-                  Switch visual perspectives to evaluate project delivery by engineering discipline, site zone, or variance trajectory.
-                </p>
-              </div>
-
-              {/* Perspective Selector Tabs */}
-              <div className="flex items-center gap-1 p-1 bg-[#F1F3F5] border border-[#D9DEE5] rounded-lg self-start sm:self-center overflow-x-auto max-w-full">
-                <button
-                  type="button"
-                  onClick={() => setActiveChartTab('discipline')}
-                  className={`px-3 py-1.5 text-xs font-semibold rounded-md transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer ${
-                    activeChartTab === 'discipline'
-                      ? 'bg-white text-[#176B87] shadow-2xs border border-[#D9DEE5]'
-                      : 'text-[#596579] hover:text-[#172033]'
-                  }`}
-                >
-                  <Layers className="w-3.5 h-3.5" />
-                  <span>By Discipline</span>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => setActiveChartTab('area')}
-                  className={`px-3 py-1.5 text-xs font-semibold rounded-md transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer ${
-                    activeChartTab === 'area'
-                      ? 'bg-white text-[#176B87] shadow-2xs border border-[#D9DEE5]'
-                      : 'text-[#596579] hover:text-[#172033]'
-                  }`}
-                >
-                  <MapPin className="w-3.5 h-3.5" />
-                  <span>By Site Area</span>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => setActiveChartTab('variance-trend')}
-                  className={`px-3 py-1.5 text-xs font-semibold rounded-md transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer ${
-                    activeChartTab === 'variance-trend'
-                      ? 'bg-white text-[#176B87] shadow-2xs border border-[#D9DEE5]'
-                      : 'text-[#596579] hover:text-[#172033]'
-                  }`}
-                >
-                  <LineChartIcon className="w-3.5 h-3.5" />
-                  <span>Variance Trend</span>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => setActiveChartTab('delays')}
-                  className={`px-3 py-1.5 text-xs font-semibold rounded-md transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer ${
-                    activeChartTab === 'delays'
-                      ? 'bg-white text-[#176B87] shadow-2xs border border-[#D9DEE5]'
-                      : 'text-[#596579] hover:text-[#172033]'
-                  }`}
-                >
-                  <Clock className="w-3.5 h-3.5" />
-                  <span>Critical Delays</span>
-                </button>
-              </div>
-            </div>
-
-            {/* Active Chart Rendering */}
-            <div className="pt-2">
-              {activeChartTab === 'discipline' && (
-                <BarChart
-                  variant="discipline"
-                  title="Discipline Performance — Actual vs Baseline"
-                  subtitle="Earned progress comparison across major engineering disciplines against P6 targets"
-                  className="border-0 p-0 shadow-none"
-                />
-              )}
-
-              {activeChartTab === 'area' && (
-                <BarChart
-                  variant="area"
-                  title="Work Package Progress by Site Area"
-                  subtitle="WBS physical progress across Unit A Gas Processing, Compressor House, and Offsites"
-                  className="border-0 p-0 shadow-none"
-                />
-              )}
-
-              {activeChartTab === 'variance-trend' && (
-                <LineChart
-                  variant="variance-trend"
-                  title="Cumulative Schedule Variance Trend"
-                  subtitle="Historical trajectory of monthly schedule slip (+ahead / -slip) and projected recovery"
-                  className="border-0 p-0 shadow-none"
-                />
-              )}
-
-              {activeChartTab === 'delays' && (
-                <HorizontalBarChart
-                  variant="delayed-activities"
-                  title="Top Delayed Critical Activities"
-                  subtitle="Slip duration and critical path impact ranking across active work packages"
-                  className="border-0 p-0 shadow-none"
-                />
-              )}
-            </div>
-          </div>
-        </details>
-
-        {/* ========================================================= */}
-        {/* 6. SCHEDULE VARIANCE CONTROL TABLE */}
-        {/* Compact, crisp activity-level tracking with highlighted CPM rows */}
-        {/* ========================================================= */}
-        <section id="variance-table" aria-labelledby="variance-table-heading" className="bg-white border border-[#D9DEE5] border-l-4 border-l-[#176B87] rounded-lg p-4 sm:p-6 shadow-xs space-y-4">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D9DEE5] gap-2">
-            <div>
-              <span className="text-[11px] font-mono font-medium uppercase text-[#596579] tracking-wider">
-                Critical Path Activity Tracking
-              </span>
-              <h2 id="variance-table-heading" className="text-base sm:text-lg font-bold text-[#172033] tracking-tight">
-                Schedule Variance Control Table
-              </h2>
-              <p className="text-xs text-[#596579] mt-0.5">
-                Activity-level audit comparing planned finish to actual completion and slip variance.
-              </p>
-            </div>
-            <Link
-              href="/variance"
-              className="text-xs text-[#176B87] hover:underline font-semibold inline-flex items-center gap-1"
-            >
-              Full Variance Ledger <ArrowRight className="w-3.5 h-3.5" />
-            </Link>
-          </div>
-
-          <div className="overflow-x-auto border border-[#D9DEE5] rounded-lg">
-            <table className="w-full min-w-[640px] text-left border-collapse text-xs">
-              <thead className="bg-[#F7F8FA] border-b border-[#D9DEE5] text-[#596579] uppercase font-semibold text-[11px] tracking-wider h-10">
-                <tr>
-                  <th className="py-2.5 px-3">Activity</th>
-                  <th className="py-2.5 px-3">Planned Finish</th>
-                  <th className="py-2.5 px-3">Actual Finish</th>
-                  <th className="py-2.5 px-3">Variance</th>
-                  <th className="py-2.5 px-3">Status</th>
-                  <th className="py-2.5 px-3 text-right">Action</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-[#D9DEE5]/60 text-[#172033]">
-                {scheduleVarianceItems.map((item) => (
-                  <tr
-                    key={item.id}
-                    className={`h-10 hover:bg-[#F9FAFC] transition-colors ${
-                      item.isCriticalPath && item.varianceDays > 0 ? 'bg-[#FFF9F8]' : ''
-                    }`}
-                  >
-                    <td className="py-2.5 px-3 font-medium">
-                      <div className="flex items-center gap-2">
-                        <span className="font-mono font-bold text-[#176B87]">{item.id}</span>
-                        <span className="text-[#172033] truncate max-w-xs">{item.name}</span>
-                        {item.isCriticalPath && (
-                          <span className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]">
-                            CPM
-                          </span>
-                        )}
-                      </div>
-                    </td>
-                    <td className="py-2.5 px-3 font-mono text-[#596579]">{item.plannedFinish}</td>
-                    <td className="py-2.5 px-3 font-mono font-medium text-[#172033]">{item.actualFinish}</td>
-                    <td className="py-2.5 px-3">
-                      <span className={`font-mono font-bold px-1.5 py-0.5 rounded ${item.varianceDays > 0 ? 'bg-[#FBEFEE] text-[#B5473C] border border-[#E4B0AA]' : 'text-[#2E7D5B]'}`}>
-                        {item.varianceDays === 0 ? '0d' : `+${item.varianceDays}d`}
-                      </span>
-                    </td>
-                    <td className="py-2.5 px-3">
-                      <StatusBadge status={item.status} size="sm" />
-                    </td>
-                    <td className="py-2.5 px-3 text-right">
-                      <button
-                        type="button"
-                        onClick={() => openActivityDrawer(item.id)}
-                        className="px-2.5 py-1 text-xs text-[#176B87] hover:bg-[#EDF5F8] border border-[#B3CBE0] rounded font-medium transition-colors cursor-pointer"
-                      >
-                        Inspect
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </section>
-
-        {/* =========================================================================
-            7. DECISIONS & VERIFIED MILESTONES (Streamlined Executive Ledger)
-            Replaces raw worker logs with high-signal pending approvals + verified milestone syncs
-            ========================================================================= */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
-          {/* Column 1: Pending Match Approvals */}
-          <section aria-labelledby="pending-approvals-heading" className="bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-5 shadow-xs space-y-3">
-            <div className="flex items-center justify-between pb-2 border-b border-[#D9DEE5]">
-              <div className="flex items-center gap-2">
-                <ShieldCheck className="w-4 h-4 text-[#176B87]" />
-                <h2 id="pending-approvals-heading" className="text-sm sm:text-base font-bold text-[#172033]">
-                  Pending Schedule Links
-                </h2>
-                <span className="px-2 py-0.5 rounded-full bg-[#FDF6ED] text-[#8C5311] border border-[#F0D4A6] text-[10px] font-mono font-bold">
-                  {reviewEvents.length} Actions
-                </span>
-              </div>
-              <Link href="/review" className="text-xs text-[#176B87] hover:underline font-semibold">
-                Open Review Center &rarr;
-              </Link>
-            </div>
-
-            {reviewEvents.length === 0 ? (
-              <div className="p-6 text-center bg-[#F7F8FA] border border-[#D9DEE5] rounded-lg">
-                <CheckCircle2 className="w-6 h-6 text-[#2E7D5B] mx-auto mb-1.5" />
-                <p className="text-xs font-bold text-[#172033]">No pending review items</p>
-                <p className="text-[11px] text-[#596579] mt-0.5">
-                  All field updates are linked and verified with the baseline.
-                </p>
-              </div>
-            ) : (
-              <div className="divide-y divide-[#D9DEE5]">
-                {reviewEvents.slice(0, 3).map((evt) => (
-                  <div key={evt.id} className="py-2.5 flex items-center justify-between gap-3 text-xs">
-                    <div className="min-w-0 space-y-0.5">
-                      <div className="flex items-center gap-2">
-                        <span className="font-mono font-bold text-[#176B87] text-[11px]">{evt.id}</span>
-                        <ConfidenceBadge score={evt.confidence} size="sm" />
-                      </div>
-                      <p className="text-xs text-[#172033] font-medium truncate max-w-sm">
-                        {evt.rawText}
-                      </p>
-                      <div className="text-[10px] text-[#596579] flex items-center gap-1">
-                        <span>Target:</span>
-                        <strong className="text-[#172033] font-mono">{evt.matchedActivityId || 'Unassigned'}</strong>
-                      </div>
+                  <div className="flex items-center gap-1.5">
+                    <WhyButton
+                      onClick={() => openWhyExplanation('health:PRJ-OIL-2026-01')}
+                      title="Why is schedule health 82%?"
+                    />
+                    <div className="p-1 rounded bg-[#FDF6ED] text-[#D98B32]">
+                      <Activity className="w-3.5 h-3.5" />
                     </div>
-                    <button
-                      type="button"
-                      onClick={() => setSelectedReviewModalEvent(evt)}
-                      className="px-2.5 py-1 text-xs bg-white hover:bg-[#EDF5F8] text-[#176B87] border border-[#B3CBE0] rounded font-semibold transition-colors flex-shrink-0 cursor-pointer shadow-2xs"
-                    >
-                      Review
-                    </button>
                   </div>
-                ))}
+                </div>
+                <div className="my-2">
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-2xl sm:text-3xl font-bold font-mono text-[#D98B32] leading-none">
+                      82%
+                    </span>
+                    <span className="text-xs font-semibold text-[#D98B32] flex items-center gap-0.5">
+                      <AlertTriangle className="w-3 h-3" /> Warning
+                    </span>
+                  </div>
+                  <p className="text-[11px] text-[#596579] mt-1">
+                    Needs Attention — 5 Warnings
+                  </p>
+                </div>
+                <Link href="/health" className="text-[11px] text-[#0F6574] group-hover:underline font-semibold flex items-center gap-1">
+                  Inspect Health &rarr;
+                </Link>
               </div>
-            )}
+
+              {/* 2. Verified Progress */}
+              <div className={`${dashboardDensity === 'compact' ? 'p-3' : 'p-4 lg:p-5'} bg-white hover:bg-[#F9FAFC] transition-colors flex flex-col justify-between group`}>
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-semibold uppercase tracking-wider text-[#596579] flex items-center gap-1">
+                    Verified Progress
+                    <TermHelp term="cpi" />
+                  </span>
+                  <div className="flex items-center gap-1.5">
+                    <WhyButton
+                      onClick={() => openWhyExplanation('progress:verified')}
+                      title="Why is verified progress 68.4%?"
+                    />
+                    <div className="p-1 rounded bg-[#EDF5F8] text-[#0F6574]">
+                      <CheckCircle2 className="w-3.5 h-3.5" />
+                    </div>
+                  </div>
+                </div>
+                <div className="my-2">
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-2xl sm:text-3xl font-bold font-mono text-[#187A6A] leading-none">
+                      {activeProject.overallProgress}%
+                    </span>
+                    <span className="text-xs text-[#596579]">Actual</span>
+                  </div>
+                  <p className="text-[11px] text-[#596579] mt-1">
+                    Baseline Target: <strong>{activeProject.plannedProgress}%</strong>
+                  </p>
+                </div>
+                <Link href="/progress" className="text-[11px] text-[#0F6574] group-hover:underline font-semibold flex items-center gap-1">
+                  Progress Matrix &rarr;
+                </Link>
+              </div>
+
+              {/* 3. Activities At Risk */}
+              <Link
+                href="/risks?filter=critical"
+                className={`${dashboardDensity === 'compact' ? 'p-3' : 'p-4 lg:p-5'} bg-white hover:bg-[#F9FAFC] transition-colors flex flex-col justify-between group`}
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-semibold uppercase tracking-wider text-[#596579] flex items-center gap-1">
+                    Activities At Risk
+                    <TermHelp term="critical_path" />
+                  </span>
+                  <div className="p-1 rounded bg-[#FBEFEE] text-[#B43D47]">
+                    <AlertTriangle className="w-3.5 h-3.5" />
+                  </div>
+                </div>
+                <div className="my-2">
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-2xl sm:text-3xl font-bold font-mono text-[#B43D47] leading-none">
+                      3
+                    </span>
+                    <span className="text-xs font-bold text-[#B43D47]">Alert</span>
+                  </div>
+                  <p className="text-[11px] text-[#596579] mt-1">
+                    1 Critical Path • 2 Near-Critical
+                  </p>
+                </div>
+                <span className="text-[11px] text-[#0F6574] group-hover:underline font-semibold flex items-center gap-1">
+                  CPM Risk Network &rarr;
+                </span>
+              </Link>
+
+              {/* 4. Pending Review */}
+              <Link
+                href="/review"
+                className={`${dashboardDensity === 'compact' ? 'p-3' : 'p-4 lg:p-5'} bg-white hover:bg-[#F9FAFC] transition-colors flex flex-col justify-between group`}
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-semibold uppercase tracking-wider text-[#596579]">
+                    Pending Review
+                  </span>
+                  <div className="p-1 rounded bg-[#FDF6ED] text-[#D98B32]">
+                    <Clock className="w-3.5 h-3.5" />
+                  </div>
+                </div>
+                <div className="my-2">
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-2xl sm:text-3xl font-bold font-mono text-[#D98B32] leading-none">
+                      {reviewEvents.length}
+                    </span>
+                    <span className="text-xs font-bold text-[#D98B32]">Events</span>
+                  </div>
+                  <p className="text-[11px] text-[#596579] mt-1">
+                    Awaiting Planner Sign-off
+                  </p>
+                </div>
+                <span className="text-[11px] text-[#0F6574] group-hover:underline font-semibold flex items-center gap-1">
+                  Review Center &rarr;
+                </span>
+              </Link>
+
+              {/* 5. Schedule Variance */}
+              <div className={`${dashboardDensity === 'compact' ? 'p-3' : 'p-4 lg:p-5'} bg-[#FFFDFD] hover:bg-[#FFF8F8] transition-colors flex flex-col justify-between sm:col-span-2 lg:col-span-1`}>
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-semibold uppercase tracking-wider text-[#B43D47] flex items-center gap-1">
+                    Schedule Variance
+                    <TermHelp term="variance" />
+                  </span>
+                  <div className="flex items-center gap-1.5">
+                    <WhyButton
+                      onClick={() => openWhyExplanation('variance:portfolio')}
+                      title="Why is variance -7%?"
+                    />
+                    <div className="p-1 rounded bg-[#FBEFEE] text-[#B43D47]">
+                      <TrendingDown className="w-3.5 h-3.5" />
+                    </div>
+                  </div>
+                </div>
+                <div className="my-2">
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-2xl sm:text-3xl font-bold font-mono text-[#B43D47] leading-none">
+                      {activeProject.variance}%
+                    </span>
+                    <span className="text-xs font-bold text-[#B43D47]">Slip</span>
+                  </div>
+                  <p className="text-[11px] text-[#B43D47] font-semibold mt-1">
+                    +2 Days Behind Baseline Finish
+                  </p>
+                </div>
+                <a href="#variance-table" className="text-[11px] text-[#0F6574] hover:underline font-semibold flex items-center gap-1">
+                  Inspect Variance Table &rarr;
+                </a>
+              </div>
+            </div>
           </section>
+        )}
 
-          {/* Column 2: Verified Milestones Sync History (Collapsible Historical Stream) */}
-          <details className="group bg-white border border-[#D9DEE5] rounded-lg p-4 sm:p-5 shadow-xs">
-            <summary className="flex items-center justify-between cursor-pointer list-none select-none">
+        {/* =========================================================================
+            3. WHAT NEEDS MY ATTENTION (Feature 16: Prioritized Attention Action Grid)
+            Prioritized #1 URGENT, #2 HIGH, #3 HIGH, #4 MEDIUM with single 1-click actions
+            ========================================================================= */}
+        {visibleSections.attention && (
+          <section aria-labelledby="attention-heading" className="bg-[#FFFDF7] border-2 border-[#D98B32] border-l-4 border-l-[#B43D47] rounded-lg p-4 sm:p-6 shadow-xs space-y-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#F0D4A6] gap-2">
               <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-[#2E7D5B]" />
-                <h2 id="milestones-heading" className="text-sm sm:text-base font-bold text-[#172033]">
-                  Verified Progress History ({verifiedMilestones.length})
-                </h2>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="text-xs text-[#176B87] font-semibold group-open:hidden">View History &darr;</span>
-                <span className="text-xs text-[#176B87] font-semibold hidden group-open:inline">Hide History &uarr;</span>
-              </div>
-            </summary>
-
-            <div className="pt-3 mt-3 border-t border-[#D9DEE5] divide-y divide-[#D9DEE5]">
-              {verifiedMilestones.map((m) => (
-                <div key={m.id} className="py-2.5 flex items-center justify-between gap-3 text-xs">
-                  <div className="min-w-0 space-y-0.5">
-                    <div className="flex items-center gap-2">
-                      <span className="font-mono font-bold text-[#2E7D5B] text-[11px] flex items-center gap-1">
-                        <Check className="w-3 h-3 text-[#2E7D5B]" />
-                        {m.activityId}
-                      </span>
-                      <span className="text-[10px] text-[#7B8798] font-mono flex items-center gap-1">
-                        <Calendar className="w-3 h-3" />
-                        {m.verifiedDate}
-                      </span>
-                    </div>
-                    <p className="text-xs text-[#172033] font-medium truncate max-w-sm">
-                      {m.title}
-                    </p>
-                    <p className="text-[10px] text-[#596579]">
-                      Verified by: <strong className="text-[#172033]">{m.auditor}</strong> • {m.progress}
-                    </p>
-                  </div>
-                  <span className="px-2 py-0.5 rounded bg-[#EDF7F2] text-[#2E7D5B] border border-[#B8DCC9] text-[10px] font-bold font-mono whitespace-nowrap">
-                    Committed
-                  </span>
+                <div className="p-1.5 rounded-md bg-[#FBEFEE] text-[#B43D47] border border-[#E8B6BA]">
+                  <AlertOctagon className="w-5 h-5" />
                 </div>
-              ))}
-              <div className="pt-2 text-right">
-                <Link href="/execution" className="text-xs text-[#176B87] hover:underline font-semibold inline-flex items-center gap-1">
-                  Full Execution Stream &rarr;
+                <div>
+                  <div className="flex items-center gap-2">
+                    <h2 id="attention-heading" className="text-base sm:text-lg font-bold text-[#172B3A] tracking-tight">
+                      What Needs My Attention
+                    </h2>
+                    <span className="px-2 py-0.5 rounded bg-[#FBEFEE] text-[#B43D47] border border-[#E8B6BA] text-[10px] font-mono font-bold uppercase">
+                      PRIORITIZED DECISION BACKLOG
+                    </span>
+                  </div>
+                  <p className="text-xs text-[#526779]">
+                    Strictly ordered by project criticality — 1 clear action per item
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <span className="px-2.5 py-1 rounded-full bg-[#B43D47] text-white text-xs font-mono font-bold flex items-center gap-1 shadow-2xs">
+                  <ShieldAlert className="w-3.5 h-3.5" />
+                  4 Action Items
+                </span>
+                <Link
+                  href="/review"
+                  className="px-3 py-1.5 bg-[#0F6574] hover:bg-[#0c505c] text-white text-xs font-bold rounded shadow-xs transition-colors inline-flex items-center gap-1.5"
+                >
+                  <span>Full Review Queue</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
               </div>
             </div>
+
+            {/* High-Signal Action Cards (Feature 16: Prioritized order with single clear action) */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
+              {/* Card 1: #1 URGENT - Critical Path Header Erection Slip */}
+              <div className="p-4 rounded-lg bg-white border border-[#E8B6BA] hover:border-[#B43D47] transition-all shadow-2xs flex flex-col justify-between space-y-3 border-l-4 border-l-[#B43D47]">
+                <div className="space-y-1.5">
+                  <div className="flex items-center justify-between">
+                    <span className="px-2 py-0.5 rounded text-[11px] font-mono font-bold uppercase bg-[#FBEFEE] text-[#B43D47] border border-[#E8B6BA] flex items-center gap-1">
+                      <AlertOctagon className="w-3.5 h-3.5 text-[#B43D47]" />
+                      #1 URGENT
+                    </span>
+                    <span className="text-xs font-mono font-bold text-[#B43D47] bg-[#FBEFEE] px-1.5 rounded border border-[#E8B6BA]">+2d Slip</span>
+                  </div>
+                  <h3 className="text-sm font-bold text-[#172B3A] leading-snug">
+                    PIP-24-001: Header Erection
+                  </h3>
+                  <p className="text-xs text-[#526779] leading-relaxed">
+                    <strong>Reason:</strong> Zero-float critical activity slipped 2 days. Pushes downstream hydrostatic testing and threatens 15 Dec COD.
+                  </p>
+                  <div className="pt-1">
+                    <span className="text-[11px] font-mono font-semibold px-2 py-0.5 rounded bg-[#FBEFEE] text-[#B43D47] border border-[#E8B6BA]">
+                      COD Slip Risk: +2 Days
+                    </span>
+                  </div>
+                </div>
+                <Link
+                  href="/what-if?activity=PIP-24-001"
+                  className="w-full py-2 px-3 bg-[#B43D47] hover:bg-[#922E37] text-white text-xs font-bold rounded text-center transition-colors block mt-2 shadow-xs"
+                >
+                  Inspect Delay Chain &rarr;
+                </Link>
+              </div>
+
+              {/* Card 2: #2 HIGH - Field Matches Awaiting Sign-off */}
+              <div className="p-4 rounded-lg bg-white border border-[#F0D4A6] hover:border-[#9C5A08] transition-all shadow-2xs flex flex-col justify-between space-y-3 border-l-4 border-l-[#9C5A08]">
+                <div className="space-y-1.5">
+                  <div className="flex items-center justify-between">
+                    <span className="px-2 py-0.5 rounded text-[11px] font-mono font-bold uppercase bg-[#FFF8E6] text-[#9C5A08] border border-[#F0D4A6] flex items-center gap-1">
+                      <ShieldAlert className="w-3.5 h-3.5 text-[#9C5A08]" />
+                      #2 HIGH
+                    </span>
+                    <span className="text-xs font-mono font-bold text-[#9C5A08]">{reviewEvents.length} Pending</span>
+                  </div>
+                  <h3 className="text-sm font-bold text-[#172B3A] leading-snug">
+                    Field Matches Awaiting Sign-off
+                  </h3>
+                  <p className="text-xs text-[#526779] leading-relaxed">
+                    <strong>Reason:</strong> 3 field updates in 70%–89% confidence band pause live Schedule Twin synchronization until committed.
+                  </p>
+                  <div className="pt-1">
+                    <span className="text-[11px] font-mono font-semibold px-2 py-0.5 rounded bg-[#FFF8E6] text-[#9C5A08] border border-[#F0D4A6]">
+                      Schedule Twin Sync Paused
+                    </span>
+                  </div>
+                </div>
+                <Link
+                  href="/review"
+                  className="w-full py-2 px-3 bg-[#0F6574] hover:bg-[#0c505c] text-white text-xs font-bold rounded text-center transition-colors block mt-2 shadow-xs"
+                >
+                  Review Matches ({reviewEvents.length}) &rarr;
+                </Link>
+              </div>
+
+              {/* Card 3: #3 HIGH - Unmatched Field Spool */}
+              <div className="p-4 rounded-lg bg-white border border-[#F0D4A6] hover:border-[#9C5A08] transition-all shadow-2xs flex flex-col justify-between space-y-3 border-l-4 border-l-[#9C5A08]">
+                <div className="space-y-1.5">
+                  <div className="flex items-center justify-between">
+                    <span className="px-2 py-0.5 rounded text-[11px] font-mono font-bold uppercase bg-[#FFF8E6] text-[#9C5A08] border border-[#F0D4A6] flex items-center gap-1">
+                      <AlertTriangle className="w-3.5 h-3.5 text-[#9C5A08]" />
+                      #3 HIGH
+                    </span>
+                    <span className="text-xs font-mono font-bold text-[#B43D47] bg-[#FBEFEE] px-1.5 rounded">47% Score</span>
+                  </div>
+                  <h3 className="text-sm font-bold text-[#172B3A] leading-snug">
+                    EVT-2026-004: Unit B Drain Line
+                  </h3>
+                  <p className="text-xs text-[#526779] leading-relaxed">
+                    <strong>Reason:</strong> Unlinked spool code submitted. Requires manager target assignment to credit physical earned progress.
+                  </p>
+                  <div className="pt-1">
+                    <span className="text-[11px] font-mono font-semibold px-2 py-0.5 rounded bg-[#FBEFEE] text-[#B43D47] border border-[#E8B6BA]">
+                      Progress Uncredited (1.0 spool)
+                    </span>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setSelectedReviewModalEvent(unmatchedEvent)}
+                  className="w-full py-2 px-3 bg-white hover:bg-[#EDF5F8] text-[#0F6574] border border-[#0F6574] text-xs font-bold rounded text-center transition-colors block cursor-pointer mt-2"
+                >
+                  Assign Target Activity &rarr;
+                </button>
+              </div>
+
+              {/* Card 4: #4 MEDIUM - Downstream Ripple / Simulation */}
+              <div className="p-4 rounded-lg bg-white border border-[#D7E1E8] hover:border-[#0F6574] transition-all shadow-2xs flex flex-col justify-between space-y-3 border-l-4 border-l-[#3D73B5]">
+                <div className="space-y-1.5">
+                  <div className="flex items-center justify-between">
+                    <span className="px-2 py-0.5 rounded text-[11px] font-mono font-bold uppercase bg-[#EDF5F8] text-[#0F6574] border border-[#B3CBE0] flex items-center gap-1">
+                      <TrendingDown className="w-3.5 h-3.5 text-[#0F6574]" />
+                      #4 MEDIUM
+                    </span>
+                    <span className="text-xs font-mono font-bold text-[#3D73B5] bg-[#EDF5F8] px-1.5 rounded">3 Downstream</span>
+                  </div>
+                  <h3 className="text-sm font-bold text-[#172B3A] leading-snug">
+                    Downstream Cascade Simulation
+                  </h3>
+                  <p className="text-xs text-[#526779] leading-relaxed">
+                    <strong>Reason:</strong> Foundation slip absorbs total float on MEC-08-003. Evaluates schedule compression options.
+                  </p>
+                  <div className="pt-1">
+                    <span className="text-[11px] font-mono font-semibold px-2 py-0.5 rounded bg-[#EDF5F8] text-[#0F6574] border border-[#B3CBE0]">
+                      Float Buffer: 0 Days Left
+                    </span>
+                  </div>
+                </div>
+                <Link
+                  href="/what-if"
+                  className="w-full py-2 px-3 bg-white hover:bg-[#F4F7FA] text-[#172B3A] border border-[#D7E1E8] text-xs font-bold rounded text-center transition-colors block mt-2"
+                >
+                  Run What-If Simulation &rarr;
+                </Link>
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* =========================================================================
+            4. UNIFIED S-CURVE PERFORMANCE TRAJECTORY (All 14 Controls Integrated)
+            Single concise summary integrated with the trajectory chart
+            ========================================================================= */}
+        {visibleSections.scurve && (
+          <section aria-labelledby="scurve-heading" className="space-y-2">
+            <SCurveChart
+              variant="full"
+              title="Project S-Curve — Baseline vs. Actual Earned vs. Forecast"
+              subtitle="Rev 3.2 (P6 XML) Physical Earned Progress (Data Date: 18 Sep 2026)"
+            />
+          </section>
+        )}
+
+        {/* =========================================================================
+            5. SUPPORTING ANALYTICAL CHARTS SUITE (Secondary Analysis)
+            ========================================================================= */}
+        {visibleSections.analytics && (
+          <details className="group bg-white border border-[#D7E1E8] rounded-lg shadow-xs overflow-hidden" open>
+            <summary className="p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between cursor-pointer list-none hover:bg-[#F9FAFC] transition-colors gap-3 select-none">
+              <div className="space-y-0.5">
+                <span className="text-[11px] font-mono font-medium uppercase text-[#526779] tracking-wider">
+                  Supporting Schedule Analytics
+                </span>
+                <div className="flex items-center gap-2">
+                  <h2 id="analytics-heading" className="text-base sm:text-lg font-bold text-[#172B3A] tracking-tight">
+                    Dimensional Analysis & Deep-Dive Charts
+                  </h2>
+                  <span className="text-xs px-2 py-0.5 rounded bg-[#EDF5F8] text-[#0F6574] font-semibold hidden sm:inline">
+                    Discipline • Site Area • Trend • Delays
+                  </span>
+                </div>
+                <p className="text-xs text-[#526779]">
+                  Multi-perspective breakdowns across engineering disciplines, site zones, and variance trajectories.
+                </p>
+              </div>
+              <div className="flex items-center gap-2 text-xs font-bold text-[#0F6574] self-start sm:self-center">
+                <span className="group-open:hidden">Expand Analysis &darr;</span>
+                <span className="hidden group-open:inline">Collapse Analysis &uarr;</span>
+              </div>
+            </summary>
+
+            <div className="p-4 sm:p-6 border-t border-[#D7E1E8] space-y-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D7E1E8] gap-3">
+                <div>
+                  <h3 className="text-sm font-bold text-[#172B3A]">
+                    Interactive Performance Dimensions
+                  </h3>
+                  <p className="text-xs text-[#526779]">
+                    Switch visual perspectives to evaluate project delivery by engineering discipline, site zone, or variance trajectory.
+                  </p>
+                </div>
+
+                {/* Perspective Selector Tabs */}
+                <div className="flex items-center gap-1 p-1 bg-[#F4F7FA] border border-[#D7E1E8] rounded-lg self-start sm:self-center overflow-x-auto max-w-full">
+                  <button
+                    type="button"
+                    onClick={() => setActiveChartTab('discipline')}
+                    className={`px-3 py-1.5 text-xs font-semibold rounded-md transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer ${
+                      activeChartTab === 'discipline'
+                        ? 'bg-white text-[#0F6574] shadow-2xs border border-[#D7E1E8]'
+                        : 'text-[#526779] hover:text-[#172B3A]'
+                    }`}
+                  >
+                    <Layers className="w-3.5 h-3.5" />
+                    <span>By Discipline</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setActiveChartTab('area')}
+                    className={`px-3 py-1.5 text-xs font-semibold rounded-md transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer ${
+                      activeChartTab === 'area'
+                        ? 'bg-white text-[#0F6574] shadow-2xs border border-[#D7E1E8]'
+                        : 'text-[#526779] hover:text-[#172B3A]'
+                    }`}
+                  >
+                    <MapPin className="w-3.5 h-3.5" />
+                    <span>By Site Area</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setActiveChartTab('variance-trend')}
+                    className={`px-3 py-1.5 text-xs font-semibold rounded-md transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer ${
+                      activeChartTab === 'variance-trend'
+                        ? 'bg-white text-[#0F6574] shadow-2xs border border-[#D7E1E8]'
+                        : 'text-[#526779] hover:text-[#172B3A]'
+                    }`}
+                  >
+                    <LineChartIcon className="w-3.5 h-3.5" />
+                    <span>Variance Trend</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setActiveChartTab('delays')}
+                    className={`px-3 py-1.5 text-xs font-semibold rounded-md transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer ${
+                      activeChartTab === 'delays'
+                        ? 'bg-white text-[#0F6574] shadow-2xs border border-[#D7E1E8]'
+                        : 'text-[#526779] hover:text-[#172B3A]'
+                    }`}
+                  >
+                    <Clock className="w-3.5 h-3.5" />
+                    <span>Critical Delays</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* Active Chart Rendering */}
+              <div className="pt-2">
+                {activeChartTab === 'discipline' && (
+                  <BarChart
+                    variant="discipline"
+                    title="Discipline Performance — Actual vs Baseline"
+                    subtitle="Earned progress comparison across major engineering disciplines against P6 targets"
+                    className="border-0 p-0 shadow-none"
+                  />
+                )}
+
+                {activeChartTab === 'area' && (
+                  <BarChart
+                    variant="area"
+                    title="Work Package Progress by Site Area"
+                    subtitle="WBS physical progress across Unit A Gas Processing, Compressor House, and Offsites"
+                    className="border-0 p-0 shadow-none"
+                  />
+                )}
+
+                {activeChartTab === 'variance-trend' && (
+                  <LineChart
+                    variant="variance-trend"
+                    title="Cumulative Schedule Variance Trend"
+                    subtitle="Historical trajectory of monthly schedule slip (+ahead / -slip) and projected recovery"
+                    className="border-0 p-0 shadow-none"
+                  />
+                )}
+
+                {activeChartTab === 'delays' && (
+                  <HorizontalBarChart
+                    variant="delayed-activities"
+                    title="Top Delayed Critical Activities"
+                    subtitle="Slip duration and critical path impact ranking across active work packages"
+                    className="border-0 p-0 shadow-none"
+                  />
+                )}
+              </div>
+            </div>
           </details>
+        )}
+
+        {/* ========================================================= */}
+        {/* 6. SCHEDULE VARIANCE CONTROL TABLE (Feature 18: Saved Views) */}
+        {/* Compact, crisp activity-level tracking with highlighted CPM rows */}
+        {/* ========================================================= */}
+        {visibleSections.variance && (
+          <section id="variance-table" aria-labelledby="variance-table-heading" className="bg-white border border-[#D7E1E8] border-l-4 border-l-[#0F6574] rounded-lg p-4 sm:p-6 shadow-xs space-y-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D7E1E8] gap-2">
+              <div>
+                <span className="text-[11px] font-mono font-medium uppercase text-[#526779] tracking-wider">
+                  Critical Path Activity Tracking
+                </span>
+                <div className="flex items-center gap-2">
+                  <h2 id="variance-table-heading" className="text-base sm:text-lg font-bold text-[#172B3A] tracking-tight">
+                    Schedule Variance Control Table
+                  </h2>
+                  <TermHelp term="variance" />
+                </div>
+                <p className="text-xs text-[#526779] mt-0.5">
+                  Activity-level audit comparing planned finish to actual completion and slip variance.
+                </p>
+              </div>
+
+              {/* Feature 18: Saved Table Views & Preset Filters */}
+              <div className="flex items-center gap-2 flex-wrap">
+                <div className="flex items-center gap-1 bg-[#F4F7FA] border border-[#D7E1E8] rounded p-0.5 text-xs">
+                  <span className="text-[11px] font-medium text-[#526779] px-1.5 flex items-center gap-1">
+                    <Filter className="w-3 h-3 text-[#526779]" /> Filter:
+                  </span>
+                  {[
+                    { id: 'all', label: 'All (6)' },
+                    { id: 'critical', label: 'Critical Path (3)' },
+                    { id: 'delayed', label: 'Delayed Slips (3)' },
+                    { id: 'completed', label: 'Completed (1)' },
+                  ].map((preset) => (
+                    <button
+                      key={preset.id}
+                      type="button"
+                      onClick={() => setVarianceTableFilter(preset.id as any)}
+                      className={`px-2 py-0.5 rounded text-[11px] font-medium transition-colors cursor-pointer ${
+                        varianceTableFilter === preset.id
+                          ? 'bg-[#0F6574] text-white font-bold shadow-2xs'
+                          : 'text-[#526779] hover:text-[#172B3A]'
+                      }`}
+                    >
+                      {preset.label}
+                    </button>
+                  ))}
+                </div>
+
+                <Link
+                  href="/variance"
+                  className="text-xs text-[#0F6574] hover:underline font-semibold inline-flex items-center gap-1"
+                >
+                  Full Ledger <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+              </div>
+            </div>
+
+            <div className="overflow-x-auto border border-[#D7E1E8] rounded-lg">
+              <table className="w-full min-w-[640px] text-left border-collapse text-xs">
+                <thead className="bg-[#F4F7FA] border-b border-[#D7E1E8] text-[#526779] uppercase font-semibold text-[11px] tracking-wider h-10">
+                  <tr>
+                    <th className="py-2.5 px-3">Activity</th>
+                    <th className="py-2.5 px-3">Planned Finish</th>
+                    <th className="py-2.5 px-3">Actual Finish</th>
+                    <th className="py-2.5 px-3 flex items-center gap-1">
+                      Variance
+                      <TermHelp term="float" />
+                    </th>
+                    <th className="py-2.5 px-3">Status</th>
+                    <th className="py-2.5 px-3 text-right">Action</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-[#D7E1E8]/60 text-[#172B3A]">
+                  {filteredVarianceItems.map((item) => (
+                    <tr
+                      key={item.id}
+                      className={`h-10 hover:bg-[#F9FAFC] transition-colors ${
+                        item.isCriticalPath && item.varianceDays > 0 ? 'bg-[#FFF9F8]' : ''
+                      }`}
+                    >
+                      <td className="py-2.5 px-3 font-medium">
+                        <div className="flex items-center gap-2">
+                          <span className="font-mono font-bold text-[#0F6574]">{item.id}</span>
+                          <span className="text-[#172B3A] truncate max-w-xs">{item.name}</span>
+                          {item.isCriticalPath && (
+                            <span className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-[#FBEFEE] text-[#B43D47] border border-[#E8B6BA]">
+                              CPM
+                            </span>
+                          )}
+                        </div>
+                      </td>
+                      <td className="py-2.5 px-3 font-mono text-[#526779]">{item.plannedFinish}</td>
+                      <td className="py-2.5 px-3 font-mono font-medium text-[#172B3A]">{item.actualFinish}</td>
+                      <td className="py-2.5 px-3">
+                        <span className={`font-mono font-bold px-1.5 py-0.5 rounded ${item.varianceDays > 0 ? 'bg-[#FBEFEE] text-[#B43D47] border border-[#E8B6BA]' : 'text-[#187A6A]'}`}>
+                          {item.varianceDays === 0 ? '0d' : `+${item.varianceDays}d`}
+                        </span>
+                      </td>
+                      <td className="py-2.5 px-3">
+                        <StatusBadge status={item.status} size="sm" />
+                      </td>
+                      <td className="py-2.5 px-3 text-right">
+                        <button
+                          type="button"
+                          onClick={() => openActivityDrawer(item.id)}
+                          className="px-2.5 py-1 text-xs text-[#0F6574] hover:bg-[#EDF5F8] border border-[#B3CBE0] rounded font-medium transition-colors cursor-pointer"
+                        >
+                          Inspect
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </section>
+        )}
+
+        {/* =========================================================================
+            7. DECISIONS & VERIFIED MILESTONES (Streamlined Executive Ledger)
+            ========================================================================= */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+          {/* Column 1: Pending Match Approvals */}
+          {visibleSections.pendingMatches && (
+            <section aria-labelledby="pending-approvals-heading" className="bg-white border border-[#D7E1E8] rounded-lg p-4 sm:p-5 shadow-xs space-y-3">
+              <div className="flex items-center justify-between pb-2 border-b border-[#D7E1E8]">
+                <div className="flex items-center gap-2">
+                  <ShieldCheck className="w-4 h-4 text-[#0F6574]" />
+                  <h2 id="pending-approvals-heading" className="text-sm sm:text-base font-bold text-[#172B3A]">
+                    Pending Schedule Links
+                  </h2>
+                  <span className="px-2 py-0.5 rounded-full bg-[#FFF8E6] text-[#9C5A08] border border-[#F0D4A6] text-[10px] font-mono font-bold">
+                    {reviewEvents.length} Actions
+                  </span>
+                </div>
+                <Link href="/review" className="text-xs text-[#0F6574] hover:underline font-semibold">
+                  Open Review Center &rarr;
+                </Link>
+              </div>
+
+              {reviewEvents.length === 0 ? (
+                <div className="p-6 text-center bg-[#F4F7FA] border border-[#D7E1E8] rounded-lg">
+                  <CheckCircle2 className="w-6 h-6 text-[#187A6A] mx-auto mb-1.5" />
+                  <p className="text-xs font-bold text-[#172B3A]">No pending review items</p>
+                  <p className="text-[11px] text-[#526779] mt-0.5">
+                    All field updates are linked and verified with the baseline.
+                  </p>
+                </div>
+              ) : (
+                <div className="divide-y divide-[#D7E1E8]">
+                  {reviewEvents.slice(0, 3).map((evt) => (
+                    <div key={evt.id} className="py-2.5 flex items-center justify-between gap-3 text-xs">
+                      <div className="min-w-0 space-y-0.5">
+                        <div className="flex items-center gap-2">
+                          <span className="font-mono font-bold text-[#0F6574] text-[11px]">{evt.id}</span>
+                          <ConfidenceBadge score={evt.confidence} size="sm" />
+                        </div>
+                        <p className="text-xs text-[#172B3A] font-medium truncate max-w-sm">
+                          {evt.rawText}
+                        </p>
+                        <div className="text-[10px] text-[#526779] flex items-center gap-1">
+                          <span>Target:</span>
+                          <strong className="text-[#172B3A] font-mono">{evt.matchedActivityId || 'Unassigned'}</strong>
+                        </div>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => setSelectedReviewModalEvent(evt)}
+                        className="px-2.5 py-1 text-xs bg-white hover:bg-[#EDF5F8] text-[#0F6574] border border-[#B3CBE0] rounded font-semibold transition-colors flex-shrink-0 cursor-pointer shadow-2xs"
+                      >
+                        Review
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </section>
+          )}
+
+          {/* Column 2: Verified Milestones Sync History (Collapsible Historical Stream) */}
+          {visibleSections.milestones && (
+            <details className="group bg-white border border-[#D7E1E8] rounded-lg p-4 sm:p-5 shadow-xs" open>
+              <summary className="flex items-center justify-between cursor-pointer list-none select-none">
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-[#187A6A]" />
+                  <h2 id="milestones-heading" className="text-sm sm:text-base font-bold text-[#172B3A]">
+                    Verified Progress History ({verifiedMilestones.length})
+                  </h2>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-xs text-[#0F6574] font-semibold group-open:hidden">View History &darr;</span>
+                  <span className="text-xs text-[#0F6574] font-semibold hidden group-open:inline">Hide History &uarr;</span>
+                </div>
+              </summary>
+
+              <div className="pt-3 mt-3 border-t border-[#D7E1E8] divide-y divide-[#D7E1E8]">
+                {verifiedMilestones.map((m) => (
+                  <div key={m.id} className="py-2.5 flex items-center justify-between gap-3 text-xs">
+                    <div className="min-w-0 space-y-0.5">
+                      <div className="flex items-center gap-2">
+                        <span className="font-mono font-bold text-[#187A6A] text-[11px] flex items-center gap-1">
+                          <Check className="w-3 h-3 text-[#187A6A]" />
+                          {m.activityId}
+                        </span>
+                        <span className="text-[10px] text-[#526779] font-mono">{m.verifiedDate}</span>
+                      </div>
+                      <p className="text-xs text-[#172B3A] font-medium">{m.title}</p>
+                      <p className="text-[11px] text-[#526779]">{m.progress} • Certified by {m.auditor}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </details>
+          )}
         </div>
       </StateWrapper>
 
