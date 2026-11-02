@@ -18,11 +18,11 @@ export const BUTTON_VARIANTS: Record<ButtonVariant, string> = {
   primary:
     'bg-[#0F6B68] hover:bg-[#135A72] active:bg-[#0F4A5E] text-white border border-[#0F6B68] shadow-xs disabled:bg-[#7B8798] disabled:border-[#7B8798]',
   secondary:
-    'bg-white hover:bg-[#EAF0F5] active:bg-[#D8E2EA] text-[#142C3F] border border-[#D8E2EA] hover:border-[#CBD5E1] shadow-xs disabled:text-[#7B8798] disabled:border-[#D8E2EA]',
+    'bg-white hover:bg-[#EAF1F5] active:bg-[#D6E1E9] text-[#1A2E42] border border-[#D6E1E9] hover:border-[#CBD5E1] shadow-xs disabled:text-[#7B8798] disabled:border-[#D6E1E9]',
   tertiary:
-    'bg-transparent hover:bg-[#EAF0F5] active:bg-[#D8E2EA] text-[#526779] hover:text-[#142C3F] border border-transparent disabled:text-[#7B8798]',
+    'bg-transparent hover:bg-[#EAF1F5] active:bg-[#D6E1E9] text-[#52687B] hover:text-[#1A2E42] border border-transparent disabled:text-[#7B8798]',
   danger:
-    'bg-[#FCE8E4] hover:bg-[#F8E3E1] active:bg-[#F4D0CC] text-[#A24335] border border-[#E4B0AA] shadow-xs disabled:text-[#7B8798]',
+    'bg-[#FDEEED] hover:bg-[#F8E3E1] active:bg-[#F4D0CC] text-[#A44339] border border-[#E4B0AA] shadow-xs disabled:text-[#7B8798]',
 };
 
 export const BUTTON_SIZES: Record<ButtonSize, string> = {

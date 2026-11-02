@@ -261,7 +261,7 @@ export function Sidebar({ collapsed, onToggle, mobileMenuOpen, onCloseMobile }: 
 
   return (
     <aside
-      className={`fixed top-14 bottom-0 left-0 bg-white border-r border-[#D8E2EA] z-30 transition-all duration-200 flex flex-col ${
+      className={`fixed top-14 bottom-0 left-0 bg-white border-r border-[#D6E1E9] z-30 transition-all duration-200 flex flex-col ${
         collapsed ? 'w-16' : 'w-[248px]'
       } ${
         mobileMenuOpen
@@ -271,14 +271,14 @@ export function Sidebar({ collapsed, onToggle, mobileMenuOpen, onCloseMobile }: 
     >
       {/* Admin-only Workspace Switcher (Only visible to privileged Admin accounts) */}
       {role === 'admin' && (
-        <div ref={switcherRef} className="p-2 border-b border-[#D8E2EA] bg-[#F3F6FA]">
+        <div ref={switcherRef} className="p-2 border-b border-[#D6E1E9] bg-[#F4F7FB]">
           {!collapsed ? (
             <div className="space-y-1">
               <div className="flex items-center justify-between px-1">
-                <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#526779]">
+                <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#52687B]">
                   CURRENT WORKSPACE
                 </span>
-                <span className="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded bg-[#EAF0F5] text-[#0F6B68] border border-[#D8E2EA]">
+                <span className="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded bg-[#EAF1F5] text-[#0F6B68] border border-[#D6E1E9]">
                   {activeWorkspace.badge}
                 </span>
               </div>
@@ -287,7 +287,7 @@ export function Sidebar({ collapsed, onToggle, mobileMenuOpen, onCloseMobile }: 
                 <button
                   type="button"
                   onClick={() => setWorkspaceSwitcherOpen(!workspaceSwitcherOpen)}
-                  className="w-full flex items-center justify-between px-2.5 py-1.5 rounded-md bg-white border border-[#D8E2EA] hover:border-[#0F6B68] shadow-2xs text-xs font-semibold text-[#142C3F] transition-colors cursor-pointer"
+                  className="w-full flex items-center justify-between px-2.5 py-1.5 rounded-md bg-white border border-[#D6E1E9] hover:border-[#0F6B68] shadow-2xs text-xs font-semibold text-[#1A2E42] transition-colors cursor-pointer"
                   aria-haspopup="true"
                   aria-expanded={workspaceSwitcherOpen}
                   title="Switch between authorized admin workspaces"
@@ -297,14 +297,14 @@ export function Sidebar({ collapsed, onToggle, mobileMenuOpen, onCloseMobile }: 
                     <span className="truncate">{activeWorkspace.label}</span>
                   </div>
                   <ChevronDown
-                    className={`w-3.5 h-3.5 text-[#526779] flex-shrink-0 transition-transform duration-150 ${
+                    className={`w-3.5 h-3.5 text-[#52687B] flex-shrink-0 transition-transform duration-150 ${
                       workspaceSwitcherOpen ? 'rotate-180 text-[#0F6B68]' : ''
                     }`}
                   />
                 </button>
 
                 {workspaceSwitcherOpen && (
-                  <div className="absolute top-full left-0 right-0 mt-1 p-1 bg-white border border-[#D8E2EA] rounded-lg shadow-lg z-50 space-y-0.5">
+                  <div className="absolute top-full left-0 right-0 mt-1 p-1 bg-white border border-[#D6E1E9] rounded-lg shadow-lg z-50 space-y-0.5">
                     {ADMIN_WORKSPACES.map((ws) => {
                       const isCurrent = activeWorkspace.key === ws.key;
                       return (
@@ -317,14 +317,14 @@ export function Sidebar({ collapsed, onToggle, mobileMenuOpen, onCloseMobile }: 
                           }}
                           className={`w-full flex items-center justify-between px-2.5 py-2 rounded-md text-xs transition-colors ${
                             isCurrent
-                              ? 'bg-[#EAF0F5] text-[#0F6B68] font-bold'
-                              : 'text-[#142C3F] hover:bg-[#EAF0F5] font-medium'
+                              ? 'bg-[#EAF1F5] text-[#0F6B68] font-bold'
+                              : 'text-[#1A2E42] hover:bg-[#EAF1F5] font-medium'
                           }`}
                         >
                           <div className="flex items-center gap-2 min-w-0">
                             <ws.icon
                               className={`w-3.5 h-3.5 flex-shrink-0 ${
-                                isCurrent ? 'text-[#0F6B68]' : 'text-[#526779]'
+                                isCurrent ? 'text-[#0F6B68]' : 'text-[#52687B]'
                               }`}
                             />
                             <span className="truncate">{ws.label}</span>
@@ -350,7 +350,7 @@ export function Sidebar({ collapsed, onToggle, mobileMenuOpen, onCloseMobile }: 
         {activeNavGroups.map((group) => (
           <div key={group.group} className="space-y-0.5">
             {!collapsed && (
-              <h4 className="px-3 pt-2 pb-1 text-[11px] font-semibold uppercase tracking-wider text-[#526779] select-none">
+              <h4 className="px-3 pt-2 pb-1 text-[11px] font-semibold uppercase tracking-wider text-[#52687B] select-none">
                 {group.group}
               </h4>
             )}
@@ -372,8 +372,8 @@ export function Sidebar({ collapsed, onToggle, mobileMenuOpen, onCloseMobile }: 
                   onClick={onCloseMobile}
                   className={`flex items-center gap-2 px-3 py-2.5 md:py-1.5 min-h-[44px] md:min-h-0 rounded-md text-xs transition-colors relative group ${
                     isActive
-                      ? 'bg-[#EAF0F5] text-[#0F6B68] font-semibold'
-                      : 'text-[#526779] hover:bg-[#EAF0F5] hover:text-[#142C3F] font-normal'
+                      ? 'bg-[#EAF1F5] text-[#0F6B68] font-semibold'
+                      : 'text-[#52687B] hover:bg-[#EAF1F5] hover:text-[#1A2E42] font-normal'
                   }`}
                   title={item.subtitle ? `${item.label} — ${item.subtitle}` : (item.badge !== undefined ? `${item.label} [${item.badge}]` : item.label)}
                 >
@@ -384,7 +384,7 @@ export function Sidebar({ collapsed, onToggle, mobileMenuOpen, onCloseMobile }: 
 
                   <item.icon
                     className={`w-4 h-4 flex-shrink-0 ${
-                      isActive ? 'text-[#0F6B68]' : 'text-[#526779] group-hover:text-[#142C3F]'
+                      isActive ? 'text-[#0F6B68]' : 'text-[#52687B] group-hover:text-[#1A2E42]'
                     }`}
                   />
 
@@ -394,7 +394,7 @@ export function Sidebar({ collapsed, onToggle, mobileMenuOpen, onCloseMobile }: 
                       {item.badge !== undefined && (
                         <span
                           className={`ml-auto pl-2 flex-shrink-0 text-[11px] font-mono leading-none font-medium ${
-                            isActive ? 'text-[#0F6B68]' : 'text-[#526779]'
+                            isActive ? 'text-[#0F6B68]' : 'text-[#52687B]'
                           }`}
                         >
                           [{item.badge}]
@@ -410,22 +410,22 @@ export function Sidebar({ collapsed, onToggle, mobileMenuOpen, onCloseMobile }: 
       </div>
 
       {/* Footer collapse button - clean and free of technical telemetry */}
-      <div className="p-2 border-t border-[#D8E2EA] bg-[#F3F6FA]">
+      <div className="p-2 border-t border-[#D6E1E9] bg-[#F4F7FB]">
         <button
           onClick={onToggle}
           className={`w-full flex items-center ${
             collapsed ? 'justify-center p-2' : 'justify-between px-3 py-1.5'
-          } text-xs text-[#526779] hover:text-[#142C3F] hover:bg-white rounded border border-transparent hover:border-[#D8E2EA] transition-colors cursor-pointer`}
+          } text-xs text-[#52687B] hover:text-[#1A2E42] hover:bg-white rounded border border-transparent hover:border-[#D6E1E9] transition-colors cursor-pointer`}
           aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
           title={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
         >
           {!collapsed && (
-            <span className="text-[11px] font-medium text-[#526779]">Collapse sidebar</span>
+            <span className="text-[11px] font-medium text-[#52687B]">Collapse sidebar</span>
           )}
           {collapsed ? (
-            <ChevronRight className="w-4 h-4 text-[#526779]" />
+            <ChevronRight className="w-4 h-4 text-[#52687B]" />
           ) : (
-            <ChevronLeft className="w-4 h-4 text-[#526779]" />
+            <ChevronLeft className="w-4 h-4 text-[#52687B]" />
           )}
         </button>
       </div>

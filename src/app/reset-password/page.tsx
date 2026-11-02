@@ -124,19 +124,19 @@ function ResetPasswordForm() {
   return (
     <div className="w-full max-w-[420px] mx-auto py-8">
       {/* Centered Authentication Panel */}
-      <div className="bg-white border border-[#D8E2EA] rounded-lg shadow-sm overflow-hidden">
+      <div className="bg-white border border-[#D6E1E9] rounded-lg shadow-sm overflow-hidden">
         {/* Header with PLnEX branding */}
-        <div className="px-6 pt-7 pb-4 text-center border-b border-[#D8E2EA] bg-white">
+        <div className="px-6 pt-7 pb-4 text-center border-b border-[#D6E1E9] bg-white">
           <div className="inline-flex items-center justify-center w-10 h-10 rounded-md bg-[#0F6B68] text-white font-black text-lg tracking-tighter mb-3 shadow-xs">
             PX
           </div>
-          <h1 className="text-xl font-bold text-[#142C3F] tracking-tight leading-snug">
+          <h1 className="text-xl font-bold text-[#1A2E42] tracking-tight leading-snug">
             PL<span className="text-[#0F6B68]">n</span>EX
           </h1>
           <p className="text-xs font-semibold text-[#0F6B68] uppercase tracking-wider font-mono mt-0.5">
             Planning-to-Execution Bridge
           </p>
-          <p className="text-[11px] text-[#526779] mt-1">
+          <p className="text-[11px] text-[#52687B] mt-1">
             Oil India Limited • Security Credentials Reset
           </p>
         </div>
@@ -144,17 +144,17 @@ function ResetPasswordForm() {
         {/* State 1: Token Invalid */}
         {pageState === 'token_invalid' && (
           <div className="p-6 md:p-8 space-y-4 text-center">
-            <div className="w-12 h-12 rounded-full bg-[#FCE8E4] border border-[#E4B0AA] flex items-center justify-center text-[#A24335] mx-auto">
+            <div className="w-12 h-12 rounded-full bg-[#FDEEED] border border-[#E4B0AA] flex items-center justify-center text-[#A44339] mx-auto">
               <AlertCircle className="w-6 h-6" />
             </div>
             <div>
-              <h2 className="text-sm font-bold text-[#142C3F]">Invalid Reset Token</h2>
-              <p className="text-xs text-[#526779] mt-2 leading-relaxed">
+              <h2 className="text-sm font-bold text-[#1A2E42]">Invalid Reset Token</h2>
+              <p className="text-xs text-[#52687B] mt-2 leading-relaxed">
                 The password reset token in this URL is unrecognized, malformed, or has already been consumed.
               </p>
             </div>
-            <div className="p-3 bg-[#F3F6FA] border border-[#D8E2EA] rounded text-[11px] text-[#526779] font-mono text-left space-y-0.5">
-              <div>Status: <span className="text-[#A24335] font-semibold">TOKEN_SIGNATURE_MISMATCH</span></div>
+            <div className="p-3 bg-[#F4F7FB] border border-[#D6E1E9] rounded text-[11px] text-[#52687B] font-mono text-left space-y-0.5">
+              <div>Status: <span className="text-[#A44339] font-semibold">TOKEN_SIGNATURE_MISMATCH</span></div>
               <div>Action: Request a fresh link from the recovery portal</div>
             </div>
             <div className="pt-2">
@@ -172,18 +172,18 @@ function ResetPasswordForm() {
         {/* State 2: Token Expired */}
         {pageState === 'token_expired' && (
           <div className="p-6 md:p-8 space-y-4 text-center">
-            <div className="w-12 h-12 rounded-full bg-[#FFF1D3] border border-[#F0D4A6] flex items-center justify-center text-[#8C5311] mx-auto">
+            <div className="w-12 h-12 rounded-full bg-[#FEF4E6] border border-[#F0D4A6] flex items-center justify-center text-[#8C5311] mx-auto">
               <Clock className="w-6 h-6" />
             </div>
             <div>
-              <h2 className="text-sm font-bold text-[#142C3F]">Reset Link Expired</h2>
-              <p className="text-xs text-[#526779] mt-2 leading-relaxed">
+              <h2 className="text-sm font-bold text-[#1A2E42]">Reset Link Expired</h2>
+              <p className="text-xs text-[#52687B] mt-2 leading-relaxed">
                 For security compliance, password reset links are single-use and expire after 60 minutes.
               </p>
             </div>
-            <div className="p-3 bg-[#F3F6FA] border border-[#D8E2EA] rounded text-[11px] text-[#526779] font-mono text-left space-y-0.5">
+            <div className="p-3 bg-[#F4F7FB] border border-[#D6E1E9] rounded text-[11px] text-[#52687B] font-mono text-left space-y-0.5">
               <div>Validity Window: <span className="text-[#8C5311] font-semibold">EXPIRED (&gt; 60 mins)</span></div>
-              <div>Single-Use Token: <span className="text-[#142C3F]">Decommissioned</span></div>
+              <div>Single-Use Token: <span className="text-[#1A2E42]">Decommissioned</span></div>
             </div>
             <div className="pt-2">
               <Link
@@ -200,16 +200,16 @@ function ResetPasswordForm() {
         {/* State 3: Success State */}
         {pageState === 'success' && (
           <div className="p-6 md:p-8 space-y-4 text-center">
-            <div className="w-12 h-12 rounded-full bg-[#E4F4EC] border border-[#B8DCC9] flex items-center justify-center text-[#2E7D5B] mx-auto">
+            <div className="w-12 h-12 rounded-full bg-[#E5F6EE] border border-[#B8DCC9] flex items-center justify-center text-[#2E7D5B] mx-auto">
               <CheckCircle2 className="w-6 h-6" />
             </div>
             <div>
-              <h2 className="text-sm font-bold text-[#142C3F]">Password Successfully Reset</h2>
-              <p className="text-xs text-[#526779] mt-1 leading-relaxed">
+              <h2 className="text-sm font-bold text-[#1A2E42]">Password Successfully Reset</h2>
+              <p className="text-xs text-[#52687B] mt-1 leading-relaxed">
                 Your new security password has been updated in the Oil India central directory.
               </p>
             </div>
-            <div className="w-full bg-[#D8E2EA] h-1.5 rounded-full overflow-hidden">
+            <div className="w-full bg-[#D6E1E9] h-1.5 rounded-full overflow-hidden">
               <div className="h-full bg-[#2E7D5B] rounded-full w-full" />
             </div>
             <span className="inline-flex items-center gap-2 text-xs text-[#0F6B68] font-medium font-mono">
@@ -232,16 +232,16 @@ function ResetPasswordForm() {
         {(pageState === 'form' || pageState === 'submitting') && (
           <form onSubmit={handleSubmit} className="p-6 md:p-6 space-y-4">
             <div>
-              <h2 className="text-sm font-bold text-[#142C3F]">Create New Password</h2>
-              <p className="text-xs text-[#526779] mt-0.5 leading-relaxed">
+              <h2 className="text-sm font-bold text-[#1A2E42]">Create New Password</h2>
+              <p className="text-xs text-[#52687B] mt-0.5 leading-relaxed">
                 Enter and confirm your new password for your Oil India project controls account.
               </p>
             </div>
 
             {/* New Password Input */}
             <div className="space-y-2">
-              <label htmlFor="new-password" className="block text-xs font-semibold text-[#142C3F]">
-                New Password <span className="text-[#A24335]">*</span>
+              <label htmlFor="new-password" className="block text-xs font-semibold text-[#1A2E42]">
+                New Password <span className="text-[#A44339]">*</span>
               </label>
               <div className="relative">
                 <Lock className="w-4 h-4 text-[#7B8798] absolute left-3 top-1/2 -translate-y-1/2" />
@@ -256,23 +256,23 @@ function ResetPasswordForm() {
                   disabled={pageState === 'submitting'}
                   placeholder="Minimum 8 characters"
                   autoComplete="new-password"
-                  className={`w-full pl-9 pr-9 py-2 text-xs bg-[#F3F6FA] border rounded-md text-[#142C3F] placeholder-[#7B8798] focus:bg-white outline-none transition-colors ${
+                  className={`w-full pl-9 pr-9 py-2 text-xs bg-[#F4F7FB] border rounded-md text-[#1A2E42] placeholder-[#7B8798] focus:bg-white outline-none transition-colors ${
                     passwordError
-                      ? 'border-[#A24335] bg-[#FCE8E4]/30'
-                      : 'border-[#D8E2EA] focus:border-[#0F6B68]'
+                      ? 'border-[#A44339] bg-[#FDEEED]/30'
+                      : 'border-[#D6E1E9] focus:border-[#0F6B68]'
                   }`}
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[#7B8798] hover:text-[#142C3F] p-1 rounded transition-colors"
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[#7B8798] hover:text-[#1A2E42] p-1 rounded transition-colors"
                   aria-label={showPassword ? 'Hide password' : 'Show password'}
                 >
                   {showPassword ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
                 </button>
               </div>
               {passwordError && (
-                <p className="text-[11px] text-[#A24335] flex items-center gap-1 mt-1 font-medium">
+                <p className="text-[11px] text-[#A44339] flex items-center gap-1 mt-1 font-medium">
                   <AlertCircle className="w-3 h-3 flex-shrink-0" />
                   <span>{passwordError}</span>
                 </p>
@@ -281,8 +281,8 @@ function ResetPasswordForm() {
 
             {/* Confirm Password Input */}
             <div className="space-y-2">
-              <label htmlFor="confirm-password" className="block text-xs font-semibold text-[#142C3F]">
-                Confirm Password <span className="text-[#A24335]">*</span>
+              <label htmlFor="confirm-password" className="block text-xs font-semibold text-[#1A2E42]">
+                Confirm Password <span className="text-[#A44339]">*</span>
               </label>
               <div className="relative">
                 <Lock className="w-4 h-4 text-[#7B8798] absolute left-3 top-1/2 -translate-y-1/2" />
@@ -297,25 +297,25 @@ function ResetPasswordForm() {
                   disabled={pageState === 'submitting'}
                   placeholder="Re-enter new password"
                   autoComplete="new-password"
-                  className={`w-full pl-9 pr-9 py-2 text-xs bg-[#F3F6FA] border rounded-md text-[#142C3F] placeholder-[#7B8798] focus:bg-white outline-none transition-colors ${
+                  className={`w-full pl-9 pr-9 py-2 text-xs bg-[#F4F7FB] border rounded-md text-[#1A2E42] placeholder-[#7B8798] focus:bg-white outline-none transition-colors ${
                     confirmPasswordError
-                      ? 'border-[#A24335] bg-[#FCE8E4]/30'
+                      ? 'border-[#A44339] bg-[#FDEEED]/30'
                       : confirmPassword && passwordsMatch
                       ? 'border-[#2E7D5B] focus:border-[#2E7D5B]'
-                      : 'border-[#D8E2EA] focus:border-[#0F6B68]'
+                      : 'border-[#D6E1E9] focus:border-[#0F6B68]'
                   }`}
                 />
                 <button
                   type="button"
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[#7B8798] hover:text-[#142C3F] p-1 rounded transition-colors"
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[#7B8798] hover:text-[#1A2E42] p-1 rounded transition-colors"
                   aria-label={showConfirmPassword ? 'Hide confirm password' : 'Show confirm password'}
                 >
                   {showConfirmPassword ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
                 </button>
               </div>
               {confirmPasswordError && (
-                <p className="text-[11px] text-[#A24335] flex items-center gap-1 mt-1 font-medium">
+                <p className="text-[11px] text-[#A44339] flex items-center gap-1 mt-1 font-medium">
                   <AlertCircle className="w-3 h-3 flex-shrink-0" />
                   <span>{confirmPasswordError}</span>
                 </p>
@@ -329,8 +329,8 @@ function ResetPasswordForm() {
             </div>
 
             {/* Password Requirements Checklist */}
-            <div className="p-3 bg-[#F3F6FA] border border-[#D8E2EA] rounded-md text-[11px] space-y-2">
-              <span className="font-semibold text-[#142C3F] block">Password Security Requirements:</span>
+            <div className="p-3 bg-[#F4F7FB] border border-[#D6E1E9] rounded-md text-[11px] space-y-2">
+              <span className="font-semibold text-[#1A2E42] block">Password Security Requirements:</span>
               <div className="grid grid-cols-2 gap-2 font-mono">
                 <div className={`flex items-center gap-2 ${passwordCriteria.minLength ? 'text-[#2E7D5B]' : 'text-[#7B8798]'}`}>
                   {passwordCriteria.minLength ? <Check className="w-3.5 h-3.5 text-[#2E7D5B]" /> : <span className="w-3.5 h-3.5 flex items-center justify-center">•</span>}
@@ -371,7 +371,7 @@ function ResetPasswordForm() {
             </button>
 
             {/* Back to Sign In Link */}
-            <div className="pt-3 border-t border-[#D8E2EA] flex items-center justify-center text-xs text-[#526779]">
+            <div className="pt-3 border-t border-[#D6E1E9] flex items-center justify-center text-xs text-[#52687B]">
               <Link href="/login" className="font-semibold text-[#0F6B68] hover:underline">
                 Return to Sign In
               </Link>
@@ -380,16 +380,16 @@ function ResetPasswordForm() {
         )}
 
         {/* Security & Compliance Footer */}
-        <div className="px-6 py-3 bg-[#F3F6FA] border-t border-[#D8E2EA] flex items-center justify-center gap-2 text-[11px] text-[#526779]">
+        <div className="px-6 py-3 bg-[#F4F7FB] border-t border-[#D6E1E9] flex items-center justify-center gap-2 text-[11px] text-[#52687B]">
           <Shield className="w-3.5 h-3.5 text-[#0F6B68] flex-shrink-0" />
           <span>Restricted to Authorized Infrastructure Personnel</span>
         </div>
       </div>
 
       {/* Quick Testing Sandbox Bar (For evaluator testing of all requested states) */}
-      <div className="mt-4 p-3 bg-white border border-[#D8E2EA] rounded-lg text-xs space-y-2">
-        <div className="flex items-center justify-between text-[11px] text-[#526779]">
-          <span className="font-semibold uppercase tracking-wider text-[#142C3F]">
+      <div className="mt-4 p-3 bg-white border border-[#D6E1E9] rounded-lg text-xs space-y-2">
+        <div className="flex items-center justify-between text-[11px] text-[#52687B]">
+          <span className="font-semibold uppercase tracking-wider text-[#1A2E42]">
             Evaluation Shortcuts (Token States)
           </span>
           <span className="font-mono">All States Tested</span>
@@ -398,21 +398,21 @@ function ResetPasswordForm() {
           <button
             type="button"
             onClick={() => handleQuickFill('valid')}
-            className="px-2 py-1 bg-[#EAF0F5] hover:bg-[#D8E2EA] text-[#142C3F] rounded text-[11px] font-mono transition-colors"
+            className="px-2 py-1 bg-[#EAF1F5] hover:bg-[#D6E1E9] text-[#1A2E42] rounded text-[11px] font-mono transition-colors"
           >
             Pre-fill Passwords
           </button>
           <button
             type="button"
             onClick={() => handleQuickFill('invalid_token')}
-            className="px-2 py-1 bg-[#FCE8E4] hover:bg-[#FCE8E4]/80 text-[#A24335] border border-[#E4B0AA] rounded text-[11px] font-mono transition-colors"
+            className="px-2 py-1 bg-[#FDEEED] hover:bg-[#FDEEED]/80 text-[#A44339] border border-[#E4B0AA] rounded text-[11px] font-mono transition-colors"
           >
             Test Invalid Token
           </button>
           <button
             type="button"
             onClick={() => handleQuickFill('expired_token')}
-            className="px-2 py-1 bg-[#FFF1D3] hover:bg-[#FFF1D3]/80 text-[#8C5311] border border-[#F0D4A6] rounded text-[11px] font-mono transition-colors"
+            className="px-2 py-1 bg-[#FEF4E6] hover:bg-[#FEF4E6]/80 text-[#8C5311] border border-[#F0D4A6] rounded text-[11px] font-mono transition-colors"
           >
             Test Expired Token
           </button>
@@ -426,9 +426,9 @@ export default function ResetPasswordPage() {
   return (
     <Suspense
       fallback={
-        <div className="flex items-center justify-center gap-2 p-12 text-sm text-[#526779]" role="status" aria-live="polite">
+        <div className="flex items-center justify-center gap-2 p-12 text-sm text-[#52687B]" role="status" aria-live="polite">
           <Loader2 className="w-4 h-4 animate-spin text-[#0F6B68] shrink-0" />
-          <span className="font-medium text-[#142C3F]">Loading security verification...</span>
+          <span className="font-medium text-[#1A2E42]">Loading security verification...</span>
         </div>
       }
     >

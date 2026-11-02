@@ -104,25 +104,25 @@ export function CoreFlowBanner({
 
   return (
     <div
-      className={`bg-white border border-[#D8E2EA] rounded-lg overflow-hidden shadow-xs ${className}`}
+      className={`bg-white border border-[#D6E1E9] rounded-lg overflow-hidden shadow-xs ${className}`}
       data-testid="plnex-core-flow-banner"
     >
       {/* Top Header Bar */}
-      <div className="px-4 py-3 bg-[#F3F6FA] border-b border-[#D8E2EA] flex items-center justify-between flex-wrap gap-2">
+      <div className="px-4 py-3 bg-[#F4F7FB] border-b border-[#D6E1E9] flex items-center justify-between flex-wrap gap-2">
         <div className="flex items-center gap-2">
           <div className="w-6 h-6 rounded bg-[#0F6B68]/10 text-[#0F6B68] flex items-center justify-center font-bold text-xs">
             Px
           </div>
-          <span className="font-bold text-xs uppercase tracking-wider text-[#142C3F]">
+          <span className="font-bold text-xs uppercase tracking-wider text-[#1A2E42]">
             PLnEX Schedule Linking Core Flow
           </span>
-          <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-white border border-[#D8E2EA] text-[#526779]">
+          <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-white border border-[#D6E1E9] text-[#52687B]">
             Candidate Match ≠ Final Authority
           </span>
         </div>
 
         <div className="flex items-center gap-3">
-          <span className="text-[11px] text-[#526779] hidden md:inline">
+          <span className="text-[11px] text-[#52687B] hidden md:inline">
             7-Step Pipeline: From Field Capture to Baseline Twin
           </span>
           {collapsible && (
@@ -157,10 +157,10 @@ export function CoreFlowBanner({
                   key={step.key}
                   className={`relative p-3 rounded-lg border transition-all flex flex-col justify-between ${
                     isGate
-                      ? 'border-[#0F6B68] bg-[#EAF0F5] ring-2 ring-[#0F6B68]/20'
+                      ? 'border-[#0F6B68] bg-[#EAF1F5] ring-2 ring-[#0F6B68]/20'
                       : isCurrent
-                      ? 'border-[#D8E2EA] bg-white shadow-xs'
-                      : 'border-[#D8E2EA] bg-[#FAFAFA]'
+                      ? 'border-[#D6E1E9] bg-white shadow-xs'
+                      : 'border-[#D6E1E9] bg-[#FAFAFA]'
                   }`}
                 >
                   <div>
@@ -169,7 +169,7 @@ export function CoreFlowBanner({
                         className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-mono font-bold ${
                           isGate
                             ? 'bg-[#0F6B68] text-white'
-                            : 'bg-[#EAF0F5] text-[#526779]'
+                            : 'bg-[#EAF1F5] text-[#52687B]'
                         }`}
                       >
                         {step.num}
@@ -179,11 +179,11 @@ export function CoreFlowBanner({
                           Human Gate
                         </span>
                       ) : step.isAi ? (
-                        <span className="text-[9px] font-semibold px-1.5 py-0.5 rounded uppercase bg-[#EAF0F5] text-[#526779]">
+                        <span className="text-[9px] font-semibold px-1.5 py-0.5 rounded uppercase bg-[#EAF1F5] text-[#52687B]">
                           Assisted
                         </span>
                       ) : (
-                        <span className="text-[9px] font-semibold px-1.5 py-0.5 rounded uppercase bg-[#EAF0F5] text-[#526779]">
+                        <span className="text-[9px] font-semibold px-1.5 py-0.5 rounded uppercase bg-[#EAF1F5] text-[#52687B]">
                           Field Record
                         </span>
                       )}
@@ -195,20 +195,20 @@ export function CoreFlowBanner({
                           isGate
                             ? 'text-[#0F6B68]'
                             : isCurrent
-                            ? 'text-[#142C3F]'
+                            ? 'text-[#1A2E42]'
                             : 'text-[#7B8798]'
                         }`}
                       />
                       <h4
                         className={`text-xs font-bold tracking-tight ${
-                          isGate ? 'text-[#0F6B68]' : 'text-[#142C3F]'
+                          isGate ? 'text-[#0F6B68]' : 'text-[#1A2E42]'
                         }`}
                       >
                         {step.title}
                       </h4>
                     </div>
 
-                    <p className="text-[10px] text-[#526779] leading-tight">
+                    <p className="text-[10px] text-[#52687B] leading-tight">
                       {step.subtitle}
                     </p>
                   </div>
@@ -225,13 +225,13 @@ export function CoreFlowBanner({
           </div>
 
           {/* Core Governance Disclaimer */}
-          <div className="p-3 bg-[#FFF1D3] border border-[#F0D4A6] rounded-lg flex items-start gap-2 text-xs">
-            <ShieldAlert className="w-4 h-4 text-[#845006] shrink-0 mt-0.5" />
+          <div className="p-3 bg-[#FEF4E6] border border-[#F0D4A6] rounded-lg flex items-start gap-2 text-xs">
+            <ShieldAlert className="w-4 h-4 text-[#965E0D] shrink-0 mt-0.5" />
             <div className="space-y-0.5">
-              <span className="font-bold text-[#142C3F]">
+              <span className="font-bold text-[#1A2E42]">
                 Strict Decoupling: Match Confidence is NOT Verification
               </span>
-              <p className="text-[#526779] leading-relaxed">
+              <p className="text-[#52687B] leading-relaxed">
                 A 94% score indicates candidate match alignment — it is <strong>never automatically verified</strong>. Candidate matches are never silently converted into verified progress without conscious confirmation by the Project Controls Manager or Site Engineer.
               </p>
             </div>

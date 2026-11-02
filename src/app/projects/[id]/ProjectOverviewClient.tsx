@@ -589,9 +589,9 @@ export default function ProjectOverviewPage() {
       L1: { bg: 'bg-[#0F6B68]/10', text: 'text-[#0F6B68]', border: 'border-[#0F6B68]/30' },
       L2: { bg: 'bg-[#3B6EA8]/10', text: 'text-[#3B6EA8]', border: 'border-[#3B6EA8]/30' },
       L3: { bg: 'bg-[#2E7D5B]/10', text: 'text-[#2E7D5B]', border: 'border-[#2E7D5B]/30' },
-      L4: { bg: 'bg-[#845006]/10', text: 'text-[#845006]', border: 'border-[#845006]/30' },
-      L5: { bg: 'bg-[#7B8798]/10', text: 'text-[#142C3F]', border: 'border-[#7B8798]/30' },
-      L6: { bg: 'bg-[#EAF0F5]', text: 'text-[#526779]', border: 'border-[#D8E2EA]' },
+      L4: { bg: 'bg-[#965E0D]/10', text: 'text-[#965E0D]', border: 'border-[#965E0D]/30' },
+      L5: { bg: 'bg-[#7B8798]/10', text: 'text-[#1A2E42]', border: 'border-[#7B8798]/30' },
+      L6: { bg: 'bg-[#EAF1F5]', text: 'text-[#52687B]', border: 'border-[#D6E1E9]' },
     };
 
     const colors = levelColorMap[node.level];
@@ -599,8 +599,8 @@ export default function ProjectOverviewPage() {
     return (
       <React.Fragment key={node.id}>
         <div
-          className={`group flex items-center justify-between py-2 px-3 hover:bg-[#F9FAFC] border-b border-[#D8E2EA] text-xs transition-colors ${
-            depth === 0 ? 'bg-[#F3F6FA] font-medium' : ''
+          className={`group flex items-center justify-between py-2 px-3 hover:bg-[#F9FAFC] border-b border-[#D6E1E9] text-xs transition-colors ${
+            depth === 0 ? 'bg-[#F4F7FB] font-medium' : ''
           }`}
           style={{ paddingLeft: `${Math.max(12, depth * 20 + 12)}px` }}
         >
@@ -609,7 +609,7 @@ export default function ProjectOverviewPage() {
               <button
                 type="button"
                 onClick={() => toggleNode(node.id)}
-                className="w-5 h-5 flex items-center justify-center rounded hover:bg-[#D8E2EA] text-[#526779] flex-shrink-0 transition-colors cursor-pointer"
+                className="w-5 h-5 flex items-center justify-center rounded hover:bg-[#D6E1E9] text-[#52687B] flex-shrink-0 transition-colors cursor-pointer"
                 aria-label={isExpanded ? 'Collapse node' : 'Expand node'}
               >
                 {isExpanded ? (
@@ -630,16 +630,16 @@ export default function ProjectOverviewPage() {
               {node.level}
             </span>
 
-            <span className="font-mono text-[11px] font-bold text-[#142C3F] flex-shrink-0">
+            <span className="font-mono text-[11px] font-bold text-[#1A2E42] flex-shrink-0">
               {node.code}
             </span>
 
-            <span className="truncate text-[#142C3F]" title={node.name}>
+            <span className="truncate text-[#1A2E42]" title={node.name}>
               {node.name}
             </span>
 
             {node.isCritical && (
-              <span className="px-1.5 py-0.5 rounded text-[9px] font-mono font-bold uppercase bg-[#FCE8E4] text-[#A24335] border border-[#E4B0AA] flex-shrink-0">
+              <span className="px-1.5 py-0.5 rounded text-[9px] font-mono font-bold uppercase bg-[#FDEEED] text-[#A44339] border border-[#E4B0AA] flex-shrink-0">
                 CRITICAL
               </span>
             )}
@@ -647,7 +647,7 @@ export default function ProjectOverviewPage() {
 
           <div className="flex items-center gap-3 flex-shrink-0 text-xs">
             <div className="w-24 flex items-center gap-2">
-              <span className="font-mono text-[11px] font-bold text-[#142C3F]">{node.actualProgress}%</span>
+              <span className="font-mono text-[11px] font-bold text-[#1A2E42]">{node.actualProgress}%</span>
               <ProgressBar
                 actual={node.actualProgress}
                 planned={node.plannedProgress}
@@ -659,7 +659,7 @@ export default function ProjectOverviewPage() {
 
             <span
               className={`w-12 text-right font-mono text-[11px] font-bold ${
-                node.variance < 0 ? 'text-[#A24335]' : 'text-[#2E7D5B]'
+                node.variance < 0 ? 'text-[#A44339]' : 'text-[#2E7D5B]'
               }`}
             >
               {node.variance > 0 ? `+${node.variance}%` : `${node.variance}%`}
@@ -698,23 +698,23 @@ export default function ProjectOverviewPage() {
         {/* 1. PROJECT HEADER */}
         {/* Consistent title, ID, breadcrumbs, and primary action bar */}
         {/* ========================================================= */}
-        <div className="bg-white border border-[#D8E2EA] rounded-lg p-4 sm:p-6 shadow-xs">
+        <div className="bg-white border border-[#D6E1E9] rounded-lg p-4 sm:p-6 shadow-xs">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
             <div>
               <div className="flex items-center gap-2 mb-2 flex-wrap">
                 <span className="font-mono text-xs font-bold px-2 py-0.5 rounded bg-[#0F6B68] text-white">
                   {project.id}
                 </span>
-                <span className="font-mono text-xs font-semibold text-[#526779] bg-[#EAF0F5] px-2 py-0.5 rounded border border-[#D8E2EA]">
+                <span className="font-mono text-xs font-semibold text-[#52687B] bg-[#EAF1F5] px-2 py-0.5 rounded border border-[#D6E1E9]">
                   {project.code}
                 </span>
                 <span className="text-[#7B8798] hidden sm:inline">&bull;</span>
-                <span className="text-xs text-[#526779] font-medium">
+                <span className="text-xs text-[#52687B] font-medium">
                   Project Controls Overview
                 </span>
               </div>
 
-              <h1 className="text-[28px] sm:text-3xl font-bold text-[#142C3F] tracking-tight">
+              <h1 className="text-[28px] sm:text-3xl font-bold text-[#1A2E42] tracking-tight">
                 {project.name}
               </h1>
             </div>
@@ -727,10 +727,10 @@ export default function ProjectOverviewPage() {
                   setActiveProjectId(project.id);
                   router.push('/schedule');
                 }}
-                className="px-4 py-2 text-xs font-semibold text-[#142C3F] bg-white hover:bg-[#EAF0F5] border border-[#D8E2EA] rounded-lg transition-colors inline-flex items-center gap-2 shadow-2xs cursor-pointer"
+                className="px-4 py-2 text-xs font-semibold text-[#1A2E42] bg-white hover:bg-[#EAF1F5] border border-[#D6E1E9] rounded-lg transition-colors inline-flex items-center gap-2 shadow-2xs cursor-pointer"
                 title="Open Master Schedule WBS"
               >
-                <Calendar className="w-3.5 h-3.5 text-[#526779]" />
+                <Calendar className="w-3.5 h-3.5 text-[#52687B]" />
                 <span>Open Schedule</span>
               </button>
 
@@ -747,13 +747,13 @@ export default function ProjectOverviewPage() {
               <Link
                 href="/matching"
                 onClick={() => setActiveProjectId(project.id)}
-                className="px-4 py-2 text-xs font-semibold text-[#142C3F] bg-white hover:bg-[#EAF0F5] border border-[#D8E2EA] rounded-lg transition-colors inline-flex items-center gap-2 shadow-2xs cursor-pointer"
+                className="px-4 py-2 text-xs font-semibold text-[#1A2E42] bg-white hover:bg-[#EAF1F5] border border-[#D6E1E9] rounded-lg transition-colors inline-flex items-center gap-2 shadow-2xs cursor-pointer"
                 title="View Match Verification Queue"
               >
-                <GitCompare className="w-3.5 h-3.5 text-[#845006]" />
+                <GitCompare className="w-3.5 h-3.5 text-[#965E0D]" />
                 <span>Review Queue</span>
                 {(project.openReviews || 0) > 0 && (
-                  <span className="px-1.5 py-0.5 rounded-full bg-[#845006] text-white text-[10px] font-mono font-bold">
+                  <span className="px-1.5 py-0.5 rounded-full bg-[#965E0D] text-white text-[10px] font-mono font-bold">
                     {project.openReviews}
                   </span>
                 )}
@@ -762,7 +762,7 @@ export default function ProjectOverviewPage() {
               <button
                 type="button"
                 onClick={() => setIsReportModalOpen(true)}
-                className="px-4 py-2 text-xs font-medium text-[#526779] hover:text-[#142C3F] bg-white hover:bg-[#EAF0F5] border border-[#D8E2EA] rounded-lg transition-colors inline-flex items-center gap-2 cursor-pointer"
+                className="px-4 py-2 text-xs font-medium text-[#52687B] hover:text-[#1A2E42] bg-white hover:bg-[#EAF1F5] border border-[#D6E1E9] rounded-lg transition-colors inline-flex items-center gap-2 cursor-pointer"
                 title="Open Project Dossier & Export Reports"
               >
                 <FileText className="w-3.5 h-3.5 text-[#0F6B68]" />
@@ -776,19 +776,19 @@ export default function ProjectOverviewPage() {
         {/* 2. PROJECT STATUS / METADATA */}
         {/* Compact, clean horizontal metadata strip */}
         {/* ========================================================= */}
-        <div className="bg-[#F3F6FA] border border-[#D8E2EA] rounded-lg p-3 sm:p-4 text-xs">
+        <div className="bg-[#F4F7FB] border border-[#D6E1E9] rounded-lg p-3 sm:p-4 text-xs">
           <div className="flex flex-wrap items-center justify-between gap-y-2 gap-x-4">
-            <div className="flex flex-wrap items-center gap-y-2 gap-x-3 text-[#526779]">
+            <div className="flex flex-wrap items-center gap-y-2 gap-x-3 text-[#52687B]">
               <div className="flex items-center gap-2">
-                <span className="font-semibold text-[#142C3F]">Status:</span>
+                <span className="font-semibold text-[#1A2E42]">Status:</span>
                 <StatusBadge status={project.status} size="sm" />
               </div>
 
               <span>&bull;</span>
 
               <div className="flex items-center gap-1">
-                <span className="font-semibold text-[#142C3F]">Schedule Version:</span>
-                <span className="font-mono text-[#142C3F]">
+                <span className="font-semibold text-[#1A2E42]">Schedule Version:</span>
+                <span className="font-mono text-[#1A2E42]">
                   {project.scheduleVersion || CANONICAL_SCHEDULE_VERSION_LABEL}
                 </span>
               </div>
@@ -797,20 +797,20 @@ export default function ProjectOverviewPage() {
 
               <div className="flex items-center gap-1">
                 <Clock className="w-3.5 h-3.5 text-[#0F6B68]" />
-                <span>Cutoff: <strong className="font-mono text-[#142C3F]">18 Sep 2026</strong></span>
+                <span>Cutoff: <strong className="font-mono text-[#1A2E42]">18 Sep 2026</strong></span>
               </div>
             </div>
 
-            <div className="flex flex-wrap items-center gap-y-2 gap-x-3 text-[#526779]">
+            <div className="flex flex-wrap items-center gap-y-2 gap-x-3 text-[#52687B]">
               <div className="flex items-center gap-1">
                 <Building2 className="w-3.5 h-3.5 text-[#7B8798]" />
-                <span>Client: <strong className="text-[#142C3F]">{project.organization}</strong></span>
+                <span>Client: <strong className="text-[#1A2E42]">{project.organization}</strong></span>
               </div>
 
               <span>&bull;</span>
 
               <div className="flex items-center gap-1">
-                <span>Contractor: <strong className="text-[#142C3F]">{project.contractor}</strong></span>
+                <span>Contractor: <strong className="text-[#1A2E42]">{project.contractor}</strong></span>
               </div>
 
               <span>&bull;</span>
@@ -827,13 +827,13 @@ export default function ProjectOverviewPage() {
         {/* 3. OVERALL PROGRESS */}
         {/* Focused physical earned progress bar (NOT a wall of KPI cards) */}
         {/* ========================================================= */}
-        <section aria-labelledby="overall-progress-heading" className="bg-white border border-[#D8E2EA] rounded-lg p-4 sm:p-4 sm:p-6 shadow-xs space-y-4">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D8E2EA] gap-2">
+        <section aria-labelledby="overall-progress-heading" className="bg-white border border-[#D6E1E9] rounded-lg p-4 sm:p-4 sm:p-6 shadow-xs space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D6E1E9] gap-2">
             <div>
-              <h2 id="overall-progress-heading" className="text-base sm:text-lg font-bold text-[#142C3F]">
+              <h2 id="overall-progress-heading" className="text-base sm:text-lg font-bold text-[#1A2E42]">
                 Overall Cumulative Progress
               </h2>
-              <p className="text-xs text-[#526779] mt-0.5">
+              <p className="text-xs text-[#52687B] mt-0.5">
                 Physical earned progress verified on site against Primavera P6 baseline envelope.
               </p>
             </div>
@@ -843,7 +843,7 @@ export default function ProjectOverviewPage() {
               <Link
                 href="/matching"
                 onClick={() => setActiveProjectId(project.id)}
-                className="px-3 py-1 rounded bg-[#FFF1D3] border border-[#F0D4A6] text-[#8C5311] font-semibold hover:bg-[#FCEFD9] transition-colors inline-flex items-center gap-1 cursor-pointer"
+                className="px-3 py-1 rounded bg-[#FEF4E6] border border-[#F0D4A6] text-[#8C5311] font-semibold hover:bg-[#FCEFD9] transition-colors inline-flex items-center gap-1 cursor-pointer"
               >
                 <AlertTriangle className="w-3 h-3" />
                 <span>{project.openReviews || 3} Pending Reviews</span>
@@ -852,13 +852,13 @@ export default function ProjectOverviewPage() {
               <button
                 type="button"
                 onClick={() => setIsDelayDrawerOpen(true)}
-                className="px-3 py-1 rounded bg-[#FCE8E4] border border-[#E4B0AA] text-[#A24335] font-semibold hover:bg-[#F8E3E1] transition-colors inline-flex items-center gap-1 cursor-pointer"
+                className="px-3 py-1 rounded bg-[#FDEEED] border border-[#E4B0AA] text-[#A44339] font-semibold hover:bg-[#F8E3E1] transition-colors inline-flex items-center gap-1 cursor-pointer"
               >
                 <TrendingDown className="w-3 h-3" />
                 <span>{project.delayedCount || 2} Critical Delays</span>
               </button>
 
-              <span className="px-3 py-1 rounded bg-[#E4F4EC] border border-[#B8DCC9] text-[#2E7D5B] font-mono font-bold text-[11px]">
+              <span className="px-3 py-1 rounded bg-[#E5F6EE] border border-[#B8DCC9] text-[#2E7D5B] font-mono font-bold text-[11px]">
                 Health Score: {MOCK_HEALTH_SCORE.overall}/100
               </span>
             </div>
@@ -868,21 +868,21 @@ export default function ProjectOverviewPage() {
           <div className="space-y-3">
             <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
               <div className="flex items-baseline gap-3">
-                <span className="text-3xl font-black font-mono text-[#142C3F]">
+                <span className="text-3xl font-black font-mono text-[#1A2E42]">
                   {project.overallProgress}%
                 </span>
-                <span className="text-xs text-[#526779]">
+                <span className="text-xs text-[#52687B]">
                   Verified Actual Earned Progress
                 </span>
                 <span className="text-xs text-[#7B8798]">&bull;</span>
-                <span className="text-xs font-mono text-[#526779]">
+                <span className="text-xs font-mono text-[#52687B]">
                   Target Baseline: <strong className="text-[#0F6B68]">{project.plannedProgress}%</strong>
                 </span>
               </div>
 
               <div className="flex items-center gap-2">
-                <span className="text-xs text-[#526779]">Schedule Variance:</span>
-                <span className="text-lg font-bold font-mono text-[#A24335]">
+                <span className="text-xs text-[#52687B]">Schedule Variance:</span>
+                <span className="text-lg font-bold font-mono text-[#A44339]">
                   {project.overallProgress - project.plannedProgress}%
                 </span>
                 <VarianceBadge daysDelay={project.status === 'delayed' ? 2 : 0} size="sm" />
@@ -925,16 +925,16 @@ export default function ProjectOverviewPage() {
         {/* 5. AREA PROGRESS */}
         {/* WBS Level 2 breakdown by operational plant areas */}
         {/* ========================================================= */}
-        <section aria-labelledby="area-progress-heading" className="bg-white border border-[#D8E2EA] rounded-lg p-4 sm:p-4 sm:p-6 shadow-xs space-y-4">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D8E2EA] gap-2">
+        <section aria-labelledby="area-progress-heading" className="bg-white border border-[#D6E1E9] rounded-lg p-4 sm:p-4 sm:p-6 shadow-xs space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D6E1E9] gap-2">
             <div>
               <div className="flex items-center gap-2">
                 <Layers className="w-4 h-4 text-[#0F6B68]" />
-                <h2 id="area-progress-heading" className="text-base sm:text-lg font-bold text-[#142C3F]">
+                <h2 id="area-progress-heading" className="text-base sm:text-lg font-bold text-[#1A2E42]">
                   Operational Area Progress (WBS Level 2)
                 </h2>
               </div>
-              <p className="text-xs text-[#526779] mt-0.5">
+              <p className="text-xs text-[#52687B] mt-0.5">
                 Physical progress and schedule health by battery limits and process units.
               </p>
             </div>
@@ -942,7 +942,7 @@ export default function ProjectOverviewPage() {
             <button
               type="button"
               onClick={() => setIsWbsDrawerOpen(true)}
-              className="px-3 py-1.5 text-xs font-semibold text-[#0F6B68] hover:bg-[#EAF0F5] border border-[#D8E2EA] rounded-md transition-colors inline-flex items-center gap-1 cursor-pointer self-start sm:self-center"
+              className="px-3 py-1.5 text-xs font-semibold text-[#0F6B68] hover:bg-[#EAF1F5] border border-[#D6E1E9] rounded-md transition-colors inline-flex items-center gap-1 cursor-pointer self-start sm:self-center"
             >
               <span>Explore Full 6-Level WBS</span>
               <ChevronRight className="w-3.5 h-3.5" />
@@ -954,27 +954,27 @@ export default function ProjectOverviewPage() {
             {operationalAreas.map((area) => (
               <div
                 key={area.id}
-                className="p-4 bg-[#F3F6FA] border border-[#D8E2EA] hover:border-[#0F6B68] rounded-lg transition-colors flex flex-col justify-between space-y-3"
+                className="p-4 bg-[#F4F7FB] border border-[#D6E1E9] hover:border-[#0F6B68] rounded-lg transition-colors flex flex-col justify-between space-y-3"
               >
                 <div>
                   <div className="flex items-center justify-between mb-2">
-                    <span className="font-mono text-[11px] font-bold text-[#0F6B68] px-1.5 py-0.5 bg-white border border-[#D8E2EA] rounded">
+                    <span className="font-mono text-[11px] font-bold text-[#0F6B68] px-1.5 py-0.5 bg-white border border-[#D6E1E9] rounded">
                       {area.code}
                     </span>
                     <StatusBadge status={area.status} size="sm" />
                   </div>
 
-                  <h3 className="text-xs font-bold text-[#142C3F]">
+                  <h3 className="text-xs font-bold text-[#1A2E42]">
                     {area.name}
                   </h3>
 
                   <div className="mt-2 space-y-1">
                     <div className="flex justify-between text-[11px] font-mono">
-                      <span>Actual: <strong className="text-[#142C3F]">{area.actualProgress}%</strong></span>
-                      <span className="text-[#526779]">Target: {area.plannedProgress}%</span>
+                      <span>Actual: <strong className="text-[#1A2E42]">{area.actualProgress}%</strong></span>
+                      <span className="text-[#52687B]">Target: {area.plannedProgress}%</span>
                       <span
                         className={`font-semibold ${
-                          area.variance < 0 ? 'text-[#A24335]' : 'text-[#2E7D5B]'
+                          area.variance < 0 ? 'text-[#A44339]' : 'text-[#2E7D5B]'
                         }`}
                       >
                         {area.variance > 0 ? `+${area.variance}%` : `${area.variance}%`}
@@ -990,8 +990,8 @@ export default function ProjectOverviewPage() {
                   </div>
                 </div>
 
-                <div className="pt-2 border-t border-[#D8E2EA] flex items-center justify-between text-xs">
-                  <span className="text-[11px] text-[#526779]">
+                <div className="pt-2 border-t border-[#D6E1E9] flex items-center justify-between text-xs">
+                  <span className="text-[11px] text-[#52687B]">
                     {area.children?.length || 0} Disciplines &bull; {area.delayDays > 0 ? `${area.delayDays}d slip` : 'On target'}
                   </span>
                   <button
@@ -1015,16 +1015,16 @@ export default function ProjectOverviewPage() {
         {/* 6. MAJOR DELAYS */}
         {/* Critical path slip, root causes, float erosion & mitigations */}
         {/* ========================================================= */}
-        <section aria-labelledby="major-delays-heading" className="bg-white border border-[#D8E2EA] rounded-lg p-4 sm:p-4 sm:p-6 shadow-xs space-y-4">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D8E2EA] gap-2">
+        <section aria-labelledby="major-delays-heading" className="bg-white border border-[#D6E1E9] rounded-lg p-4 sm:p-4 sm:p-6 shadow-xs space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D6E1E9] gap-2">
             <div>
               <div className="flex items-center gap-2">
-                <TrendingDown className="w-4 h-4 text-[#A24335]" />
-                <h2 id="major-delays-heading" className="text-base sm:text-lg font-bold text-[#142C3F]">
+                <TrendingDown className="w-4 h-4 text-[#A44339]" />
+                <h2 id="major-delays-heading" className="text-base sm:text-lg font-bold text-[#1A2E42]">
                   Major Schedule Delays &amp; Driving Variances
                 </h2>
               </div>
-              <p className="text-xs text-[#526779] mt-0.5">
+              <p className="text-xs text-[#52687B] mt-0.5">
                 Work packages on or near the Critical Path causing project finish date slippage.
               </p>
             </div>
@@ -1032,7 +1032,7 @@ export default function ProjectOverviewPage() {
             <button
               type="button"
               onClick={() => setIsDelayDrawerOpen(true)}
-              className="px-3 py-1.5 text-xs font-semibold text-[#0F6B68] hover:bg-[#EAF0F5] border border-[#D8E2EA] rounded-md transition-colors inline-flex items-center gap-1 cursor-pointer self-start sm:self-center"
+              className="px-3 py-1.5 text-xs font-semibold text-[#0F6B68] hover:bg-[#EAF1F5] border border-[#D6E1E9] rounded-md transition-colors inline-flex items-center gap-1 cursor-pointer self-start sm:self-center"
             >
               <span>Full Delay Chain Simulation</span>
               <ChevronRight className="w-3.5 h-3.5" />
@@ -1041,40 +1041,40 @@ export default function ProjectOverviewPage() {
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             {/* Primary Driving Delay */}
-            <div className="p-4 bg-[#FCE8E4] border border-[#E4B0AA] rounded-lg space-y-2 text-xs">
+            <div className="p-4 bg-[#FDEEED] border border-[#E4B0AA] rounded-lg space-y-2 text-xs">
               <div className="flex items-center justify-between gap-2 flex-wrap">
-                <span className="font-mono font-bold text-[#A24335]">
+                <span className="font-mono font-bold text-[#A44339]">
                   PIP-24-002: Weld Line 24-XX Field Joints &amp; NDT
                 </span>
-                <span className="px-2 py-0.5 rounded font-mono font-bold text-[#A24335] bg-white border border-[#E4B0AA] text-[11px]">
+                <span className="px-2 py-0.5 rounded font-mono font-bold text-[#A44339] bg-white border border-[#E4B0AA] text-[11px]">
                   +2 Days Critical Slip
                 </span>
               </div>
 
-              <p className="text-[11px] text-[#142C3F] leading-relaxed">
+              <p className="text-[11px] text-[#1A2E42] leading-relaxed">
                 <strong>Root Cause:</strong> Delayed delivery of 24-inch 600# carbon steel weld fittings from central stores warehouse voucher #4102 during monsoon transport disruption.
               </p>
 
               <div className="pt-2 border-t border-[#E4B0AA]/40 space-y-2">
-                <span className="text-[11px] font-bold text-[#142C3F] block">
+                <span className="text-[11px] font-bold text-[#1A2E42] block">
                   Downstream Successors Impacted:
                 </span>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px]">
                   <div className="p-2 bg-white rounded border border-[#E4B0AA]">
-                    <strong className="text-[#142C3F] block font-mono">PIP-24-003 [FS Precedence]</strong>
-                    <span className="text-[#526779]">Hydrostatic Pressure Test 150 bar</span>
-                    <span className="text-[#A24335] block font-semibold mt-0.5">Total float eroded to 0 days</span>
+                    <strong className="text-[#1A2E42] block font-mono">PIP-24-003 [FS Precedence]</strong>
+                    <span className="text-[#52687B]">Hydrostatic Pressure Test 150 bar</span>
+                    <span className="text-[#A44339] block font-semibold mt-0.5">Total float eroded to 0 days</span>
                   </div>
                   <div className="p-2 bg-white rounded border border-[#E4B0AA]">
-                    <strong className="text-[#142C3F] block font-mono">INS-02-005 [SS+3d Precedence]</strong>
-                    <span className="text-[#526779]">Pressure Transmitter Tubing</span>
-                    <span className="text-[#A24335] block font-semibold mt-0.5">Start date shifted by +2d</span>
+                    <strong className="text-[#1A2E42] block font-mono">INS-02-005 [SS+3d Precedence]</strong>
+                    <span className="text-[#52687B]">Pressure Transmitter Tubing</span>
+                    <span className="text-[#A44339] block font-semibold mt-0.5">Start date shifted by +2d</span>
                   </div>
                 </div>
               </div>
 
               <div className="pt-2 border-t border-[#E4B0AA]/40 flex items-center justify-between">
-                <span className="text-[11px] text-[#526779]">
+                <span className="text-[11px] text-[#52687B]">
                   Recovery: Second welding gang on night shift to recoup 2 days.
                 </span>
                 <button
@@ -1088,9 +1088,9 @@ export default function ProjectOverviewPage() {
             </div>
 
             {/* Secondary Near-Critical Delay */}
-            <div className="p-4 bg-[#FFF1D3] border border-[#F0D4A6] rounded-lg space-y-2 text-xs">
+            <div className="p-4 bg-[#FEF4E6] border border-[#F0D4A6] rounded-lg space-y-2 text-xs">
               <div className="flex items-center justify-between gap-2 flex-wrap">
-                <span className="font-mono font-bold text-[#845006]">
+                <span className="font-mono font-bold text-[#965E0D]">
                   ELE-11-032: Cable Tray Installation - Substation to Bay
                 </span>
                 <span className="px-2 py-0.5 rounded font-mono font-bold text-[#8C5311] bg-white border border-[#F0D4A6] text-[11px]">
@@ -1098,23 +1098,23 @@ export default function ProjectOverviewPage() {
                 </span>
               </div>
 
-              <p className="text-[11px] text-[#142C3F] leading-relaxed">
+              <p className="text-[11px] text-[#1A2E42] leading-relaxed">
                 <strong>Root Cause:</strong> Scaffolding tag clearance pending inspection by site HSE officer due to rain on Overhead Gallery Bay 1-4.
               </p>
 
               <div className="pt-2 border-t border-[#F0D4A6]/40 space-y-2">
-                <span className="text-[11px] font-bold text-[#142C3F] block">
+                <span className="text-[11px] font-bold text-[#1A2E42] block">
                   Downstream Successors Impacted:
                 </span>
                 <div className="p-2 bg-white rounded border border-[#F0D4A6] text-[11px]">
-                  <strong className="text-[#142C3F] block font-mono">ELE-06-004 [FS Precedence]</strong>
-                  <span className="text-[#526779]">Pull Cable Tray TR-04 Main Feeder</span>
-                  <span className="text-[#845006] block font-semibold mt-0.5">Available float reduced to 1 day</span>
+                  <strong className="text-[#1A2E42] block font-mono">ELE-06-004 [FS Precedence]</strong>
+                  <span className="text-[#52687B]">Pull Cable Tray TR-04 Main Feeder</span>
+                  <span className="text-[#965E0D] block font-semibold mt-0.5">Available float reduced to 1 day</span>
                 </div>
               </div>
 
               <div className="pt-2 border-t border-[#F0D4A6]/40 flex items-center justify-between">
-                <span className="text-[11px] text-[#526779]">
+                <span className="text-[11px] text-[#52687B]">
                   Recovery: Expedite HSE scaffolding handover inspection at 07:00 tomorrow.
                 </span>
                 <button
@@ -1133,16 +1133,16 @@ export default function ProjectOverviewPage() {
         {/* 7. RECENT EXECUTION */}
         {/* Clean, compact execution events and verified evidence feed */}
         {/* ========================================================= */}
-        <section aria-labelledby="recent-execution-heading" className="bg-white border border-[#D8E2EA] rounded-lg p-4 sm:p-4 sm:p-6 shadow-xs space-y-4">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D8E2EA] gap-2">
+        <section aria-labelledby="recent-execution-heading" className="bg-white border border-[#D6E1E9] rounded-lg p-4 sm:p-4 sm:p-6 shadow-xs space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D6E1E9] gap-2">
             <div>
               <div className="flex items-center gap-2">
                 <ClipboardList className="w-4 h-4 text-[#0F6B68]" />
-                <h2 id="recent-execution-heading" className="text-base sm:text-lg font-bold text-[#142C3F]">
+                <h2 id="recent-execution-heading" className="text-base sm:text-lg font-bold text-[#1A2E42]">
                   Recent Site Execution &amp; Evidence
                 </h2>
               </div>
-              <p className="text-xs text-[#526779] mt-0.5">
+              <p className="text-xs text-[#52687B] mt-0.5">
                 Continuously ingested site observations, weld inspections, and geotagged field media.
               </p>
             </div>
@@ -1151,7 +1151,7 @@ export default function ProjectOverviewPage() {
               <Link
                 href="/field"
                 onClick={() => setActiveProjectId(project.id)}
-                className="px-3 py-1.5 text-xs font-semibold text-[#0F6B68] hover:bg-[#EAF0F5] border border-[#D8E2EA] rounded-md transition-colors inline-flex items-center gap-1 cursor-pointer"
+                className="px-3 py-1.5 text-xs font-semibold text-[#0F6B68] hover:bg-[#EAF1F5] border border-[#D6E1E9] rounded-md transition-colors inline-flex items-center gap-1 cursor-pointer"
               >
                 <span>Execution Feed ({executionEvents.length})</span>
                 <ChevronRight className="w-3.5 h-3.5" />
@@ -1162,19 +1162,19 @@ export default function ProjectOverviewPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             {/* Column 1: Recent Execution Observations */}
             <div className="space-y-3">
-              <span className="text-[11px] font-semibold uppercase tracking-wider text-[#526779] block">
+              <span className="text-[11px] font-semibold uppercase tracking-wider text-[#52687B] block">
                 Execution Events
               </span>
 
               {executionEvents.slice(0, 3).map((event) => (
                 <div
                   key={event.id}
-                  className="p-3 bg-[#F3F6FA] border border-[#D8E2EA] hover:border-[#0F6B68] rounded-lg transition-colors space-y-2 text-xs"
+                  className="p-3 bg-[#F4F7FB] border border-[#D6E1E9] hover:border-[#0F6B68] rounded-lg transition-colors space-y-2 text-xs"
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <span className="font-mono font-bold text-[#0F6B68]">{event.id}</span>
-                      <span className="font-mono text-[10px] px-1.5 py-0.5 rounded bg-white text-[#526779] border border-[#D8E2EA]">
+                      <span className="font-mono text-[10px] px-1.5 py-0.5 rounded bg-white text-[#52687B] border border-[#D6E1E9]">
                         {event.source}
                       </span>
                     </div>
@@ -1184,13 +1184,13 @@ export default function ProjectOverviewPage() {
                     </div>
                   </div>
 
-                  <p className="text-[#142C3F] bg-white p-2 rounded border border-[#D8E2EA] text-[11px] italic">
+                  <p className="text-[#1A2E42] bg-white p-2 rounded border border-[#D6E1E9] text-[11px] italic">
                     &ldquo;{event.rawText}&rdquo;
                   </p>
 
-                  <div className="flex items-center justify-between text-[11px] text-[#526779] pt-0.5">
+                  <div className="flex items-center justify-between text-[11px] text-[#52687B] pt-0.5">
                     <div>
-                      Target: <strong className="text-[#142C3F] font-mono">{event.matchedActivityId || 'Unlinked'}</strong>
+                      Target: <strong className="text-[#1A2E42] font-mono">{event.matchedActivityId || 'Unlinked'}</strong>
                     </div>
                     {event.matchedActivityId && (
                       <button
@@ -1208,14 +1208,14 @@ export default function ProjectOverviewPage() {
 
             {/* Column 2: Recent Verified Evidence */}
             <div className="space-y-3">
-              <span className="text-[11px] font-semibold uppercase tracking-wider text-[#526779] block">
+              <span className="text-[11px] font-semibold uppercase tracking-wider text-[#52687B] block">
                 Verified Field Evidence Vault
               </span>
 
               {evidenceItems.slice(0, 3).map((item) => (
                 <div
                   key={item.id}
-                  className="p-3 bg-[#F3F6FA] border border-[#D8E2EA] hover:border-[#0F6B68] rounded-lg transition-colors space-y-2 text-xs flex flex-col justify-between"
+                  className="p-3 bg-[#F4F7FB] border border-[#D6E1E9] hover:border-[#0F6B68] rounded-lg transition-colors space-y-2 text-xs flex flex-col justify-between"
                 >
                   <div>
                     <div className="flex items-center justify-between mb-1">
@@ -1223,17 +1223,17 @@ export default function ProjectOverviewPage() {
                         {item.type === 'PHOTO' ? (
                           <Camera className="w-3.5 h-3.5 text-[#0F6B68]" />
                         ) : (
-                          <FileText className="w-3.5 h-3.5 text-[#526779]" />
+                          <FileText className="w-3.5 h-3.5 text-[#52687B]" />
                         )}
-                        <span className="font-bold text-[#142C3F] truncate max-w-[200px]">
+                        <span className="font-bold text-[#1A2E42] truncate max-w-[200px]">
                           {item.title}
                         </span>
                       </div>
                       <span className="text-[10px] font-mono text-[#7B8798]">{item.fileSize}</span>
                     </div>
 
-                    <div className="flex items-center gap-2 text-[11px] text-[#526779] font-mono">
-                      <span>WBS: <strong className="text-[#142C3F]">{item.activityId || 'Unlinked'}</strong></span>
+                    <div className="flex items-center gap-2 text-[11px] text-[#52687B] font-mono">
+                      <span>WBS: <strong className="text-[#1A2E42]">{item.activityId || 'Unlinked'}</strong></span>
                       {item.gpsCoords && (
                         <>
                           <span>&bull;</span>
@@ -1246,7 +1246,7 @@ export default function ProjectOverviewPage() {
                     </div>
                   </div>
 
-                  <div className="pt-2 border-t border-[#D8E2EA] flex items-center justify-between text-[11px]">
+                  <div className="pt-2 border-t border-[#D6E1E9] flex items-center justify-between text-[11px]">
                     <span className="text-[#7B8798] font-mono">{item.timestamp}</span>
                     <button
                       type="button"
@@ -1282,7 +1282,7 @@ export default function ProjectOverviewPage() {
           width="xl"
           footer={
             <div className="flex items-center justify-between w-full text-xs">
-              <span className="text-[#526779] font-mono">Rev 3.2 (P6 XML)</span>
+              <span className="text-[#52687B] font-mono">Rev 3.2 (P6 XML)</span>
               <button
                 type="button"
                 onClick={() => {
@@ -1299,7 +1299,7 @@ export default function ProjectOverviewPage() {
         >
           <div className="space-y-4">
             {/* Search and Expand Controls */}
-            <div className="flex items-center justify-between gap-2 flex-wrap pb-3 border-b border-[#D8E2EA]">
+            <div className="flex items-center justify-between gap-2 flex-wrap pb-3 border-b border-[#D6E1E9]">
               <div className="relative flex-1 min-w-[200px]">
                 <Search className="w-3.5 h-3.5 text-[#7B8798] absolute left-2.5 top-1/2 -translate-y-1/2" />
                 <input
@@ -1307,7 +1307,7 @@ export default function ProjectOverviewPage() {
                   placeholder="Filter WBS code or title..."
                   value={hierarchySearch}
                   onChange={(e) => setHierarchySearch(e.target.value)}
-                  className="w-full pl-8 pr-2.5 py-1.5 text-xs bg-[#F3F6FA] focus:bg-white border border-[#D8E2EA] rounded focus:border-[#0F6B68] outline-none"
+                  className="w-full pl-8 pr-2.5 py-1.5 text-xs bg-[#F4F7FB] focus:bg-white border border-[#D6E1E9] rounded focus:border-[#0F6B68] outline-none"
                 />
               </div>
 
@@ -1315,14 +1315,14 @@ export default function ProjectOverviewPage() {
                 <button
                   type="button"
                   onClick={expandAll}
-                  className="px-3 py-1 text-xs font-medium text-[#142C3F] bg-white border border-[#D8E2EA] hover:bg-[#EAF0F5] rounded transition-colors cursor-pointer"
+                  className="px-3 py-1 text-xs font-medium text-[#1A2E42] bg-white border border-[#D6E1E9] hover:bg-[#EAF1F5] rounded transition-colors cursor-pointer"
                 >
                   Expand All
                 </button>
                 <button
                   type="button"
                   onClick={collapseAll}
-                  className="px-3 py-1 text-xs font-medium text-[#526779] bg-white border border-[#D8E2EA] hover:bg-[#EAF0F5] rounded transition-colors cursor-pointer"
+                  className="px-3 py-1 text-xs font-medium text-[#52687B] bg-white border border-[#D6E1E9] hover:bg-[#EAF1F5] rounded transition-colors cursor-pointer"
                 >
                   Collapse
                 </button>
@@ -1330,7 +1330,7 @@ export default function ProjectOverviewPage() {
             </div>
 
             {/* Tree Table Header */}
-            <div className="bg-[#EAF0F5] border border-[#D8E2EA] rounded-t-lg px-3 py-2 text-[11px] font-semibold text-[#526779] flex items-center justify-between">
+            <div className="bg-[#EAF1F5] border border-[#D6E1E9] rounded-t-lg px-3 py-2 text-[11px] font-semibold text-[#52687B] flex items-center justify-between">
               <span>WBS CODE &amp; BREAKDOWN HIERARCHY</span>
               <div className="flex items-center gap-6">
                 <span className="w-24 text-center">PROGRESS</span>
@@ -1341,7 +1341,7 @@ export default function ProjectOverviewPage() {
             </div>
 
             {/* Render Tree */}
-            <div className="border border-t-0 border-[#D8E2EA] rounded-b-lg divide-y divide-[#D8E2EA] overflow-y-auto max-h-[60vh]">
+            <div className="border border-t-0 border-[#D6E1E9] rounded-b-lg divide-y divide-[#D6E1E9] overflow-y-auto max-h-[60vh]">
               {selectedAreaForDrawer
                 ? renderHierarchyNode(selectedAreaForDrawer)
                 : renderHierarchyNode(hierarchyTree)}
@@ -1382,35 +1382,35 @@ export default function ProjectOverviewPage() {
             }
           >
             <div className="space-y-4 text-xs">
-              <div className="p-4 bg-[#F3F6FA] border border-[#D8E2EA] rounded-lg space-y-2">
+              <div className="p-4 bg-[#F4F7FB] border border-[#D6E1E9] rounded-lg space-y-2">
                 <div className="flex justify-between">
-                  <span className="text-[#526779]">Filename:</span>
-                  <strong className="text-[#142C3F] font-mono">{selectedEvidenceForDrawer.filename}</strong>
+                  <span className="text-[#52687B]">Filename:</span>
+                  <strong className="text-[#1A2E42] font-mono">{selectedEvidenceForDrawer.filename}</strong>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-[#526779]">File Size:</span>
+                  <span className="text-[#52687B]">File Size:</span>
                   <span className="font-mono">{selectedEvidenceForDrawer.fileSize}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-[#526779]">Recorded Timestamp:</span>
+                  <span className="text-[#52687B]">Recorded Timestamp:</span>
                   <span className="font-mono">{selectedEvidenceForDrawer.timestamp}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-[#526779]">Site Engineer:</span>
-                  <span className="font-semibold text-[#142C3F]">{selectedEvidenceForDrawer.uploader}</span>
+                  <span className="text-[#52687B]">Site Engineer:</span>
+                  <span className="font-semibold text-[#1A2E42]">{selectedEvidenceForDrawer.uploader}</span>
                 </div>
                 {selectedEvidenceForDrawer.gpsCoords && (
                   <div className="flex justify-between">
-                    <span className="text-[#526779]">GPS Coordinates:</span>
+                    <span className="text-[#52687B]">GPS Coordinates:</span>
                     <span className="font-mono text-[#2E7D5B]">{selectedEvidenceForDrawer.gpsCoords}</span>
                   </div>
                 )}
               </div>
 
               {selectedEvidenceForDrawer.notes && (
-                <div className="p-4 bg-white border border-[#D8E2EA] rounded-lg space-y-1">
-                  <span className="font-bold text-[#142C3F] block">Field QA/QC Verification Notes:</span>
-                  <p className="text-[#526779] leading-relaxed">{selectedEvidenceForDrawer.notes}</p>
+                <div className="p-4 bg-white border border-[#D6E1E9] rounded-lg space-y-1">
+                  <span className="font-bold text-[#1A2E42] block">Field QA/QC Verification Notes:</span>
+                  <p className="text-[#52687B] leading-relaxed">{selectedEvidenceForDrawer.notes}</p>
                 </div>
               )}
             </div>
@@ -1428,7 +1428,7 @@ export default function ProjectOverviewPage() {
           width="lg"
           footer={
             <div className="flex items-center justify-between w-full text-xs">
-              <span className="text-[#526779]">Critical slip: +2 days</span>
+              <span className="text-[#52687B]">Critical slip: +2 days</span>
               <button
                 type="button"
                 onClick={() => {
@@ -1444,34 +1444,34 @@ export default function ProjectOverviewPage() {
           }
         >
           <div className="space-y-4 text-xs">
-            <div className="p-4 bg-[#FCE8E4] border border-[#E4B0AA] rounded-lg space-y-2">
-              <span className="font-mono font-bold text-[#A24335] block">
+            <div className="p-4 bg-[#FDEEED] border border-[#E4B0AA] rounded-lg space-y-2">
+              <span className="font-mono font-bold text-[#A44339] block">
                 Primary Delay Node: PIP-24-002 (Weld Line 24-XX Field Joints)
               </span>
-              <p className="text-[11px] text-[#142C3F]">
+              <p className="text-[11px] text-[#1A2E42]">
                 Total Float: <strong>0 days (Critical Path)</strong>. Free float exhausted on 16 Sep 2026.
               </p>
-              <p className="text-[11px] text-[#526779]">
+              <p className="text-[11px] text-[#52687B]">
                 Delayed delivery of 24-inch 600# carbon steel fittings caused 2-day work stoppage. Direct day-for-day slip propagated into hydrotest milestone.
               </p>
             </div>
 
-            <div className="p-4 bg-white border border-[#D8E2EA] rounded-lg space-y-2">
-              <span className="font-bold text-[#142C3F] block">Network Precedence Chain:</span>
+            <div className="p-4 bg-white border border-[#D6E1E9] rounded-lg space-y-2">
+              <span className="font-bold text-[#1A2E42] block">Network Precedence Chain:</span>
               <div className="space-y-2 font-mono text-[11px]">
-                <div className="p-2 bg-[#F3F6FA] rounded border border-[#D8E2EA] flex justify-between">
+                <div className="p-2 bg-[#F4F7FB] rounded border border-[#D6E1E9] flex justify-between">
                   <span>PIP-24-001 (Erect Gas Header)</span>
                   <span className="text-[#2E7D5B] font-bold">100% Done</span>
                 </div>
                 <div className="text-center text-[#7B8798]">&darr; [Finish-to-Start]</div>
-                <div className="p-2 bg-[#FCE8E4] rounded border border-[#E4B0AA] flex justify-between text-[#A24335] font-bold">
+                <div className="p-2 bg-[#FDEEED] rounded border border-[#E4B0AA] flex justify-between text-[#A44339] font-bold">
                   <span>PIP-24-002 (Weld Field Joints &amp; NDT)</span>
                   <span>70% (2 Days Late)</span>
                 </div>
                 <div className="text-center text-[#7B8798]">&darr; [Finish-to-Start Precedence]</div>
-                <div className="p-2 bg-[#F3F6FA] rounded border border-[#D8E2EA] flex justify-between text-[#526779]">
+                <div className="p-2 bg-[#F4F7FB] rounded border border-[#D6E1E9] flex justify-between text-[#52687B]">
                   <span>PIP-24-003 (Hydrostatic Test 150 bar)</span>
-                  <span className="text-[#A24335]">Float: 0d (Blocked)</span>
+                  <span className="text-[#A44339]">Float: 0d (Blocked)</span>
                 </div>
               </div>
             </div>
@@ -1493,7 +1493,7 @@ export default function ProjectOverviewPage() {
                 type="button"
                 onClick={() => setIsFieldModalOpen(false)}
                 disabled={isSubmittingField}
-                className="px-3 py-1.5 text-xs text-[#526779] hover:text-[#142C3F] bg-white border border-[#D8E2EA] rounded cursor-pointer"
+                className="px-3 py-1.5 text-xs text-[#52687B] hover:text-[#1A2E42] bg-white border border-[#D6E1E9] rounded cursor-pointer"
               >
                 Cancel
               </button>
@@ -1510,7 +1510,7 @@ export default function ProjectOverviewPage() {
         >
           <form onSubmit={handleSubmitFieldReport} className="space-y-3 text-xs">
             <div>
-              <label className="block text-xs font-bold text-[#142C3F] mb-1">
+              <label className="block text-xs font-bold text-[#1A2E42] mb-1">
                 Data Source Format
               </label>
               <div className="grid grid-cols-3 gap-2">
@@ -1519,8 +1519,8 @@ export default function ProjectOverviewPage() {
                   onClick={() => setFieldSource('FIELD_QUICK_FORM')}
                   className={`p-2 text-center rounded border transition-colors cursor-pointer ${
                     fieldSource === 'FIELD_QUICK_FORM'
-                      ? 'bg-[#EAF0F5] text-[#0F6B68] border-[#0F6B68] font-semibold'
-                      : 'bg-[#F3F6FA] text-[#526779] border-[#D8E2EA]'
+                      ? 'bg-[#EAF1F5] text-[#0F6B68] border-[#0F6B68] font-semibold'
+                      : 'bg-[#F4F7FB] text-[#52687B] border-[#D6E1E9]'
                   }`}
                 >
                   Quick Site Note
@@ -1530,8 +1530,8 @@ export default function ProjectOverviewPage() {
                   onClick={() => setFieldSource('SITE_DIARY')}
                   className={`p-2 text-center rounded border transition-colors cursor-pointer ${
                     fieldSource === 'SITE_DIARY'
-                      ? 'bg-[#EAF0F5] text-[#0F6B68] border-[#0F6B68] font-semibold'
-                      : 'bg-[#F3F6FA] text-[#526779] border-[#D8E2EA]'
+                      ? 'bg-[#EAF1F5] text-[#0F6B68] border-[#0F6B68] font-semibold'
+                      : 'bg-[#F4F7FB] text-[#52687B] border-[#D6E1E9]'
                   }`}
                 >
                   Supervisor Diary
@@ -1541,8 +1541,8 @@ export default function ProjectOverviewPage() {
                   onClick={() => setFieldSource('DPR_PDF')}
                   className={`p-2 text-center rounded border transition-colors cursor-pointer ${
                     fieldSource === 'DPR_PDF'
-                      ? 'bg-[#EAF0F5] text-[#0F6B68] border-[#0F6B68] font-semibold'
-                      : 'bg-[#F3F6FA] text-[#526779] border-[#D8E2EA]'
+                      ? 'bg-[#EAF1F5] text-[#0F6B68] border-[#0F6B68] font-semibold'
+                      : 'bg-[#F4F7FB] text-[#52687B] border-[#D6E1E9]'
                   }`}
                 >
                   DPR Excerpt
@@ -1551,19 +1551,19 @@ export default function ProjectOverviewPage() {
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-[#142C3F] mb-1">
-                Field Progress Statement <span className="text-[#A24335]">*</span>
+              <label className="block text-xs font-bold text-[#1A2E42] mb-1">
+                Field Progress Statement <span className="text-[#A44339]">*</span>
               </label>
               <textarea
                 rows={4}
                 value={fieldReportText}
                 onChange={(e) => setFieldReportText(e.target.value)}
                 placeholder="e.g. Line 24 spool welding completed 8 joints today on Header Unit A. Crane shifted to compressor skid."
-                className="w-full p-3 bg-[#F3F6FA] border border-[#D8E2EA] rounded focus:border-[#0F6B68] focus:bg-white text-[#142C3F] outline-none"
+                className="w-full p-3 bg-[#F4F7FB] border border-[#D6E1E9] rounded focus:border-[#0F6B68] focus:bg-white text-[#1A2E42] outline-none"
               />
             </div>
 
-            <div className="p-3 bg-[#EAF0F5] rounded text-[11px] text-[#526779] flex items-start gap-2">
+            <div className="p-3 bg-[#EAF1F5] rounded text-[11px] text-[#52687B] flex items-start gap-2">
               <Info className="w-4 h-4 text-[#0F6B68] flex-shrink-0 mt-0.5" />
               <span>
                 Extracted quantities, locations, and activities will be matched against schedule activities for review and verification.
@@ -1583,7 +1583,7 @@ export default function ProjectOverviewPage() {
           maxWidth="lg"
           footer={
             <div className="flex items-center justify-between w-full">
-              <span className="text-[11px] font-mono text-[#526779]">Cutoff: 18 Sep 2026</span>
+              <span className="text-[11px] font-mono text-[#52687B]">Cutoff: 18 Sep 2026</span>
               <button
                 type="button"
                 onClick={() => {
@@ -1603,13 +1603,13 @@ export default function ProjectOverviewPage() {
           }
         >
           <div className="space-y-3 text-xs">
-            <p className="text-[#526779]">
+            <p className="text-[#52687B]">
               Export verified project baseline actuals, schedule health metrics, and delay chains for presentation to the project steering committee.
             </p>
-            <div className="p-3 bg-[#F3F6FA] border border-[#D8E2EA] rounded space-y-1">
+            <div className="p-3 bg-[#F4F7FB] border border-[#D6E1E9] rounded space-y-1">
               <div className="flex justify-between">
                 <span>Baseline File:</span>
-                <strong className="font-mono text-[#142C3F]">{project.scheduleVersion || CANONICAL_SCHEDULE_VERSION_LABEL}</strong>
+                <strong className="font-mono text-[#1A2E42]">{project.scheduleVersion || CANONICAL_SCHEDULE_VERSION_LABEL}</strong>
               </div>
               <div className="flex justify-between">
                 <span>Physical Completion:</span>
@@ -1617,7 +1617,7 @@ export default function ProjectOverviewPage() {
               </div>
               <div className="flex justify-between">
                 <span>Variance:</span>
-                <strong className="font-mono text-[#A24335]">{project.overallProgress - project.plannedProgress}%</strong>
+                <strong className="font-mono text-[#A44339]">{project.overallProgress - project.plannedProgress}%</strong>
               </div>
             </div>
           </div>

@@ -65,37 +65,37 @@ export function getActivityStatusConfig(status: ActivityStatus): StatusBadgeConf
     case 'in-progress':
       return {
         label: 'On Track',
-        color: '#176F7A',
-        bgColor: '#E2F2F4',
-        borderColor: '#BCE1E5',
+        color: '#176B53',
+        bgColor: '#E5F6EE',
+        borderColor: '#BCE7D2',
       };
     case 'at-risk':
       return {
         label: 'At Risk',
-        color: '#845006',
-        bgColor: '#FFF1D3',
-        borderColor: '#F8DDA2',
+        color: '#965E0D',
+        bgColor: '#FEF4E6',
+        borderColor: '#FCD9A8',
       };
     case 'delayed':
       return {
         label: 'Delayed',
-        color: '#A24335',
-        bgColor: '#FCE8E4',
-        borderColor: '#F6C7BE',
+        color: '#A44339',
+        bgColor: '#FDEEED',
+        borderColor: '#FAC7C3',
       };
     case 'completed':
       return {
         label: 'Completed',
         color: '#176B53',
-        bgColor: '#E4F4EC',
-        borderColor: '#BDE4D0',
+        bgColor: '#E5F6EE',
+        borderColor: '#BCE7D2',
       };
     case 'blocked':
       return {
         label: 'Blocked',
-        color: '#8D3143',
-        bgColor: '#F8E6EA',
-        borderColor: '#EEC4CE',
+        color: '#7B2857',
+        bgColor: '#F8EAF1',
+        borderColor: '#ECC4DA',
       };
     case 'pending':
     case 'not-started':
@@ -103,8 +103,8 @@ export function getActivityStatusConfig(status: ActivityStatus): StatusBadgeConf
       return {
         label: 'Pending Review',
         color: '#3B55A3',
-        bgColor: '#E9EEFF',
-        borderColor: '#C5D2FC',
+        bgColor: '#EBF2FF',
+        borderColor: '#C6D8FF',
       };
   }
 }
@@ -116,30 +116,30 @@ export function getEventStatusConfig(status: EventStatus): StatusBadgeConfig {
       return {
         label: 'Verified',
         color: '#176B53',
-        bgColor: '#E4F4EC',
-        borderColor: '#BDE4D0',
+        bgColor: '#E5F6EE',
+        borderColor: '#BCE7D2',
       };
     case 'pending-review':
     case 'pending-verification':
       return {
         label: 'Pending Review',
         color: '#3B55A3',
-        bgColor: '#E9EEFF',
-        borderColor: '#C5D2FC',
+        bgColor: '#EBF2FF',
+        borderColor: '#C6D8FF',
       };
     case 'rematched':
       return {
         label: 'Unmatched',
-        color: '#66528F',
-        bgColor: '#F0EBF8',
-        borderColor: '#DACFF0',
+        color: '#52687B',
+        bgColor: '#EDF1F5',
+        borderColor: '#D4DDE6',
       };
     case 'rejected':
       return {
         label: 'Blocked',
-        color: '#8D3143',
-        bgColor: '#F8E6EA',
-        borderColor: '#EEC4CE',
+        color: '#7B2857',
+        bgColor: '#F8EAF1',
+        borderColor: '#ECC4DA',
       };
   }
 }

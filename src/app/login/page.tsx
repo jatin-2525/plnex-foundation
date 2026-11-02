@@ -166,19 +166,19 @@ function LoginForm() {
   return (
     <div className="w-full max-w-[420px] mx-auto py-8">
       {/* Centered Authentication Panel */}
-      <div className="bg-white border border-[#D8E2EA] rounded-lg shadow-sm overflow-hidden">
+      <div className="bg-white border border-[#D6E1E9] rounded-lg shadow-sm overflow-hidden">
         {/* Header with PLnEX branding */}
-        <div className="px-6 pt-7 pb-4 text-center border-b border-[#D8E2EA] bg-white">
+        <div className="px-6 pt-7 pb-4 text-center border-b border-[#D6E1E9] bg-white">
           <div className="inline-flex items-center justify-center mb-3">
             <Logo size="lg" showWordmark={false} />
           </div>
-          <h1 className="text-xl font-bold text-[#142C3F] tracking-tight leading-snug">
+          <h1 className="text-xl font-bold text-[#1A2E42] tracking-tight leading-snug">
             PL<span className="text-[#0F6B68]">n</span>EX
           </h1>
           <p className="text-xs font-semibold text-[#0F6B68] uppercase tracking-wider font-mono mt-0.5">
             Planning-to-Execution Bridge
           </p>
-          <p className="text-[11px] text-[#526779] mt-1">
+          <p className="text-[11px] text-[#52687B] mt-1">
             Oil India Limited • Infrastructure Project Controls
           </p>
         </div>
@@ -186,16 +186,16 @@ function LoginForm() {
         {/* Success State Overlay / Transition */}
         {loginState === 'success' ? (
           <div className="p-8 text-center space-y-4">
-            <div className="w-12 h-12 rounded-full bg-[#E4F4EC] border border-[#B8DCC9] flex items-center justify-center text-[#2E7D5B] mx-auto">
+            <div className="w-12 h-12 rounded-full bg-[#E5F6EE] border border-[#B8DCC9] flex items-center justify-center text-[#2E7D5B] mx-auto">
               <CheckCircle2 className="w-6 h-6" />
             </div>
             <div>
-              <h2 className="text-base font-bold text-[#142C3F]">Session Authorized</h2>
-              <p className="text-xs text-[#526779] mt-1">
+              <h2 className="text-base font-bold text-[#1A2E42]">Session Authorized</h2>
+              <p className="text-xs text-[#52687B] mt-1">
                 Access granted. Loading role-specific workspace...
               </p>
             </div>
-            <div className="w-full bg-[#D8E2EA] h-1.5 rounded-full overflow-hidden">
+            <div className="w-full bg-[#D6E1E9] h-1.5 rounded-full overflow-hidden">
               <div className="h-full bg-[#2E7D5B] rounded-full w-full" />
             </div>
             <span className="inline-flex items-center gap-2 text-xs text-[#0F6B68] font-medium font-mono">
@@ -208,7 +208,7 @@ function LoginForm() {
           <form onSubmit={handleSubmit} className="p-6 md:p-6 space-y-4">
             {/* Server Error Alert Banner */}
             {loginState === 'server_error' && (
-              <div className="p-3 bg-[#FCE8E4] border border-[#E4B0AA] rounded-md flex items-start gap-2 text-xs text-[#A24335]">
+              <div className="p-3 bg-[#FDEEED] border border-[#E4B0AA] rounded-md flex items-start gap-2 text-xs text-[#A44339]">
                 <AlertTriangle className="w-4 h-4 flex-shrink-0 mt-0.5" />
                 <div>
                   <strong className="block font-semibold">Authentication Gateway Error (500)</strong>
@@ -221,7 +221,7 @@ function LoginForm() {
 
             {/* Invalid Credentials Alert Banner */}
             {loginState === 'invalid_credentials' && (
-              <div className="p-3 bg-[#FCE8E4] border border-[#E4B0AA] rounded-md flex items-start gap-2 text-xs text-[#A24335]">
+              <div className="p-3 bg-[#FDEEED] border border-[#E4B0AA] rounded-md flex items-start gap-2 text-xs text-[#A44339]">
                 <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
                 <div>
                   <strong className="block font-semibold">Invalid Credentials</strong>
@@ -234,8 +234,8 @@ function LoginForm() {
 
             {/* Work Email Field */}
             <div className="space-y-2">
-              <label htmlFor="work-email" className="block text-xs font-semibold text-[#142C3F]">
-                Work Email <span className="text-[#A24335]">*</span>
+              <label htmlFor="work-email" className="block text-xs font-semibold text-[#1A2E42]">
+                Work Email <span className="text-[#A44339]">*</span>
               </label>
               <div className="relative">
                 <Mail className="w-4 h-4 text-[#7B8798] absolute left-3 top-1/2 -translate-y-1/2" />
@@ -251,15 +251,15 @@ function LoginForm() {
                   disabled={loginState === 'submitting'}
                   placeholder="name@oilindia.in"
                   autoComplete="username"
-                  className={`w-full pl-9 pr-3 py-2 text-xs bg-[#F3F6FA] border rounded-md text-[#142C3F] placeholder-[#7B8798] focus:bg-white outline-none transition-colors ${
+                  className={`w-full pl-9 pr-3 py-2 text-xs bg-[#F4F7FB] border rounded-md text-[#1A2E42] placeholder-[#7B8798] focus:bg-white outline-none transition-colors ${
                     emailError
-                      ? 'border-[#A24335] focus:border-[#A24335] bg-[#FCE8E4]/30'
-                      : 'border-[#D8E2EA] focus:border-[#0F6B68]'
+                      ? 'border-[#A44339] focus:border-[#A44339] bg-[#FDEEED]/30'
+                      : 'border-[#D6E1E9] focus:border-[#0F6B68]'
                   }`}
                 />
               </div>
               {emailError && (
-                <p className="text-[11px] text-[#A24335] flex items-center gap-1 mt-1 font-medium">
+                <p className="text-[11px] text-[#A44339] flex items-center gap-1 mt-1 font-medium">
                   <AlertCircle className="w-3 h-3 flex-shrink-0" />
                   <span>{emailError}</span>
                 </p>
@@ -269,8 +269,8 @@ function LoginForm() {
             {/* Password Field */}
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <label htmlFor="password" className="block text-xs font-semibold text-[#142C3F]">
-                  Password <span className="text-[#A24335]">*</span>
+                <label htmlFor="password" className="block text-xs font-semibold text-[#1A2E42]">
+                  Password <span className="text-[#A44339]">*</span>
                 </label>
                 <Link
                   href="/forgot-password"
@@ -293,23 +293,23 @@ function LoginForm() {
                   disabled={loginState === 'submitting'}
                   placeholder="••••••••••••"
                   autoComplete="current-password"
-                  className={`w-full pl-9 pr-9 py-2 text-xs bg-[#F3F6FA] border rounded-md text-[#142C3F] placeholder-[#7B8798] focus:bg-white outline-none transition-colors ${
+                  className={`w-full pl-9 pr-9 py-2 text-xs bg-[#F4F7FB] border rounded-md text-[#1A2E42] placeholder-[#7B8798] focus:bg-white outline-none transition-colors ${
                     passwordError
-                      ? 'border-[#A24335] focus:border-[#A24335] bg-[#FCE8E4]/30'
-                      : 'border-[#D8E2EA] focus:border-[#0F6B68]'
+                      ? 'border-[#A44339] focus:border-[#A44339] bg-[#FDEEED]/30'
+                      : 'border-[#D6E1E9] focus:border-[#0F6B68]'
                   }`}
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[#7B8798] hover:text-[#142C3F] p-1 rounded transition-colors"
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[#7B8798] hover:text-[#1A2E42] p-1 rounded transition-colors"
                   aria-label={showPassword ? 'Hide password' : 'Show password'}
                 >
                   {showPassword ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
                 </button>
               </div>
               {passwordError && (
-                <p className="text-[11px] text-[#A24335] flex items-center gap-1 mt-1 font-medium">
+                <p className="text-[11px] text-[#A44339] flex items-center gap-1 mt-1 font-medium">
                   <AlertCircle className="w-3 h-3 flex-shrink-0" />
                   <span>{passwordError}</span>
                 </p>
@@ -324,9 +324,9 @@ function LoginForm() {
                   checked={rememberSession}
                   onChange={(e) => setRememberSession(e.target.checked)}
                   disabled={loginState === 'submitting'}
-                  className="rounded border-[#D8E2EA] text-[#0F6B68] focus:ring-[#0F6B68] w-3.5 h-3.5 cursor-pointer"
+                  className="rounded border-[#D6E1E9] text-[#0F6B68] focus:ring-[#0F6B68] w-3.5 h-3.5 cursor-pointer"
                 />
-                <span className="text-xs text-[#526779]">Remember session on this device</span>
+                <span className="text-xs text-[#52687B]">Remember session on this device</span>
               </label>
             </div>
 
@@ -350,7 +350,7 @@ function LoginForm() {
             </button>
 
             {/* Bottom Links */}
-            <div className="pt-3 border-t border-[#D8E2EA] flex items-center justify-between text-xs text-[#526779]">
+            <div className="pt-3 border-t border-[#D6E1E9] flex items-center justify-between text-xs text-[#52687B]">
               <span>New project engineer?</span>
               <Link
                 href="/register"
@@ -363,51 +363,51 @@ function LoginForm() {
         )}
 
         {/* Security & Compliance Footer */}
-        <div className="px-6 py-3 bg-[#F3F6FA] border-t border-[#D8E2EA] flex items-center justify-center gap-2 text-[11px] text-[#526779]">
+        <div className="px-6 py-3 bg-[#F4F7FB] border-t border-[#D6E1E9] flex items-center justify-center gap-2 text-[11px] text-[#52687B]">
           <Shield className="w-3.5 h-3.5 text-[#0F6B68] flex-shrink-0" />
           <span>Enterprise Multi-Tenant Access Gate · Role-Based Access Control</span>
         </div>
       </div>
 
       {/* Quick Testing Sandbox Bar (For evaluator testing of all 3 roles) */}
-      <details className="mt-4 p-3 bg-white border border-[#D8E2EA] rounded-lg text-xs space-y-2 group">
-        <summary className="flex items-center justify-between text-[11px] text-[#526779] font-medium list-none select-none cursor-pointer">
-          <span className="font-semibold uppercase tracking-wider text-[#142C3F] flex items-center gap-1.5">
+      <details className="mt-4 p-3 bg-white border border-[#D6E1E9] rounded-lg text-xs space-y-2 group">
+        <summary className="flex items-center justify-between text-[11px] text-[#52687B] font-medium list-none select-none cursor-pointer">
+          <span className="font-semibold uppercase tracking-wider text-[#1A2E42] flex items-center gap-1.5">
             <span>Demo Sandbox Credentials</span>
           </span>
           <span className="text-[10px] text-[#0F6B68] group-open:hidden">Show Role Presets ▾</span>
           <span className="text-[10px] text-[#0F6B68] hidden group-open:inline">Hide Role Presets ▴</span>
         </summary>
         <div className="pt-2 text-xs space-y-2">
-          <p className="text-[11px] text-[#526779]">
+          <p className="text-[11px] text-[#52687B]">
             Select a verified persona to test role-based navigation and views:
           </p>
           <div className="flex flex-wrap gap-2">
             <button
               type="button"
               onClick={() => handleQuickFill('manager')}
-              className="px-2.5 py-1 bg-[#EAF0F5] hover:bg-[#D9EBF2] text-[#0F6B68] border border-[#D8E2EA] rounded text-[11px] font-mono font-medium transition-colors cursor-pointer"
+              className="px-2.5 py-1 bg-[#EAF1F5] hover:bg-[#D9EBF2] text-[#0F6B68] border border-[#D6E1E9] rounded text-[11px] font-mono font-medium transition-colors cursor-pointer"
             >
               Pre-fill as Manager (/dashboard)
             </button>
             <button
               type="button"
               onClick={() => handleQuickFill('engineer')}
-              className="px-2.5 py-1 bg-[#E4F4EC] hover:bg-[#B8DCC9]/40 text-[#2E7D5B] border border-[#B8DCC9] rounded text-[11px] font-mono font-medium transition-colors cursor-pointer"
+              className="px-2.5 py-1 bg-[#E5F6EE] hover:bg-[#B8DCC9]/40 text-[#2E7D5B] border border-[#B8DCC9] rounded text-[11px] font-mono font-medium transition-colors cursor-pointer"
             >
               Pre-fill as Site Engineer (/engineer)
             </button>
             <button
               type="button"
               onClick={() => handleQuickFill('admin')}
-              className="px-2.5 py-1 bg-[#EAF0F5] hover:bg-[#D8E2EA]/40 text-[#3B6EA8] border border-[#D8E2EA] rounded text-[11px] font-mono font-medium transition-colors cursor-pointer"
+              className="px-2.5 py-1 bg-[#EAF1F5] hover:bg-[#D6E1E9]/40 text-[#3B6EA8] border border-[#D6E1E9] rounded text-[11px] font-mono font-medium transition-colors cursor-pointer"
             >
               Pre-fill as Admin (/admin)
             </button>
             <button
               type="button"
               onClick={() => handleQuickFill('invalid')}
-              className="px-2.5 py-1 bg-[#FCE8E4] hover:bg-[#FCE8E4]/80 text-[#A24335] border border-[#E4B0AA] rounded text-[11px] font-mono transition-colors cursor-pointer"
+              className="px-2.5 py-1 bg-[#FDEEED] hover:bg-[#FDEEED]/80 text-[#A44339] border border-[#E4B0AA] rounded text-[11px] font-mono transition-colors cursor-pointer"
             >
               Invalid Creds
             </button>
@@ -422,9 +422,9 @@ export default function LoginPage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen bg-[#F3F6FA] flex items-center justify-center gap-2 p-4 text-sm text-[#526779]" role="status" aria-live="polite">
+        <div className="min-h-screen bg-[#F4F7FB] flex items-center justify-center gap-2 p-4 text-sm text-[#52687B]" role="status" aria-live="polite">
           <Loader2 className="w-4 h-4 animate-spin text-[#0F6B68] shrink-0" />
-          <span className="font-medium text-[#142C3F]">Loading session...</span>
+          <span className="font-medium text-[#1A2E42]">Loading session...</span>
         </div>
       }
     >

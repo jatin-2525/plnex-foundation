@@ -18,7 +18,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="bg-[#F3F6FA] text-[#142C3F] antialiased font-sans">
+      <body className="bg-[#F4F7FB] text-[#1A2E42] antialiased font-sans">
         <AppProvider>
           <OfflineProvider>
             <ToastProvider>

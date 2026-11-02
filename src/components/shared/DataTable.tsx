@@ -94,18 +94,18 @@ export function DataTable<T>({
   const allSelected = paginatedData.length > 0 && paginatedData.every((row, idx) => selectedIds.includes(keyExtractor(row, idx)));
 
   return (
-    <div className={`bg-white border border-[#D8E2EA] rounded-lg overflow-hidden flex flex-col ${className}`}>
+    <div className={`bg-white border border-[#D6E1E9] rounded-lg overflow-hidden flex flex-col ${className}`}>
       <div className="overflow-x-auto">
         <table className="w-full text-left border-collapse text-[13px] sm:text-[14px]">
-          <thead className="sticky top-0 z-10 bg-[#F3F6FA]">
-            <tr className="bg-[#F3F6FA] border-b border-[#D8E2EA] text-[#526779] font-semibold uppercase tracking-wider text-[11px] sm:text-xs h-11">
+          <thead className="sticky top-0 z-10 bg-[#F4F7FB]">
+            <tr className="bg-[#F4F7FB] border-b border-[#D6E1E9] text-[#52687B] font-semibold uppercase tracking-wider text-[11px] sm:text-xs h-11">
               {selectable && (
                 <th className="w-10 px-4 py-3 text-center">
                   <input
                     type="checkbox"
                     checked={allSelected}
                     onChange={(e) => onSelectAll && onSelectAll(e.target.checked)}
-                    className="rounded border-[#D8E2EA] text-[#0F6B68] focus:ring-[#0F6B68] cursor-pointer"
+                    className="rounded border-[#D6E1E9] text-[#0F6B68] focus:ring-[#0F6B68] cursor-pointer"
                     aria-label="Select all rows"
                   />
                 </th>
@@ -118,15 +118,15 @@ export function DataTable<T>({
                     <th
                       key={col.id}
                       onClick={() => col.sortable && handleSort(col.id)}
-                      className={`px-4 py-3 font-semibold text-[#142C3F] ${
-                        col.sortable ? 'cursor-pointer select-none hover:bg-[#EAF0F5]' : ''
+                      className={`px-4 py-3 font-semibold text-[#1A2E42] ${
+                        col.sortable ? 'cursor-pointer select-none hover:bg-[#EAF1F5]' : ''
                       } ${col.align === 'right' ? 'text-right' : col.align === 'center' ? 'text-center' : 'text-left'}`}
                       style={{ width: col.width, minWidth: col.minWidth }}
                     >
                       <div className={`flex items-center gap-2 ${col.align === 'right' ? 'justify-end' : col.align === 'center' ? 'justify-center' : 'justify-start'}`}>
                         <span>{col.header}</span>
                         {col.sortable && (
-                          <span className="text-[#526779]">
+                          <span className="text-[#52687B]">
                             {isSorted ? (
                               sortDirection === 'asc' ? (
                                 <ChevronUp className="w-3.5 h-3.5 text-[#0F6B68]" />
@@ -144,7 +144,7 @@ export function DataTable<T>({
                 })}
             </tr>
           </thead>
-          <tbody className="divide-y divide-[#D8E2EA] text-[#142C3F] text-[13px] sm:text-[14px]">
+          <tbody className="divide-y divide-[#D6E1E9] text-[#1A2E42] text-[13px] sm:text-[14px]">
             {paginatedData.map((row, index) => {
               const rowKey = keyExtractor(row, startIndex + index);
               const isSelected = selectedIds.includes(rowKey);
@@ -154,7 +154,7 @@ export function DataTable<T>({
                   key={rowKey}
                   onClick={() => onRowClick && onRowClick(row)}
                   className={`h-11 sm:h-12 transition-colors ${
-                    isSelected ? 'bg-[#EAF0F5]' : 'hover:bg-[#EAF0F5]/60'
+                    isSelected ? 'bg-[#EAF1F5]' : 'hover:bg-[#EAF1F5]/60'
                   } ${onRowClick ? 'cursor-pointer' : ''}`}
                 >
                   {selectable && (
@@ -166,7 +166,7 @@ export function DataTable<T>({
                         type="checkbox"
                         checked={isSelected}
                         onChange={(e) => onSelectRow && onSelectRow(rowKey, e.target.checked)}
-                        className="rounded border-[#D8E2EA] text-[#0F6B68] focus:ring-[#0F6B68] cursor-pointer"
+                        className="rounded border-[#D6E1E9] text-[#0F6B68] focus:ring-[#0F6B68] cursor-pointer"
                         aria-label={`Select row ${rowKey}`}
                       />
                     </td>
@@ -204,7 +204,7 @@ export function DataTable<T>({
 
       {/* Pagination Footer */}
       {totalPages > 1 && (
-        <div className="flex items-center justify-between px-4 py-3 border-t border-[#D8E2EA] bg-[#F3F6FA] text-xs text-[#526779]">
+        <div className="flex items-center justify-between px-4 py-3 border-t border-[#D6E1E9] bg-[#F4F7FB] text-xs text-[#52687B]">
           <span className="font-mono">
             Page {currentPage} of {totalPages} ({data.length} total)
           </span>
@@ -212,7 +212,7 @@ export function DataTable<T>({
             <button
               onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
               disabled={currentPage === 1}
-              className="p-1 rounded border border-[#D8E2EA] bg-white text-[#142C3F] disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[#EAF0F5] transition-colors"
+              className="p-1 rounded border border-[#D6E1E9] bg-white text-[#1A2E42] disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[#EAF1F5] transition-colors"
               aria-label="Previous page"
             >
               <ChevronLeft className="w-4 h-4" />
@@ -220,7 +220,7 @@ export function DataTable<T>({
             <button
               onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
               disabled={currentPage === totalPages}
-              className="p-1 rounded border border-[#D8E2EA] bg-white text-[#142C3F] disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[#EAF0F5] transition-colors"
+              className="p-1 rounded border border-[#D6E1E9] bg-white text-[#1A2E42] disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[#EAF1F5] transition-colors"
               aria-label="Next page"
             >
               <ChevronRight className="w-4 h-4" />

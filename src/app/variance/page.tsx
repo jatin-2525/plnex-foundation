@@ -65,7 +65,7 @@ export default function VariancePage() {
           <div className="flex items-center gap-2">
             <Link
               href="/risks"
-              className="inline-flex items-center gap-2 px-4 py-2 bg-[#FCE8E4] hover:bg-[#FCE8E4]/80 border border-[#E4B0AA] text-[#A24335] text-xs font-bold rounded-lg shadow-xs transition-colors"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-[#FDEEED] hover:bg-[#FDEEED]/80 border border-[#E4B0AA] text-[#A44339] text-xs font-bold rounded-lg shadow-xs transition-colors"
             >
               <AlertTriangle className="w-3.5 h-3.5" />
               <span>Risks & Dependencies</span>
@@ -100,29 +100,29 @@ export default function VariancePage() {
         emptyDescription="Activities with start or finish date variances relative to the committed baseline will appear here. Reset your filter criteria to inspect all variance bands."
       >
         {/* Section 1: "Why is this delayed?" Dependency Chain Visualization */}
-        <div className="bg-white border border-[#D8E2EA] border-l-4 border-l-[#A24335] rounded-lg p-4 sm:p-6 space-y-4 shadow-xs">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#D8E2EA]">
+        <div className="bg-white border border-[#D6E1E9] border-l-4 border-l-[#A44339] rounded-lg p-4 sm:p-6 space-y-4 shadow-xs">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#D6E1E9]">
             <div>
               <div className="flex items-center gap-2 flex-wrap">
-                <GitBranch className="w-5 h-5 text-[#A24335]" />
-                <h3 className="text-base font-bold text-[#142C3F] tracking-tight">
+                <GitBranch className="w-5 h-5 text-[#A44339]" />
+                <h3 className="text-base font-bold text-[#1A2E42] tracking-tight">
                   &ldquo;Why Is This Delayed?&rdquo; — Root Predecessor Dependency Chain
                 </h3>
-                <span className="px-2 py-0.5 rounded bg-[#FCE8E4] text-[#A24335] border border-[#E4B0AA] text-[11px] font-mono font-bold">
+                <span className="px-2 py-0.5 rounded bg-[#FDEEED] text-[#A44339] border border-[#E4B0AA] text-[11px] font-mono font-bold">
                   ROOT CAUSE TRACE
                 </span>
               </div>
-              <p className="text-xs text-[#526779] mt-0.5">
+              <p className="text-xs text-[#52687B] mt-0.5">
                 Reveals the cascading root causes of execution slips across construction disciplines.
               </p>
             </div>
 
             <div className="flex items-center gap-2">
-              <span className="text-xs text-[#526779] font-bold">Inspect Activity:</span>
+              <span className="text-xs text-[#52687B] font-bold">Inspect Activity:</span>
               <select
                 value={selectedActivityId}
                 onChange={(e) => setSelectedActivityId(e.target.value)}
-                className="px-3 py-1.5 text-xs bg-[#F3F6FA] border border-[#D8E2EA] rounded-md font-mono font-bold text-[#142C3F] outline-none hover:border-[#0F6B68] transition-colors"
+                className="px-3 py-1.5 text-xs bg-[#F4F7FB] border border-[#D6E1E9] rounded-md font-mono font-bold text-[#1A2E42] outline-none hover:border-[#0F6B68] transition-colors"
               >
                 {MOCK_ACTIVITIES.map((act) => (
                   <option key={act.id} value={act.id}>
@@ -134,40 +134,40 @@ export default function VariancePage() {
           </div>
 
           {/* Chain Steps Progression */}
-          <div className="relative pl-6 space-y-4 before:absolute before:left-2 before:top-3 before:bottom-3 before:w-0.5 before:bg-[#D8E2EA]">
+          <div className="relative pl-6 space-y-4 before:absolute before:left-2 before:top-3 before:bottom-3 before:w-0.5 before:bg-[#D6E1E9]">
             {delayChain.map((step, idx) => {
               const isTerminus = idx === delayChain.length - 1;
               return (
                 <div key={idx} className="relative group">
                   <div
                     className={`absolute -left-6 top-1 w-4 h-4 rounded-full border-2 bg-white flex items-center justify-center ${
-                      step.delayDays > 0 ? 'border-[#A24335]' : 'border-[#0F6B68]'
+                      step.delayDays > 0 ? 'border-[#A44339]' : 'border-[#0F6B68]'
                     }`}
                   >
                     <span
                       className={`w-1.5 h-1.5 rounded-full ${
-                        step.delayDays > 0 ? 'bg-[#A24335]' : 'bg-[#0F6B68]'
+                        step.delayDays > 0 ? 'bg-[#A44339]' : 'bg-[#0F6B68]'
                       }`}
                     />
                   </div>
 
-                  <div className="bg-[#F3F6FA] border border-[#D8E2EA] rounded-md p-3.5 hover:border-[#0F6B68] transition-all">
+                  <div className="bg-[#F4F7FB] border border-[#D6E1E9] rounded-md p-3.5 hover:border-[#0F6B68] transition-all">
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-2">
                       <div className="flex items-center gap-2 flex-wrap">
-                        <span className="font-mono text-xs font-bold text-[#0F6B68] bg-white px-2 py-0.5 rounded border border-[#D8E2EA]">
+                        <span className="font-mono text-xs font-bold text-[#0F6B68] bg-white px-2 py-0.5 rounded border border-[#D6E1E9]">
                           {step.activityId}
                         </span>
-                        <span className="text-xs font-bold text-[#142C3F]">{step.name}</span>
-                        <span className="text-[11px] font-semibold text-[#526779]">({step.discipline})</span>
+                        <span className="text-xs font-bold text-[#1A2E42]">{step.name}</span>
+                        <span className="text-[11px] font-semibold text-[#52687B]">({step.discipline})</span>
                       </div>
                       <div className="flex items-center gap-2">
                         {step.delayDays > 0 && (
                           step.isCritical ? (
-                            <span className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-[#FCE8E4] text-[#A24335] border border-[#E4B0AA]">
+                            <span className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-[#FDEEED] text-[#A44339] border border-[#E4B0AA]">
                               CRITICAL PATH (0d float)
                             </span>
                           ) : (
-                            <span className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-[#FEF9E7] text-[#845006] border border-[#F4E0A0]">
+                            <span className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-[#FEF9E7] text-[#965E0D] border border-[#F4E0A0]">
                               FLOAT BUFFER ({step.totalFloat ?? 0}d float)
                             </span>
                           )
@@ -176,20 +176,20 @@ export default function VariancePage() {
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs pt-2 border-t border-[#D8E2EA]">
-                      <div className="bg-white p-2.5 rounded border border-[#D8E2EA]">
-                        <span className="text-[10px] uppercase font-bold text-[#A24335] flex items-center gap-1 mb-1">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs pt-2 border-t border-[#D6E1E9]">
+                      <div className="bg-white p-2.5 rounded border border-[#D6E1E9]">
+                        <span className="text-[10px] uppercase font-bold text-[#A44339] flex items-center gap-1 mb-1">
                           <AlertCircle className="w-3 h-3" />
                           Root Cause / Origin:
                         </span>
-                        <p className="text-[#142C3F] font-medium leading-relaxed">{step.reason}</p>
+                        <p className="text-[#1A2E42] font-medium leading-relaxed">{step.reason}</p>
                       </div>
-                      <div className="bg-white p-2.5 rounded border border-[#D8E2EA]">
+                      <div className="bg-white p-2.5 rounded border border-[#D6E1E9]">
                         <span className="text-[10px] uppercase font-bold text-[#0F6B68] flex items-center gap-1 mb-1">
                           <ArrowRight className="w-3 h-3" />
                           Downstream Successor Impact:
                         </span>
-                        <p className="text-[#142C3F] font-medium leading-relaxed">{step.impactOnSuccessor}</p>
+                        <p className="text-[#1A2E42] font-medium leading-relaxed">{step.impactOnSuccessor}</p>
                       </div>
                     </div>
                   </div>
@@ -200,38 +200,38 @@ export default function VariancePage() {
         </div>
 
         {/* Section 2: Deterministic What-If Simulator */}
-        <div className="bg-white border border-[#D8E2EA] border-l-4 border-l-[#0F6B68] rounded-lg p-4 sm:p-6 space-y-4 shadow-xs">
-          <div className="pb-3 border-b border-[#D8E2EA] flex items-center justify-between flex-wrap gap-2">
+        <div className="bg-white border border-[#D6E1E9] border-l-4 border-l-[#0F6B68] rounded-lg p-4 sm:p-6 space-y-4 shadow-xs">
+          <div className="pb-3 border-b border-[#D6E1E9] flex items-center justify-between flex-wrap gap-2">
             <div>
               <div className="flex items-center gap-2">
                 <Play className="w-4 h-4 text-[#0F6B68]" />
-                <h3 className="text-base font-bold text-[#142C3F] tracking-tight">
+                <h3 className="text-base font-bold text-[#1A2E42] tracking-tight">
                   Deterministic What-If Delay Simulator
                 </h3>
               </div>
-              <p className="text-xs text-[#526779] mt-0.5">
+              <p className="text-xs text-[#52687B] mt-0.5">
                 Simulate prospective field delays deterministically on the CPM network without modifying baseline data.
               </p>
             </div>
             <Link
               href="/what-if"
-              className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#EAF0F5] hover:bg-[#EAF0F5]/80 border border-[#D8E2EA] text-[#0F6B68] text-xs font-bold rounded-lg transition-colors"
+              className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#EAF1F5] hover:bg-[#EAF1F5]/80 border border-[#D6E1E9] text-[#0F6B68] text-xs font-bold rounded-lg transition-colors"
             >
               <span>Full What-If Simulator Studio</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </div>
 
-          <div className="bg-[#F3F6FA] border border-[#D8E2EA] rounded-lg p-4 flex flex-col md:flex-row md:items-end justify-between gap-4">
+          <div className="bg-[#F4F7FB] border border-[#D6E1E9] rounded-lg p-4 flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div className="flex flex-1 flex-col sm:flex-row items-stretch sm:items-center gap-3">
               <div className="flex-1">
-                <label className="text-xs font-bold text-[#142C3F] block mb-1">
+                <label className="text-xs font-bold text-[#1A2E42] block mb-1">
                   Source Activity to Delay
                 </label>
                 <select
                   value={selectedActivityId}
                   onChange={(e) => setSelectedActivityId(e.target.value)}
-                  className="w-full p-2 text-xs bg-white border border-[#D8E2EA] rounded font-mono text-[#142C3F] outline-none"
+                  className="w-full p-2 text-xs bg-white border border-[#D6E1E9] rounded font-mono text-[#1A2E42] outline-none"
                 >
                   {MOCK_ACTIVITIES.map((act) => (
                     <option key={act.id} value={act.id}>
@@ -242,7 +242,7 @@ export default function VariancePage() {
               </div>
 
               <div className="w-36">
-                <label className="text-xs font-bold text-[#142C3F] block mb-1">
+                <label className="text-xs font-bold text-[#1A2E42] block mb-1">
                   Additional Delay
                 </label>
                 <div className="flex items-center gap-1">
@@ -252,9 +252,9 @@ export default function VariancePage() {
                     max={30}
                     value={simDays}
                     onChange={(e) => setSimDays(parseInt(e.target.value) || 1)}
-                    className="w-full p-2 text-xs bg-white border border-[#D8E2EA] rounded font-mono text-[#142C3F] outline-none"
+                    className="w-full p-2 text-xs bg-white border border-[#D6E1E9] rounded font-mono text-[#1A2E42] outline-none"
                   />
-                  <span className="text-xs text-[#526779]">days</span>
+                  <span className="text-xs text-[#52687B]">days</span>
                 </div>
               </div>
             </div>
@@ -270,23 +270,23 @@ export default function VariancePage() {
 
           {/* Simulation Output */}
           {simulationResult && (
-            <div className="p-4 border rounded-lg bg-white border-[#D8E2EA] space-y-4">
-              <div className="flex items-center justify-between pb-3 border-b border-[#D8E2EA]">
+            <div className="p-4 border rounded-lg bg-white border-[#D6E1E9] space-y-4">
+              <div className="flex items-center justify-between pb-3 border-b border-[#D6E1E9]">
                 <div>
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-[#142C3F]">
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-[#1A2E42]">
                     Simulation Results: What If +{simulationResult.additionalDays} Days Occurs?
                   </h4>
-                  <p className="text-xs text-[#526779] mt-0.5">
+                  <p className="text-xs text-[#52687B] mt-0.5">
                     Evaluated against predecessor/successor schedule tree.
                   </p>
                 </div>
                 <div className="flex items-center gap-2">
                   {simulationResult.criticalPathImpacted ? (
-                    <span className="px-3 py-1 bg-[#FCE8E4] text-[#A24335] border border-[#E4B0AA] text-xs font-mono font-bold rounded">
+                    <span className="px-3 py-1 bg-[#FDEEED] text-[#A44339] border border-[#E4B0AA] text-xs font-mono font-bold rounded">
                       CRITICAL PATH DELAY: +{simulationResult.projectCompletionDelayDays} DAYS
                     </span>
                   ) : (
-                    <span className="px-3 py-1 bg-[#E4F4EC] text-[#2E7D5B] border border-[#B8DCC9] text-xs font-mono font-bold rounded">
+                    <span className="px-3 py-1 bg-[#E5F6EE] text-[#2E7D5B] border border-[#B8DCC9] text-xs font-mono font-bold rounded">
                       ABSORBED BY FLOAT
                     </span>
                   )}
@@ -294,7 +294,7 @@ export default function VariancePage() {
               </div>
 
               <div>
-                <span className="text-xs font-semibold text-[#142C3F] block mb-2">
+                <span className="text-xs font-semibold text-[#1A2E42] block mb-2">
                   Affected Downstream Activities ({simulationResult.affectedActivities.length}):
                 </span>
                 {simulationResult.affectedActivities.length > 0 ? (
@@ -302,21 +302,21 @@ export default function VariancePage() {
                     {simulationResult.affectedActivities.map((aff) => (
                       <div
                         key={aff.activityId}
-                        className="p-3 bg-[#F3F6FA] border border-[#D8E2EA] rounded flex items-center justify-between"
+                        className="p-3 bg-[#F4F7FB] border border-[#D6E1E9] rounded flex items-center justify-between"
                       >
                         <div>
                           <div className="flex items-center gap-2">
                             <span className="font-mono font-bold text-[#0F6B68]">
                               {aff.activityId}
                             </span>
-                            <span className="font-medium text-[#142C3F]">{aff.name}</span>
+                            <span className="font-medium text-[#1A2E42]">{aff.name}</span>
                             {aff.isCritical && (
-                              <span className="text-[10px] font-mono uppercase bg-[#FCE8E4] text-[#A24335] px-1 rounded">
+                              <span className="text-[10px] font-mono uppercase bg-[#FDEEED] text-[#A44339] px-1 rounded">
                                 Critical
                               </span>
                             )}
                           </div>
-                          <div className="text-[11px] text-[#526779] font-mono mt-0.5">
+                          <div className="text-[11px] text-[#52687B] font-mono mt-0.5">
                             Original: {aff.originalPlannedFinish} → Projected: {aff.newProjectedFinish}
                           </div>
                         </div>
@@ -335,48 +335,48 @@ export default function VariancePage() {
         </div>
 
         {/* Section 3: Project Memory — Institutional Knowledge */}
-        <div className="bg-white border border-[#D8E2EA] border-l-4 border-l-[#2E7D5B] rounded-lg p-4 sm:p-6 space-y-4 shadow-xs">
-          <div className="flex items-center justify-between pb-3 border-b border-[#D8E2EA]">
+        <div className="bg-white border border-[#D6E1E9] border-l-4 border-l-[#2E7D5B] rounded-lg p-4 sm:p-6 space-y-4 shadow-xs">
+          <div className="flex items-center justify-between pb-3 border-b border-[#D6E1E9]">
             <div className="flex items-center gap-2">
               <BookOpen className="w-5 h-5 text-[#2E7D5B]" />
               <div>
-                <h3 className="text-base font-bold text-[#142C3F] tracking-tight">
+                <h3 className="text-base font-bold text-[#1A2E42] tracking-tight">
                   Project Memory & Institutional Knowledge Base
                 </h3>
-                <p className="text-xs text-[#526779] mt-0.5">
+                <p className="text-xs text-[#52687B] mt-0.5">
                   Past project completion records and root cause patterns from historical Oil India infrastructure executions.
                 </p>
               </div>
             </div>
-            <span className="px-2.5 py-1 rounded bg-[#E4F4EC] text-[#2E7D5B] border border-[#B8DCC9] text-xs font-mono font-bold">
+            <span className="px-2.5 py-1 rounded bg-[#E5F6EE] text-[#2E7D5B] border border-[#B8DCC9] text-xs font-mono font-bold">
               HISTORICAL RECOVERY RULES
             </span>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {MOCK_PROJECT_MEMORY.map((mem) => (
-              <div key={mem.id} className="p-4 border border-[#D8E2EA] rounded-lg bg-[#F3F6FA]">
+              <div key={mem.id} className="p-4 border border-[#D6E1E9] rounded-lg bg-[#F4F7FB]">
                 <div className="flex items-center justify-between mb-1">
                   <span className="font-mono text-xs font-bold text-[#0F6B68]">{mem.projectCode}</span>
-                  <span className="px-2 py-0.5 bg-[#EAF0F5] text-xs font-medium rounded text-[#526779]">
+                  <span className="px-2 py-0.5 bg-[#EAF1F5] text-xs font-medium rounded text-[#52687B]">
                     {mem.discipline}
                   </span>
                 </div>
-                <h4 className="text-xs font-bold text-[#142C3F] mb-2">{mem.projectName}</h4>
+                <h4 className="text-xs font-bold text-[#1A2E42] mb-2">{mem.projectName}</h4>
 
-                <div className="flex items-center gap-4 text-xs font-mono text-[#526779] mb-3">
+                <div className="flex items-center gap-4 text-xs font-mono text-[#52687B] mb-3">
                   <span>Planned: {mem.plannedDurationDays}d</span>
                   <span>•</span>
                   <span>Actual: {mem.actualDurationDays}d</span>
                   <span>•</span>
-                  <span className="text-[#A24335] font-semibold">Slip: +{mem.varianceDays}d</span>
+                  <span className="text-[#A44339] font-semibold">Slip: +{mem.varianceDays}d</span>
                 </div>
 
                 <div className="text-xs space-y-1 mb-3">
-                  <span className="font-semibold text-[#142C3F] block text-[11px] uppercase">
+                  <span className="font-semibold text-[#1A2E42] block text-[11px] uppercase">
                     Key Historical Delay Factors:
                   </span>
-                  <ul className="list-disc list-inside text-[11px] text-[#526779] space-y-0.5">
+                  <ul className="list-disc list-inside text-[11px] text-[#52687B] space-y-0.5">
                     {mem.keyDelayCauses.map((cause, cIdx) => (
                       <li key={cIdx}>{cause}</li>
                     ))}

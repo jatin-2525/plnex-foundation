@@ -41,7 +41,7 @@ export function UserMenu() {
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 p-1 sm:px-2 sm:py-1 rounded-md hover:bg-[#EAF0F5] transition-colors cursor-pointer"
+        className="flex items-center gap-2 p-1 sm:px-2 sm:py-1 rounded-md hover:bg-[#EAF1F5] transition-colors cursor-pointer"
         aria-expanded={isOpen}
         aria-haspopup="true"
       >
@@ -50,34 +50,34 @@ export function UserMenu() {
         </div>
         <div className="hidden sm:flex items-center gap-2 text-left min-w-0">
           <div className="flex flex-col">
-            <span className="text-xs font-semibold text-[#142C3F] leading-tight truncate">
+            <span className="text-xs font-semibold text-[#1A2E42] leading-tight truncate">
               {displayName}
             </span>
-            <span className="text-[10px] text-[#526779] leading-none mt-0.5">
+            <span className="text-[10px] text-[#52687B] leading-none mt-0.5">
               {displayRole}
             </span>
           </div>
-          <ChevronDown className="w-3 h-3 text-[#526779] flex-shrink-0 ml-0.5" />
+          <ChevronDown className="w-3 h-3 text-[#52687B] flex-shrink-0 ml-0.5" />
         </div>
-        <ChevronDown className="w-3.5 h-3.5 text-[#526779] sm:hidden flex-shrink-0" />
+        <ChevronDown className="w-3.5 h-3.5 text-[#52687B] sm:hidden flex-shrink-0" />
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-72 bg-white border border-[#D8E2EA] rounded-lg shadow-lg z-50 overflow-hidden">
+        <div className="absolute right-0 mt-2 w-72 bg-white border border-[#D6E1E9] rounded-lg shadow-lg z-50 overflow-hidden">
           {/* User Details */}
-          <div className="p-4 border-b border-[#D8E2EA] bg-[#F3F6FA]">
-            <p className="text-xs font-bold text-[#142C3F]">{userSession?.name}</p>
-            <p className="text-[11px] text-[#526779]">{userSession?.email}</p>
+          <div className="p-4 border-b border-[#D6E1E9] bg-[#F4F7FB]">
+            <p className="text-xs font-bold text-[#1A2E42]">{userSession?.name}</p>
+            <p className="text-[11px] text-[#52687B]">{userSession?.email}</p>
             <p className="text-[11px] text-[#0F6B68] font-medium mt-1">
               {userSession?.title} • {displayRole}
             </p>
-            <p className="text-[10px] text-[#526779] mt-0.5">{userSession?.organization}</p>
+            <p className="text-[10px] text-[#52687B] mt-0.5">{userSession?.organization}</p>
           </div>
 
           {/* Admin Workspace Access */}
           {userSession?.role === 'admin' && (
-            <div className="p-2 border-b border-[#D8E2EA]">
-              <div className="px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-[#526779] flex items-center gap-2">
+            <div className="p-2 border-b border-[#D6E1E9]">
+              <div className="px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-[#52687B] flex items-center gap-2">
                 <Shield className="w-3 h-3 text-[#0F6B68]" />
                 <span>Authorized Workspaces</span>
               </div>
@@ -88,7 +88,7 @@ export function UserMenu() {
                     setIsOpen(false);
                     router.push('/admin');
                   }}
-                  className="w-full text-left p-2 rounded flex items-center gap-2 hover:bg-[#EAF0F5] text-xs text-[#142C3F]"
+                  className="w-full text-left p-2 rounded flex items-center gap-2 hover:bg-[#EAF1F5] text-xs text-[#1A2E42]"
                 >
                   <Shield className="w-3.5 h-3.5 text-[#0F6B68]" />
                   <span>Admin Workspace (/admin)</span>
@@ -99,7 +99,7 @@ export function UserMenu() {
                     setIsOpen(false);
                     router.push('/dashboard');
                   }}
-                  className="w-full text-left p-2 rounded flex items-center gap-2 hover:bg-[#EAF0F5] text-xs text-[#142C3F]"
+                  className="w-full text-left p-2 rounded flex items-center gap-2 hover:bg-[#EAF1F5] text-xs text-[#1A2E42]"
                 >
                   <LayoutDashboard className="w-3.5 h-3.5 text-[#0F6B68]" />
                   <span>Manager Workspace (/dashboard)</span>
@@ -110,7 +110,7 @@ export function UserMenu() {
                     setIsOpen(false);
                     router.push('/engineer');
                   }}
-                  className="w-full text-left p-2 rounded flex items-center gap-2 hover:bg-[#EAF0F5] text-xs text-[#142C3F]"
+                  className="w-full text-left p-2 rounded flex items-center gap-2 hover:bg-[#EAF1F5] text-xs text-[#1A2E42]"
                 >
                   <HardHat className="w-3.5 h-3.5 text-[#2E7D5B]" />
                   <span>Site Engineer Workspace (/engineer)</span>
@@ -123,7 +123,7 @@ export function UserMenu() {
           <div className="p-1">
             <button
               onClick={handleSignOut}
-              className="w-full text-left px-3 py-2 text-xs text-[#A24335] hover:bg-[#FCE8E4] rounded flex items-center gap-2 transition-colors cursor-pointer font-medium"
+              className="w-full text-left px-3 py-2 text-xs text-[#A44339] hover:bg-[#FDEEED] rounded flex items-center gap-2 transition-colors cursor-pointer font-medium"
             >
               <LogOut className="w-3.5 h-3.5" />
               <span>Sign Out Session</span>

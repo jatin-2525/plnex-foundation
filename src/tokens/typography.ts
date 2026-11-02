@@ -11,11 +11,11 @@
  * - KPI:           28–32px (Manrope font-bold or font-semibold, leading-none)
  *
  * Palette Mappings:
- * - Main text: #142C3F
- * - Secondary text: #526779
+ * - Main text: #1A2E42
+ * - Secondary text: #52687B
  * - Brand / Primary: #0F6B68
- * - Borders: #D8E2EA
- * - Background: #F3F6FA
+ * - Borders: #D6E1E9
+ * - Background: #F4F7FB
  */
 
 export const TYPOGRAPHY_SCALE = {
@@ -24,78 +24,78 @@ export const TYPOGRAPHY_SCALE = {
     max: '32px',
     lineHeight: '1.2',
     fontWeight: '600',
-    color: '#142C3F',
-    classes: 'text-[28px] sm:text-[30px] lg:text-[32px] font-semibold text-[#142C3F] tracking-tight leading-tight',
+    color: '#1A2E42',
+    classes: 'text-[28px] sm:text-[30px] lg:text-[32px] font-semibold text-[#1A2E42] tracking-tight leading-tight',
   },
   sectionTitle: {
     min: '18px',
     max: '20px',
     lineHeight: '1.35',
     fontWeight: '600',
-    color: '#142C3F',
-    classes: 'text-[18px] sm:text-[20px] font-semibold text-[#142C3F] tracking-tight leading-snug',
+    color: '#1A2E42',
+    classes: 'text-[18px] sm:text-[20px] font-semibold text-[#1A2E42] tracking-tight leading-snug',
   },
   cardTitle: {
     min: '15px',
     max: '16px',
     lineHeight: '1.35',
     fontWeight: '500',
-    color: '#142C3F',
-    classes: 'text-[15px] sm:text-[16px] font-medium text-[#142C3F] leading-snug',
+    color: '#1A2E42',
+    classes: 'text-[15px] sm:text-[16px] font-medium text-[#1A2E42] leading-snug',
   },
   body: {
     size: '15px',
     lineHeight: '1.5',
     fontWeight: '400',
-    color: '#142C3F',
-    classes: 'text-[15px] text-[#142C3F] leading-normal font-normal',
+    color: '#1A2E42',
+    classes: 'text-[15px] text-[#1A2E42] leading-normal font-normal',
   },
   secondary: {
     size: '13px',
     lineHeight: '1.4',
     fontWeight: '400',
-    color: '#526779',
-    classes: 'text-[13px] text-[#526779] leading-normal font-normal',
+    color: '#52687B',
+    classes: 'text-[13px] text-[#52687B] leading-normal font-normal',
   },
   tableDense: {
     min: '13px',
     max: '14px',
     lineHeight: '1.4',
     fontWeight: '400',
-    color: '#142C3F',
-    classes: 'text-[13px] text-[#142C3F] leading-normal',
+    color: '#1A2E42',
+    classes: 'text-[13px] text-[#1A2E42] leading-normal',
   },
   techId: {
     min: '12px',
     max: '13px',
     lineHeight: '1.3',
     fontWeight: '500',
-    color: '#142C3F',
-    classes: 'font-mono text-xs sm:text-[13px] text-[#142C3F]',
+    color: '#1A2E42',
+    classes: 'font-mono text-xs sm:text-[13px] text-[#1A2E42]',
   },
   kpi: {
     min: '28px',
     max: '32px',
     lineHeight: '1.1',
     fontWeight: '700',
-    color: '#142C3F',
-    classes: 'text-[28px] sm:text-[30px] lg:text-[32px] font-bold font-sans text-[#142C3F] tracking-tight leading-none',
+    color: '#1A2E42',
+    classes: 'text-[28px] sm:text-[30px] lg:text-[32px] font-bold font-sans text-[#1A2E42] tracking-tight leading-none',
   },
 } as const;
 
 export const TYPOGRAPHY_CLASSES = {
-  pageTitle: 'text-[28px] sm:text-[32px] font-semibold text-[#142C3F] tracking-tight leading-tight',
-  sectionTitle: 'text-[18px] sm:text-[20px] font-semibold text-[#142C3F] tracking-tight leading-snug',
-  cardTitle: 'text-[15px] sm:text-[16px] font-medium text-[#142C3F] leading-snug',
-  body: 'text-[15px] text-[#142C3F] leading-normal font-normal',
-  secondary: 'text-[13px] text-[#526779] leading-normal font-normal',
-  tableDense: 'text-[13px] text-[#142C3F] leading-normal',
-  techId: 'font-mono text-xs sm:text-[13px] text-[#142C3F]',
-  kpi: 'text-[28px] sm:text-[32px] font-bold font-sans text-[#142C3F] tracking-tight leading-none',
-  tableHeader: 'text-[12px] sm:text-[13px] font-semibold uppercase tracking-wider text-[#526779]',
-  tableBody: 'text-[13px] sm:text-[14px] text-[#142C3F] leading-normal',
-  tableSecondary: 'text-[13px] text-[#526779] leading-normal',
-  tableMetadata: 'text-[12px] sm:text-[13px] font-mono text-[#526779]',
+  pageTitle: 'text-[28px] sm:text-[32px] font-semibold text-[#1A2E42] tracking-tight leading-tight',
+  sectionTitle: 'text-[18px] sm:text-[20px] font-semibold text-[#1A2E42] tracking-tight leading-snug',
+  cardTitle: 'text-[15px] sm:text-[16px] font-medium text-[#1A2E42] leading-snug',
+  body: 'text-[15px] text-[#1A2E42] leading-normal font-normal',
+  secondary: 'text-[13px] text-[#52687B] leading-normal font-normal',
+  tableDense: 'text-[13px] text-[#1A2E42] leading-normal',
+  techId: 'font-mono text-xs sm:text-[13px] text-[#1A2E42]',
+  kpi: 'text-[28px] sm:text-[32px] font-bold font-sans text-[#1A2E42] tracking-tight leading-none',
+  tableHeader: 'text-[12px] sm:text-[13px] font-semibold uppercase tracking-wider text-[#52687B]',
+  tableBody: 'text-[13px] sm:text-[14px] text-[#1A2E42] leading-normal',
+  tableSecondary: 'text-[13px] text-[#52687B] leading-normal',
+  tableMetadata: 'text-[12px] sm:text-[13px] font-mono text-[#52687B]',
 } as const;
 
 export const typography = {

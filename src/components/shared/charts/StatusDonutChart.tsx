@@ -29,7 +29,7 @@ const DEFAULT_EXECUTION_STATUS_SLICES: StatusSliceItem[] = [
     id: 'verified',
     label: 'Verified & Committed',
     count: 12,
-    color: '#0D8879', // Verified actual teal #0D8879
+    color: '#176B53', // Verified actual teal #176B53
     glyph: '✓',
     description: 'Signed off with verified audit record and evidence proof',
   },
@@ -45,7 +45,7 @@ const DEFAULT_EXECUTION_STATUS_SLICES: StatusSliceItem[] = [
     id: 'attention',
     label: 'Unmatched / Attention Required',
     count: 2,
-    color: '#C98925', // Attention amber #C98925
+    color: '#965E0D', // Attention amber #965E0D
     glyph: '▲',
     description: 'Ambiguous field statement or low confidence score (<70%)',
   },
@@ -85,26 +85,26 @@ export function StatusDonutChart({
   });
 
   return (
-    <div className={`bg-white rounded-lg border border-[#D8E2EA] p-4 sm:p-6 shadow-xs text-[#142C3F] ${className}`}>
+    <div className={`bg-white rounded-lg border border-[#D6E1E9] p-4 sm:p-6 shadow-xs text-[#1A2E42] ${className}`}>
       {/* Header */}
-      <div className="flex flex-col lg:flex-row lg:items-center justify-between pb-3 border-b border-[#D8E2EA] gap-3">
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between pb-3 border-b border-[#D6E1E9] gap-3">
         <div>
           <div className="flex items-center gap-2 flex-wrap">
-            <h3 className="text-base font-bold text-[#142C3F] tracking-tight">{title}</h3>
-            <span className="px-2 py-0.5 rounded bg-[#EAF0F5] text-[#0F6B68] border border-[#D8E2EA] text-[10px] font-mono font-bold">
+            <h3 className="text-base font-bold text-[#1A2E42] tracking-tight">{title}</h3>
+            <span className="px-2 py-0.5 rounded bg-[#EAF1F5] text-[#0F6B68] border border-[#D6E1E9] text-[10px] font-mono font-bold">
               Unit: {unit}
             </span>
-            <span className="px-2 py-0.5 rounded bg-[#F3F6FA] text-[#526779] border border-[#D8E2EA] text-[10px] font-mono">
+            <span className="px-2 py-0.5 rounded bg-[#F4F7FB] text-[#52687B] border border-[#D6E1E9] text-[10px] font-mono">
               {timeRange}
             </span>
           </div>
-          <p className="text-xs text-[#526779] mt-0.5">{subtitle}</p>
+          <p className="text-xs text-[#52687B] mt-0.5">{subtitle}</p>
         </div>
 
         {/* Project Question Banner (only if explicitly provided) */}
         {projectQuestion && (
-          <div className="px-3 py-1.5 rounded bg-[#EAF0F5] border border-[#D8E2EA] text-xs font-mono text-[#0F6B68] font-semibold self-start lg:self-auto max-w-md">
-            <span className="font-sans font-bold text-[#142C3F] block text-[10px] uppercase tracking-wide">
+          <div className="px-3 py-1.5 rounded bg-[#EAF1F5] border border-[#D6E1E9] text-xs font-mono text-[#0F6B68] font-semibold self-start lg:self-auto max-w-md">
+            <span className="font-sans font-bold text-[#1A2E42] block text-[10px] uppercase tracking-wide">
               Project Question:
             </span>
             {projectQuestion}
@@ -151,10 +151,10 @@ export function StatusDonutChart({
 
           {/* Center Text (Direct Readable Values) */}
           <div className="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none">
-            <span className="text-2xl font-black font-mono text-[#142C3F] leading-none">
+            <span className="text-2xl font-black font-mono text-[#1A2E42] leading-none">
               {total}
             </span>
-            <span className="text-[10px] text-[#526779] font-medium uppercase tracking-wider mt-1">
+            <span className="text-[10px] text-[#52687B] font-medium uppercase tracking-wider mt-1">
               {centerLabel}
             </span>
           </div>
@@ -165,7 +165,7 @@ export function StatusDonutChart({
           {sliceArcs.map((slice) => (
             <div
               key={slice.id}
-              className="p-3 rounded-md border border-[#D8E2EA] bg-[#F3F6FA] flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs"
+              className="p-3 rounded-md border border-[#D6E1E9] bg-[#F4F7FB] flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs"
             >
               <div className="flex items-center gap-2">
                 <span
@@ -176,11 +176,11 @@ export function StatusDonutChart({
                 </span>
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="font-bold text-[#142C3F] block">{slice.label}</span>
-                    <span className="font-mono text-[10px] text-[#526779]">[{slice.glyph || '●'}]</span>
+                    <span className="font-bold text-[#1A2E42] block">{slice.label}</span>
+                    <span className="font-mono text-[10px] text-[#52687B]">[{slice.glyph || '●'}]</span>
                   </div>
                   {slice.description && (
-                    <span className="text-[10px] text-[#526779] block">
+                    <span className="text-[10px] text-[#52687B] block">
                       {slice.description}
                     </span>
                   )}
@@ -188,11 +188,11 @@ export function StatusDonutChart({
               </div>
 
               <div className="flex items-center gap-3 font-mono self-end sm:self-center">
-                <span className="font-bold text-[#142C3F]">
+                <span className="font-bold text-[#1A2E42]">
                   {slice.count} {unit}
                 </span>
-                <span className="text-[#526779]">•</span>
-                <span className="font-bold px-1.5 py-0.5 rounded bg-white border border-[#D8E2EA] text-[#142C3F]">
+                <span className="text-[#52687B]">•</span>
+                <span className="font-bold px-1.5 py-0.5 rounded bg-white border border-[#D6E1E9] text-[#1A2E42]">
                   {(slice.percent * 100).toFixed(1)}%
                 </span>
               </div>
@@ -202,7 +202,7 @@ export function StatusDonutChart({
       </div>
 
       {/* Footer */}
-      <div className="mt-4 pt-3 border-t border-[#D8E2EA] flex flex-wrap items-center justify-between text-xs text-[#526779] font-mono">
+      <div className="mt-4 pt-3 border-t border-[#D6E1E9] flex flex-wrap items-center justify-between text-xs text-[#52687B] font-mono">
         <span>Validation Engine: PLnEX Verification Rules</span>
         <span>Quality Standard: 100% Traceable to Signed Evidence</span>
       </div>

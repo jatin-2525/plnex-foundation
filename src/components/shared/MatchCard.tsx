@@ -77,11 +77,11 @@ function getFactorIcon(name: string) {
     case 'Discipline':
       return <Tag className="w-4 h-4 text-[#3B6EA8]" />;
     case 'Date / Context':
-      return <Calendar className="w-4 h-4 text-[#845006]" />;
+      return <Calendar className="w-4 h-4 text-[#965E0D]" />;
     case 'Project / WBS':
       return <FolderGit2 className="w-4 h-4 text-[#2E7D5B]" />;
     default:
-      return <Target className="w-4 h-4 text-[#526779]" />;
+      return <Target className="w-4 h-4 text-[#52687B]" />;
   }
 }
 
@@ -90,14 +90,14 @@ function renderFactorBadge(status: ScoringFactorStatus) {
   switch (status) {
     case 'matched':
       return (
-        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-bold bg-[#E4F4EC] text-[#2E7D5B] border border-[#B8DCC9]">
+        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-bold bg-[#E5F6EE] text-[#2E7D5B] border border-[#B8DCC9]">
           <span>✓</span>
           <span>matched</span>
         </span>
       );
     case 'partial':
       return (
-        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-bold bg-[#FFF1D3] text-[#8C5311] border border-[#F0D4A6]">
+        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-bold bg-[#FEF4E6] text-[#8C5311] border border-[#F0D4A6]">
           <span>△</span>
           <span>partial</span>
         </span>
@@ -105,7 +105,7 @@ function renderFactorBadge(status: ScoringFactorStatus) {
     case 'mismatch':
     default:
       return (
-        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-bold bg-[#FCE8E4] text-[#A24335] border border-[#E4B0AA]">
+        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-bold bg-[#FDEEED] text-[#A44339] border border-[#E4B0AA]">
           <span>✕</span>
           <span>mismatch</span>
         </span>
@@ -196,33 +196,33 @@ export function MatchCard({
 
   return (
     <div
-      className={`bg-white border border-[#D8E2EA] rounded-lg overflow-hidden shadow-xs space-y-0 ${className}`}
+      className={`bg-white border border-[#D6E1E9] rounded-lg overflow-hidden shadow-xs space-y-0 ${className}`}
       data-testid="plnex-match-card"
     >
       {/* =========================================================================
           1. MATCH CARD HEADER: Suggested Activity, Activity ID, Confidence, Status
           ========================================================================= */}
-      <div className="p-4 sm:p-4 sm:p-6 bg-[#F3F6FA] border-b border-[#D8E2EA] space-y-4">
+      <div className="p-4 sm:p-4 sm:p-6 bg-[#F4F7FB] border-b border-[#D6E1E9] space-y-4">
         {/* Field Statement Context if provided */}
         {fieldStatement && (
-          <div className="p-3 bg-[#EAF0F5] border border-[#D8E2EA] rounded-lg text-xs space-y-1">
-            <span className="text-[10px] uppercase font-semibold text-[#526779] block tracking-wider">
+          <div className="p-3 bg-[#EAF1F5] border border-[#D6E1E9] rounded-lg text-xs space-y-1">
+            <span className="text-[10px] uppercase font-semibold text-[#52687B] block tracking-wider">
               Field Execution Report:
             </span>
-            <p className="text-[#142C3F] font-medium italic">
+            <p className="text-[#1A2E42] font-medium italic">
               &ldquo;{fieldStatement}&rdquo;
             </p>
           </div>
         )}
 
         {/* Primary Match Card Information */}
-        <div className="p-4 bg-white border border-[#D8E2EA] rounded-lg shadow-xs space-y-3">
+        <div className="p-4 bg-white border border-[#D6E1E9] rounded-lg shadow-xs space-y-3">
           <div className="flex items-center justify-between flex-wrap gap-2">
-            <span className="text-[10px] uppercase font-semibold tracking-wider text-[#526779] flex items-center gap-2">
+            <span className="text-[10px] uppercase font-semibold tracking-wider text-[#52687B] flex items-center gap-2">
               <Target className="w-3.5 h-3.5 text-[#0F6B68]" />
               Suggested Match
             </span>
-            <span className="text-[11px] font-mono font-medium px-2 py-0.5 rounded bg-[#F3F6FA] text-[#526779] border border-[#D8E2EA]">
+            <span className="text-[11px] font-mono font-medium px-2 py-0.5 rounded bg-[#F4F7FB] text-[#52687B] border border-[#D6E1E9]">
               Assistive Suggestion · Not Final Authority
             </span>
           </div>
@@ -236,17 +236,17 @@ export function MatchCard({
                       {activityId}
                     </span>
                     {wbs && (
-                      <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#EAF0F5] text-[#0F6B68] font-semibold border border-[#D8E2EA]">
+                      <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#EAF1F5] text-[#0F6B68] font-semibold border border-[#D6E1E9]">
                         WBS {wbs}
                       </span>
                     )}
                     {discipline && (
-                      <span className="text-[10px] px-2 py-0.5 rounded bg-[#F3F6FA] text-[#526779] font-medium border border-[#D8E2EA]">
+                      <span className="text-[10px] px-2 py-0.5 rounded bg-[#F4F7FB] text-[#52687B] font-medium border border-[#D6E1E9]">
                         {discipline}
                       </span>
                     )}
                   </div>
-                  <h3 className="text-sm sm:text-base font-bold text-[#142C3F] mt-1">
+                  <h3 className="text-sm sm:text-base font-bold text-[#1A2E42] mt-1">
                     {activityName || 'Suggested Schedule Activity'}
                   </h3>
                 </div>
@@ -259,22 +259,22 @@ export function MatchCard({
                         isConfidenceHigh
                           ? 'bg-[#2E7D5B]'
                           : confidence >= 70
-                          ? 'bg-[#845006]'
-                          : 'bg-[#A24335]'
+                          ? 'bg-[#965E0D]'
+                          : 'bg-[#A44339]'
                       }`}
                       aria-hidden="true"
                     />
-                    <span className="text-2xl font-black font-mono text-[#142C3F]">
+                    <span className="text-2xl font-black font-mono text-[#1A2E42]">
                       {confidence}%
                     </span>
                   </div>
                   <span
                     className={`inline-flex items-center gap-1 px-3 py-0.5 rounded-md text-xs font-bold border ${
                       isConfidenceHigh
-                        ? 'bg-[#E4F4EC] text-[#2E7D5B] border-[#B8DCC9]'
+                        ? 'bg-[#E5F6EE] text-[#2E7D5B] border-[#B8DCC9]'
                         : confidence >= 70
-                        ? 'bg-[#FFF1D3] text-[#8C5311] border-[#F0D4A6]'
-                        : 'bg-[#FCE8E4] text-[#A24335] border-[#E4B0AA]'
+                        ? 'bg-[#FEF4E6] text-[#8C5311] border-[#F0D4A6]'
+                        : 'bg-[#FDEEED] text-[#A44339] border-[#E4B0AA]'
                     }`}
                   >
                     {isConfidenceHigh ? (
@@ -295,23 +295,23 @@ export function MatchCard({
               </div>
 
               {(area || line) && (
-                <div className="flex items-center gap-3 text-xs text-[#526779] pt-1 border-t border-[#D8E2EA]/60 flex-wrap">
+                <div className="flex items-center gap-3 text-xs text-[#52687B] pt-1 border-t border-[#D6E1E9]/60 flex-wrap">
                   {area && (
                     <span className="inline-flex items-center gap-1">
                       <MapPin className="w-3.5 h-3.5 text-[#7B8798]" />
-                      Area: <strong className="text-[#142C3F]">{area}</strong>
+                      Area: <strong className="text-[#1A2E42]">{area}</strong>
                     </span>
                   )}
                   {line && (
                     <span className="inline-flex items-center gap-1 font-mono">
-                      Line: <strong className="text-[#142C3F]">{line}</strong>
+                      Line: <strong className="text-[#1A2E42]">{line}</strong>
                     </span>
                   )}
                 </div>
               )}
             </div>
           ) : (
-            <div className="p-3 bg-[#FCE8E4] border border-[#E4B0AA] rounded-lg text-xs space-y-2 text-[#A24335]">
+            <div className="p-3 bg-[#FDEEED] border border-[#E4B0AA] rounded-lg text-xs space-y-2 text-[#A44339]">
               <div className="flex items-center gap-2 font-bold">
                 <XCircle className="w-4 h-4 shrink-0" />
                 <span>No sufficiently strong match exists</span>
@@ -329,11 +329,11 @@ export function MatchCard({
             2. VERIFICATION: CLEARLY SEPARATE CONFIDENCE FROM VERIFICATION
                Example: Confidence: 94% | Verification: Pending
             ========================================================================= */}
-        <div className="p-4 bg-[#F3F6FA] border border-[#D8E2EA] rounded-lg flex items-center justify-between flex-wrap gap-3">
+        <div className="p-4 bg-[#F4F7FB] border border-[#D6E1E9] rounded-lg flex items-center justify-between flex-wrap gap-3">
           <div className="flex items-center gap-6 flex-wrap">
             {/* Confidence metric */}
             <div>
-              <span className="text-[10px] uppercase font-semibold text-[#526779] tracking-wider block">
+              <span className="text-[10px] uppercase font-semibold text-[#52687B] tracking-wider block">
                 Confidence:
               </span>
               <div className="mt-0.5">
@@ -341,11 +341,11 @@ export function MatchCard({
               </div>
             </div>
 
-            <div className="h-8 w-[1px] bg-[#D8E2EA] hidden sm:block" />
+            <div className="h-8 w-[1px] bg-[#D6E1E9] hidden sm:block" />
 
             {/* Verification metric */}
             <div>
-              <span className="text-[10px] uppercase font-semibold text-[#526779] tracking-wider block mb-1">
+              <span className="text-[10px] uppercase font-semibold text-[#52687B] tracking-wider block mb-1">
                 Verification:
               </span>
               <StatusBadge status={verificationStatus} size="xs" />
@@ -354,7 +354,7 @@ export function MatchCard({
 
           {/* DO NOT Display 94% = Verified Disclaimer */}
           <div className="text-right">
-            <span className="text-[11px] text-[#526779] font-medium block">
+            <span className="text-[11px] text-[#52687B] font-medium block">
               Human-in-the-loop Gate
             </span>
             <span className="text-[10px] font-mono text-[#7B8798]">
@@ -368,11 +368,11 @@ export function MatchCard({
           3. WHY? SECTION: Activity keywords, Area / Line, Discipline, Date / Context, Project / WBS
              Using: ✓ matched, △ partial, ✕ mismatch
           ========================================================================= */}
-      <div className="p-4 sm:p-4 sm:p-6 border-b border-[#D8E2EA] bg-white space-y-3">
+      <div className="p-4 sm:p-4 sm:p-6 border-b border-[#D6E1E9] bg-white space-y-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <ShieldCheck className="w-4 h-4 text-[#0F6B68]" />
-            <h4 className="font-bold text-xs uppercase tracking-wider text-[#142C3F]">
+            <h4 className="font-bold text-xs uppercase tracking-wider text-[#1A2E42]">
               Why this match?
             </h4>
             <span className="text-[10px] font-mono text-[#7B8798]">
@@ -399,7 +399,7 @@ export function MatchCard({
             {isConfidenceHigh && (
               <div className="p-3 bg-[#F7FBF9] border border-[#D1EADC] rounded-lg space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-[#142C3F] uppercase tracking-wider">
+                  <span className="text-xs font-bold text-[#1A2E42] uppercase tracking-wider">
                     Why?
                   </span>
                   <span className="text-[11px] text-[#2E7D5B] font-medium">
@@ -407,26 +407,26 @@ export function MatchCard({
                   </span>
                 </div>
                 <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
-                  <li className="flex items-center gap-2 text-[#142C3F]">
-                    <span className="w-4 h-4 rounded-full bg-[#E4F4EC] text-[#2E7D5B] flex items-center justify-center shrink-0">
+                  <li className="flex items-center gap-2 text-[#1A2E42]">
+                    <span className="w-4 h-4 rounded-full bg-[#E5F6EE] text-[#2E7D5B] flex items-center justify-center shrink-0">
                       <Check className="w-3 h-3 stroke-[3]" />
                     </span>
                     <span className="font-medium">Activity match</span>
                   </li>
-                  <li className="flex items-center gap-2 text-[#142C3F]">
-                    <span className="w-4 h-4 rounded-full bg-[#E4F4EC] text-[#2E7D5B] flex items-center justify-center shrink-0">
+                  <li className="flex items-center gap-2 text-[#1A2E42]">
+                    <span className="w-4 h-4 rounded-full bg-[#E5F6EE] text-[#2E7D5B] flex items-center justify-center shrink-0">
                       <Check className="w-3 h-3 stroke-[3]" />
                     </span>
                     <span className="font-medium">Area match</span>
                   </li>
-                  <li className="flex items-center gap-2 text-[#142C3F]">
-                    <span className="w-4 h-4 rounded-full bg-[#E4F4EC] text-[#2E7D5B] flex items-center justify-center shrink-0">
+                  <li className="flex items-center gap-2 text-[#1A2E42]">
+                    <span className="w-4 h-4 rounded-full bg-[#E5F6EE] text-[#2E7D5B] flex items-center justify-center shrink-0">
                       <Check className="w-3 h-3 stroke-[3]" />
                     </span>
                     <span className="font-medium">Discipline match</span>
                   </li>
-                  <li className="flex items-center gap-2 text-[#142C3F]">
-                    <span className="w-4 h-4 rounded-full bg-[#E4F4EC] text-[#2E7D5B] flex items-center justify-center shrink-0">
+                  <li className="flex items-center gap-2 text-[#1A2E42]">
+                    <span className="w-4 h-4 rounded-full bg-[#E5F6EE] text-[#2E7D5B] flex items-center justify-center shrink-0">
                       <Check className="w-3 h-3 stroke-[3]" />
                     </span>
                     <span className="font-medium">Context match</span>
@@ -437,20 +437,20 @@ export function MatchCard({
             {effectiveFactors.map((factor, idx) => (
               <div
                 key={idx}
-                className="p-3 bg-[#F3F6FA] border border-[#D8E2EA] rounded-lg flex items-start justify-between gap-3 text-xs"
+                className="p-3 bg-[#F4F7FB] border border-[#D6E1E9] rounded-lg flex items-start justify-between gap-3 text-xs"
               >
                 <div className="flex items-start gap-2 min-w-0">
-                  <div className="w-7 h-7 rounded-lg bg-white border border-[#D8E2EA] flex items-center justify-center shrink-0 mt-0.5">
+                  <div className="w-7 h-7 rounded-lg bg-white border border-[#D6E1E9] flex items-center justify-center shrink-0 mt-0.5">
                     {getFactorIcon(factor.name)}
                   </div>
                   <div className="space-y-0.5 min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <span className="font-bold text-xs text-[#142C3F]">
+                      <span className="font-bold text-xs text-[#1A2E42]">
                         {factor.name}
                       </span>
                       {renderFactorBadge(factor.status)}
                     </div>
-                    <p className="text-[11px] text-[#526779] leading-relaxed">
+                    <p className="text-[11px] text-[#52687B] leading-relaxed">
                       {factor.reason}
                     </p>
                   </div>
@@ -466,11 +466,11 @@ export function MatchCard({
              Example: PIP-24-001 (94%), PIP-24-003 (71%), PIP-24-009 (42%)
           ========================================================================= */}
       {alternatives.length > 0 && (
-        <div className="p-4 sm:p-4 sm:p-6 border-b border-[#D8E2EA] bg-white space-y-3">
+        <div className="p-4 sm:p-4 sm:p-6 border-b border-[#D6E1E9] bg-white space-y-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <GitCompare className="w-4 h-4 text-[#0F6B68]" />
-              <h4 className="font-bold text-xs uppercase tracking-wider text-[#142C3F]">
+              <h4 className="font-bold text-xs uppercase tracking-wider text-[#1A2E42]">
                 Alternative Activities ({alternatives.length})
               </h4>
             </div>
@@ -493,24 +493,24 @@ export function MatchCard({
               {alternatives.map((alt) => (
                 <div
                   key={alt.activityId}
-                  className="p-3 bg-[#F3F6FA] border border-[#D8E2EA] rounded-lg flex items-center justify-between gap-3 text-xs hover:border-[#D8E2EA] transition-colors"
+                  className="p-3 bg-[#F4F7FB] border border-[#D6E1E9] rounded-lg flex items-center justify-between gap-3 text-xs hover:border-[#D6E1E9] transition-colors"
                 >
                   <div className="space-y-0.5 min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
                       <span className="font-mono font-bold text-[#0F6B68]">
                         {alt.activityId}
                       </span>
-                      <span className="font-bold text-[#142C3F] truncate">
+                      <span className="font-bold text-[#1A2E42] truncate">
                         {alt.activityName}
                       </span>
                       {alt.wbs && (
-                        <span className="text-[10px] font-mono text-[#526779] bg-white px-1.5 py-0.5 rounded border border-[#D8E2EA]">
+                        <span className="text-[10px] font-mono text-[#52687B] bg-white px-1.5 py-0.5 rounded border border-[#D6E1E9]">
                           WBS {alt.wbs}
                         </span>
                       )}
                     </div>
                     {alt.reasons && alt.reasons.length > 0 && (
-                      <p className="text-[11px] text-[#526779]">
+                      <p className="text-[11px] text-[#52687B]">
                         {alt.reasons[0]}
                       </p>
                     )}
@@ -522,7 +522,7 @@ export function MatchCard({
                       <button
                         type="button"
                         onClick={() => onSelectAlternative(alt.activityId)}
-                        className="px-3 py-1 text-xs font-bold text-[#0F6B68] hover:bg-[#EAF0F5] border border-[#D8E2EA] rounded-lg transition-colors"
+                        className="px-3 py-1 text-xs font-bold text-[#0F6B68] hover:bg-[#EAF1F5] border border-[#D6E1E9] rounded-lg transition-colors"
                       >
                         Select
                       </button>
@@ -540,13 +540,13 @@ export function MatchCard({
              Approve Match, Choose Another, Reject, Mark Unmatched
           ========================================================================= */}
       {(onApprove || onChooseAnother || onReject || onMarkUnmatched) && (
-        <div className="p-4 sm:p-6 bg-[#F3F6FA] flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+        <div className="p-4 sm:p-6 bg-[#F4F7FB] flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
           <div className="flex items-center gap-2 flex-wrap">
             {onReject && (
               <button
                 type="button"
                 onClick={onReject}
-                className="min-h-[44px] px-4 py-2 text-xs font-semibold text-[#A24335] hover:bg-[#FCE8E4] border border-[#E4B0AA] rounded-lg transition-colors flex items-center justify-center gap-2 cursor-pointer"
+                className="min-h-[44px] px-4 py-2 text-xs font-semibold text-[#A44339] hover:bg-[#FDEEED] border border-[#E4B0AA] rounded-lg transition-colors flex items-center justify-center gap-2 cursor-pointer"
               >
                 <X className="w-3.5 h-3.5" />
                 <span>Reject</span>
@@ -557,7 +557,7 @@ export function MatchCard({
               <button
                 type="button"
                 onClick={onMarkUnmatched}
-                className="min-h-[44px] px-4 py-2 text-xs font-semibold text-[#526779] hover:text-[#142C3F] hover:bg-white border border-[#D8E2EA] rounded-lg transition-colors flex items-center justify-center gap-2 cursor-pointer"
+                className="min-h-[44px] px-4 py-2 text-xs font-semibold text-[#52687B] hover:text-[#1A2E42] hover:bg-white border border-[#D6E1E9] rounded-lg transition-colors flex items-center justify-center gap-2 cursor-pointer"
               >
                 <HelpCircle className="w-3.5 h-3.5" />
                 <span>Mark Unmatched</span>
@@ -570,7 +570,7 @@ export function MatchCard({
               <button
                 type="button"
                 onClick={onChooseAnother}
-                className="min-h-[44px] px-4 py-2 text-xs font-semibold text-[#142C3F] bg-white hover:bg-[#EAF0F5] border border-[#D8E2EA] rounded-lg transition-colors flex items-center justify-center gap-2 cursor-pointer"
+                className="min-h-[44px] px-4 py-2 text-xs font-semibold text-[#1A2E42] bg-white hover:bg-[#EAF1F5] border border-[#D6E1E9] rounded-lg transition-colors flex items-center justify-center gap-2 cursor-pointer"
               >
                 <SlidersHorizontal className="w-3.5 h-3.5" />
                 <span>Choose Another</span>
