@@ -25,7 +25,9 @@ import { CanonicalDataState } from '../../lib/domain/canonicalModels';
 export type RequiredStatus =
   | 'On Track'
   | 'At Risk'
+  | 'Forecast Late'
   | 'Delayed'
+  | 'Completed Late'
   | 'Completed'
   | 'Blocked'
   | 'Pending Review'
@@ -70,64 +72,80 @@ export const REQUIRED_STATUS_CONFIGS: Record<RequiredStatus, StatusConfig> = {
     key: 'On Track',
     label: 'On Track',
     description: 'Work is progressing in accordance with approved baseline schedule logic and planned milestones.',
-    badgeClass: 'bg-[#E5F6EE] text-[#176B53] border-[#BCE7D2]',
-    dotColor: '#176B53',
+    badgeClass: 'bg-[#E4F1E9] text-[#1F6B4E] border-[#B7DAC3] dark:bg-[#20382C] dark:text-[#9AD5AF] dark:border-[#315442]',
+    dotColor: '#1F6B4E',
     icon: CheckCircle2,
   },
   'At Risk': {
     key: 'At Risk',
     label: 'At Risk',
     description: 'Potential schedule delay, negative float encroachment, or variance threshold alert detected.',
-    badgeClass: 'bg-[#FEF4E6] text-[#965E0D] border-[#FCD9A8]',
-    dotColor: '#965E0D',
+    badgeClass: 'bg-[#F8EFDA] text-[#825700] border-[#E5C185] dark:bg-[#3A3120] dark:text-[#F3D27E] dark:border-[#5B4A2B]',
+    dotColor: '#825700',
     icon: AlertTriangle,
+  },
+  'Forecast Late': {
+    key: 'Forecast Late',
+    label: 'Forecast Late',
+    description: 'Activity is within planned finish window but projected trajectory indicates late completion.',
+    badgeClass: 'bg-[#F8EFDA] text-[#825700] border-[#E5C185] dark:bg-[#3A3120] dark:text-[#F3D27E] dark:border-[#5B4A2B]',
+    dotColor: '#825700',
+    icon: Clock,
   },
   Delayed: {
     key: 'Delayed',
     label: 'Delayed',
     description: 'Actual progress has breached planned schedule finish with critical path slippage.',
-    badgeClass: 'bg-[#FDEEED] text-[#A44339] border-[#FAC7C3]',
-    dotColor: '#A44339',
+    badgeClass: 'bg-[#F6E4E1] text-[#A43B36] border-[#DCABA7] dark:bg-[#3B2422] dark:text-[#FF9E94] dark:border-[#5B3734]',
+    dotColor: '#A43B36',
     icon: AlertCircle,
+  },
+  'Completed Late': {
+    key: 'Completed Late',
+    label: 'Completed Late',
+    description: 'Activity finished 100%, but actual completion date exceeded baseline schedule finish.',
+    badgeClass: 'bg-[#EAF0E9] text-[#52665D] border-[#D9E2DA] dark:bg-[#243832] dark:text-[#B5C1B5] dark:border-[#3A5146]',
+    dotColor: '#52665D',
+    icon: CheckCheck,
   },
   Completed: {
     key: 'Completed',
     label: 'Completed',
     description: 'Activity or work package is 100% physically finished with actual finish recorded.',
-    badgeClass: 'bg-[#E5F6EE] text-[#176B53] border-[#BCE7D2]',
-    dotColor: '#176B53',
+    badgeClass: 'bg-[#E4F1E9] text-[#1F6B4E] border-[#B7DAC3] dark:bg-[#20382C] dark:text-[#9AD5AF] dark:border-[#315442]',
+    dotColor: '#1F6B4E',
     icon: CheckCheck,
   },
   Blocked: {
     key: 'Blocked',
     label: 'Blocked',
     description: 'Execution is halted due to unmet predecessors, site conflicts, or validation failure.',
-    badgeClass: 'bg-[#F8EAF1] text-[#7B2857] border-[#ECC4DA]',
-    dotColor: '#7B2857',
+    badgeClass: 'bg-[#F6E4E1] text-[#A43B36] border-[#DCABA7] dark:bg-[#3B2422] dark:text-[#FF9E94] dark:border-[#5B3734]',
+    dotColor: '#A43B36',
     icon: XCircle,
   },
   'Pending Review': {
     key: 'Pending Review',
     label: 'Pending Review',
     description: 'Awaiting human verification, engineering review, or formal planner sign-off.',
-    badgeClass: 'bg-[#EBF2FF] text-[#3B55A3] border-[#C6D8FF]',
-    dotColor: '#3B55A3',
+    badgeClass: 'bg-[#E3EEF1] text-[#2C6475] border-[#AECFD6] dark:bg-[#20353A] dark:text-[#9CCBD4] dark:border-[#304E55]',
+    dotColor: '#2C6475',
     icon: Clock,
   },
   Unmatched: {
     key: 'Unmatched',
     label: 'Unmatched',
     description: 'Field observation has no verified counterpart in the imported schedule baseline.',
-    badgeClass: 'bg-[#EDF1F5] text-[#52687B] border-[#D4DDE6]',
-    dotColor: '#52687B',
+    badgeClass: 'bg-[#EAF0E9] text-[#52665D] border-[#D9E2DA] dark:bg-[#243832] dark:text-[#B5C1B5] dark:border-[#3A5146]',
+    dotColor: '#52665D',
     icon: HelpCircle,
   },
   Verified: {
     key: 'Verified',
     label: 'Verified',
     description: 'Confirmed against physical site evidence tickets and committed to the Schedule Twin.',
-    badgeClass: 'bg-[#E5F6EE] text-[#176B53] border-[#BCE7D2]',
-    dotColor: '#176B53',
+    badgeClass: 'bg-[#E4F1E9] text-[#1F6B4E] border-[#B7DAC3] dark:bg-[#20382C] dark:text-[#9AD5AF] dark:border-[#315442]',
+    dotColor: '#1F6B4E',
     icon: CheckCircle2,
   },
 };
@@ -171,7 +189,11 @@ export function normalizeStatus(raw: string | undefined | null): RequiredStatus 
     case 'ACCELERATED':
       return 'On Track';
 
-    // 2. At Risk
+    // 2. At Risk & Forecast Late
+    case 'FORECAST_LATE':
+    case 'PROJECTED_LATE':
+      return 'Forecast Late';
+
     case 'AT_RISK':
     case 'WARNING':
     case 'STALE':
@@ -189,7 +211,10 @@ export function normalizeStatus(raw: string | undefined | null): RequiredStatus 
     case 'LATE':
       return 'Delayed';
 
-    // 4. Completed
+    // 4. Completed & Completed Late
+    case 'COMPLETED_LATE':
+      return 'Completed Late';
+
     case 'COMPLETED':
     case 'DONE':
     case 'RESOLVED':

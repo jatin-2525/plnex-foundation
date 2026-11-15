@@ -53,24 +53,24 @@ export function Modal({
     <div className="fixed inset-0 z-50 overflow-y-auto" role="dialog" aria-modal="true">
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-[#1A2E42]/40"
+        className="fixed inset-0 bg-black/50 dark:bg-black/75 backdrop-blur-xs"
         onClick={onClose}
         aria-hidden="true"
       />
 
       <div className="flex min-h-full items-center justify-center p-3 sm:p-4">
         <div
-          className={`relative w-full ${maxWidthClass} bg-white rounded-lg border border-[#D6E1E9] shadow-lg overflow-hidden`}
+          className={`relative w-full ${maxWidthClass} bg-white dark:bg-[#17221D] rounded-xl border border-[#D9E2DA] dark:border-[#3A5146] shadow-xl overflow-hidden transition-colors`}
         >
           {/* Header */}
-          <div className="flex items-start justify-between px-4 sm:px-6 py-3 sm:py-4 border-b border-[#D6E1E9] bg-white">
+          <div className="flex items-start justify-between px-4 sm:px-6 py-3.5 sm:py-4 border-b border-[#D9E2DA] dark:border-[#3A5146] bg-white dark:bg-[#17221D]">
             <div className="min-w-0 pr-2">
-              <h2 className="text-base font-semibold text-[#1A2E42] leading-snug">{title}</h2>
-              {subtitle && <p className="text-xs text-[#52687B] mt-0.5">{subtitle}</p>}
+              <h2 className="text-base font-bold font-heading text-[#1A2B25] dark:text-[#F2F4E9] leading-snug">{title}</h2>
+              {subtitle && <p className="text-xs text-[#52665D] dark:text-[#B5C1B5] mt-0.5">{subtitle}</p>}
             </div>
             <button
               onClick={onClose}
-              className="min-w-[44px] min-h-[44px] flex items-center justify-center p-2 text-[#52687B] hover:text-[#1A2E42] hover:bg-[#EAF1F5] rounded-md transition-colors -mr-1 flex-shrink-0 cursor-pointer"
+              className="min-w-[44px] min-h-[44px] flex items-center justify-center p-2 text-[#52665D] hover:text-[#1A2B25] dark:text-[#B5C1B5] dark:hover:text-[#F2F4E9] hover:bg-[#EAF0E9] dark:hover:bg-[#243832] rounded-lg transition-colors -mr-1 flex-shrink-0 cursor-pointer"
               aria-label="Close dialog"
             >
               <X className="w-5 h-5" />
@@ -78,13 +78,13 @@ export function Modal({
           </div>
 
           {/* Body */}
-          <div className="px-4 sm:px-6 py-3 sm:py-4 max-h-[75vh] overflow-y-auto text-[#1A2E42] text-sm">
+          <div className="px-4 sm:px-6 py-3.5 sm:py-4 max-h-[75vh] overflow-y-auto text-[#1A2B25] dark:text-[#F2F4E9] text-sm">
             {children}
           </div>
 
           {/* Footer */}
           {footer && (
-            <div className="flex flex-wrap items-center justify-end gap-2 sm:gap-3 px-4 sm:px-6 py-3 border-t border-[#D6E1E9] bg-[#F4F7FB]">
+            <div className="flex flex-wrap items-center justify-end gap-2 sm:gap-3 px-4 sm:px-6 py-3 border-t border-[#D9E2DA] dark:border-[#3A5146] bg-[#F6F7F3] dark:bg-[#101815]">
               {footer}
             </div>
           )}

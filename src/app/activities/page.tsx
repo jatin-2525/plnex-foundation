@@ -463,81 +463,81 @@ export default function MyActivitiesPage() {
         <Breadcrumbs items={breadcrumbs} />
 
         {/* HEADER: My Activities, Project Selector, Reporting Date */}
-        <div className="bg-white border border-[#D6E1E9] rounded-lg p-4 sm:p-6">
+        <div className="bg-white border border-[#D9E2DA] rounded-lg p-4 sm:p-6">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
             <div>
               <div className="flex items-center gap-2 mb-2">
-                <div className="w-8 h-8 rounded bg-[#EAF1F5] flex items-center justify-center text-[#0F6B68]">
+                <div className="w-8 h-8 rounded bg-[#EAF0E9] flex items-center justify-center text-[#006B61]">
                   <ListChecks className="w-4 h-4" />
                 </div>
                 <div>
-                  <h1 className="text-xl font-bold text-[#1A2E42] tracking-tight">My Activities</h1>
+                  <h1 className="text-xl font-bold text-[#1A2B25] tracking-tight">My Activities</h1>
                 </div>
               </div>
-              <p className="text-xs text-[#52687B]">
+              <p className="text-xs text-[#52665D]">
                 Assigned work package execution schedule for{' '}
-                <strong className="text-[#1A2E42]">Debajit Borah (Lead Site Execution Engineer)</strong>.
+                <strong className="text-[#1A2B25]">Debajit Borah (Lead Site Execution Engineer)</strong>.
               </p>
             </div>
 
             {/* Header Controls: Project Selector & Reporting Date */}
             <div className="flex flex-wrap items-center gap-3">
               <div className="flex items-center gap-2">
-                <span className="text-xs text-[#52687B] font-medium hidden sm:inline">Project:</span>
+                <span className="text-xs text-[#52665D] font-medium hidden sm:inline">Project:</span>
                 <ProjectSelector />
               </div>
 
-              <div className="flex items-center gap-2 px-3 py-1.5 bg-[#F4F7FB] border border-[#D6E1E9] rounded-lg text-xs font-mono">
-                <Calendar className="w-3.5 h-3.5 text-[#0F6B68]" />
-                <span className="text-[#52687B]">Reporting Date:</span>
-                <strong className="text-[#1A2E42] font-bold">18 Sep 2026</strong>
+              <div className="flex items-center gap-2 px-3 py-1.5 bg-[#F6F7F3] border border-[#D9E2DA] rounded-lg text-xs font-mono">
+                <Calendar className="w-3.5 h-3.5 text-[#006B61]" />
+                <span className="text-[#52665D]">Reporting Date:</span>
+                <strong className="text-[#1A2B25] font-bold">18 Sep 2026</strong>
               </div>
             </div>
           </div>
 
           {/* Metrics Ribbon */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 mt-4 pt-4 border-t border-[#D6E1E9]">
-            <div className="p-3 bg-[#F4F7FB] border border-[#D6E1E9] rounded">
-              <span className="text-[11px] text-[#52687B] font-medium block">Total Assigned</span>
-              <span className="text-lg font-bold text-[#1A2E42] font-mono">{metrics.total} packages</span>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 mt-4 pt-4 border-t border-[#D9E2DA]">
+            <div className="p-3 bg-[#F6F7F3] border border-[#D9E2DA] rounded">
+              <span className="text-[11px] text-[#52665D] font-medium block">Total Assigned</span>
+              <span className="text-lg font-bold text-[#1A2B25] font-mono">{metrics.total} packages</span>
             </div>
-            <div className="p-3 bg-[#F4F7FB] border border-[#D6E1E9] rounded">
-              <span className="text-[11px] text-[#0F6B68] font-medium block">In Progress</span>
-              <span className="text-lg font-bold text-[#0F6B68] font-mono">{metrics.inProgress} active</span>
+            <div className="p-3 bg-[#F6F7F3] border border-[#D9E2DA] rounded">
+              <span className="text-[11px] text-[#006B61] font-medium block">In Progress</span>
+              <span className="text-lg font-bold text-[#006B61] font-mono">{metrics.inProgress} active</span>
             </div>
-            <div className="p-3 bg-[#F4F7FB] border border-[#D6E1E9] rounded">
-              <span className="text-[11px] text-[#A44339] font-medium block">Delayed / Blocked</span>
-              <span className="text-lg font-bold text-[#A44339] font-mono">{metrics.delayed + metrics.blocked} attention</span>
+            <div className="p-3 bg-[#F6F7F3] border border-[#D9E2DA] rounded">
+              <span className="text-[11px] text-[#A43B36] font-medium block">Delayed / Blocked</span>
+              <span className="text-lg font-bold text-[#A43B36] font-mono">{metrics.delayed + metrics.blocked} attention</span>
             </div>
-            <div className="p-3 bg-[#F4F7FB] border border-[#D6E1E9] rounded">
-              <span className="text-[11px] text-[#2E7D5B] font-medium block">Completed</span>
-              <span className="text-lg font-bold text-[#2E7D5B] font-mono">{metrics.completed} finished</span>
+            <div className="p-3 bg-[#F6F7F3] border border-[#D9E2DA] rounded">
+              <span className="text-[11px] text-[#1F6B4E] font-medium block">Completed</span>
+              <span className="text-lg font-bold text-[#1F6B4E] font-mono">{metrics.completed} finished</span>
             </div>
-            <div className="p-3 bg-[#F4F7FB] border border-[#D6E1E9] rounded">
-              <span className="text-[11px] text-[#52687B] font-medium block">Avg Progress</span>
-              <span className="text-lg font-bold text-[#1A2E42] font-mono">{metrics.avgProgress}%</span>
+            <div className="p-3 bg-[#F6F7F3] border border-[#D9E2DA] rounded">
+              <span className="text-[11px] text-[#52665D] font-medium block">Avg Progress</span>
+              <span className="text-lg font-bold text-[#1A2B25] font-mono">{metrics.avgProgress}%</span>
             </div>
           </div>
         </div>
 
         {/* SEARCH & FILTERS BAR */}
-        <div className="bg-white border border-[#D6E1E9] rounded-lg p-4 space-y-3">
+        <div className="bg-white border border-[#D9E2DA] rounded-lg p-4 space-y-3">
           <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3">
             {/* Search Input */}
             <div className="relative flex-1 min-w-[240px]">
-              <Search className="w-4 h-4 text-[#7B8798] absolute left-3 top-1/2 -translate-y-1/2" />
+              <Search className="w-4 h-4 text-[#738A80] absolute left-3 top-1/2 -translate-y-1/2" />
               <input
                 type="text"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search assigned activity ID, title, or area..."
-                className="w-full pl-9 pr-8 py-2 text-xs bg-[#F4F7FB] border border-[#D6E1E9] focus:border-[#0F6B68] focus:bg-white rounded-md text-[#1A2E42] placeholder-[#7B8798] transition-colors outline-none"
+                className="w-full pl-9 pr-8 py-2 text-xs bg-[#F6F7F3] border border-[#D9E2DA] focus:border-[#006B61] focus:bg-white rounded-md text-[#1A2B25] placeholder-[#7B8798] transition-colors outline-none"
               />
               {search && (
                 <button
                   type="button"
                   onClick={() => setSearch('')}
-                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[#7B8798] hover:text-[#1A2E42]"
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[#738A80] hover:text-[#1A2B25]"
                   aria-label="Clear search"
                 >
                   <X className="w-3.5 h-3.5" />
@@ -549,11 +549,11 @@ export default function MyActivitiesPage() {
             <div className="flex flex-wrap items-center gap-2">
               {/* Filter 1: Status (Not Started, In Progress, Completed, Blocked, Delayed) */}
               <div className="flex items-center gap-2">
-                <span className="text-xs text-[#52687B] font-medium">Status:</span>
+                <span className="text-xs text-[#52665D] font-medium">Status:</span>
                 <select
                   value={statusFilter}
                   onChange={(e) => setStatusFilter(e.target.value)}
-                  className="px-3 py-1.5 text-xs bg-[#F4F7FB] border border-[#D6E1E9] focus:border-[#0F6B68] rounded-md text-[#1A2E42] outline-none cursor-pointer"
+                  className="px-3 py-1.5 text-xs bg-[#F6F7F3] border border-[#D9E2DA] focus:border-[#006B61] rounded-md text-[#1A2B25] outline-none cursor-pointer"
                 >
                   <option value="all">All Statuses</option>
                   <option value="in-progress">In Progress</option>
@@ -566,11 +566,11 @@ export default function MyActivitiesPage() {
 
               {/* Filter 2: Area */}
               <div className="flex items-center gap-2">
-                <span className="text-xs text-[#52687B] font-medium">Area:</span>
+                <span className="text-xs text-[#52665D] font-medium">Area:</span>
                 <select
                   value={areaFilter}
                   onChange={(e) => setAreaFilter(e.target.value)}
-                  className="px-3 py-1.5 text-xs bg-[#F4F7FB] border border-[#D6E1E9] focus:border-[#0F6B68] rounded-md text-[#1A2E42] outline-none cursor-pointer max-w-[150px] truncate"
+                  className="px-3 py-1.5 text-xs bg-[#F6F7F3] border border-[#D9E2DA] focus:border-[#006B61] rounded-md text-[#1A2B25] outline-none cursor-pointer max-w-[150px] truncate"
                 >
                   <option value="all">All Areas</option>
                   {areaOptions.map((area) => (
@@ -583,11 +583,11 @@ export default function MyActivitiesPage() {
 
               {/* Filter 3: Discipline */}
               <div className="flex items-center gap-2">
-                <span className="text-xs text-[#52687B] font-medium">Discipline:</span>
+                <span className="text-xs text-[#52665D] font-medium">Discipline:</span>
                 <select
                   value={disciplineFilter}
                   onChange={(e) => setDisciplineFilter(e.target.value)}
-                  className="px-3 py-1.5 text-xs bg-[#F4F7FB] border border-[#D6E1E9] focus:border-[#0F6B68] rounded-md text-[#1A2E42] outline-none cursor-pointer"
+                  className="px-3 py-1.5 text-xs bg-[#F6F7F3] border border-[#D9E2DA] focus:border-[#006B61] rounded-md text-[#1A2B25] outline-none cursor-pointer"
                 >
                   <option value="all">All Disciplines</option>
                   {disciplineOptions.map((disc) => (
@@ -600,11 +600,11 @@ export default function MyActivitiesPage() {
 
               {/* Filter 4: Date */}
               <div className="flex items-center gap-2">
-                <span className="text-xs text-[#52687B] font-medium">Date:</span>
+                <span className="text-xs text-[#52665D] font-medium">Date:</span>
                 <select
                   value={dateFilter}
                   onChange={(e) => setDateFilter(e.target.value)}
-                  className="px-3 py-1.5 text-xs bg-[#F4F7FB] border border-[#D6E1E9] focus:border-[#0F6B68] rounded-md text-[#1A2E42] outline-none cursor-pointer"
+                  className="px-3 py-1.5 text-xs bg-[#F6F7F3] border border-[#D9E2DA] focus:border-[#006B61] rounded-md text-[#1A2B25] outline-none cursor-pointer"
                 >
                   <option value="all">All Dates</option>
                   <option value="this-week">Due This Week</option>
@@ -615,11 +615,11 @@ export default function MyActivitiesPage() {
 
               {/* Filter 5: Progress */}
               <div className="flex items-center gap-2">
-                <span className="text-xs text-[#52687B] font-medium">Progress:</span>
+                <span className="text-xs text-[#52665D] font-medium">Progress:</span>
                 <select
                   value={progressFilter}
                   onChange={(e) => setProgressFilter(e.target.value)}
-                  className="px-3 py-1.5 text-xs bg-[#F4F7FB] border border-[#D6E1E9] focus:border-[#0F6B68] rounded-md text-[#1A2E42] outline-none cursor-pointer"
+                  className="px-3 py-1.5 text-xs bg-[#F6F7F3] border border-[#D9E2DA] focus:border-[#006B61] rounded-md text-[#1A2B25] outline-none cursor-pointer"
                 >
                   <option value="all">All Progress</option>
                   <option value="0">0% (Not Started)</option>
@@ -634,7 +634,7 @@ export default function MyActivitiesPage() {
                 <button
                   type="button"
                   onClick={clearAllFilters}
-                  className="px-3 py-1.5 text-xs text-[#A44339] hover:bg-[#FDEEED] border border-[#E4B0AA] rounded-md transition-colors inline-flex items-center gap-1"
+                  className="px-3 py-1.5 text-xs text-[#A43B36] hover:bg-[#F6E4E1] border border-[#DCABA7] rounded-md transition-colors inline-flex items-center gap-1"
                 >
                   <X className="w-3.5 h-3.5" />
                   <span>Clear</span>
@@ -643,23 +643,23 @@ export default function MyActivitiesPage() {
             </div>
           </div>
 
-          <div className="flex items-center justify-between text-xs text-[#52687B] pt-2 border-t border-[#EAF1F5]">
+          <div className="flex items-center justify-between text-xs text-[#52665D] pt-2 border-t border-[#EAF1F5]">
             <span>
-              Showing <strong className="text-[#1A2E42] font-mono">{filteredActivities.length}</strong> of{' '}
+              Showing <strong className="text-[#1A2B25] font-mono">{filteredActivities.length}</strong> of{' '}
               <span className="font-mono">{activities.length}</span> assigned activities
             </span>
-            <span className="text-[11px] text-[#7B8798]">Click any row to open the Activity Detail Drawer</span>
+            <span className="text-[11px] text-[#738A80]">Click any row to open the Activity Detail Drawer</span>
           </div>
         </div>
 
         {/* ========================================================= */}
         {/* DESKTOP TABLE VIEW (hidden on mobile) */}
         {/* ========================================================= */}
-        <div className="hidden md:block bg-white border border-[#D6E1E9] rounded-lg overflow-hidden">
+        <div className="hidden md:block bg-white border border-[#D9E2DA] rounded-lg overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full min-w-[760px] text-left text-sm border-collapse">
-              <thead className="sticky top-0 z-10 bg-[#F4F7FB]">
-                <tr className="bg-[#F4F7FB] border-b border-[#D6E1E9] text-[#52687B] font-medium h-11">
+              <thead className="sticky top-0 z-10 bg-[#F6F7F3]">
+                <tr className="bg-[#F6F7F3] border-b border-[#D9E2DA] text-[#52665D] font-medium h-11">
                   <th className="py-3 px-4 whitespace-nowrap">Activity ID</th>
                   <th className="py-3 px-4 whitespace-nowrap min-w-[240px]">Activity</th>
                   <th className="py-3 px-4 whitespace-nowrap">Area</th>
@@ -670,7 +670,7 @@ export default function MyActivitiesPage() {
                   <th className="py-3 px-4 whitespace-nowrap text-right">Action</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#D6E1E9]/60">
+              <tbody className="divide-y divide-[#D9E2DA]/60">
                 {filteredActivities.map((act) => {
                   const isSlipped = act.delayDays > 0;
                   const isBehindProgress = act.actualProgress < act.plannedProgress;
@@ -683,31 +683,31 @@ export default function MyActivitiesPage() {
                     >
                       {/* 1. Activity ID */}
                       <td className="py-3 px-4 align-middle whitespace-nowrap">
-                        <span className="font-mono font-bold text-[#0F6B68] group-hover:underline">
+                        <span className="font-mono font-bold text-[#006B61] group-hover:underline">
                           {act.id}
                         </span>
                       </td>
 
                       {/* 2. Activity (Clean title without cluttered inline WBS) */}
                       <td className="py-3 px-4 align-middle">
-                        <div className="font-semibold text-[#1A2E42] group-hover:text-[#0F6B68] transition-colors">
+                        <div className="font-semibold text-[#1A2B25] group-hover:text-[#006B61] transition-colors">
                           {act.name}
                         </div>
                         {act.isCritical && (
-                          <span className="inline-block mt-0.5 text-[10px] font-mono text-[#A44339] font-bold">
+                          <span className="inline-block mt-0.5 text-[10px] font-mono text-[#A43B36] font-bold">
                             CRITICAL PATH
                           </span>
                         )}
                       </td>
 
                       {/* 3. Area */}
-                      <td className="py-3 px-4 align-middle whitespace-nowrap text-[#52687B]">
+                      <td className="py-3 px-4 align-middle whitespace-nowrap text-[#52665D]">
                         {act.area}
                       </td>
 
                       {/* 4. Discipline */}
                       <td className="py-3 px-4 align-middle whitespace-nowrap">
-                        <span className="px-2 py-0.5 bg-[#EAF1F5] border border-[#D6E1E9] rounded text-[11px] text-[#1A2E42] font-medium">
+                        <span className="px-2 py-0.5 bg-[#EAF0E9] border border-[#D9E2DA] rounded text-[11px] text-[#1A2B25] font-medium">
                           {act.discipline}
                         </span>
                       </td>
@@ -716,8 +716,8 @@ export default function MyActivitiesPage() {
                       <td className="py-3 px-4 align-middle">
                         <div className="space-y-1">
                           <div className="flex items-center justify-between text-[11px] font-mono">
-                            <span className="font-bold text-[#1A2E42]">{act.actualProgress}%</span>
-                            <span className="text-[#52687B]">Target: {act.plannedProgress}%</span>
+                            <span className="font-bold text-[#1A2B25]">{act.actualProgress}%</span>
+                            <span className="text-[#52665D]">Target: {act.plannedProgress}%</span>
                           </div>
                           <ProgressBar
                             actual={act.actualProgress}
@@ -733,7 +733,7 @@ export default function MyActivitiesPage() {
                       <td className="py-3 px-4 align-middle whitespace-nowrap">
                         {isSlipped ? (
                           <div className="flex items-center gap-2">
-                            <span className="font-mono font-bold text-xs px-2 py-0.5 rounded bg-[#FDEEED] text-[#A44339] border border-[#E4B0AA]">
+                            <span className="font-mono font-bold text-xs px-2 py-0.5 rounded bg-[#F6E4E1] text-[#A43B36] border border-[#DCABA7]">
                               +{act.delayDays}d slip
                             </span>
                             <WhyButton
@@ -745,7 +745,7 @@ export default function MyActivitiesPage() {
                           </div>
                         ) : isBehindProgress ? (
                           <div className="flex items-center gap-2">
-                            <span className="font-mono font-bold text-xs px-2 py-0.5 rounded bg-[#FEF4E6] text-[#8C5311] border border-[#F0D4A6]">
+                            <span className="font-mono font-bold text-xs px-2 py-0.5 rounded bg-[#F8EFDA] text-[#825700] border border-[#E5C185]">
                               {act.actualProgress - act.plannedProgress}% lag
                             </span>
                             <WhyButton
@@ -756,7 +756,7 @@ export default function MyActivitiesPage() {
                             />
                           </div>
                         ) : (
-                          <span className="font-mono text-xs px-2 py-0.5 rounded bg-[#E5F6EE] text-[#2E7D5B] border border-[#B8DCC9]">
+                          <span className="font-mono text-xs px-2 py-0.5 rounded bg-[#E4F1E9] text-[#1F6B4E] border border-[#B7DAC3]">
                             On Track
                           </span>
                         )}
@@ -784,7 +784,7 @@ export default function MyActivitiesPage() {
                             <button
                               type="button"
                               onClick={(e) => handleOpenCapture(e, act)}
-                              className="px-3 py-1 text-xs font-semibold text-white bg-[#0F6B68] hover:bg-[#135A72] rounded transition-colors inline-flex items-center gap-1 shadow-2xs"
+                              className="px-3 py-1 text-xs font-semibold text-white bg-[#006B61] hover:bg-[#00524A] rounded transition-colors inline-flex items-center gap-1 shadow-2xs"
                               title="Capture field progress for this activity"
                             >
                               <Plus className="w-3.5 h-3.5" />
@@ -798,10 +798,10 @@ export default function MyActivitiesPage() {
                               e.stopPropagation();
                               handleOpenDrawer(act);
                             }}
-                            className="px-2 py-1 text-xs font-medium text-[#52687B] hover:text-[#1A2E42] hover:bg-[#EAF1F5] border border-[#D6E1E9] rounded transition-colors inline-flex items-center gap-1"
+                            className="px-2 py-1 text-xs font-medium text-[#52665D] hover:text-[#1A2B25] hover:bg-[#EAF0E9] border border-[#D9E2DA] rounded transition-colors inline-flex items-center gap-1"
                             title="Open Activity Detail Drawer"
                           >
-                            <Eye className="w-3.5 h-3.5 text-[#7B8798]" />
+                            <Eye className="w-3.5 h-3.5 text-[#738A80]" />
                             <span>Details</span>
                           </button>
                         </div>
@@ -822,15 +822,15 @@ export default function MyActivitiesPage() {
             <div
               key={act.id}
               onClick={() => handleOpenDrawer(act)}
-              className="bg-white border border-[#D6E1E9] rounded-lg p-4 space-y-3 shadow-xs active:bg-[#F9FAFC]"
+              className="bg-white border border-[#D9E2DA] rounded-lg p-4 space-y-3 shadow-xs active:bg-[#F9FAFC]"
             >
               {/* Top Row: Activity ID + Discipline + Status */}
               <div className="flex items-center justify-between gap-2">
                 <div className="flex items-center gap-2">
-                  <span className="font-mono font-bold text-sm text-[#0F6B68]">
+                  <span className="font-mono font-bold text-sm text-[#006B61]">
                     {act.id}
                   </span>
-                  <span className="px-1.5 py-0.5 rounded text-[10px] bg-[#EAF1F5] border border-[#D6E1E9] text-[#52687B]">
+                  <span className="px-1.5 py-0.5 rounded text-[10px] bg-[#EAF0E9] border border-[#D9E2DA] text-[#52665D]">
                     {act.discipline}
                   </span>
                 </div>
@@ -839,25 +839,25 @@ export default function MyActivitiesPage() {
 
               {/* Title & Area */}
               <div>
-                <h3 className="font-bold text-sm text-[#1A2E42] leading-snug">{act.name}</h3>
-                <p className="text-xs text-[#52687B] mt-0.5">
+                <h3 className="font-bold text-sm text-[#1A2B25] leading-snug">{act.name}</h3>
+                <p className="text-xs text-[#52665D] mt-0.5">
                   {act.area} • WBS {act.wbs}
                 </p>
                 {act.blockedReason && (
-                  <p className="text-[11px] text-[#8C5311] mt-1 bg-[#FEF4E6] p-2 rounded border border-[#F0D4A6]">
+                  <p className="text-[11px] text-[#825700] mt-1 bg-[#F8EFDA] p-2 rounded border border-[#E5C185]">
                     {act.blockedReason}
                   </p>
                 )}
               </div>
 
               {/* Dates & Progress */}
-              <div className="p-3 bg-[#F4F7FB] rounded border border-[#D6E1E9] space-y-2 text-xs font-mono">
-                <div className="flex justify-between text-[#52687B] text-[11px]">
+              <div className="p-3 bg-[#F6F7F3] rounded border border-[#D9E2DA] space-y-2 text-xs font-mono">
+                <div className="flex justify-between text-[#52665D] text-[11px]">
                   <span>Planned: {act.plannedStart} → {act.plannedFinish}</span>
                   <span>{act.lastUpdate}</span>
                 </div>
                 <div className="flex justify-between text-xs">
-                  <span>Actual: <strong className="text-[#0F6B68]">{act.actualProgress}%</strong></span>
+                  <span>Actual: <strong className="text-[#006B61]">{act.actualProgress}%</strong></span>
                   <span>Target: {act.plannedProgress}%</span>
                 </div>
                 <ProgressBar
@@ -870,14 +870,14 @@ export default function MyActivitiesPage() {
               </div>
 
               {/* Bottom Card Actions: Primary Capture Update & Secondary View Activity */}
-              <div className="pt-2 border-t border-[#D6E1E9] flex items-center justify-between gap-2">
+              <div className="pt-2 border-t border-[#D9E2DA] flex items-center justify-between gap-2">
                 <button
                   type="button"
                   onClick={(e) => {
                     e.stopPropagation();
                     handleOpenDrawer(act);
                   }}
-                  className="min-h-[44px] px-3 py-2 text-xs font-medium text-[#52687B] hover:bg-[#EAF1F5] active:bg-[#D6E1E9] border border-[#D6E1E9] rounded-lg flex-1 text-center transition-colors cursor-pointer"
+                  className="min-h-[44px] px-3 py-2 text-xs font-medium text-[#52665D] hover:bg-[#EAF0E9] active:bg-[#D9E2DA] border border-[#D9E2DA] rounded-lg flex-1 text-center transition-colors cursor-pointer"
                 >
                   View Activity
                 </button>
@@ -885,7 +885,7 @@ export default function MyActivitiesPage() {
                 <button
                   type="button"
                   onClick={(e) => handleOpenCapture(e, act)}
-                  className="min-h-[44px] px-4 py-2 text-xs font-bold text-white bg-[#0F6B68] hover:bg-[#135A72] active:bg-[#135A72] rounded-lg flex-1 inline-flex items-center justify-center gap-2 shadow-xs transition-colors cursor-pointer"
+                  className="min-h-[44px] px-4 py-2 text-xs font-bold text-white bg-[#006B61] hover:bg-[#00524A] active:bg-[#003D37] rounded-lg flex-1 inline-flex items-center justify-center gap-2 shadow-xs transition-colors cursor-pointer"
                 >
                   <Plus className="w-3.5 h-3.5" />
                   <span>Capture Update</span>
@@ -909,7 +909,7 @@ export default function MyActivitiesPage() {
                   type="button"
                   onClick={() => setIsCaptureModalOpen(false)}
                   disabled={isSubmittingCapture}
-                  className="px-3 py-1.5 text-xs text-[#52687B] border border-[#D6E1E9] rounded"
+                  className="px-3 py-1.5 text-xs text-[#52665D] border border-[#D9E2DA] rounded"
                 >
                   Cancel
                 </button>
@@ -917,7 +917,7 @@ export default function MyActivitiesPage() {
                   type="button"
                   onClick={handleQuickCaptureSubmit}
                   disabled={isSubmittingCapture || !captureStatement.trim()}
-                  className="px-4 py-1.5 text-xs font-semibold text-white bg-[#0F6B68] hover:bg-[#135A72] rounded inline-flex items-center gap-2 shadow-xs"
+                  className="px-4 py-1.5 text-xs font-semibold text-white bg-[#006B61] hover:bg-[#00524A] rounded inline-flex items-center gap-2 shadow-xs"
                 >
                   {isSubmittingCapture ? 'Submitting...' : 'Submit Progress Update'}
                 </button>
@@ -925,34 +925,34 @@ export default function MyActivitiesPage() {
             }
           >
             <form onSubmit={handleQuickCaptureSubmit} className="space-y-3 text-xs">
-              <div className="p-3 bg-[#F4F7FB] border border-[#D6E1E9] rounded space-y-1">
+              <div className="p-3 bg-[#F6F7F3] border border-[#D9E2DA] rounded space-y-1">
                 <div className="flex justify-between font-mono">
                   <span>Current Actual: {captureTargetActivity.actualProgress}%</span>
                   <span>Target: {captureTargetActivity.plannedProgress}%</span>
                 </div>
-                <div className="flex justify-between text-[#52687B]">
+                <div className="flex justify-between text-[#52665D]">
                   <span>Total Target: {captureTargetActivity.quantityTarget} {captureTargetActivity.unit}</span>
                   <span>Done so far: {captureTargetActivity.quantityDone} {captureTargetActivity.unit}</span>
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-[#1A2E42] mb-1">
-                  Field Progress Statement <span className="text-[#A44339]">*</span>
+                <label className="block text-xs font-bold text-[#1A2B25] mb-1">
+                  Field Progress Statement <span className="text-[#A43B36]">*</span>
                 </label>
                 <textarea
                   rows={3}
                   value={captureStatement}
                   onChange={(e) => setCaptureStatement(e.target.value)}
                   placeholder="Record work completed on site today..."
-                  className="w-full p-2 bg-[#F4F7FB] border border-[#D6E1E9] rounded focus:border-[#0F6B68] focus:bg-white text-[#1A2E42] outline-none"
+                  className="w-full p-2 bg-[#F6F7F3] border border-[#D9E2DA] rounded focus:border-[#006B61] focus:bg-white text-[#1A2B25] outline-none"
                   required
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-bold text-[#1A2E42] mb-1">
+                  <label className="block text-xs font-bold text-[#1A2B25] mb-1">
                     Quantity Done in Shift
                   </label>
                   <input
@@ -960,18 +960,18 @@ export default function MyActivitiesPage() {
                     min={1}
                     value={captureQuantity}
                     onChange={(e) => setCaptureQuantity(Number(e.target.value))}
-                    className="w-full px-2 py-1 bg-white border border-[#D6E1E9] rounded font-mono font-bold"
+                    className="w-full px-2 py-1 bg-white border border-[#D9E2DA] rounded font-mono font-bold"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-bold text-[#1A2E42] mb-1">
+                  <label className="block text-xs font-bold text-[#1A2B25] mb-1">
                     Unit
                   </label>
                   <input
                     type="text"
                     disabled
                     value={captureTargetActivity.unit}
-                    className="w-full px-2 py-1 bg-[#EAF1F5] border border-[#D6E1E9] rounded font-mono text-[#52687B]"
+                    className="w-full px-2 py-1 bg-[#EAF0E9] border border-[#D9E2DA] rounded font-mono text-[#52665D]"
                   />
                 </div>
               </div>

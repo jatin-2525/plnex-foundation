@@ -104,32 +104,32 @@ export function CoreFlowBanner({
 
   return (
     <div
-      className={`bg-white border border-[#D6E1E9] rounded-lg overflow-hidden shadow-xs ${className}`}
+      className={`bg-white border border-[#D9E2DA] rounded-lg overflow-hidden shadow-xs ${className}`}
       data-testid="plnex-core-flow-banner"
     >
       {/* Top Header Bar */}
-      <div className="px-4 py-3 bg-[#F4F7FB] border-b border-[#D6E1E9] flex items-center justify-between flex-wrap gap-2">
+      <div className="px-4 py-3 bg-[#F6F7F3] border-b border-[#D9E2DA] flex items-center justify-between flex-wrap gap-2">
         <div className="flex items-center gap-2">
-          <div className="w-6 h-6 rounded bg-[#0F6B68]/10 text-[#0F6B68] flex items-center justify-center font-bold text-xs">
+          <div className="w-6 h-6 rounded bg-[#006B61]/10 text-[#006B61] flex items-center justify-center font-bold text-xs">
             Px
           </div>
-          <span className="font-bold text-xs uppercase tracking-wider text-[#1A2E42]">
+          <span className="font-bold text-xs uppercase tracking-wider text-[#1A2B25]">
             PLnEX Schedule Linking Core Flow
           </span>
-          <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-white border border-[#D6E1E9] text-[#52687B]">
+          <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-white border border-[#D9E2DA] text-[#52665D]">
             Candidate Match ≠ Final Authority
           </span>
         </div>
 
         <div className="flex items-center gap-3">
-          <span className="text-[11px] text-[#52687B] hidden md:inline">
+          <span className="text-[11px] text-[#52665D] hidden md:inline">
             7-Step Pipeline: From Field Capture to Baseline Twin
           </span>
           {collapsible && (
             <button
               type="button"
               onClick={() => setIsExpanded(!isExpanded)}
-              className="text-xs font-semibold text-[#0F6B68] hover:underline flex items-center gap-1"
+              className="text-xs font-semibold text-[#006B61] hover:underline flex items-center gap-1"
             >
               <span>{isExpanded ? 'Hide Pipeline' : 'Show Pipeline'}</span>
               {isExpanded ? (
@@ -157,10 +157,10 @@ export function CoreFlowBanner({
                   key={step.key}
                   className={`relative p-3 rounded-lg border transition-all flex flex-col justify-between ${
                     isGate
-                      ? 'border-[#0F6B68] bg-[#EAF1F5] ring-2 ring-[#0F6B68]/20'
+                      ? 'border-[#006B61] bg-[#EAF0E9] ring-2 ring-[#006B61]/20'
                       : isCurrent
-                      ? 'border-[#D6E1E9] bg-white shadow-xs'
-                      : 'border-[#D6E1E9] bg-[#FAFAFA]'
+                      ? 'border-[#D9E2DA] bg-white shadow-xs'
+                      : 'border-[#D9E2DA] bg-[#FAFAFA]'
                   }`}
                 >
                   <div>
@@ -168,22 +168,22 @@ export function CoreFlowBanner({
                       <span
                         className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-mono font-bold ${
                           isGate
-                            ? 'bg-[#0F6B68] text-white'
-                            : 'bg-[#EAF1F5] text-[#52687B]'
+                            ? 'bg-[#006B61] text-white'
+                            : 'bg-[#EAF0E9] text-[#52665D]'
                         }`}
                       >
                         {step.num}
                       </span>
                       {isGate ? (
-                        <span className="text-[9px] font-extrabold px-1.5 py-0.5 rounded uppercase bg-[#0F6B68] text-white">
+                        <span className="text-[9px] font-extrabold px-1.5 py-0.5 rounded uppercase bg-[#006B61] text-white">
                           Human Gate
                         </span>
                       ) : step.isAi ? (
-                        <span className="text-[9px] font-semibold px-1.5 py-0.5 rounded uppercase bg-[#EAF1F5] text-[#52687B]">
+                        <span className="text-[9px] font-semibold px-1.5 py-0.5 rounded uppercase bg-[#EAF0E9] text-[#52665D]">
                           Assisted
                         </span>
                       ) : (
-                        <span className="text-[9px] font-semibold px-1.5 py-0.5 rounded uppercase bg-[#EAF1F5] text-[#52687B]">
+                        <span className="text-[9px] font-semibold px-1.5 py-0.5 rounded uppercase bg-[#EAF0E9] text-[#52665D]">
                           Field Record
                         </span>
                       )}
@@ -193,29 +193,29 @@ export function CoreFlowBanner({
                       <Icon
                         className={`w-3.5 h-3.5 shrink-0 ${
                           isGate
-                            ? 'text-[#0F6B68]'
+                            ? 'text-[#006B61]'
                             : isCurrent
-                            ? 'text-[#1A2E42]'
-                            : 'text-[#7B8798]'
+                            ? 'text-[#1A2B25]'
+                            : 'text-[#738A80]'
                         }`}
                       />
                       <h4
                         className={`text-xs font-bold tracking-tight ${
-                          isGate ? 'text-[#0F6B68]' : 'text-[#1A2E42]'
+                          isGate ? 'text-[#006B61]' : 'text-[#1A2B25]'
                         }`}
                       >
                         {step.title}
                       </h4>
                     </div>
 
-                    <p className="text-[10px] text-[#52687B] leading-tight">
+                    <p className="text-[10px] text-[#52665D] leading-tight">
                       {step.subtitle}
                     </p>
                   </div>
 
                   {/* Flow arrow on wide screens */}
                   {idx < FLOW_STEPS.length - 1 && (
-                    <div className="hidden lg:block absolute -right-2 top-1/2 -translate-y-1/2 z-10 text-[#7B8798]">
+                    <div className="hidden lg:block absolute -right-2 top-1/2 -translate-y-1/2 z-10 text-[#738A80]">
                       <ChevronRight className="w-4 h-4" />
                     </div>
                   )}
@@ -225,13 +225,13 @@ export function CoreFlowBanner({
           </div>
 
           {/* Core Governance Disclaimer */}
-          <div className="p-3 bg-[#FEF4E6] border border-[#F0D4A6] rounded-lg flex items-start gap-2 text-xs">
-            <ShieldAlert className="w-4 h-4 text-[#965E0D] shrink-0 mt-0.5" />
+          <div className="p-3 bg-[#F8EFDA] border border-[#E5C185] rounded-lg flex items-start gap-2 text-xs">
+            <ShieldAlert className="w-4 h-4 text-[#825700] shrink-0 mt-0.5" />
             <div className="space-y-0.5">
-              <span className="font-bold text-[#1A2E42]">
+              <span className="font-bold text-[#1A2B25]">
                 Strict Decoupling: Match Confidence is NOT Verification
               </span>
-              <p className="text-[#52687B] leading-relaxed">
+              <p className="text-[#52665D] leading-relaxed">
                 A 94% score indicates candidate match alignment — it is <strong>never automatically verified</strong>. Candidate matches are never silently converted into verified progress without conscious confirmation by the Project Controls Manager or Site Engineer.
               </p>
             </div>

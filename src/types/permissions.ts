@@ -154,6 +154,9 @@ export function getResourceName(pathname: string): string {
   if (pathname === '/evidence') return 'Evidence & Audit';
   if (pathname === '/execution') return 'Execution Intelligence';
   if (pathname === '/sync') return 'Offline / Sync Center';
+  if (pathname === '/support' || pathname === '/help') return 'Help & Support';
+  if (pathname === '/messages') return 'Messages';
+  if (pathname === '/matching') return 'Schedule Matching & Remap Engine';
   return pathname;
 }
 
@@ -178,12 +181,16 @@ export function canAccessRoute(role: UserRole, rawPathname: string): boolean {
     return true;
   }
 
+  // Common authenticated routes accessible to all roles
+  if (pathname === '/support' || pathname === '/help' || pathname === '/messages' || pathname === '/matching') {
+    return true;
+  }
+
   // Manager permissions
   if (role === 'manager') {
     // Explicitly denied routes for Manager
     if (
       pathname === '/engineer' ||
-      pathname === '/field/capture' ||
       pathname.startsWith('/admin')
     ) {
       return false;

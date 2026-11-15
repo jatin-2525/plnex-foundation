@@ -172,26 +172,26 @@ export function BarChart({
   };
 
   return (
-    <div className={`bg-white rounded-lg border border-[#D6E1E9] p-4 sm:p-6 shadow-xs text-[#1A2E42] ${className}`}>
+    <div className={`bg-white rounded-lg border border-[#D9E2DA] p-4 sm:p-6 shadow-xs text-[#1A2B25] ${className}`}>
       {/* Header */}
-      <div className="flex flex-col lg:flex-row lg:items-center justify-between pb-3 border-b border-[#D6E1E9] gap-3">
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between pb-3 border-b border-[#D9E2DA] gap-3">
         <div>
           <div className="flex items-center gap-2 flex-wrap">
-            <h3 className="text-base font-bold text-[#1A2E42] tracking-tight">{displayTitle}</h3>
-            <span className="px-2 py-0.5 rounded bg-[#EAF1F5] text-[#0F6B68] border border-[#D6E1E9] text-[10px] font-mono font-bold">
+            <h3 className="text-base font-bold text-[#1A2B25] tracking-tight">{displayTitle}</h3>
+            <span className="px-2 py-0.5 rounded bg-[#EAF0E9] text-[#006B61] border border-[#D9E2DA] text-[10px] font-mono font-bold">
               Unit: {unit}
             </span>
-            <span className="px-2 py-0.5 rounded bg-[#F4F7FB] text-[#52687B] border border-[#D6E1E9] text-[10px] font-mono">
+            <span className="px-2 py-0.5 rounded bg-[#F6F7F3] text-[#52665D] border border-[#D9E2DA] text-[10px] font-mono">
               {timeRange}
             </span>
           </div>
-          <p className="text-xs text-[#52687B] mt-0.5">{displaySubtitle}</p>
+          <p className="text-xs text-[#52665D] mt-0.5">{displaySubtitle}</p>
         </div>
 
         {/* Project Question Banner (only if explicitly provided) */}
         {projectQuestion && (
-          <div className="px-3 py-1.5 rounded bg-[#EAF1F5] border border-[#D6E1E9] text-xs font-mono text-[#0F6B68] font-semibold self-start lg:self-auto max-w-md">
-            <span className="font-sans font-bold text-[#1A2E42] block text-[10px] uppercase tracking-wide">
+          <div className="px-3 py-1.5 rounded bg-[#EAF0E9] border border-[#D9E2DA] text-xs font-mono text-[#006B61] font-semibold self-start lg:self-auto max-w-md">
+            <span className="font-sans font-bold text-[#1A2B25] block text-[10px] uppercase tracking-wide">
               Project Question:
             </span>
             {displayQuestion}
@@ -226,7 +226,7 @@ export function BarChart({
                     y={y + 3.5}
                     textAnchor="end"
                     fontSize="11"
-                    fill="#52687B"
+                    fill="#52665D"
                     fontFamily="inherit"
                     fontWeight="500"
                   >
@@ -243,7 +243,7 @@ export function BarChart({
               textAnchor="start"
               fontSize="11"
               fontWeight="bold"
-              fill="#1A2E42"
+              fill="#1A2B25"
             >
               Physical Progress ({unit})
             </text>
@@ -272,7 +272,7 @@ export function BarChart({
                     y={padTop}
                     width={groupW - 8}
                     height={plotH}
-                    fill="#F4F7FB"
+                    fill="#F6F7F3"
                     opacity="0.5"
                     rx={4}
                   />
@@ -352,7 +352,7 @@ export function BarChart({
                     textAnchor="middle"
                     fontSize="12"
                     fontWeight="700"
-                    fill="#1A2E42"
+                    fill="#1A2B25"
                   >
                     {item.label}
                   </text>
@@ -365,7 +365,7 @@ export function BarChart({
                       textAnchor="middle"
                       fontSize="10"
                       fontFamily="monospace"
-                      fill="#52687B"
+                      fill="#52665D"
                     >
                       {item.subLabel}
                     </text>
@@ -381,7 +381,7 @@ export function BarChart({
               textAnchor="middle"
               fontSize="11"
               fontWeight="bold"
-              fill="#52687B"
+              fill="#52665D"
             >
               {isDiscipline ? 'Engineering Disciplines' : 'Plant Battery Limits & Areas'}
             </text>
@@ -390,24 +390,24 @@ export function BarChart({
       </div>
 
       {/* Legend & Concise Drivers */}
-      <div className="flex flex-wrap items-center justify-between gap-4 mt-3 pt-3 border-t border-[#D6E1E9] text-xs text-[#52687B]">
+      <div className="flex flex-wrap items-center justify-between gap-4 mt-3 pt-3 border-t border-[#D9E2DA] text-xs text-[#52665D]">
         <div className="flex items-center gap-4 flex-wrap">
           <div className="flex items-center gap-2">
             <span className="w-3.5 h-3.5 bg-[#EBF1FA] border border-[#5273C6] inline-block rounded-xs" />
-            <span className="text-[#1A2E42] font-semibold">Planned Target</span>
+            <span className="text-[#1A2B25] font-semibold">Planned Target</span>
           </div>
           <div className="flex items-center gap-2">
             <span className="w-3.5 h-3.5 bg-[#176B53] inline-block rounded-xs" />
-            <span className="text-[#1A2E42] font-semibold">Actual (On-Track / Ahead)</span>
+            <span className="text-[#1A2B25] font-semibold">Actual (On-Track / Ahead)</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="w-3.5 h-3.5 bg-[#A44339] inline-block rounded-xs" />
-            <span className="text-[#1A2E42] font-semibold">Actual (Behind Schedule)</span>
+            <span className="w-3.5 h-3.5 bg-[#92372F] inline-block rounded-xs" />
+            <span className="text-[#1A2B25] font-semibold">Actual (Behind Schedule)</span>
           </div>
         </div>
 
-        <div className="text-[11px] text-[#52687B] font-mono">
-          Total Analyzed: <strong className="text-[#1A2E42]">{effectiveItems.length} {isDiscipline ? 'Disciplines' : 'Areas'}</strong> • Rev 3.2 (P6 XML)
+        <div className="text-[11px] text-[#52665D] font-mono">
+          Total Analyzed: <strong className="text-[#1A2B25]">{effectiveItems.length} {isDiscipline ? 'Disciplines' : 'Areas'}</strong> • Rev 3.2 (P6 XML)
         </div>
       </div>
     </div>

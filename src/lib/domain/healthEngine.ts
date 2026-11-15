@@ -434,7 +434,7 @@ export const INITIAL_HEALTH_ISSUES: HealthIssue[] = [
     rule: 'Duplicate Event',
     canonicalCategory: 'duplicate event',
     severity: 'Critical',
-    objectId: 'EVT-2026-008',
+    objectId: 'EVT-2026-007',
     objectName: 'Erect Line 24 spools (12 spools duplicate)',
     objectType: 'EXECUTION_EVENT',
     description: 'Duplicate event: Ingested field capture reports identical 12 spools already verified and credited under EVT-2026-001 (Duplicate Events).',

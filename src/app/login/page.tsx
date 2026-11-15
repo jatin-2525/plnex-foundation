@@ -166,19 +166,19 @@ function LoginForm() {
   return (
     <div className="w-full max-w-[420px] mx-auto py-8">
       {/* Centered Authentication Panel */}
-      <div className="bg-white border border-[#D6E1E9] rounded-lg shadow-sm overflow-hidden">
+      <div className="bg-white dark:bg-[#17221D] border border-[#D9E2DA] dark:border-[#3A5146] rounded-lg shadow-sm overflow-hidden">
         {/* Header with PLnEX branding */}
-        <div className="px-6 pt-7 pb-4 text-center border-b border-[#D6E1E9] bg-white">
+        <div className="px-6 pt-7 pb-4 text-center border-b border-[#D9E2DA] dark:border-[#3A5146] bg-white dark:bg-[#17221D]">
           <div className="inline-flex items-center justify-center mb-3">
             <Logo size="lg" showWordmark={false} />
           </div>
-          <h1 className="text-xl font-bold text-[#1A2E42] tracking-tight leading-snug">
-            PL<span className="text-[#0F6B68]">n</span>EX
+          <h1 className="text-xl font-bold font-heading text-[#1A2B25] dark:text-[#F2F4E9] tracking-tight leading-snug">
+            PL<span className="text-[#006B61] dark:text-[#72C6AD]">n</span>EX
           </h1>
-          <p className="text-xs font-semibold text-[#0F6B68] uppercase tracking-wider font-mono mt-0.5">
+          <p className="text-xs font-semibold text-[#006B61] dark:text-[#72C6AD] uppercase tracking-wider font-mono mt-0.5">
             Planning-to-Execution Bridge
           </p>
-          <p className="text-[11px] text-[#52687B] mt-1">
+          <p className="text-[11px] text-[#52665D] dark:text-[#B5C1B5] mt-1">
             Oil India Limited • Infrastructure Project Controls
           </p>
         </div>
@@ -186,19 +186,19 @@ function LoginForm() {
         {/* Success State Overlay / Transition */}
         {loginState === 'success' ? (
           <div className="p-8 text-center space-y-4">
-            <div className="w-12 h-12 rounded-full bg-[#E5F6EE] border border-[#B8DCC9] flex items-center justify-center text-[#2E7D5B] mx-auto">
+            <div className="w-12 h-12 rounded-full bg-[#E4F1E9] dark:bg-[#0D3322] border border-[#B7DAC3] dark:border-[#1E5C3E] flex items-center justify-center text-[#1F6B4E] dark:text-[#34D399] mx-auto">
               <CheckCircle2 className="w-6 h-6" />
             </div>
             <div>
-              <h2 className="text-base font-bold text-[#1A2E42]">Session Authorized</h2>
-              <p className="text-xs text-[#52687B] mt-1">
+              <h2 className="text-base font-bold font-heading text-[#1A2B25] dark:text-[#F2F4E9]">Session Authorized</h2>
+              <p className="text-xs text-[#52665D] dark:text-[#B5C1B5] mt-1">
                 Access granted. Loading role-specific workspace...
               </p>
             </div>
-            <div className="w-full bg-[#D6E1E9] h-1.5 rounded-full overflow-hidden">
-              <div className="h-full bg-[#2E7D5B] rounded-full w-full" />
+            <div className="w-full bg-[#D9E2DA] dark:bg-[#243832] h-1.5 rounded-full overflow-hidden">
+              <div className="h-full bg-[#2E7D5B] dark:bg-[#34D399] rounded-full w-full" />
             </div>
-            <span className="inline-flex items-center gap-2 text-xs text-[#0F6B68] font-medium font-mono">
+            <span className="inline-flex items-center gap-2 text-xs text-[#006B61] dark:text-[#72C6AD] font-medium font-mono">
               <Loader2 className="w-3.5 h-3.5 animate-spin" />
               Routing to authorized dashboard...
             </span>
@@ -208,7 +208,7 @@ function LoginForm() {
           <form onSubmit={handleSubmit} className="p-6 md:p-6 space-y-4">
             {/* Server Error Alert Banner */}
             {loginState === 'server_error' && (
-              <div className="p-3 bg-[#FDEEED] border border-[#E4B0AA] rounded-md flex items-start gap-2 text-xs text-[#A44339]">
+              <div className="p-3 bg-[#F6E4E1] dark:bg-[#3D1418] border border-[#DCABA7] dark:border-[#6B2027] rounded-md flex items-start gap-2 text-xs text-[#A43B36] dark:text-[#FF9E94]">
                 <AlertTriangle className="w-4 h-4 flex-shrink-0 mt-0.5" />
                 <div>
                   <strong className="block font-semibold">Authentication Gateway Error (500)</strong>
@@ -221,7 +221,7 @@ function LoginForm() {
 
             {/* Invalid Credentials Alert Banner */}
             {loginState === 'invalid_credentials' && (
-              <div className="p-3 bg-[#FDEEED] border border-[#E4B0AA] rounded-md flex items-start gap-2 text-xs text-[#A44339]">
+              <div className="p-3 bg-[#F6E4E1] dark:bg-[#3D1418] border border-[#DCABA7] dark:border-[#6B2027] rounded-md flex items-start gap-2 text-xs text-[#A43B36] dark:text-[#FF9E94]">
                 <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
                 <div>
                   <strong className="block font-semibold">Invalid Credentials</strong>
@@ -234,11 +234,11 @@ function LoginForm() {
 
             {/* Work Email Field */}
             <div className="space-y-2">
-              <label htmlFor="work-email" className="block text-xs font-semibold text-[#1A2E42]">
-                Work Email <span className="text-[#A44339]">*</span>
+              <label htmlFor="work-email" className="block text-xs font-semibold text-[#1A2B25] dark:text-[#F2F4E9]">
+                Work Email <span className="text-[#A43B36] dark:text-[#FF9E94]">*</span>
               </label>
               <div className="relative">
-                <Mail className="w-4 h-4 text-[#7B8798] absolute left-3 top-1/2 -translate-y-1/2" />
+                <Mail className="w-4 h-4 text-[#738A80] dark:text-[#B5C1B5] absolute left-3 top-1/2 -translate-y-1/2" />
                 <input
                   id="work-email"
                   type="email"
@@ -251,15 +251,15 @@ function LoginForm() {
                   disabled={loginState === 'submitting'}
                   placeholder="name@oilindia.in"
                   autoComplete="username"
-                  className={`w-full pl-9 pr-3 py-2 text-xs bg-[#F4F7FB] border rounded-md text-[#1A2E42] placeholder-[#7B8798] focus:bg-white outline-none transition-colors ${
+                  className={`w-full pl-9 pr-3 py-2 text-xs bg-[#F6F7F3] dark:bg-[#101815] border rounded-md text-[#1A2B25] dark:text-[#F2F4E9] placeholder-[#7B8798] dark:placeholder-[#64748B] focus:bg-white dark:focus:bg-[#243832] outline-none transition-colors ${
                     emailError
-                      ? 'border-[#A44339] focus:border-[#A44339] bg-[#FDEEED]/30'
-                      : 'border-[#D6E1E9] focus:border-[#0F6B68]'
+                      ? 'border-[#92372F] dark:border-[#F87171] focus:border-[#92372F] bg-[#F6E4E1]/30 dark:bg-[#3D1418]/30'
+                      : 'border-[#D9E2DA] dark:border-[#3A5146] focus:border-[#006B61] dark:focus:border-[#72C6AD]'
                   }`}
                 />
               </div>
               {emailError && (
-                <p className="text-[11px] text-[#A44339] flex items-center gap-1 mt-1 font-medium">
+                <p className="text-[11px] text-[#A43B36] dark:text-[#FF9E94] flex items-center gap-1 mt-1 font-medium">
                   <AlertCircle className="w-3 h-3 flex-shrink-0" />
                   <span>{emailError}</span>
                 </p>
@@ -269,18 +269,18 @@ function LoginForm() {
             {/* Password Field */}
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <label htmlFor="password" className="block text-xs font-semibold text-[#1A2E42]">
-                  Password <span className="text-[#A44339]">*</span>
+                <label htmlFor="password" className="block text-xs font-semibold text-[#1A2B25] dark:text-[#F2F4E9]">
+                  Password <span className="text-[#A43B36] dark:text-[#FF9E94]">*</span>
                 </label>
                 <Link
                   href="/forgot-password"
-                  className="text-[11px] text-[#0F6B68] hover:underline transition-colors"
+                  className="text-[11px] text-[#006B61] dark:text-[#72C6AD] hover:underline transition-colors"
                 >
                   Forgot Password?
                 </Link>
               </div>
               <div className="relative">
-                <Lock className="w-4 h-4 text-[#7B8798] absolute left-3 top-1/2 -translate-y-1/2" />
+                <Lock className="w-4 h-4 text-[#738A80] dark:text-[#B5C1B5] absolute left-3 top-1/2 -translate-y-1/2" />
                 <input
                   id="password"
                   type={showPassword ? 'text' : 'password'}
@@ -293,23 +293,23 @@ function LoginForm() {
                   disabled={loginState === 'submitting'}
                   placeholder="••••••••••••"
                   autoComplete="current-password"
-                  className={`w-full pl-9 pr-9 py-2 text-xs bg-[#F4F7FB] border rounded-md text-[#1A2E42] placeholder-[#7B8798] focus:bg-white outline-none transition-colors ${
+                  className={`w-full pl-9 pr-9 py-2 text-xs bg-[#F6F7F3] dark:bg-[#101815] border rounded-md text-[#1A2B25] dark:text-[#F2F4E9] placeholder-[#7B8798] dark:placeholder-[#64748B] focus:bg-white dark:focus:bg-[#243832] outline-none transition-colors ${
                     passwordError
-                      ? 'border-[#A44339] focus:border-[#A44339] bg-[#FDEEED]/30'
-                      : 'border-[#D6E1E9] focus:border-[#0F6B68]'
+                      ? 'border-[#92372F] dark:border-[#F87171] focus:border-[#92372F] bg-[#F6E4E1]/30 dark:bg-[#3D1418]/30'
+                      : 'border-[#D9E2DA] dark:border-[#3A5146] focus:border-[#006B61] dark:focus:border-[#72C6AD]'
                   }`}
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[#7B8798] hover:text-[#1A2E42] p-1 rounded transition-colors"
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[#738A80] dark:text-[#B5C1B5] hover:text-[#1A2B25] dark:hover:text-[#F2F4E9] p-1 rounded transition-colors"
                   aria-label={showPassword ? 'Hide password' : 'Show password'}
                 >
                   {showPassword ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
                 </button>
               </div>
               {passwordError && (
-                <p className="text-[11px] text-[#A44339] flex items-center gap-1 mt-1 font-medium">
+                <p className="text-[11px] text-[#A43B36] dark:text-[#FF9E94] flex items-center gap-1 mt-1 font-medium">
                   <AlertCircle className="w-3 h-3 flex-shrink-0" />
                   <span>{passwordError}</span>
                 </p>
@@ -324,9 +324,9 @@ function LoginForm() {
                   checked={rememberSession}
                   onChange={(e) => setRememberSession(e.target.checked)}
                   disabled={loginState === 'submitting'}
-                  className="rounded border-[#D6E1E9] text-[#0F6B68] focus:ring-[#0F6B68] w-3.5 h-3.5 cursor-pointer"
+                  className="rounded border-[#D9E2DA] dark:border-[#3A5146] text-[#006B61] dark:text-[#72C6AD] focus:ring-[#006B61] w-3.5 h-3.5 cursor-pointer"
                 />
-                <span className="text-xs text-[#52687B]">Remember session on this device</span>
+                <span className="text-xs text-[#52665D] dark:text-[#B5C1B5]">Remember session on this device</span>
               </label>
             </div>
 
@@ -334,7 +334,7 @@ function LoginForm() {
             <button
               type="submit"
               disabled={loginState === 'submitting'}
-              className="w-full flex items-center justify-center gap-2 py-2 px-4 bg-[#0F6B68] hover:bg-[#135A72] disabled:bg-[#0F6B68]/60 text-white text-xs font-semibold rounded-md shadow-xs transition-colors cursor-pointer disabled:cursor-not-allowed mt-2"
+              className="w-full flex items-center justify-center gap-2 py-2 px-4 bg-[#006B61] hover:bg-[#00524A] dark:bg-[#72C6AD] dark:text-[#0B2822] dark:hover:bg-[#5CB69C] disabled:bg-[#006B61]/60 text-white text-xs font-semibold rounded-md shadow-xs transition-colors cursor-pointer disabled:cursor-not-allowed mt-2 min-h-[44px]"
             >
               {loginState === 'submitting' ? (
                 <>
@@ -350,11 +350,11 @@ function LoginForm() {
             </button>
 
             {/* Bottom Links */}
-            <div className="pt-3 border-t border-[#D6E1E9] flex items-center justify-between text-xs text-[#52687B]">
+            <div className="pt-3 border-t border-[#D9E2DA] dark:border-[#3A5146] flex items-center justify-between text-xs text-[#52665D] dark:text-[#B5C1B5]">
               <span>New project engineer?</span>
               <Link
                 href="/register"
-                className="font-semibold text-[#0F6B68] hover:underline"
+                className="font-semibold text-[#006B61] dark:text-[#72C6AD] hover:underline"
               >
                 Create Account
               </Link>
@@ -363,51 +363,51 @@ function LoginForm() {
         )}
 
         {/* Security & Compliance Footer */}
-        <div className="px-6 py-3 bg-[#F4F7FB] border-t border-[#D6E1E9] flex items-center justify-center gap-2 text-[11px] text-[#52687B]">
-          <Shield className="w-3.5 h-3.5 text-[#0F6B68] flex-shrink-0" />
+        <div className="px-6 py-3 bg-[#F6F7F3] dark:bg-[#243832] border-t border-[#D9E2DA] dark:border-[#3A5146] flex items-center justify-center gap-2 text-[11px] text-[#52665D] dark:text-[#B5C1B5]">
+          <Shield className="w-3.5 h-3.5 text-[#006B61] dark:text-[#72C6AD] flex-shrink-0" />
           <span>Enterprise Multi-Tenant Access Gate · Role-Based Access Control</span>
         </div>
       </div>
 
       {/* Quick Testing Sandbox Bar (For evaluator testing of all 3 roles) */}
-      <details className="mt-4 p-3 bg-white border border-[#D6E1E9] rounded-lg text-xs space-y-2 group">
-        <summary className="flex items-center justify-between text-[11px] text-[#52687B] font-medium list-none select-none cursor-pointer">
-          <span className="font-semibold uppercase tracking-wider text-[#1A2E42] flex items-center gap-1.5">
+      <details className="mt-4 p-3 bg-white dark:bg-[#17221D] border border-[#D9E2DA] dark:border-[#3A5146] rounded-lg text-xs space-y-2 group">
+        <summary className="flex items-center justify-between text-[11px] text-[#52665D] dark:text-[#B5C1B5] font-medium list-none select-none cursor-pointer">
+          <span className="font-semibold uppercase tracking-wider text-[#1A2B25] dark:text-[#F2F4E9] flex items-center gap-1.5 font-heading">
             <span>Demo Sandbox Credentials</span>
           </span>
-          <span className="text-[10px] text-[#0F6B68] group-open:hidden">Show Role Presets ▾</span>
-          <span className="text-[10px] text-[#0F6B68] hidden group-open:inline">Hide Role Presets ▴</span>
+          <span className="text-[10px] text-[#006B61] dark:text-[#72C6AD] group-open:hidden">Show Role Presets ▾</span>
+          <span className="text-[10px] text-[#006B61] dark:text-[#72C6AD] hidden group-open:inline">Hide Role Presets ▴</span>
         </summary>
         <div className="pt-2 text-xs space-y-2">
-          <p className="text-[11px] text-[#52687B]">
+          <p className="text-[11px] text-[#52665D] dark:text-[#B5C1B5]">
             Select a verified persona to test role-based navigation and views:
           </p>
           <div className="flex flex-wrap gap-2">
             <button
               type="button"
               onClick={() => handleQuickFill('manager')}
-              className="px-2.5 py-1 bg-[#EAF1F5] hover:bg-[#D9EBF2] text-[#0F6B68] border border-[#D6E1E9] rounded text-[11px] font-mono font-medium transition-colors cursor-pointer"
+              className="px-2.5 py-1 bg-[#EAF0E9] dark:bg-[#243832] hover:bg-[#D9EBF2] dark:hover:bg-[#253954] text-[#006B61] dark:text-[#72C6AD] border border-[#D9E2DA] dark:border-[#3A5146] rounded text-[11px] font-mono font-medium transition-colors cursor-pointer"
             >
               Pre-fill as Manager (/dashboard)
             </button>
             <button
               type="button"
               onClick={() => handleQuickFill('engineer')}
-              className="px-2.5 py-1 bg-[#E5F6EE] hover:bg-[#B8DCC9]/40 text-[#2E7D5B] border border-[#B8DCC9] rounded text-[11px] font-mono font-medium transition-colors cursor-pointer"
+              className="px-2.5 py-1 bg-[#E4F1E9] dark:bg-[#0D3322] hover:bg-[#B8DCC9]/40 dark:hover:bg-[#1E5C3E]/60 text-[#1F6B4E] dark:text-[#34D399] border border-[#B7DAC3] dark:border-[#1E5C3E] rounded text-[11px] font-mono font-medium transition-colors cursor-pointer"
             >
               Pre-fill as Site Engineer (/engineer)
             </button>
             <button
               type="button"
               onClick={() => handleQuickFill('admin')}
-              className="px-2.5 py-1 bg-[#EAF1F5] hover:bg-[#D6E1E9]/40 text-[#3B6EA8] border border-[#D6E1E9] rounded text-[11px] font-mono font-medium transition-colors cursor-pointer"
+              className="px-2.5 py-1 bg-[#EAF0E9] dark:bg-[#243832] hover:bg-[#D9E2DA]/40 dark:hover:bg-[#253954] text-[#2C6475] dark:text-[#E5C185] border border-[#D9E2DA] dark:border-[#3A5146] rounded text-[11px] font-mono font-medium transition-colors cursor-pointer"
             >
               Pre-fill as Admin (/admin)
             </button>
             <button
               type="button"
               onClick={() => handleQuickFill('invalid')}
-              className="px-2.5 py-1 bg-[#FDEEED] hover:bg-[#FDEEED]/80 text-[#A44339] border border-[#E4B0AA] rounded text-[11px] font-mono transition-colors cursor-pointer"
+              className="px-2.5 py-1 bg-[#F6E4E1] dark:bg-[#3D1418] hover:bg-[#F6E4E1]/80 dark:hover:bg-[#3D1418]/80 text-[#A43B36] dark:text-[#FF9E94] border border-[#DCABA7] dark:border-[#6B2027] rounded text-[11px] font-mono transition-colors cursor-pointer"
             >
               Invalid Creds
             </button>
@@ -422,9 +422,9 @@ export default function LoginPage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen bg-[#F4F7FB] flex items-center justify-center gap-2 p-4 text-sm text-[#52687B]" role="status" aria-live="polite">
-          <Loader2 className="w-4 h-4 animate-spin text-[#0F6B68] shrink-0" />
-          <span className="font-medium text-[#1A2E42]">Loading session...</span>
+        <div className="min-h-screen bg-[#F6F7F3] dark:bg-[#101815] flex items-center justify-center gap-2 p-4 text-sm text-[#52665D] dark:text-[#B5C1B5]" role="status" aria-live="polite">
+          <Loader2 className="w-4 h-4 animate-spin text-[#006B61] dark:text-[#72C6AD] shrink-0" />
+          <span className="font-medium text-[#1A2B25] dark:text-[#F2F4E9]">Loading session...</span>
         </div>
       }
     >

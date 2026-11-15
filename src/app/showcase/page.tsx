@@ -90,19 +90,19 @@ export default function ShowcasePage() {
           <div className="flex items-center gap-2">
             <button
               onClick={() => setIsModalOpen(true)}
-              className="px-3 py-1.5 bg-[#0F6B68] hover:bg-[#135A72] text-white rounded-md text-xs font-semibold shadow-xs transition-colors"
+              className="px-3 py-1.5 bg-[#006B61] hover:bg-[#00524A] text-white rounded-md text-xs font-semibold shadow-xs transition-colors"
             >
               Open Test Modal
             </button>
             <button
               onClick={() => setIsDrawerOpen(true)}
-              className="px-3 py-1.5 bg-white hover:bg-[#EAF1F5] text-[#1A2E42] border border-[#D6E1E9] rounded-md text-xs font-medium transition-colors"
+              className="px-3 py-1.5 bg-white hover:bg-[#EAF0E9] text-[#1A2B25] border border-[#D9E2DA] rounded-md text-xs font-medium transition-colors"
             >
               Open Test Drawer
             </button>
             <button
               onClick={() => setIsConfirmDialogOpen(true)}
-              className="px-3 py-1.5 bg-[#A44339] hover:bg-[#973930] text-white rounded-md text-xs font-semibold shadow-xs transition-colors"
+              className="px-3 py-1.5 bg-[#92372F] hover:bg-[#973930] text-white rounded-md text-xs font-semibold shadow-xs transition-colors"
             >
               Confirm Dialog
             </button>
@@ -111,15 +111,15 @@ export default function ShowcasePage() {
       />
 
       {/* Interactive State & Role Sandbox Bar */}
-      <div className="bg-white border border-[#D6E1E9] rounded-lg p-4">
-        <h3 className="text-xs font-bold uppercase tracking-wider text-[#1A2E42] mb-3 flex items-center gap-2">
-          <SlidersHorizontal className="w-4 h-4 text-[#0F6B68]" />
+      <div className="bg-white border border-[#D9E2DA] rounded-lg p-4">
+        <h3 className="text-xs font-bold uppercase tracking-wider text-[#1A2B25] mb-3 flex items-center gap-2">
+          <SlidersHorizontal className="w-4 h-4 text-[#006B61]" />
           Interactive State Simulator & RBAC Role Sandbox
         </h3>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
           <div>
-            <label className="text-[11px] font-semibold text-[#52687B] block mb-1">
+            <label className="text-[11px] font-semibold text-[#52665D] block mb-1">
               Test UI State on Current Page:
             </label>
             <div className="flex flex-wrap gap-2">
@@ -136,8 +136,8 @@ export default function ShowcasePage() {
                   onClick={() => setSimulatedState(s.id as any)}
                   className={`px-3 py-1 rounded text-xs font-mono transition-colors ${
                     simulatedState === s.id
-                      ? 'bg-[#0F6B68] text-white font-bold'
-                      : 'bg-[#EAF1F5] text-[#52687B] hover:bg-[#D6E1E9] hover:text-[#1A2E42]'
+                      ? 'bg-[#006B61] text-white font-bold'
+                      : 'bg-[#EAF0E9] text-[#52665D] hover:bg-[#D9E2DA] hover:text-[#1A2B25]'
                   }`}
                 >
                   {s.label}
@@ -147,7 +147,7 @@ export default function ShowcasePage() {
           </div>
 
           <div>
-            <label className="text-[11px] font-semibold text-[#52687B] block mb-1">
+            <label className="text-[11px] font-semibold text-[#52665D] block mb-1">
               Test RBAC Authorization Role:
             </label>
             <div className="flex flex-wrap gap-2">
@@ -162,8 +162,8 @@ export default function ShowcasePage() {
                   onClick={() => setUserRole(r.id as any)}
                   className={`px-3 py-1 rounded text-xs transition-colors ${
                     userSession?.role === r.id
-                      ? 'bg-[#0F6B68] text-white font-bold'
-                      : 'bg-[#EAF1F5] text-[#52687B] hover:bg-[#D6E1E9]'
+                      ? 'bg-[#006B61] text-white font-bold'
+                      : 'bg-[#EAF0E9] text-[#52665D] hover:bg-[#D9E2DA]'
                   }`}
                 >
                   {r.label}
@@ -175,37 +175,37 @@ export default function ShowcasePage() {
       </div>
 
       {/* 1. Core Workflow Stages (PLAN → ACTION) */}
-      <div className="bg-white border border-[#D6E1E9] rounded-lg p-4 sm:p-6">
-        <h3 className="text-xs font-bold uppercase tracking-wider text-[#1A2E42] mb-1">
+      <div className="bg-white border border-[#D9E2DA] rounded-lg p-4 sm:p-6">
+        <h3 className="text-xs font-bold uppercase tracking-wider text-[#1A2B25] mb-1">
           1. Core PLnEX Value Chain (9 Stages)
         </h3>
-        <p className="text-xs text-[#52687B] mb-4">
+        <p className="text-xs text-[#52665D] mb-4">
           Strict sequence defined in authoritative engineering specifications connecting planning schedules with actual site execution.
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
           {PIPELINE_STAGES.map((st) => (
-            <div key={st.key} className="p-3 border border-[#D6E1E9] rounded bg-[#F4F7FB] text-xs">
+            <div key={st.key} className="p-3 border border-[#D9E2DA] rounded bg-[#F6F7F3] text-xs">
               <div className="flex items-center gap-2 mb-1">
-                <span className="font-mono font-bold text-[#0F6B68]">
+                <span className="font-mono font-bold text-[#006B61]">
                   {st.stepNumber}. {st.label}
                 </span>
               </div>
-              <p className="text-[11px] text-[#52687B] leading-relaxed">{st.description}</p>
+              <p className="text-[11px] text-[#52665D] leading-relaxed">{st.description}</p>
             </div>
           ))}
         </div>
       </div>
 
       {/* 2. Semantic Badges (Status, Confidence, Variance) */}
-      <div className="bg-white border border-[#D6E1E9] rounded-lg p-4 sm:p-6 space-y-4">
-        <h3 className="text-xs font-bold uppercase tracking-wider text-[#1A2E42] mb-1">
+      <div className="bg-white border border-[#D9E2DA] rounded-lg p-4 sm:p-6 space-y-4">
+        <h3 className="text-xs font-bold uppercase tracking-wider text-[#1A2B25] mb-1">
           2. Semantic Status & Confidence Badges
         </h3>
 
         <div className="space-y-4 text-xs">
           <div>
-            <h4 className="font-semibold text-[#52687B] mb-2">The 8 Canonical System Statuses:</h4>
+            <h4 className="font-semibold text-[#52665D] mb-2">The 8 Canonical System Statuses:</h4>
             <div className="flex flex-wrap gap-2">
               <StatusBadge status="On Track" />
               <StatusBadge status="At Risk" />
@@ -219,7 +219,7 @@ export default function ShowcasePage() {
           </div>
 
           <div>
-            <h4 className="font-semibold text-[#52687B] mb-2">
+            <h4 className="font-semibold text-[#52665D] mb-2">
               Confidence Thresholds (≥90% High Confidence, 70-89% Review Required, &lt;70% Unmatched):
             </h4>
             <div className="flex flex-wrap gap-2">
@@ -232,16 +232,16 @@ export default function ShowcasePage() {
           </div>
 
           <div className="space-y-3">
-            <h4 className="font-semibold text-[#52687B]">
+            <h4 className="font-semibold text-[#52665D]">
               Standardized Confidence Visualizer (Simple text + small indicator + explanation):
             </h4>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
-                <span className="text-xs font-semibold text-[#52687B] uppercase block mb-1">State 1: High Confidence</span>
+                <span className="text-xs font-semibold text-[#52665D] uppercase block mb-1">State 1: High Confidence</span>
                 <ConfidenceBlock score={94} />
               </div>
               <div>
-                <span className="text-xs font-semibold text-[#52687B] uppercase block mb-1">State 2: Medium Confidence</span>
+                <span className="text-xs font-semibold text-[#52665D] uppercase block mb-1">State 2: Medium Confidence</span>
                 <ConfidenceBlock
                   score={71}
                   alternatives={[
@@ -261,14 +261,14 @@ export default function ShowcasePage() {
                 />
               </div>
               <div>
-                <span className="text-xs font-semibold text-[#52687B] uppercase block mb-1">State 3: Low Confidence</span>
+                <span className="text-xs font-semibold text-[#52665D] uppercase block mb-1">State 3: Low Confidence</span>
                 <ConfidenceBlock score={42} />
               </div>
             </div>
           </div>
 
           <div>
-            <h4 className="font-semibold text-[#52687B] mb-2">Schedule Variance Indicators:</h4>
+            <h4 className="font-semibold text-[#52665D] mb-2">Schedule Variance Indicators:</h4>
             <div className="flex flex-wrap gap-2">
               <VarianceBadge daysDelay={-3} />
               <VarianceBadge daysDelay={0} />
@@ -279,7 +279,7 @@ export default function ShowcasePage() {
           </div>
 
           <div>
-            <h4 className="font-semibold text-[#52687B] mb-2">
+            <h4 className="font-semibold text-[#52665D] mb-2">
               Canonical PLnEX Data States (Shared Single Source of Truth):
             </h4>
             <div className="flex flex-wrap gap-2">
@@ -300,36 +300,36 @@ export default function ShowcasePage() {
       </div>
 
       {/* 3. Progress Bars */}
-      <div className="bg-white border border-[#D6E1E9] rounded-lg p-4 sm:p-6 space-y-3">
-        <h3 className="text-xs font-bold uppercase tracking-wider text-[#1A2E42] mb-1">
+      <div className="bg-white border border-[#D9E2DA] rounded-lg p-4 sm:p-6 space-y-3">
+        <h3 className="text-xs font-bold uppercase tracking-wider text-[#1A2B25] mb-1">
           3. Dual Planned vs Actual Progress Bars
         </h3>
-        <p className="text-xs text-[#52687B] mb-3">
+        <p className="text-xs text-[#52665D] mb-3">
           Displays actual completed percentage alongside baseline planned targets with critical lag detection.
         </p>
 
         <div className="space-y-4 max-w-xl">
           <div>
-            <span className="text-xs text-[#52687B] block mb-1">On Track (Actual 75%, Planned 70%):</span>
+            <span className="text-xs text-[#52665D] block mb-1">On Track (Actual 75%, Planned 70%):</span>
             <ProgressBar actual={75} planned={70} status="on-track" />
           </div>
           <div>
-            <span className="text-xs text-[#52687B] block mb-1">At Risk (Actual 40%, Planned 50%):</span>
+            <span className="text-xs text-[#52665D] block mb-1">At Risk (Actual 40%, Planned 50%):</span>
             <ProgressBar actual={40} planned={50} status="at-risk" />
           </div>
           <div>
-            <span className="text-xs text-[#52687B] block mb-1">Delayed (Actual 20%, Planned 45%):</span>
+            <span className="text-xs text-[#52665D] block mb-1">Delayed (Actual 20%, Planned 45%):</span>
             <ProgressBar actual={20} planned={45} status="delayed" />
           </div>
         </div>
       </div>
 
       {/* 4. Feedback & Overlay Triggers */}
-      <div className="bg-white border border-[#D6E1E9] rounded-lg p-4 sm:p-6 space-y-4">
-        <h3 className="text-xs font-bold uppercase tracking-wider text-[#1A2E42] mb-1">
+      <div className="bg-white border border-[#D9E2DA] rounded-lg p-4 sm:p-6 space-y-4">
+        <h3 className="text-xs font-bold uppercase tracking-wider text-[#1A2B25] mb-1">
           4. Toast Notifications & System Triggers
         </h3>
-        <p className="text-xs text-[#52687B] mb-3">
+        <p className="text-xs text-[#52665D] mb-3">
           Trigger system notifications across semantic categories.
         </p>
 
@@ -342,7 +342,7 @@ export default function ShowcasePage() {
                 description: 'Baseline P6 XML import confirmed. 146 activities aligned.',
               })
             }
-            className="px-3 py-1.5 bg-[#E5F6EE] text-[#2E7D5B] border border-[#B8DCC9] rounded text-xs font-medium"
+            className="px-3 py-1.5 bg-[#E4F1E9] text-[#1F6B4E] border border-[#B7DAC3] rounded text-xs font-medium"
           >
             Trigger Success Toast
           </button>
@@ -354,7 +354,7 @@ export default function ShowcasePage() {
                 description: 'Field event matched at 86% confidence. Routed to review queue.',
               })
             }
-            className="px-3 py-1.5 bg-[#FEF4E6] text-[#8C5311] border border-[#F0D4A6] rounded text-xs font-medium"
+            className="px-3 py-1.5 bg-[#F8EFDA] text-[#825700] border border-[#E5C185] rounded text-xs font-medium"
           >
             Trigger Warning Toast
           </button>
@@ -366,7 +366,7 @@ export default function ShowcasePage() {
                 description: 'Line 24-XX erection +2d slip impacts hydro-test milestone.',
               })
             }
-            className="px-3 py-1.5 bg-[#FDEEED] text-[#A44339] border border-[#E4B0AA] rounded text-xs font-medium"
+            className="px-3 py-1.5 bg-[#F6E4E1] text-[#A43B36] border border-[#DCABA7] rounded text-xs font-medium"
           >
             Trigger Critical Toast
           </button>
@@ -378,7 +378,7 @@ export default function ShowcasePage() {
                 description: 'Permanent audit record generated for match approval AUD-003.',
               })
             }
-            className="px-3 py-1.5 bg-[#EDF2F8] text-[#3B6EA8] border border-[#D6E1E9] rounded text-xs font-medium"
+            className="px-3 py-1.5 bg-[#EDF2F8] text-[#2C6475] border border-[#D9E2DA] rounded text-xs font-medium"
           >
             Trigger Info Toast
           </button>
@@ -386,41 +386,41 @@ export default function ShowcasePage() {
       </div>
 
       {/* 5. Centralized Tokens Reference */}
-      <div className="bg-white border border-[#D6E1E9] rounded-lg p-4 sm:p-6 space-y-4">
-        <h3 className="text-xs font-bold uppercase tracking-wider text-[#1A2E42] mb-1">
+      <div className="bg-white border border-[#D9E2DA] rounded-lg p-4 sm:p-6 space-y-4">
+        <h3 className="text-xs font-bold uppercase tracking-wider text-[#1A2B25] mb-1">
           5. Design Tokens Catalog (Exact Specification)
         </h3>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 text-xs">
-          <div className="p-3 border border-[#D6E1E9] rounded bg-[#F4F7FB]">
-            <span className="font-bold text-[#1A2E42]">Background</span>
-            <div className="h-6 w-full bg-[#F4F7FB] border border-[#D6E1E9] rounded my-1" />
-            <code className="text-[10px] text-[#52687B]">#F4F7FB</code>
+          <div className="p-3 border border-[#D9E2DA] rounded bg-[#F6F7F3]">
+            <span className="font-bold text-[#1A2B25]">Background</span>
+            <div className="h-6 w-full bg-[#F6F7F3] border border-[#D9E2DA] rounded my-1" />
+            <code className="text-[10px] text-[#52665D]">#F6F7F3</code>
           </div>
-          <div className="p-3 border border-[#D6E1E9] rounded bg-white">
-            <span className="font-bold text-[#1A2E42]">Surface</span>
-            <div className="h-6 w-full bg-white border border-[#D6E1E9] rounded my-1" />
-            <code className="text-[10px] text-[#52687B]">#FFFFFF</code>
+          <div className="p-3 border border-[#D9E2DA] rounded bg-white">
+            <span className="font-bold text-[#1A2B25]">Surface</span>
+            <div className="h-6 w-full bg-white border border-[#D9E2DA] rounded my-1" />
+            <code className="text-[10px] text-[#52665D]">#FFFFFF</code>
           </div>
-          <div className="p-3 border border-[#D6E1E9] rounded bg-white">
-            <span className="font-bold text-[#1A2E42]">Primary Brand</span>
-            <div className="h-6 w-full bg-[#0F6B68] rounded my-1" />
-            <code className="text-[10px] text-[#52687B]">#0F6B68</code>
+          <div className="p-3 border border-[#D9E2DA] rounded bg-white">
+            <span className="font-bold text-[#1A2B25]">Primary Brand</span>
+            <div className="h-6 w-full bg-[#006B61] rounded my-1" />
+            <code className="text-[10px] text-[#52665D]">#006B61</code>
           </div>
-          <div className="p-3 border border-[#D6E1E9] rounded bg-white">
-            <span className="font-bold text-[#1A2E42]">Success</span>
-            <div className="h-6 w-full bg-[#2E7D5B] rounded my-1" />
-            <code className="text-[10px] text-[#52687B]">#2E7D5B</code>
+          <div className="p-3 border border-[#D9E2DA] rounded bg-white">
+            <span className="font-bold text-[#1A2B25]">Success</span>
+            <div className="h-6 w-full bg-[#1F6B4E] rounded my-1" />
+            <code className="text-[10px] text-[#52665D]">#1F6B4E</code>
           </div>
-          <div className="p-3 border border-[#D6E1E9] rounded bg-white">
-            <span className="font-bold text-[#1A2E42]">Warning</span>
-            <div className="h-6 w-full bg-[#965E0D] rounded my-1" />
-            <code className="text-[10px] text-[#52687B]">#965E0D</code>
+          <div className="p-3 border border-[#D9E2DA] rounded bg-white">
+            <span className="font-bold text-[#1A2B25]">Warning</span>
+            <div className="h-6 w-full bg-[#825700] rounded my-1" />
+            <code className="text-[10px] text-[#52665D]">#825700</code>
           </div>
-          <div className="p-3 border border-[#D6E1E9] rounded bg-white">
-            <span className="font-bold text-[#1A2E42]">Critical</span>
-            <div className="h-6 w-full bg-[#A44339] rounded my-1" />
-            <code className="text-[10px] text-[#52687B]">#A44339</code>
+          <div className="p-3 border border-[#D9E2DA] rounded bg-white">
+            <span className="font-bold text-[#1A2B25]">Critical</span>
+            <div className="h-6 w-full bg-[#A43B36] rounded my-1" />
+            <code className="text-[10px] text-[#52665D]">#A43B36</code>
           </div>
         </div>
       </div>
@@ -428,14 +428,14 @@ export default function ShowcasePage() {
       {/* =========================================================================
           REUSABLE COMPONENT: PLnEX MATCH EXPLANATION COMPONENT
           ========================================================================= */}
-      <div className="bg-white border border-[#D6E1E9] rounded-lg p-4 sm:p-6 space-y-4">
+      <div className="bg-white border border-[#D9E2DA] rounded-lg p-4 sm:p-6 space-y-4">
         <div className="flex items-center justify-between flex-wrap gap-2">
           <div>
-            <h3 className="text-sm font-bold text-[#1A2E42] flex items-center gap-2">
-              <Target className="w-4 h-4 text-[#0F6B68]" />
+            <h3 className="text-sm font-bold text-[#1A2B25] flex items-center gap-2">
+              <Target className="w-4 h-4 text-[#006B61]" />
               <span>Reusable PLnEX Match Explanation Component</span>
             </h3>
-            <p className="text-xs text-[#52687B]">
+            <p className="text-xs text-[#52665D]">
               Strictly auditable explainability model. Never shows an unexplained percentage. Decomposes confidence into the 5 explicit signals: Activity keywords, Area / Line, Discipline, Context / Date, and Project / WBS.
             </p>
           </div>
@@ -443,7 +443,7 @@ export default function ShowcasePage() {
 
         {/* Interactive Scenario Switcher */}
         <div className="flex items-center gap-2 flex-wrap text-xs pt-1">
-          <span className="text-[11px] font-semibold text-[#52687B] uppercase">Test Scenarios:</span>
+          <span className="text-[11px] font-semibold text-[#52665D] uppercase">Test Scenarios:</span>
           {[
             { id: 'EVT-2026-001', label: '94% High Confidence (Erect Spools)', badge: 'Auto-link' },
             { id: 'EVT-2026-002', label: '86% Review Required (Field Welds)', badge: 'Review' },
@@ -458,8 +458,8 @@ export default function ShowcasePage() {
               onClick={() => setSelectedExplanationEventId(sc.id)}
               className={`px-3 py-1.5 rounded-lg border text-xs font-semibold transition-all ${
                 selectedExplanationEventId === sc.id
-                  ? 'bg-[#0F6B68] text-white border-[#0F6B68] shadow-xs'
-                  : 'bg-[#F4F7FB] border-[#D6E1E9] text-[#52687B] hover:bg-white'
+                  ? 'bg-[#006B61] text-white border-[#006B61] shadow-xs'
+                  : 'bg-[#F6F7F3] border-[#D9E2DA] text-[#52665D] hover:bg-white'
               }`}
             >
               <span>{sc.label}</span>
@@ -484,13 +484,13 @@ export default function ShowcasePage() {
       {/* =========================================================================
           REUSABLE COMPONENT: PLnEX NOTIFICATION CENTER
           ========================================================================= */}
-      <div className="bg-white border border-[#D6E1E9] rounded-lg p-4 sm:p-6 space-y-4">
+      <div className="bg-white border border-[#D9E2DA] rounded-lg p-4 sm:p-6 space-y-4">
         <div>
-          <h3 className="text-sm font-bold text-[#1A2E42] flex items-center gap-2">
-            <Bell className="w-4 h-4 text-[#0F6B68]" />
+          <h3 className="text-sm font-bold text-[#1A2B25] flex items-center gap-2">
+            <Bell className="w-4 h-4 text-[#006B61]" />
             <span>Reusable PLnEX Notification Center</span>
           </h3>
-          <p className="text-xs text-[#52687B]">
+          <p className="text-xs text-[#52665D]">
             Enterprise operational alerts with zero decorative notifications. Covers all 8 project controls types: New review required, Activity delayed, Dependency impacted, Match conflict, DPR confirmation required, Evidence uploaded, Processing failed, and Sync conflict. Clicking opens the relevant PLnEX page or drawer.
           </p>
         </div>
@@ -502,21 +502,21 @@ export default function ShowcasePage() {
       {/* =========================================================================
           REUSABLE COMPONENT: PLnEX GLOBAL UNIVERSAL SEARCH
           ========================================================================= */}
-      <div className="bg-white border border-[#D6E1E9] rounded-lg p-4 sm:p-6 space-y-4">
+      <div className="bg-white border border-[#D9E2DA] rounded-lg p-4 sm:p-6 space-y-4">
         <div className="flex items-center justify-between flex-wrap gap-2">
           <div>
-            <h3 className="text-sm font-bold text-[#1A2E42] flex items-center gap-2">
-              <Search className="w-4 h-4 text-[#0F6B68]" />
+            <h3 className="text-sm font-bold text-[#1A2B25] flex items-center gap-2">
+              <Search className="w-4 h-4 text-[#006B61]" />
               <span>Reusable PLnEX Global Search (Ctrl/Cmd + K)</span>
             </h3>
-            <p className="text-xs text-[#52687B]">
+            <p className="text-xs text-[#52665D]">
               Indexed across all 7 project data stores: Projects, Activities, Execution Events, Evidence, Review Items, Risks, and Reports. Displays Type, ID, Title, Project, and Status for each entity with deep drawer and route routing.
             </p>
           </div>
           <button
             type="button"
             onClick={() => setGlobalSearchOpen(true)}
-            className="px-3 py-1.5 bg-[#0F6B68] hover:bg-[#135A72] text-white text-xs font-semibold rounded-lg inline-flex items-center gap-2 transition-colors shadow-xs"
+            className="px-3 py-1.5 bg-[#006B61] hover:bg-[#00524A] text-white text-xs font-semibold rounded-lg inline-flex items-center gap-2 transition-colors shadow-xs"
           >
             <span>Trigger Global Modal (⌘K)</span>
           </button>
@@ -529,32 +529,32 @@ export default function ShowcasePage() {
       {/* =========================================================================
           REUSABLE SYSTEM: RESTRAINED LOADING INDICATORS
           ========================================================================= */}
-      <div className="bg-white border border-[#D6E1E9] rounded-lg p-4 sm:p-6 space-y-4">
+      <div className="bg-white border border-[#D9E2DA] rounded-lg p-4 sm:p-6 space-y-4">
         <div>
-          <h3 className="text-sm font-bold text-[#1A2E42] flex items-center gap-2">
-            <Loader2 className="w-4 h-4 text-[#0F6B68]" />
+          <h3 className="text-sm font-bold text-[#1A2B25] flex items-center gap-2">
+            <Loader2 className="w-4 h-4 text-[#006B61]" />
             <span>Restrained Loading Indicators (Communicates Status Without Decoration)</span>
           </h3>
-          <p className="text-xs text-[#52687B] mt-1">
+          <p className="text-xs text-[#52665D] mt-1">
             Simple restrained indicators. Zero animated decorative skeletons, zero pulsing cards, zero animated dashboard elements, and zero unnecessary spinners.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
-            <span className="text-[11px] font-semibold text-[#52687B] uppercase block mb-1.5 font-mono">
+            <span className="text-[11px] font-semibold text-[#52665D] uppercase block mb-1.5 font-mono">
               Schedule Subsystem
             </span>
             <LoadingState message="Loading schedule..." />
           </div>
           <div>
-            <span className="text-[11px] font-semibold text-[#52687B] uppercase block mb-1.5 font-mono">
+            <span className="text-[11px] font-semibold text-[#52665D] uppercase block mb-1.5 font-mono">
               Execution Subsystem
             </span>
             <LoadingState message="Loading execution events..." />
           </div>
           <div>
-            <span className="text-[11px] font-semibold text-[#52687B] uppercase block mb-1.5 font-mono">
+            <span className="text-[11px] font-semibold text-[#52665D] uppercase block mb-1.5 font-mono">
               Reporting Subsystem
             </span>
             <LoadingState message="Preparing report..." />
@@ -565,13 +565,13 @@ export default function ShowcasePage() {
       {/* =========================================================================
           REUSABLE SYSTEM: STANDARDIZED EMPTY STATES
           ========================================================================= */}
-      <div className="bg-white border border-[#D6E1E9] rounded-lg p-4 sm:p-6 space-y-4">
+      <div className="bg-white border border-[#D9E2DA] rounded-lg p-4 sm:p-6 space-y-4">
         <div>
-          <h3 className="text-sm font-bold text-[#1A2E42] flex items-center gap-2">
-            <Inbox className="w-4 h-4 text-[#0F6B68]" />
+          <h3 className="text-sm font-bold text-[#1A2B25] flex items-center gap-2">
+            <Inbox className="w-4 h-4 text-[#006B61]" />
             <span>Standardized Empty States (3-Part Explanation + Single Action)</span>
           </h3>
-          <p className="text-xs text-[#52687B] mt-1">
+          <p className="text-xs text-[#52665D] mt-1">
             Eliminates vague empty messages. Always explains: 1. What is missing? 2. Why? 3. What can the user do? Zero decorative illustrations.
           </p>
         </div>
@@ -599,13 +599,13 @@ export default function ShowcasePage() {
       {/* =========================================================================
           REUSABLE SYSTEM: STANDARDIZED ERROR STATES
           ========================================================================= */}
-      <div className="bg-white border border-[#D6E1E9] rounded-lg p-4 sm:p-6 space-y-4">
+      <div className="bg-white border border-[#D9E2DA] rounded-lg p-4 sm:p-6 space-y-4">
         <div>
-          <h3 className="text-sm font-bold text-[#1A2E42] flex items-center gap-2">
-            <AlertCircle className="w-4 h-4 text-[#A44339]" />
+          <h3 className="text-sm font-bold text-[#1A2B25] flex items-center gap-2">
+            <AlertCircle className="w-4 h-4 text-[#A43B36]" />
             <span>Standardized Error States (What Happened + What User Can Do + Retry)</span>
           </h3>
-          <p className="text-xs text-[#52687B] mt-1">
+          <p className="text-xs text-[#52665D] mt-1">
             Consistent restrained error styling. Zero giant red screens and zero dramatic illustrations. Every major error explicitly communicates: 1. What happened, 2. What the user can do, paired with an accessible Retry action.
           </p>
         </div>
@@ -637,13 +637,13 @@ export default function ShowcasePage() {
         footer={
           <button
             onClick={() => setIsModalOpen(false)}
-            className="px-4 py-1.5 bg-[#0F6B68] text-white text-xs font-semibold rounded"
+            className="px-4 py-1.5 bg-[#006B61] text-white text-xs font-semibold rounded"
           >
             Close Modal
           </button>
         }
       >
-        <p className="text-xs text-[#52687B] leading-relaxed">
+        <p className="text-xs text-[#52665D] leading-relaxed">
           Standard enterprise modal dialog for schedule configuration, evidence attachment, and manual activity rematches.
         </p>
       </Modal>
@@ -657,13 +657,13 @@ export default function ShowcasePage() {
         footer={
           <button
             onClick={() => setIsDrawerOpen(false)}
-            className="px-4 py-1.5 bg-[#0F6B68] text-white text-xs font-semibold rounded"
+            className="px-4 py-1.5 bg-[#006B61] text-white text-xs font-semibold rounded"
           >
             Dismiss
           </button>
         }
       >
-        <p className="text-xs text-[#52687B]">
+        <p className="text-xs text-[#52665D]">
           The drawer allows inspecting rich data like L1–L6 WBS hierarchies, predecessor graphs, and linked evidence photos without losing table context.
         </p>
       </Drawer>

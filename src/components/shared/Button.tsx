@@ -16,17 +16,17 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 export const BUTTON_VARIANTS: Record<ButtonVariant, string> = {
   primary:
-    'bg-[#0F6B68] hover:bg-[#135A72] active:bg-[#0F4A5E] text-white border border-[#0F6B68] shadow-xs disabled:bg-[#7B8798] disabled:border-[#7B8798]',
+    'bg-[#006B61] hover:bg-[#00524A] active:bg-[#003D37] dark:bg-[#72C6AD] dark:hover:bg-[#5CB69C] dark:active:bg-[#47A287] text-white dark:text-[#0B2822] border border-[#006B61] dark:border-[#72C6AD] shadow-xs disabled:opacity-50 font-semibold',
   secondary:
-    'bg-white hover:bg-[#EAF1F5] active:bg-[#D6E1E9] text-[#1A2E42] border border-[#D6E1E9] hover:border-[#CBD5E1] shadow-xs disabled:text-[#7B8798] disabled:border-[#D6E1E9]',
+    'bg-white dark:bg-[#17221D] hover:bg-[#EAF0E9] dark:hover:bg-[#243832] active:bg-[#D9E2DA] dark:active:bg-[#2D443D] text-[#1A2B25] dark:text-[#F2F4E9] border border-[#D9E2DA] dark:border-[#3A5146] shadow-xs disabled:opacity-50',
   tertiary:
-    'bg-transparent hover:bg-[#EAF1F5] active:bg-[#D6E1E9] text-[#52687B] hover:text-[#1A2E42] border border-transparent disabled:text-[#7B8798]',
+    'bg-transparent hover:bg-[#EAF0E9] dark:hover:bg-[#243832] active:bg-[#D9E2DA] dark:active:bg-[#2D443D] text-[#52665D] dark:text-[#B5C1B5] hover:text-[#1A2B25] dark:hover:text-[#F2F4E9] border border-transparent disabled:opacity-50',
   danger:
-    'bg-[#FDEEED] hover:bg-[#F8E3E1] active:bg-[#F4D0CC] text-[#A44339] border border-[#E4B0AA] shadow-xs disabled:text-[#7B8798]',
+    'bg-[#F6E4E1] dark:bg-[#3B2422] hover:bg-[#F0CECA] dark:hover:bg-[#4D2C2A] text-[#A43B36] dark:text-[#FF9E94] border border-[#DCABA7] dark:border-[#5B3734] shadow-xs disabled:opacity-50',
 };
 
 export const BUTTON_SIZES: Record<ButtonSize, string> = {
-  sm: 'h-8 px-3 text-xs gap-2',
+  sm: 'h-8 px-3 text-xs gap-1.5',
   md: 'h-9 px-4 text-xs font-semibold gap-2',
   lg: 'h-10 px-4 text-sm font-semibold gap-2',
 };
@@ -52,7 +52,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         type={type}
         disabled={disabled || isLoading}
-        className={`inline-flex items-center justify-center font-medium rounded-md transition-colors cursor-pointer disabled:cursor-not-allowed select-none ${BUTTON_VARIANTS[variant]} ${BUTTON_SIZES[size]} ${className}`}
+        className={`inline-flex items-center justify-center font-medium rounded-lg transition-colors cursor-pointer disabled:cursor-not-allowed select-none ${BUTTON_VARIANTS[variant]} ${BUTTON_SIZES[size]} ${className}`}
         {...rest}
       >
         {isLoading ? (

@@ -25,30 +25,30 @@ function ToastItem({ toast, onDismiss }: { toast: ToastMessage; onDismiss: () =>
   const getIcon = () => {
     switch (toast.type) {
       case 'success':
-        return <CheckCircle2 className="w-5 h-5 text-[#2E7D5B] flex-shrink-0" />;
+        return <CheckCircle2 className="w-5 h-5 text-[#1F6B4E] flex-shrink-0" />;
       case 'warning':
-        return <AlertTriangle className="w-5 h-5 text-[#965E0D] flex-shrink-0" />;
+        return <AlertTriangle className="w-5 h-5 text-[#825700] flex-shrink-0" />;
       case 'critical':
       case 'error':
-        return <AlertCircle className="w-5 h-5 text-[#A44339] flex-shrink-0" />;
+        return <AlertCircle className="w-5 h-5 text-[#A43B36] flex-shrink-0" />;
       case 'info':
       default:
-        return <Info className="w-5 h-5 text-[#3B6EA8] flex-shrink-0" />;
+        return <Info className="w-5 h-5 text-[#2C6475] flex-shrink-0" />;
     }
   };
 
   const getBorderColor = () => {
     switch (toast.type) {
       case 'success':
-        return 'border-[#B8DCC9]';
+        return 'border-[#B7DAC3]';
       case 'warning':
-        return 'border-[#F0D4A6]';
+        return 'border-[#E5C185]';
       case 'critical':
       case 'error':
-        return 'border-[#E4B0AA]';
+        return 'border-[#DCABA7]';
       case 'info':
       default:
-        return 'border-[#D6E1E9]';
+        return 'border-[#D9E2DA]';
     }
   };
 
@@ -58,14 +58,14 @@ function ToastItem({ toast, onDismiss }: { toast: ToastMessage; onDismiss: () =>
     >
       {getIcon()}
       <div className="flex-1 text-xs">
-        <p className="font-semibold text-[#1A2E42]">{toast.title}</p>
+        <p className="font-semibold text-[#1A2B25]">{toast.title}</p>
         {toast.description && (
-          <p className="text-[#52687B] mt-0.5 leading-relaxed">{toast.description}</p>
+          <p className="text-[#52665D] mt-0.5 leading-relaxed">{toast.description}</p>
         )}
       </div>
       <button
         onClick={onDismiss}
-        className="text-[#7B8798] hover:text-[#1A2E42] p-0.5 rounded transition-colors"
+        className="text-[#738A80] hover:text-[#1A2B25] p-0.5 rounded transition-colors"
         aria-label="Dismiss toast"
       >
         <X className="w-4 h-4" />

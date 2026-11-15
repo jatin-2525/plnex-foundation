@@ -155,26 +155,26 @@ export function LineChart({
   const activePoint = hoveredIdx !== null ? effectiveData[hoveredIdx] : effectiveData[dataDateIndex];
 
   return (
-    <div className={`bg-white rounded-lg border border-[#D6E1E9] p-4 sm:p-6 shadow-xs text-[#1A2E42] ${className}`}>
+    <div className={`bg-white rounded-lg border border-[#D9E2DA] p-4 sm:p-6 shadow-xs text-[#1A2B25] ${className}`}>
       {/* Header */}
-      <div className="flex flex-col lg:flex-row lg:items-center justify-between pb-3 border-b border-[#D6E1E9] gap-3">
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between pb-3 border-b border-[#D9E2DA] gap-3">
         <div>
           <div className="flex items-center gap-2 flex-wrap">
-            <h3 className="text-base font-bold text-[#1A2E42] tracking-tight">{displayTitle}</h3>
-            <span className="px-2 py-0.5 rounded bg-[#EAF1F5] text-[#0F6B68] border border-[#D6E1E9] text-[10px] font-mono font-bold">
+            <h3 className="text-base font-bold text-[#1A2B25] tracking-tight">{displayTitle}</h3>
+            <span className="px-2 py-0.5 rounded bg-[#EAF0E9] text-[#006B61] border border-[#D9E2DA] text-[10px] font-mono font-bold">
               Unit: {effectiveUnit}
             </span>
-            <span className="px-2 py-0.5 rounded bg-[#F4F7FB] text-[#52687B] border border-[#D6E1E9] text-[10px] font-mono">
+            <span className="px-2 py-0.5 rounded bg-[#F6F7F3] text-[#52665D] border border-[#D9E2DA] text-[10px] font-mono">
               {timeRange}
             </span>
           </div>
-          <p className="text-xs text-[#52687B] mt-0.5">{displaySubtitle}</p>
+          <p className="text-xs text-[#52665D] mt-0.5">{displaySubtitle}</p>
         </div>
 
         {/* Project Question Banner (only if explicitly provided) */}
         {projectQuestion && (
-          <div className="px-3 py-1.5 rounded bg-[#EAF1F5] border border-[#D6E1E9] text-xs font-mono text-[#0F6B68] font-semibold self-start lg:self-auto max-w-md">
-            <span className="font-sans font-bold text-[#1A2E42] block text-[10px] uppercase tracking-wide">
+          <div className="px-3 py-1.5 rounded bg-[#EAF0E9] border border-[#D9E2DA] text-xs font-mono text-[#006B61] font-semibold self-start lg:self-auto max-w-md">
+            <span className="font-sans font-bold text-[#1A2B25] block text-[10px] uppercase tracking-wide">
               Project Question:
             </span>
             {displayQuestion}
@@ -186,43 +186,43 @@ export function LineChart({
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 my-4 text-xs font-mono">
         {!isVariance ? (
           <>
-            <div className="p-2 bg-[#F4F7FB] rounded border border-[#D6E1E9]">
-              <span className="text-[#52687B] block text-[10px] font-sans">Planned Target</span>
+            <div className="p-2 bg-[#F6F7F3] rounded border border-[#D9E2DA]">
+              <span className="text-[#52665D] block text-[10px] font-sans">Planned Target</span>
               <span className="font-bold text-[#5273C6]">
                 {effectiveData[dataDateIndex]?.planned ?? 80}%
               </span>
             </div>
-            <div className="p-2 bg-[#F4F7FB] rounded border border-[#D6E1E9]">
-              <span className="text-[#52687B] block text-[10px] font-sans">Verified Actual</span>
+            <div className="p-2 bg-[#F6F7F3] rounded border border-[#D9E2DA]">
+              <span className="text-[#52665D] block text-[10px] font-sans">Verified Actual</span>
               <span className="font-bold text-[#176B53]">
                 {effectiveData[dataDateIndex]?.actual ?? 73}%
               </span>
             </div>
-            <div className="p-2 bg-[#FEF4E6] rounded border border-[#F8DDA2]">
-              <span className="text-[#965E0D] block text-[10px] font-sans">Current Variance</span>
-              <span className="font-bold text-[#A44339]">-7.0%</span>
+            <div className="p-2 bg-[#F8EFDA] rounded border border-[#F8DDA2]">
+              <span className="text-[#825700] block text-[10px] font-sans">Current Variance</span>
+              <span className="font-bold text-[#A43B36]">-7.0%</span>
             </div>
-            <div className="p-2 bg-[#F4F7FB] rounded border border-[#D6E1E9]">
-              <span className="text-[#52687B] block text-[10px] font-sans">Forecast Completion</span>
-              <span className="font-bold text-[#1A2E42]">20 Dec 2026 (+5d)</span>
+            <div className="p-2 bg-[#F6F7F3] rounded border border-[#D9E2DA]">
+              <span className="text-[#52665D] block text-[10px] font-sans">Forecast Completion</span>
+              <span className="font-bold text-[#1A2B25]">20 Dec 2026 (+5d)</span>
             </div>
           </>
         ) : (
           <>
-            <div className="p-2 bg-[#F4F7FB] rounded border border-[#D6E1E9]">
-              <span className="text-[#52687B] block text-[10px] font-sans">Baseline Zero Slip</span>
-              <span className="font-bold text-[#52687B]">0.0% pts</span>
+            <div className="p-2 bg-[#F6F7F3] rounded border border-[#D9E2DA]">
+              <span className="text-[#52665D] block text-[10px] font-sans">Baseline Zero Slip</span>
+              <span className="font-bold text-[#52665D]">0.0% pts</span>
             </div>
-            <div className="p-2 bg-[#FDEEED] rounded border border-[#F6C7BE]">
-              <span className="text-[#52687B] block text-[10px] font-sans">Active Maximum Slip</span>
-              <span className="font-bold text-[#A44339]">-7.0% pts (18 Sep)</span>
+            <div className="p-2 bg-[#F6E4E1] rounded border border-[#F6C7BE]">
+              <span className="text-[#52665D] block text-[10px] font-sans">Active Maximum Slip</span>
+              <span className="font-bold text-[#A43B36]">-7.0% pts (18 Sep)</span>
             </div>
-            <div className="p-2 bg-[#E5F6EE] rounded border border-[#BDE4D0]">
-              <span className="text-[#52687B] block text-[10px] font-sans">Peak Prior Gain</span>
+            <div className="p-2 bg-[#E4F1E9] rounded border border-[#BDE4D0]">
+              <span className="text-[#52665D] block text-[10px] font-sans">Peak Prior Gain</span>
               <span className="font-bold text-[#176B53]">+2.0% pts (Jun/Jul)</span>
             </div>
-            <div className="p-2 bg-[#F4F7FB] rounded border border-[#D6E1E9]">
-              <span className="text-[#52687B] block text-[10px] font-sans">Target Recovery</span>
+            <div className="p-2 bg-[#F6F7F3] rounded border border-[#D9E2DA]">
+              <span className="text-[#52665D] block text-[10px] font-sans">Target Recovery</span>
               <span className="font-bold text-[#5273C6]">0.0% pts by Dec</span>
             </div>
           </>
@@ -249,7 +249,7 @@ export function LineChart({
                     y1={y}
                     x2={width - padRight}
                     y2={y}
-                    stroke={isZero ? '#1A2E42' : CHART_TOKENS.neutral.grid}
+                    stroke={isZero ? '#1A2B25' : CHART_TOKENS.neutral.grid}
                     strokeWidth={isZero ? '1.5' : '1'}
                     strokeDasharray={isZero ? undefined : '3,3'}
                   />
@@ -258,7 +258,7 @@ export function LineChart({
                     y={y + 3.5}
                     textAnchor="end"
                     fontSize="10"
-                    fill={isZero ? '#1A2E42' : '#52687B'}
+                    fill={isZero ? '#1A2B25' : '#52665D'}
                     fontFamily="inherit"
                     fontWeight={isZero ? '700' : '500'}
                   >
@@ -276,7 +276,7 @@ export function LineChart({
               textAnchor="start"
               fontSize="10"
               fontWeight="bold"
-              fill="#1A2E42"
+              fill="#1A2B25"
             >
               {isVariance ? `Variance (${effectiveUnit})` : `Progress (${effectiveUnit})`}
             </text>
@@ -287,7 +287,7 @@ export function LineChart({
               y1={padTop}
               x2={getX(dataDateIndex)}
               y2={height - padBottom}
-              stroke="#1A2E42"
+              stroke="#1A2B25"
               strokeWidth="1.5"
               strokeDasharray="4,3"
             />
@@ -297,7 +297,7 @@ export function LineChart({
               width={80}
               height={16}
               rx={3}
-              fill="#1A2E42"
+              fill="#1A2B25"
             />
             <text
               x={getX(dataDateIndex)}
@@ -391,13 +391,13 @@ export function LineChart({
                     fill={
                       isVariance
                         ? pointVal < 0
-                          ? '#A44339'
+                          ? '#A43B36'
                           : pointVal > 0
-                          ? '#176B53'
-                          : '#52687B'
+                          ? '#1F6B4E'
+                          : '#52665D'
                         : pt.actual !== null
-                        ? '#176B53'
-                        : '#7055A4'
+                        ? '#1F6B4E'
+                        : '#006B61'
                     }
                     stroke="#FFFFFF"
                     strokeWidth="1.5"
@@ -410,7 +410,7 @@ export function LineChart({
                     textAnchor="middle"
                     fontSize="9"
                     fontWeight="bold"
-                    fill="#1A2E42"
+                    fill="#1A2B25"
                   >
                     {isVariance ? (pointVal > 0 ? `+${pointVal}%` : `${pointVal}%`) : `${pointVal}%`}
                   </text>
@@ -421,7 +421,7 @@ export function LineChart({
                     y1={height - padBottom}
                     x2={x}
                     y2={height - padBottom + 4}
-                    stroke="#D6E1E9"
+                    stroke="#D9E2DA"
                     strokeWidth="1"
                   />
                   <text
@@ -430,7 +430,7 @@ export function LineChart({
                     textAnchor="middle"
                     fontSize="10"
                     fontWeight={isDD || isSelected ? '700' : '400'}
-                    fill={isSelected ? '#0F6B68' : isDD ? '#1A2E42' : '#52687B'}
+                    fill={isSelected ? '#006B61' : isDD ? '#1A2B25' : '#52665D'}
                   >
                     {pt.period}
                   </text>
@@ -445,7 +445,7 @@ export function LineChart({
               textAnchor="middle"
               fontSize="10"
               fontWeight="bold"
-              fill="#52687B"
+              fill="#52665D"
             >
               Timeline (Project Reporting Periods • Cutoff: 18 Sep 2026)
             </text>
@@ -454,49 +454,49 @@ export function LineChart({
       </div>
 
       {/* Legend & Interpretation (Strictly Static, No Animation) */}
-      <div className="flex flex-wrap items-center justify-between gap-4 mt-3 pt-3 border-t border-[#D6E1E9] text-xs text-[#52687B]">
+      <div className="flex flex-wrap items-center justify-between gap-4 mt-3 pt-3 border-t border-[#D9E2DA] text-xs text-[#52665D]">
         <div className="flex items-center gap-4 flex-wrap">
           {!isVariance ? (
             <>
               <div className="flex items-center gap-2">
                 <span className="w-3.5 h-1 bg-[#5273C6] inline-block rounded-xs" />
-                <span className="font-semibold text-[#1A2E42]">■ Planned Target</span>
+                <span className="font-semibold text-[#1A2B25]">■ Planned Target</span>
               </div>
               <div className="flex items-center gap-2">
                 <span className="w-3.5 h-1.5 bg-[#176B53] inline-block rounded-xs" />
-                <span className="font-semibold text-[#1A2E42]">● Verified Actual</span>
+                <span className="font-semibold text-[#1A2B25]">● Verified Actual</span>
               </div>
               <div className="flex items-center gap-2">
                 <span className="w-4 h-0.5 border-t-2 border-dashed border-[#7055A4] inline-block" />
-                <span className="font-semibold text-[#52687B]">▲ Forecast (Dashed)</span>
+                <span className="font-semibold text-[#52665D]">▲ Forecast (Dashed)</span>
               </div>
             </>
           ) : (
             <>
               <div className="flex items-center gap-2">
-                <span className="w-4 h-0.5 bg-[#1A2E42] inline-block" />
-                <span className="font-semibold text-[#1A2E42]">— Baseline (0.0% Variance)</span>
+                <span className="w-4 h-0.5 bg-[#103F39] inline-block" />
+                <span className="font-semibold text-[#1A2B25]">— Baseline (0.0% Variance)</span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="w-3.5 h-1.5 bg-[#A44339] inline-block rounded-xs" />
-                <span className="font-semibold text-[#1A2E42]">✕ Schedule Slip Trend</span>
+                <span className="w-3.5 h-1.5 bg-[#92372F] inline-block rounded-xs" />
+                <span className="font-semibold text-[#1A2B25]">✕ Schedule Slip Trend</span>
               </div>
               <div className="flex items-center gap-2">
                 <span className="w-3.5 h-1.5 bg-[#176B53] inline-block rounded-xs" />
-                <span className="font-semibold text-[#1A2E42]">✓ Schedule Gain Ahead</span>
+                <span className="font-semibold text-[#1A2B25]">✓ Schedule Gain Ahead</span>
               </div>
             </>
           )}
           <div className="flex items-center gap-2">
-            <span className="w-2.5 h-2.5 rounded-full border-2 border-[#1A2E42] inline-block" />
-            <span className="font-semibold text-[#1A2E42]">Cutoff Data Date</span>
+            <span className="w-2.5 h-2.5 rounded-full border-2 border-[#103F39] inline-block" />
+            <span className="font-semibold text-[#1A2B25]">Cutoff Data Date</span>
           </div>
         </div>
 
-        <div className="text-[11px] font-mono text-[#52687B]">
-          Active Point: <strong className="text-[#1A2E42]">{activePoint.period}</strong> —{' '}
+        <div className="text-[11px] font-mono text-[#52665D]">
+          Active Point: <strong className="text-[#1A2B25]">{activePoint.period}</strong> —{' '}
           {isVariance ? (
-            <span className={(activePoint.variance ?? 0) < 0 ? 'text-[#A44339] font-bold' : 'text-[#176B53] font-bold'}>
+            <span className={(activePoint.variance ?? 0) < 0 ? 'text-[#A43B36] font-bold' : 'text-[#176B53] font-bold'}>
               {activePoint.variance ?? 0}% pts
             </span>
           ) : (

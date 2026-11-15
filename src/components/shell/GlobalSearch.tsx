@@ -45,19 +45,19 @@ function getEntityTypeIcon(type: SearchResultType) {
     case 'Project':
       return <FolderGit2 className="w-3.5 h-3.5 text-[#0284C7]" />;
     case 'Activity':
-      return <Layers className="w-3.5 h-3.5 text-[#0F6B68]" />;
+      return <Layers className="w-3.5 h-3.5 text-[#006B61]" />;
     case 'Execution Event':
-      return <FileText className="w-3.5 h-3.5 text-[#3B6EA8]" />;
+      return <FileText className="w-3.5 h-3.5 text-[#2C6475]" />;
     case 'Evidence':
-      return <Camera className="w-3.5 h-3.5 text-[#2E7D5B]" />;
+      return <Camera className="w-3.5 h-3.5 text-[#1F6B4E]" />;
     case 'Review Item':
-      return <CheckSquare className="w-3.5 h-3.5 text-[#965E0D]" />;
+      return <CheckSquare className="w-3.5 h-3.5 text-[#825700]" />;
     case 'Risk':
-      return <AlertTriangle className="w-3.5 h-3.5 text-[#A44339]" />;
+      return <AlertTriangle className="w-3.5 h-3.5 text-[#A43B36]" />;
     case 'Report':
-      return <FileBarChart className="w-3.5 h-3.5 text-[#3B6EA8]" />;
+      return <FileBarChart className="w-3.5 h-3.5 text-[#2C6475]" />;
     default:
-      return <Search className="w-3.5 h-3.5 text-[#52687B]" />;
+      return <Search className="w-3.5 h-3.5 text-[#52665D]" />;
   }
 }
 
@@ -65,21 +65,21 @@ function getEntityTypeIcon(type: SearchResultType) {
 function getEntityTypeBadge(type: SearchResultType) {
   switch (type) {
     case 'Project':
-      return 'bg-[#EAF1F5] text-[#0F6B68] border-[#D6E1E9]';
+      return 'bg-[#EAF0E9] text-[#006B61] border-[#D9E2DA]';
     case 'Activity':
-      return 'bg-[#EAF1F5] text-[#0F6B68] border-[#D6E1E9]';
+      return 'bg-[#EAF0E9] text-[#006B61] border-[#D9E2DA]';
     case 'Execution Event':
-      return 'bg-[#EAF1F5] text-[#3B6EA8] border-[#D6E1E9]';
+      return 'bg-[#EAF0E9] text-[#2C6475] border-[#D9E2DA]';
     case 'Evidence':
-      return 'bg-[#E5F6EE] text-[#2E7D5B] border-[#B8DCC9]';
+      return 'bg-[#E4F1E9] text-[#1F6B4E] border-[#B7DAC3]';
     case 'Review Item':
-      return 'bg-[#FEF4E6] text-[#8C5311] border-[#F0D4A6]';
+      return 'bg-[#F8EFDA] text-[#825700] border-[#E5C185]';
     case 'Risk':
-      return 'bg-[#FDEEED] text-[#A44339] border-[#E4B0AA]';
+      return 'bg-[#F6E4E1] text-[#A43B36] border-[#DCABA7]';
     case 'Report':
-      return 'bg-[#EAF1F5] text-[#3B6EA8] border-[#D6E1E9]';
+      return 'bg-[#EAF0E9] text-[#2C6475] border-[#D9E2DA]';
     default:
-      return 'bg-[#EAF1F5] text-[#52687B] border-[#D6E1E9]';
+      return 'bg-[#EAF0E9] text-[#52665D] border-[#D9E2DA]';
   }
 }
 
@@ -241,21 +241,21 @@ export function GlobalSearch() {
     >
       {/* Dark backdrop */}
       <div
-        className="fixed inset-0 bg-[#1A2E42]/50"
+        className="fixed inset-0 bg-[#103F39]/50"
         onClick={() => setGlobalSearchOpen(false)}
         aria-hidden="true"
       />
 
       <div className="flex min-h-full items-start justify-center pt-16 sm:pt-24 p-3 sm:p-4">
         <div
-          className="relative w-full max-w-3xl bg-white rounded-lg border border-[#D6E1E9] shadow-lg overflow-hidden flex flex-col max-h-[80vh]"
+          className="relative w-full max-w-3xl bg-white dark:bg-[#17221D] rounded-lg border border-[#D9E2DA] dark:border-[#3A5146] shadow-lg overflow-hidden flex flex-col max-h-[80vh]"
           onClick={(e) => e.stopPropagation()}
         >
           {/* =========================================================================
               1. SEARCH INPUT HEADER
               ========================================================================= */}
-          <div className="flex items-center px-4 py-3 border-b border-[#D6E1E9] bg-white gap-3">
-            <Search className="w-5 h-5 text-[#7B8798] shrink-0" />
+          <div className="flex items-center px-4 py-3 border-b border-[#D9E2DA] dark:border-[#3A5146] bg-white dark:bg-[#17221D] gap-3">
+            <Search className="w-5 h-5 text-[#738A80] dark:text-[#859688] shrink-0" />
             <input
               ref={inputRef}
               type="text"
@@ -263,25 +263,25 @@ export function GlobalSearch() {
               onChange={(e) => setQuery(e.target.value)}
               onKeyDown={handleInputKeyDown}
               placeholder="Search across Projects, Activities, Events, Evidence, Review items, Risks, Reports..."
-              className="w-full text-sm bg-transparent outline-none text-[#1A2E42] placeholder-[#7B8798]"
+              className="w-full text-sm bg-transparent outline-none text-[#1A2B25] dark:text-[#F2F4E9] placeholder-[#7B8798] dark:placeholder-[#64748B]"
             />
 
             {isLoading && (
-              <Loader2 className="w-4 h-4 text-[#0F6B68] animate-spin shrink-0" />
+              <Loader2 className="w-4 h-4 text-[#006B61] dark:text-[#72C6AD] animate-spin shrink-0" />
             )}
 
             {query && !isLoading && (
               <button
                 type="button"
                 onClick={() => setQuery('')}
-                className="text-[#7B8798] hover:text-[#1A2E42] p-1 rounded transition-colors"
+                className="text-[#738A80] dark:text-[#859688] hover:text-[#1A2B25] dark:hover:text-[#F2F4E9] p-1 rounded transition-colors"
                 aria-label="Clear search query"
               >
                 <X className="w-4 h-4" />
               </button>
             )}
 
-            <kbd className="hidden sm:inline-flex items-center gap-0.5 px-2 py-0.5 text-[10px] font-mono font-medium text-[#52687B] bg-[#EAF1F5] border border-[#D6E1E9] rounded">
+            <kbd className="hidden sm:inline-flex items-center gap-0.5 px-2 py-0.5 text-[10px] font-mono font-medium text-[#52665D] dark:text-[#B5C1B5] bg-[#EAF0E9] dark:bg-[#243832] border border-[#D9E2DA] dark:border-[#3A5146] rounded">
               ESC
             </kbd>
           </div>
@@ -289,7 +289,7 @@ export function GlobalSearch() {
           {/* =========================================================================
               2. CATEGORY PILL FILTER CAROUSEL (THE 7 ENTITY TYPES)
               ========================================================================= */}
-          <div className="px-4 py-2 bg-[#F4F7FB] border-b border-[#D6E1E9] flex items-center gap-2 overflow-x-auto scrollbar-thin">
+          <div className="px-4 py-2 bg-[#F6F7F3] dark:bg-[#101815] border-b border-[#D9E2DA] dark:border-[#3A5146] flex items-center gap-2 overflow-x-auto scrollbar-thin">
             {categories.map((cat) => {
               const isSelected = activeCategory === cat.id;
               return (
@@ -299,8 +299,8 @@ export function GlobalSearch() {
                   onClick={() => setActiveCategory(cat.id)}
                   className={`px-3 py-1 rounded-md text-[11px] font-medium whitespace-nowrap transition-colors border ${
                     isSelected
-                      ? 'bg-[#0F6B68] text-white border-[#0F6B68] shadow-xs'
-                      : 'bg-white border-[#D6E1E9] text-[#52687B] hover:bg-[#EAF1F5]'
+                      ? 'bg-[#006B61] text-white border-[#006B61] shadow-xs'
+                      : 'bg-white dark:bg-[#243832] border-[#D9E2DA] dark:border-[#3A5146] text-[#52665D] dark:text-[#B5C1B5] hover:bg-[#EAF0E9] dark:hover:bg-[#243832]'
                   }`}
                 >
                   {cat.label}
@@ -314,19 +314,19 @@ export function GlobalSearch() {
               ========================================================================= */}
           <div
             ref={resultsContainerRef}
-            className="flex-1 overflow-y-auto p-2 sm:p-3 divide-y divide-[#EAF1F5]"
+            className="flex-1 overflow-y-auto p-2 sm:p-3 divide-y divide-[#D9E2DA] dark:divide-[#3A5146]"
           >
             {/* STATE 1: ERROR STATE */}
             {hasError && (
               <div className="p-6 text-center space-y-2 max-w-sm mx-auto" role="alert">
-                <div className="w-8 h-8 rounded-full bg-[#FDEEED] border border-[#E4B0AA] flex items-center justify-center text-[#A44339] mx-auto">
+                <div className="w-8 h-8 rounded-full bg-[#F6E4E1] dark:bg-[#3B2422] border border-[#DCABA7] dark:border-[#5B3734] flex items-center justify-center text-[#A43B36] dark:text-[#FF9E94] mx-auto">
                   <AlertCircle className="w-4 h-4" />
                 </div>
                 <div>
-                  <h4 className="text-xs font-semibold text-[#1A2E42]">
+                  <h4 className="text-xs font-semibold text-[#1A2B25] dark:text-[#F2F4E9]">
                     Search could not be completed.
                   </h4>
-                  <p className="text-[11px] text-[#52687B] mt-0.5 leading-relaxed">
+                  <p className="text-[11px] text-[#52665D] dark:text-[#B5C1B5] mt-0.5 leading-relaxed">
                     {errorMessage || 'The search index is temporarily unavailable. Check your query syntax or retry search.'}
                   </p>
                 </div>
@@ -336,7 +336,7 @@ export function GlobalSearch() {
                     setHasError(false);
                     setQuery('');
                   }}
-                  className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#0F6B68] hover:bg-[#135A72] text-white text-xs font-semibold rounded transition-colors cursor-pointer"
+                  className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#006B61] dark:bg-[#72C6AD] dark:text-[#0B2822] hover:bg-[#00524A] text-white text-xs font-semibold rounded transition-colors cursor-pointer"
                 >
                   <RotateCcw className="w-3 h-3" />
                   <span>Retry Search</span>
@@ -347,9 +347,9 @@ export function GlobalSearch() {
             {/* STATE 2: LOADING INDICATOR */}
             {isLoading && !hasError && (
               <div className="p-8 text-center" role="status" aria-live="polite">
-                <div className="inline-flex items-center gap-2 text-xs text-[#52687B]">
-                  <Loader2 className="w-4 h-4 animate-spin text-[#0F6B68] flex-shrink-0" />
-                  <span className="font-medium text-[#1A2E42]">Scanning master index...</span>
+                <div className="inline-flex items-center gap-2 text-xs text-[#52665D] dark:text-[#B5C1B5]">
+                  <Loader2 className="w-4 h-4 animate-spin text-[#006B61] dark:text-[#72C6AD] flex-shrink-0" />
+                  <span className="font-medium text-[#1A2B25] dark:text-[#F2F4E9]">Scanning master index...</span>
                 </div>
               </div>
             )}
@@ -357,25 +357,25 @@ export function GlobalSearch() {
             {/* STATE 3: NO RESULTS STATE */}
             {!isLoading && !hasError && query && results.length === 0 && (
               <div className="p-8 text-center space-y-3">
-                <div className="w-10 h-10 rounded-full bg-[#EAF1F5] text-[#7B8798] flex items-center justify-center mx-auto">
+                <div className="w-10 h-10 rounded-full bg-[#EAF0E9] dark:bg-[#243832] text-[#738A80] dark:text-[#859688] flex items-center justify-center mx-auto">
                   <Search className="w-5 h-5" />
                 </div>
                 <div>
-                  <h4 className="text-xs font-bold text-[#1A2E42]">
+                  <h4 className="text-xs font-bold text-[#1A2B25] dark:text-[#F2F4E9]">
                     No Results Found for &ldquo;{query}&rdquo;
                   </h4>
-                  <p className="text-[11px] text-[#52687B] mt-0.5 max-w-sm mx-auto">
+                  <p className="text-[11px] text-[#52665D] dark:text-[#B5C1B5] mt-0.5 max-w-sm mx-auto">
                     No matching Projects, Activities, Events, Evidence, Review Items, Risks, or Reports were located.
                   </p>
                 </div>
                 <div className="pt-2 flex items-center justify-center gap-2 flex-wrap text-xs">
-                  <span className="text-[11px] text-[#7B8798]">Try searching:</span>
+                  <span className="text-[11px] text-[#738A80] dark:text-[#859688]">Try searching:</span>
                   {['PIP-24-001', 'Line 24', 'EVT-2026-001', 'DPR', 'RSK-001'].map((term) => (
                     <button
                       key={term}
                       type="button"
                       onClick={() => setQuery(term)}
-                      className="px-2 py-0.5 rounded bg-[#EAF1F5] hover:bg-[#E5E9F0] text-[#0F6B68] font-mono text-[11px] border border-[#D6E1E9]"
+                      className="px-2 py-0.5 rounded bg-[#EAF0E9] dark:bg-[#243832] hover:bg-[#E5E9F0] dark:hover:bg-[#243832] text-[#006B61] dark:text-[#72C6AD] font-mono text-[11px] border border-[#D9E2DA] dark:border-[#3A5146]"
                     >
                       {term}
                     </button>
@@ -387,16 +387,16 @@ export function GlobalSearch() {
             {/* STATE 4: RECENT SEARCHES (When query is empty) */}
             {!isLoading && !hasError && !query && (
               <div className="space-y-3 p-2">
-                <div className="flex items-center justify-between px-2 text-[11px] font-bold uppercase tracking-wider text-[#52687B]">
+                <div className="flex items-center justify-between px-2 text-[11px] font-bold uppercase tracking-wider text-[#52665D] dark:text-[#B5C1B5]">
                   <span className="flex items-center gap-2">
-                    <Clock className="w-3.5 h-3.5 text-[#0F6B68]" />
+                    <Clock className="w-3.5 h-3.5 text-[#006B61] dark:text-[#72C6AD]" />
                     Recent Searches & Quick Queries
                   </span>
                   {recentSearches.length > 0 && (
                     <button
                       type="button"
                       onClick={handleClearRecent}
-                      className="text-[10px] text-[#7B8798] hover:text-[#A44339] transition-colors"
+                      className="text-[10px] text-[#738A80] dark:text-[#859688] hover:text-[#A43B36] dark:hover:text-[#F87171] transition-colors"
                     >
                       Clear Recent
                     </button>
@@ -404,7 +404,7 @@ export function GlobalSearch() {
                 </div>
 
                 {recentSearches.length === 0 ? (
-                  <p className="px-2 py-3 text-xs text-[#7B8798] italic text-center">
+                  <p className="px-2 py-3 text-xs text-[#738A80] dark:text-[#859688] italic text-center">
                     No recent searches yet. Enter an Activity ID, line tag, or report name.
                   </p>
                 ) : (
@@ -419,18 +419,18 @@ export function GlobalSearch() {
                             setQuery(rec.query);
                           }
                         }}
-                        className="flex items-center justify-between p-3 rounded-lg hover:bg-[#EAF1F5] transition-colors cursor-pointer group"
+                        className="flex items-center justify-between p-3 rounded-lg hover:bg-[#EAF0E9] dark:hover:bg-[#243832] transition-colors cursor-pointer group"
                       >
                         <div className="flex items-center gap-2 min-w-0">
-                          <div className="w-6 h-6 rounded bg-white border border-[#D6E1E9] flex items-center justify-center shrink-0 text-[#7B8798]">
+                          <div className="w-6 h-6 rounded bg-white dark:bg-[#243832] border border-[#D9E2DA] dark:border-[#3A5146] flex items-center justify-center shrink-0 text-[#738A80] dark:text-[#859688]">
                             <Clock className="w-3.5 h-3.5" />
                           </div>
                           <div className="truncate">
-                            <span className="text-xs font-semibold text-[#1A2E42] block truncate">
+                            <span className="text-xs font-semibold text-[#1A2B25] dark:text-[#F2F4E9] block truncate">
                               {rec.query}
                             </span>
                             {rec.resultItem && (
-                              <span className="text-[10px] text-[#52687B] font-mono">
+                              <span className="text-[10px] text-[#52665D] dark:text-[#B5C1B5] font-mono">
                                 {rec.resultItem.type} · {rec.resultItem.id}
                               </span>
                             )}
@@ -438,13 +438,13 @@ export function GlobalSearch() {
                         </div>
 
                         <div className="flex items-center gap-2 shrink-0">
-                          <span className="text-[10px] font-mono text-[#7B8798]">
+                          <span className="text-[10px] font-mono text-[#738A80] dark:text-[#859688]">
                             {rec.relativeTime}
                           </span>
                           <button
                             type="button"
                             onClick={(e) => handleRemoveRecentItem(rec.id, e)}
-                            className="p-1 text-[#7B8798] hover:text-[#A44339] opacity-0 group-hover:opacity-100 transition-opacity"
+                            className="p-1 text-[#738A80] dark:text-[#859688] hover:text-[#A43B36] dark:hover:text-[#F87171] opacity-0 group-hover:opacity-100 transition-opacity"
                             title="Remove from history"
                           >
                             <X className="w-3 h-3" />
@@ -456,8 +456,8 @@ export function GlobalSearch() {
                 )}
 
                 {/* Quick Discover suggestions */}
-                <div className="pt-3 border-t border-[#EAF1F5]">
-                  <span className="px-2 text-[10px] uppercase font-semibold text-[#52687B] block mb-2">
+                <div className="pt-3 border-t border-[#EAF1F5] dark:border-[#3A5146]">
+                  <span className="px-2 text-[10px] uppercase font-semibold text-[#52665D] dark:text-[#B5C1B5] block mb-2">
                     Quick Jump Suggestions (Across 7 Data Stores):
                   </span>
                   <div className="flex flex-wrap gap-2 px-2">
@@ -473,7 +473,7 @@ export function GlobalSearch() {
                         key={s.query}
                         type="button"
                         onClick={() => setQuery(s.query)}
-                        className="px-3 py-1 bg-[#F4F7FB] hover:bg-[#EAF1F5] text-[#1A2E42] hover:text-[#0F6B68] rounded-md text-xs border border-[#D6E1E9] transition-colors"
+                        className="px-3 py-1 bg-[#F6F7F3] dark:bg-[#243832] hover:bg-[#EAF0E9] dark:hover:bg-[#243832] text-[#1A2B25] dark:text-[#F2F4E9] hover:text-[#006B61] dark:hover:text-[#72C6AD] rounded-md text-xs border border-[#D9E2DA] dark:border-[#3A5146] transition-colors"
                       >
                         {s.label}
                       </button>
@@ -486,7 +486,7 @@ export function GlobalSearch() {
             {/* STATE 5: MATCHED RESULTS LIST */}
             {!isLoading && !hasError && query && results.length > 0 && (
               <div className="space-y-1">
-                <div className="px-2 py-1 text-[11px] font-semibold text-[#52687B] flex items-center justify-between">
+                <div className="px-2 py-1 text-[11px] font-semibold text-[#52665D] flex items-center justify-between">
                   <span>
                     Results ({results.length} entities found across project index)
                   </span>
@@ -506,8 +506,8 @@ export function GlobalSearch() {
                       onMouseEnter={() => setSelectedIndex(idx)}
                       className={`p-3 rounded-lg border transition-all cursor-pointer flex items-start justify-between gap-3 ${
                         isSelected
-                          ? 'bg-[#EAF1F5] border-[#0F6B68] shadow-xs'
-                          : 'bg-white border-[#D6E1E9] hover:border-[#D6E1E9]'
+                          ? 'bg-[#EAF0E9] dark:bg-[#243832] border-[#006B61] dark:border-[#72C6AD] shadow-xs'
+                          : 'bg-white dark:bg-[#17221D] border-[#D9E2DA] dark:border-[#3A5146] hover:border-[#D9E2DA] dark:hover:border-[#334B6E]'
                       }`}
                     >
                       <div className="min-w-0 flex-1 space-y-1">
@@ -522,24 +522,24 @@ export function GlobalSearch() {
                           </span>
 
                           {/* 2. ID */}
-                          <span className="font-mono font-bold text-xs text-[#0F6B68] bg-white px-1.5 py-0.5 rounded border border-[#D6E1E9]">
+                          <span className="font-mono font-bold text-xs text-[#006B61] dark:text-[#72C6AD] bg-white dark:bg-[#243832] px-1.5 py-0.5 rounded border border-[#D9E2DA] dark:border-[#3A5146]">
                             {item.id}
                           </span>
 
                           {/* 3. PROJECT */}
-                          <span className="text-[11px] text-[#52687B] font-medium truncate max-w-[200px]">
+                          <span className="text-[11px] text-[#52665D] dark:text-[#B5C1B5] font-medium truncate max-w-[200px]">
                             {item.project}
                           </span>
                         </div>
 
                         {/* Title */}
-                        <h4 className="text-xs font-bold text-[#1A2E42] leading-snug">
+                        <h4 className="text-xs font-bold text-[#1A2B25] dark:text-[#F2F4E9] leading-snug">
                           {item.title}
                         </h4>
 
                         {/* Optional description snippet */}
                         {item.description && (
-                          <p className="text-[11px] text-[#52687B] line-clamp-1">
+                          <p className="text-[11px] text-[#52665D] dark:text-[#B5C1B5] line-clamp-1">
                             {item.description}
                           </p>
                         )}
@@ -550,7 +550,7 @@ export function GlobalSearch() {
                         {/* 4. STATUS */}
                         <StatusBadge status={item.status} size="xs" />
 
-                        <span className="text-[11px] font-bold text-[#0F6B68] inline-flex items-center gap-1">
+                        <span className="text-[11px] font-bold text-[#006B61] dark:text-[#72C6AD] inline-flex items-center gap-1">
                           <span>Open</span>
                           <ArrowRight className="w-3 h-3" />
                         </span>
@@ -565,30 +565,30 @@ export function GlobalSearch() {
           {/* =========================================================================
               4. FOOTER BAR WITH KEYBOARD SHORTCUT HELPER
               ========================================================================= */}
-          <div className="px-4 py-2 bg-[#F4F7FB] border-t border-[#D6E1E9] flex items-center justify-between text-xs text-[#52687B] flex-wrap gap-2">
+          <div className="px-4 py-2 bg-[#F6F7F3] dark:bg-[#101815] border-t border-[#D9E2DA] dark:border-[#3A5146] flex items-center justify-between text-xs text-[#52665D] dark:text-[#B5C1B5] flex-wrap gap-2">
             <div className="flex items-center gap-4 text-[11px]">
               <span className="inline-flex items-center gap-1">
-                <kbd className="px-1.5 py-0.5 bg-white border border-[#D6E1E9] rounded font-mono text-[10px]">
+                <kbd className="px-1.5 py-0.5 bg-white dark:bg-[#243832] border border-[#D9E2DA] dark:border-[#3A5146] text-[#1A2B25] dark:text-[#F2F4E9] rounded font-mono text-[10px]">
                   ↑↓
                 </kbd>
                 <span>Navigate</span>
               </span>
               <span className="inline-flex items-center gap-1">
-                <kbd className="px-1.5 py-0.5 bg-white border border-[#D6E1E9] rounded font-mono text-[10px]">
+                <kbd className="px-1.5 py-0.5 bg-white dark:bg-[#243832] border border-[#D9E2DA] dark:border-[#3A5146] text-[#1A2B25] dark:text-[#F2F4E9] rounded font-mono text-[10px]">
                   ↵
                 </kbd>
                 <span>Open Destination</span>
               </span>
               <span className="inline-flex items-center gap-1">
-                <kbd className="px-1.5 py-0.5 bg-white border border-[#D6E1E9] rounded font-mono text-[10px]">
+                <kbd className="px-1.5 py-0.5 bg-white dark:bg-[#243832] border border-[#D9E2DA] dark:border-[#3A5146] text-[#1A2B25] dark:text-[#F2F4E9] rounded font-mono text-[10px]">
                   ESC
                 </kbd>
                 <span>Dismiss</span>
               </span>
             </div>
 
-            <div className="flex items-center gap-2 text-[10px] text-[#7B8798]">
-              <ShieldCheck className="w-3.5 h-3.5 text-[#0F6B68]" />
+            <div className="flex items-center gap-2 text-[10px] text-[#738A80] dark:text-[#859688]">
+              <ShieldCheck className="w-3.5 h-3.5 text-[#006B61] dark:text-[#72C6AD]" />
               <span>Full Cross-Entity Project Index</span>
             </div>
           </div>

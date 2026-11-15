@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
@@ -797,7 +797,7 @@ export default function ReviewQueuePage() {
       id: 'high-conf',
       label: 'High Confidence (Ready)',
       count: pendingActionEvents.filter((e) => e.status === 'High Confidence').length,
-      color: '#0F6B68',
+      color: '#006B61',
       glyph: '●',
       description: 'Direct candidate match (≥90%); ready for 1-click verification',
     },
@@ -805,7 +805,7 @@ export default function ReviewQueuePage() {
       id: 'manager-rev',
       label: 'Manager Review Required',
       count: pendingActionEvents.filter((e) => e.status === 'Manager Review').length,
-      color: '#5273C6',
+      color: '#2C6475',
       glyph: '◐',
       description: 'Intermediate confidence band (70–89%); requires planner check',
     },
@@ -813,7 +813,7 @@ export default function ReviewQueuePage() {
       id: 'blocked',
       label: 'Blocked / Conflicts',
       count: pendingActionEvents.filter((e) => e.status === 'Conflicts').length,
-      color: '#A44339',
+      color: '#A43B36',
       glyph: '▲',
       description: 'Dependency constraint failure or weather stoppage impediment',
     },
@@ -821,7 +821,7 @@ export default function ReviewQueuePage() {
       id: 'duplicates',
       label: 'Duplicates (Suppressed)',
       count: pendingActionEvents.filter((e) => e.status === 'Duplicates').length,
-      color: '#965E0D',
+      color: '#825700',
       glyph: '✕',
       description: 'Suppressed duplicate signatures to prevent double counting',
     },
@@ -829,7 +829,7 @@ export default function ReviewQueuePage() {
       id: 'unmatched',
       label: 'Unmatched / Stale Scope',
       count: pendingActionEvents.filter((e) => e.status === 'Unmatched' || e.status === 'Stale').length,
-      color: '#52687B',
+      color: '#52665D',
       glyph: '?',
       description: 'Ambiguous field statement or expired 72-hour reporting SLA',
     },
@@ -1204,31 +1204,31 @@ export default function ReviewQueuePage() {
         <Breadcrumbs items={breadcrumbs} />
 
         {/* HEADER */}
-        <div className="bg-white border border-[#D6E1E9] border-l-4 border-l-[#0F6B68] rounded-lg p-4 sm:p-6 shadow-xs">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-[#D6E1E9]/60">
+        <div className="bg-white dark:bg-[#17221D] border border-[#D9E2DA] dark:border-[#3A5146] border-l-4 border-l-[#006B61] rounded-lg p-4 sm:p-6 shadow-xs">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-[#D9E2DA]/60">
             <div>
               <div className="flex items-center gap-2 mb-1">
-                <span className="inline-flex items-center gap-2 px-3 py-0.5 rounded text-[11px] font-bold tracking-wider uppercase bg-[#0F6B68]/10 text-[#0F6B68]">
+                <span className="inline-flex items-center gap-2 px-3 py-0.5 rounded text-[11px] font-bold tracking-wider uppercase bg-[#006B61]/10 text-[#006B61]">
                   <ShieldCheck className="w-3.5 h-3.5" />
                   Human-in-the-Loop Verification
                 </span>
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-mono font-medium bg-[#EAF1F5] text-[#52687B] border border-[#D6E1E9]">
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-mono font-medium bg-[#EAF0E9] text-[#52665D] border border-[#D9E2DA]">
                   Action Queue Only · Zero Silent Conversions
                 </span>
               </div>
-              <h1 className="text-[28px] sm:text-3xl font-bold text-[#1A2E42] tracking-tight">Review Queue</h1>
-              <p className="text-sm text-[#52687B] mt-1">
-                <strong>{pendingActionEvents.length} Active Action Items</strong> requiring planner sign-off (3 urgent site actions) · <strong>4 Ingested NLP Candidates</strong> · <strong>{verifiedHistoryEvents.length} Verified Events</strong> in Master Schedule History.
+              <h1 className="text-[28px] sm:text-3xl font-bold text-[#1A2B25] tracking-tight">Review Queue</h1>
+              <p className="text-sm text-[#52665D] mt-1">
+                <strong className="text-[#1A2B25]">{pendingActionEvents.length} Active Queue Items</strong> (Current Project {activeProject?.code || 'OIL-DUL-01'}) · <strong className="text-[#A43B36]">3 Urgent (Action Required)</strong> · <span className="text-[#52665D]">15 Open Reviews Portfolio-wide</span> · <strong className="text-[#006B61]">{verifiedHistoryEvents.length} Verified Events</strong> in Historical Ledger.
               </p>
             </div>
 
             <div className="flex items-center gap-2 flex-wrap">
-              <span className="text-xs px-3 py-1 rounded bg-[#F4F7FB] border border-[#D6E1E9] text-[#52687B] font-mono">
+              <span className="text-xs px-3 py-1 rounded bg-[#F6F7F3] border border-[#D9E2DA] text-[#52665D] font-mono">
                 {activeProject?.code || 'OIL-DUL-01'} · Rev 3.2 (P6 XML)
               </span>
               <Link
                 href="/matching"
-                className="inline-flex items-center gap-2 px-3 py-2 text-xs font-semibold text-[#0F6B68] hover:text-[#135A72] hover:bg-[#EAF1F5] border border-transparent rounded-lg transition-colors"
+                className="inline-flex items-center gap-2 px-3 py-2 text-xs font-semibold text-[#006B61] hover:text-[#00524A] hover:bg-[#EAF0E9] border border-transparent rounded-lg transition-colors"
               >
                 <span>Matching Engine</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -1238,13 +1238,13 @@ export default function ReviewQueuePage() {
 
           {/* GOVERNANCE POLICY BANNER */}
           <div className="pt-4">
-            <div className="p-4 bg-[#EAF1F5] border border-[#D6E1E9] border-l-4 border-l-[#0F6B68] rounded-lg flex items-start gap-3 text-xs">
-              <ShieldCheck className="w-5 h-5 text-[#0F6B68] shrink-0 mt-0.5" />
+            <div className="p-4 bg-[#EAF0E9] border border-[#D9E2DA] border-l-4 border-l-[#006B61] rounded-lg flex items-start gap-3 text-xs">
+              <ShieldCheck className="w-5 h-5 text-[#006B61] shrink-0 mt-0.5" />
               <div className="space-y-0.5">
-                <h4 className="font-bold text-[#1A2E42]">
+                <h4 className="font-bold text-[#1A2B25]">
                   Schedule Integrity Policy: Human Verification Required
                 </h4>
-                <p className="text-[#52687B] leading-relaxed">
+                <p className="text-[#52665D] leading-relaxed">
                   A high confidence suggestion (e.g. 94%) is <strong>never treated as verified</strong>. Suggested candidate matches are assistive only and require conscious human verification. Once approved, events are committed to Schedule Twin and cleared from this queue.
                 </p>
               </div>
@@ -1252,23 +1252,33 @@ export default function ReviewQueuePage() {
           </div>
         </div>
 
-        {/* CORE FLOW PIPELINE: Field Input -> Extraction -> Execution Event -> Candidate Match -> Confidence -> Human Verification -> Verified Update */}
-        <CoreFlowBanner currentStage="HUMAN_VERIFICATION" />
-
-        {/* Operational Review Backlog & Verification Status Charts */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-          <HorizontalBarChart variant="review-backlog" />
-          <StatusDonutChart
-            title="Review Queue Verification Breakdown"
-            subtitle="Current disposition of field execution items across verified ledger and active review states"
-            projectQuestion="Where are unverified execution items accumulating across review categories?"
-            slices={reviewDonutSlices}
-          />
-        </div>
+        {/* COLLAPSIBLE PIPELINE EXPLAINER & BACKLOG CHARTS (Queue Starts Immediately Above Fold) */}
+        <details className="group bg-white dark:bg-[#17221D] border border-[#D9E2DA] dark:border-[#3A5146] rounded-lg overflow-hidden transition-colors">
+          <summary className="px-4 py-3 bg-[#F6F7F3] dark:bg-[#243832] font-semibold text-xs text-[#1A2B25] dark:text-[#F2F4E9] cursor-pointer hover:bg-[#EAF0E9] dark:hover:bg-[#1E2D42] transition-colors flex items-center justify-between">
+            <span className="flex items-center gap-2">
+              <ShieldCheck className="w-4 h-4 text-[#006B61] dark:text-[#72C6AD]" />
+              <span>How the Verification &amp; Schedule Twin Pipeline Works (Click to view diagram &amp; backlog metrics)</span>
+            </span>
+            <span className="text-[11px] font-mono text-[#006B61] dark:text-[#72C6AD] font-bold group-open:hidden">Show Flow &amp; Charts ▼</span>
+            <span className="text-[11px] font-mono text-[#52665D] dark:text-[#B5C1B5] hidden group-open:inline">Hide Flow ▲</span>
+          </summary>
+          <div className="p-4 sm:p-6 space-y-4 border-t border-[#D9E2DA] dark:border-[#3A5146]">
+            <CoreFlowBanner currentStage="HUMAN_VERIFICATION" />
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 pt-2">
+              <HorizontalBarChart variant="review-backlog" />
+              <StatusDonutChart
+                title="Review Queue Verification Breakdown"
+                subtitle="Current disposition of field execution items across verified ledger and active review states"
+                projectQuestion="Where are unverified execution items accumulating across review categories?"
+                slices={reviewDonutSlices}
+              />
+            </div>
+          </div>
+        </details>
 
         {/* SUMMARY TABS */}
-        <div className="bg-white border border-[#D6E1E9] rounded-lg overflow-hidden shadow-xs">
-          <div className="flex border-b border-[#D6E1E9] bg-[#F4F7FB] overflow-x-auto">
+        <div className="bg-white dark:bg-[#17221D] border border-[#D9E2DA] dark:border-[#3A5146] rounded-lg overflow-hidden shadow-xs">
+          <div className="flex border-b border-[#D9E2DA] bg-[#F6F7F3] overflow-x-auto">
             {tabs.map((tab) => {
               const isActive = activeTab === tab;
               const count = tabCounts[tab];
@@ -1281,21 +1291,21 @@ export default function ReviewQueuePage() {
                   onClick={() => setActiveTab(tab)}
                   className={`flex items-center gap-2 px-4 sm:px-6 py-3 text-xs font-semibold border-b-2 whitespace-nowrap transition-colors min-h-[48px] ${
                     isActive
-                      ? 'border-[#0F6B68] text-[#0F6B68] bg-white'
-                      : 'border-transparent text-[#52687B] hover:text-[#1A2E42] hover:bg-[#EAF1F5]'
+                      ? 'border-[#006B61] text-[#006B61] bg-white'
+                      : 'border-transparent text-[#52665D] hover:text-[#1A2B25] hover:bg-[#EAF0E9]'
                   }`}
                 >
-                  {isHistory && <Archive className="w-3.5 h-3.5 text-[#7B8798]" />}
+                  {isHistory && <Archive className="w-3.5 h-3.5 text-[#738A80]" />}
                   <span>{tab}</span>
                   <span
                     className={`px-2 py-0.5 rounded-full text-[10px] font-mono font-bold ${
                       isActive
-                        ? 'bg-[#EAF1F5] text-[#0F6B68]'
+                        ? 'bg-[#EAF0E9] text-[#006B61]'
                         : isHistory
-                        ? 'bg-[#EAF1F5] text-[#7B8798]'
+                        ? 'bg-[#EAF0E9] text-[#738A80]'
                         : count > 0
-                        ? 'bg-[#D6E1E9] text-[#1A2E42]'
-                        : 'bg-[#EAF1F5] text-[#7B8798]'
+                        ? 'bg-[#D9E2DA] text-[#1A2B25]'
+                        : 'bg-[#EAF0E9] text-[#738A80]'
                     }`}
                   >
                     {count}
@@ -1306,28 +1316,28 @@ export default function ReviewQueuePage() {
           </div>
 
           {/* SEARCH & ACTIVE QUEUE NOTICE */}
-          <div className="p-4 border-b border-[#D6E1E9]/60 flex items-center justify-between gap-3 text-xs flex-wrap">
+          <div className="p-4 border-b border-[#D9E2DA]/60 flex items-center justify-between gap-3 text-xs flex-wrap">
             <div className="relative flex-1 max-w-md">
-              <Search className="w-4 h-4 text-[#7B8798] absolute left-3 top-1/2 -translate-y-1/2" />
+              <Search className="w-4 h-4 text-[#738A80] absolute left-3 top-1/2 -translate-y-1/2" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search by event ID, statement, candidate, or submitter..."
-                className="w-full pl-9 pr-3 py-2 bg-[#FAFAFA] focus:bg-white border border-[#D6E1E9] focus:border-[#0F6B68] rounded-lg text-xs outline-hidden transition-all"
+                className="w-full pl-9 pr-3 py-2 bg-[#FAFAFA] focus:bg-white border border-[#D9E2DA] focus:border-[#006B61] rounded-lg text-xs outline-hidden transition-all"
               />
               {searchQuery && (
                 <button
                   type="button"
                   onClick={() => setSearchQuery('')}
-                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[#7B8798] hover:text-[#1A2E42]"
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[#738A80] hover:text-[#1A2B25]"
                 >
                   <X className="w-3.5 h-3.5" />
                 </button>
               )}
             </div>
 
-            <div className="text-[11px] text-[#52687B]">
+            <div className="text-[11px] text-[#52665D]">
               {activeTab === 'Verified History' ? (
                 <span>Showing <strong>{filteredEvents.length}</strong> previously verified & committed events (Archived)</span>
               ) : (
@@ -1337,15 +1347,15 @@ export default function ReviewQueuePage() {
           </div>
 
           {/* OPERATIONAL BATCH & TRIAGE TOOLBAR */}
-          <div className="p-3 bg-[#F4F7FB] border-b border-[#D6E1E9] flex items-center justify-between gap-3 text-xs flex-wrap">
+          <div className="p-3 bg-[#F6F7F3] border-b border-[#D9E2DA] flex items-center justify-between gap-3 text-xs flex-wrap">
             <div className="flex items-center gap-3">
               {activeTab !== 'Verified History' && filteredEvents.length > 0 && (
-                <label className="flex items-center gap-2 font-semibold text-[#1A2E42] cursor-pointer select-none">
+                <label className="flex items-center gap-2 font-semibold text-[#1A2B25] cursor-pointer select-none">
                   <input
                     type="checkbox"
                     checked={selectedItemIds.length > 0 && selectedItemIds.length === filteredEvents.length}
                     onChange={handleToggleSelectAll}
-                    className="w-4 h-4 rounded border-[#D6E1E9] text-[#0F6B68] focus:ring-[#0F6B68] cursor-pointer"
+                    className="w-4 h-4 rounded border-[#D9E2DA] text-[#006B61] focus:ring-[#006B61] cursor-pointer"
                   />
                   <span>Select All Visible ({filteredEvents.length})</span>
                 </label>
@@ -1356,7 +1366,7 @@ export default function ReviewQueuePage() {
                   <button
                     type="button"
                     onClick={() => handleBatchAccept()}
-                    className="min-h-[40px] px-3.5 py-2 bg-[#0F6B68] hover:bg-[#135A72] border border-[#0F6B68] text-white font-bold rounded shadow-xs inline-flex items-center gap-2 transition-colors cursor-pointer"
+                    className="min-h-[40px] px-3.5 py-2 bg-[#006B61] hover:bg-[#00524A] border border-[#006B61] text-white font-bold rounded shadow-xs inline-flex items-center gap-2 transition-colors cursor-pointer"
                   >
                     <Check className="w-3.5 h-3.5 stroke-[2.5]" />
                     <span>Accept Selected ({selectedItemIds.length})</span>
@@ -1364,7 +1374,7 @@ export default function ReviewQueuePage() {
                   <button
                     type="button"
                     onClick={() => setSelectedItemIds([])}
-                    className="min-h-[40px] px-3.5 py-2 bg-white text-[#1A2E42] hover:bg-[#F4F7FB] border border-[#D6E1E9] rounded font-medium transition-colors cursor-pointer"
+                    className="min-h-[40px] px-3.5 py-2 bg-white text-[#1A2B25] hover:bg-[#F6F7F3] border border-[#D9E2DA] rounded font-medium transition-colors cursor-pointer"
                   >
                     Deselect All
                   </button>
@@ -1379,7 +1389,7 @@ export default function ReviewQueuePage() {
                         .map((e) => e.id);
                       handleBatchAccept(highConfIds);
                     }}
-                    className="min-h-[40px] px-3.5 py-2 bg-white hover:bg-[#EAF1F5] text-[#0F6B68] border border-[#D6E1E9] font-bold rounded inline-flex items-center gap-2 transition-colors cursor-pointer shadow-2xs"
+                    className="min-h-[40px] px-3.5 py-2 bg-white hover:bg-[#EAF0E9] text-[#006B61] border border-[#D9E2DA] font-bold rounded inline-flex items-center gap-2 transition-colors cursor-pointer shadow-2xs"
                     title="Fast-track all 90%+ confidence items to Schedule Twin"
                   >
                     <CheckCircle2 className="w-3.5 h-3.5" />
@@ -1390,17 +1400,17 @@ export default function ReviewQueuePage() {
             </div>
 
             <div className="flex items-center gap-2">
-              <span className="text-[11px] text-[#52687B] font-mono">
+              <span className="text-[11px] text-[#52665D] font-mono">
                 Queue View:
               </span>
-              <div className="inline-flex rounded-md border border-[#D6E1E9] bg-white p-0.5">
+              <div className="inline-flex rounded-md border border-[#D9E2DA] bg-white p-0.5">
                 <button
                   type="button"
                   onClick={() => setViewMode('hybrid')}
                   className={`px-3 py-1 text-xs font-semibold rounded transition-colors ${
                     viewMode === 'hybrid'
-                      ? 'bg-[#0F6B68] text-white shadow-xs'
-                      : 'text-[#52687B] hover:text-[#1A2E42]'
+                      ? 'bg-[#006B61] text-white shadow-xs'
+                      : 'text-[#52665D] hover:text-[#1A2B25]'
                   }`}
                 >
                   Hybrid Table
@@ -1410,8 +1420,8 @@ export default function ReviewQueuePage() {
                   onClick={() => setViewMode('cards')}
                   className={`px-3 py-1 text-xs font-semibold rounded transition-colors ${
                     viewMode === 'cards'
-                      ? 'bg-[#0F6B68] text-white shadow-xs'
-                      : 'text-[#52687B] hover:text-[#1A2E42]'
+                      ? 'bg-[#006B61] text-white shadow-xs'
+                      : 'text-[#52665D] hover:text-[#1A2B25]'
                   }`}
                 >
                   Expanded Cards
@@ -1423,14 +1433,14 @@ export default function ReviewQueuePage() {
           {/* MAIN REVIEW QUEUE EVENT ITEMS */}
           <div className="p-4 space-y-4">
             {filteredEvents.length === 0 ? (
-              <div className="p-12 text-center text-[#52687B] bg-[#FAFAFA] rounded-lg border border-dashed border-[#D6E1E9]">
-                <CheckCircle2 className="w-10 h-10 text-[#2E7D5B] mx-auto mb-3" />
-                <h3 className="font-bold text-lg text-[#1A2E42]">
+              <div className="p-12 text-center text-[#52665D] bg-[#FAFAFA] rounded-lg border border-dashed border-[#D9E2DA]">
+                <CheckCircle2 className="w-10 h-10 text-[#1F6B4E] mx-auto mb-3" />
+                <h3 className="font-bold text-lg text-[#1A2B25]">
                   {activeTab === 'Verified History'
                     ? 'No verified events in history archive yet'
                     : 'No pending review items'}
                 </h3>
-                <p className="text-sm text-[#52687B] mt-1 max-w-md mx-auto">
+                <p className="text-sm text-[#52665D] mt-1 max-w-md mx-auto">
                   {activeTab === 'Verified History'
                     ? 'Approve candidate matches in the queue to commit them to the Schedule Twin and archive them here.'
                     : 'All incoming execution events have been matched and verified, or none match your active search query.'}
@@ -1440,7 +1450,7 @@ export default function ReviewQueuePage() {
                     <button
                       type="button"
                       onClick={() => setActiveTab('All Action Items')}
-                      className="px-4 py-2 text-xs font-semibold text-white bg-[#0F6B68] hover:bg-[#135A72] rounded-md transition-colors cursor-pointer"
+                      className="px-4 py-2 text-xs font-semibold text-white bg-[#006B61] hover:bg-[#00524A] rounded-md transition-colors cursor-pointer"
                     >
                       View Active Review Queue
                     </button>
@@ -1448,14 +1458,14 @@ export default function ReviewQueuePage() {
                     <button
                       type="button"
                       onClick={() => setSearchQuery('')}
-                      className="px-4 py-2 text-xs font-semibold text-[#0F6B68] bg-white border border-[#D6E1E9] hover:border-[#0F6B68] rounded-md transition-colors cursor-pointer"
+                      className="px-4 py-2 text-xs font-semibold text-[#006B61] bg-white border border-[#D9E2DA] hover:border-[#006B61] rounded-md transition-colors cursor-pointer"
                     >
                       Clear Search Query
                     </button>
                   ) : (
                     <Link
                       href="/execution"
-                      className="px-4 py-2 text-xs font-semibold text-[#0F6B68] bg-white border border-[#D6E1E9] hover:border-[#0F6B68] rounded-md transition-colors cursor-pointer inline-flex items-center gap-1"
+                      className="px-4 py-2 text-xs font-semibold text-[#006B61] bg-white border border-[#D9E2DA] hover:border-[#006B61] rounded-md transition-colors cursor-pointer inline-flex items-center gap-1"
                     >
                       <span>Open Execution Intel Feed</span>
                     </Link>
@@ -1466,27 +1476,27 @@ export default function ReviewQueuePage() {
               filteredEvents.map((evt) => (
                 <div
                   key={evt.id}
-                  className="bg-white border border-[#D6E1E9] rounded-lg overflow-hidden shadow-xs hover:border-[#D6E1E9] transition-colors"
+                  className="bg-white dark:bg-[#17221D] border border-[#D9E2DA] dark:border-[#3A5146] rounded-lg overflow-hidden shadow-xs hover:border-[#D9E2DA] transition-colors"
                 >
                   {/* Event Top Meta Bar */}
-                  <div className="px-4 py-2 bg-[#F4F7FB] border-b border-[#D6E1E9] flex items-center justify-between flex-wrap gap-2 text-xs">
+                  <div className="px-4 py-2 bg-[#F6F7F3] border-b border-[#D9E2DA] flex items-center justify-between flex-wrap gap-2 text-xs">
                     <div className="flex items-center gap-3">
-                      <span className="font-mono font-bold text-[#0F6B68]">{evt.id}</span>
-                      <span className="text-[#7B8798]">•</span>
-                      <span className="font-semibold text-[#1A2E42]">{evt.submittedBy}</span>
-                      <span className="text-[#7B8798]">•</span>
-                      <span className="text-[#52687B] font-mono text-[11px]">{evt.date}</span>
+                      <span className="font-mono font-bold text-[#006B61]">{evt.id}</span>
+                      <span className="text-[#738A80]">•</span>
+                      <span className="font-semibold text-[#1A2B25]">{evt.submittedBy}</span>
+                      <span className="text-[#738A80]">•</span>
+                      <span className="text-[#52665D] font-mono text-[11px]">{evt.date}</span>
                     </div>
 
                     <div className="flex items-center gap-2">
-                      <span className="text-[10px] uppercase font-mono px-2 py-0.5 rounded bg-white border border-[#D6E1E9] text-[#52687B]">
+                      <span className="text-[10px] uppercase font-mono px-2 py-0.5 rounded bg-white border border-[#D9E2DA] text-[#52665D]">
                         {evt.source}
                       </span>
                       {evt.evidenceCount > 0 && (
                         <button
                           type="button"
                           onClick={() => evt.evidenceItems[0] && setPreviewEvidence({ item: evt.evidenceItems[0], event: evt })}
-                          className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-mono bg-[#E5F6EE] text-[#2E7D5B] border border-[#B8DCC9] hover:bg-[#DDF0E5] transition-colors cursor-pointer"
+                          className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-mono bg-[#E4F1E9] text-[#1F6B4E] border border-[#B7DAC3] hover:bg-[#DDF0E5] transition-colors cursor-pointer"
                         >
                           <Camera className="w-3 h-3" />
                           <span>{evt.evidenceCount} Proofs</span>
@@ -1495,7 +1505,7 @@ export default function ReviewQueuePage() {
                       <button
                         type="button"
                         onClick={() => handleOpenReview(evt)}
-                        className="text-xs font-bold text-[#0F6B68] hover:underline inline-flex items-center gap-1 ml-2"
+                        className="text-xs font-bold text-[#006B61] hover:underline inline-flex items-center gap-1 ml-2"
                       >
                         <span>Full Inspection Drawer</span>
                         <ArrowRight className="w-3 h-3" />
@@ -1547,34 +1557,34 @@ export default function ReviewQueuePage() {
                   key={evt.id}
                   className={`bg-white border rounded-lg overflow-hidden transition-all shadow-xs ${
                     selectedItemIds.includes(evt.id)
-                      ? 'border-[#0F6B68] ring-1 ring-[#0F6B68]/30'
-                      : 'border-[#D6E1E9] hover:border-[#D6E1E9]'
+                      ? 'border-[#006B61] ring-1 ring-[#006B61]/30'
+                      : 'border-[#D9E2DA] hover:border-[#D9E2DA]'
                   }`}
                 >
                   {/* Event Top Meta Bar */}
-                  <div className="px-4 py-2 bg-[#F4F7FB] border-b border-[#D6E1E9] flex items-center justify-between flex-wrap gap-2 text-xs">
+                  <div className="px-4 py-2 bg-[#F6F7F3] border-b border-[#D9E2DA] flex items-center justify-between flex-wrap gap-2 text-xs">
                     <div className="flex items-center gap-2 flex-wrap">
                       {activeTab !== 'Verified History' && (
                         <input
                           type="checkbox"
                           checked={selectedItemIds.includes(evt.id)}
                           onChange={() => handleToggleSelectItem(evt.id)}
-                          className="w-4 h-4 rounded border-[#D6E1E9] text-[#0F6B68] focus:ring-[#0F6B68] cursor-pointer"
+                          className="w-4 h-4 rounded border-[#D9E2DA] text-[#006B61] focus:ring-[#006B61] cursor-pointer"
                           title={`Select ${evt.id}`}
                         />
                       )}
-                      <span className="font-mono font-bold text-xs px-2 py-0.5 rounded bg-[#EAF1F5] text-[#0F6B68] border border-[#D6E1E9]">
+                      <span className="font-mono font-bold text-xs px-2 py-0.5 rounded bg-[#EAF0E9] text-[#006B61] border border-[#D9E2DA]">
                         {evt.id}
                       </span>
-                      <span className="font-semibold text-[#1A2E42]">{evt.submittedBy}</span>
-                      <span className="text-[#7B8798]">•</span>
-                      <span className="text-[10px] uppercase font-mono px-2 py-0.5 rounded bg-white border border-[#D6E1E9] text-[#52687B]">
+                      <span className="font-semibold text-[#1A2B25]">{evt.submittedBy}</span>
+                      <span className="text-[#738A80]">•</span>
+                      <span className="text-[10px] uppercase font-mono px-2 py-0.5 rounded bg-white border border-[#D9E2DA] text-[#52665D]">
                         {evt.source}
                       </span>
-                      <span className="text-[#7B8798]">•</span>
-                      <span className="text-[#52687B] font-mono text-[11px]">{evt.date}</span>
-                      <span className="text-[#7B8798] hidden sm:inline">•</span>
-                      <span className="text-[#52687B] font-mono text-[11px] hidden sm:inline">Shift: {evt.shiftTime}</span>
+                      <span className="text-[#738A80]">•</span>
+                      <span className="text-[#52665D] font-mono text-[11px]">{evt.date}</span>
+                      <span className="text-[#738A80] hidden sm:inline">•</span>
+                      <span className="text-[#52665D] font-mono text-[11px] hidden sm:inline">Shift: {evt.shiftTime}</span>
                     </div>
 
                     <div className="flex items-center gap-2 flex-wrap">
@@ -1603,7 +1613,7 @@ export default function ReviewQueuePage() {
                       <button
                         type="button"
                         onClick={() => handleOpenReview(evt)}
-                        className="text-xs font-bold text-[#0F6B68] hover:underline inline-flex items-center gap-1 ml-1 cursor-pointer"
+                        className="text-xs font-bold text-[#006B61] hover:underline inline-flex items-center gap-1 ml-1 cursor-pointer"
                         title="Open full 3-column inspection drawer"
                       >
                         <span>Drawer</span>
@@ -1613,51 +1623,51 @@ export default function ReviewQueuePage() {
                   </div>
 
                   {/* 4-Column Hybrid Table/Card Body answering the 6 questions */}
-                  <div className="grid grid-cols-1 lg:grid-cols-12 divide-y lg:divide-y-0 lg:divide-x divide-[#D6E1E9] text-xs">
+                  <div className="grid grid-cols-1 lg:grid-cols-12 divide-y lg:divide-y-0 lg:divide-x divide-[#D9E2DA] text-xs">
                     {/* COL 1: 1. WHAT HAPPENED? & WHAT EVIDENCE EXISTS? (5 cols) */}
                     <div className="lg:col-span-5 p-4 space-y-3">
                       <div className="flex items-center justify-between">
-                        <span className="text-[10px] font-semibold uppercase tracking-wider text-[#52687B] flex items-center gap-1">
-                          <Info className="w-3 h-3 text-[#0F6B68]" />
+                        <span className="text-[10px] font-semibold uppercase tracking-wider text-[#52665D] flex items-center gap-1">
+                          <Info className="w-3 h-3 text-[#006B61]" />
                           <span>1. What Happened?</span>
                         </span>
-                        <span className="font-mono font-bold text-[11px] px-2 py-0.5 rounded bg-[#EAF1F5] text-[#0F6B68] border border-[#D6E1E9]">
+                        <span className="font-mono font-bold text-[11px] px-2 py-0.5 rounded bg-[#EAF0E9] text-[#006B61] border border-[#D9E2DA]">
                           {evt.extractedQuantity} {evt.unit}
                         </span>
                       </div>
 
                       {/* Raw Field Observation Statement */}
-                      <blockquote className="text-xs text-[#1A2E42] bg-[#F4F7FB] p-3 rounded border border-[#E5E9EF] leading-relaxed italic">
+                      <blockquote className="text-xs text-[#1A2B25] bg-[#F6F7F3] p-3 rounded border border-[#E5E9EF] leading-relaxed italic">
                         "{evt.rawFieldStatement}"
                       </blockquote>
 
                       {/* Extracted Scope Attributes */}
                       <div className="flex flex-wrap gap-2 items-center text-[11px]">
-                        <span className="px-2 py-0.5 rounded bg-[#EAF1F5] text-[#0F6B68] font-semibold">
+                        <span className="px-2 py-0.5 rounded bg-[#EAF0E9] text-[#006B61] font-semibold">
                           {evt.discipline}
                         </span>
-                        <span className="px-2 py-0.5 rounded bg-[#EAF1F5] text-[#52687B]">
+                        <span className="px-2 py-0.5 rounded bg-[#EAF0E9] text-[#52665D]">
                           {evt.area}
                         </span>
                         {evt.line && (
-                          <span className="px-2 py-0.5 rounded bg-[#EAF1F5] text-[#52687B] font-mono">
+                          <span className="px-2 py-0.5 rounded bg-[#EAF0E9] text-[#52665D] font-mono">
                             {evt.line}
                           </span>
                         )}
-                        <span className="px-2 py-0.5 rounded bg-white border border-[#D6E1E9] text-[#52687B] font-medium">
+                        <span className="px-2 py-0.5 rounded bg-white border border-[#D9E2DA] text-[#52665D] font-medium">
                           Type: {evt.workType}
                         </span>
                       </div>
 
                       {/* What Evidence Exists? */}
-                      <div className="pt-2 border-t border-[#D6E1E9]/60 space-y-2">
-                        <div className="flex items-center justify-between text-[10px] font-semibold uppercase tracking-wider text-[#52687B]">
+                      <div className="pt-2 border-t border-[#D9E2DA]/60 space-y-2">
+                        <div className="flex items-center justify-between text-[10px] font-semibold uppercase tracking-wider text-[#52665D]">
                           <span>What Evidence Exists?</span>
                           <span>{evt.evidenceItems.length} File{evt.evidenceItems.length === 1 ? '' : 's'}</span>
                         </div>
 
                         {evt.evidenceItems.length === 0 ? (
-                          <div className="p-2 bg-[#FEF4E6] border border-[#F0D4A6] rounded text-[#A66D24] text-[11px] flex items-center gap-2">
+                          <div className="p-2 bg-[#F8EFDA] border border-[#E5C185] rounded text-[#A66D24] text-[11px] flex items-center gap-2">
                             <AlertTriangle className="w-3.5 h-3.5 shrink-0" />
                             <span>No physical evidence attached to this field log</span>
                           </div>
@@ -1668,18 +1678,18 @@ export default function ReviewQueuePage() {
                                 key={item.id}
                                 type="button"
                                 onClick={() => setPreviewEvidence({ item, event: evt })}
-                                className="inline-flex items-center gap-2 px-2 py-1 bg-white hover:bg-[#EAF1F5] border border-[#D6E1E9] hover:border-[#0F6B68] rounded text-[11px] font-medium text-[#1A2E42] transition-colors group cursor-pointer"
+                                className="inline-flex items-center gap-2 px-2 py-1 bg-white hover:bg-[#EAF0E9] border border-[#D9E2DA] hover:border-[#006B61] rounded text-[11px] font-medium text-[#1A2B25] transition-colors group cursor-pointer"
                                 title={`Click to view ${item.title} in-place preview`}
                               >
                                 {item.type === 'PHOTO' ? (
                                   <Camera className="w-3.5 h-3.5 text-[#0284C7]" />
                                 ) : (
-                                  <FileText className="w-3.5 h-3.5 text-[#0F6B68]" />
+                                  <FileText className="w-3.5 h-3.5 text-[#006B61]" />
                                 )}
-                                <span className="font-mono text-[10px] truncate max-w-[140px] group-hover:text-[#0F6B68]">
+                                <span className="font-mono text-[10px] truncate max-w-[140px] group-hover:text-[#006B61]">
                                   {item.title}
                                 </span>
-                                <span className="text-[9px] text-[#7B8798] font-mono">({item.timestamp})</span>
+                                <span className="text-[9px] text-[#738A80] font-mono">({item.timestamp})</span>
                               </button>
                             ))}
                           </div>
@@ -1689,59 +1699,59 @@ export default function ReviewQueuePage() {
 
                     {/* COL 2: 2. SUGGESTED ACTIVITY & ALTERNATIVE MATCHES (3 cols) */}
                     <div className="lg:col-span-3 p-4 space-y-3">
-                      <div className="text-[10px] font-semibold uppercase tracking-wider text-[#52687B]">
+                      <div className="text-[10px] font-semibold uppercase tracking-wider text-[#52665D]">
                         2. Suggested Activity
                       </div>
 
                       {evt.candidateActivityId ? (
-                        <div className="p-3 bg-white border border-[#D6E1E9] rounded space-y-1">
+                        <div className="p-3 bg-white border border-[#D9E2DA] rounded space-y-1">
                           <div className="flex items-center justify-between">
-                            <span className="font-mono font-bold text-xs text-[#0F6B68]">
+                            <span className="font-mono font-bold text-xs text-[#006B61]">
                               {evt.candidateActivityId}
                             </span>
                             {evt.candidateWbs && (
-                              <span className="text-[10px] font-mono text-[#7B8798] bg-[#EAF1F5] px-1.5 py-0.5 rounded">
+                              <span className="text-[10px] font-mono text-[#738A80] bg-[#EAF0E9] px-1.5 py-0.5 rounded">
                                 WBS {evt.candidateWbs}
                               </span>
                             )}
                           </div>
-                          <div className="font-semibold text-xs text-[#1A2E42] leading-snug">
+                          <div className="font-semibold text-xs text-[#1A2B25] leading-snug">
                             {evt.candidateActivityName}
                           </div>
-                          <div className="text-[10px] text-[#52687B]">
+                          <div className="text-[10px] text-[#52665D]">
                             Discipline: <span className="font-medium">{evt.discipline}</span>
                           </div>
                         </div>
                       ) : (
-                        <div className="p-3 bg-[#FDEEED] border border-[#E4B0AA] rounded text-[#A44339] text-xs font-semibold">
+                        <div className="p-3 bg-[#F6E4E1] border border-[#DCABA7] rounded text-[#A43B36] text-xs font-semibold">
                           No schedule activity matched (Unmatched)
                         </div>
                       )}
 
                       {/* Alternative Matches */}
-                      <div className="pt-2 border-t border-[#D6E1E9]/60 space-y-2">
-                        <div className="text-[10px] font-semibold uppercase tracking-wider text-[#52687B]">
+                      <div className="pt-2 border-t border-[#D9E2DA]/60 space-y-2">
+                        <div className="text-[10px] font-semibold uppercase tracking-wider text-[#52665D]">
                           Alternative Matches ({evt.alternativeCandidates.length})
                         </div>
 
                         {evt.alternativeCandidates.length === 0 ? (
-                          <div className="p-2 bg-[#F4F7FB] border border-[#D6E1E9] rounded text-[11px] text-[#52687B]">
-                            <span className="font-semibold text-[#1A2E42] block">No alternative candidates</span>
-                            <span className="text-[10px] text-[#52687B]">No other activities in the baseline matched this event.</span>
+                          <div className="p-2 bg-[#F6F7F3] border border-[#D9E2DA] rounded text-[11px] text-[#52665D]">
+                            <span className="font-semibold text-[#1A2B25] block">No alternative candidates</span>
+                            <span className="text-[10px] text-[#52665D]">No other activities in the baseline matched this event.</span>
                           </div>
                         ) : (
                           <div className="space-y-2">
                             {evt.alternativeCandidates.map((alt) => (
                               <div
                                 key={alt.activityId}
-                                className="p-2 bg-[#F4F7FB] border border-[#D6E1E9] rounded text-[11px] flex items-center justify-between gap-2 hover:bg-[#EAF1F5] transition-colors"
+                                className="p-2 bg-[#F6F7F3] border border-[#D9E2DA] rounded text-[11px] flex items-center justify-between gap-2 hover:bg-[#EAF0E9] transition-colors"
                               >
                                 <div className="min-w-0 flex-1">
                                   <div className="flex items-center gap-2">
-                                    <span className="font-mono font-semibold text-[#1A2E42]">{alt.activityId}</span>
-                                    <span className="text-[10px] font-mono font-bold text-[#965E0D]">{alt.confidence}%</span>
+                                    <span className="font-mono font-semibold text-[#1A2B25]">{alt.activityId}</span>
+                                    <span className="text-[10px] font-mono font-bold text-[#825700]">{alt.confidence}%</span>
                                   </div>
-                                  <div className="text-[10px] text-[#52687B] truncate">
+                                  <div className="text-[10px] text-[#52665D] truncate">
                                     {alt.reasons[0] || alt.activityName}
                                   </div>
                                 </div>
@@ -1750,7 +1760,7 @@ export default function ReviewQueuePage() {
                                   onClick={() => {
                                     handleSwitchActivity(alt.activityId, evt);
                                   }}
-                                  className="px-2 py-1 text-[10px] font-bold text-[#0F6B68] hover:text-white hover:bg-[#0F6B68] border border-[#D6E1E9] rounded whitespace-nowrap transition-colors cursor-pointer"
+                                  className="px-2 py-1 text-[10px] font-bold text-[#006B61] hover:text-white hover:bg-[#006B61] border border-[#D9E2DA] rounded whitespace-nowrap transition-colors cursor-pointer"
                                   title={`Switch match to ${alt.activityId}`}
                                 >
                                   Switch
@@ -1764,22 +1774,22 @@ export default function ReviewQueuePage() {
 
                     {/* COL 3: 3. HOW CONFIDENT IS THE MATCH? & WHY WAS IT SUGGESTED? (2 cols) */}
                     <div className="lg:col-span-2 p-4 space-y-2">
-                      <div className="text-[10px] font-semibold uppercase tracking-wider text-[#52687B]">
+                      <div className="text-[10px] font-semibold uppercase tracking-wider text-[#52665D]">
                         3. Confidence & Why?
                       </div>
 
-                      <div className="p-2 bg-[#F4F7FB] border border-[#D6E1E9] rounded space-y-1">
+                      <div className="p-2 bg-[#F6F7F3] border border-[#D9E2DA] rounded space-y-1">
                         <div className="flex items-center justify-between">
-                          <span className="text-[10px] font-bold text-[#52687B]">Confidence:</span>
+                          <span className="text-[10px] font-bold text-[#52665D]">Confidence:</span>
                           <div className="flex items-center gap-2">
-                            <span className="font-mono font-bold text-xs text-[#1A2E42]">{evt.confidence}%</span>
+                            <span className="font-mono font-bold text-xs text-[#1A2B25]">{evt.confidence}%</span>
                             <WhyButton
                               onClick={() => openWhyExplanation(`confidence:${evt.id}`)}
                               title={`Why is match confidence ${evt.confidence}%?`}
                             />
                           </div>
                         </div>
-                        <div className="text-[11px] font-semibold text-[#1A2E42]">
+                        <div className="text-[11px] font-semibold text-[#1A2B25]">
                           {evt.confidence >= 90
                             ? 'High Confidence'
                             : evt.confidence >= 70
@@ -1788,59 +1798,56 @@ export default function ReviewQueuePage() {
                         </div>
                       </div>
 
-                      {/* Deterministic Signals Checklist */}
-                      <div className="space-y-1 text-[11px] pt-1">
-                        <div className="flex items-center justify-between">
-                          <span className="text-[10px] font-semibold uppercase tracking-wider text-[#52687B]">
-                            Why was it suggested?
-                          </span>
-                          <WhyButton
-                            onClick={() => openWhyExplanation(`confidence:${evt.id}`)}
-                            title="Open detailed factors"
-                            variant="subtle"
-                          />
-                        </div>
-                        <div className="flex items-center gap-2 text-[#2E7D5B] font-medium">
-                          <Check className="w-3.5 h-3.5 stroke-[2.5]" />
-                          <span>Activity match</span>
-                        </div>
-                        <div className="flex items-center gap-2 text-[#2E7D5B] font-medium">
-                          <Check className="w-3.5 h-3.5 stroke-[2.5]" />
-                          <span>Area match</span>
-                        </div>
-                        <div className="flex items-center gap-2 text-[#2E7D5B] font-medium">
-                          <Check className="w-3.5 h-3.5 stroke-[2.5]" />
-                          <span>Discipline match</span>
-                        </div>
-                        <div className={`flex items-center gap-2 font-medium ${evt.confidence >= 70 ? 'text-[#2E7D5B]' : 'text-[#965E0D]'}`}>
-                          {evt.confidence >= 70 ? (
-                            <Check className="w-3.5 h-3.5 stroke-[2.5]" />
-                          ) : (
-                            <AlertTriangle className="w-3.5 h-3.5" />
-                          )}
-                          <span>Context match</span>
-                        </div>
-                      </div>
-
                       {/* Match Reason Text */}
-                      <div className="text-[10px] text-[#52687B] bg-white p-2 rounded border border-[#E5E9EF] leading-relaxed">
-                        <strong className="text-[#1A2E42] block mb-0.5">Match Reason:</strong>
+                      <div className="text-[10px] text-[#52665D] dark:text-[#B5C1B5] bg-white dark:bg-[#17221D] p-2 rounded border border-[#E5E9EF] dark:border-[#3A5146] leading-relaxed">
+                        <strong className="text-[#1A2B25] dark:text-[#F2F4E9] block mb-0.5">Match Reason:</strong>
                         {evt.matchReason}
                       </div>
+
+                      {/* Expandable Signals & Technical Weights Accordion */}
+                      <details className="group/sig text-[11px] pt-1">
+                        <summary className="flex items-center justify-between text-[10px] font-semibold uppercase tracking-wider text-[#52665D] dark:text-[#B5C1B5] cursor-pointer list-none select-none hover:text-[#1A2B25] dark:hover:text-[#72C6AD]">
+                          <span>Signal breakdown</span>
+                          <span className="font-mono text-[9px] text-[#1A2B25] dark:text-[#72C6AD] group-open/sig:hidden">+ View Factors</span>
+                          <span className="font-mono text-[9px] text-[#1A2B25] dark:text-[#72C6AD] hidden group-open/sig:inline">- Hide Factors</span>
+                        </summary>
+                        <div className="space-y-1 pt-1.5 pl-1 border-t border-[#E5E9EF] dark:border-[#3A5146] mt-1">
+                          <div className="flex items-center gap-2 text-[#1F6B4E] dark:text-[#72C6AD] font-medium text-[10px]">
+                            <Check className="w-3 h-3 stroke-[2.5]" />
+                            <span>Activity match (Discipline aligned)</span>
+                          </div>
+                          <div className="flex items-center gap-2 text-[#1F6B4E] dark:text-[#72C6AD] font-medium text-[10px]">
+                            <Check className="w-3 h-3 stroke-[2.5]" />
+                            <span>Area &amp; Workfront match</span>
+                          </div>
+                          <div className="flex items-center gap-2 text-[#1F6B4E] dark:text-[#72C6AD] font-medium text-[10px]">
+                            <Check className="w-3 h-3 stroke-[2.5]" />
+                            <span>WBS Hierarchy verification</span>
+                          </div>
+                          <div className={`flex items-center gap-2 font-medium text-[10px] ${evt.confidence >= 70 ? 'text-[#1F6B4E] dark:text-[#72C6AD]' : 'text-[#825700] dark:text-[#E5C185]'}`}>
+                            {evt.confidence >= 70 ? (
+                              <Check className="w-3 h-3 stroke-[2.5]" />
+                            ) : (
+                              <AlertTriangle className="w-3 h-3" />
+                            )}
+                            <span>Context match ({evt.confidence}% score)</span>
+                          </div>
+                        </div>
+                      </details>
                     </div>
 
                     {/* COL 4: 4. WHAT SHOULD I DO? (PRIMARY ACTIONS) (2 cols) */}
                     <div className="lg:col-span-2 p-4 flex flex-col justify-between bg-[#FAFAFB] space-y-3">
                       <div>
-                        <div className="text-[10px] font-semibold uppercase tracking-wider text-[#52687B] mb-2">
+                        <div className="text-[10px] font-semibold uppercase tracking-wider text-[#52665D] mb-2">
                           4. What Should I Do?
                         </div>
 
                         {activeTab === 'Verified History' ? (
-                          <div className="p-3 bg-[#E5F6EE] border border-[#B8DCC9] rounded text-center text-xs">
-                            <CheckCircle2 className="w-5 h-5 text-[#2E7D5B] mx-auto mb-1" />
-                            <div className="font-bold text-[#2E7D5B]">Decision Committed</div>
-                            <div className="text-[10px] text-[#52687B] mt-0.5">
+                          <div className="p-3 bg-[#E4F1E9] border border-[#B7DAC3] rounded text-center text-xs">
+                            <CheckCircle2 className="w-5 h-5 text-[#1F6B4E] mx-auto mb-1" />
+                            <div className="font-bold text-[#1F6B4E]">Decision Committed</div>
+                            <div className="text-[10px] text-[#52665D] mt-0.5">
                               {evt.isApproved ? 'Approved & Linked to Twin' : 'Rejected by Reviewer'}
                             </div>
                           </div>
@@ -1881,7 +1888,7 @@ export default function ReviewQueuePage() {
                                 setSelectedAlternativeId(evt.candidateActivityId || '');
                                 setIsActivityPickerOpen(true);
                               }}
-                              className="w-full min-h-[44px] py-2.5 px-4 bg-white hover:bg-[#EAF1F5] text-[#0F6B68] hover:text-[#135A72] border border-[#D6E1E9] font-semibold text-xs rounded inline-flex items-center justify-center gap-2 transition-colors cursor-pointer"
+                              className="w-full min-h-[44px] py-2.5 px-4 bg-white hover:bg-[#EAF0E9] text-[#006B61] hover:text-[#00524A] border border-[#D9E2DA] font-semibold text-xs rounded inline-flex items-center justify-center gap-2 transition-colors cursor-pointer"
                             >
                               <Edit3 className="w-3.5 h-3.5" />
                               <span>Change Match</span>
@@ -1894,7 +1901,7 @@ export default function ReviewQueuePage() {
                                 setSelectedEvent(evt);
                                 setIsRejectModalOpen(true);
                               }}
-                              className="w-full min-h-[44px] py-2.5 px-4 bg-white hover:bg-[#FDEEED] text-[#A44339] hover:text-[#9E3B31] border border-[#E4B0AA] font-semibold text-xs rounded inline-flex items-center justify-center gap-2 transition-colors cursor-pointer"
+                              className="w-full min-h-[44px] py-2.5 px-4 bg-white hover:bg-[#F6E4E1] text-[#A43B36] hover:text-[#9E3B31] border border-[#DCABA7] font-semibold text-xs rounded inline-flex items-center justify-center gap-2 transition-colors cursor-pointer"
                             >
                               <X className="w-3.5 h-3.5 stroke-[2]" />
                               <span>Reject</span>
@@ -1904,11 +1911,11 @@ export default function ReviewQueuePage() {
                       </div>
 
                       {/* Deep Inspection Drawer trigger */}
-                      <div className="pt-2 border-t border-[#D6E1E9]/60 text-center">
+                      <div className="pt-2 border-t border-[#D9E2DA]/60 text-center">
                         <button
                           type="button"
                           onClick={() => handleOpenReview(evt)}
-                          className="min-h-[40px] px-3 py-2 text-xs font-semibold text-[#0F6B68] hover:underline inline-flex items-center justify-center gap-1 cursor-pointer"
+                          className="min-h-[40px] px-3 py-2 text-xs font-semibold text-[#006B61] hover:underline inline-flex items-center justify-center gap-1 cursor-pointer"
                         >
                           <span>Full Inspection Drawer</span>
                           <ArrowRight className="w-3 h-3" />
@@ -1936,7 +1943,7 @@ export default function ReviewQueuePage() {
                   <button
                     type="button"
                     onClick={() => handleMarkUnmatched(selectedEvent)}
-                    className="min-h-[44px] px-3.5 py-2 font-semibold text-[#52687B] hover:text-[#1A2E42] bg-white border border-[#D6E1E9] rounded-lg transition-colors cursor-pointer inline-flex items-center justify-center"
+                    className="min-h-[44px] px-3.5 py-2 font-semibold text-[#52665D] hover:text-[#1A2B25] bg-white border border-[#D9E2DA] rounded-lg transition-colors cursor-pointer inline-flex items-center justify-center"
                   >
                     Mark Unmatched
                   </button>
@@ -1946,7 +1953,7 @@ export default function ReviewQueuePage() {
                       setClarificationQueryText('');
                       setIsClarificationModalOpen(true);
                     }}
-                    className="min-h-[44px] px-3.5 py-2 font-semibold text-[#8C5311] hover:bg-[#FEF4E6] bg-white border border-[#F0D4A6] rounded-lg transition-colors inline-flex items-center justify-center gap-1 cursor-pointer"
+                    className="min-h-[44px] px-3.5 py-2 font-semibold text-[#825700] hover:bg-[#F8EFDA] bg-white border border-[#E5C185] rounded-lg transition-colors inline-flex items-center justify-center gap-1 cursor-pointer"
                   >
                     <MessageSquare className="w-3.5 h-3.5" />
                     <span>Request Clarification</span>
@@ -1957,7 +1964,7 @@ export default function ReviewQueuePage() {
                       setRejectReasonText('');
                       setIsRejectModalOpen(true);
                     }}
-                    className="min-h-[44px] px-3.5 py-2 font-semibold text-[#A44339] hover:bg-[#FDEEED] bg-white border border-[#E4B0AA] rounded-lg transition-colors cursor-pointer inline-flex items-center justify-center"
+                    className="min-h-[44px] px-3.5 py-2 font-semibold text-[#A43B36] hover:bg-[#F6E4E1] bg-white border border-[#DCABA7] rounded-lg transition-colors cursor-pointer inline-flex items-center justify-center"
                   >
                     Reject Match
                   </button>
@@ -1967,7 +1974,7 @@ export default function ReviewQueuePage() {
                   <button
                     type="button"
                     onClick={() => setSelectedEvent(null)}
-                    className="min-h-[44px] px-4 py-2 font-semibold text-[#52687B] hover:text-[#1A2E42] bg-white border border-[#D6E1E9] rounded-lg cursor-pointer inline-flex items-center justify-center"
+                    className="min-h-[44px] px-4 py-2 font-semibold text-[#52665D] hover:text-[#1A2B25] bg-white border border-[#D9E2DA] rounded-lg cursor-pointer inline-flex items-center justify-center"
                   >
                     Cancel
                   </button>
@@ -1979,7 +1986,7 @@ export default function ReviewQueuePage() {
                         onClick={() => handleInitiateApprove(selectedEvent)}
                         disabled={!acceptance.canAccept}
                         title={acceptance.reason}
-                        className="w-full sm:w-auto min-h-[44px] px-4 py-2 font-bold text-white bg-[#0F6B68] hover:bg-[#135A72] border border-[#0F6B68] disabled:bg-gray-100 disabled:text-gray-400 disabled:border-gray-200 disabled:opacity-75 disabled:cursor-not-allowed rounded-lg shadow-sm inline-flex items-center justify-center gap-2 transition-colors cursor-pointer"
+                        className="w-full sm:w-auto min-h-[44px] px-4 py-2 font-bold text-white bg-[#006B61] hover:bg-[#00524A] border border-[#006B61] disabled:bg-gray-100 disabled:text-gray-400 disabled:border-gray-200 disabled:opacity-75 disabled:cursor-not-allowed rounded-lg shadow-sm inline-flex items-center justify-center gap-2 transition-colors cursor-pointer"
                       >
                         <Check className="w-4 h-4 stroke-[3]" />
                         <span>{acceptance.canAccept ? 'Approve Match & Commit' : 'Approval Blocked'}</span>
@@ -1992,7 +1999,7 @@ export default function ReviewQueuePage() {
           }
         >
           {selectedEvent && (
-            <div className="space-y-6 text-xs text-[#1A2E42]">
+            <div className="space-y-6 text-xs text-[#1A2B25]">
               {/* MatchCard inside drawer */}
               <MatchCard
                 activityId={selectedEvent.candidateActivityId}
@@ -2026,15 +2033,15 @@ export default function ReviewQueuePage() {
               {/* 3-Column Inspection: Raw Field Observation, Editable Parameters, Physical Evidence */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {/* Column 1: Editable Extraction Fields */}
-                <div className="p-4 bg-[#F4F7FB] border border-[#D6E1E9] rounded-lg space-y-3">
+                <div className="p-4 bg-[#F6F7F3] border border-[#D9E2DA] rounded-lg space-y-3">
                   <div className="flex items-center justify-between">
-                    <span className="font-bold text-xs uppercase tracking-wider text-[#52687B]">
+                    <span className="font-bold text-xs uppercase tracking-wider text-[#52665D]">
                       Extracted Parameters (Editable)
                     </span>
                     <button
                       type="button"
                       onClick={() => setIsEditingCenter(!isEditingCenter)}
-                      className="text-xs font-semibold text-[#0F6B68] hover:underline inline-flex items-center gap-1"
+                      className="text-xs font-semibold text-[#006B61] hover:underline inline-flex items-center gap-1"
                     >
                       <Edit3 className="w-3.5 h-3.5" />
                       <span>{isEditingCenter ? 'Discard Edits' : 'Edit Fields'}</span>
@@ -2044,113 +2051,113 @@ export default function ReviewQueuePage() {
                   {isEditingCenter ? (
                     <div className="space-y-3 pt-1">
                       <div>
-                        <label className="text-[11px] font-bold text-[#52687B] block mb-1">Work Type</label>
+                        <label className="text-[11px] font-bold text-[#52665D] block mb-1">Work Type</label>
                         <input
                           type="text"
                           value={editWorkType}
                           onChange={(e) => setEditWorkType(e.target.value)}
-                          className="w-full p-2 bg-white border border-[#D6E1E9] rounded text-xs"
+                          className="w-full p-2 bg-white border border-[#D9E2DA] rounded text-xs"
                         />
                       </div>
                       <div className="grid grid-cols-2 gap-2">
                         <div>
-                          <label className="text-[11px] font-bold text-[#52687B] block mb-1">Quantity</label>
+                          <label className="text-[11px] font-bold text-[#52665D] block mb-1">Quantity</label>
                           <input
                             type="number"
                             value={editQuantity}
                             onChange={(e) => setEditQuantity(Number(e.target.value))}
-                            className="w-full p-2 bg-white border border-[#D6E1E9] rounded text-xs font-mono"
+                            className="w-full p-2 bg-white border border-[#D9E2DA] rounded text-xs font-mono"
                           />
                         </div>
                         <div>
-                          <label className="text-[11px] font-bold text-[#52687B] block mb-1">Unit</label>
+                          <label className="text-[11px] font-bold text-[#52665D] block mb-1">Unit</label>
                           <input
                             type="text"
                             value={editUnit}
                             onChange={(e) => setEditUnit(e.target.value)}
-                            className="w-full p-2 bg-white border border-[#D6E1E9] rounded text-xs"
+                            className="w-full p-2 bg-white border border-[#D9E2DA] rounded text-xs"
                           />
                         </div>
                       </div>
                       <div>
-                        <label className="text-[11px] font-bold text-[#52687B] block mb-1">Area / Location</label>
+                        <label className="text-[11px] font-bold text-[#52665D] block mb-1">Area / Location</label>
                         <input
                           type="text"
                           value={editArea}
                           onChange={(e) => setEditArea(e.target.value)}
-                          className="w-full p-2 bg-white border border-[#D6E1E9] rounded text-xs"
+                          className="w-full p-2 bg-white border border-[#D9E2DA] rounded text-xs"
                         />
                       </div>
                       <button
                         type="button"
                         onClick={handleSaveCenterEdits}
-                        className="w-full py-2 bg-[#0F6B68] hover:bg-[#135A72] text-white font-bold rounded shadow-xs"
+                        className="w-full py-2 bg-[#006B61] hover:bg-[#00524A] text-white font-bold rounded shadow-xs"
                       >
                         Save Parameter Corrections
                       </button>
                     </div>
                   ) : (
                     <div className="space-y-2 pt-1 text-xs">
-                      <div className="flex justify-between py-1 border-b border-[#D6E1E9]/60">
-                        <span className="text-[#7B8798]">Work Type:</span>
-                        <strong className="text-[#1A2E42]">{selectedEvent.workType}</strong>
+                      <div className="flex justify-between py-1 border-b border-[#D9E2DA]/60">
+                        <span className="text-[#738A80]">Work Type:</span>
+                        <strong className="text-[#1A2B25]">{selectedEvent.workType}</strong>
                       </div>
-                      <div className="flex justify-between py-1 border-b border-[#D6E1E9]/60">
-                        <span className="text-[#7B8798]">Quantity / Unit:</span>
-                        <strong className="text-[#1A2E42] font-mono">{selectedEvent.extractedQuantity} {selectedEvent.unit}</strong>
+                      <div className="flex justify-between py-1 border-b border-[#D9E2DA]/60">
+                        <span className="text-[#738A80]">Quantity / Unit:</span>
+                        <strong className="text-[#1A2B25] font-mono">{selectedEvent.extractedQuantity} {selectedEvent.unit}</strong>
                       </div>
-                      <div className="flex justify-between py-1 border-b border-[#D6E1E9]/60">
-                        <span className="text-[#7B8798]">Area:</span>
-                        <strong className="text-[#1A2E42]">{selectedEvent.area}</strong>
+                      <div className="flex justify-between py-1 border-b border-[#D9E2DA]/60">
+                        <span className="text-[#738A80]">Area:</span>
+                        <strong className="text-[#1A2B25]">{selectedEvent.area}</strong>
                       </div>
                       {selectedEvent.line && (
-                        <div className="flex justify-between py-1 border-b border-[#D6E1E9]/60">
-                          <span className="text-[#7B8798]">Line Code:</span>
-                          <strong className="text-[#1A2E42] font-mono">{selectedEvent.line}</strong>
+                        <div className="flex justify-between py-1 border-b border-[#D9E2DA]/60">
+                          <span className="text-[#738A80]">Line Code:</span>
+                          <strong className="text-[#1A2B25] font-mono">{selectedEvent.line}</strong>
                         </div>
                       )}
                       <div className="flex justify-between py-1">
-                        <span className="text-[#7B8798]">Shift Time:</span>
-                        <strong className="text-[#1A2E42] font-mono">{selectedEvent.shiftTime}</strong>
+                        <span className="text-[#738A80]">Shift Time:</span>
+                        <strong className="text-[#1A2B25] font-mono">{selectedEvent.shiftTime}</strong>
                       </div>
                     </div>
                   )}
                 </div>
 
                 {/* Column 2: Physical Evidence & Rules Checked */}
-                <div className="p-4 bg-[#F4F7FB] border border-[#D6E1E9] rounded-lg space-y-3">
-                  <span className="font-bold text-xs uppercase tracking-wider text-[#52687B] block">
+                <div className="p-4 bg-[#F6F7F3] border border-[#D9E2DA] rounded-lg space-y-3">
+                  <span className="font-bold text-xs uppercase tracking-wider text-[#52665D] block">
                     Physical Evidence & QC Proofs ({selectedEvent.evidenceItems.length})
                   </span>
 
                   {selectedEvent.evidenceItems.length === 0 ? (
-                    <div className="p-3 bg-white border border-[#D6E1E9] rounded-lg text-center space-y-0.5">
-                      <p className="font-semibold text-xs text-[#1A2E42]">No physical evidence attached</p>
-                      <p className="text-[11px] text-[#52687B]">No photographic or document proofs were submitted with this field log.</p>
+                    <div className="p-3 bg-white border border-[#D9E2DA] rounded-lg text-center space-y-0.5">
+                      <p className="font-semibold text-xs text-[#1A2B25]">No physical evidence attached</p>
+                      <p className="text-[11px] text-[#52665D]">No photographic or document proofs were submitted with this field log.</p>
                     </div>
                   ) : (
                     <div className="space-y-2">
                       {selectedEvent.evidenceItems.map((item) => (
                         <div
                           key={item.id}
-                          className="p-3 bg-white border border-[#D6E1E9] rounded-lg flex items-center justify-between text-xs"
+                          className="p-3 bg-white border border-[#D9E2DA] rounded-lg flex items-center justify-between text-xs"
                         >
                           <div className="flex items-center gap-2">
                             {item.type === 'PHOTO' ? (
                               <Camera className="w-4 h-4 text-[#0284C7]" />
                             ) : (
-                              <FileText className="w-4 h-4 text-[#0F6B68]" />
+                              <FileText className="w-4 h-4 text-[#006B61]" />
                             )}
                             <div>
-                              <span className="font-semibold text-[#1A2E42] block truncate max-w-[200px]">
+                              <span className="font-semibold text-[#1A2B25] block truncate max-w-[200px]">
                                 {item.title}
                               </span>
-                              <span className="text-[10px] text-[#7B8798] font-mono">
+                              <span className="text-[10px] text-[#738A80] font-mono">
                                 Time: {item.timestamp}
                               </span>
                             </div>
                           </div>
-                          <span className="text-[10px] uppercase font-mono px-2 py-0.5 rounded bg-[#E5F6EE] text-[#2E7D5B] border border-[#B8DCC9]">
+                          <span className="text-[10px] uppercase font-mono px-2 py-0.5 rounded bg-[#E4F1E9] text-[#1F6B4E] border border-[#B7DAC3]">
                             Attached
                           </span>
                         </div>
@@ -2158,23 +2165,23 @@ export default function ReviewQueuePage() {
                     </div>
                   )}
 
-                  <div className="pt-2 border-t border-[#D6E1E9]/60 space-y-2">
-                    <span className="text-[10px] uppercase font-semibold text-[#52687B] block">
+                  <div className="pt-2 border-t border-[#D9E2DA]/60 space-y-2">
+                    <span className="text-[10px] uppercase font-semibold text-[#52665D] block">
                       Deterministic Rules Verified:
                     </span>
                     {selectedEvent.rulesEvaluated.map((rule, idx) => (
                       <div key={idx} className="flex items-start gap-2 text-[11px]">
                         <span className="mt-0.5">
                           {rule.status === 'PASSED' ? (
-                            <Check className="w-3.5 h-3.5 text-[#2E7D5B]" />
+                            <Check className="w-3.5 h-3.5 text-[#1F6B4E]" />
                           ) : rule.status === 'WARNING' ? (
-                            <AlertTriangle className="w-3.5 h-3.5 text-[#965E0D]" />
+                            <AlertTriangle className="w-3.5 h-3.5 text-[#825700]" />
                           ) : (
-                            <X className="w-3.5 h-3.5 text-[#A44339]" />
+                            <X className="w-3.5 h-3.5 text-[#A43B36]" />
                           )}
                         </span>
-                        <span className="text-[#52687B]">
-                          <strong className="text-[#1A2E42]">{rule.name}:</strong> {rule.details}
+                        <span className="text-[#52665D]">
+                          <strong className="text-[#1A2B25]">{rule.name}:</strong> {rule.details}
                         </span>
                       </div>
                     ))}
@@ -2211,14 +2218,14 @@ export default function ReviewQueuePage() {
               <button
                 type="button"
                 onClick={() => setIsRejectModalOpen(false)}
-                className="px-4 py-2 font-semibold text-[#52687B] hover:text-[#1A2E42] rounded border border-[#D6E1E9]"
+                className="px-4 py-2 font-semibold text-[#52665D] hover:text-[#1A2B25] rounded border border-[#D9E2DA]"
               >
                 Cancel
               </button>
               <button
                 type="button"
                 onClick={handleConfirmReject}
-                className="px-4 py-2 font-bold text-white bg-[#A44339] hover:bg-[#9E3B31] rounded shadow-xs"
+                className="px-4 py-2 font-bold text-white bg-[#92372F] hover:bg-[#9E3B31] rounded shadow-xs"
               >
                 Confirm Rejection
               </button>
@@ -2226,13 +2233,13 @@ export default function ReviewQueuePage() {
           }
         >
           <div className="space-y-3 text-xs">
-            <label className="font-bold text-[#1A2E42] block">Rejection Justification</label>
+            <label className="font-bold text-[#1A2B25] block">Rejection Justification</label>
             <textarea
               value={rejectReasonText}
               onChange={(e) => setRejectReasonText(e.target.value)}
               placeholder="State reason (e.g., spool scope corresponds to contractor punchlist rather than main header)..."
               rows={3}
-              className="w-full p-3 bg-[#F4F7FB] border border-[#D6E1E9] rounded-lg outline-none focus:border-[#0F6B68]"
+              className="w-full p-3 bg-[#F6F7F3] border border-[#D9E2DA] rounded-lg outline-none focus:border-[#006B61]"
             />
           </div>
         </Modal>
@@ -2248,7 +2255,7 @@ export default function ReviewQueuePage() {
               <button
                 type="button"
                 onClick={() => setIsActivityPickerOpen(false)}
-                className="px-4 py-2 font-semibold text-[#52687B] hover:text-[#1A2E42] rounded border border-[#D6E1E9]"
+                className="px-4 py-2 font-semibold text-[#52665D] hover:text-[#1A2B25] rounded border border-[#D9E2DA]"
               >
                 Cancel
               </button>
@@ -2256,7 +2263,7 @@ export default function ReviewQueuePage() {
                 type="button"
                 onClick={() => handleSwitchActivity(selectedAlternativeId)}
                 disabled={!selectedAlternativeId}
-                className="px-4 py-2 font-bold text-white bg-[#0F6B68] hover:bg-[#135A72] rounded shadow-xs disabled:opacity-50"
+                className="px-4 py-2 font-bold text-white bg-[#006B61] hover:bg-[#00524A] rounded shadow-xs disabled:opacity-50"
               >
                 Assign Selected Activity
               </button>
@@ -2265,11 +2272,11 @@ export default function ReviewQueuePage() {
         >
           <div className="space-y-4 text-xs">
             <div>
-              <label className="font-bold text-[#1A2E42] block mb-1">Target Schedule Activity (WBS)</label>
+              <label className="font-bold text-[#1A2B25] block mb-1">Target Schedule Activity (WBS)</label>
               <select
                 value={selectedAlternativeId}
                 onChange={(e) => setSelectedAlternativeId(e.target.value)}
-                className="w-full p-3 bg-white border border-[#D6E1E9] rounded-lg outline-none focus:border-[#0F6B68]"
+                className="w-full p-3 bg-white border border-[#D9E2DA] rounded-lg outline-none focus:border-[#006B61]"
               >
                 <option value="">-- Choose activity from WBS --</option>
                 {MOCK_ACTIVITIES.map((act) => (
@@ -2293,14 +2300,14 @@ export default function ReviewQueuePage() {
               <button
                 type="button"
                 onClick={() => setIsClarificationModalOpen(false)}
-                className="px-4 py-2 font-semibold text-[#52687B] hover:text-[#1A2E42] rounded border border-[#D6E1E9]"
+                className="px-4 py-2 font-semibold text-[#52665D] hover:text-[#1A2B25] rounded border border-[#D9E2DA]"
               >
                 Cancel
               </button>
               <button
                 type="button"
                 onClick={handleSendClarification}
-                className="px-4 py-2 font-bold text-white bg-[#965E0D] hover:bg-[#C27A28] rounded shadow-xs inline-flex items-center gap-2"
+                className="px-4 py-2 font-bold text-white bg-[#81500B] hover:bg-[#C27A28] rounded shadow-xs inline-flex items-center gap-2"
               >
                 <Send className="w-3.5 h-3.5" />
                 <span>Dispatch Clarification</span>
@@ -2309,13 +2316,13 @@ export default function ReviewQueuePage() {
           }
         >
           <div className="space-y-3 text-xs">
-            <label className="font-bold text-[#1A2E42] block">Inquiry Query for Site Engineer</label>
+            <label className="font-bold text-[#1A2B25] block">Inquiry Query for Site Engineer</label>
             <textarea
               value={clarificationQueryText}
               onChange={(e) => setClarificationQueryText(e.target.value)}
               placeholder="e.g. Please clarify if the 12 spools completed include isometric sheet 24-B tie-ins..."
               rows={3}
-              className="w-full p-3 bg-[#F4F7FB] border border-[#D6E1E9] rounded-lg outline-none focus:border-[#0F6B68]"
+              className="w-full p-3 bg-[#F6F7F3] border border-[#D9E2DA] rounded-lg outline-none focus:border-[#006B61]"
             />
           </div>
         </Modal>
@@ -2328,17 +2335,17 @@ export default function ReviewQueuePage() {
           subtitle={`Attached to ${previewEvidence?.event.id || ''} · ${previewEvidence?.event.discipline} Discipline`}
           footer={
             <div className="flex items-center justify-between w-full text-xs">
-              <div className="flex items-center gap-2 text-[11px] text-[#52687B]">
+              <div className="flex items-center gap-2 text-[11px] text-[#52665D]">
                 <span>Verified Evidence · Timestamped &amp; Geotagged (OIL Duliajan)</span>
                 <details className="inline-block">
-                  <summary className="text-[10px] text-[#0F6B68] cursor-pointer hover:underline font-semibold">Technical Details</summary>
-                  <span className="font-mono text-[10px] text-[#7B8798] ml-1">Ref: 7f8a3c...e901</span>
+                  <summary className="text-[10px] text-[#006B61] cursor-pointer hover:underline font-semibold">Technical Details</summary>
+                  <span className="font-mono text-[10px] text-[#738A80] ml-1">Ref: 7f8a3c...e901</span>
                 </details>
               </div>
               <button
                 type="button"
                 onClick={() => setPreviewEvidence(null)}
-                className="px-4 py-2 font-semibold text-[#1A2E42] bg-white border border-[#D6E1E9] hover:bg-[#F4F7FB] rounded shadow-xs cursor-pointer transition-colors"
+                className="px-4 py-2 font-semibold text-[#1A2B25] bg-white border border-[#D9E2DA] hover:bg-[#F6F7F3] rounded shadow-xs cursor-pointer transition-colors"
               >
                 Close Preview
               </button>
@@ -2348,27 +2355,27 @@ export default function ReviewQueuePage() {
           {previewEvidence && (
             <div className="space-y-4 text-xs">
               {/* Evidence Meta Card */}
-              <div className="p-3 bg-[#F4F7FB] border border-[#D6E1E9] rounded-lg grid grid-cols-2 sm:grid-cols-4 gap-3 text-[11px]">
+              <div className="p-3 bg-[#F6F7F3] border border-[#D9E2DA] rounded-lg grid grid-cols-2 sm:grid-cols-4 gap-3 text-[11px]">
                 <div>
-                  <span className="text-[#7B8798] block">File Type</span>
-                  <strong className="text-[#1A2E42] font-mono">{previewEvidence.item.type}</strong>
+                  <span className="text-[#738A80] block">File Type</span>
+                  <strong className="text-[#1A2B25] font-mono">{previewEvidence.item.type}</strong>
                 </div>
                 <div>
-                  <span className="text-[#7B8798] block">Capture Timestamp</span>
-                  <strong className="text-[#1A2E42] font-mono">{previewEvidence.item.timestamp} IST</strong>
+                  <span className="text-[#738A80] block">Capture Timestamp</span>
+                  <strong className="text-[#1A2B25] font-mono">{previewEvidence.item.timestamp} IST</strong>
                 </div>
                 <div>
-                  <span className="text-[#7B8798] block">Submitter</span>
-                  <strong className="text-[#1A2E42] truncate block">{previewEvidence.event.submittedBy}</strong>
+                  <span className="text-[#738A80] block">Submitter</span>
+                  <strong className="text-[#1A2B25] truncate block">{previewEvidence.event.submittedBy}</strong>
                 </div>
                 <div>
-                  <span className="text-[#7B8798] block">Integrity Status</span>
-                  <span className="text-[#2E7D5B] font-bold">✓ Tamper-proof Hash</span>
+                  <span className="text-[#738A80] block">Integrity Status</span>
+                  <span className="text-[#1F6B4E] font-bold">✓ Tamper-proof Hash</span>
                 </div>
               </div>
 
               {/* Simulated Visual Preview Box */}
-              <div className="border border-[#D6E1E9] rounded-lg overflow-hidden bg-slate-900 text-slate-100 min-h-[220px] flex flex-col justify-between p-4">
+              <div className="border border-[#D9E2DA] rounded-lg overflow-hidden bg-slate-900 text-slate-100 min-h-[220px] flex flex-col justify-between p-4">
                 <div className="flex items-center justify-between text-[11px] text-slate-400 font-mono">
                   <span>{previewEvidence.item.title}</span>
                   <span className="px-2 py-0.5 rounded bg-slate-800 text-teal-300 border border-slate-700">
@@ -2405,11 +2412,11 @@ export default function ReviewQueuePage() {
               </div>
 
               {/* Linked Event Statement */}
-              <div className="p-3 bg-[#EAF1F5] border border-[#D6E1E9] rounded-lg">
-                <div className="text-[10px] uppercase font-bold text-[#0F6B68] mb-1">
+              <div className="p-3 bg-[#EAF0E9] border border-[#D9E2DA] rounded-lg">
+                <div className="text-[10px] uppercase font-bold text-[#006B61] mb-1">
                   Referenced Field Report:
                 </div>
-                <p className="text-xs text-[#1A2E42] italic">
+                <p className="text-xs text-[#1A2B25] italic">
                   "{previewEvidence.event.rawFieldStatement}"
                 </p>
               </div>

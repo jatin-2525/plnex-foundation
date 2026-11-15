@@ -111,26 +111,26 @@ export function NotificationCenterPanel({
 
   return (
     <div
-      className={`bg-white border border-[#D6E1E9] rounded-lg overflow-hidden shadow-xs flex flex-col ${className}`}
+      className={`bg-white border border-[#D9E2DA] rounded-lg overflow-hidden shadow-xs flex flex-col ${className}`}
       data-testid="plnex-notification-center-panel"
     >
       {/* 1. Header Bar */}
       {showHeading && (
-        <div className="p-4 border-b border-[#D6E1E9] bg-[#F4F7FB] flex items-center justify-between gap-3">
+        <div className="p-4 border-b border-[#D9E2DA] bg-[#F6F7F3] flex items-center justify-between gap-3">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-[#EAF1F5] border border-[#D6E1E9] flex items-center justify-center text-[#0F6B68]">
+            <div className="w-8 h-8 rounded-lg bg-[#EAF0E9] border border-[#D9E2DA] flex items-center justify-center text-[#006B61]">
               <Bell className="w-4 h-4" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h3 className="text-sm font-bold text-[#1A2E42]">
+                <h3 className="text-sm font-bold text-[#1A2B25]">
                   Project Notification Center
                 </h3>
-                <span className="px-2 py-0.5 rounded-md text-[11px] font-mono font-bold bg-[#EAF1F5] text-[#0F6B68] border border-[#D6E1E9]">
+                <span className="px-2 py-0.5 rounded-md text-[11px] font-mono font-bold bg-[#EAF0E9] text-[#006B61] border border-[#D9E2DA]">
                   {unreadCount} unread
                 </span>
               </div>
-              <p className="text-[11px] text-[#52687B]">
+              <p className="text-[11px] text-[#52665D]">
                 Actionable construction alerts across reviews, delays, dependencies, and sync conflicts
               </p>
             </div>
@@ -141,7 +141,7 @@ export function NotificationCenterPanel({
               <button
                 type="button"
                 onClick={markAllAsRead}
-                className="px-3 py-1.5 text-xs font-semibold text-[#0F6B68] hover:bg-[#EAF1F5] border border-[#D6E1E9] rounded-md transition-colors"
+                className="px-3 py-1.5 text-xs font-semibold text-[#006B61] hover:bg-[#EAF0E9] border border-[#D9E2DA] rounded-md transition-colors"
               >
                 Mark all as read
               </button>
@@ -149,7 +149,7 @@ export function NotificationCenterPanel({
             <button
               type="button"
               onClick={resetNotifications}
-              className="p-2 text-[#7B8798] hover:text-[#1A2E42] hover:bg-[#EAF1F5] border border-[#D6E1E9] rounded-md transition-colors"
+              className="p-2 text-[#738A80] hover:text-[#1A2B25] hover:bg-[#EAF0E9] border border-[#D9E2DA] rounded-md transition-colors"
               title="Reset notification feed to verified defaults"
             >
               <RotateCcw className="w-4 h-4" />
@@ -159,21 +159,21 @@ export function NotificationCenterPanel({
       )}
 
       {/* 2. Controls & Search */}
-      <div className="p-3 bg-[#F4F7FB] border-b border-[#D6E1E9] space-y-2">
+      <div className="p-3 bg-[#F6F7F3] border-b border-[#D9E2DA] space-y-2">
         <div className="relative">
-          <Search className="w-3.5 h-3.5 text-[#7B8798] absolute left-3 top-2.5" />
+          <Search className="w-3.5 h-3.5 text-[#738A80] absolute left-3 top-2.5" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search alerts by title, description, activity ID (PIP-24-001)..."
-            className="w-full pl-8 pr-7 py-1.5 bg-white border border-[#D6E1E9] rounded-lg text-xs text-[#1A2E42] placeholder-[#7B8798] focus:outline-none focus:border-[#0F6B68] focus:ring-1 focus:ring-[#0F6B68]"
+            className="w-full pl-8 pr-7 py-1.5 bg-white border border-[#D9E2DA] rounded-lg text-xs text-[#1A2B25] placeholder-[#7B8798] focus:outline-none focus:border-[#006B61] focus:ring-1 focus:ring-[#006B61]"
           />
           {searchQuery && (
             <button
               type="button"
               onClick={() => setSearchQuery('')}
-              className="absolute right-2.5 top-2 text-[#7B8798] hover:text-[#1A2E42]"
+              className="absolute right-2.5 top-2 text-[#738A80] hover:text-[#1A2B25]"
             >
               <X className="w-3 h-3" />
             </button>
@@ -190,8 +190,8 @@ export function NotificationCenterPanel({
             }}
             className={`px-3 py-1 rounded-md text-[11px] font-medium whitespace-nowrap transition-colors border ${
               selectedType === 'ALL' && !showUnreadOnly
-                ? 'bg-[#0F6B68] text-white border-[#0F6B68]'
-                : 'bg-white border-[#D6E1E9] text-[#52687B] hover:bg-[#EAF1F5]'
+                ? 'bg-[#006B61] text-white border-[#006B61]'
+                : 'bg-white border-[#D9E2DA] text-[#52665D] hover:bg-[#EAF0E9]'
             }`}
           >
             All ({notifications.length})
@@ -202,8 +202,8 @@ export function NotificationCenterPanel({
             onClick={() => setShowUnreadOnly(!showUnreadOnly)}
             className={`px-3 py-1 rounded-md text-[11px] font-medium whitespace-nowrap transition-colors border ${
               showUnreadOnly
-                ? 'bg-[#0F6B68] text-white border-[#0F6B68]'
-                : 'bg-white border-[#D6E1E9] text-[#52687B] hover:bg-[#EAF1F5]'
+                ? 'bg-[#006B61] text-white border-[#006B61]'
+                : 'bg-white border-[#D9E2DA] text-[#52665D] hover:bg-[#EAF0E9]'
             }`}
           >
             Unread Only ({unreadCount})
@@ -222,8 +222,8 @@ export function NotificationCenterPanel({
                   }}
                   className={`px-3 py-1 rounded-md text-[11px] font-medium whitespace-nowrap transition-colors border flex items-center gap-1 ${
                     isActive
-                      ? 'bg-[#0F6B68] text-white border-[#0F6B68]'
-                      : 'bg-white border-[#D6E1E9] text-[#52687B] hover:bg-[#EAF1F5]'
+                      ? 'bg-[#006B61] text-white border-[#006B61]'
+                      : 'bg-white border-[#D9E2DA] text-[#52665D] hover:bg-[#EAF0E9]'
                   }`}
                 >
                   <span>{tab.label}</span>
@@ -237,16 +237,16 @@ export function NotificationCenterPanel({
       </div>
 
       {/* 3. Items List */}
-      <div className="divide-y divide-[#D6E1E9] overflow-y-auto max-h-[600px]">
+      <div className="divide-y divide-[#D9E2DA] overflow-y-auto max-h-[600px]">
         {filteredNotifications.length === 0 ? (
           <div className="p-8 text-center space-y-2">
-            <div className="w-10 h-10 rounded-lg bg-[#EAF1F5] text-[#7B8798] flex items-center justify-center mx-auto">
-              <CheckCircle2 className="w-5 h-5 text-[#2E7D5B]" />
+            <div className="w-10 h-10 rounded-lg bg-[#EAF0E9] text-[#738A80] flex items-center justify-center mx-auto">
+              <CheckCircle2 className="w-5 h-5 text-[#1F6B4E]" />
             </div>
-            <p className="text-xs font-bold text-[#1A2E42]">
+            <p className="text-xs font-bold text-[#1A2B25]">
               No Notifications Found
             </p>
-            <p className="text-[11px] text-[#52687B] max-w-xs mx-auto">
+            <p className="text-[11px] text-[#52665D] max-w-xs mx-auto">
               {showUnreadOnly
                 ? 'All notifications have been addressed.'
                 : 'No alerts match your filter criteria.'}
@@ -259,7 +259,7 @@ export function NotificationCenterPanel({
                   setSelectedType('ALL');
                   setShowUnreadOnly(false);
                 }}
-                className="text-xs text-[#0F6B68] font-semibold hover:underline mt-1 inline-block cursor-pointer"
+                className="text-xs text-[#006B61] font-semibold hover:underline mt-1 inline-block cursor-pointer"
               >
                 Reset all filters
               </button>
@@ -273,13 +273,13 @@ export function NotificationCenterPanel({
               <div
                 key={notification.id}
                 onClick={() => handleNotificationClick(notification)}
-                className={`p-4 hover:bg-[#F4F7FB] transition-colors cursor-pointer group relative flex items-start gap-4 ${
+                className={`p-4 hover:bg-[#F6F7F3] transition-colors cursor-pointer group relative flex items-start gap-4 ${
                   !notification.isRead ? 'bg-[#F9FAFC]' : 'bg-white'
                 }`}
               >
                 {!notification.isRead && (
                   <span
-                    className="absolute left-1 top-4 bottom-4 w-1 bg-[#0F6B68] rounded-r"
+                    className="absolute left-1 top-4 bottom-4 w-1 bg-[#006B61] rounded-r"
                     title="Unread"
                   />
                 )}
@@ -295,7 +295,7 @@ export function NotificationCenterPanel({
                 <div className="flex-1 min-w-0 space-y-1">
                   <div className="flex items-center justify-between gap-2 flex-wrap">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-[#1A2E42]">
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-[#1A2B25]">
                         {notification.type}
                       </span>
                       <span
@@ -304,32 +304,32 @@ export function NotificationCenterPanel({
                         {severityCfg.label}
                       </span>
                       {notification.sourceEntity && (
-                        <span className="text-[10px] font-mono text-[#52687B] bg-[#EAF1F5] px-1.5 py-0.5 rounded border border-[#D6E1E9]">
+                        <span className="text-[10px] font-mono text-[#52665D] bg-[#EAF0E9] px-1.5 py-0.5 rounded border border-[#D9E2DA]">
                           {notification.sourceEntity.id}
                         </span>
                       )}
                     </div>
 
-                    <div className="flex items-center gap-1 text-[10px] font-mono text-[#7B8798]">
+                    <div className="flex items-center gap-1 text-[10px] font-mono text-[#738A80]">
                       <Clock className="w-3 h-3" />
                       <span>{notification.relativeTime}</span>
                     </div>
                   </div>
 
                   <h4
-                    className={`text-xs text-[#1A2E42] leading-snug ${
+                    className={`text-xs text-[#1A2B25] leading-snug ${
                       !notification.isRead ? 'font-bold' : 'font-semibold'
                     }`}
                   >
                     {notification.title}
                   </h4>
 
-                  <p className="text-[11px] text-[#52687B] leading-relaxed">
+                  <p className="text-[11px] text-[#52665D] leading-relaxed">
                     {notification.description}
                   </p>
 
                   <div className="pt-2 flex items-center justify-between gap-2 text-xs">
-                    <span className="inline-flex items-center gap-1 text-[11px] font-bold text-[#0F6B68] group-hover:underline">
+                    <span className="inline-flex items-center gap-1 text-[11px] font-bold text-[#006B61] group-hover:underline">
                       <span>{notification.destination.actionLabel}</span>
                       <ArrowRight className="w-3 h-3" />
                     </span>
@@ -347,19 +347,19 @@ export function NotificationCenterPanel({
                             markAsRead(notification.id);
                           }
                         }}
-                        className="p-1 text-[#7B8798] hover:text-[#1A2E42] hover:bg-[#EAF1F5] rounded transition-colors"
+                        className="p-1 text-[#738A80] hover:text-[#1A2B25] hover:bg-[#EAF0E9] rounded transition-colors"
                         title={notification.isRead ? 'Mark as unread' : 'Mark as read'}
                       >
                         {notification.isRead ? (
                           <Mail className="w-3.5 h-3.5" />
                         ) : (
-                          <Check className="w-3.5 h-3.5 text-[#2E7D5B]" />
+                          <Check className="w-3.5 h-3.5 text-[#1F6B4E]" />
                         )}
                       </button>
                       <button
                         type="button"
                         onClick={() => dismissNotification(notification.id)}
-                        className="p-1 text-[#7B8798] hover:text-[#A44339] hover:bg-[#FDEEED] rounded transition-colors"
+                        className="p-1 text-[#738A80] hover:text-[#A43B36] hover:bg-[#F6E4E1] rounded transition-colors"
                         title="Dismiss notification"
                       >
                         <X className="w-3.5 h-3.5" />

@@ -27,15 +27,15 @@ export function ProcessingState({
 }: ProcessingStateProps) {
   return (
     <div
-      className={`bg-white border border-[#D6E1E9] rounded-lg p-6 flex flex-col items-center text-center max-w-lg mx-auto ${className}`}
+      className={`bg-white border border-[#D9E2DA] rounded-lg p-6 flex flex-col items-center text-center max-w-lg mx-auto ${className}`}
       role="status"
       aria-live="polite"
     >
       <div className="flex items-center gap-2 mb-1.5">
-        <Loader2 className="w-4 h-4 animate-spin text-[#0F6B68] shrink-0" />
-        <h3 className="text-sm font-semibold text-[#1A2E42]">{title}</h3>
+        <Loader2 className="w-4 h-4 animate-spin text-[#006B61] shrink-0" />
+        <h3 className="text-sm font-semibold text-[#1A2B25]">{title}</h3>
       </div>
-      <p className="text-xs font-medium text-[#52687B] mb-4">
+      <p className="text-xs font-medium text-[#52665D] mb-4">
         {stepIndex && totalSteps ? `Step ${stepIndex} of ${totalSteps}: ` : ''}
         {currentStep}
       </p>
@@ -44,13 +44,13 @@ export function ProcessingState({
         <ProgressBar actual={progressPercent} size="md" showLabels={false} />
       </div>
 
-      <div className="flex items-center justify-between w-full text-xs text-[#52687B] font-mono mb-4">
+      <div className="flex items-center justify-between w-full text-xs text-[#52665D] font-mono mb-4">
         <span>Processing pipeline...</span>
         <span>{Math.round(progressPercent)}%</span>
       </div>
 
       {notes && (
-        <p className="text-xs text-[#52687B] bg-[#F4F7FB] border border-[#D6E1E9] p-3 rounded w-full text-left font-mono mb-4 leading-relaxed">
+        <p className="text-xs text-[#52665D] bg-[#F6F7F3] border border-[#D9E2DA] p-3 rounded w-full text-left font-mono mb-4 leading-relaxed">
           {notes}
         </p>
       )}
@@ -58,7 +58,7 @@ export function ProcessingState({
       {onCancel && (
         <button
           onClick={onCancel}
-          className="text-xs font-medium text-[#52687B] hover:text-[#1A2E42] underline transition-colors"
+          className="text-xs font-medium text-[#52665D] hover:text-[#1A2B25] underline transition-colors"
         >
           Cancel Processing
         </button>

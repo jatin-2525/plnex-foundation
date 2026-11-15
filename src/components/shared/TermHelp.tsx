@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
-import { HelpCircle, X, ExternalLink, BookOpen } from 'lucide-react';
+import { Info, X, ExternalLink, BookOpen } from 'lucide-react';
 
 export type ProjectControlTerm =
   | 'float'
@@ -184,11 +184,11 @@ export function TermHelp({
         }}
         aria-label={`Explain term: ${def.name}`}
         title={`Click for definition: ${def.name}`}
-        className={`inline-flex items-center gap-0.5 text-inherit hover:text-[#0F6B68] transition-colors cursor-pointer border-b border-dotted border-[#52687B] hover:border-[#0F6B68] ${className}`}
+        className={`inline-flex items-center gap-0.5 text-inherit hover:text-[#006B61] dark:hover:text-[#72C6AD] transition-colors cursor-pointer border-b border-dotted border-[#52665D] dark:border-[#93A3B8] hover:border-[#006B61] dark:hover:border-[#72C6AD] ${className}`}
       >
         <span>{children || def.name}</span>
         {showIcon && (
-          <HelpCircle className="w-3 h-3 text-[#52687B] hover:text-[#0F6B68] shrink-0 ml-0.5 inline" />
+          <Info className="w-3.5 h-3.5 text-[#52665D] dark:text-[#B5C1B5] hover:text-[#006B61] dark:hover:text-[#72C6AD] shrink-0 ml-0.5 inline" />
         )}
       </button>
 
@@ -197,19 +197,19 @@ export function TermHelp({
           ref={popoverRef}
           role="dialog"
           aria-label={def.name}
-          className="absolute z-50 left-0 bottom-full mb-2 w-80 sm:w-96 p-4 bg-white rounded-lg border border-[#D6E1E9] shadow-lg text-left text-xs font-normal text-[#1A2E42] animate-in fade-in zoom-in-95 duration-100"
+          className="absolute z-50 left-0 bottom-full mb-2 w-80 sm:w-96 p-4 bg-white dark:bg-[#17221D] rounded-xl border border-[#D9E2DA] dark:border-[#3A5146] shadow-xl text-left text-xs font-normal text-[#1A2B25] dark:text-[#F2F4E9] animate-in fade-in zoom-in-95 duration-100"
           style={{ maxWidth: 'calc(100vw - 32px)' }}
         >
           {/* Header */}
-          <div className="flex items-start justify-between gap-2 pb-2 border-b border-[#D6E1E9]">
+          <div className="flex items-start justify-between gap-2 pb-2 border-b border-[#D9E2DA] dark:border-[#3A5146]">
             <div className="flex items-center gap-1.5">
-              <BookOpen className="w-4 h-4 text-[#0F6B68]" />
-              <span className="font-bold text-sm text-[#1A2E42]">{def.name}</span>
+              <BookOpen className="w-4 h-4 text-[#006B61] dark:text-[#72C6AD]" />
+              <span className="font-bold font-heading text-sm text-[#1A2B25] dark:text-[#F2F4E9]">{def.name}</span>
             </div>
             <button
               type="button"
               onClick={() => setIsOpen(false)}
-              className="p-1 text-[#52687B] hover:text-[#1A2E42] rounded hover:bg-[#F4F7FB] transition-colors"
+              className="p-1 text-[#52665D] hover:text-[#1A2B25] dark:text-[#B5C1B5] dark:hover:text-[#F2F4E9] rounded-md hover:bg-[#F6F7F3] dark:hover:bg-[#243832] transition-colors"
               aria-label="Close explanation"
             >
               <X className="w-3.5 h-3.5" />
@@ -218,13 +218,13 @@ export function TermHelp({
 
           {/* Body */}
           <div className="py-2.5 space-y-2">
-            <p className="text-[#1A2E42] leading-relaxed">
+            <p className="text-[#1A2B25] dark:text-[#F2F4E9] leading-relaxed">
               {def.detail}
             </p>
 
             {def.formula && (
-              <div className="p-2 rounded bg-[#F4F7FB] border border-[#D6E1E9] font-mono text-[11px] text-[#0F6B68]">
-                <strong className="text-[#52687B] font-sans block text-[10px] uppercase tracking-wider mb-0.5">
+              <div className="p-2 rounded bg-[#F6F7F3] dark:bg-[#243832] border border-[#D9E2DA] dark:border-[#3A5146] font-mono text-[11px] text-[#006B61] dark:text-[#72C6AD]">
+                <strong className="text-[#52665D] dark:text-[#B5C1B5] font-sans block text-[10px] uppercase tracking-wider mb-0.5">
                   Calculation Formula:
                 </strong>
                 {def.formula}
@@ -233,9 +233,9 @@ export function TermHelp({
           </div>
 
           {/* Footer */}
-          <div className="pt-2 border-t border-[#D6E1E9] flex items-center justify-between text-[10px] text-[#52687B]">
+          <div className="pt-2 border-t border-[#D9E2DA] dark:border-[#3A5146] flex items-center justify-between text-[10px] text-[#52665D] dark:text-[#B5C1B5]">
             <span>Standard: {def.referenceStandard}</span>
-            <span className="font-mono text-[#0F6B68]">PLnEX Controls</span>
+            <span className="font-mono text-[#006B61] dark:text-[#72C6AD]">PLnEX Controls</span>
           </div>
         </div>
       )}

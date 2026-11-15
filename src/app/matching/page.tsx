@@ -251,7 +251,7 @@ export default function MatchingPage() {
       accessorKey: 'id',
       width: '110px',
       cell: ({ row }) => (
-        <span className="font-mono text-xs font-bold text-[#52687B] bg-[#EAF1F5] px-2 py-0.5 rounded">
+        <span className="font-mono text-xs font-bold text-[#52665D] bg-[#EAF0E9] px-2 py-0.5 rounded">
           {row.id}
         </span>
       ),
@@ -261,8 +261,8 @@ export default function MatchingPage() {
       header: 'Field Execution Report',
       cell: ({ row }) => (
         <div>
-          <p className="text-xs font-medium text-[#1A2E42] leading-snug">{row.rawText}</p>
-          <div className="flex items-center gap-2 text-[11px] text-[#52687B] font-mono mt-0.5">
+          <p className="text-xs font-medium text-[#1A2B25] leading-snug">{row.rawText}</p>
+          <div className="flex items-center gap-2 text-[11px] text-[#52665D] font-mono mt-0.5">
             <span>Date: {row.eventDate}</span>
             <span>•</span>
             <span>Discipline: {row.discipline}</span>
@@ -279,16 +279,16 @@ export default function MatchingPage() {
         <div>
           {row.matchedActivityId ? (
             <div className="flex items-center gap-2">
-              <span className="font-mono text-xs font-bold text-[#0F6B68]">
+              <span className="font-mono text-xs font-bold text-[#006B61]">
                 {row.matchedActivityId}
               </span>
-              <span className="text-xs text-[#1A2E42] truncate">{row.matchedActivityName}</span>
+              <span className="text-xs text-[#1A2B25] truncate">{row.matchedActivityName}</span>
             </div>
           ) : (
-            <span className="text-xs text-[#A44339] font-semibold">Unmatched (Review Needed)</span>
+            <span className="text-xs text-[#A43B36] font-semibold">Unmatched (Review Needed)</span>
           )}
           {row.matchedReasons && row.matchedReasons.length > 0 && (
-            <p className="text-[11px] text-[#52687B] italic mt-0.5">{row.matchedReasons[0]}</p>
+            <p className="text-[11px] text-[#52665D] italic mt-0.5">{row.matchedReasons[0]}</p>
           )}
         </div>
       ),
@@ -300,7 +300,7 @@ export default function MatchingPage() {
       cell: ({ row }) => (
         <div>
           <ConfidenceBadge score={row.confidence} size="sm" />
-          <span className="text-[10px] text-[#7B8798] block mt-0.5">Assistive Score</span>
+          <span className="text-[10px] text-[#738A80] block mt-0.5">Assistive Score</span>
         </div>
       ),
     },
@@ -317,7 +317,7 @@ export default function MatchingPage() {
               status={isApproved ? 'Verified' : isRejected ? 'Blocked' : 'Pending Review'}
               size="xs"
             />
-            <span className="text-[10px] text-[#7B8798] block mt-0.5">
+            <span className="text-[10px] text-[#738A80] block mt-0.5">
               {isApproved ? 'Committed to Twin' : 'Awaiting Review'}
             </span>
           </div>
@@ -333,7 +333,7 @@ export default function MatchingPage() {
         <div className="flex items-center justify-end gap-2" onClick={(e) => e.stopPropagation()}>
           <button
             onClick={() => setActiveReviewEvent(row)}
-            className="px-3 py-1 bg-[#EAF1F5] hover:bg-[#D6E1E9] text-[#1A2E42] rounded text-xs font-semibold transition-colors"
+            className="px-3 py-1 bg-[#EAF0E9] hover:bg-[#D9E2DA] text-[#1A2B25] rounded text-xs font-semibold transition-colors"
           >
             Review Match
           </button>
@@ -353,7 +353,7 @@ export default function MatchingPage() {
         actions={
           <Link
             href="/review"
-            className="inline-flex items-center gap-2 px-4 py-2 bg-[#0F6B68] hover:bg-[#135A72] border border-[#0F6B68] text-white text-xs font-bold rounded-lg shadow-xs transition-colors"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-[#006B61] hover:bg-[#00524A] border border-[#006B61] text-white text-xs font-bold rounded-lg shadow-xs transition-colors"
           >
             <ShieldCheck className="w-4 h-4" />
             <span>Open Review Queue</span>
@@ -380,46 +380,46 @@ export default function MatchingPage() {
 
         {/* Verification Policy Summary Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-          <div className="bg-white border border-[#B8DCC9] border-l-4 border-l-[#2E7D5B] rounded-lg p-4 flex items-start gap-3 shadow-2xs">
-            <div className="w-8 h-8 rounded bg-[#E5F6EE] text-[#2E7D5B] flex items-center justify-center flex-shrink-0">
+          <div className="bg-white border border-[#B7DAC3] border-l-4 border-l-[#2E7D5B] rounded-lg p-4 flex items-start gap-3 shadow-2xs">
+            <div className="w-8 h-8 rounded bg-[#E4F1E9] text-[#1F6B4E] flex items-center justify-center flex-shrink-0">
               <CheckCircle2 className="w-4 h-4" />
             </div>
             <div>
-              <span className="text-[11px] font-bold text-[#2E7D5B] font-mono px-1.5 py-0.5 rounded bg-[#E5F6EE] border border-[#B8DCC9]">
+              <span className="text-[11px] font-bold text-[#1F6B4E] font-mono px-1.5 py-0.5 rounded bg-[#E4F1E9] border border-[#B7DAC3]">
                 ≥ 90% CONFIDENCE RECOMMENDATION
               </span>
-              <p className="text-xs text-[#1A2E42] font-bold mt-1">High-Confidence Candidate</p>
-              <p className="text-[11px] text-[#52687B] mt-0.5">
+              <p className="text-xs text-[#1A2B25] font-bold mt-1">High-Confidence Candidate</p>
+              <p className="text-[11px] text-[#52665D] mt-0.5">
                 Exact alignment across line, area, and trade boundaries. Recommended for 1-click approval; remains pending in review queue until confirmed by engineer.
               </p>
             </div>
           </div>
 
-          <div className="bg-white border border-[#F0D4A6] border-l-4 border-l-[#965E0D] rounded-lg p-4 flex items-start gap-3 shadow-2xs">
-            <div className="w-8 h-8 rounded bg-[#FEF4E6] text-[#8C5311] flex items-center justify-center flex-shrink-0">
+          <div className="bg-white border border-[#E5C185] border-l-4 border-l-[#81500B] rounded-lg p-4 flex items-start gap-3 shadow-2xs">
+            <div className="w-8 h-8 rounded bg-[#F8EFDA] text-[#825700] flex items-center justify-center flex-shrink-0">
               <AlertTriangle className="w-4 h-4" />
             </div>
             <div>
-              <span className="text-[11px] font-bold text-[#8C5311] font-mono px-1.5 py-0.5 rounded bg-[#FEF4E6] border border-[#F0D4A6]">
+              <span className="text-[11px] font-bold text-[#825700] font-mono px-1.5 py-0.5 rounded bg-[#F8EFDA] border border-[#E5C185]">
                 70% – 89% PLANNER REVIEW REQUIRED
               </span>
-              <p className="text-xs text-[#1A2E42] font-bold mt-1">Ambiguous / Partial Match</p>
-              <p className="text-[11px] text-[#52687B] mt-0.5">
+              <p className="text-xs text-[#1A2B25] font-bold mt-1">Ambiguous / Partial Match</p>
+              <p className="text-[11px] text-[#52665D] mt-0.5">
                 Partial name alignment or missing parameters. Requires planner review and candidate alternative selection.
               </p>
             </div>
           </div>
 
-          <div className="bg-white border border-[#E4B0AA] border-l-4 border-l-[#A44339] rounded-lg p-4 flex items-start gap-3 shadow-2xs">
-            <div className="w-8 h-8 rounded bg-[#FDEEED] text-[#A44339] flex items-center justify-center flex-shrink-0">
+          <div className="bg-white border border-[#DCABA7] border-l-4 border-l-[#92372F] rounded-lg p-4 flex items-start gap-3 shadow-2xs">
+            <div className="w-8 h-8 rounded bg-[#F6E4E1] text-[#A43B36] flex items-center justify-center flex-shrink-0">
               <XCircle className="w-4 h-4" />
             </div>
             <div>
-              <span className="text-[11px] font-bold text-[#A44339] font-mono px-1.5 py-0.5 rounded bg-[#FDEEED] border border-[#E4B0AA]">
+              <span className="text-[11px] font-bold text-[#A43B36] font-mono px-1.5 py-0.5 rounded bg-[#F6E4E1] border border-[#DCABA7]">
                 &lt; 70% UNMATCHED / MANUAL SCOPE
               </span>
-              <p className="text-xs text-[#1A2E42] font-bold mt-1">Manual Scope Resolution</p>
-              <p className="text-[11px] text-[#52687B] mt-0.5">
+              <p className="text-xs text-[#1A2B25] font-bold mt-1">Manual Scope Resolution</p>
+              <p className="text-[11px] text-[#52665D] mt-0.5">
                 Reported work not found in baseline WBS. Reviewer can rematch to WBS activity or mark as out-of-scope work.
               </p>
             </div>
@@ -532,14 +532,14 @@ export default function MatchingPage() {
           <>
             <button
               onClick={() => setIsRematchModalOpen(false)}
-              className="px-4 py-2 text-xs font-semibold text-[#52687B] hover:text-[#1A2E42] bg-white rounded-lg border border-[#D6E1E9] hover:bg-[#F4F7FB] transition-colors"
+              className="px-4 py-2 text-xs font-semibold text-[#52665D] hover:text-[#1A2B25] bg-white rounded-lg border border-[#D9E2DA] hover:bg-[#F6F7F3] transition-colors"
             >
               Cancel
             </button>
             <button
               onClick={handleRematchConfirm}
               disabled={!selectedRematchTarget}
-              className="px-4 py-2 text-xs font-bold bg-[#0F6B68] hover:bg-[#135A72] border border-[#0F6B68] text-white rounded-lg shadow-xs disabled:opacity-50 transition-colors"
+              className="px-4 py-2 text-xs font-bold bg-[#006B61] hover:bg-[#00524A] border border-[#006B61] text-white rounded-lg shadow-xs disabled:opacity-50 transition-colors"
             >
               Assign Selected Activity
             </button>
@@ -548,11 +548,11 @@ export default function MatchingPage() {
       >
         <div className="space-y-4 text-xs">
           <div>
-            <label className="font-bold text-[#1A2E42] block mb-1">Target Schedule Activity (WBS)</label>
+            <label className="font-bold text-[#1A2B25] block mb-1">Target Schedule Activity (WBS)</label>
             <select
               value={selectedRematchTarget}
               onChange={(e) => setSelectedRematchTarget(e.target.value)}
-              className="w-full p-3 text-xs bg-white border border-[#D6E1E9] rounded-lg outline-none focus:border-[#0F6B68]"
+              className="w-full p-3 text-xs bg-white border border-[#D9E2DA] rounded-lg outline-none focus:border-[#006B61]"
             >
               <option value="">-- Choose activity from WBS --</option>
               {MOCK_ACTIVITIES.map((act) => (
@@ -564,13 +564,13 @@ export default function MatchingPage() {
           </div>
 
           <div>
-            <label className="font-bold text-[#1A2E42] block mb-1">Planner Override Justification</label>
+            <label className="font-bold text-[#1A2B25] block mb-1">Planner Override Justification</label>
             <textarea
               value={rematchReason}
               onChange={(e) => setRematchReason(e.target.value)}
               placeholder="State reason for manual reassignment (e.g., spool scope corresponds to line tie-in)..."
               rows={3}
-              className="w-full p-3 text-xs bg-[#F4F7FB] border border-[#D6E1E9] rounded-lg outline-none focus:border-[#0F6B68]"
+              className="w-full p-3 text-xs bg-[#F6F7F3] border border-[#D9E2DA] rounded-lg outline-none focus:border-[#006B61]"
             />
           </div>
         </div>

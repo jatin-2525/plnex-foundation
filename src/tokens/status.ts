@@ -14,7 +14,9 @@ export type PipelineStage =
 export type ActivityStatus =
   | 'on-track'
   | 'at-risk'
+  | 'forecast-late'
   | 'delayed'
+  | 'completed-late'
   | 'completed'
   | 'pending'
   | 'not-started'
@@ -65,46 +67,60 @@ export function getActivityStatusConfig(status: ActivityStatus): StatusBadgeConf
     case 'in-progress':
       return {
         label: 'On Track',
-        color: '#176B53',
-        bgColor: '#E5F6EE',
-        borderColor: '#BCE7D2',
+        color: '#1F6B4E',
+        bgColor: '#E4F1E9',
+        borderColor: '#B7DAC3',
       };
     case 'at-risk':
       return {
         label: 'At Risk',
-        color: '#965E0D',
-        bgColor: '#FEF4E6',
-        borderColor: '#FCD9A8',
+        color: '#825700',
+        bgColor: '#F8EFDA',
+        borderColor: '#E5C185',
+      };
+    case 'forecast-late':
+      return {
+        label: 'Forecast Late',
+        color: '#825700',
+        bgColor: '#F8EFDA',
+        borderColor: '#E5C185',
       };
     case 'delayed':
       return {
         label: 'Delayed',
-        color: '#A44339',
-        bgColor: '#FDEEED',
-        borderColor: '#FAC7C3',
+        color: '#A43B36',
+        bgColor: '#F6E4E1',
+        borderColor: '#DCABA7',
+      };
+    case 'completed-late':
+      return {
+        label: 'Completed Late',
+        color: '#52665D',
+        bgColor: '#EAF0E9',
+        borderColor: '#D9E2DA',
       };
     case 'completed':
       return {
         label: 'Completed',
-        color: '#176B53',
-        bgColor: '#E5F6EE',
-        borderColor: '#BCE7D2',
+        color: '#1F6B4E',
+        bgColor: '#E4F1E9',
+        borderColor: '#B7DAC3',
       };
     case 'blocked':
       return {
         label: 'Blocked',
-        color: '#7B2857',
-        bgColor: '#F8EAF1',
-        borderColor: '#ECC4DA',
+        color: '#A43B36',
+        bgColor: '#F6E4E1',
+        borderColor: '#DCABA7',
       };
     case 'pending':
     case 'not-started':
     default:
       return {
         label: 'Pending Review',
-        color: '#3B55A3',
-        bgColor: '#EBF2FF',
-        borderColor: '#C6D8FF',
+        color: '#2C6475',
+        bgColor: '#E3EEF1',
+        borderColor: '#AECFD6',
       };
   }
 }
@@ -115,31 +131,31 @@ export function getEventStatusConfig(status: EventStatus): StatusBadgeConfig {
     case 'approved':
       return {
         label: 'Verified',
-        color: '#176B53',
-        bgColor: '#E5F6EE',
-        borderColor: '#BCE7D2',
+        color: '#1F6B4E',
+        bgColor: '#E4F1E9',
+        borderColor: '#B7DAC3',
       };
     case 'pending-review':
     case 'pending-verification':
       return {
         label: 'Pending Review',
-        color: '#3B55A3',
-        bgColor: '#EBF2FF',
-        borderColor: '#C6D8FF',
+        color: '#2C6475',
+        bgColor: '#E3EEF1',
+        borderColor: '#AECFD6',
       };
     case 'rematched':
       return {
         label: 'Unmatched',
-        color: '#52687B',
-        bgColor: '#EDF1F5',
-        borderColor: '#D4DDE6',
+        color: '#52665D',
+        bgColor: '#EAF0E9',
+        borderColor: '#D9E2DA',
       };
     case 'rejected':
       return {
         label: 'Blocked',
-        color: '#7B2857',
-        bgColor: '#F8EAF1',
-        borderColor: '#ECC4DA',
+        color: '#A43B36',
+        bgColor: '#F6E4E1',
+        borderColor: '#DCABA7',
       };
   }
 }
@@ -149,25 +165,25 @@ export function getMatchConfidenceConfig(confidence: MatchConfidence): StatusBad
     case 'high':
       return {
         label: 'High Confidence',
-        color: colors.status.success,
-        bgColor: colors.status.successBg,
-        borderColor: colors.status.successBorder,
+        color: '#1F6B4E',
+        bgColor: '#E4F1E9',
+        borderColor: '#B7DAC3',
       };
     case 'medium':
       return {
         label: 'Review Required',
-        color: colors.status.warningText,
-        bgColor: colors.status.warningBg,
-        borderColor: colors.status.warningBorder,
+        color: '#825700',
+        bgColor: '#F8EFDA',
+        borderColor: '#E5C185',
       };
     case 'low':
     case 'unmatched':
     default:
       return {
         label: 'Unmatched',
-        color: colors.status.critical,
-        bgColor: colors.status.criticalBg,
-        borderColor: colors.status.criticalBorder,
+        color: '#52665D',
+        bgColor: '#EAF0E9',
+        borderColor: '#D9E2DA',
       };
   }
 }
@@ -183,37 +199,37 @@ export function getVarianceSeverityConfig(severity: VarianceSeverity): StatusBad
     case 'positive':
       return {
         label: 'Ahead of Schedule',
-        color: colors.status.success,
-        bgColor: colors.status.successBg,
-        borderColor: colors.status.successBorder,
+        color: '#1F6B4E',
+        bgColor: '#E4F1E9',
+        borderColor: '#B7DAC3',
       };
     case 'neutral':
       return {
         label: 'On Schedule',
-        color: colors.status.info,
-        bgColor: colors.status.infoBg,
-        borderColor: colors.status.infoBorder,
+        color: '#2C6475',
+        bgColor: '#E3EEF1',
+        borderColor: '#AECFD6',
       };
     case 'minor':
       return {
         label: 'Minor Delay',
-        color: colors.status.warningText,
-        bgColor: colors.status.warningBg,
-        borderColor: colors.status.warningBorder,
+        color: '#825700',
+        bgColor: '#F8EFDA',
+        borderColor: '#E5C185',
       };
     case 'moderate':
       return {
         label: 'Moderate Delay',
-        color: colors.status.warningText,
-        bgColor: colors.status.warningBg,
-        borderColor: colors.status.warningBorder,
+        color: '#825700',
+        bgColor: '#F8EFDA',
+        borderColor: '#E5C185',
       };
     case 'severe':
       return {
         label: 'Critical Delay',
-        color: colors.status.critical,
-        bgColor: colors.status.criticalBg,
-        borderColor: colors.status.criticalBorder,
+        color: '#A43B36',
+        bgColor: '#F6E4E1',
+        borderColor: '#DCABA7',
       };
   }
 }

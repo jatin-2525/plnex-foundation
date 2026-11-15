@@ -1,7 +1,8 @@
 'use client';
 
 import React from 'react';
-import { CHART_TOKENS } from '@/tokens';
+import { CHART_TOKENS_LIGHT, CHART_TOKENS_DARK } from '@/tokens';
+import { useTheme } from '@/context/ThemeContext';
 
 export interface HorizontalBarItem {
   id: string; // e.g. "CIV-11-001" or "PIP-24-002"
@@ -27,57 +28,47 @@ export interface HorizontalBarChartProps {
   maxBars?: number;
 }
 
-// Canonical Delayed Activities Dataset
+// Canonical Delayed Activities Dataset (Reconciled with 4 Register Delay Drivers)
 const DEFAULT_DELAYED_ACTIVITIES: HorizontalBarItem[] = [
   {
-    id: 'CIV-11-001',
-    label: 'Foundation Block A - Compressor Pedestal',
-    subLabel: 'Civil • Area 01',
+    id: 'CIV-11-002',
+    label: 'Compressor House Baseplate Grouting & Anchor Setting',
+    subLabel: 'Civil • Area 01 • Critical Path',
     value: 5,
     valueDisplay: '+5 Days',
     isCritical: true,
     totalFloat: 0,
-    contextNote: 'Curing hold and concrete test report verification delay',
+    contextNote: 'Curing hold and anchor setting verification delay; driving project critical path (+5d)',
   },
   {
     id: 'PIP-24-002',
-    label: 'Weld Line 24-XX Field Joints & NDT',
-    subLabel: 'Piping • Area 01',
-    value: 4,
-    valueDisplay: '+4 Days',
-    isCritical: true,
-    totalFloat: 0,
-    contextNote: 'Monsoon squall stoppage and evening shift RT hold',
-  },
-  {
-    id: 'PIP-24-001',
-    label: 'Erect Line 24-XX High Pressure Header',
-    subLabel: 'Piping • Area 01',
+    label: 'Weld Line 24-XX Field Joints & NDT Clearance',
+    subLabel: 'Piping • Area 01 • Critical Path',
     value: 2,
     valueDisplay: '+2 Days',
     isCritical: true,
     totalFloat: 0,
-    contextNote: 'Crane mobilization delayed by muddy ground at laydown',
+    contextNote: 'Monsoon squall stoppage and evening shift RT hold; 14 of 20 welds verified',
   },
   {
     id: 'ELE-11-032',
-    label: 'Cable Tray Installation - Gallery',
-    subLabel: 'Electrical • Area 02',
+    label: 'Cable Tray Installation - Substation to Compressor Bay',
+    subLabel: 'Electrical • Area 02 • Absorbing Float',
     value: 2,
     valueDisplay: '+2 Days',
     isCritical: false,
     totalFloat: 2,
-    contextNote: 'Bracket shipment arrival delayed by 2 days; absorbs float',
+    contextNote: 'Bracket shipment arrival delayed by 2 days; absorbs float, non-critical',
   },
   {
-    id: 'INS-04-015',
-    label: 'Transmitter Instrument Impulse Tubing',
-    subLabel: 'Instrumentation • Area 01',
+    id: 'MEC-02-008',
+    label: 'Align Flare K.O. Drum Vessel',
+    subLabel: 'Mechanical • Area 01 • Buffered',
     value: 1,
     valueDisplay: '+1 Day',
     isCritical: false,
-    totalFloat: 5,
-    contextNote: 'Held awaiting piping hydrotest clearance sign-off',
+    totalFloat: 3,
+    contextNote: 'Flange orientation mismatch resolved with fab shop shim; 3d float remaining',
   },
 ];
 
@@ -208,6 +199,9 @@ export function HorizontalBarChart({
   const displaySubtitle = subtitle || defaultSubtitle;
   const displayQuestion = projectQuestion || defaultQuestion;
 
+  const { resolvedTheme } = useTheme();
+  const tokens = resolvedTheme === 'dark' ? CHART_TOKENS_DARK : CHART_TOKENS_LIGHT;
+
   const displayList = effectiveItems.slice(0, maxBars);
   const maxVal = Math.max(...displayList.map((i) => i.value), 1);
 
@@ -224,26 +218,26 @@ export function HorizontalBarChart({
   const plotW = width - padLeft - padRight;
 
   return (
-    <div className={`bg-white rounded-lg border border-[#D6E1E9] p-4 sm:p-6 shadow-xs text-[#1A2E42] ${className}`}>
+    <div className={`bg-white dark:bg-[#17221D] rounded-lg border border-[#D9E2DA] dark:border-[#3A5146] p-4 sm:p-6 shadow-xs text-[#1A2B25] dark:text-[#F2F4E9] ${className}`}>
       {/* Header */}
-      <div className="flex flex-col lg:flex-row lg:items-center justify-between pb-3 border-b border-[#D6E1E9] gap-3">
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between pb-3 border-b border-[#D9E2DA] dark:border-[#3A5146] gap-3">
         <div>
           <div className="flex items-center gap-2 flex-wrap">
-            <h3 className="text-base font-bold text-[#1A2E42] tracking-tight">{displayTitle}</h3>
-            <span className="px-2 py-0.5 rounded bg-[#EAF1F5] text-[#0F6B68] border border-[#D6E1E9] text-[10px] font-mono font-bold">
+            <h3 className="text-base font-bold font-heading text-[#1A2B25] dark:text-[#F2F4E9] tracking-tight">{displayTitle}</h3>
+            <span className="px-2 py-0.5 rounded bg-[#EAF0E9] dark:bg-[#243832] text-[#006B61] dark:text-[#72C6AD] border border-[#D9E2DA] dark:border-[#3A5146] text-[10px] font-mono font-bold">
               Unit: {effectiveUnit}
             </span>
-            <span className="px-2 py-0.5 rounded bg-[#F4F7FB] text-[#52687B] border border-[#D6E1E9] text-[10px] font-mono">
+            <span className="px-2 py-0.5 rounded bg-[#F6F7F3] dark:bg-[#243832] text-[#52665D] dark:text-[#B5C1B5] border border-[#D9E2DA] dark:border-[#3A5146] text-[10px] font-mono">
               {timeRange}
             </span>
           </div>
-          <p className="text-xs text-[#52687B] mt-0.5">{displaySubtitle}</p>
+          <p className="text-xs text-[#52665D] dark:text-[#B5C1B5] mt-0.5">{displaySubtitle}</p>
         </div>
 
         {/* Project Question Banner (only if explicitly provided) */}
         {projectQuestion && (
-          <div className="px-3 py-1.5 rounded bg-[#EAF1F5] border border-[#D6E1E9] text-xs font-mono text-[#0F6B68] font-semibold self-start lg:self-auto max-w-md">
-            <span className="font-sans font-bold text-[#1A2E42] block text-[10px] uppercase tracking-wide">
+          <div className="px-3 py-1.5 rounded bg-[#EAF0E9] dark:bg-[#243832] border border-[#D9E2DA] dark:border-[#3A5146] text-xs font-mono text-[#006B61] dark:text-[#72C6AD] font-semibold self-start lg:self-auto max-w-md">
+            <span className="font-sans font-bold text-[#1A2B25] dark:text-[#F2F4E9] block text-[10px] uppercase tracking-wide">
               Project Question:
             </span>
             {displayQuestion}
@@ -270,7 +264,7 @@ export function HorizontalBarChart({
                     y1={padTop}
                     x2={x}
                     y2={height - padBottom}
-                    stroke={CHART_TOKENS.neutral.grid}
+                    stroke={tokens.neutral.grid}
                     strokeWidth="1"
                     strokeDasharray={ratio === 0 ? undefined : '3,3'}
                   />
@@ -279,7 +273,7 @@ export function HorizontalBarChart({
                     y={height - padBottom + 16}
                     textAnchor="middle"
                     fontSize="10"
-                    fill="#52687B"
+                    fill={resolvedTheme === 'dark' ? '#B5C1B5' : '#52665D'}
                     fontFamily="inherit"
                   >
                     {variant === 'top-variances' ? `-${tickVal}%` : `${tickVal} ${effectiveUnit}`}
@@ -295,7 +289,7 @@ export function HorizontalBarChart({
               textAnchor="middle"
               fontSize="10"
               fontWeight="bold"
-              fill="#52687B"
+              fill={resolvedTheme === 'dark' ? '#B5C1B5' : '#52665D'}
             >
               {variant === 'delayed-activities'
                 ? `Schedule Delay Duration (${effectiveUnit})`
@@ -310,31 +304,31 @@ export function HorizontalBarChart({
               const barLen = Math.max(6, (item.value / maxVal) * plotW);
 
               // Colors and multi-channel descriptors based on variant & criticality
-              let barColor: string = CHART_TOKENS.planned.stroke;
+              let barColor: string = tokens.planned.stroke;
               let statusBadge = '';
 
               if (variant === 'delayed-activities') {
                 if (item.isCritical) {
-                  barColor = CHART_TOKENS.critical.fill;
+                  barColor = tokens.critical.fill;
                   statusBadge = '[✕ Critical Path]';
                 } else {
-                  barColor = CHART_TOKENS.warning.fill;
+                  barColor = tokens.warning.fill;
                   statusBadge = `[▲ Float: ${item.totalFloat ?? 0}d]`;
                 }
               } else if (variant === 'top-variances') {
                 if (item.value >= 12) {
-                  barColor = CHART_TOKENS.critical.fill;
+                  barColor = tokens.critical.fill;
                   statusBadge = '[✕ Critical Slip]';
                 } else {
-                  barColor = CHART_TOKENS.warning.fill;
+                  barColor = tokens.warning.fill;
                   statusBadge = '[▲ Warning Slip]';
                 }
               } else if (variant === 'review-backlog') {
                 if (item.value >= 6) {
-                  barColor = CHART_TOKENS.critical.fill;
+                  barColor = tokens.critical.fill;
                   statusBadge = '[✕ High Priority]';
                 } else {
-                  barColor = CHART_TOKENS.planned.stroke;
+                  barColor = tokens.planned.stroke;
                   statusBadge = '[● Standard Queue]';
                 }
               }
@@ -347,7 +341,7 @@ export function HorizontalBarChart({
                     y={y - 4}
                     width={width - 8}
                     height={rowSpacing - 6}
-                    fill={CHART_TOKENS.neutral.bg}
+                    fill={tokens.neutral.bg}
                     opacity="0.4"
                     rx={4}
                   />
@@ -359,7 +353,7 @@ export function HorizontalBarChart({
                     textAnchor="end"
                     fontSize="11"
                     fontWeight="bold"
-                    fill={CHART_TOKENS.neutral.heading}
+                    fill={tokens.neutral.heading}
                   >
                     {item.label}
                   </text>
@@ -371,7 +365,7 @@ export function HorizontalBarChart({
                     textAnchor="end"
                     fontSize="9"
                     fontFamily="monospace"
-                    fill={item.isCritical ? CHART_TOKENS.critical.text : CHART_TOKENS.neutral.text}
+                    fill={item.isCritical ? tokens.critical.text : tokens.neutral.text}
                   >
                     {item.id} • {item.subLabel || ''}
                     {item.isCritical ? ' [CRITICAL PATH ✕]' : ''}
@@ -383,7 +377,7 @@ export function HorizontalBarChart({
                     y={y + 4}
                     width={plotW}
                     height={barHeight - 6}
-                    fill={CHART_TOKENS.neutral.border}
+                    fill={tokens.neutral.border}
                     rx={3}
                   />
 
@@ -416,27 +410,27 @@ export function HorizontalBarChart({
       </div>
 
       {/* Legend & Summary with Multi-Channel Symbols */}
-      <div className="flex flex-wrap items-center justify-between gap-4 mt-3 pt-3 border-t border-[#D6E1E9] text-xs text-[#52687B]">
+      <div className="flex flex-wrap items-center justify-between gap-4 mt-3 pt-3 border-t border-[#D9E2DA] dark:border-[#3A5146] text-xs text-[#52665D] dark:text-[#B5C1B5]">
         <div className="flex items-center gap-4 flex-wrap">
           {variant === 'delayed-activities' ? (
             <>
               <div className="flex items-center gap-2">
                 <span
                   className="w-4 h-4 inline-flex items-center justify-center rounded-xs text-[10px] text-white font-bold leading-none"
-                  style={{ backgroundColor: CHART_TOKENS.critical.fill }}
+                  style={{ backgroundColor: tokens.critical.fill }}
                 >
                   ✕
                 </span>
-                <span className="font-semibold text-[#1A2E42]">Critical Path Delay (Zero Float)</span>
+                <span className="font-semibold text-[#1A2B25] dark:text-[#F2F4E9]">Critical Path Delay (Zero Float)</span>
               </div>
               <div className="flex items-center gap-2">
                 <span
                   className="w-4 h-4 inline-flex items-center justify-center rounded-xs text-[10px] text-white font-bold leading-none"
-                  style={{ backgroundColor: CHART_TOKENS.warning.fill }}
+                  style={{ backgroundColor: tokens.warning.fill }}
                 >
                   ▲
                 </span>
-                <span>Secondary Float Delay</span>
+                <span className="text-[#52665D] dark:text-[#B5C1B5]">Secondary Float Delay</span>
               </div>
             </>
           ) : variant === 'top-variances' ? (
@@ -444,20 +438,20 @@ export function HorizontalBarChart({
               <div className="flex items-center gap-2">
                 <span
                   className="w-4 h-4 inline-flex items-center justify-center rounded-xs text-[10px] text-white font-bold leading-none"
-                  style={{ backgroundColor: CHART_TOKENS.critical.fill }}
+                  style={{ backgroundColor: tokens.critical.fill }}
                 >
                   ✕
                 </span>
-                <span className="font-semibold text-[#1A2E42]">Severe Variance (&ge; 12% Slip)</span>
+                <span className="font-semibold text-[#1A2B25] dark:text-[#F2F4E9]">Severe Variance (&ge; 12% Slip)</span>
               </div>
               <div className="flex items-center gap-2">
                 <span
                   className="w-4 h-4 inline-flex items-center justify-center rounded-xs text-[10px] text-white font-bold leading-none"
-                  style={{ backgroundColor: CHART_TOKENS.warning.fill }}
+                  style={{ backgroundColor: tokens.warning.fill }}
                 >
                   ▲
                 </span>
-                <span>Moderate Variance (&lt; 12% Slip)</span>
+                <span className="text-[#52665D] dark:text-[#B5C1B5]">Moderate Variance (&lt; 12% Slip)</span>
               </div>
             </>
           ) : (
@@ -465,26 +459,26 @@ export function HorizontalBarChart({
               <div className="flex items-center gap-2">
                 <span
                   className="w-4 h-4 inline-flex items-center justify-center rounded-xs text-[10px] text-white font-bold leading-none"
-                  style={{ backgroundColor: CHART_TOKENS.critical.fill }}
+                  style={{ backgroundColor: tokens.critical.fill }}
                 >
                   ✕
                 </span>
-                <span className="font-semibold text-[#1A2E42]">High Priority Backlog (&ge; 6 Items)</span>
+                <span className="font-semibold text-[#1A2B25] dark:text-[#F2F4E9]">High Priority Backlog (&ge; 6 Items)</span>
               </div>
               <div className="flex items-center gap-2">
                 <span
                   className="w-4 h-4 inline-flex items-center justify-center rounded-xs text-[10px] text-white font-bold leading-none"
-                  style={{ backgroundColor: CHART_TOKENS.planned.stroke }}
+                  style={{ backgroundColor: tokens.planned.stroke }}
                 >
                   ●
                 </span>
-                <span>Standard Review Queue</span>
+                <span className="text-[#52665D] dark:text-[#B5C1B5]">Standard Review Queue</span>
               </div>
             </>
           )}
         </div>
 
-        <div className="text-[11px] text-[#52687B] font-mono">
+        <div className="text-[11px] text-[#52665D] dark:text-[#B5C1B5] font-mono">
           Showing Top {displayList.length} Drivers • Primavera P6 Live Model
         </div>
       </div>

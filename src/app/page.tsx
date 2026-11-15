@@ -36,11 +36,11 @@ export default function RootPage() {
   }, [isAuthenticated, isAuthReady, userSession, router]);
 
   return (
-    <div className="min-h-screen bg-[#F4F7FB] flex flex-col items-center justify-center p-4">
+    <div className="min-h-screen bg-[#F6F7F3] dark:bg-[#101815] flex flex-col items-center justify-center p-4">
       <div className="flex flex-col items-center gap-3">
         <Logo size="lg" />
-        <div className="flex items-center gap-2 text-xs font-mono text-[#52687B]">
-          <Loader2 className="w-4 h-4 animate-spin text-[#0F6B68]" />
+        <div className="flex items-center gap-2 text-xs font-mono text-[#52665D] dark:text-[#B5C1B5]">
+          <Loader2 className="w-4 h-4 animate-spin text-[#006B61] dark:text-[#72C6AD]" />
           <span>Verifying PLnEX session authority...</span>
         </div>
       </div>

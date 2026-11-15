@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useApp } from '../../context/AppContext';
 import { useToast } from '../../context/ToastContext';
 import { useOffline } from '../../context/OfflineContext';
+import { usePreferences } from '../../context/PreferencesContext';
 import { Breadcrumbs } from '../../components/shell/Breadcrumbs';
 import { StateWrapper } from '../../components/shared/StateWrapper';
 import { StatusBadge } from '../../components/shared/StatusBadge';
@@ -40,6 +41,7 @@ import {
   FileSpreadsheet,
   Layers,
   ExternalLink,
+  MessageSquare,
 } from 'lucide-react';
 
 export interface TodayActivityItem extends ScheduleActivity {
@@ -91,6 +93,7 @@ export interface FieldEvidenceItem {
 export default function EngineerDashboardPage() {
   const { activeProject, userSession } = useApp();
   const { addToast } = useToast();
+  const { engineer } = usePreferences();
   const {
     isOffline,
     effectiveStatus,
@@ -102,12 +105,18 @@ export default function EngineerDashboardPage() {
 
   // Field Capture Modal State
   const [isCaptureModalOpen, setIsCaptureModalOpen] = useState(false);
-  const [selectedActivityForCapture, setSelectedActivityForCapture] = useState<string>('PIP-24-002');
+  const [selectedActivityForCapture, setSelectedActivityForCapture] = useState<string>(
+    engineer.defaultWorkPackage || 'PIP-24-002'
+  );
   const [customStatement, setCustomStatement] = useState('');
   const [quantityValue, setQuantityValue] = useState<number>(4);
   const [quantityUnit, setQuantityUnit] = useState<string>('joints');
   const [attachedPhotoName, setAttachedPhotoName] = useState<string | null>(null);
   const [isSubmittingCapture, setIsSubmittingCapture] = useState(false);
+
+  // Ergonomic touch scale class (WCAG 2.2 AA compliant >= 44px, glove mode scales to >= 52px)
+  const isGloveMode = engineer.touchTargetScale === 'glove';
+  const touchBtnClass = isGloveMode ? 'min-h-[52px] py-3.5 px-5 text-sm' : 'min-h-[44px] py-2 px-4 text-xs sm:text-sm';
 
   // Detail Modal for Recent Updates
   const [selectedDetailUpdate, setSelectedDetailUpdate] = useState<TodaySubmission | null>(null);
@@ -392,6 +401,21 @@ export default function EngineerDashboardPage() {
     },
   ]);
 
+  // Specific list filters so counters match visible records 1:1
+  const [signoffFilter, setSignoffFilter] = useState<'pending' | 'all'>('pending');
+  const [eventStreamFilter, setEventStreamFilter] = useState<'all' | 'queued' | 'synced'>('all');
+
+  const filteredPendingVerifications = pendingVerifications.filter((v) => {
+    if (signoffFilter === 'pending') return v.status !== 'Verified';
+    return true;
+  });
+
+  const filteredTodaySubmissions = todaySubmissions.filter((sub) => {
+    if (eventStreamFilter === 'queued') return !sub.isSynced;
+    if (eventStreamFilter === 'synced') return sub.isSynced;
+    return true;
+  });
+
   const breadcrumbs = [
     { label: 'Site Execution' },
     { label: 'Engineer Dashboard', current: true },
@@ -547,9 +571,9 @@ export default function EngineerDashboardPage() {
 
         {/* OFFLINE MODE BANNER */}
         {isOffline && (
-          <div className="p-4 rounded-lg bg-[#FEF4E6] border border-[#F0D4A6] flex items-center justify-between gap-3 text-xs text-[#8C5311]">
+          <div className="p-4 rounded-lg bg-[#F8EFDA] dark:bg-[#3D2808] border border-[#E5C185] dark:border-[#523712] flex items-center justify-between gap-3 text-xs text-[#825700] dark:text-[#F3B765] transition-colors">
             <div className="flex items-center gap-2">
-              <span className="px-2 py-0.5 rounded bg-[#965E0D] text-white font-mono font-bold text-[10px] uppercase">
+              <span className="px-2 py-0.5 rounded bg-[#81500B] text-white font-mono font-bold text-[10px] uppercase">
                 OFFLINE MODE
               </span>
               <span className="font-semibold">
@@ -558,7 +582,7 @@ export default function EngineerDashboardPage() {
             </div>
             <Link
               href="/sync"
-              className="px-3 py-1 bg-white border border-[#F0D4A6] rounded text-[#8C5311] hover:bg-[#FEF4E6] font-mono font-bold text-[11px] whitespace-nowrap"
+              className="px-3 py-1 bg-white dark:bg-[#17221D] border border-[#E5C185] dark:border-[#523712] rounded text-[#825700] dark:text-[#F3B765] hover:bg-[#F8EFDA] dark:hover:bg-[#243832] font-mono font-bold text-[11px] whitespace-nowrap"
             >
               {metrics.pendingUploads} Queued for Sync
             </Link>
@@ -569,81 +593,91 @@ export default function EngineerDashboardPage() {
         {/* HEADER & PRACTICAL FIELD CONTEXT */}
         {/* Site Engineer Greeting, Shift, Location & Primary Action Triggers */}
         {/* ========================================================= */}
-        <div className="bg-white border border-[#D6E1E9] rounded-lg p-4 sm:p-6 shadow-xs">
+        <div className="bg-white dark:bg-[#17221D] border border-[#D9E2DA] dark:border-[#3A5146] rounded-lg p-4 sm:p-6 shadow-xs transition-colors">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
             <div>
               {/* Engineer identity & connection indicator */}
               <div className="flex items-center gap-2 mb-2 flex-wrap">
-                <span className="text-sm sm:text-base font-bold text-[#1A2E42]">
-                  {greeting}, <strong className="text-[#0F6B68]">{currentUserName}</strong>
+                <span className="text-sm sm:text-base font-bold text-[#1A2B25] dark:text-[#F2F4E9]">
+                  {greeting}, <strong className="text-[#006B61] dark:text-[#72C6AD]">{currentUserName}</strong>
                 </span>
-                <span className="text-[#7B8798] hidden sm:inline">•</span>
+                <span className="text-[#738A80] dark:text-[#859688] hidden sm:inline">•</span>
                 {userSession?.role === 'admin' ? (
-                  <span className="px-2 py-0.5 rounded bg-[#EAF1F5] text-[#0F6B68] border border-[#D6E1E9] text-xs font-semibold">
+                  <span className="px-2 py-0.5 rounded bg-[#EAF0E9] dark:bg-[#243832] text-[#006B61] dark:text-[#72C6AD] border border-[#D9E2DA] dark:border-[#3A5146] text-xs font-semibold">
                     Admin Previewing Engineer Workspace
                   </span>
                 ) : (
-                  <span className="text-xs font-semibold text-[#52687B]">
+                  <span className="text-xs font-semibold text-[#52665D] dark:text-[#B5C1B5]">
                     Site Field Construction Engineer
                   </span>
                 )}
-                <span className="text-[#7B8798] hidden sm:inline">•</span>
+                <span className="text-[#738A80] dark:text-[#859688] hidden sm:inline">•</span>
                 <div
                   className={`inline-flex items-center gap-2 px-2 py-0.5 rounded-md text-[11px] font-mono font-bold border ${
                     effectiveStatus === 'OFFLINE'
-                      ? 'bg-[#FDEEED] border-[#E4B0AA] text-[#A44339]'
-                      : 'bg-[#E5F6EE] border-[#B8DCC9] text-[#2E7D5B]'
+                      ? 'bg-[#F6E4E1] dark:bg-[#3D1418] border-[#DCABA7] dark:border-[#5C2329] text-[#A43B36] dark:text-[#FF9E94]'
+                      : 'bg-[#E4F1E9] dark:bg-[#0D3326] border-[#B7DAC3] dark:border-[#1E4D3A] text-[#1F6B4E] dark:text-[#4ADE80]'
                   }`}
                 >
                   <span
                     className={`w-2 h-2 rounded-full ${
-                      effectiveStatus === 'OFFLINE' ? 'bg-[#A44339]' : 'bg-[#2E7D5B]'
+                      effectiveStatus === 'OFFLINE' ? 'bg-[#92372F] dark:bg-[#F87171]' : 'bg-[#2E7D5B] dark:bg-[#4ADE80]'
                     }`}
                   />
-                  <span>{effectiveStatus === 'OFFLINE' ? 'Offline' : 'Online'}</span>
+                  <span>{effectiveStatus === 'OFFLINE' ? 'Offline (Local)' : 'Simulated Online (Sandbox)'}</span>
                 </div>
               </div>
 
               {/* Project title */}
-              <h1 className="text-[28px] sm:text-3xl font-bold text-[#1A2E42] tracking-tight">
+              <h1 className="text-[28px] sm:text-3xl font-bold text-[#1A2B25] dark:text-[#F2F4E9] tracking-tight font-heading">
                 {activeProject.name}
               </h1>
 
               {/* Practical site context */}
-              <div className="flex items-center gap-3 text-xs text-[#52687B] mt-2 flex-wrap">
+              <div className="flex items-center gap-3 text-xs text-[#52665D] dark:text-[#B5C1B5] mt-2 flex-wrap">
                 <span className="inline-flex items-center gap-1">
-                  <MapPin className="w-3.5 h-3.5 text-[#0F6B68]" />
-                  <span>Area / Scope: <strong className="text-[#1A2E42]">Unit A & Substation (Multi-Discipline Field Execution)</strong></span>
+                  <MapPin className="w-3.5 h-3.5 text-[#006B61] dark:text-[#72C6AD]" />
+                  <span>Area / Scope: <strong className="text-[#1A2B25] dark:text-[#F2F4E9]">Unit A & Substation (Multi-Discipline Field Execution)</strong></span>
                 </span>
                 <span>•</span>
                 <span className="inline-flex items-center gap-1">
-                  <Clock className="w-3.5 h-3.5 text-[#52687B]" />
-                  <span>Shift: <strong className="text-[#1A2E42]">Shift A (Day)</strong></span>
+                  <Clock className="w-3.5 h-3.5 text-[#52665D] dark:text-[#B5C1B5]" />
+                  <span>Shift: <strong className="text-[#1A2B25] dark:text-[#F2F4E9]">Shift A (Day)</strong></span>
                 </span>
                 <span>•</span>
-                <span>Reporting Date: <strong className="text-[#1A2E42] font-mono">{formatProjectDate(PROJECT_REPORT_DATE, true)}</strong></span>
+                <span>Reporting Date: <strong className="text-[#1A2B25] dark:text-[#F2F4E9] font-mono">{formatProjectDate(PROJECT_REPORT_DATE, true)}</strong></span>
               </div>
             </div>
 
-            {/* Fast Action Buttons (Touch-friendly >= 44px) */}
-            <div className="flex items-center gap-2 self-stretch sm:self-start lg:self-center">
+            {/* Fast Action Buttons (Touch-friendly >= 44px, scaling to 52px in glove mode) */}
+            <div className="flex items-center gap-2 self-stretch sm:self-start lg:self-center flex-wrap">
               <button
                 type="button"
                 onClick={() => {
                   setSelectedActivityForCapture('PIP-24-002');
                   setIsCaptureModalOpen(true);
                 }}
-                className="flex-1 sm:flex-initial min-h-[44px] px-4 py-2 text-xs sm:text-sm font-bold text-white bg-[#0F6B68] hover:bg-[#135A72] active:scale-98 rounded-lg shadow-xs transition-all inline-flex items-center justify-center gap-2 cursor-pointer"
+                className={`flex-1 sm:flex-initial ${touchBtnClass} font-bold text-white bg-[#103F39] hover:bg-[#0C312C] dark:bg-[#72C6AD] dark:hover:bg-[#5a8f7b] dark:text-[#0B2822] active:scale-98 rounded-lg shadow-xs transition-all inline-flex items-center justify-center gap-2 cursor-pointer`}
               >
                 <Plus className="w-4 h-4 stroke-[2.5]" />
                 <span>CAPTURE UPDATE</span>
               </button>
 
               <Link
-                href="/field/dpr"
-                className="flex-1 sm:flex-initial min-h-[44px] px-4 py-2 text-xs sm:text-sm font-bold text-[#1A2E42] bg-white hover:bg-[#EAF1F5] active:scale-98 border border-[#D6E1E9] rounded-lg transition-all inline-flex items-center justify-center gap-2 cursor-pointer"
+                href="/messages"
+                className={`flex-1 sm:flex-initial ${touchBtnClass} font-bold text-[#1A2B25] dark:text-[#F2F4E9] bg-white dark:bg-[#17221D] hover:bg-[#EAF0E9] active:scale-98 border border-[#D9E2DA] dark:border-[#3A5146] rounded-lg transition-all inline-flex items-center justify-center gap-2 cursor-pointer`}
+                title="Message Project Manager (Rajesh Sharma)"
               >
-                <FileText className="w-4 h-4 text-[#52687B]" />
+                <MessageSquare className="w-4 h-4 text-[#1A2B25] dark:text-[#72C6AD]" />
+                <span>MESSAGES</span>
+                <span className="px-1.5 py-0.2 rounded-full bg-[#F5EAD4] text-[#765216] dark:bg-[#352712] dark:text-[#E3B66A] text-[10px] font-bold">1</span>
+              </Link>
+
+              <Link
+                href="/field/dpr"
+                className={`flex-1 sm:flex-initial ${touchBtnClass} font-bold text-[#1A2B25] dark:text-[#F2F4E9] bg-white dark:bg-[#17221D] hover:bg-[#EAF0E9] active:scale-98 border border-[#D9E2DA] dark:border-[#3A5146] rounded-lg transition-all inline-flex items-center justify-center gap-2 cursor-pointer`}
+              >
+                <FileText className="w-4 h-4 text-[#566159] dark:text-[#B5C1B5]" />
                 <span>CONTINUE DPR</span>
               </Link>
             </div>
@@ -655,58 +689,58 @@ export default function EngineerDashboardPage() {
         {/* Real-time counters: Assigned Today, Pending Uploads, Awaiting Review, High Priority */}
         {/* ========================================================= */}
         <section aria-label="Operational status counters" className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-          <div className="bg-white border border-[#D6E1E9] rounded-lg p-3 sm:p-4 shadow-2xs">
-            <div className="flex items-center justify-between text-xs text-[#52687B] mb-1">
+          <div className="bg-white dark:bg-[#17221D] border border-[#D9E2DA] dark:border-[#3A5146] rounded-lg p-3 sm:p-4 shadow-2xs transition-colors">
+            <div className="flex items-center justify-between text-xs text-[#52665D] dark:text-[#B5C1B5] mb-1">
               <span className="font-semibold uppercase tracking-wider text-[11px]">Assigned Today</span>
-              <HardHat className="w-4 h-4 text-[#0F6B68]" />
+              <HardHat className="w-4 h-4 text-[#006B61] dark:text-[#72C6AD]" />
             </div>
             <div className="flex items-baseline gap-1.5">
-              <span className="text-2xl font-bold font-mono text-[#1A2E42]">{todayActivities.length}</span>
-              <span className="text-xs text-[#52687B]">packages</span>
+              <span className="text-2xl font-bold font-mono text-[#1A2B25] dark:text-[#F2F4E9]">{todayActivities.length}</span>
+              <span className="text-xs text-[#52665D] dark:text-[#B5C1B5]">packages</span>
             </div>
-            <span className="text-[11px] text-[#52687B] block mt-1">Direct site execution scope</span>
+            <span className="text-[11px] text-[#52665D] dark:text-[#B5C1B5] block mt-1">Direct site execution scope</span>
           </div>
 
-          <div className="bg-white border border-[#D6E1E9] rounded-lg p-3 sm:p-4 shadow-2xs">
-            <div className="flex items-center justify-between text-xs text-[#52687B] mb-1">
+          <div className="bg-white dark:bg-[#17221D] border border-[#D9E2DA] dark:border-[#3A5146] rounded-lg p-3 sm:p-4 shadow-2xs transition-colors">
+            <div className="flex items-center justify-between text-xs text-[#52665D] dark:text-[#B5C1B5] mb-1">
               <span className="font-semibold uppercase tracking-wider text-[11px]">Pending Uploads</span>
-              <UploadCloud className="w-4 h-4 text-[#965E0D]" />
+              <UploadCloud className="w-4 h-4 text-[#825700] dark:text-[#F3B765]" />
             </div>
             <div className="flex items-baseline gap-1.5">
-              <span className="text-2xl font-bold font-mono text-[#1A2E42]">{metrics.pendingUploads}</span>
-              <span className="text-xs text-[#52687B]">in queue</span>
+              <span className="text-2xl font-bold font-mono text-[#1A2B25] dark:text-[#F2F4E9]">{metrics.pendingUploads}</span>
+              <span className="text-xs text-[#52665D] dark:text-[#B5C1B5]">in queue</span>
             </div>
-            <span className="text-[11px] text-[#8C5311] block mt-1">
+            <span className="text-[11px] text-[#825700] dark:text-[#F3B765] block mt-1">
               {isOffline ? 'Queued offline (IndexedDB)' : 'Ready for sync'}
             </span>
           </div>
 
-          <div className="bg-white border border-[#D6E1E9] rounded-lg p-3 sm:p-4 shadow-2xs">
-            <div className="flex items-center justify-between text-xs text-[#52687B] mb-1">
+          <div className="bg-white dark:bg-[#17221D] border border-[#D9E2DA] dark:border-[#3A5146] rounded-lg p-3 sm:p-4 shadow-2xs transition-colors">
+            <div className="flex items-center justify-between text-xs text-[#52665D] dark:text-[#B5C1B5] mb-1">
               <span className="font-semibold uppercase tracking-wider text-[11px]">Awaiting Review</span>
-              <Clock className="w-4 h-4 text-[#0F6B68]" />
+              <Clock className="w-4 h-4 text-[#006B61] dark:text-[#72C6AD]" />
             </div>
             <div className="flex items-baseline gap-1.5">
-              <span className="text-2xl font-bold font-mono text-[#1A2E42]">
+              <span className="text-2xl font-bold font-mono text-[#1A2B25] dark:text-[#F2F4E9]">
                 {pendingVerifications.filter((v) => v.status !== 'Verified').length}
               </span>
-              <span className="text-xs text-[#52687B]">items</span>
+              <span className="text-xs text-[#52665D] dark:text-[#B5C1B5]">items</span>
             </div>
-            <span className="text-[11px] text-[#52687B] block mt-1">Pending QC & lead stamp</span>
+            <span className="text-[11px] text-[#52665D] dark:text-[#B5C1B5] block mt-1">Pending QC & lead stamp</span>
           </div>
 
-          <div className="bg-white border border-[#D6E1E9] rounded-lg p-3 sm:p-4 shadow-2xs">
-            <div className="flex items-center justify-between text-xs text-[#52687B] mb-1">
+          <div className="bg-white dark:bg-[#17221D] border border-[#D9E2DA] dark:border-[#3A5146] rounded-lg p-3 sm:p-4 shadow-2xs transition-colors">
+            <div className="flex items-center justify-between text-xs text-[#52665D] dark:text-[#B5C1B5] mb-1">
               <span className="font-semibold uppercase tracking-wider text-[11px]">High Priority</span>
-              <AlertCircle className="w-4 h-4 text-[#A44339]" />
+              <AlertCircle className="w-4 h-4 text-[#A43B36] dark:text-[#FF9E94]" />
             </div>
             <div className="flex items-baseline gap-1.5">
-              <span className="text-2xl font-bold font-mono text-[#A44339]">
+              <span className="text-2xl font-bold font-mono text-[#A43B36] dark:text-[#FF9E94]">
                 {todayActivities.filter((a) => a.priority === 'High').length}
               </span>
-              <span className="text-xs text-[#52687B]">critical</span>
+              <span className="text-xs text-[#52665D] dark:text-[#B5C1B5]">critical</span>
             </div>
-            <span className="text-[11px] text-[#A44339] font-medium block mt-1">Immediate fit-up / weld priority</span>
+            <span className="text-[11px] text-[#A43B36] dark:text-[#FF9E94] font-medium block mt-1">Immediate fit-up / weld priority</span>
           </div>
         </section>
 
@@ -714,33 +748,33 @@ export default function EngineerDashboardPage() {
         {/* 1. TODAY'S WORK (ASSIGNED WORK PACKAGES) */}
         {/* Unified operational board with View Mode switcher (Cards vs Table) */}
         {/* ========================================================= */}
-        <section aria-labelledby="todays-work-heading" className="bg-white border border-[#D6E1E9] border-l-4 border-l-[#0F6B68] rounded-lg p-4 sm:p-6 shadow-xs space-y-4">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D6E1E9] gap-3">
+        <section aria-labelledby="todays-work-heading" className="bg-white dark:bg-[#17221D] border border-[#D9E2DA] dark:border-[#3A5146] border-l-4 border-l-[#006B61] dark:border-l-[#72C6AD] rounded-lg p-4 sm:p-6 shadow-xs space-y-4 transition-colors">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D9E2DA] dark:border-[#3A5146] gap-3">
             <div>
               <div className="flex items-center gap-2 flex-wrap">
-                <HardHat className="w-5 h-5 text-[#0F6B68]" />
-                <h2 id="todays-work-heading" className="text-base sm:text-lg font-bold text-[#1A2E42] tracking-tight">
+                <HardHat className="w-5 h-5 text-[#006B61] dark:text-[#72C6AD]" />
+                <h2 id="todays-work-heading" className="text-base sm:text-lg font-bold text-[#1A2B25] dark:text-[#F2F4E9] tracking-tight font-heading">
                   Today&apos;s Work Assignments
                 </h2>
-                <span className="px-2 py-0.5 rounded bg-[#EAF1F5] text-[#0F6B68] border border-[#D6E1E9] text-xs font-mono font-bold">
+                <span className="px-2 py-0.5 rounded bg-[#EAF0E9] dark:bg-[#243832] text-[#006B61] dark:text-[#72C6AD] border border-[#D9E2DA] dark:border-[#3A5146] text-xs font-mono font-bold">
                   {todayActivities.length} PACKAGES ASSIGNED
                 </span>
               </div>
-              <p className="text-xs text-[#52687B] mt-0.5">
+              <p className="text-xs text-[#52665D] dark:text-[#B5C1B5] mt-0.5">
                 Work packages scheduled for site execution, fit-up verification, and welding logging today.
               </p>
             </div>
 
             {/* Filter pills and View Mode Switcher */}
             <div className="flex items-center gap-2 self-start sm:self-center flex-wrap">
-              <div className="flex items-center gap-1 bg-[#EAF1F5] p-1 rounded-md">
+              <div className="flex items-center gap-1 bg-[#EAF0E9] dark:bg-[#101815] p-1 rounded-md">
                 <button
                   type="button"
                   onClick={() => setActivityFilter('all')}
-                  className={`px-2.5 py-1 text-xs font-semibold rounded ${
+                  className={`px-2.5 py-1 text-xs font-semibold rounded transition-colors cursor-pointer ${
                     activityFilter === 'all'
-                      ? 'bg-white text-[#0F6B68] shadow-2xs'
-                      : 'text-[#52687B] hover:text-[#1A2E42]'
+                      ? 'bg-white dark:bg-[#243832] text-[#006B61] dark:text-[#72C6AD] shadow-2xs'
+                      : 'text-[#52665D] dark:text-[#B5C1B5] hover:text-[#1A2B25] dark:hover:text-[#F2F4E9]'
                   }`}
                 >
                   All ({todayActivities.length})
@@ -748,10 +782,10 @@ export default function EngineerDashboardPage() {
                 <button
                   type="button"
                   onClick={() => setActivityFilter('needs-update')}
-                  className={`px-2.5 py-1 text-xs font-semibold rounded ${
+                  className={`px-2.5 py-1 text-xs font-semibold rounded transition-colors cursor-pointer ${
                     activityFilter === 'needs-update'
-                      ? 'bg-[#965E0D] text-white'
-                      : 'text-[#52687B] hover:text-[#1A2E42]'
+                      ? 'bg-[#81500B] text-white'
+                      : 'text-[#52665D] dark:text-[#B5C1B5] hover:text-[#1A2B25] dark:hover:text-[#F2F4E9]'
                   }`}
                 >
                   Needs Update ({updatesRequiredCount})
@@ -759,10 +793,10 @@ export default function EngineerDashboardPage() {
                 <button
                   type="button"
                   onClick={() => setActivityFilter('completed')}
-                  className={`px-2.5 py-1 text-xs font-semibold rounded ${
+                  className={`px-2.5 py-1 text-xs font-semibold rounded transition-colors cursor-pointer ${
                     activityFilter === 'completed'
                       ? 'bg-[#2E7D5B] text-white'
-                      : 'text-[#52687B] hover:text-[#1A2E42]'
+                      : 'text-[#52665D] dark:text-[#B5C1B5] hover:text-[#1A2B25] dark:hover:text-[#F2F4E9]'
                   }`}
                 >
                   Done ({completedActivitiesCount})
@@ -770,14 +804,14 @@ export default function EngineerDashboardPage() {
               </div>
 
               {/* View Toggle */}
-              <div className="flex items-center gap-1 border border-[#D6E1E9] p-0.5 rounded-md">
+              <div className="flex items-center gap-1 border border-[#D9E2DA] dark:border-[#3A5146] p-0.5 rounded-md">
                 <button
                   type="button"
                   onClick={() => setViewMode('cards')}
-                  className={`px-2 py-1 text-xs font-semibold rounded ${
+                  className={`px-2 py-1 text-xs font-semibold rounded transition-colors cursor-pointer ${
                     viewMode === 'cards'
-                      ? 'bg-[#0F6B68] text-white'
-                      : 'text-[#52687B] hover:text-[#1A2E42]'
+                      ? 'bg-[#006B61] dark:bg-[#006B61] text-white'
+                      : 'text-[#52665D] dark:text-[#B5C1B5] hover:text-[#1A2B25] dark:hover:text-[#F2F4E9]'
                   }`}
                 >
                   Cards
@@ -785,10 +819,10 @@ export default function EngineerDashboardPage() {
                 <button
                   type="button"
                   onClick={() => setViewMode('table')}
-                  className={`px-2 py-1 text-xs font-semibold rounded ${
+                  className={`px-2 py-1 text-xs font-semibold rounded transition-colors cursor-pointer ${
                     viewMode === 'table'
-                      ? 'bg-[#0F6B68] text-white'
-                      : 'text-[#52687B] hover:text-[#1A2E42]'
+                      ? 'bg-[#006B61] dark:bg-[#006B61] text-white'
+                      : 'text-[#52665D] dark:text-[#B5C1B5] hover:text-[#1A2B25] dark:hover:text-[#F2F4E9]'
                   }`}
                 >
                   Table
@@ -803,26 +837,26 @@ export default function EngineerDashboardPage() {
               {filteredActivities.map((act) => (
                 <div
                   key={act.id}
-                  className={`p-4 rounded-lg border bg-white transition-all shadow-2xs flex flex-col justify-between space-y-3 group ${
+                  className={`p-4 rounded-lg border bg-white dark:bg-[#243832] transition-all shadow-2xs flex flex-col justify-between space-y-3 group ${
                     act.priority === 'High'
-                      ? 'border-[#E4B0AA] border-l-4 border-l-[#A44339]'
-                      : 'border-[#D6E1E9] hover:border-[#0F6B68]'
+                      ? 'border-[#DCABA7] dark:border-[#5C2329] border-l-4 border-l-[#92372F] dark:border-l-[#F87171]'
+                      : 'border-[#D9E2DA] dark:border-[#3A5146] hover:border-[#006B61] dark:hover:border-[#72C6AD]'
                   }`}
                 >
                   <div className="space-y-2">
                     {/* Top Bar: Activity ID, Priority & Status */}
                     <div className="flex items-center justify-between gap-2">
                       <div className="flex items-center gap-1.5">
-                        <span className="font-mono text-xs font-bold text-[#0F6B68] px-2 py-0.5 rounded bg-[#EAF1F5] border border-[#D6E1E9]">
+                        <span className="font-mono text-xs font-bold text-[#006B61] dark:text-[#72C6AD] px-2 py-0.5 rounded bg-[#EAF0E9] dark:bg-[#17221D] border border-[#D9E2DA] dark:border-[#3A5146]">
                           {act.id}
                         </span>
                         <span
                           className={`text-[10px] font-mono font-bold uppercase px-1.5 py-0.5 rounded border ${
                             act.priority === 'High'
-                              ? 'bg-[#FDEEED] text-[#A44339] border-[#E4B0AA]'
+                              ? 'bg-[#F6E4E1] dark:bg-[#3D1418] text-[#A43B36] dark:text-[#FF9E94] border-[#DCABA7] dark:border-[#5C2329]'
                               : act.priority === 'Medium'
-                              ? 'bg-[#FEF4E6] text-[#8C5311] border-[#F0D4A6]'
-                              : 'bg-[#EAF1F5] text-[#52687B] border-[#D6E1E9]'
+                              ? 'bg-[#F8EFDA] dark:bg-[#3D2808] text-[#825700] dark:text-[#F3B765] border-[#E5C185] dark:border-[#523712]'
+                              : 'bg-[#EAF0E9] dark:bg-[#17221D] text-[#52665D] dark:text-[#B5C1B5] border-[#D9E2DA] dark:border-[#3A5146]'
                           }`}
                         >
                           {act.priority} Priority
@@ -832,27 +866,27 @@ export default function EngineerDashboardPage() {
                     </div>
 
                     {/* Title */}
-                    <h3 className="text-xs sm:text-sm font-bold text-[#1A2E42] leading-snug">
+                    <h3 className="text-xs sm:text-sm font-bold text-[#1A2B25] dark:text-[#F2F4E9] leading-snug">
                       {act.name}
                     </h3>
 
                     {/* Operational Context: Area & Discipline */}
-                    <div className="flex items-center gap-2 text-xs text-[#52687B] flex-wrap">
+                    <div className="flex items-center gap-2 text-xs text-[#52665D] dark:text-[#B5C1B5] flex-wrap">
                       <span className="inline-flex items-center gap-1">
-                        <MapPin className="w-3 h-3 text-[#0F6B68]" />
+                        <MapPin className="w-3 h-3 text-[#006B61] dark:text-[#72C6AD]" />
                         <span>{act.area}</span>
                       </span>
                       <span>•</span>
-                      <span className="font-medium text-[#1A2E42]">{act.discipline}</span>
+                      <span className="font-medium text-[#1A2B25] dark:text-[#F2F4E9]">{act.discipline}</span>
                     </div>
 
                     {/* Progress Bar with highlighted delta */}
                     <div className="space-y-1 pt-1">
                       <div className="flex items-center justify-between text-[11px] font-mono">
-                        <span className="font-bold text-[#1A2E42]">
-                          Progress: <strong className="text-[#0F6B68]">{act.actualProgress}%</strong>
+                        <span className="font-bold text-[#1A2B25] dark:text-[#F2F4E9]">
+                          Progress: <strong className="text-[#006B61] dark:text-[#72C6AD]">{act.actualProgress}%</strong>
                         </span>
-                        <span className={act.actualProgress < act.plannedProgress ? 'text-[#A44339] font-bold' : 'text-[#52687B]'}>
+                        <span className={act.actualProgress < act.plannedProgress ? 'text-[#A43B36] dark:text-[#FF9E94] font-bold' : 'text-[#52665D] dark:text-[#B5C1B5]'}>
                           Target: {act.plannedProgress}% {act.actualProgress < act.plannedProgress ? '(Delayed)' : ''}
                         </span>
                       </div>
@@ -867,14 +901,14 @@ export default function EngineerDashboardPage() {
                   </div>
 
                   {/* Card Action & Last Update */}
-                  <div className="flex items-center justify-between pt-2 border-t border-[#EAF1F5] text-xs">
-                    <span className="text-[11px] font-mono text-[#7B8798]">
+                  <div className="flex items-center justify-between pt-2 border-t border-[#EAF1F5] dark:border-[#3A5146] text-xs">
+                    <span className="text-[11px] font-mono text-[#738A80] dark:text-[#859688]">
                       {act.lastUpdateText}
                     </span>
                     <button
                       type="button"
                       onClick={() => handleOpenCaptureForActivity(act.id)}
-                      className="min-h-[36px] px-3 py-1.5 text-xs font-bold text-white bg-[#0F6B68] hover:bg-[#135A72] active:scale-95 rounded-md transition-all inline-flex items-center gap-1.5 shadow-2xs cursor-pointer"
+                      className={`min-h-[36px] px-3 py-1.5 text-xs font-bold text-white bg-[#006B61] hover:bg-[#00524A] dark:bg-[#006B61] dark:hover:bg-[#0b96a5] active:scale-95 rounded-md transition-all inline-flex items-center gap-1.5 shadow-2xs cursor-pointer`}
                     >
                       <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
                       <span>Capture Update</span>
@@ -885,41 +919,41 @@ export default function EngineerDashboardPage() {
             </div>
           ) : (
             /* COMPACT TABLE VIEW */
-            <div className="overflow-x-auto border border-[#D6E1E9] rounded-lg">
+            <div className="overflow-x-auto border border-[#D9E2DA] dark:border-[#3A5146] rounded-lg">
               <table className="w-full min-w-[700px] text-left border-collapse text-xs">
-                <thead className="sticky top-0 z-10 bg-[#F4F7FB] border-b border-[#D6E1E9] text-[#52687B] font-semibold text-[11px] uppercase tracking-wider h-10">
+                <thead className="sticky top-0 z-10 bg-[#F6F7F3] dark:bg-[#243832] border-b border-[#D9E2DA] dark:border-[#3A5146] text-[#52665D] dark:text-[#B5C1B5] font-semibold text-[11px] uppercase tracking-wider h-10">
                   <tr>
-                    <th className="py-2.5 px-3">Activity</th>
-                    <th className="py-2.5 px-3">Area</th>
-                    <th className="py-2.5 px-3">Status</th>
-                    <th className="py-2.5 px-3 min-w-[140px]">Progress</th>
-                    <th className="py-2.5 px-3 text-right">Action</th>
+                    <th scope="col" className="py-2.5 px-3">Activity</th>
+                    <th scope="col" className="py-2.5 px-3">Area</th>
+                    <th scope="col" className="py-2.5 px-3">Status</th>
+                    <th scope="col" className="py-2.5 px-3 min-w-[140px]">Progress</th>
+                    <th scope="col" className="py-2.5 px-3 text-right">Action</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#D6E1E9]/60 text-[#1A2E42]">
+                <tbody className="divide-y divide-[#D9E2DA]/60 dark:divide-[#3A5146] text-[#1A2B25] dark:text-[#F2F4E9]">
                   {filteredActivities.map((act) => (
-                    <tr key={act.id} className="h-10 hover:bg-[#F9FAFC] transition-colors">
+                    <tr key={act.id} className="h-10 hover:bg-[#F9FAFC] dark:hover:bg-[#243832] transition-colors">
                       <td className="py-2.5 px-3 font-medium">
                         <div className="flex items-center gap-2">
-                          <span className="font-mono font-bold text-[#0F6B68]">{act.id}</span>
-                          <span className="text-[#1A2E42] font-semibold">{act.name}</span>
+                          <span className="font-mono font-bold text-[#006B61] dark:text-[#72C6AD]">{act.id}</span>
+                          <span className="text-[#1A2B25] dark:text-[#F2F4E9] font-semibold">{act.name}</span>
                           {act.priority === 'High' && (
-                            <span className="text-[9px] font-mono font-bold px-1 rounded bg-[#FDEEED] text-[#A44339] border border-[#E4B0AA]">
+                            <span className="text-[9px] font-mono font-bold px-1 rounded bg-[#F6E4E1] dark:bg-[#3D1418] text-[#A43B36] dark:text-[#FF9E94] border border-[#DCABA7] dark:border-[#5C2329]">
                               HIGH
                             </span>
                           )}
                         </div>
-                        <span className="text-[11px] text-[#52687B]">{act.discipline}</span>
+                        <span className="text-[11px] text-[#52665D] dark:text-[#B5C1B5]">{act.discipline}</span>
                       </td>
-                      <td className="py-2.5 px-3 text-[#52687B] whitespace-nowrap">{act.area}</td>
+                      <td className="py-2.5 px-3 text-[#52665D] dark:text-[#B5C1B5] whitespace-nowrap">{act.area}</td>
                       <td className="py-2.5 px-3 whitespace-nowrap">
                         <StatusBadge status={act.status} size="sm" />
                       </td>
                       <td className="py-2.5 px-3">
                         <div className="space-y-1">
                           <div className="flex justify-between font-mono text-[11px]">
-                            <span className="font-bold text-[#1A2E42]">{act.actualProgress}%</span>
-                            <span className="text-[#52687B]">Target: {act.plannedProgress}%</span>
+                            <span className="font-bold text-[#1A2B25] dark:text-[#F2F4E9]">{act.actualProgress}%</span>
+                            <span className="text-[#52665D] dark:text-[#B5C1B5]">Target: {act.plannedProgress}%</span>
                           </div>
                           <ProgressBar
                             actual={act.actualProgress}
@@ -934,7 +968,7 @@ export default function EngineerDashboardPage() {
                         <button
                           type="button"
                           onClick={() => handleOpenCaptureForActivity(act.id)}
-                          className="px-2.5 py-1 text-xs font-bold text-white bg-[#0F6B68] hover:bg-[#135A72] rounded transition-colors inline-flex items-center gap-1 shadow-2xs cursor-pointer"
+                          className="px-2.5 py-1 text-xs font-bold text-white bg-[#006B61] hover:bg-[#00524A] dark:bg-[#006B61] dark:hover:bg-[#0b96a5] rounded transition-colors inline-flex items-center gap-1 shadow-2xs cursor-pointer"
                         >
                           <Plus className="w-3 h-3 stroke-[2.5]" />
                           <span>Capture</span>
@@ -954,10 +988,10 @@ export default function EngineerDashboardPage() {
         {/* ========================================================= */}
         <section aria-labelledby="quick-actions-heading" className="space-y-2">
           <div className="flex items-center justify-between">
-            <h2 id="quick-actions-heading" className="text-xs font-semibold uppercase tracking-wider text-[#52687B]">
+            <h2 id="quick-actions-heading" className="text-xs font-semibold uppercase tracking-wider text-[#52665D] dark:text-[#B5C1B5] font-heading">
               Fast Field Actions
             </h2>
-            <span className="text-[11px] text-[#7B8798] font-mono">
+            <span className="text-[11px] text-[#738A80] dark:text-[#859688] font-mono">
               Direct execution capture
             </span>
           </div>
@@ -970,16 +1004,16 @@ export default function EngineerDashboardPage() {
                 setSelectedActivityForCapture('PIP-24-002');
                 setIsCaptureModalOpen(true);
               }}
-              className="p-3.5 bg-white hover:bg-[#F9FAFC] border-2 border-[#0F6B68]/30 hover:border-[#0F6B68] rounded-lg shadow-2xs text-left transition-all flex items-center gap-3 cursor-pointer group"
+              className="p-3.5 bg-white dark:bg-[#17221D] hover:bg-[#F9FAFC] dark:hover:bg-[#243832] border-2 border-[#006B61]/30 dark:border-[#72C6AD]/30 hover:border-[#006B61] dark:hover:border-[#72C6AD] rounded-lg shadow-2xs text-left transition-all flex items-center gap-3 cursor-pointer group"
             >
-              <div className="w-10 h-10 rounded-lg bg-[#EAF1F5] group-hover:bg-[#0F6B68] text-[#0F6B68] group-hover:text-white flex items-center justify-center flex-shrink-0 transition-colors">
+              <div className="w-10 h-10 rounded-lg bg-[#EAF0E9] dark:bg-[#243832] group-hover:bg-[#006B61] dark:group-hover:bg-[#006B61] text-[#006B61] dark:text-[#72C6AD] group-hover:text-white flex items-center justify-center flex-shrink-0 transition-colors">
                 <Plus className="w-5 h-5 stroke-[2.5]" />
               </div>
               <div className="min-w-0 flex-1">
-                <span className="text-xs sm:text-sm font-bold text-[#1A2E42] block">
+                <span className="text-xs sm:text-sm font-bold text-[#1A2B25] dark:text-[#F2F4E9] block">
                   Capture Field Work
                 </span>
-                <span className="text-[11px] text-[#52687B] block truncate">
+                <span className="text-[11px] text-[#52665D] dark:text-[#B5C1B5] block truncate">
                   Record joints, spools, or fit-up
                 </span>
               </div>
@@ -988,21 +1022,21 @@ export default function EngineerDashboardPage() {
             {/* Action 2: Create DPR */}
             <Link
               href="/field/dpr"
-              className="p-3.5 bg-white hover:bg-[#F9FAFC] border border-[#D6E1E9] hover:border-[#965E0D] rounded-lg shadow-2xs text-left transition-all flex items-center gap-3 group"
+              className="p-3.5 bg-white dark:bg-[#17221D] hover:bg-[#F9FAFC] dark:hover:bg-[#243832] border border-[#D9E2DA] dark:border-[#3A5146] hover:border-[#81500B] dark:hover:border-[#F3B765] rounded-lg shadow-2xs text-left transition-all flex items-center gap-3 group"
             >
-              <div className="w-10 h-10 rounded-lg bg-[#FEF4E6] group-hover:bg-[#965E0D] text-[#8C5311] group-hover:text-white flex items-center justify-center flex-shrink-0 transition-colors">
+              <div className="w-10 h-10 rounded-lg bg-[#F8EFDA] dark:bg-[#3D2808] group-hover:bg-[#81500B] text-[#825700] dark:text-[#F3B765] group-hover:text-white flex items-center justify-center flex-shrink-0 transition-colors">
                 <FileText className="w-5 h-5" />
               </div>
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-2">
-                  <span className="text-xs sm:text-sm font-bold text-[#1A2E42]">
+                  <span className="text-xs sm:text-sm font-bold text-[#1A2B25] dark:text-[#F2F4E9]">
                     Create / Edit DPR
                   </span>
-                  <span className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-[#FEF4E6] text-[#8C5311] border border-[#F0D4A6]">
+                  <span className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-[#F8EFDA] dark:bg-[#3D2808] text-[#825700] dark:text-[#F3B765] border border-[#E5C185] dark:border-[#523712]">
                     65% Draft
                   </span>
                 </div>
-                <span className="text-[11px] text-[#52687B] block truncate">
+                <span className="text-[11px] text-[#52665D] dark:text-[#B5C1B5] block truncate">
                   Continue Shift A daily diary
                 </span>
               </div>
@@ -1021,16 +1055,16 @@ export default function EngineerDashboardPage() {
                 setSelectedActivityForCapture('PIP-24-002');
                 setIsCaptureModalOpen(true);
               }}
-              className="p-3.5 bg-white hover:bg-[#F9FAFC] border border-[#D6E1E9] hover:border-[#0F6B68] rounded-lg shadow-2xs text-left transition-all flex items-center gap-3 cursor-pointer group"
+              className="p-3.5 bg-white dark:bg-[#17221D] hover:bg-[#F9FAFC] dark:hover:bg-[#243832] border border-[#D9E2DA] dark:border-[#3A5146] hover:border-[#006B61] dark:hover:border-[#72C6AD] rounded-lg shadow-2xs text-left transition-all flex items-center gap-3 cursor-pointer group"
             >
-              <div className="w-10 h-10 rounded-lg bg-[#EAF1F5] group-hover:bg-[#0F6B68] text-[#52687B] group-hover:text-white flex items-center justify-center flex-shrink-0 transition-colors">
+              <div className="w-10 h-10 rounded-lg bg-[#EAF0E9] dark:bg-[#243832] group-hover:bg-[#006B61] dark:group-hover:bg-[#006B61] text-[#52665D] dark:text-[#B5C1B5] group-hover:text-white flex items-center justify-center flex-shrink-0 transition-colors">
                 <Camera className="w-5 h-5" />
               </div>
               <div className="min-w-0 flex-1">
-                <span className="text-xs sm:text-sm font-bold text-[#1A2E42] block">
+                <span className="text-xs sm:text-sm font-bold text-[#1A2B25] dark:text-[#F2F4E9] block">
                   Add Site Evidence
                 </span>
-                <span className="text-[11px] text-[#52687B] block truncate">
+                <span className="text-[11px] text-[#52665D] dark:text-[#B5C1B5] block truncate">
                   Attach geotagged photo or certificate
                 </span>
               </div>
@@ -1042,46 +1076,68 @@ export default function EngineerDashboardPage() {
         {/* 3. PENDING VERIFICATION */}
         {/* Highlighted items awaiting inspection sign-off */}
         {/* ========================================================= */}
-        <section aria-labelledby="pending-verification-heading" className="bg-white border border-[#D6E1E9] border-l-4 border-l-[#965E0D] rounded-lg p-4 sm:p-6 shadow-xs space-y-4">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D6E1E9] gap-2">
+        <section aria-labelledby="pending-verification-heading" className="bg-white dark:bg-[#17221D] border border-[#D9E2DA] dark:border-[#3A5146] border-l-4 border-l-[#81500B] dark:border-l-[#F3B765] rounded-lg p-4 sm:p-6 shadow-xs space-y-4 transition-colors">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D9E2DA] dark:border-[#3A5146] gap-2">
             <div>
               <div className="flex items-center gap-2">
-                <FileCheck className="w-5 h-5 text-[#965E0D]" />
-                <h2 id="pending-verification-heading" className="text-base sm:text-lg font-bold text-[#1A2E42] tracking-tight">
-                  Pending Verification & Inspection Sign-off
+                <FileCheck className="w-5 h-5 text-[#825700] dark:text-[#F3B765]" />
+                <h2 id="pending-verification-heading" className="text-base sm:text-lg font-bold text-[#1A2B25] dark:text-[#F2F4E9] tracking-tight font-heading">
+                  Pending Verification &amp; Inspection Sign-off
                 </h2>
               </div>
-              <p className="text-xs text-[#52687B] mt-0.5">
+              <p className="text-xs text-[#52665D] dark:text-[#B5C1B5] mt-0.5">
                 Site submissions awaiting quality stamp, NDT report, or supervisor sign-off before schedule twin credit.
               </p>
             </div>
 
-            <span className="text-xs font-mono text-[#52687B] self-start sm:self-center">
-              {pendingVerifications.filter((v) => v.status !== 'Verified').length} Awaiting Sign-off
-            </span>
+            {/* Filter Tabs matching count to visible list */}
+            <div className="flex items-center gap-1.5 p-1 bg-[#F6F7F3] dark:bg-[#243832] rounded-lg border border-[#D9E2DA] dark:border-[#3A5146]">
+              <button
+                type="button"
+                onClick={() => setSignoffFilter('pending')}
+                className={`px-2.5 py-1 text-xs font-semibold rounded transition-colors ${
+                  signoffFilter === 'pending'
+                    ? 'bg-white dark:bg-[#17221D] text-[#825700] dark:text-[#F3B765] shadow-xs'
+                    : 'text-[#52665D] dark:text-[#B5C1B5] hover:text-[#1A2B25] dark:hover:text-[#F2F4E9]'
+                }`}
+              >
+                Awaiting Sign-off ({pendingVerifications.filter((v) => v.status !== 'Verified').length})
+              </button>
+              <button
+                type="button"
+                onClick={() => setSignoffFilter('all')}
+                className={`px-2.5 py-1 text-xs font-semibold rounded transition-colors ${
+                  signoffFilter === 'all'
+                    ? 'bg-white dark:bg-[#17221D] text-[#006B61] dark:text-[#72C6AD] shadow-xs'
+                    : 'text-[#52665D] dark:text-[#B5C1B5] hover:text-[#1A2B25] dark:hover:text-[#F2F4E9]'
+                }`}
+              >
+                All Submissions ({pendingVerifications.length})
+              </button>
+            </div>
           </div>
 
-          <div className="divide-y divide-[#D6E1E9]">
-            {pendingVerifications.map((item) => (
+          <div className="divide-y divide-[#D9E2DA] dark:divide-[#3A5146]">
+            {filteredPendingVerifications.map((item) => (
               <div
                 key={item.id}
                 className="py-3 flex flex-col md:flex-row md:items-center justify-between gap-3 text-xs"
               >
                 <div className="min-w-0 flex-1 space-y-1">
                   <div className="flex items-center gap-2 flex-wrap">
-                    <span className="font-bold text-[#1A2E42]">{item.item}</span>
-                    <span className="text-[#7B8798] font-mono">•</span>
-                    <span className="text-xs text-[#52687B]">
-                      Suggested: <strong className="font-mono text-[#0F6B68]">{item.activityId}</strong>
+                    <span className="font-bold text-[#1A2B25] dark:text-[#F2F4E9]">{item.item}</span>
+                    <span className="text-[#738A80] dark:text-[#859688] font-mono">•</span>
+                    <span className="text-xs text-[#52665D] dark:text-[#B5C1B5]">
+                      Suggested: <strong className="font-mono text-[#006B61] dark:text-[#72C6AD]">{item.activityId}</strong>
                     </span>
-                    <span className="text-[11px] text-[#7B8798] font-mono">• {item.submittedAt}</span>
+                    <span className="text-[11px] text-[#738A80] dark:text-[#859688] font-mono">• {item.submittedAt}</span>
                   </div>
-                  <p className="text-[11px] text-[#52687B]">
+                  <p className="text-[11px] text-[#52665D] dark:text-[#B5C1B5]">
                     {item.notes}
                   </p>
-                  <div className="flex items-center gap-2 text-[11px] text-[#52687B] flex-wrap">
-                    <span>Reviewer: <strong className="text-[#1A2E42]">{item.assignedReviewer}</strong> ({item.reviewerRole})</span>
-                    <span>• Area: <strong className="text-[#1A2E42]">{item.area}</strong></span>
+                  <div className="flex items-center gap-2 text-[11px] text-[#52665D] dark:text-[#B5C1B5] flex-wrap">
+                    <span>Reviewer: <strong className="text-[#1A2B25] dark:text-[#F2F4E9]">{item.assignedReviewer}</strong> ({item.reviewerRole})</span>
+                    <span>• Area: <strong className="text-[#1A2B25] dark:text-[#F2F4E9]">{item.area}</strong></span>
                   </div>
                 </div>
 
@@ -1091,7 +1147,7 @@ export default function EngineerDashboardPage() {
 
                   <Link
                     href={`/review?activityId=${item.activityId}`}
-                    className="px-3 py-1 text-xs font-semibold text-[#0F6B68] hover:bg-[#EAF1F5] border border-[#D6E1E9] rounded transition-colors inline-flex items-center gap-1 cursor-pointer"
+                    className="px-3 py-1 text-xs font-semibold text-[#006B61] dark:text-[#72C6AD] hover:bg-[#EAF0E9] dark:hover:bg-[#243832] border border-[#D9E2DA] dark:border-[#3A5146] rounded transition-colors inline-flex items-center gap-1 cursor-pointer"
                   >
                     <span>Review</span>
                     <ChevronRight className="w-3.5 h-3.5" />
@@ -1106,60 +1162,97 @@ export default function EngineerDashboardPage() {
         {/* 4. RECENT EXECUTION EVENTS (SITE EVENT LOG) */}
         {/* Chronological site observations, logs, and sync states */}
         {/* ========================================================= */}
-        <section aria-labelledby="recent-events-heading" className="bg-white border border-[#D6E1E9] rounded-lg p-4 sm:p-6 shadow-xs space-y-4">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D6E1E9] gap-2">
+        <section aria-labelledby="recent-events-heading" className="bg-white dark:bg-[#17221D] border border-[#D9E2DA] dark:border-[#3A5146] rounded-lg p-4 sm:p-6 shadow-xs space-y-4 transition-colors">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D9E2DA] dark:border-[#3A5146] gap-2">
             <div>
               <div className="flex items-center gap-2">
-                <Clock className="w-5 h-5 text-[#0F6B68]" />
-                <h2 id="recent-events-heading" className="text-base sm:text-lg font-bold text-[#1A2E42] tracking-tight">
-                  Recent Execution Log & Observations
+                <Clock className="w-5 h-5 text-[#006B61] dark:text-[#72C6AD]" />
+                <h2 id="recent-events-heading" className="text-base sm:text-lg font-bold text-[#1A2B25] dark:text-[#F2F4E9] tracking-tight font-heading">
+                  Recent Execution Log &amp; Observations
                 </h2>
               </div>
-              <p className="text-xs text-[#52687B] mt-0.5">
-                Execution events recorded from the field today with local IndexedDB queue status.
+              <p className="text-xs text-[#52665D] dark:text-[#B5C1B5] mt-0.5">
+                Execution events recorded from the field today ({todaySubmissions.length} total · {metrics.pendingUploads} queued locally for sync).
               </p>
             </div>
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 flex-wrap">
+              {/* Queue Filter Tabs */}
+              <div className="flex items-center gap-1 p-1 bg-[#F6F7F3] dark:bg-[#243832] rounded-lg border border-[#D9E2DA] dark:border-[#3A5146]">
+                <button
+                  type="button"
+                  onClick={() => setEventStreamFilter('all')}
+                  className={`px-2 py-1 text-xs font-semibold rounded transition-colors ${
+                    eventStreamFilter === 'all'
+                      ? 'bg-white dark:bg-[#17221D] text-[#006B61] dark:text-[#72C6AD] shadow-xs'
+                      : 'text-[#52665D] dark:text-[#B5C1B5]'
+                  }`}
+                >
+                  All Today ({todaySubmissions.length})
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setEventStreamFilter('queued')}
+                  className={`px-2 py-1 text-xs font-semibold rounded transition-colors ${
+                    eventStreamFilter === 'queued'
+                      ? 'bg-white dark:bg-[#17221D] text-[#825700] dark:text-[#F3BA63] shadow-xs'
+                      : 'text-[#52665D] dark:text-[#B5C1B5]'
+                  }`}
+                >
+                  Queued ({todaySubmissions.filter((s) => !s.isSynced).length})
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setEventStreamFilter('synced')}
+                  className={`px-2 py-1 text-xs font-semibold rounded transition-colors ${
+                    eventStreamFilter === 'synced'
+                      ? 'bg-white dark:bg-[#17221D] text-[#1F6B4E] dark:text-[#4ADE80] shadow-xs'
+                      : 'text-[#52665D] dark:text-[#B5C1B5]'
+                  }`}
+                >
+                  Confirmed ({todaySubmissions.filter((s) => s.isSynced).length})
+                </button>
+              </div>
+
               <button
                 type="button"
                 onClick={handleSyncNow}
                 disabled={isSyncing || metrics.pendingUploads === 0}
-                className="px-3 py-1.5 text-xs font-bold text-[#1A2E42] bg-white border border-[#D6E1E9] hover:bg-[#EAF1F5] disabled:opacity-50 rounded transition-colors inline-flex items-center gap-2 shadow-2xs cursor-pointer"
+                className="px-3 py-1.5 text-xs font-bold text-[#1A2B25] dark:text-[#F2F4E9] bg-white dark:bg-[#243832] border border-[#D9E2DA] dark:border-[#3A5146] hover:bg-[#EAF0E9] dark:hover:bg-[#1f3049] disabled:opacity-50 rounded transition-colors inline-flex items-center gap-2 shadow-2xs cursor-pointer"
               >
                 <RefreshCw className={`w-3.5 h-3.5 ${isSyncing ? 'animate-spin' : ''}`} />
-                <span>{isSyncing ? 'Syncing...' : `Sync Queue (${metrics.pendingUploads})`}</span>
+                <span>{isSyncing ? 'Syncing...' : `Sync ${metrics.pendingUploads} Queued`}</span>
               </button>
             </div>
           </div>
 
-          <div className="divide-y divide-[#D6E1E9]">
-            {todaySubmissions.map((sub) => (
+          <div className="divide-y divide-[#D9E2DA] dark:divide-[#3A5146]">
+            {filteredTodaySubmissions.map((sub) => (
               <div
                 key={sub.id}
                 className="py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs"
               >
                 <div className="min-w-0 flex-1 space-y-0.5">
                   <div className="flex items-center gap-2 flex-wrap">
-                    <span className="font-mono font-bold text-[#0F6B68]">{sub.activityId}</span>
-                    <span className="font-semibold text-[#1A2E42] truncate max-w-xs">{sub.activityName}</span>
-                    <span className="text-[11px] text-[#7B8798] font-mono">• {sub.time}</span>
+                    <span className="font-mono font-bold text-[#006B61] dark:text-[#72C6AD]">{sub.activityId}</span>
+                    <span className="font-semibold text-[#1A2B25] dark:text-[#F2F4E9] truncate max-w-xs">{sub.activityName}</span>
+                    <span className="text-[11px] text-[#738A80] dark:text-[#859688] font-mono">• {sub.time}</span>
                   </div>
-                  <p className="text-[11px] text-[#52687B] truncate max-w-xl">
+                  <p className="text-[11px] text-[#52665D] dark:text-[#B5C1B5] truncate max-w-xl">
                     &ldquo;{sub.statement}&rdquo;
                   </p>
                   <div className="flex items-center gap-2 text-[10px] font-mono">
-                    <span className="text-[#1A2E42] font-bold">{sub.quantity}</span>
+                    <span className="text-[#1A2B25] dark:text-[#F2F4E9] font-bold">{sub.quantity}</span>
                     <span>•</span>
-                    <span className="text-[#52687B]">{sub.discipline} ({sub.area})</span>
+                    <span className="text-[#52665D] dark:text-[#B5C1B5]">{sub.discipline} ({sub.area})</span>
                     <span>•</span>
                     {sub.isSynced ? (
-                      <span className="text-[#2E7D5B] font-bold flex items-center gap-0.5">
+                      <span className="text-[#1F6B4E] dark:text-[#4ADE80] font-bold flex items-center gap-0.5">
                         <Check className="w-3 h-3" />
                         Server confirmed
                       </span>
                     ) : (
-                      <span className="text-[#8C5311] font-bold bg-[#FEF4E6] px-1.5 py-0.5 rounded border border-[#F0D4A6]">
+                      <span className="text-[#825700] dark:text-[#F3B765] font-bold bg-[#F8EFDA] dark:bg-[#3D2808] px-1.5 py-0.5 rounded border border-[#E5C185] dark:border-[#523712]">
                         Saved locally
                       </span>
                     )}
@@ -1170,7 +1263,7 @@ export default function EngineerDashboardPage() {
                   <button
                     type="button"
                     onClick={() => setSelectedDetailUpdate(sub)}
-                    className="px-3 py-1 text-xs font-medium text-[#0F6B68] hover:bg-[#EAF1F5] border border-[#D6E1E9] rounded transition-colors inline-flex items-center gap-1 cursor-pointer"
+                    className="px-3 py-1 text-xs font-medium text-[#006B61] dark:text-[#72C6AD] hover:bg-[#EAF0E9] dark:hover:bg-[#243832] border border-[#D9E2DA] dark:border-[#3A5146] rounded transition-colors inline-flex items-center gap-1 cursor-pointer"
                   >
                     <Eye className="w-3.5 h-3.5" />
                     <span>View Details</span>
@@ -1185,16 +1278,16 @@ export default function EngineerDashboardPage() {
         {/* 5. EVIDENCE (GEOTAGGED PHOTOS & TEST CERTIFICATES) */}
         {/* Visual gallery grid of site photos and inspection proofs */}
         {/* ========================================================= */}
-        <section aria-labelledby="evidence-heading" className="bg-white border border-[#D6E1E9] rounded-lg p-4 sm:p-6 shadow-xs space-y-4">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D6E1E9] gap-2">
+        <section aria-labelledby="evidence-heading" className="bg-white dark:bg-[#17221D] border border-[#D9E2DA] dark:border-[#3A5146] rounded-lg p-4 sm:p-6 shadow-xs space-y-4 transition-colors">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D9E2DA] dark:border-[#3A5146] gap-2">
             <div>
               <div className="flex items-center gap-2">
-                <ShieldCheck className="w-5 h-5 text-[#0F6B68]" />
-                <h2 id="evidence-heading" className="text-base sm:text-lg font-bold text-[#1A2E42] tracking-tight">
+                <ShieldCheck className="w-5 h-5 text-[#006B61] dark:text-[#72C6AD]" />
+                <h2 id="evidence-heading" className="text-base sm:text-lg font-bold text-[#1A2B25] dark:text-[#F2F4E9] tracking-tight font-heading">
                   Field Evidence & Site Media
                 </h2>
               </div>
-              <p className="text-xs text-[#52687B] mt-0.5">
+              <p className="text-xs text-[#52665D] dark:text-[#B5C1B5] mt-0.5">
                 Geotagged site photography, weld inspection cards, and test records.
               </p>
             </div>
@@ -1202,7 +1295,7 @@ export default function EngineerDashboardPage() {
             <div className="flex items-center gap-2 self-start sm:self-center">
               <Link
                 href="/evidence"
-                className="px-3 py-1.5 text-xs font-semibold text-[#0F6B68] hover:bg-[#EAF1F5] border border-[#D6E1E9] rounded transition-colors inline-flex items-center gap-1 cursor-pointer"
+                className="px-3 py-1.5 text-xs font-semibold text-[#006B61] dark:text-[#72C6AD] hover:bg-[#EAF0E9] dark:hover:bg-[#243832] border border-[#D9E2DA] dark:border-[#3A5146] rounded transition-colors inline-flex items-center gap-1 cursor-pointer"
               >
                 <span>Evidence Vault</span>
                 <ChevronRight className="w-3.5 h-3.5" />
@@ -1215,35 +1308,35 @@ export default function EngineerDashboardPage() {
               <div
                 key={ev.id}
                 onClick={() => setSelectedEvidence(ev)}
-                className="p-3 bg-[#F4F7FB] border border-[#D6E1E9] hover:border-[#0F6B68] rounded-lg transition-all cursor-pointer space-y-2 flex flex-col justify-between"
+                className="p-3 bg-[#F6F7F3] dark:bg-[#243832] border border-[#D9E2DA] dark:border-[#3A5146] hover:border-[#006B61] dark:hover:border-[#72C6AD] rounded-lg transition-all cursor-pointer space-y-2 flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-center justify-between mb-2">
-                    <span className="font-mono text-[10px] font-bold text-[#0F6B68] px-1.5 py-0.5 bg-white border border-[#D6E1E9] rounded">
+                    <span className="font-mono text-[10px] font-bold text-[#006B61] dark:text-[#72C6AD] px-1.5 py-0.5 bg-white dark:bg-[#17221D] border border-[#D9E2DA] dark:border-[#3A5146] rounded">
                       {ev.activityId}
                     </span>
                     <StatusBadge status={ev.verified ? 'Verified' : 'Pending Review'} size="xs" />
                   </div>
 
-                  <h3 className="text-xs font-bold text-[#1A2E42] line-clamp-1">
+                  <h3 className="text-xs font-bold text-[#1A2B25] dark:text-[#F2F4E9] line-clamp-1">
                     {ev.title}
                   </h3>
-                  <p className="text-[11px] text-[#52687B] mt-0.5 line-clamp-2">
+                  <p className="text-[11px] text-[#52665D] dark:text-[#B5C1B5] mt-0.5 line-clamp-2">
                     {ev.notes}
                   </p>
                 </div>
 
-                <div className="pt-2 border-t border-[#D6E1E9] space-y-1 text-[10px] font-mono text-[#7B8798]">
+                <div className="pt-2 border-t border-[#D9E2DA] dark:border-[#3A5146] space-y-1 text-[10px] font-mono text-[#738A80] dark:text-[#859688]">
                   <div className="flex items-center justify-between">
                     <span className="truncate">{ev.fileName}</span>
-                    <span className="text-[#0F6B68] font-semibold underline">Inspect</span>
+                    <span className="text-[#006B61] dark:text-[#72C6AD] font-semibold underline">Inspect</span>
                   </div>
-                  <div className="flex items-center justify-between gap-1 text-[#52687B]">
+                  <div className="flex items-center justify-between gap-1 text-[#52665D] dark:text-[#B5C1B5]">
                     <span className="truncate inline-flex items-center gap-1">
-                      <MapPin className="w-3 h-3 text-[#0F6B68]" />
+                      <MapPin className="w-3 h-3 text-[#006B61] dark:text-[#72C6AD]" />
                       <span>{ev.gps}</span>
                     </span>
-                    <span className="text-[#1A2E42] font-medium whitespace-nowrap">{ev.timestamp}</span>
+                    <span className="text-[#1A2B25] dark:text-[#F2F4E9] font-medium whitespace-nowrap">{ev.timestamp}</span>
                   </div>
                 </div>
               </div>
@@ -1254,33 +1347,33 @@ export default function EngineerDashboardPage() {
         {/* ========================================================= */}
         {/* 6. DAILY PROGRESS & SHIFT SUMMARY (Expandable Shift Context) */}
         {/* ========================================================= */}
-        <details className="group bg-white border border-[#D6E1E9] rounded-lg p-4 sm:p-6 shadow-xs space-y-4">
+        <details className="group bg-white dark:bg-[#17221D] border border-[#D9E2DA] dark:border-[#3A5146] rounded-lg p-4 sm:p-6 shadow-xs space-y-4 transition-colors">
           <summary className="flex flex-col sm:flex-row sm:items-center justify-between cursor-pointer list-none select-none gap-2">
             <div>
               <div className="flex items-center gap-2">
-                <FileSpreadsheet className="w-5 h-5 text-[#0F6B68]" />
-                <h2 id="shift-summary-heading" className="text-base sm:text-lg font-bold text-[#1A2E42] tracking-tight">
+                <FileSpreadsheet className="w-5 h-5 text-[#006B61] dark:text-[#72C6AD]" />
+                <h2 id="shift-summary-heading" className="text-base sm:text-lg font-bold text-[#1A2B25] dark:text-[#F2F4E9] tracking-tight font-heading">
                   Daily Progress & Shift Summary
                 </h2>
-                <span className="text-xs px-2 py-0.5 rounded bg-[#EAF1F5] text-[#0F6B68] font-semibold hidden sm:inline">
+                <span className="text-xs px-2 py-0.5 rounded bg-[#EAF0E9] dark:bg-[#243832] text-[#006B61] dark:text-[#72C6AD] font-semibold hidden sm:inline">
                   Weather • Manpower • Equipment • Handover
                 </span>
               </div>
-              <p className="text-xs text-[#52687B] mt-0.5">
+              <p className="text-xs text-[#52665D] dark:text-[#B5C1B5] mt-0.5">
                 Site staffing, equipment utilization, work permits, and cross-shift handover notes.
               </p>
             </div>
             <div className="flex items-center gap-3 self-start sm:self-center">
-              <span className="text-xs font-bold text-[#0F6B68] group-open:hidden">Expand Shift Details &darr;</span>
-              <span className="text-xs font-bold text-[#0F6B68] hidden group-open:inline">Collapse Shift Details &uarr;</span>
+              <span className="text-xs font-bold text-[#006B61] dark:text-[#72C6AD] group-open:hidden">Expand Shift Details &darr;</span>
+              <span className="text-xs font-bold text-[#006B61] dark:text-[#72C6AD] hidden group-open:inline">Collapse Shift Details &uarr;</span>
             </div>
           </summary>
 
-          <div className="pt-3 border-t border-[#D6E1E9] space-y-4">
+          <div className="pt-3 border-t border-[#D9E2DA] dark:border-[#3A5146] space-y-4">
             <div className="flex justify-end">
               <Link
                 href="/field/dpr"
-                className="text-xs font-semibold text-[#0F6B68] hover:underline inline-flex items-center gap-1"
+                className="text-xs font-semibold text-[#006B61] dark:text-[#72C6AD] hover:underline inline-flex items-center gap-1"
               >
                 <span>Open Full Daily Progress Report (DPR)</span>
                 <ChevronRight className="w-3.5 h-3.5" />
@@ -1289,80 +1382,80 @@ export default function EngineerDashboardPage() {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
               {/* Shift Logistics & Permits */}
-              <div className="p-3 bg-[#F4F7FB] border border-[#D6E1E9] rounded-lg space-y-2">
-                <span className="text-[11px] font-bold uppercase tracking-wider text-[#52687B] block">
+              <div className="p-3 bg-[#F6F7F3] dark:bg-[#243832] border border-[#D9E2DA] dark:border-[#3A5146] rounded-lg space-y-2">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-[#52665D] dark:text-[#B5C1B5] block">
                   Shift Logistics & Permits
                 </span>
                 <div className="space-y-1.5 text-xs">
                   <div className="flex justify-between">
-                    <span className="text-[#52687B]">Shift Schedule:</span>
-                    <span className="font-semibold text-[#1A2E42]">Shift A (07:00 - 15:30 IST)</span>
+                    <span className="text-[#52665D] dark:text-[#B5C1B5]">Shift Schedule:</span>
+                    <span className="font-semibold text-[#1A2B25] dark:text-[#F2F4E9]">Shift A (07:00 - 15:30 IST)</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-[#52687B]">Hot Work Permit:</span>
-                    <span className="font-mono text-[#2E7D5B] font-semibold">#HWP-2026-0918 (Active)</span>
+                    <span className="text-[#52665D] dark:text-[#B5C1B5]">Hot Work Permit:</span>
+                    <span className="font-mono text-[#1F6B4E] dark:text-[#4ADE80] font-semibold">#HWP-2026-0918 (Active)</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-[#52687B]">Site Weather:</span>
-                    <span className="text-[#1A2E42] font-medium">Clear · 28°C · Wind 6 km/h</span>
+                    <span className="text-[#52665D] dark:text-[#B5C1B5]">Site Weather:</span>
+                    <span className="text-[#1A2B25] dark:text-[#F2F4E9] font-medium">Clear · 28°C · Wind 6 km/h</span>
                   </div>
                 </div>
               </div>
 
               {/* Manpower & Resources */}
-              <div className="p-3 bg-[#F4F7FB] border border-[#D6E1E9] rounded-lg space-y-2">
-                <span className="text-[11px] font-bold uppercase tracking-wider text-[#52687B] block">
+              <div className="p-3 bg-[#F6F7F3] dark:bg-[#243832] border border-[#D9E2DA] dark:border-[#3A5146] rounded-lg space-y-2">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-[#52665D] dark:text-[#B5C1B5] block">
                   Manpower On Site
                 </span>
                 <div className="space-y-1.5 text-xs">
                   <div className="flex justify-between">
-                    <span className="text-[#52687B]">Pipefitters & Fabricators:</span>
-                    <span className="font-mono font-bold text-[#1A2E42]">18 personnel</span>
+                    <span className="text-[#52665D] dark:text-[#B5C1B5]">Pipefitters & Fabricators:</span>
+                    <span className="font-mono font-bold text-[#1A2B25] dark:text-[#F2F4E9]">18 personnel</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-[#52687B]">6G Certified Welders:</span>
-                    <span className="font-mono font-bold text-[#1A2E42]">6 personnel</span>
+                    <span className="text-[#52665D] dark:text-[#B5C1B5]">6G Certified Welders:</span>
+                    <span className="font-mono font-bold text-[#1A2B25] dark:text-[#F2F4E9]">6 personnel</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-[#52687B]">QC & NDT Level II:</span>
-                    <span className="font-mono font-bold text-[#1A2E42]">2 inspectors</span>
+                    <span className="text-[#52665D] dark:text-[#B5C1B5]">QC & NDT Level II:</span>
+                    <span className="font-mono font-bold text-[#1A2B25] dark:text-[#F2F4E9]">2 inspectors</span>
                   </div>
                 </div>
               </div>
 
               {/* Active Plant & Equipment */}
-              <div className="p-3 bg-[#F4F7FB] border border-[#D6E1E9] rounded-lg space-y-2">
-                <span className="text-[11px] font-bold uppercase tracking-wider text-[#52687B] block">
+              <div className="p-3 bg-[#F6F7F3] dark:bg-[#243832] border border-[#D9E2DA] dark:border-[#3A5146] rounded-lg space-y-2">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-[#52665D] dark:text-[#B5C1B5] block">
                   Plant & Heavy Equipment
                 </span>
                 <div className="space-y-1.5 text-xs">
                   <div className="flex justify-between">
-                    <span className="text-[#52687B]">Hydraulic Mobile Crane:</span>
-                    <span className="font-semibold text-[#1A2E42]">1x 50-Ton (Operating)</span>
+                    <span className="text-[#52665D] dark:text-[#B5C1B5]">Hydraulic Mobile Crane:</span>
+                    <span className="font-semibold text-[#1A2B25] dark:text-[#F2F4E9]">1x 50-Ton (Operating)</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-[#52687B]">Inverter TIG Welding Sets:</span>
-                    <span className="font-semibold text-[#1A2E42]">4x 400A Active</span>
+                    <span className="text-[#52665D] dark:text-[#B5C1B5]">Inverter TIG Welding Sets:</span>
+                    <span className="font-semibold text-[#1A2B25] dark:text-[#F2F4E9]">4x 400A Active</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-[#52687B]">Hydrostatic Test Skid:</span>
-                    <span className="font-semibold text-[#1A2E42]">1x 250-bar (Standby)</span>
+                    <span className="text-[#52665D] dark:text-[#B5C1B5]">Hydrostatic Test Skid:</span>
+                    <span className="font-semibold text-[#1A2B25] dark:text-[#F2F4E9]">1x 250-bar (Standby)</span>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* Cross-Shift Handover Note */}
-            <div className="p-3 bg-[#EAF1F5] border border-[#D6E1E9] rounded-lg text-xs flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <div className="p-3 bg-[#EAF0E9] dark:bg-[#243832] border border-[#D9E2DA] dark:border-[#3A5146] rounded-lg text-xs flex flex-col sm:flex-row sm:items-center justify-between gap-2">
               <div className="space-y-0.5">
-                <span className="font-bold text-[#0F6B68] uppercase text-[10px] tracking-wider block">
+                <span className="font-bold text-[#006B61] dark:text-[#72C6AD] uppercase text-[10px] tracking-wider block font-heading">
                   Shift Handover Note
                 </span>
-                <p className="text-[#1A2E42]">
+                <p className="text-[#1A2B25] dark:text-[#F2F4E9]">
                   Shift A completed root & hot passes on Line 24 joints #05–#08. Joints handed over to Shift B for radiographic testing (RT) and capping passes.
                 </p>
               </div>
-              <span className="text-[11px] font-mono text-[#52687B] whitespace-nowrap self-start sm:self-center">
+              <span className="text-[11px] font-mono text-[#52665D] dark:text-[#B5C1B5] whitespace-nowrap self-start sm:self-center">
                 Logged by: D. Borah
               </span>
             </div>
@@ -1372,23 +1465,23 @@ export default function EngineerDashboardPage() {
         {/* ========================================================= */}
         {/* MOBILE STICKY BOTTOM ACTION BAR (One-Hand Reachable) */}
         {/* ========================================================= */}
-        <div className="fixed bottom-0 left-0 right-0 p-3 bg-white border-t border-[#D6E1E9] md:hidden shadow-lg z-30 flex items-center gap-2">
+        <div className="fixed bottom-0 left-0 right-0 p-3 bg-white dark:bg-[#17221D] border-t border-[#D9E2DA] dark:border-[#3A5146] md:hidden shadow-lg z-30 flex items-center gap-2">
           <button
             type="button"
             onClick={() => {
               setSelectedActivityForCapture('PIP-24-002');
               setIsCaptureModalOpen(true);
             }}
-            className="flex-1 min-h-[44px] py-3 px-4 text-xs font-bold text-white bg-[#0F6B68] active:bg-[#135A72] rounded-lg shadow-sm flex items-center justify-center gap-2 cursor-pointer"
+            className={`flex-1 ${touchBtnClass} font-bold text-white bg-[#006B61] hover:bg-[#00524A] dark:bg-[#006B61] dark:hover:bg-[#0b96a5] active:bg-[#003D37] rounded-lg shadow-sm flex items-center justify-center gap-2 cursor-pointer`}
           >
             <Plus className="w-4 h-4 stroke-[2.5]" />
             <span>CAPTURE UPDATE</span>
           </button>
           <Link
             href="/field/dpr"
-            className="min-h-[44px] py-3 px-4 text-xs font-bold text-[#1A2E42] bg-[#F4F7FB] border border-[#D6E1E9] active:bg-[#D6E1E9] rounded-lg flex items-center justify-center gap-1 cursor-pointer"
+            className={`${touchBtnClass} font-bold text-[#1A2B25] dark:text-[#F2F4E9] bg-[#F6F7F3] dark:bg-[#243832] border border-[#D9E2DA] dark:border-[#3A5146] active:bg-[#D9E2DA] rounded-lg flex items-center justify-center gap-1 cursor-pointer`}
           >
-            <FileText className="w-4 h-4 text-[#52687B]" />
+            <FileText className="w-4 h-4 text-[#52665D] dark:text-[#B5C1B5]" />
             <span>DPR (65%)</span>
           </Link>
         </div>
@@ -1404,7 +1497,7 @@ export default function EngineerDashboardPage() {
           maxWidth="lg"
           footer={
             <div className="flex items-center justify-between w-full">
-              <span className="text-[11px] text-[#52687B] font-mono">
+              <span className="text-[11px] text-[#52665D] dark:text-[#B5C1B5] font-mono">
                 {isOffline ? 'Offline mode: saving locally' : 'Online mode'}
               </span>
 
@@ -1413,7 +1506,7 @@ export default function EngineerDashboardPage() {
                   type="button"
                   onClick={() => setIsCaptureModalOpen(false)}
                   disabled={isSubmittingCapture}
-                  className="px-4 py-2 text-xs font-medium text-[#52687B] hover:text-[#1A2E42] border border-[#D6E1E9] rounded cursor-pointer"
+                  className="px-4 py-2 text-xs font-medium text-[#52665D] dark:text-[#B5C1B5] hover:text-[#1A2B25] dark:hover:text-[#F2F4E9] border border-[#D9E2DA] dark:border-[#3A5146] rounded cursor-pointer"
                 >
                   Cancel
                 </button>
@@ -1421,7 +1514,9 @@ export default function EngineerDashboardPage() {
                   type="button"
                   onClick={handleSubmitFastCapture}
                   disabled={isSubmittingCapture || !customStatement.trim()}
-                  className="px-4 py-2 text-xs font-bold text-white bg-[#0F6B68] hover:bg-[#135A72] rounded transition-all inline-flex items-center gap-2 shadow-xs disabled:opacity-50 cursor-pointer"
+                  className={`px-4 py-2 text-xs font-bold text-white bg-[#006B61] hover:bg-[#00524A] dark:bg-[#006B61] dark:hover:bg-[#0b96a5] rounded transition-all inline-flex items-center gap-2 shadow-xs disabled:opacity-50 cursor-pointer ${
+                    isGloveMode ? 'min-h-[48px]' : ''
+                  }`}
                 >
                   {isSubmittingCapture ? (
                     <>
@@ -1442,8 +1537,8 @@ export default function EngineerDashboardPage() {
           <form onSubmit={handleSubmitFastCapture} className="space-y-4 text-xs">
             {/* Target Activity */}
             <div>
-              <label className="block text-xs font-bold text-[#1A2E42] mb-1">
-                Target Scheduled Activity <span className="text-[#A44339]">*</span>
+              <label className="block text-xs font-bold text-[#1A2B25] dark:text-[#F2F4E9] mb-1">
+                Target Scheduled Activity <span className="text-[#A43B36] dark:text-[#FF9E94]">*</span>
               </label>
               <select
                 value={selectedActivityForCapture}
@@ -1452,7 +1547,7 @@ export default function EngineerDashboardPage() {
                   const act = todayActivities.find((a) => a.id === e.target.value);
                   if (act) setQuantityUnit(act.unit || 'joints');
                 }}
-                className="w-full px-3 py-2 text-xs bg-[#F4F7FB] border border-[#D6E1E9] focus:border-[#0F6B68] focus:bg-white rounded font-medium text-[#1A2E42] outline-none"
+                className="w-full px-3 py-2 text-xs bg-[#F6F7F3] dark:bg-[#243832] border border-[#D9E2DA] dark:border-[#3A5146] focus:border-[#006B61] dark:focus:border-[#72C6AD] focus:bg-white dark:focus:bg-[#17221D] rounded font-medium text-[#1A2B25] dark:text-[#F2F4E9] outline-none"
               >
                 {todayActivities.map((act) => (
                   <option key={act.id} value={act.id}>
@@ -1464,21 +1559,24 @@ export default function EngineerDashboardPage() {
 
             {/* Quick Observation Chips */}
             <div>
-              <label className="block text-[11px] font-bold text-[#52687B] mb-2">
+              <label className="block text-[11px] font-bold text-[#52665D] dark:text-[#B5C1B5] mb-2">
                 Quick Observation Chips (Tap to Insert):
               </label>
               <div className="flex flex-wrap gap-2">
-                {[
-                  'Welding completed 4 joints on Header 24-XX.',
-                  'Root pass done with TIG; NDT scheduled tonight.',
-                  'Rigging & crane hoisting finished without incident.',
-                  'De-shuttering finished; curing compound applied.',
-                ].map((chip, idx) => (
+                {(engineer.quickCaptureTemplates && engineer.quickCaptureTemplates.length > 0
+                  ? engineer.quickCaptureTemplates
+                  : [
+                      'Welding completed 4 joints on Header 24-XX.',
+                      'Root pass done with TIG; NDT scheduled tonight.',
+                      'Rigging & crane hoisting finished without incident.',
+                      'De-shuttering finished; curing compound applied.',
+                    ]
+                ).map((chip: string, idx: number) => (
                   <button
                     key={idx}
                     type="button"
                     onClick={() => setCustomStatement(chip)}
-                    className="px-3 py-1 text-[11px] rounded bg-[#EAF1F5] hover:bg-[#EAF1F5] hover:text-[#0F6B68] text-[#52687B] border border-[#D6E1E9] transition-colors text-left cursor-pointer"
+                    className="px-3 py-1.5 text-[11px] rounded bg-[#EAF0E9] dark:bg-[#243832] hover:bg-[#D9E2DA] dark:hover:bg-[#3A5146] text-[#1A2B25] dark:text-[#F2F4E9] border border-[#D9E2DA] dark:border-[#3A5146] transition-colors text-left cursor-pointer"
                   >
                     + {chip}
                   </button>
@@ -1489,8 +1587,8 @@ export default function EngineerDashboardPage() {
             {/* Field Statement */}
             <div>
               <div className="flex items-center justify-between mb-1">
-                <label className="text-xs font-bold text-[#1A2E42]">
-                  Field Statement / Site Observation <span className="text-[#A44339]">*</span>
+                <label className="text-xs font-bold text-[#1A2B25] dark:text-[#F2F4E9]">
+                  Field Statement / Site Observation <span className="text-[#A43B36] dark:text-[#FF9E94]">*</span>
                 </label>
                 <button
                   type="button"
@@ -1504,9 +1602,9 @@ export default function EngineerDashboardPage() {
                       description: 'Simulated voice memo parsed into statement.',
                     });
                   }}
-                  className="text-[11px] text-[#0F6B68] hover:underline inline-flex items-center gap-1 font-semibold cursor-pointer"
+                  className="text-[11px] text-[#006B61] dark:text-[#72C6AD] hover:underline inline-flex items-center gap-1 font-semibold cursor-pointer"
                 >
-                  <Mic className="w-3.5 h-3.5 text-[#0F6B68]" />
+                  <Mic className="w-3.5 h-3.5 text-[#006B61] dark:text-[#72C6AD]" />
                   <span>Simulate Voice Note</span>
                 </button>
               </div>
@@ -1515,22 +1613,22 @@ export default function EngineerDashboardPage() {
                 value={customStatement}
                 onChange={(e) => setCustomStatement(e.target.value)}
                 placeholder="Type or dictate what was completed on site today..."
-                className="w-full p-3 bg-[#F4F7FB] border border-[#D6E1E9] rounded focus:border-[#0F6B68] focus:bg-white text-[#1A2E42] outline-none"
+                className="w-full p-3 bg-[#F6F7F3] dark:bg-[#243832] border border-[#D9E2DA] dark:border-[#3A5146] rounded focus:border-[#006B61] dark:focus:border-[#72C6AD] focus:bg-white dark:focus:bg-[#17221D] text-[#1A2B25] dark:text-[#F2F4E9] outline-none"
                 required
               />
             </div>
 
             {/* Quantity Stepper & Unit */}
-            <div className="grid grid-cols-2 gap-3 p-3 bg-[#F4F7FB] border border-[#D6E1E9] rounded">
+            <div className="grid grid-cols-2 gap-3 p-3 bg-[#F6F7F3] dark:bg-[#243832] border border-[#D9E2DA] dark:border-[#3A5146] rounded">
               <div>
-                <label className="block text-[11px] font-bold text-[#1A2E42] mb-1">
+                <label className="block text-[11px] font-bold text-[#1A2B25] dark:text-[#F2F4E9] mb-1">
                   Quantity Completed
                 </label>
                 <div className="flex items-center gap-2">
                   <button
                     type="button"
                     onClick={() => setQuantityValue(Math.max(1, quantityValue - 1))}
-                    className="w-7 h-7 bg-white border border-[#D6E1E9] hover:bg-[#D6E1E9] rounded text-sm font-bold flex items-center justify-center text-[#1A2E42] cursor-pointer"
+                    className="w-8 h-8 bg-white dark:bg-[#17221D] border border-[#D9E2DA] dark:border-[#3A5146] hover:bg-[#D9E2DA] dark:hover:bg-[#3A5146] rounded text-sm font-bold flex items-center justify-center text-[#1A2B25] dark:text-[#F2F4E9] cursor-pointer"
                   >
                     -
                   </button>
@@ -1538,12 +1636,12 @@ export default function EngineerDashboardPage() {
                     type="number"
                     value={quantityValue}
                     onChange={(e) => setQuantityValue(Number(e.target.value))}
-                    className="w-16 text-center font-mono font-bold text-sm bg-white border border-[#D6E1E9] rounded py-1"
+                    className="w-16 text-center font-mono font-bold text-sm bg-white dark:bg-[#17221D] text-[#1A2B25] dark:text-[#F2F4E9] border border-[#D9E2DA] dark:border-[#3A5146] rounded py-1"
                   />
                   <button
                     type="button"
                     onClick={() => setQuantityValue(quantityValue + 1)}
-                    className="w-7 h-7 bg-white border border-[#D6E1E9] hover:bg-[#D6E1E9] rounded text-sm font-bold flex items-center justify-center text-[#1A2E42] cursor-pointer"
+                    className="w-8 h-8 bg-white dark:bg-[#17221D] border border-[#D9E2DA] dark:border-[#3A5146] hover:bg-[#D9E2DA] dark:hover:bg-[#3A5146] rounded text-sm font-bold flex items-center justify-center text-[#1A2B25] dark:text-[#F2F4E9] cursor-pointer"
                   >
                     +
                   </button>
@@ -1551,23 +1649,23 @@ export default function EngineerDashboardPage() {
               </div>
 
               <div>
-                <label className="block text-[11px] font-bold text-[#1A2E42] mb-1">
+                <label className="block text-[11px] font-bold text-[#1A2B25] dark:text-[#F2F4E9] mb-1">
                   Unit
                 </label>
                 <input
                   type="text"
                   value={quantityUnit}
                   onChange={(e) => setQuantityUnit(e.target.value)}
-                  className="w-full px-3 py-1 text-xs bg-white border border-[#D6E1E9] rounded font-mono"
+                  className="w-full px-3 py-1 text-xs bg-white dark:bg-[#17221D] text-[#1A2B25] dark:text-[#F2F4E9] border border-[#D9E2DA] dark:border-[#3A5146] rounded font-mono"
                 />
               </div>
             </div>
 
             {/* Photo Attachment */}
-            <div className="flex items-center justify-between p-3 bg-[#EAF1F5] border border-[#D6E1E9] rounded">
+            <div className="flex items-center justify-between p-3 bg-[#EAF0E9] dark:bg-[#243832] border border-[#D9E2DA] dark:border-[#3A5146] rounded">
               <div className="flex items-center gap-2">
-                <Camera className="w-4 h-4 text-[#0F6B68]" />
-                <span className="text-[11px] text-[#1A2E42] font-medium">
+                <Camera className="w-4 h-4 text-[#006B61] dark:text-[#72C6AD]" />
+                <span className="text-[11px] text-[#1A2B25] dark:text-[#F2F4E9] font-medium">
                   {attachedPhotoName ? attachedPhotoName : 'Attach Geotagged Site Photo'}
                 </span>
               </div>
@@ -1582,7 +1680,7 @@ export default function EngineerDashboardPage() {
                     description: 'Captured image with embedded field coordinates.',
                   });
                 }}
-                className="px-3 py-1 text-[11px] font-semibold text-[#0F6B68] bg-white border border-[#D6E1E9] hover:bg-[#EAF1F5] rounded transition-colors cursor-pointer"
+                className="px-3 py-1 text-[11px] font-semibold text-[#006B61] dark:text-[#72C6AD] bg-white dark:bg-[#17221D] border border-[#D9E2DA] dark:border-[#3A5146] hover:bg-[#EAF0E9] dark:hover:bg-[#1f3049] rounded transition-colors cursor-pointer"
               >
                 {attachedPhotoName ? 'Replace Photo' : 'Capture Photo'}
               </button>
@@ -1604,49 +1702,49 @@ export default function EngineerDashboardPage() {
               <button
                 type="button"
                 onClick={() => setSelectedDetailUpdate(null)}
-                className="px-4 py-1.5 text-xs font-semibold text-white bg-[#0F6B68] hover:bg-[#135A72] rounded shadow-xs ml-auto cursor-pointer"
+                className="px-4 py-1.5 text-xs font-semibold text-white bg-[#006B61] hover:bg-[#00524A] dark:bg-[#006B61] dark:hover:bg-[#0b96a5] rounded shadow-xs ml-auto cursor-pointer"
               >
                 Close
               </button>
             }
           >
             <div className="space-y-3 text-xs">
-              <div className="p-3 bg-[#F4F7FB] border border-[#D6E1E9] rounded-lg">
-                <span className="text-[10px] font-mono font-semibold text-[#52687B] uppercase block">
+              <div className="p-3 bg-[#F6F7F3] dark:bg-[#243832] border border-[#D9E2DA] dark:border-[#3A5146] rounded-lg">
+                <span className="text-[10px] font-mono font-semibold text-[#52665D] dark:text-[#B5C1B5] uppercase block">
                   Activity Target
                 </span>
-                <span className="font-mono font-bold text-[#0F6B68] block mt-0.5">
+                <span className="font-mono font-bold text-[#006B61] dark:text-[#72C6AD] block mt-0.5">
                   {selectedDetailUpdate.activityId}
                 </span>
-                <p className="font-semibold text-[#1A2E42] mt-0.5">
+                <p className="font-semibold text-[#1A2B25] dark:text-[#F2F4E9] mt-0.5">
                   {selectedDetailUpdate.activityName}
                 </p>
               </div>
 
-              <div className="p-3 bg-white border border-[#D6E1E9] rounded-lg space-y-2">
-                <span className="text-[10px] font-mono font-semibold text-[#52687B] uppercase block">
+              <div className="p-3 bg-white dark:bg-[#17221D] border border-[#D9E2DA] dark:border-[#3A5146] rounded-lg space-y-2">
+                <span className="text-[10px] font-mono font-semibold text-[#52665D] dark:text-[#B5C1B5] uppercase block">
                   Field Statement
                 </span>
-                <p className="text-xs text-[#1A2E42] italic leading-relaxed">
+                <p className="text-xs text-[#1A2B25] dark:text-[#F2F4E9] italic leading-relaxed">
                   &ldquo;{selectedDetailUpdate.statement}&rdquo;
                 </p>
-                <div className="pt-2 border-t border-[#D6E1E9] flex items-center justify-between text-[11px]">
-                  <span className="text-[#52687B]">Quantity: <strong className="text-[#1A2E42]">{selectedDetailUpdate.quantity}</strong></span>
-                  <span className="text-[#52687B]">Discipline: <strong className="text-[#1A2E42]">{selectedDetailUpdate.discipline}</strong></span>
+                <div className="pt-2 border-t border-[#D9E2DA] dark:border-[#3A5146] flex items-center justify-between text-[11px]">
+                  <span className="text-[#52665D] dark:text-[#B5C1B5]">Quantity: <strong className="text-[#1A2B25] dark:text-[#F2F4E9]">{selectedDetailUpdate.quantity}</strong></span>
+                  <span className="text-[#52665D] dark:text-[#B5C1B5]">Discipline: <strong className="text-[#1A2B25] dark:text-[#F2F4E9]">{selectedDetailUpdate.discipline}</strong></span>
                 </div>
               </div>
 
-              <div className="p-3 bg-[#F4F7FB] border border-[#D6E1E9] rounded flex items-center justify-between text-xs">
-                <span className="text-[#52687B]">Sync Status:</span>
+              <div className="p-3 bg-[#F6F7F3] dark:bg-[#243832] border border-[#D9E2DA] dark:border-[#3A5146] rounded flex items-center justify-between text-xs">
+                <span className="text-[#52665D] dark:text-[#B5C1B5]">Sync Status:</span>
                 {selectedDetailUpdate.isSynced ? (
-                  <span className="text-[#2E7D5B] font-bold font-mono">Server confirmed</span>
+                  <span className="text-[#1F6B4E] dark:text-[#4ADE80] font-bold font-mono">Server confirmed</span>
                 ) : (
-                  <span className="text-[#965E0D] font-bold font-mono">Saved locally (IndexedDB)</span>
+                  <span className="text-[#825700] dark:text-[#F3B765] font-bold font-mono">Saved locally (IndexedDB)</span>
                 )}
               </div>
 
               {selectedDetailUpdate.photoUrl && (
-                <div className="p-3 bg-[#E5F6EE] border border-[#B8DCC9] rounded text-xs text-[#2E7D5B] flex items-center gap-2">
+                <div className="p-3 bg-[#E4F1E9] dark:bg-[#0D3326] border border-[#B7DAC3] dark:border-[#1E4D3A] rounded text-xs text-[#1F6B4E] dark:text-[#4ADE80] flex items-center gap-2">
                   <Camera className="w-4 h-4" />
                   <span>Attached Photo: <strong>{selectedDetailUpdate.photoUrl}</strong></span>
                 </div>
@@ -1669,44 +1767,44 @@ export default function EngineerDashboardPage() {
               <button
                 type="button"
                 onClick={() => setSelectedEvidence(null)}
-                className="px-4 py-1.5 text-xs font-semibold text-white bg-[#0F6B68] hover:bg-[#135A72] rounded shadow-xs ml-auto cursor-pointer"
+                className="px-4 py-1.5 text-xs font-semibold text-white bg-[#006B61] hover:bg-[#00524A] dark:bg-[#006B61] dark:hover:bg-[#0b96a5] rounded shadow-xs ml-auto cursor-pointer"
               >
                 Close
               </button>
             }
           >
             <div className="space-y-3 text-xs">
-              <div className="p-3 bg-[#F4F7FB] border border-[#D6E1E9] rounded-lg">
-                <span className="text-[10px] font-mono font-semibold text-[#52687B] uppercase block">
+              <div className="p-3 bg-[#F6F7F3] dark:bg-[#243832] border border-[#D9E2DA] dark:border-[#3A5146] rounded-lg">
+                <span className="text-[10px] font-mono font-semibold text-[#52665D] dark:text-[#B5C1B5] uppercase block">
                   Subject & Target Activity
                 </span>
-                <span className="font-bold text-[#1A2E42] text-sm block mt-0.5">
+                <span className="font-bold text-[#1A2B25] dark:text-[#F2F4E9] text-sm block mt-0.5">
                   {selectedEvidence.title}
                 </span>
-                <p className="font-mono text-[#0F6B68] text-[11px] mt-0.5">
+                <p className="font-mono text-[#006B61] dark:text-[#72C6AD] text-[11px] mt-0.5">
                   {selectedEvidence.activityId} — {selectedEvidence.activityName}
                 </p>
               </div>
 
-              <div className="p-3 bg-white border border-[#D6E1E9] rounded-lg space-y-2">
-                <span className="text-[10px] font-mono font-semibold text-[#52687B] uppercase block">
+              <div className="p-3 bg-white dark:bg-[#17221D] border border-[#D9E2DA] dark:border-[#3A5146] rounded-lg space-y-2">
+                <span className="text-[10px] font-mono font-semibold text-[#52665D] dark:text-[#B5C1B5] uppercase block">
                   Inspection Notes & Geotag
                 </span>
-                <p className="text-xs text-[#1A2E42] leading-relaxed">
+                <p className="text-xs text-[#1A2B25] dark:text-[#F2F4E9] leading-relaxed">
                   {selectedEvidence.notes}
                 </p>
-                <div className="pt-2 border-t border-[#D6E1E9] flex items-center justify-between text-[11px]">
-                  <span className="text-[#52687B]">GPS Tag: <strong className="font-mono text-[#1A2E42]">{selectedEvidence.gps}</strong></span>
-                  <span className="text-[#52687B]">Type: <strong className="uppercase text-[#1A2E42]">{selectedEvidence.type}</strong></span>
+                <div className="pt-2 border-t border-[#D9E2DA] dark:border-[#3A5146] flex items-center justify-between text-[11px]">
+                  <span className="text-[#52665D] dark:text-[#B5C1B5]">GPS Tag: <strong className="font-mono text-[#1A2B25] dark:text-[#F2F4E9]">{selectedEvidence.gps}</strong></span>
+                  <span className="text-[#52665D] dark:text-[#B5C1B5]">Type: <strong className="uppercase text-[#1A2B25] dark:text-[#F2F4E9]">{selectedEvidence.type}</strong></span>
                 </div>
               </div>
 
-              <div className="p-3 bg-[#F4F7FB] border border-[#D6E1E9] rounded flex items-center justify-between text-xs">
-                <span className="text-[#52687B]">QC Sign-off:</span>
+              <div className="p-3 bg-[#F6F7F3] dark:bg-[#243832] border border-[#D9E2DA] dark:border-[#3A5146] rounded flex items-center justify-between text-xs">
+                <span className="text-[#52665D] dark:text-[#B5C1B5]">QC Sign-off:</span>
                 {selectedEvidence.verified ? (
-                  <span className="text-[#2E7D5B] font-bold font-mono">QC Verified & Stamped</span>
+                  <span className="text-[#1F6B4E] dark:text-[#4ADE80] font-bold font-mono">QC Verified & Stamped</span>
                 ) : (
-                  <span className="text-[#965E0D] font-bold font-mono">Awaiting QC Stamp</span>
+                  <span className="text-[#825700] dark:text-[#F3B765] font-bold font-mono">Awaiting QC Stamp</span>
                 )}
               </div>
             </div>

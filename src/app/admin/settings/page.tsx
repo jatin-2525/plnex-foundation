@@ -40,30 +40,30 @@ export default function AdminSettingsPage() {
 
       <form onSubmit={handleSave} className="space-y-4 max-w-3xl">
         {/* Session Security */}
-        <div className="bg-white border border-[#D6E1E9] rounded-lg p-4 sm:p-6 space-y-4">
-          <div className="flex items-center gap-2 pb-2 border-b border-[#D6E1E9]">
-            <Clock className="w-4 h-4 text-[#0F6B68]" />
-            <h3 className="text-xs font-bold uppercase tracking-wider text-[#1A2E42]">
-              Authentication & Session Lifetime
+        <div className="bg-white dark:bg-[#17221D] border border-[#D9E2DA] dark:border-[#3A5146] rounded-lg p-4 sm:p-6 space-y-4">
+          <div className="flex items-center gap-2 pb-2 border-b border-[#D9E2DA] dark:border-[#3A5146]">
+            <Clock className="w-4 h-4 text-[#006B61] dark:text-[#72C6AD]" />
+            <h3 className="text-xs font-bold font-heading uppercase tracking-wider text-[#1A2B25] dark:text-[#F2F4E9]">
+              Authentication &amp; Session Lifetime
             </h3>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
             <div>
-              <label className="font-semibold text-[#1A2E42] block mb-1">
+              <label className="font-semibold text-[#1A2B25] dark:text-[#F2F4E9] block mb-1">
                 Standard Session Expiration
               </label>
               <select
                 value={sessionTimeoutHours}
                 onChange={(e) => setSessionTimeoutHours(e.target.value)}
-                className="w-full p-2 bg-[#F4F7FB] border border-[#D6E1E9] rounded-md outline-none"
+                className="w-full p-2 bg-[#F6F7F3] dark:bg-[#101815] border border-[#D9E2DA] dark:border-[#3A5146] rounded-md outline-none text-[#1A2B25] dark:text-[#F2F4E9]"
               >
                 <option value="2">2 Hours (Strict High-Security)</option>
                 <option value="8">8 Hours (Standard Single Shift)</option>
                 <option value="24">24 Hours (Field Extended)</option>
                 <option value="168">7 Days (Remembered Trusted Devices)</option>
               </select>
-              <p className="text-[11px] text-[#52687B] mt-1">
+              <p className="text-[11px] text-[#52665D] dark:text-[#B5C1B5] mt-1">
                 Users will be automatically redirected to /login when their session expires.
               </p>
             </div>
@@ -74,11 +74,11 @@ export default function AdminSettingsPage() {
                   type="checkbox"
                   checked={require2FA}
                   onChange={(e) => setRequire2FA(e.target.checked)}
-                  className="rounded border-[#D6E1E9] text-[#0F6B68] w-4 h-4"
+                  className="rounded border-[#D9E2DA] dark:border-[#3A5146] text-[#006B61] dark:text-[#72C6AD] w-4 h-4"
                 />
-                <span className="font-semibold text-[#1A2E42]">Enforce Corporate 2FA for Managers</span>
+                <span className="font-semibold text-[#1A2B25] dark:text-[#F2F4E9]">Enforce Corporate 2FA for Managers</span>
               </label>
-              <p className="text-[11px] text-[#52687B]">
+              <p className="text-[11px] text-[#52665D] dark:text-[#B5C1B5]">
                 Requires OTP confirmation for baseline modifications or schedule overrides.
               </p>
             </div>
@@ -86,11 +86,11 @@ export default function AdminSettingsPage() {
         </div>
 
         {/* Schedule Baseline Protection */}
-        <div className="bg-white border border-[#D6E1E9] rounded-lg p-4 sm:p-6 space-y-4">
-          <div className="flex items-center gap-2 pb-2 border-b border-[#D6E1E9]">
-            <Lock className="w-4 h-4 text-[#2E7D5B]" />
-            <h3 className="text-xs font-bold uppercase tracking-wider text-[#1A2E42]">
-              Primavera P6 & Schedule Governance
+        <div className="bg-white dark:bg-[#17221D] border border-[#D9E2DA] dark:border-[#3A5146] rounded-lg p-4 sm:p-6 space-y-4">
+          <div className="flex items-center gap-2 pb-2 border-b border-[#D9E2DA] dark:border-[#3A5146]">
+            <Lock className="w-4 h-4 text-[#1F6B4E] dark:text-[#34D399]" />
+            <h3 className="text-xs font-bold font-heading uppercase tracking-wider text-[#1A2B25] dark:text-[#F2F4E9]">
+              Primavera P6 &amp; Schedule Governance
             </h3>
           </div>
 
@@ -100,13 +100,13 @@ export default function AdminSettingsPage() {
                 type="checkbox"
                 checked={!allowManualBaselineOverride}
                 onChange={(e) => setAllowManualBaselineOverride(!e.target.checked)}
-                className="rounded border-[#D6E1E9] text-[#0F6B68] w-4 h-4 mt-0.5"
+                className="rounded border-[#D9E2DA] dark:border-[#3A5146] text-[#006B61] dark:text-[#72C6AD] w-4 h-4 mt-0.5"
               />
               <div>
-                <span className="font-semibold text-[#1A2E42] block">
+                <span className="font-semibold text-[#1A2B25] dark:text-[#F2F4E9] block">
                   Lock Baseline Planned Dates (Zero Implicit Overwrite)
                 </span>
-                <span className="text-[11px] text-[#52687B]">
+                <span className="text-[11px] text-[#52665D] dark:text-[#B5C1B5]">
                   Site engineers and automated matching processes can record actuals, but cannot alter baseline planned start/finish without an approved schedule revision.
                 </span>
               </div>
@@ -117,13 +117,13 @@ export default function AdminSettingsPage() {
                 type="checkbox"
                 checked={immutableAuditLog}
                 onChange={(e) => setImmutableAuditLog(e.target.checked)}
-                className="rounded border-[#D6E1E9] text-[#0F6B68] w-4 h-4 mt-0.5"
+                className="rounded border-[#D9E2DA] dark:border-[#3A5146] text-[#006B61] dark:text-[#72C6AD] w-4 h-4 mt-0.5"
               />
               <div>
-                <span className="font-semibold text-[#1A2E42] block">
+                <span className="font-semibold text-[#1A2B25] dark:text-[#F2F4E9] block">
                   Tamper-Evident Audit Trail
                 </span>
-                <span className="text-[11px] text-[#52687B]">
+                <span className="text-[11px] text-[#52665D] dark:text-[#B5C1B5]">
                   All schedule approvals, DPR matches, and manual overrides are signed and persisted in the audit log.
                 </span>
               </div>
@@ -134,7 +134,7 @@ export default function AdminSettingsPage() {
         <div className="flex items-center justify-end gap-3 pt-2">
           <button
             type="submit"
-            className="inline-flex items-center gap-2 px-4 py-2 bg-[#0F6B68] hover:bg-[#135A72] text-white text-xs font-semibold rounded-md shadow-xs transition-colors cursor-pointer"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-[#006B61] hover:bg-[#00524A] dark:bg-[#72C6AD] dark:text-[#0B2822] dark:hover:bg-[#5CB69C] text-white text-xs font-semibold rounded-md shadow-xs transition-colors cursor-pointer"
           >
             <Save className="w-3.5 h-3.5" />
             Save Security Configuration
