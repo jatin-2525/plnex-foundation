@@ -131,6 +131,7 @@ const INITIAL_REVIEW_EVENTS: ReviewEvent[] = [
     submittedBy: 'Debajit Borah (Lead Site Engineer)',
     date: '2026-09-14 17:15',
     status: 'High Confidence',
+    isApproved: true,
     alternativeCandidates: [
       {
         activityId: 'PIP-24-002',

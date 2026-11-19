@@ -58,14 +58,14 @@ const config: Config = {
         'content': '84rem',
       },
       fontFamily: {
-        heading: ["'Manrope'", "system-ui", "-apple-system", "BlinkMacSystemFont", "'Segoe UI'", "sans-serif"],
-        sans: ["'Inter'", "system-ui", "-apple-system", "BlinkMacSystemFont", "'Segoe UI'", "Roboto", "sans-serif"],
+        heading: ["'IBM Plex Sans'", "system-ui", "-apple-system", "BlinkMacSystemFont", "'Segoe UI'", "sans-serif"],
+        sans: ["'IBM Plex Sans'", "system-ui", "-apple-system", "BlinkMacSystemFont", "'Segoe UI'", "sans-serif"],
         mono: ["'IBM Plex Mono'", "'Cascadia Code'", "Consolas", "monospace"],
       },
       fontSize: {
         'page-title': ['1.875rem', { lineHeight: '2.25rem', fontWeight: '700' }], // 30px
         'section-heading': ['1.25rem', { lineHeight: '1.75rem', fontWeight: '600' }], // 20px
-        'body': ['0.9375rem', { lineHeight: '1.5rem', fontWeight: '400' }], // 15px
+        'body': ['0.9375rem', { lineHeight: '1.5rem', fontWeight: '400' }], // 15px (desktop >= 14px)
         'table-dense': ['0.8125rem', { lineHeight: '1.25rem', fontWeight: '500' }], // 13px
         'tech-id': ['0.8125rem', { lineHeight: '1.25rem', fontWeight: '600' }], // 13px IBM Plex Mono
       },

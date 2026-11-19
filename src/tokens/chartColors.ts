@@ -1,13 +1,13 @@
 /**
  * Standardized PLnEX Chart Colors & Visual Semantic Tokens
- * "Mineral + Evergreen" Direction
+ * "Evergreen, Mineral + Warm Neutral" Direction
  *
  * Strict Design System Rules:
  * 1. Series Colors:
- *    - Planned baseline: Teal (#006B61 light / #72C6AD dark, glyph: ■)
- *    - Verified actual:  Copper (#AC4B31 light / #E58567 dark, glyph: ●)
- *    - Forecast:         Dashed Amber (#D99B26 light / #E9C46A dark, dashArray: "5,4", glyph: ▲)
- *    - Variance:         Copper (#AC4B31 light / #E58567 dark, glyph: ▼)
+ *    - Planned baseline: Warm gold (#C8963E light / #E5C185 dark, glyph: ■)
+ *    - Verified actual:  Mint (#08786A light / #72C6AD dark, glyph: ●)
+ *    - Forecast:         Dashed Muted Lavender (#7872A8 light / #A9A3D8 dark, dashArray: "5,4", glyph: ▲)
+ *    - Variance:         Warm Accent / Critical (#C7522A light / #FF9E94 dark, glyph: ▼)
  * 2. WCAG 2.2 Level AA Contrast compliant in both themes.
  * 3. Never use color alone: pair with labels, markers, or dashed patterns.
  * 4. Subtle readable grids and axes in both themes (#D9E2DA light / #3A5146 dark).
@@ -15,34 +15,34 @@
 
 export const CHART_TOKENS_LIGHT = {
   planned: {
-    stroke: '#006B61',         // Teal planned baseline
-    fill: '#E4F1E9',
-    text: '#006B61',
+    stroke: '#C8963E',         // Warm gold planned baseline
+    fill: '#FBF5E8',
+    text: '#825700',
     label: 'Planned Baseline',
     glyph: '■',
     strokeWidth: 2.5,
   },
   actual: {
-    stroke: '#AC4B31',         // Copper verified actual
-    fill: '#AC4B31',
-    text: '#AC4B31',
+    stroke: '#08786A',         // Mint verified actual
+    fill: '#08786A',
+    text: '#08786A',
     label: 'Verified Actual',
     glyph: '●',
     strokeWidth: 3.5,
   },
   forecast: {
-    stroke: '#D99B26',         // Amber forecast trajectory
-    strokeAlt: '#E5C185',
+    stroke: '#7872A8',         // Muted lavender forecast trajectory
+    strokeAlt: '#A9A3D8',
     dashArray: '5,4',
-    fill: '#FFFFFF',
-    text: '#825700',
+    fill: '#F4F3FA',
+    text: '#544E85',
     label: 'Forecast Trajectory',
     glyph: '▲',
     strokeWidth: 2.5,
   },
   variance: {
-    stroke: '#AC4B31',
-    fill: '#AC4B31',
+    stroke: '#C7522A',
+    fill: '#C7522A',
     bg: '#F6E4E1',
     border: '#DCABA7',
     text: '#A43B36',
@@ -72,41 +72,41 @@ export const CHART_TOKENS_LIGHT = {
   },
   neutral: {
     grid: '#D9E2DA',
-    bg: '#F6F7F3',
-    heading: '#1A2B25',
+    bg: '#F5F7F3',
+    heading: '#182920',
     text: '#52665D',
     border: '#D9E2DA',
   },
   grid: '#D9E2DA',
   textMuted: '#52665D',
   surface: '#FFFFFF',
-  dataDateLine: '#1A2B25',
-  forecastZoneBg: '#F6F7F3',
+  dataDateLine: '#182920',
+  forecastZoneBg: '#F5F7F3',
 };
 
 export const CHART_TOKENS_DARK = {
   planned: {
-    stroke: '#72C6AD',         // Teal planned baseline (dark)
-    fill: '#20353A',
-    text: '#72C6AD',
+    stroke: '#E5C185',         // Warm gold planned baseline (dark)
+    fill: '#3D2D14',
+    text: '#E5C185',
     label: 'Planned Baseline',
     glyph: '■',
     strokeWidth: 2.5,
   },
   actual: {
-    stroke: '#E58567',         // Copper verified actual (dark)
-    fill: '#E58567',
-    text: '#E58567',
+    stroke: '#72C6AD',         // Mint verified actual (dark)
+    fill: '#72C6AD',
+    text: '#72C6AD',
     label: 'Verified Actual',
     glyph: '●',
     strokeWidth: 3.5,
   },
   forecast: {
-    stroke: '#E9C46A',         // Amber forecast trajectory (dark)
-    strokeAlt: '#E9C46A',
+    stroke: '#A9A3D8',         // Muted lavender forecast trajectory (dark)
+    strokeAlt: '#C7C2EA',
     dashArray: '5,4',
-    fill: '#17221D',
-    text: '#F3D27E',
+    fill: '#28253D',
+    text: '#A9A3D8',
     label: 'Forecast Trajectory',
     glyph: '▲',
     strokeWidth: 2.5,
@@ -143,7 +143,7 @@ export const CHART_TOKENS_DARK = {
   },
   neutral: {
     grid: '#3A5146',
-    bg: '#17221D',
+    bg: '#101815',
     heading: '#F2F4E9',
     text: '#B5C1B5',
     border: '#3A5146',
@@ -151,9 +151,8 @@ export const CHART_TOKENS_DARK = {
   grid: '#3A5146',
   textMuted: '#B5C1B5',
   surface: '#17221D',
-  dataDateLine: '#F2F4E9',
-  forecastZoneBg: '#101815',
+  dataDateLine: '#72C6AD',
+  forecastZoneBg: '#131F1A',
 };
 
-// Default export uses light tokens for direct access
 export const CHART_TOKENS = CHART_TOKENS_LIGHT;

@@ -590,7 +590,7 @@ export const MOCK_MATCH_EXPLANATIONS: Record<string, MatchExplanationModel> = {
       url: '/evidence?id=EVD-DIARY-1092',
     },
     algorithmVersion: DEFAULT_ALGORITHM_METADATA,
-    generatedTimestamp: '2026-09-17 17:30:22 UTC',
+    generatedTimestamp: '2026-09-17 17:30:22 IST',
     processingLatencyMs: 98,
     auditHash: '0x1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b',
   },

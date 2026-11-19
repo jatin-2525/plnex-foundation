@@ -11,6 +11,7 @@ import { StateWrapper } from '../../components/shared/StateWrapper';
 import { StatusBadge } from '../../components/shared/StatusBadge';
 import { ConfidenceBadge } from '../../components/shared/ConfidenceBadge';
 import { SCurveChart } from '../../components/shared/SCurveChart';
+import { WorkfrontSchematic } from '../../components/shared/WorkfrontSchematic';
 import { BarChart, HorizontalBarChart, LineChart, StatusDonutChart } from '../../components/shared/charts';
 import { Modal } from '../../components/shared/Modal';
 import { WhyButton } from '../../components/shared/WhyButton';
@@ -44,6 +45,7 @@ import {
   Filter,
   HelpCircle,
   MessageSquare,
+  ChevronDown,
 } from 'lucide-react';
 
 export default function ManagerDashboardPage() {
@@ -62,9 +64,11 @@ export default function ManagerDashboardPage() {
 
   // Feature 15: Dashboard Layout Controls (Density & Section Visibility wired to Display Preferences)
   const [dashboardDensity, setDashboardDensity] = useState<'comfortable' | 'compact'>(shared.density || 'comfortable');
+  const [viewSettingsOpen, setViewSettingsOpen] = useState(false);
   const [visibleSections, setVisibleSections] = useState({
     kpis: manager.pinnedCards?.includes('kpi-summary') ?? true,
     attention: manager.pinnedCards?.includes('urgent-actions') ?? true,
+    schematic: true,
     scurve: manager.pinnedCards?.includes('s-curve') ?? true,
     analytics: false, // Default collapsed to reduce manager overload
     variance: true,
@@ -236,145 +240,146 @@ export default function ManagerDashboardPage() {
         emptyDescription="Operational KPIs, critical path risks, and pending review events will appear here once project data is loaded."
       >
         {/* =========================================================================
-            1. PAGE HEADER (Deliberate dark evergreen #103F39 anchor for executive hierarchy)
-            Project context, canonical schedule version, reporting date, connection status
+            1. COMPACT EXECUTIVE TOOLBAR
+            Selected project context, reporting cutoff, view settings & primary review action
             ========================================================================= */}
-        <div className="bg-[#103F39] dark:bg-[#101815] border border-[#235F56] dark:border-[#3A5146] rounded-xl p-4 sm:p-6 shadow-card text-white transition-colors">
-          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+        <div className="bg-[#103F39] dark:bg-[#101815] border border-[#235F56] dark:border-[#3A5146] rounded-xl p-3.5 sm:p-4 text-white shadow-card transition-colors">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
+            {/* Project Identification & Cutoff */}
             <div className="space-y-1">
               <div className="flex items-center gap-2 flex-wrap">
-                <span className="px-2 py-0.5 rounded bg-[#103F39] dark:bg-[#243832] text-[#72C6AD] border border-[#235F56] text-[11px] font-mono font-bold">
-                  PROJECT ID: {activeProject.code}
+                <span className="px-2 py-0.5 rounded bg-[#0C312C] dark:bg-[#203129] text-[#72C6AD] border border-[#235F56] dark:border-[#3A5146] text-[11px] font-mono font-bold">
+                  PROJECT: {activeProject.code}
                 </span>
                 <span className="text-xs text-[#C5D5CA]">
                   Schedule: <strong className="text-[#F2F4E9] font-mono">{CANONICAL_SCHEDULE_VERSION_LABEL}</strong>
                 </span>
                 <span className="text-[#8FA897] hidden sm:inline">•</span>
                 <span className="text-xs text-[#C5D5CA]">
-                  Reporting Date: <strong className="text-[#F2F4E9] font-mono">{formatProjectDate(PROJECT_REPORT_DATE, true)}</strong>
+                  Data Date: <strong className="text-[#F2F4E9] font-mono">18 Sep 2026, 17:30 IST</strong>
                 </span>
+                <span className="text-[#8FA897] hidden sm:inline">•</span>
+                <div
+                  className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded border text-[10px] font-mono font-semibold ${
+                    effectiveStatus === 'OFFLINE'
+                      ? 'bg-[#381916] border-[#5C2823] text-[#FF9E94]'
+                      : 'bg-[#0C312C] border-[#235F56] text-[#72C6AD]'
+                  }`}
+                  title={`Operating mode: ${effectiveStatus}`}
+                >
+                  <span
+                    className={`w-1.5 h-1.5 rounded-full ${
+                      effectiveStatus === 'OFFLINE' ? 'bg-[#FF9E94]' : 'bg-[#72C6AD]'
+                    }`}
+                  />
+                  <span>{effectiveStatus === 'OFFLINE' ? 'OFFLINE' : 'ONLINE (SANDBOX)'}</span>
+                </div>
               </div>
-              <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight font-heading">
+              <h1 className="text-xl sm:text-2xl font-bold text-white tracking-tight font-heading">
                 {activeProject.name}
               </h1>
-              <p className="text-sm text-[#C5D5CA]">
-                Executive Project Controls & Schedule Decision Cockpit • <strong className="text-white">Oil India Limited</strong>
-              </p>
             </div>
 
-            {/* Header Action Toolbar & Connection Status */}
-            <div className="flex flex-wrap items-center gap-2 self-start lg:self-center">
-              <div
-                className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-md border text-xs font-semibold ${
-                  effectiveStatus === 'OFFLINE'
-                    ? 'bg-[#381916] border-[#5C2823] text-[#FF9E94]'
-                    : 'bg-[#0C312C] border-[#235F56] text-[#72C6AD]'
-                }`}
-                title={`Application operating mode: ${effectiveStatus}`}
-              >
-                <span
-                  className={`w-2 h-2 rounded-full ${
-                    effectiveStatus === 'OFFLINE' ? 'bg-[#FF9E94]' : 'bg-[#72C6AD]'
+            {/* View Settings & Primary Action */}
+            <div className="flex items-center gap-2 self-start md:self-center flex-shrink-0">
+              {/* View Settings Dropdown Button */}
+              <div className="relative">
+                <button
+                  type="button"
+                  onClick={() => setViewSettingsOpen(!viewSettingsOpen)}
+                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg border transition-all cursor-pointer ${
+                    viewSettingsOpen
+                      ? 'bg-[#08786A] text-white border-[#72C6AD] shadow-xs'
+                      : 'bg-[#0C312C] dark:bg-[#17221D] text-[#EEF3E8] hover:bg-[#194E46] border-[#235F56] dark:border-[#3A5146]'
                   }`}
-                />
-                <span className="font-mono uppercase tracking-wider text-[11px]">
-                  {effectiveStatus === 'OFFLINE' ? 'Offline Mode (Local)' : 'Simulated Online (Sandbox)'}
-                </span>
+                  aria-expanded={viewSettingsOpen}
+                  aria-label="Toggle dashboard view and density settings"
+                >
+                  <SlidersHorizontal className="w-3.5 h-3.5 text-[#72C6AD]" />
+                  <span>View Settings</span>
+                  <ChevronDown className={`w-3.5 h-3.5 transition-transform ${viewSettingsOpen ? 'rotate-180' : ''}`} />
+                </button>
+
+                {/* View Settings Dropdown Popover */}
+                {viewSettingsOpen && (
+                  <div className="absolute right-0 mt-2 w-72 p-3 bg-white dark:bg-[#17221D] text-[#182920] dark:text-[#F2F4E9] border border-[#D9E2DA] dark:border-[#3A5146] rounded-xl shadow-xl z-50 space-y-3">
+                    {/* Density Control */}
+                    <div>
+                      <div className="text-[11px] font-bold uppercase tracking-wider text-[#52665D] dark:text-[#B5C1B5] mb-1.5">
+                        Display Density
+                      </div>
+                      <div className="grid grid-cols-2 gap-1 p-0.5 bg-[#F5F7F3] dark:bg-[#101815] rounded-lg border border-[#D9E2DA] dark:border-[#3A5146]">
+                        <button
+                          type="button"
+                          onClick={() => setDashboardDensity('comfortable')}
+                          className={`py-1 text-center text-xs font-semibold rounded transition-colors ${
+                            dashboardDensity === 'comfortable'
+                              ? 'bg-[#08786A] text-white shadow-xs'
+                              : 'text-[#52665D] dark:text-[#B5C1B5] hover:text-[#182920]'
+                          }`}
+                        >
+                          Comfortable
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setDashboardDensity('compact')}
+                          className={`py-1 text-center text-xs font-semibold rounded transition-colors ${
+                            dashboardDensity === 'compact'
+                              ? 'bg-[#08786A] text-white shadow-xs'
+                              : 'text-[#52665D] dark:text-[#B5C1B5] hover:text-[#182920]'
+                          }`}
+                        >
+                          Compact
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Section Visibility */}
+                    <div className="pt-2 border-t border-[#D9E2DA] dark:border-[#3A5146]">
+                      <div className="text-[11px] font-bold uppercase tracking-wider text-[#52665D] dark:text-[#B5C1B5] mb-1.5">
+                        Visible Sections
+                      </div>
+                      <div className="space-y-1 text-xs">
+                        {[
+                          { id: 'kpis', label: 'Executive KPIs' },
+                          { id: 'attention', label: 'Decision Backlog (Attention)' },
+                          { id: 'schematic', label: 'Workfront 2D Schematic' },
+                          { id: 'scurve', label: 'Earned Value S-Curve' },
+                          { id: 'analytics', label: 'Supporting Analytics' },
+                          { id: 'variance', label: 'Variance Control Table' },
+                          { id: 'pendingMatches', label: 'Pending Schedule Links' },
+                          { id: 'milestones', label: 'Verified Milestones' },
+                        ].map((sec) => (
+                          <label
+                            key={sec.id}
+                            className="flex items-center justify-between p-1 rounded hover:bg-[#F5F7F3] dark:hover:bg-[#203129] cursor-pointer"
+                          >
+                            <span className="text-xs">{(sec as any).label}</span>
+                            <input
+                              type="checkbox"
+                              checked={(visibleSections as any)[sec.id]}
+                              onChange={() =>
+                                setVisibleSections((prev: any) => ({ ...prev, [sec.id]: !prev[sec.id] }))
+                              }
+                              className="w-4 h-4 rounded text-[#08786A] focus:ring-[#08786A] accent-[#08786A] cursor-pointer"
+                            />
+                          </label>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
 
-              {/* Messages Link */}
-              <Link
-                href="/messages"
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-white bg-[#103F39] hover:bg-[#0C312C] border border-[#235F56] rounded-lg transition-colors shadow-2xs"
-              >
-                <MessageSquare className="w-3.5 h-3.5 text-[#72C6AD]" />
-                <span>Messages</span>
-                <span className="px-1.5 py-0.2 rounded-full bg-[#E5C185] text-[#1B281E] text-[10px] font-bold">2</span>
-              </Link>
-
-              {/* Secondary Navigation */}
-              <Link
-                href="/schedule-twin"
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-white bg-[#103F39] hover:bg-[#0C312C] border border-[#235F56] rounded-lg transition-colors shadow-2xs"
-              >
-                <GitCommit className="w-3.5 h-3.5 text-[#72C6AD]" />
-                <span>Schedule Twin</span>
-              </Link>
-
-              {/* Primary Action */}
+              {/* Primary Action Button */}
               <Link
                 href="/review"
-                className="inline-flex items-center gap-2 px-4 py-2 text-xs font-bold text-white bg-[#103F39] hover:bg-[#0C312C] dark:bg-[#72C6AD] dark:text-[#0B2822] border border-[#235F56] dark:border-[#72C6AD] rounded-lg transition-colors shadow-xs"
+                className="inline-flex items-center gap-2 px-3.5 py-1.5 text-xs font-bold text-white bg-[#08786A] hover:bg-[#076458] dark:bg-[#72C6AD] dark:text-[#0B2822] dark:hover:bg-[#5CB69C] border border-[#08786A] dark:border-[#72C6AD] rounded-lg transition-colors shadow-xs"
               >
                 <ShieldCheck className="w-4 h-4" />
-                <span>Review Pending Events ({reviewEvents.length})</span>
+                <span>Review Queue ({reviewEvents.length})</span>
               </Link>
             </div>
-          </div>
-        </div>
-
-        {/* =========================================================================
-            FEATURE 15: DASHBOARD LAYOUT & DENSITY CONTROLS
-            Allows the Project Manager to customize density and show/hide sections
-            ========================================================================= */}
-        <div className="bg-white dark:bg-[#17221D] border border-[#D9E2DA] dark:border-[#3A5146] rounded-lg p-3 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs transition-colors">
-          <div className="flex items-center gap-2">
-            <span className="font-semibold text-[#1A2B25] dark:text-[#F2F4E9] flex items-center gap-1.5 text-xs">
-              <SlidersHorizontal className="w-3.5 h-3.5 text-[#006B61] dark:text-[#72C6AD]" />
-              Layout & Density:
-            </span>
-            <div className="flex rounded border border-[#D9E2DA] dark:border-[#3A5146] p-0.5 bg-[#F6F7F3] dark:bg-[#101815]">
-              <button
-                type="button"
-                onClick={() => setDashboardDensity('comfortable')}
-                className={`px-2.5 py-1 rounded text-[11px] font-medium transition-all cursor-pointer ${
-                  dashboardDensity === 'comfortable'
-                    ? 'bg-[#006B61] dark:bg-[#006B61] text-white font-bold shadow-xs'
-                    : 'text-[#52665D] dark:text-[#B5C1B5] hover:text-[#1A2B25] dark:hover:text-[#F2F4E9] hover:bg-[#EAF0E9] dark:hover:bg-[#243832]'
-                }`}
-              >
-                Comfortable
-              </button>
-              <button
-                type="button"
-                onClick={() => setDashboardDensity('compact')}
-                className={`px-2.5 py-1 rounded text-[11px] font-medium transition-all cursor-pointer ${
-                  dashboardDensity === 'compact'
-                    ? 'bg-[#006B61] dark:bg-[#006B61] text-white font-bold shadow-xs'
-                    : 'text-[#52665D] dark:text-[#B5C1B5] hover:text-[#1A2B25] dark:hover:text-[#F2F4E9] hover:bg-[#EAF0E9] dark:hover:bg-[#243832]'
-                }`}
-              >
-                Compact
-              </button>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-1.5 flex-wrap">
-            <span className="text-[11px] font-medium text-[#52665D] dark:text-[#B5C1B5]">Visible Sections:</span>
-            {[
-              { id: 'kpis', label: 'KPIs' },
-              { id: 'attention', label: 'Attention' },
-              { id: 'scurve', label: 'S-Curve' },
-              { id: 'analytics', label: 'Analytics' },
-              { id: 'variance', label: 'Variance' },
-              { id: 'pendingMatches', label: 'Matches' },
-              { id: 'milestones', label: 'History' },
-            ].map((sec) => (
-              <button
-                key={sec.id}
-                type="button"
-                onClick={() =>
-                  setVisibleSections((prev: any) => ({ ...prev, [sec.id]: !prev[sec.id] }))
-                }
-                className={`px-2.5 py-1 rounded text-[11px] font-medium border transition-all cursor-pointer ${
-                  (visibleSections as any)[sec.id]
-                    ? 'bg-[#006B61] dark:bg-[#006B61] text-white border-[#006B61] dark:border-[#006B61] font-semibold shadow-xs'
-                    : 'bg-white dark:bg-[#243832] text-[#52665D] dark:text-[#B5C1B5] border-[#D9E2DA] dark:border-[#3A5146] hover:bg-[#EAF0E9] dark:hover:bg-[#1f3049]'
-                }`}
-              >
-                {(visibleSections as any)[sec.id] ? `✓ ${sec.label}` : sec.label}
-              </button>
-            ))}
           </div>
         </div>
 
@@ -391,7 +396,7 @@ export default function ManagerDashboardPage() {
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
-                    <h2 id="attention-heading" className="text-base sm:text-lg font-bold text-[#1A2B25] dark:text-[#F2F4E9] tracking-tight font-heading">
+                    <h2 id="attention-heading" className="text-base sm:text-lg font-bold text-[#182920] dark:text-[#F2F4E9] tracking-tight font-heading">
                       What Needs My Attention
                     </h2>
                     <span className="px-2 py-0.5 rounded bg-[#FFF1EE] dark:bg-[#381916] text-[#9D473D] dark:text-[#FF9E94] border border-[#F6CEC7] dark:border-[#5C2823] text-[10px] font-mono font-bold uppercase">
@@ -432,7 +437,7 @@ export default function ManagerDashboardPage() {
                       Critical Path
                     </span>
                   </div>
-                  <h3 className="font-bold text-xs text-[#1A2B25] dark:text-[#F2F4E9] leading-snug">
+                  <h3 className="font-bold text-xs text-[#182920] dark:text-[#F2F4E9] leading-snug">
                     Line 24 Header Erection Delayed
                   </h3>
                   <p className="text-[11px] text-[#566159] dark:text-[#B5C1B5] leading-relaxed">
@@ -451,26 +456,27 @@ export default function ManagerDashboardPage() {
                 </Link>
               </div>
 
-              {/* Card 2: #2 HIGH - Low Confidence Ambiguous Match */}
+              {/* Card 2: #2 HIGH Priority vs 62% Match Confidence */}
               <div className="p-4 rounded-lg bg-white dark:bg-[#243832] border border-[#E5D1A9] dark:border-[#553F1D] hover:border-[#765216] dark:hover:border-[#E5C185] transition-all shadow-card flex flex-col justify-between space-y-3 border-l-4 border-l-[#765216] dark:border-l-[#E5C185]">
                 <div className="space-y-1.5">
                   <div className="flex items-center justify-between">
                     <span className="px-2 py-0.5 rounded text-[11px] font-mono font-bold uppercase bg-[#F5EAD4] dark:bg-[#352712] text-[#765216] dark:text-[#E5C185] border border-[#E5D1A9] dark:border-[#553F1D] flex items-center gap-1">
-                      <HelpCircle className="w-3 h-3" /> #2 HIGH
+                      <HelpCircle className="w-3 h-3 text-[#765216] dark:text-[#E5C185]" />
+                      Priority: High (#2)
                     </span>
-                    <span className="text-[10px] text-[#765216] dark:text-[#E5C185] font-mono font-bold">
-                      Match Review
+                    <span className="text-[10px] text-[#765216] dark:text-[#E5C185] font-mono font-bold bg-[#F5EAD4] dark:bg-[#352712] px-1.5 py-0.5 rounded">
+                      Confidence: 62% (Medium)
                     </span>
                   </div>
-                  <h3 className="font-bold text-xs text-[#1A2B25] dark:text-[#F2F4E9] leading-snug">
+                  <h3 className="font-bold text-xs text-[#182920] dark:text-[#F2F4E9] leading-snug">
                     Unmatched Flare Line Observation
                   </h3>
-                  <p className="text-[11px] text-[#566159] dark:text-[#B5C1B5] leading-relaxed">
+                  <p className="text-[11px] text-[#52665D] dark:text-[#B5C1B5] leading-relaxed">
                     Field reported 35m pipe installation at Unit 02 flare, but closest baseline match (PIP-24-003) is 62% confidence.
                   </p>
                   <div className="pt-2 border-t border-[#D9E2DA] dark:border-[#3A5146] flex items-center justify-between text-[11px] font-mono">
-                    <span className="text-[#566159] dark:text-[#B5C1B5]">DPR-2026-09-18</span>
-                    <span className="text-[#765216] dark:text-[#E5C185] font-bold">62% Match</span>
+                    <span className="text-[#52665D] dark:text-[#B5C1B5]">DPR-2026-09-18</span>
+                    <span className="text-[#765216] dark:text-[#E5C185] font-bold">Needs Verification</span>
                   </div>
                 </div>
                 <Link
@@ -481,30 +487,32 @@ export default function ManagerDashboardPage() {
                 </Link>
               </div>
 
-              {/* Card 3: #3 HIGH - Unmatched Field Observation */}
+              {/* Card 3: #3 HIGH Priority vs 47% Match Confidence (Low / Unmatched) */}
               <div className="p-4 rounded-lg bg-white dark:bg-[#243832] border border-[#E5D1A9] dark:border-[#553F1D] hover:border-[#765216] dark:hover:border-[#E5C185] transition-all shadow-card flex flex-col justify-between space-y-3 border-l-4 border-l-[#765216] dark:border-l-[#E5C185]">
                 <div className="space-y-1.5">
                   <div className="flex items-center justify-between">
                     <span className="px-2 py-0.5 rounded text-[11px] font-mono font-bold uppercase bg-[#F5EAD4] dark:bg-[#352712] text-[#765216] dark:text-[#E5C185] border border-[#E5D1A9] dark:border-[#553F1D] flex items-center gap-1">
                       <HelpCircle className="w-3 h-3 text-[#765216] dark:text-[#E5C185]" />
-                      #3 HIGH
+                      Priority: High (#3)
                     </span>
-                    <span className="text-xs font-mono font-bold text-[#9D473D] dark:text-[#FF9E94] bg-[#FFF1EE] dark:bg-[#381916] px-1.5 rounded">47% Score</span>
+                    <span className="text-xs font-mono font-bold text-[#A43B36] dark:text-[#FF9E94] bg-[#F6E4E1] dark:bg-[#381916] px-1.5 py-0.5 rounded">
+                      Confidence: 47% (Low)
+                    </span>
                   </div>
-                  <h3 className="font-bold text-xs text-[#1A2B25] dark:text-[#F2F4E9] leading-snug">
+                  <h3 className="font-bold text-xs text-[#182920] dark:text-[#F2F4E9] leading-snug">
                     EVT-2026-004: Unit B Drain Line
                   </h3>
-                  <p className="text-[11px] text-[#566159] dark:text-[#B5C1B5] leading-relaxed">
+                  <p className="text-[11px] text-[#52665D] dark:text-[#B5C1B5] leading-relaxed">
                     Unlinked spool code submitted. Requires manager target assignment to credit physical earned progress.
                   </p>
                   <div className="pt-2 border-t border-[#D9E2DA] dark:border-[#3A5146] flex items-center justify-between text-[11px] font-mono">
-                    <span className="text-[#566159] dark:text-[#B5C1B5]">DPR-2026-09-17</span>
-                    <span className="text-[#9D473D] dark:text-[#FF9E94] font-bold">Uncredited</span>
+                    <span className="text-[#52665D] dark:text-[#B5C1B5]">DPR-2026-09-17</span>
+                    <span className="text-[#A43B36] dark:text-[#FF9E94] font-bold">Uncredited</span>
                   </div>
                 </div>
                 <Link
                   href="/matching"
-                  className="w-full py-2 px-3 bg-white dark:bg-[#17221D] hover:bg-[#EAF0E9] text-[#1A2B25] dark:text-[#72C6AD] border border-[#235F56] dark:border-[#72C6AD] text-xs font-bold rounded-lg text-center transition-colors block mt-2"
+                  className="w-full py-2 px-3 bg-white dark:bg-[#17221D] hover:bg-[#EAF0E9] text-[#182920] dark:text-[#72C6AD] border border-[#235F56] dark:border-[#72C6AD] text-xs font-bold rounded-lg text-center transition-colors block mt-2"
                 >
                   Assign Target Activity &rarr;
                 </Link>
@@ -521,7 +529,7 @@ export default function ManagerDashboardPage() {
                       Float Erosion
                     </span>
                   </div>
-                  <h3 className="font-bold text-xs text-[#1A2B25] dark:text-[#F2F4E9] leading-snug">
+                  <h3 className="font-bold text-xs text-[#182920] dark:text-[#F2F4E9] leading-snug">
                     Substation Cable Tray Float Exhausted
                   </h3>
                   <p className="text-[11px] text-[#566159] dark:text-[#B5C1B5] leading-relaxed">
@@ -534,7 +542,7 @@ export default function ManagerDashboardPage() {
                 </div>
                 <Link
                   href="/risks"
-                  className="w-full py-2 px-3 bg-white dark:bg-[#17221D] hover:bg-[#EAF0E9] text-[#1A2B25] dark:text-[#F2F4E9] border border-[#D9E2DA] dark:border-[#3A5146] text-xs font-bold rounded-lg text-center transition-colors block mt-2"
+                  className="w-full py-2 px-3 bg-white dark:bg-[#17221D] hover:bg-[#EAF0E9] text-[#182920] dark:text-[#F2F4E9] border border-[#D9E2DA] dark:border-[#3A5146] text-xs font-bold rounded-lg text-center transition-colors block mt-2"
                 >
                   Inspect Critical Path &rarr;
                 </Link>
@@ -550,7 +558,7 @@ export default function ManagerDashboardPage() {
           <section aria-labelledby="kpi-heading" className="space-y-2">
             <div className="flex items-center justify-between">
               <h2 id="kpi-heading" className="text-xs font-semibold uppercase tracking-wider text-[#52665D] dark:text-[#B5C1B5] flex items-center gap-1.5 font-heading">
-                <BarChart3 className="w-3.5 h-3.5 text-[#006B61] dark:text-[#72C6AD]" />
+                <BarChart3 className="w-3.5 h-3.5 text-[#08786A] dark:text-[#72C6AD]" />
                 Executive Performance Indicators
               </h2>
               <span className="text-[11px] text-[#738A80] dark:text-[#859688] font-mono hidden sm:inline">
@@ -589,7 +597,7 @@ export default function ManagerDashboardPage() {
                     Needs Attention — 5 Warnings
                   </p>
                 </div>
-                <Link href="/health" className="text-[11px] text-[#006B61] dark:text-[#72C6AD] group-hover:underline font-semibold flex items-center gap-1">
+                <Link href="/health" className="text-[11px] text-[#08786A] dark:text-[#72C6AD] group-hover:underline font-semibold flex items-center gap-1">
                   Inspect Health &rarr;
                 </Link>
               </div>
@@ -606,7 +614,7 @@ export default function ManagerDashboardPage() {
                       onClick={() => openWhyExplanation('progress:verified')}
                       title="Why is verified progress 73.0%?"
                     />
-                    <div className="p-1 rounded bg-[#EAF0E9] dark:bg-[#243832] text-[#006B61] dark:text-[#72C6AD]">
+                    <div className="p-1 rounded bg-[#EAF0E9] dark:bg-[#243832] text-[#08786A] dark:text-[#72C6AD]">
                       <CheckCircle2 className="w-3.5 h-3.5" />
                     </div>
                   </div>
@@ -619,10 +627,10 @@ export default function ManagerDashboardPage() {
                     <span className="text-xs text-[#52665D] dark:text-[#B5C1B5]">Actual</span>
                   </div>
                   <p className="text-[11px] text-[#52665D] dark:text-[#B5C1B5] mt-1">
-                    Baseline Target: <strong className="text-[#1A2B25] dark:text-[#F2F4E9] font-mono">{activeProject.plannedProgress}%</strong>
+                    Baseline Target: <strong className="text-[#182920] dark:text-[#F2F4E9] font-mono">{activeProject.plannedProgress}%</strong>
                   </p>
                 </div>
-                <Link href="/progress" className="text-[11px] text-[#006B61] dark:text-[#72C6AD] group-hover:underline font-semibold flex items-center gap-1">
+                <Link href="/progress" className="text-[11px] text-[#08786A] dark:text-[#72C6AD] group-hover:underline font-semibold flex items-center gap-1">
                   Progress Matrix &rarr;
                 </Link>
               </div>
@@ -652,7 +660,7 @@ export default function ManagerDashboardPage() {
                     1 Critical Path • 2 Near-Critical
                   </p>
                 </div>
-                <span className="text-[11px] text-[#006B61] dark:text-[#72C6AD] group-hover:underline font-semibold flex items-center gap-1">
+                <span className="text-[11px] text-[#08786A] dark:text-[#72C6AD] group-hover:underline font-semibold flex items-center gap-1">
                   CPM Risk Network &rarr;
                 </span>
               </Link>
@@ -681,7 +689,7 @@ export default function ManagerDashboardPage() {
                     Awaiting Planner Sign-off
                   </p>
                 </div>
-                <span className="text-[11px] text-[#006B61] dark:text-[#72C6AD] group-hover:underline font-semibold flex items-center gap-1">
+                <span className="text-[11px] text-[#08786A] dark:text-[#72C6AD] group-hover:underline font-semibold flex items-center gap-1">
                   Review Center &rarr;
                 </span>
               </Link>
@@ -714,11 +722,21 @@ export default function ManagerDashboardPage() {
                     +2 Days Behind Baseline Finish
                   </p>
                 </div>
-                <a href="#variance-table" className="text-[11px] text-[#006B61] dark:text-[#72C6AD] hover:underline font-semibold flex items-center gap-1">
+                <a href="#variance-table" className="text-[11px] text-[#08786A] dark:text-[#72C6AD] hover:underline font-semibold flex items-center gap-1">
                   Inspect Variance Table &rarr;
                 </a>
               </div>
             </div>
+          </section>
+        )}
+
+        {/* =========================================================================
+            3. INTERACTIVE 2D WORKFRONT PLOT PLAN SCHEMATIC
+            Physical workfront zones, live progress, chainage, critical blockers, and activity hooks
+            ========================================================================= */}
+        {visibleSections.schematic && (
+          <section aria-labelledby="workfront-schematic-heading" className="space-y-2">
+            <WorkfrontSchematic />
           </section>
         )}
 
@@ -747,10 +765,10 @@ export default function ManagerDashboardPage() {
                   Supporting Schedule Analytics
                 </span>
                 <div className="flex items-center gap-2">
-                  <h2 id="analytics-heading" className="text-base sm:text-lg font-bold text-[#1A2B25] dark:text-[#F2F4E9] tracking-tight font-heading">
+                  <h2 id="analytics-heading" className="text-base sm:text-lg font-bold text-[#182920] dark:text-[#F2F4E9] tracking-tight font-heading">
                     Dimensional Analysis & Deep-Dive Charts
                   </h2>
-                  <span className="text-xs px-2 py-0.5 rounded bg-[#EAF0E9] dark:bg-[#243832] text-[#006B61] dark:text-[#72C6AD] font-semibold hidden sm:inline">
+                  <span className="text-xs px-2 py-0.5 rounded bg-[#EAF0E9] dark:bg-[#243832] text-[#08786A] dark:text-[#72C6AD] font-semibold hidden sm:inline">
                     Discipline • Site Area • Trend • Delays
                   </span>
                 </div>
@@ -758,7 +776,7 @@ export default function ManagerDashboardPage() {
                   Multi-perspective breakdowns across engineering disciplines, site zones, and variance trajectories.
                 </p>
               </div>
-              <div className="flex items-center gap-2 text-xs font-bold text-[#006B61] dark:text-[#72C6AD] self-start sm:self-center">
+              <div className="flex items-center gap-2 text-xs font-bold text-[#08786A] dark:text-[#72C6AD] self-start sm:self-center">
                 <span className="group-open:hidden">Expand Analysis &darr;</span>
                 <span className="hidden group-open:inline">Collapse Analysis &uarr;</span>
               </div>
@@ -767,7 +785,7 @@ export default function ManagerDashboardPage() {
             <div className="p-4 sm:p-6 border-t border-[#D9E2DA] dark:border-[#3A5146] space-y-4">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D9E2DA] dark:border-[#3A5146] gap-3">
                 <div>
-                  <h3 className="text-sm font-bold text-[#1A2B25] dark:text-[#F2F4E9] font-heading">
+                  <h3 className="text-sm font-bold text-[#182920] dark:text-[#F2F4E9] font-heading">
                     Interactive Performance Dimensions
                   </h3>
                   <p className="text-xs text-[#52665D] dark:text-[#B5C1B5]">
@@ -776,14 +794,14 @@ export default function ManagerDashboardPage() {
                 </div>
 
                 {/* Perspective Selector Tabs */}
-                <div className="flex items-center gap-1 p-1 bg-[#F6F7F3] dark:bg-[#101815] border border-[#D9E2DA] dark:border-[#3A5146] rounded-lg self-start sm:self-center overflow-x-auto max-w-full">
+                <div className="flex items-center gap-1 p-1 bg-[#F5F7F3] dark:bg-[#101815] border border-[#D9E2DA] dark:border-[#3A5146] rounded-lg self-start sm:self-center overflow-x-auto max-w-full">
                   <button
                     type="button"
                     onClick={() => setActiveChartTab('discipline')}
                     className={`px-3 py-1.5 text-xs font-semibold rounded-md transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer ${
                       activeChartTab === 'discipline'
-                        ? 'bg-white dark:bg-[#243832] text-[#006B61] dark:text-[#72C6AD] shadow-2xs border border-[#D9E2DA] dark:border-[#3A5146]'
-                        : 'text-[#52665D] dark:text-[#B5C1B5] hover:text-[#1A2B25] dark:hover:text-[#F2F4E9]'
+                        ? 'bg-white dark:bg-[#243832] text-[#08786A] dark:text-[#72C6AD] shadow-2xs border border-[#D9E2DA] dark:border-[#3A5146]'
+                        : 'text-[#52665D] dark:text-[#B5C1B5] hover:text-[#182920] dark:hover:text-[#F2F4E9]'
                     }`}
                   >
                     <Layers className="w-3.5 h-3.5" />
@@ -795,8 +813,8 @@ export default function ManagerDashboardPage() {
                     onClick={() => setActiveChartTab('area')}
                     className={`px-3 py-1.5 text-xs font-semibold rounded-md transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer ${
                       activeChartTab === 'area'
-                        ? 'bg-white dark:bg-[#243832] text-[#006B61] dark:text-[#72C6AD] shadow-2xs border border-[#D9E2DA] dark:border-[#3A5146]'
-                        : 'text-[#52665D] dark:text-[#B5C1B5] hover:text-[#1A2B25] dark:hover:text-[#F2F4E9]'
+                        ? 'bg-white dark:bg-[#243832] text-[#08786A] dark:text-[#72C6AD] shadow-2xs border border-[#D9E2DA] dark:border-[#3A5146]'
+                        : 'text-[#52665D] dark:text-[#B5C1B5] hover:text-[#182920] dark:hover:text-[#F2F4E9]'
                     }`}
                   >
                     <MapPin className="w-3.5 h-3.5" />
@@ -808,8 +826,8 @@ export default function ManagerDashboardPage() {
                     onClick={() => setActiveChartTab('variance-trend')}
                     className={`px-3 py-1.5 text-xs font-semibold rounded-md transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer ${
                       activeChartTab === 'variance-trend'
-                        ? 'bg-white dark:bg-[#243832] text-[#006B61] dark:text-[#72C6AD] shadow-2xs border border-[#D9E2DA] dark:border-[#3A5146]'
-                        : 'text-[#52665D] dark:text-[#B5C1B5] hover:text-[#1A2B25] dark:hover:text-[#F2F4E9]'
+                        ? 'bg-white dark:bg-[#243832] text-[#08786A] dark:text-[#72C6AD] shadow-2xs border border-[#D9E2DA] dark:border-[#3A5146]'
+                        : 'text-[#52665D] dark:text-[#B5C1B5] hover:text-[#182920] dark:hover:text-[#F2F4E9]'
                     }`}
                   >
                     <LineChartIcon className="w-3.5 h-3.5" />
@@ -821,8 +839,8 @@ export default function ManagerDashboardPage() {
                     onClick={() => setActiveChartTab('delays')}
                     className={`px-3 py-1.5 text-xs font-semibold rounded-md transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer ${
                       activeChartTab === 'delays'
-                        ? 'bg-white dark:bg-[#243832] text-[#006B61] dark:text-[#72C6AD] shadow-2xs border border-[#D9E2DA] dark:border-[#3A5146]'
-                        : 'text-[#52665D] dark:text-[#B5C1B5] hover:text-[#1A2B25] dark:hover:text-[#F2F4E9]'
+                        ? 'bg-white dark:bg-[#243832] text-[#08786A] dark:text-[#72C6AD] shadow-2xs border border-[#D9E2DA] dark:border-[#3A5146]'
+                        : 'text-[#52665D] dark:text-[#B5C1B5] hover:text-[#182920] dark:hover:text-[#F2F4E9]'
                     }`}
                   >
                     <Clock className="w-3.5 h-3.5" />
@@ -878,14 +896,14 @@ export default function ManagerDashboardPage() {
         {/* Compact, crisp activity-level tracking with highlighted CPM rows */}
         {/* ========================================================= */}
         {visibleSections.variance && (
-          <section id="variance-table" aria-labelledby="variance-table-heading" className="bg-white dark:bg-[#17221D] border border-[#D9E2DA] dark:border-[#3A5146] border-l-4 border-l-[#006B61] dark:border-l-[#72C6AD] rounded-lg p-4 sm:p-6 shadow-xs space-y-4 transition-colors">
+          <section id="variance-table" aria-labelledby="variance-table-heading" className="bg-white dark:bg-[#17221D] border border-[#D9E2DA] dark:border-[#3A5146] border-l-4 border-l-[#08786A] dark:border-l-[#72C6AD] rounded-lg p-4 sm:p-6 shadow-xs space-y-4 transition-colors">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-[#D9E2DA] dark:border-[#3A5146] gap-2">
               <div>
                 <span className="text-[11px] font-mono font-medium uppercase text-[#52665D] dark:text-[#B5C1B5] tracking-wider">
                   Critical Path Activity Tracking
                 </span>
                 <div className="flex items-center gap-2">
-                  <h2 id="variance-table-heading" className="text-base sm:text-lg font-bold text-[#1A2B25] dark:text-[#F2F4E9] tracking-tight font-heading">
+                  <h2 id="variance-table-heading" className="text-base sm:text-lg font-bold text-[#182920] dark:text-[#F2F4E9] tracking-tight font-heading">
                     Schedule Variance Control Table
                   </h2>
                   <TermHelp term="variance" />
@@ -897,7 +915,7 @@ export default function ManagerDashboardPage() {
 
               {/* Feature 18: Saved Table Views & Preset Filters */}
               <div className="flex items-center gap-2 flex-wrap">
-                <div className="flex items-center gap-1 bg-[#F6F7F3] dark:bg-[#101815] border border-[#D9E2DA] dark:border-[#3A5146] rounded p-0.5 text-xs">
+                <div className="flex items-center gap-1 bg-[#F5F7F3] dark:bg-[#101815] border border-[#D9E2DA] dark:border-[#3A5146] rounded p-0.5 text-xs">
                   <span className="text-[11px] font-medium text-[#52665D] dark:text-[#B5C1B5] px-1.5 flex items-center gap-1">
                     <Filter className="w-3 h-3 text-[#52665D] dark:text-[#B5C1B5]" /> Filter:
                   </span>
@@ -913,8 +931,8 @@ export default function ManagerDashboardPage() {
                       onClick={() => setVarianceTableFilter(preset.id as any)}
                       className={`px-2 py-0.5 rounded text-[11px] font-medium transition-colors cursor-pointer ${
                         varianceTableFilter === preset.id
-                          ? 'bg-[#006B61] dark:bg-[#006B61] text-white font-bold shadow-2xs'
-                          : 'text-[#52665D] dark:text-[#B5C1B5] hover:text-[#1A2B25] dark:hover:text-[#F2F4E9]'
+                          ? 'bg-[#08786A] dark:bg-[#08786A] text-white font-bold shadow-2xs'
+                          : 'text-[#52665D] dark:text-[#B5C1B5] hover:text-[#182920] dark:hover:text-[#F2F4E9]'
                       }`}
                     >
                       {preset.label}
@@ -924,7 +942,7 @@ export default function ManagerDashboardPage() {
 
                 <Link
                   href="/variance"
-                  className="text-xs text-[#006B61] dark:text-[#72C6AD] hover:underline font-semibold inline-flex items-center gap-1"
+                  className="text-xs text-[#08786A] dark:text-[#72C6AD] hover:underline font-semibold inline-flex items-center gap-1"
                 >
                   Full Ledger <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
@@ -933,7 +951,7 @@ export default function ManagerDashboardPage() {
 
             <div className="overflow-x-auto border border-[#D9E2DA] dark:border-[#3A5146] rounded-lg">
               <table className="w-full min-w-[640px] text-left border-collapse text-xs">
-                <thead className="bg-[#F6F7F3] dark:bg-[#243832] border-b border-[#D9E2DA] dark:border-[#3A5146] text-[#52665D] dark:text-[#B5C1B5] uppercase font-semibold text-[11px] tracking-wider h-10">
+                <thead className="bg-[#F5F7F3] dark:bg-[#243832] border-b border-[#D9E2DA] dark:border-[#3A5146] text-[#52665D] dark:text-[#B5C1B5] uppercase font-semibold text-[11px] tracking-wider h-10">
                   <tr>
                     <th scope="col" className="py-2.5 px-3">Activity</th>
                     <th scope="col" className="py-2.5 px-3">Planned Finish</th>
@@ -946,7 +964,7 @@ export default function ManagerDashboardPage() {
                     <th scope="col" className="py-2.5 px-3 text-right">Action</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#D9E2DA]/60 dark:divide-[#3A5146] text-[#1A2B25] dark:text-[#F2F4E9]">
+                <tbody className="divide-y divide-[#D9E2DA]/60 dark:divide-[#3A5146] text-[#182920] dark:text-[#F2F4E9]">
                   {filteredVarianceItems.map((item) => (
                     <tr
                       key={item.id}
@@ -956,8 +974,8 @@ export default function ManagerDashboardPage() {
                     >
                       <td className="py-2.5 px-3 font-medium">
                         <div className="flex items-center gap-2">
-                          <span className="font-mono font-bold text-[#006B61] dark:text-[#72C6AD]">{item.id}</span>
-                          <span className="text-[#1A2B25] dark:text-[#F2F4E9] truncate max-w-xs">{item.name}</span>
+                          <span className="font-mono font-bold text-[#08786A] dark:text-[#72C6AD]">{item.id}</span>
+                          <span className="text-[#182920] dark:text-[#F2F4E9] truncate max-w-xs">{item.name}</span>
                           {item.isCriticalPath && (
                             <span className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-[#F6E4E1] dark:bg-[#3D1418] text-[#A43B36] dark:text-[#FF9E94] border border-[#DCABA7] dark:border-[#5C2329]">
                               CPM
@@ -966,7 +984,7 @@ export default function ManagerDashboardPage() {
                         </div>
                       </td>
                       <td className="py-2.5 px-3 font-mono text-[#52665D] dark:text-[#B5C1B5]">{item.plannedFinish}</td>
-                      <td className="py-2.5 px-3 font-mono font-medium text-[#1A2B25] dark:text-[#F2F4E9]">{item.actualFinish}</td>
+                      <td className="py-2.5 px-3 font-mono font-medium text-[#182920] dark:text-[#F2F4E9]">{item.actualFinish}</td>
                       <td className="py-2.5 px-3">
                         <span className={`font-mono font-bold px-1.5 py-0.5 rounded ${item.varianceDays > 0 ? 'bg-[#F6E4E1] dark:bg-[#3D1418] text-[#A43B36] dark:text-[#FF9E94] border border-[#DCABA7] dark:border-[#5C2329]' : 'text-[#176B53] dark:text-[#4ADE80]'}`}>
                           {item.varianceDays === 0 ? '0d' : `+${item.varianceDays}d`}
@@ -979,7 +997,7 @@ export default function ManagerDashboardPage() {
                         <button
                           type="button"
                           onClick={() => openActivityDrawer(item.id)}
-                          className="px-2.5 py-1 text-xs text-[#006B61] dark:text-[#72C6AD] hover:bg-[#EAF0E9] dark:hover:bg-[#1f3049] border border-[#D9E2DA] dark:border-[#3A5146] rounded font-medium transition-colors cursor-pointer"
+                          className="px-2.5 py-1 text-xs text-[#08786A] dark:text-[#72C6AD] hover:bg-[#EAF0E9] dark:hover:bg-[#1f3049] border border-[#D9E2DA] dark:border-[#3A5146] rounded font-medium transition-colors cursor-pointer"
                         >
                           Inspect
                         </button>
@@ -1001,23 +1019,23 @@ export default function ManagerDashboardPage() {
             <section aria-labelledby="pending-approvals-heading" className="bg-white dark:bg-[#17221D] border border-[#D9E2DA] dark:border-[#3A5146] rounded-lg p-4 sm:p-5 shadow-xs space-y-3 transition-colors">
               <div className="flex items-center justify-between pb-2 border-b border-[#D9E2DA] dark:border-[#3A5146]">
                 <div className="flex items-center gap-2">
-                  <ShieldCheck className="w-4 h-4 text-[#006B61] dark:text-[#72C6AD]" />
-                  <h2 id="pending-approvals-heading" className="text-sm sm:text-base font-bold text-[#1A2B25] dark:text-[#F2F4E9] font-heading">
+                  <ShieldCheck className="w-4 h-4 text-[#08786A] dark:text-[#72C6AD]" />
+                  <h2 id="pending-approvals-heading" className="text-sm sm:text-base font-bold text-[#182920] dark:text-[#F2F4E9] font-heading">
                     Pending Schedule Links
                   </h2>
                   <span className="px-2 py-0.5 rounded-full bg-[#FFF8E6] dark:bg-[#3D2808] text-[#825700] dark:text-[#F3B765] border border-[#E5C185] dark:border-[#523712] text-[10px] font-mono font-bold">
                     {reviewEvents.length} Actions
                   </span>
                 </div>
-                <Link href="/review" className="text-xs text-[#006B61] dark:text-[#72C6AD] hover:underline font-semibold">
+                <Link href="/review" className="text-xs text-[#08786A] dark:text-[#72C6AD] hover:underline font-semibold">
                   Open Review Center &rarr;
                 </Link>
               </div>
 
               {reviewEvents.length === 0 ? (
-                <div className="p-6 text-center bg-[#F6F7F3] dark:bg-[#101815] border border-[#D9E2DA] dark:border-[#3A5146] rounded-lg">
+                <div className="p-6 text-center bg-[#F5F7F3] dark:bg-[#101815] border border-[#D9E2DA] dark:border-[#3A5146] rounded-lg">
                   <CheckCircle2 className="w-6 h-6 text-[#176B53] dark:text-[#4ADE80] mx-auto mb-1.5" />
-                  <p className="text-xs font-bold text-[#1A2B25] dark:text-[#F2F4E9]">No pending review items</p>
+                  <p className="text-xs font-bold text-[#182920] dark:text-[#F2F4E9]">No pending review items</p>
                   <p className="text-[11px] text-[#52665D] dark:text-[#B5C1B5] mt-0.5">
                     All field updates are linked and verified with the baseline.
                   </p>
@@ -1028,21 +1046,21 @@ export default function ManagerDashboardPage() {
                     <div key={evt.id} className="py-2.5 flex items-center justify-between gap-3 text-xs">
                       <div className="min-w-0 space-y-0.5">
                         <div className="flex items-center gap-2">
-                          <span className="font-mono font-bold text-[#006B61] dark:text-[#72C6AD] text-[11px]">{evt.id}</span>
+                          <span className="font-mono font-bold text-[#08786A] dark:text-[#72C6AD] text-[11px]">{evt.id}</span>
                           <ConfidenceBadge score={evt.confidence} size="sm" />
                         </div>
-                        <p className="text-xs text-[#1A2B25] dark:text-[#F2F4E9] font-medium truncate max-w-sm">
+                        <p className="text-xs text-[#182920] dark:text-[#F2F4E9] font-medium truncate max-w-sm">
                           {evt.rawText}
                         </p>
                         <div className="text-[10px] text-[#52665D] dark:text-[#B5C1B5] flex items-center gap-1">
                           <span>Target:</span>
-                          <strong className="text-[#1A2B25] dark:text-[#F2F4E9] font-mono">{evt.matchedActivityId || 'Unassigned'}</strong>
+                          <strong className="text-[#182920] dark:text-[#F2F4E9] font-mono">{evt.matchedActivityId || 'Unassigned'}</strong>
                         </div>
                       </div>
                       <button
                         type="button"
                         onClick={() => setSelectedReviewModalEvent(evt)}
-                        className="px-2.5 py-1 text-xs bg-white dark:bg-[#243832] hover:bg-[#EAF0E9] dark:hover:bg-[#1f3049] text-[#006B61] dark:text-[#72C6AD] border border-[#D9E2DA] dark:border-[#3A5146] rounded font-semibold transition-colors flex-shrink-0 cursor-pointer shadow-2xs"
+                        className="px-2.5 py-1 text-xs bg-white dark:bg-[#243832] hover:bg-[#EAF0E9] dark:hover:bg-[#1f3049] text-[#08786A] dark:text-[#72C6AD] border border-[#D9E2DA] dark:border-[#3A5146] rounded font-semibold transition-colors flex-shrink-0 cursor-pointer shadow-2xs"
                       >
                         Review
                       </button>
@@ -1059,13 +1077,13 @@ export default function ManagerDashboardPage() {
               <summary className="flex items-center justify-between cursor-pointer list-none select-none">
                 <div className="flex items-center gap-2">
                   <CheckCircle2 className="w-4 h-4 text-[#176B53] dark:text-[#4ADE80]" />
-                  <h2 id="milestones-heading" className="text-sm sm:text-base font-bold text-[#1A2B25] dark:text-[#F2F4E9] font-heading">
+                  <h2 id="milestones-heading" className="text-sm sm:text-base font-bold text-[#182920] dark:text-[#F2F4E9] font-heading">
                     Verified Progress History ({verifiedMilestones.length})
                   </h2>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="text-xs text-[#006B61] dark:text-[#72C6AD] font-semibold group-open:hidden">View History &darr;</span>
-                  <span className="text-xs text-[#006B61] dark:text-[#72C6AD] font-semibold hidden group-open:inline">Hide History &uarr;</span>
+                  <span className="text-xs text-[#08786A] dark:text-[#72C6AD] font-semibold group-open:hidden">View History &darr;</span>
+                  <span className="text-xs text-[#08786A] dark:text-[#72C6AD] font-semibold hidden group-open:inline">Hide History &uarr;</span>
                 </div>
               </summary>
 
@@ -1080,7 +1098,7 @@ export default function ManagerDashboardPage() {
                         </span>
                         <span className="text-[10px] text-[#52665D] dark:text-[#B5C1B5] font-mono">{m.verifiedDate}</span>
                       </div>
-                      <p className="text-xs text-[#1A2B25] dark:text-[#F2F4E9] font-medium">{m.title}</p>
+                      <p className="text-xs text-[#182920] dark:text-[#F2F4E9] font-medium">{m.title}</p>
                       <p className="text-[11px] text-[#52665D] dark:text-[#B5C1B5]">{m.progress} • Certified by {m.auditor}</p>
                     </div>
                   </div>
@@ -1116,14 +1134,14 @@ export default function ManagerDashboardPage() {
                 <button
                   type="button"
                   onClick={() => setSelectedReviewModalEvent(null)}
-                  className="px-3 py-1.5 text-xs text-[#52665D] dark:text-[#B5C1B5] hover:text-[#1A2B25] dark:hover:text-[#F2F4E9] rounded border border-[#D9E2DA] dark:border-[#3A5146] cursor-pointer"
+                  className="px-3 py-1.5 text-xs text-[#52665D] dark:text-[#B5C1B5] hover:text-[#182920] dark:hover:text-[#F2F4E9] rounded border border-[#D9E2DA] dark:border-[#3A5146] cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="button"
                   onClick={() => handleApproveEvent(selectedReviewModalEvent)}
-                  className="px-4 py-1.5 text-xs bg-[#006B61] hover:bg-[#00524A] dark:bg-[#006B61] dark:hover:bg-[#0b96a5] text-white rounded font-bold shadow-xs transition-colors cursor-pointer"
+                  className="px-4 py-1.5 text-xs bg-[#08786A] hover:bg-[#00524A] dark:bg-[#08786A] dark:hover:bg-[#0b96a5] text-white rounded font-bold shadow-xs transition-colors cursor-pointer"
                 >
                   Approve & Commit Match
                 </button>
@@ -1133,11 +1151,11 @@ export default function ManagerDashboardPage() {
         >
           <div className="space-y-4 text-xs">
             {/* Field Statement */}
-            <div className="p-3 bg-[#F6F7F3] dark:bg-[#101815] border border-[#D9E2DA] dark:border-[#3A5146] rounded-lg">
+            <div className="p-3 bg-[#F5F7F3] dark:bg-[#101815] border border-[#D9E2DA] dark:border-[#3A5146] rounded-lg">
               <span className="text-[10px] font-mono font-semibold text-[#52665D] dark:text-[#B5C1B5] uppercase block">
                 Raw Field Statement
               </span>
-              <p className="text-xs font-semibold text-[#1A2B25] dark:text-[#F2F4E9] mt-1 leading-relaxed">
+              <p className="text-xs font-semibold text-[#182920] dark:text-[#F2F4E9] mt-1 leading-relaxed">
                 &ldquo;{selectedReviewModalEvent.rawText}&rdquo;
               </p>
               <div className="mt-2 text-[10px] font-mono text-[#52665D] dark:text-[#B5C1B5]">
@@ -1152,10 +1170,10 @@ export default function ManagerDashboardPage() {
               </span>
               <div className="flex items-center justify-between">
                 <div>
-                  <span className="font-mono font-bold text-sm text-[#006B61] dark:text-[#72C6AD]">
+                  <span className="font-mono font-bold text-sm text-[#08786A] dark:text-[#72C6AD]">
                     {selectedReviewModalEvent.matchedActivityId || 'NO TARGET ASSIGNED'}
                   </span>
-                  <p className="text-xs font-semibold text-[#1A2B25] dark:text-[#F2F4E9] mt-0.5">
+                  <p className="text-xs font-semibold text-[#182920] dark:text-[#F2F4E9] mt-0.5">
                     {selectedReviewModalEvent.matchedActivityName || 'Awaiting planner manual assignment'}
                   </p>
                 </div>
@@ -1199,7 +1217,7 @@ export default function ManagerDashboardPage() {
               <button
                 type="button"
                 onClick={() => setSelectedEventForRejection(null)}
-                className="px-3 py-1.5 text-xs text-[#52665D] dark:text-[#B5C1B5] hover:text-[#1A2B25] dark:hover:text-[#F2F4E9] rounded border border-[#D9E2DA] dark:border-[#3A5146] cursor-pointer"
+                className="px-3 py-1.5 text-xs text-[#52665D] dark:text-[#B5C1B5] hover:text-[#182920] dark:hover:text-[#F2F4E9] rounded border border-[#D9E2DA] dark:border-[#3A5146] cursor-pointer"
               >
                 Cancel
               </button>
@@ -1222,7 +1240,7 @@ export default function ManagerDashboardPage() {
               onChange={(e) => setRejectReason(e.target.value)}
               placeholder="e.g. Activity does not belong to active package scope..."
               rows={3}
-              className="w-full p-3 bg-[#F6F7F3] dark:bg-[#101815] text-[#1A2B25] dark:text-[#F2F4E9] border border-[#D9E2DA] dark:border-[#3A5146] rounded outline-none focus:border-[#006B61] dark:focus:border-[#72C6AD]"
+              className="w-full p-3 bg-[#F5F7F3] dark:bg-[#101815] text-[#182920] dark:text-[#F2F4E9] border border-[#D9E2DA] dark:border-[#3A5146] rounded outline-none focus:border-[#08786A] dark:focus:border-[#72C6AD]"
             />
           </div>
         </Modal>

@@ -165,9 +165,10 @@ export default function ProjectsPage() {
   // Portfolio Overview Aggregate Metrics
   const portfolioStats = useMemo(() => {
     const total = allProjects.length;
-    if (total === 0) return { total: 0, onTrack: 0, atRiskDelayed: 0, avgProgress: 0, totalReviews: 0, totalRisks: 0 };
+    if (total === 0) return { total: 0, onTrack: 0, completed: 0, atRiskDelayed: 0, avgProgress: 0, totalReviews: 0, totalRisks: 0 };
 
-    const onTrack = allProjects.filter((p) => p.status === 'on-track' || p.status === 'completed').length;
+    const onTrack = allProjects.filter((p) => p.status === 'on-track').length;
+    const completed = allProjects.filter((p) => p.status === 'completed').length;
     const atRiskDelayed = allProjects.filter((p) => p.status === 'at-risk' || p.status === 'delayed').length;
     const avgProgress = Math.round(
       allProjects.reduce((acc, curr) => acc + curr.overallProgress, 0) / total
@@ -175,7 +176,7 @@ export default function ProjectsPage() {
     const totalReviews = allProjects.reduce((acc, curr) => acc + (curr.openReviews || 0), 0);
     const totalRisks = allProjects.reduce((acc, curr) => acc + (curr.openRisks || 0), 0);
 
-    return { total, onTrack, atRiskDelayed, avgProgress, totalReviews, totalRisks };
+    return { total, onTrack, completed, atRiskDelayed, avgProgress, totalReviews, totalRisks };
   }, [allProjects]);
 
   // Action Handlers
@@ -388,6 +389,10 @@ export default function ProjectsPage() {
             <div className="flex items-center gap-2">
               <span className="text-[#1F6B4E] dark:text-[#72C6AD] font-medium">On Track:</span>
               <span className="font-bold font-mono text-[#1F6B4E] dark:text-[#72C6AD]">{portfolioStats.onTrack}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-[#2C6475] dark:text-[#9CCBD4] font-medium">Completed:</span>
+              <span className="font-bold font-mono text-[#2C6475] dark:text-[#9CCBD4]">{portfolioStats.completed}</span>
             </div>
             <div className="flex items-center gap-2">
               <span className="text-[#825700] dark:text-[#E5C185] font-medium">At Risk / Delayed:</span>

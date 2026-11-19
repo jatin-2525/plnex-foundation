@@ -2,20 +2,20 @@
  * Standardized PLnEX Typography System
  *
  * Strict Design Scale:
- * - Page Title:    28–32px (Manrope font-semibold or bold, tracking-tight, leading-tight)
- * - Section Title: 18–20px (Manrope font-semibold, tracking-tight, leading-snug)
- * - Card Title:    15–16px (Manrope font-medium to font-semibold, leading-snug)
- * - Body:          14–16px (Manrope font-normal, leading-normal)
- * - Dense Table:   at least 13px (Manrope, never smaller than 13px)
+ * - Page Title:    28–32px (IBM Plex Sans font-semibold or bold, tracking-tight, leading-tight)
+ * - Section Title: 18–20px (IBM Plex Sans font-semibold, tracking-tight, leading-snug)
+ * - Card Title:    15–16px (IBM Plex Sans font-medium to font-semibold, leading-snug)
+ * - Body:          14–16px (IBM Plex Sans font-normal, leading-normal)
+ * - Dense Table:   at least 13px (IBM Plex Sans, never smaller than 13px)
  * - Technical IDs: 12–13px (IBM Plex Mono font-mono, codes such as PIP-24-002 and WBS references)
- * - KPI:           28–32px (Manrope font-bold or font-semibold, leading-none)
+ * - KPI:           28–32px (IBM Plex Sans font-bold or font-semibold, leading-none)
  *
  * Palette Mappings (Mineral + Evergreen):
- * - Main text: #1A2B25
+ * - Main text: #182920
  * - Secondary text: #52665D
- * - Brand / Primary: #006B61
+ * - Brand / Primary: #08786A
  * - Borders: #D9E2DA
- * - Background: #F6F7F3
+ * - Background: #F5F7F3
  */
 
 export const TYPOGRAPHY_SCALE = {

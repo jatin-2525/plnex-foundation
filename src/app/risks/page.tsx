@@ -121,7 +121,7 @@ export const MOCK_SCHEDULE_DELAYS: ScheduleDelayItem[] = [
   {
     id: 'DLY-CIV-01',
     title: 'Compressor Bay Baseplate Grouting & Curing Hold',
-    sourceActivityId: 'CIV-11-001',
+    sourceActivityId: 'CIV-11-002',
     sourceActivityName: 'Compressor House Baseplate Grouting & Anchor Setting',
     sourceWbs: '2.1.2',
     sourceDiscipline: 'Civil',
@@ -133,7 +133,7 @@ export const MOCK_SCHEDULE_DELAYS: ScheduleDelayItem[] = [
     affectedCount: 3,
     dependencyType: 'FS (Finish-to-Start)',
     cause: 'Soil bearing capacity re-test delay following monsoon ground saturation & delayed rebar cage delivery',
-    evidence: 'EVD-012: Concrete Curing Cylinder Compression Test Report (DPR-014)',
+    evidence: 'EVD-003: Compressor Pedestal Concrete Pour Certificate (28-day) · EVD-012: Drone Orthomosaic Survey Map',
     affectedActivities: [
       'Activity A: Column Baseplate Preparation',
       'Activity B: Column Installation',
@@ -151,8 +151,8 @@ export const MOCK_SCHEDULE_DELAYS: ScheduleDelayItem[] = [
       'Mandatory 7-day cylinder compressive strength curing hold before anchor bolt pull test',
     ],
     evidenceItems: [
-      { id: 'EVD-012', title: 'CONCRETE_CYLINDER_BREAK_REPORT_DPR014.pdf', type: 'DOCUMENT', timestamp: '14:30 IST' },
-      { id: 'EVD-013', title: 'IMG_PEDESTAL_REBAR_CAGE_INSPECTION.jpg', type: 'PHOTO', timestamp: '11:15 IST' },
+      { id: 'EVD-003', title: 'CIV-PED-QC-20260914.pdf', type: 'DOCUMENT', timestamp: '14:30 IST' },
+      { id: 'EVD-012', title: 'DRONE-SURVEY-UNIT-A-20260915.tif', type: 'PHOTO', timestamp: '17:00 IST' },
     ],
     delayDurationDetails: {
       grossDelayDays: 5.0,
@@ -161,7 +161,7 @@ export const MOCK_SCHEDULE_DELAYS: ScheduleDelayItem[] = [
     },
     downstreamImpacts: [
       {
-        activityId: 'CIV-11-001',
+        activityId: 'CIV-11-002',
         stepLabel: 'Activity A',
         name: 'Column Baseplate Preparation',
         wbs: '2.1.2',
@@ -215,7 +215,7 @@ export const MOCK_SCHEDULE_DELAYS: ScheduleDelayItem[] = [
     dependencyChain: [
       {
         step: 'Activity A',
-        activityId: 'CIV-11-001',
+        activityId: 'CIV-11-002',
         name: 'Compressor House Baseplate Grouting & Anchor Setting',
         discipline: 'Civil',
         status: 'Delayed',
@@ -913,7 +913,7 @@ export default function DelayDependencyImpactPage() {
               </div>
             </div>
             <span className="text-[12px] text-[#A43B36] dark:text-[#FF9E94] mt-1 block font-medium">
-              CIV-11-001 (+5d) &amp; PIP-24-002 (+2d)
+              CIV-11-002 (+5d) &amp; PIP-24-002 (+2d)
             </span>
           </button>
 

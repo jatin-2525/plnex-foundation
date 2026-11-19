@@ -7,7 +7,6 @@ import { verifyHoneypot, verifyRateLimit } from '../../lib/validation/formProtec
 import { useApp } from '../../context/AppContext';
 import { useToast } from '../../context/ToastContext';
 import { Breadcrumbs } from '../../components/shell/Breadcrumbs';
-import { TestimonialsSection } from '../../components/shared/TestimonialsSection';
 import {
   HelpCircle,
   Send,
@@ -556,12 +555,12 @@ export default function SupportPage() {
       {/* Hero Header with Deliberate Navy Anchor in Light Mode */}
       <div className="bg-[#103F39] text-[#F2F4E9] dark:bg-[#17221D] border border-[#235F56] dark:border-[#3A5146] rounded-xl p-5 sm:p-7 shadow-md transition-colors relative overflow-hidden">
         {/* Subtle background accent glow */}
-        <div className="absolute -right-16 -top-16 w-64 h-64 bg-[#006B61]/15 dark:bg-[#72C6AD]/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -right-16 -top-16 w-64 h-64 bg-[#08786A]/15 dark:bg-[#72C6AD]/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 relative z-10">
           <div className="space-y-1.5 max-w-2xl">
             <div className="flex items-center gap-2">
-              <span className="p-1.5 rounded-lg bg-[#006B61] dark:bg-[#72C6AD] text-white dark:text-[#0B2822]">
+              <span className="p-1.5 rounded-lg bg-[#08786A] dark:bg-[#72C6AD] text-white dark:text-[#0B2822]">
                 <LifeBuoy className="w-5 h-5" />
               </span>
               <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#72C6AD] dark:text-[#72C6AD]">
@@ -600,7 +599,7 @@ export default function SupportPage() {
             onClick={() => setActiveTab('request')}
             className={`px-4 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-2 whitespace-nowrap cursor-pointer ${
               activeTab === 'request'
-                ? 'bg-[#006B61] text-white shadow-xs'
+                ? 'bg-[#08786A] text-white shadow-xs'
                 : 'text-[#B5C1B5] hover:text-white hover:bg-white/5'
             }`}
           >
@@ -613,7 +612,7 @@ export default function SupportPage() {
             onClick={() => setActiveTab('faq')}
             className={`px-4 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-2 whitespace-nowrap cursor-pointer ${
               activeTab === 'faq'
-                ? 'bg-[#006B61] text-white shadow-xs'
+                ? 'bg-[#08786A] text-white shadow-xs'
                 : 'text-[#B5C1B5] hover:text-white hover:bg-white/5'
             }`}
           >
@@ -629,7 +628,7 @@ export default function SupportPage() {
             onClick={() => setActiveTab('history')}
             className={`px-4 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-2 whitespace-nowrap cursor-pointer ${
               activeTab === 'history'
-                ? 'bg-[#006B61] text-white shadow-xs'
+                ? 'bg-[#08786A] text-white shadow-xs'
                 : 'text-[#B5C1B5] hover:text-white hover:bg-white/5'
             }`}
           >
@@ -657,7 +656,7 @@ export default function SupportPage() {
                   New Support Request
                 </h2>
                 <p className="text-xs text-[#596A7D] dark:text-[#B5C1B5] mt-0.5">
-                  Prepares an email draft to <strong className="font-mono text-[#006B61] dark:text-[#72C6AD]">{SUPPORT_DEST_EMAIL}</strong> with structured project diagnostics.
+                  Prepares an email draft to <strong className="font-mono text-[#08786A] dark:text-[#72C6AD]">{SUPPORT_DEST_EMAIL}</strong> with structured project diagnostics.
                 </p>
               </div>
 
@@ -715,7 +714,7 @@ export default function SupportPage() {
                     <select
                       value={topic}
                       onChange={(e) => setTopic(e.target.value)}
-                      className="w-full p-2.5 bg-white dark:bg-[#101815] border border-[#D9E2DA] dark:border-[#3A5146] rounded-lg text-xs text-[#1A2B25] dark:text-[#F2F4E9] outline-hidden focus:border-[#006B61] dark:focus:border-[#72C6AD] transition-colors cursor-pointer"
+                      className="w-full p-2.5 bg-white dark:bg-[#101815] border border-[#D9E2DA] dark:border-[#3A5146] rounded-lg text-xs text-[#1A2B25] dark:text-[#F2F4E9] outline-hidden focus:border-[#08786A] dark:focus:border-[#72C6AD] transition-colors cursor-pointer"
                     >
                       <option value="Field DPR & Quantity Verification">Field DPR & Quantity Verification</option>
                       <option value="Baseline Schedule & P6/MSP Import">Baseline Schedule & P6/MSP Import</option>
@@ -737,7 +736,7 @@ export default function SupportPage() {
                     <select
                       value={urgency}
                       onChange={(e) => setUrgency(e.target.value as SupportUrgency)}
-                      className="w-full p-2.5 bg-white dark:bg-[#101815] border border-[#D9E2DA] dark:border-[#3A5146] rounded-lg text-xs font-semibold text-[#1A2B25] dark:text-[#F2F4E9] outline-hidden focus:border-[#006B61] dark:focus:border-[#72C6AD] transition-colors cursor-pointer"
+                      className="w-full p-2.5 bg-white dark:bg-[#101815] border border-[#D9E2DA] dark:border-[#3A5146] rounded-lg text-xs font-semibold text-[#1A2B25] dark:text-[#F2F4E9] outline-hidden focus:border-[#08786A] dark:focus:border-[#72C6AD] transition-colors cursor-pointer"
                     >
                       <option value="low">Low — General question or documentation inquiry</option>
                       <option value="medium">Medium — Workflow inconvenience / non-blocking</option>
@@ -757,7 +756,7 @@ export default function SupportPage() {
                     <select
                       value={selectedProjectId}
                       onChange={(e) => setSelectedProjectId(e.target.value)}
-                      className="w-full p-2.5 bg-white dark:bg-[#101815] border border-[#D9E2DA] dark:border-[#3A5146] rounded-lg text-xs text-[#1A2B25] dark:text-[#F2F4E9] outline-hidden focus:border-[#006B61] dark:focus:border-[#72C6AD] transition-colors cursor-pointer"
+                      className="w-full p-2.5 bg-white dark:bg-[#101815] border border-[#D9E2DA] dark:border-[#3A5146] rounded-lg text-xs text-[#1A2B25] dark:text-[#F2F4E9] outline-hidden focus:border-[#08786A] dark:focus:border-[#72C6AD] transition-colors cursor-pointer"
                     >
                       {allProjects.map((p) => (
                         <option key={p.id} value={p.id}>
@@ -778,7 +777,7 @@ export default function SupportPage() {
                       value={activityId}
                       onChange={(e) => setActivityId(e.target.value)}
                       placeholder="e.g. PIP-24-002, CIV-11-001, or WBS 1.1.2"
-                      className="w-full p-2.5 bg-white dark:bg-[#101815] border border-[#D9E2DA] dark:border-[#3A5146] rounded-lg text-xs font-mono text-[#1A2B25] dark:text-[#F2F4E9] placeholder-[#52665D] dark:placeholder-[#B5C1B5] outline-hidden focus:border-[#006B61] dark:focus:border-[#72C6AD] transition-colors"
+                      className="w-full p-2.5 bg-white dark:bg-[#101815] border border-[#D9E2DA] dark:border-[#3A5146] rounded-lg text-xs font-mono text-[#1A2B25] dark:text-[#F2F4E9] placeholder-[#52665D] dark:placeholder-[#B5C1B5] outline-hidden focus:border-[#08786A] dark:focus:border-[#72C6AD] transition-colors"
                     />
                   </div>
                 </div>
@@ -796,7 +795,7 @@ export default function SupportPage() {
                     className={`w-full p-2.5 bg-white dark:bg-[#101815] border rounded-lg text-xs text-[#1A2B25] dark:text-[#F2F4E9] placeholder-[#52665D] dark:placeholder-[#B5C1B5] outline-hidden transition-colors ${
                       formErrors.subject
                         ? 'border-[#A43E47] focus:border-[#A43E47]'
-                        : 'border-[#D9E2DA] dark:border-[#3A5146] focus:border-[#006B61] dark:focus:border-[#72C6AD]'
+                        : 'border-[#D9E2DA] dark:border-[#3A5146] focus:border-[#08786A] dark:focus:border-[#72C6AD]'
                     }`}
                   />
                   {formErrors.subject && (
@@ -820,7 +819,7 @@ export default function SupportPage() {
                     className={`w-full p-3 bg-white dark:bg-[#101815] border rounded-lg text-xs text-[#1A2B25] dark:text-[#F2F4E9] placeholder-[#52665D] dark:placeholder-[#B5C1B5] outline-hidden transition-colors leading-relaxed ${
                       formErrors.description
                         ? 'border-[#A43E47] focus:border-[#A43E47]'
-                        : 'border-[#D9E2DA] dark:border-[#3A5146] focus:border-[#006B61] dark:focus:border-[#72C6AD]'
+                        : 'border-[#D9E2DA] dark:border-[#3A5146] focus:border-[#08786A] dark:focus:border-[#72C6AD]'
                     }`}
                   />
                   {formErrors.description && (
@@ -830,7 +829,7 @@ export default function SupportPage() {
                   {/* Diagnostic helper tips box */}
                   <div className="p-2.5 bg-[#EEF2F7] dark:bg-[#101815] border border-[#D9E2DA] dark:border-[#3A5146] rounded-lg text-[11px] text-[#596A7D] dark:text-[#B5C1B5] space-y-1">
                     <strong className="text-[#1A2B25] dark:text-[#F2F4E9] flex items-center gap-1">
-                      <Info className="w-3.5 h-3.5 text-[#006B61] dark:text-[#72C6AD]" />
+                      <Info className="w-3.5 h-3.5 text-[#08786A] dark:text-[#72C6AD]" />
                       Tips for faster diagnosis:
                     </strong>
                     <ul className="list-disc pl-4 space-y-0.5 text-[10.5px]">
@@ -855,7 +854,7 @@ export default function SupportPage() {
                         value={senderName}
                         onChange={(e) => setSenderName(e.target.value)}
                         placeholder="Your full name"
-                        className="w-full pl-9 pr-3 py-2.5 bg-white dark:bg-[#101815] border border-[#D9E2DA] dark:border-[#3A5146] rounded-lg text-xs text-[#1A2B25] dark:text-[#F2F4E9] outline-hidden focus:border-[#006B61] dark:focus:border-[#72C6AD] transition-colors"
+                        className="w-full pl-9 pr-3 py-2.5 bg-white dark:bg-[#101815] border border-[#D9E2DA] dark:border-[#3A5146] rounded-lg text-xs text-[#1A2B25] dark:text-[#F2F4E9] outline-hidden focus:border-[#08786A] dark:focus:border-[#72C6AD] transition-colors"
                       />
                     </div>
                   </div>
@@ -875,7 +874,7 @@ export default function SupportPage() {
                         className={`w-full pl-9 pr-3 py-2.5 bg-white dark:bg-[#101815] border rounded-lg text-xs text-[#1A2B25] dark:text-[#F2F4E9] outline-hidden transition-colors ${
                           formErrors.replyEmail
                             ? 'border-[#A43E47] focus:border-[#A43E47]'
-                            : 'border-[#D9E2DA] dark:border-[#3A5146] focus:border-[#006B61] dark:focus:border-[#72C6AD]'
+                            : 'border-[#D9E2DA] dark:border-[#3A5146] focus:border-[#08786A] dark:focus:border-[#72C6AD]'
                         }`}
                       />
                     </div>
@@ -889,7 +888,7 @@ export default function SupportPage() {
                 <div className="space-y-2 pt-2 border-t border-[#D9E2DA] dark:border-[#3A5146]">
                   <div className="flex items-center justify-between">
                     <label className="font-bold text-[#1A2B25] dark:text-[#F2F4E9] flex items-center gap-1.5">
-                      <Paperclip className="w-3.5 h-3.5 text-[#006B61] dark:text-[#72C6AD]" />
+                      <Paperclip className="w-3.5 h-3.5 text-[#08786A] dark:text-[#72C6AD]" />
                       <span>Optional File Attachments & Screenshots</span>
                     </label>
                     <span className="text-[10px] text-[#596A7D] dark:text-[#B5C1B5]">Max 15 MB total</span>
@@ -900,7 +899,7 @@ export default function SupportPage() {
                     onDragOver={(e) => e.preventDefault()}
                     onDrop={handleFileDrop}
                     onClick={() => fileInputRef.current?.click()}
-                    className="border-2 border-dashed border-[#D9E2DA] dark:border-[#3A5146] hover:border-[#006B61] dark:hover:border-[#72C6AD] rounded-xl p-5 text-center bg-[#F6F7F3]/50 dark:bg-[#101815]/30 cursor-pointer transition-colors space-y-1.5"
+                    className="border-2 border-dashed border-[#D9E2DA] dark:border-[#3A5146] hover:border-[#08786A] dark:hover:border-[#72C6AD] rounded-xl p-5 text-center bg-[#F6F7F3]/50 dark:bg-[#101815]/30 cursor-pointer transition-colors space-y-1.5"
                   >
                     <input
                       type="file"
@@ -910,12 +909,12 @@ export default function SupportPage() {
                       accept=".pdf,.jpg,.jpeg,.png,.csv,.xlsx,.log,.txt"
                       className="hidden"
                     />
-                    <div className="w-8 h-8 rounded-full bg-[#EEF2F7] dark:bg-[#101815] text-[#006B61] dark:text-[#72C6AD] flex items-center justify-center mx-auto">
+                    <div className="w-8 h-8 rounded-full bg-[#EEF2F7] dark:bg-[#101815] text-[#08786A] dark:text-[#72C6AD] flex items-center justify-center mx-auto">
                       <Paperclip className="w-4 h-4" />
                     </div>
                     <p className="text-xs font-semibold text-[#1A2B25] dark:text-[#F2F4E9]">
                       Drag and drop logs, PDFs, or screenshots here, or{' '}
-                      <span className="text-[#006B61] dark:text-[#72C6AD] underline">browse files</span>
+                      <span className="text-[#08786A] dark:text-[#72C6AD] underline">browse files</span>
                     </p>
                     <p className="text-[11px] text-[#596A7D] dark:text-[#B5C1B5]">
                       Supported formats: PDF, PNG, JPG, CSV, XLSX, LOG, TXT (up to 15 MB)
@@ -935,7 +934,7 @@ export default function SupportPage() {
                             className="flex items-center justify-between p-2 rounded-lg bg-[#EEF2F7] dark:bg-[#101815] border border-[#D9E2DA] dark:border-[#3A5146] text-xs"
                           >
                             <div className="flex items-center gap-2 truncate">
-                              <FileText className="w-3.5 h-3.5 text-[#006B61] dark:text-[#72C6AD] shrink-0" />
+                              <FileText className="w-3.5 h-3.5 text-[#08786A] dark:text-[#72C6AD] shrink-0" />
                               <span className="font-mono text-[#1A2B25] dark:text-[#F2F4E9] truncate">{file.name}</span>
                               <span className="text-[10px] text-[#596A7D] dark:text-[#B5C1B5] shrink-0">
                                 ({Math.round(file.size / 1024)} KB)
@@ -989,7 +988,7 @@ export default function SupportPage() {
 
                     <button
                       type="submit"
-                      className="px-5 py-2.5 rounded-lg bg-[#006B61] hover:bg-[#0b5f59] dark:bg-[#72C6AD] dark:hover:bg-[#5CB69C] text-white dark:text-[#0B2822] text-xs font-bold transition-all inline-flex items-center justify-center gap-2 cursor-pointer shadow-xs"
+                      className="px-5 py-2.5 rounded-lg bg-[#08786A] hover:bg-[#0b5f59] dark:bg-[#72C6AD] dark:hover:bg-[#5CB69C] text-white dark:text-[#0B2822] text-xs font-bold transition-all inline-flex items-center justify-center gap-2 cursor-pointer shadow-xs"
                     >
                       <Send className="w-3.5 h-3.5" />
                       <span>Prepare Email Draft →</span>
@@ -1004,7 +1003,7 @@ export default function SupportPage() {
           <div className="space-y-5">
             {/* What Happens Next Card */}
             <div className="bg-[#EEF2F7] dark:bg-[#101815] border border-[#D9E2DA] dark:border-[#3A5146] rounded-xl p-5 text-xs text-[#1A2B25] dark:text-[#F2F4E9] space-y-3">
-              <div className="flex items-center gap-2 font-bold font-heading text-sm text-[#006B61] dark:text-[#72C6AD]">
+              <div className="flex items-center gap-2 font-bold font-heading text-sm text-[#08786A] dark:text-[#72C6AD]">
                 <Info className="w-4 h-4" />
                 <span>How Support Works in PLnEX</span>
               </div>
@@ -1023,7 +1022,7 @@ export default function SupportPage() {
               <div className="pt-2 border-t border-[#D9E2DA] dark:border-[#3A5146]">
                 <span className="text-[11px] text-[#596A7D] dark:text-[#B5C1B5] block">
                   Prefer webmail? Click <strong>"Copy Text"</strong> and paste into Gmail at{' '}
-                  <span className="font-mono text-[#006B61] dark:text-[#72C6AD]">{SUPPORT_DEST_EMAIL}</span>.
+                  <span className="font-mono text-[#08786A] dark:text-[#72C6AD]">{SUPPORT_DEST_EMAIL}</span>.
                 </span>
               </div>
             </div>
@@ -1037,7 +1036,7 @@ export default function SupportPage() {
                 <button
                   type="button"
                   onClick={() => setActiveTab('faq')}
-                  className="text-[11px] font-semibold text-[#006B61] dark:text-[#72C6AD] hover:underline"
+                  className="text-[11px] font-semibold text-[#08786A] dark:text-[#72C6AD] hover:underline"
                 >
                   View All &rarr;
                 </button>
@@ -1052,9 +1051,9 @@ export default function SupportPage() {
                       setActiveTab('faq');
                       setExpandedFaqId(f.id);
                     }}
-                    className="w-full text-left p-2.5 rounded-lg border border-[#D9E2DA] dark:border-[#3A5146] hover:border-[#006B61] dark:hover:border-[#72C6AD] bg-[#F6F7F3]/50 dark:bg-[#101815]/30 transition-colors cursor-pointer group"
+                    className="w-full text-left p-2.5 rounded-lg border border-[#D9E2DA] dark:border-[#3A5146] hover:border-[#08786A] dark:hover:border-[#72C6AD] bg-[#F6F7F3]/50 dark:bg-[#101815]/30 transition-colors cursor-pointer group"
                   >
-                    <div className="font-semibold text-[#1A2B25] dark:text-[#F2F4E9] group-hover:text-[#006B61] dark:group-hover:text-[#72C6AD] transition-colors leading-snug">
+                    <div className="font-semibold text-[#1A2B25] dark:text-[#F2F4E9] group-hover:text-[#08786A] dark:group-hover:text-[#72C6AD] transition-colors leading-snug">
                       {f.question}
                     </div>
                     <div className="text-[10px] text-[#596A7D] dark:text-[#B5C1B5] mt-1 line-clamp-1">
@@ -1084,7 +1083,7 @@ export default function SupportPage() {
                   value={faqSearch}
                   onChange={(e) => setFaqSearch(e.target.value)}
                   placeholder="Search FAQ guides, CPM terms, offline sync, or match rules..."
-                  className="w-full pl-9 pr-8 py-2.5 bg-[#F6F7F3] dark:bg-[#101815] border border-[#D9E2DA] dark:border-[#3A5146] rounded-lg text-xs text-[#1A2B25] dark:text-[#F2F4E9] placeholder-[#52665D] dark:placeholder-[#B5C1B5] outline-hidden focus:border-[#006B61] dark:focus:border-[#72C6AD] transition-colors"
+                  className="w-full pl-9 pr-8 py-2.5 bg-[#F6F7F3] dark:bg-[#101815] border border-[#D9E2DA] dark:border-[#3A5146] rounded-lg text-xs text-[#1A2B25] dark:text-[#F2F4E9] placeholder-[#52665D] dark:placeholder-[#B5C1B5] outline-hidden focus:border-[#08786A] dark:focus:border-[#72C6AD] transition-colors"
                 />
                 {faqSearch && (
                   <button
@@ -1113,7 +1112,7 @@ export default function SupportPage() {
                     onClick={() => setFaqCategory(cat)}
                     className={`px-3 py-1 rounded-full text-[11px] font-semibold transition-all cursor-pointer ${
                       faqCategory === cat
-                        ? 'bg-[#006B61] text-white shadow-2xs'
+                        ? 'bg-[#08786A] text-white shadow-2xs'
                         : 'bg-[#EEF2F7] dark:bg-[#101815] text-[#596A7D] dark:text-[#B5C1B5] hover:text-[#1A2B25] dark:hover:text-white'
                     }`}
                   >
@@ -1140,7 +1139,7 @@ export default function SupportPage() {
                       setFaqSearch('');
                       setFaqCategory('ALL');
                     }}
-                    className="px-3 py-1.5 rounded-lg bg-[#EEF2F7] dark:bg-[#101815] text-xs font-semibold text-[#006B61] dark:text-[#72C6AD] mt-2 inline-flex items-center gap-1 cursor-pointer"
+                    className="px-3 py-1.5 rounded-lg bg-[#EEF2F7] dark:bg-[#101815] text-xs font-semibold text-[#08786A] dark:text-[#72C6AD] mt-2 inline-flex items-center gap-1 cursor-pointer"
                   >
                     Reset Search Filters
                   </button>
@@ -1160,7 +1159,7 @@ export default function SupportPage() {
                       >
                         <div className="space-y-1 min-w-0">
                           <div className="flex items-center gap-2">
-                            <span className="px-2 py-0.5 rounded text-[10px] font-mono font-semibold uppercase bg-[#EEF2F7] dark:bg-[#101815] text-[#006B61] dark:text-[#72C6AD]">
+                            <span className="px-2 py-0.5 rounded text-[10px] font-mono font-semibold uppercase bg-[#EEF2F7] dark:bg-[#101815] text-[#08786A] dark:text-[#72C6AD]">
                               {faq.category}
                             </span>
                           </div>
@@ -1183,7 +1182,7 @@ export default function SupportPage() {
                             <div className="pt-2">
                               <Link
                                 href={faq.relatedLink.href}
-                                className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#006B61] dark:text-[#72C6AD] hover:underline"
+                                className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#08786A] dark:text-[#72C6AD] hover:underline"
                               >
                                 <span>{faq.relatedLink.label}</span>
                                 <ArrowRight className="w-3.5 h-3.5" />
@@ -1206,7 +1205,7 @@ export default function SupportPage() {
               <div className="p-3.5 bg-[#EEF2F7] dark:bg-[#101815] border-b border-[#D9E2DA] dark:border-[#3A5146] space-y-1">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-[#006B61] dark:bg-[#72C6AD] animate-pulse" />
+                    <span className="w-2 h-2 rounded-full bg-[#08786A] dark:bg-[#72C6AD] animate-pulse" />
                     <span className="font-bold font-heading text-xs text-[#1A2B25] dark:text-[#F2F4E9]">
                       Interactive FAQ Assistant
                     </span>
@@ -1230,7 +1229,7 @@ export default function SupportPage() {
                     <div
                       className={`max-w-[85%] p-3 rounded-xl leading-relaxed text-xs ${
                         msg.sender === 'user'
-                          ? 'bg-[#006B61] text-white rounded-br-none'
+                          ? 'bg-[#08786A] text-white rounded-br-none'
                           : 'bg-[#EEF2F7] dark:bg-[#101815] text-[#1A2B25] dark:text-[#F2F4E9] border border-[#D9E2DA] dark:border-[#3A5146] rounded-bl-none whitespace-pre-line'
                       }`}
                     >
@@ -1239,7 +1238,7 @@ export default function SupportPage() {
                         <div className="mt-2 pt-2 border-t border-black/10 dark:border-white/10">
                           <Link
                             href={msg.link.href}
-                            className="font-bold text-[#006B61] dark:text-[#72C6AD] hover:underline inline-flex items-center gap-1"
+                            className="font-bold text-[#08786A] dark:text-[#72C6AD] hover:underline inline-flex items-center gap-1"
                           >
                             <span>{msg.link.label}</span>
                             <ArrowRight className="w-3 h-3" />
@@ -1260,21 +1259,21 @@ export default function SupportPage() {
                 <button
                   type="button"
                   onClick={() => handleSendChatMessage('How do I sync DPR when working offline?')}
-                  className="px-2 py-1 rounded bg-white dark:bg-[#17221D] border border-[#D9E2DA] dark:border-[#3A5146] text-[#1A2B25] dark:text-[#F2F4E9] hover:border-[#006B61] transition-colors cursor-pointer"
+                  className="px-2 py-1 rounded bg-white dark:bg-[#17221D] border border-[#D9E2DA] dark:border-[#3A5146] text-[#1A2B25] dark:text-[#F2F4E9] hover:border-[#08786A] transition-colors cursor-pointer"
                 >
                   Offline sync?
                 </button>
                 <button
                   type="button"
                   onClick={() => handleSendChatMessage('Why is an activity marked Forecast Late?')}
-                  className="px-2 py-1 rounded bg-white dark:bg-[#17221D] border border-[#D9E2DA] dark:border-[#3A5146] text-[#1A2B25] dark:text-[#F2F4E9] hover:border-[#006B61] transition-colors cursor-pointer"
+                  className="px-2 py-1 rounded bg-white dark:bg-[#17221D] border border-[#D9E2DA] dark:border-[#3A5146] text-[#1A2B25] dark:text-[#F2F4E9] hover:border-[#08786A] transition-colors cursor-pointer"
                 >
                   Forecast Late?
                 </button>
                 <button
                   type="button"
                   onClick={() => handleSendChatMessage('What does 0 days Total Float mean?')}
-                  className="px-2 py-1 rounded bg-white dark:bg-[#17221D] border border-[#D9E2DA] dark:border-[#3A5146] text-[#1A2B25] dark:text-[#F2F4E9] hover:border-[#006B61] transition-colors cursor-pointer"
+                  className="px-2 py-1 rounded bg-white dark:bg-[#17221D] border border-[#D9E2DA] dark:border-[#3A5146] text-[#1A2B25] dark:text-[#F2F4E9] hover:border-[#08786A] transition-colors cursor-pointer"
                 >
                   Zero float?
                 </button>
@@ -1293,12 +1292,12 @@ export default function SupportPage() {
                   value={chatInput}
                   onChange={(e) => setChatInput(e.target.value)}
                   placeholder="Ask a question about PLnEX..."
-                  className="flex-1 p-2 text-xs bg-[#F6F7F3] dark:bg-[#101815] border border-[#D9E2DA] dark:border-[#3A5146] rounded-lg text-[#1A2B25] dark:text-[#F2F4E9] outline-hidden focus:border-[#006B61]"
+                  className="flex-1 p-2 text-xs bg-[#F6F7F3] dark:bg-[#101815] border border-[#D9E2DA] dark:border-[#3A5146] rounded-lg text-[#1A2B25] dark:text-[#F2F4E9] outline-hidden focus:border-[#08786A]"
                 />
                 <button
                   type="submit"
                   disabled={!chatInput.trim()}
-                  className="p-2 rounded-lg bg-[#006B61] dark:bg-[#72C6AD] text-white dark:text-[#0B2822] disabled:opacity-40 cursor-pointer"
+                  className="p-2 rounded-lg bg-[#08786A] dark:bg-[#72C6AD] text-white dark:text-[#0B2822] disabled:opacity-40 cursor-pointer"
                   title="Send question"
                 >
                   <Send className="w-3.5 h-3.5" />
@@ -1317,7 +1316,7 @@ export default function SupportPage() {
                   setActiveTab('request');
                   setSubject('Inquiry following documentation search');
                 }}
-                className="w-full py-2 px-3 rounded-lg bg-white dark:bg-[#17221D] border border-[#006B61] dark:border-[#72C6AD] text-[#006B61] dark:text-[#72C6AD] font-bold text-xs hover:bg-[#006B61] hover:text-white dark:hover:bg-[#72C6AD] dark:hover:text-[#0B2822] transition-colors inline-flex items-center justify-center gap-1.5 cursor-pointer shadow-2xs"
+                className="w-full py-2 px-3 rounded-lg bg-white dark:bg-[#17221D] border border-[#08786A] dark:border-[#72C6AD] text-[#08786A] dark:text-[#72C6AD] font-bold text-xs hover:bg-[#08786A] hover:text-white dark:hover:bg-[#72C6AD] dark:hover:text-[#0B2822] transition-colors inline-flex items-center justify-center gap-1.5 cursor-pointer shadow-2xs"
               >
                 <span>Open an Email Support Request &rarr;</span>
               </button>
@@ -1335,7 +1334,7 @@ export default function SupportPage() {
           <div className="p-4 rounded-xl bg-[#EEF2F7] dark:bg-[#101815] border border-[#D9E2DA] dark:border-[#3A5146] flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
             <div className="space-y-1">
               <div className="flex items-center gap-2 font-bold text-[#1A2B25] dark:text-[#F2F4E9]">
-                <History className="w-4 h-4 text-[#006B61] dark:text-[#72C6AD]" />
+                <History className="w-4 h-4 text-[#08786A] dark:text-[#72C6AD]" />
                 <span>Local Browser History (Frontend Only)</span>
               </div>
               <p className="text-[11px] text-[#596A7D] dark:text-[#B5C1B5] leading-relaxed max-w-3xl">
@@ -1370,7 +1369,7 @@ export default function SupportPage() {
               <button
                 type="button"
                 onClick={() => setActiveTab('request')}
-                className="px-4 py-2 rounded-lg bg-[#006B61] hover:bg-[#0b5f59] text-white text-xs font-bold inline-flex items-center gap-1.5 cursor-pointer shadow-xs"
+                className="px-4 py-2 rounded-lg bg-[#08786A] hover:bg-[#0b5f59] text-white text-xs font-bold inline-flex items-center gap-1.5 cursor-pointer shadow-xs"
               >
                 <span>Submit a Request</span>
               </button>
@@ -1385,7 +1384,7 @@ export default function SupportPage() {
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#D9E2DA]/60 dark:border-[#3A5146] pb-3">
                     <div className="space-y-1">
                       <div className="flex items-center gap-2 flex-wrap">
-                        <span className="font-mono text-xs font-bold text-[#006B61] dark:text-[#72C6AD]">
+                        <span className="font-mono text-xs font-bold text-[#08786A] dark:text-[#72C6AD]">
                           {item.id}
                         </span>
                         <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase bg-[#E8EEFF] dark:bg-[#243832] text-[#2E55A3] dark:text-[#A8BEFF]">
@@ -1451,7 +1450,7 @@ export default function SupportPage() {
                           )}&body=${encodeURIComponent(item.description)}`;
                           window.location.href = mailtoUrl;
                         }}
-                        className="text-xs font-semibold text-[#006B61] dark:text-[#72C6AD] hover:underline inline-flex items-center gap-1"
+                        className="text-xs font-semibold text-[#08786A] dark:text-[#72C6AD] hover:underline inline-flex items-center gap-1"
                       >
                         <span>Re-open Mailto &rarr;</span>
                       </button>
@@ -1463,9 +1462,6 @@ export default function SupportPage() {
           )}
         </div>
       )}
-
-      {/* Verified Customer Reviews Section (Placeholders Only — Real Reviews To Be Added by Owner) */}
-      <TestimonialsSection />
     </div>
   );
 }

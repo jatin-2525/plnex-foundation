@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -7,7 +7,7 @@
 @layer base {
   :root {
     /* Mineral + Evergreen Architecture (Light Theme) */
-    --background: #F6F7F3;
+    --background: #F5F7F3;
     --surface: #FFFFFF;
     --surface-raised: #EAF0E9;
     --surface-sunken: #E2EAE1;
@@ -15,24 +15,24 @@
     --hero-anchor: #103F39;
     --border: #D9E2DA;
     --border-strong: #52665D;
-    --foreground: #1A2B25;
+    --foreground: #182920;
     --muted: #52665D;
     --subtle: #738A80;
 
     /* Semantic Accent Roles */
-    --primary: #006B61;
+    --primary: #08786A;
     --primary-foreground: #FFFFFF;
-    --primary-hover: #00524A;
-    --primary-active: #003D37;
-    --accent-sea: #006B61;
+    --primary-hover: #066357;
+    --primary-active: #044F45;
+    --accent-sea: #08786A;
     --accent-sage: #5A8A76;
-    --accent-warm: #AC4B31;
+    --accent-warm: #C7522A;
     --accent-brass: #E5C185;
-    --accent-clay: #AC4B31;
-    --planned: #006B61;
-    --actual: #AC4B31;
-    --forecast: #D99B26;
-    --link: #006B61;
+    --accent-clay: #C7522A;
+    --planned: #C8963E;
+    --actual: #08786A;
+    --forecast: #7872A8;
+    --link: #08786A;
 
     /* Semantic Status Badges (Light: > 4.5:1 WCAG contrast) */
     --status-verified: #1F6B4E;
@@ -64,7 +64,7 @@
     /* Mineral + Evergreen Architecture (Dark Theme) */
     --background: #101815;
     --surface: #17221D;
-    --surface-raised: #243832;
+    --surface-raised: #203129;
     --surface-sunken: #0B120F;
     --surface-panel: #2D443D;
     --spotlight: #1F2E27;
@@ -81,12 +81,12 @@
     --primary-active: #47A287;
     --accent-sea: #72C6AD;
     --accent-sage: #9AD5AF;
-    --accent-warm: #E58567;
-    --accent-brass: #E9C46A;
-    --accent-clay: #E58567;
-    --planned: #72C6AD;
-    --actual: #E58567;
-    --forecast: #E9C46A;
+    --accent-warm: #E5C185;
+    --accent-brass: #E5C185;
+    --accent-clay: #E5C185;
+    --planned: #E5C185;
+    --actual: #72C6AD;
+    --forecast: #A9A3D8;
     --link: #72C6AD;
 
     /* Semantic Status Badges (Dark: > 4.5:1 WCAG contrast) */

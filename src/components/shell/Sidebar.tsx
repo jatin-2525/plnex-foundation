@@ -84,68 +84,61 @@ export const ADMIN_WORKSPACES: AdminWorkspaceOption[] = [
   },
 ];
 
-// Role-specific navigation groups strictly isolated by persona
+// Role-specific navigation groups strictly consolidated into clear functional groups
 export const managerNav: SidebarGroup[] = [
   {
-    group: 'WORKSPACE',
+    group: 'OVERVIEW',
     items: [
       { label: 'Manager Dashboard', href: '/dashboard', icon: LayoutDashboard },
-      { label: 'Messages', href: '/messages', icon: MessageSquare, badge: 2, subtitle: 'Direct Field & Site Communications' },
+      { label: 'Projects', href: '/projects', icon: FolderKanban, subtitle: 'Portfolio Projects Overview' },
     ],
   },
   {
-    group: 'PROJECT',
+    group: 'PLAN',
     items: [
-      { label: 'Projects', href: '/projects', icon: FolderKanban, subtitle: 'Portfolio Projects Overview' },
-      { label: 'Schedule', href: '/schedule', icon: Calendar, subtitle: 'Committed Baseline CPM Network' },
+      { label: 'Master Schedule', href: '/schedule', icon: Calendar, subtitle: 'Committed Baseline CPM Network' },
       { label: 'Schedule Twin', href: '/schedule-twin', icon: Layers, subtitle: 'Dynamic CPM Twin with Field Progress' },
+      { label: 'WBS Activities', href: '/activities', icon: ListChecks, subtitle: 'WBS Activities & Scope' },
     ],
   },
   {
     group: 'EXECUTION',
     items: [
+      { label: 'Review Queue', href: '/review', icon: ShieldCheck, badge: 3, subtitle: '3 Pending Verification Items' },
       { label: 'Execution Intelligence', href: '/execution', icon: Cpu, subtitle: 'Live Site Telemetry & Unstructured Stream' },
-      { label: 'Review Queue', href: '/review', icon: ShieldCheck, badge: 8, subtitle: '8 Pending Verification Items (3 Urgent)' },
-      { label: 'Progress & Variance', href: '/progress', icon: TrendingUp, subtitle: 'Earned Value S-Curve & Trend Analytics' },
     ],
   },
   {
-    group: 'INTELLIGENCE',
+    group: 'ANALYZE',
     items: [
-      { label: 'Delay & Dependency Impact', href: '/risks', icon: TrendingDown, subtitle: 'Float Consumption & Critical Chain Risks' },
-      { label: 'What-if', href: '/what-if', icon: Sliders, subtitle: 'Predictive Forward-Pass Sandbox' },
-    ],
-  },
-  {
-    group: 'TRUST',
-    items: [
-      { label: 'Evidence & Audit', href: '/evidence', icon: ShieldCheck, subtitle: 'Immutable Ledger & Proof Repository' },
+      { label: 'Progress & S-Curve', href: '/progress', icon: TrendingUp, subtitle: 'Earned Value S-Curve & Trend Analytics' },
+      { label: 'Delays & Risks', href: '/risks', icon: TrendingDown, subtitle: 'Float Consumption & Critical Chain Risks' },
+      { label: 'What-if Sandbox', href: '/what-if', icon: Sliders, subtitle: 'Predictive Forward-Pass Sandbox' },
       { label: 'Schedule Health', href: '/health', icon: Activity, subtitle: 'CPM Logic & Field Hygiene Rules' },
     ],
   },
   {
-    group: 'KNOWLEDGE',
+    group: 'EVIDENCE',
     items: [
+      { label: 'Evidence & Audit', href: '/evidence', icon: ShieldCheck, subtitle: 'Immutable Ledger & Proof Repository' },
       { label: 'Reports & Memory', href: '/reports', icon: BookOpen, subtitle: 'Historical Variance Lessons & Cases' },
-      { label: 'Documentation & Guides', href: '/help', icon: FileText, subtitle: 'User Manuals & SOP Workflows' },
     ],
   },
   {
-    group: 'SYSTEM',
+    group: 'TOOLS',
     items: [
+      { label: 'Messages', href: '/messages', icon: MessageSquare, badge: 2, subtitle: 'Direct Field & Site Communications' },
       { label: 'Offline / Sync', href: '/sync', icon: Wifi, subtitle: 'Local Browser Cache & Queue Simulation' },
       { label: 'Help & Support', href: '/support', icon: HelpCircle, subtitle: 'FAQs, Knowledge & Email Assistance' },
-      { label: 'Privacy Policy', href: '/privacy', icon: Shield, subtitle: 'Data Protection & Governance' },
     ],
   },
 ];
 
 export const engineerNav: SidebarGroup[] = [
   {
-    group: 'WORKSPACE',
+    group: 'OVERVIEW',
     items: [
       { label: 'Site Engineer Dashboard', href: '/engineer', icon: HardHat, subtitle: 'Daily Shift & Workfront Focus' },
-      { label: 'Messages', href: '/messages', icon: MessageSquare, badge: 1, subtitle: 'Direct Manager Communications' },
       { label: 'My Activities', href: '/activities', icon: ListChecks, subtitle: 'Direct Workfront Scope & Milestones' },
     ],
   },
@@ -158,16 +151,16 @@ export const engineerNav: SidebarGroup[] = [
     ],
   },
   {
-    group: 'TRUST',
+    group: 'EVIDENCE',
     items: [
-      { label: 'Evidence', href: '/evidence', icon: ShieldCheck, subtitle: 'Photographic Proofs & Lift Tickets' },
+      { label: 'Evidence Vault', href: '/evidence', icon: ShieldCheck, subtitle: 'Photographic Proofs & Lift Tickets' },
     ],
   },
   {
-    group: 'SYSTEM',
+    group: 'TOOLS',
     items: [
-      { label: 'Offline / Sync', href: '/sync', icon: Wifi, subtitle: 'Local Browser Queue Simulation' },
-      { label: 'Documentation & Guides', href: '/help', icon: FileText, subtitle: 'Field SOPs & Instructions' },
+      { label: 'Messages', href: '/messages', icon: MessageSquare, badge: 1, subtitle: 'Direct Communications' },
+      { label: 'Offline / Sync', href: '/sync', icon: Wifi, subtitle: 'Local Browser Cache & Queue' },
       { label: 'Help & Support', href: '/support', icon: HelpCircle, subtitle: 'FAQs, Field Help & Email Assistance' },
     ],
   },
@@ -175,64 +168,44 @@ export const engineerNav: SidebarGroup[] = [
 
 export const adminNav: SidebarGroup[] = [
   {
-    group: 'ADMINISTRATION',
+    group: 'GOVERNANCE',
     items: [
       { label: 'Admin Dashboard', href: '/admin', icon: Shield, subtitle: 'System Health & Security Control' },
-      { label: 'Messages', href: '/messages', icon: MessageSquare, subtitle: 'Cross-Project Communications' },
       { label: 'Users & Roles', href: '/admin/users', icon: Users, subtitle: 'User Directory & Persona Access' },
       { label: 'Organizations', href: '/admin/organizations', icon: Building2, subtitle: 'Client & Contractor Tenants' },
     ],
   },
   {
-    group: 'WORKSPACE ACCESS', // MANAGER VIEW & ENGINEER VIEW
+    group: 'WORKSPACE VIEWS',
     items: [
       { label: 'Manager Dashboard', href: '/dashboard', icon: LayoutDashboard, subtitle: 'Project Executive Command View' },
       { label: 'Site Engineer Dashboard', href: '/engineer', icon: HardHat, subtitle: 'Field Execution Workfront View' },
     ],
   },
   {
-    group: 'PROJECT',
+    group: 'PLAN & EXECUTION',
     items: [
       { label: 'Projects', href: '/projects', icon: FolderKanban, subtitle: 'Portfolio Projects Overview' },
-      { label: 'Schedule', href: '/schedule', icon: Calendar, subtitle: 'Committed Baseline CPM Network' },
+      { label: 'Master Schedule', href: '/schedule', icon: Calendar, subtitle: 'Committed Baseline CPM Network' },
       { label: 'Schedule Twin', href: '/schedule-twin', icon: Layers, subtitle: 'Dynamic CPM Twin with Field Progress' },
+      { label: 'Review Queue', href: '/review', icon: ShieldCheck, badge: 3, subtitle: 'Pending Verification Items' },
+      { label: 'Execution Stream', href: '/execution', icon: Cpu, subtitle: 'Live Site Telemetry' },
     ],
   },
   {
-    group: 'EXECUTION',
+    group: 'ANALYZE & EVIDENCE',
     items: [
-      { label: 'Field Capture', href: '/field/capture', icon: Camera, subtitle: 'Fast Mobile Entry for Single Site Events' },
-      { label: 'DPR', href: '/field/dpr', icon: FileText, subtitle: 'Official End-of-Shift Submission & Signoff' },
-      { label: 'Execution Intelligence', href: '/execution', icon: Cpu, subtitle: 'Live Site Telemetry & Unstructured Stream' },
-      { label: 'Review Queue', href: '/review', icon: ShieldCheck, badge: 8, subtitle: '8 Pending Verification Items (3 Urgent)' },
-    ],
-  },
-  {
-    group: 'INTELLIGENCE',
-    items: [
-      { label: 'Progress & Variance', href: '/progress', icon: TrendingUp, subtitle: 'Earned Value S-Curve & Trend Analytics' },
-      { label: 'Delay & Dependency Impact', href: '/risks', icon: TrendingDown, subtitle: 'Float Consumption & Critical Chain Risks' },
-      { label: 'What-if', href: '/what-if', icon: Sliders, subtitle: 'Predictive Forward-Pass Sandbox' },
-    ],
-  },
-  {
-    group: 'TRUST',
-    items: [
-      { label: 'Evidence & Audit', href: '/evidence', icon: ShieldCheck, subtitle: 'Immutable Ledger & Proof Repository' },
+      { label: 'Progress & S-Curve', href: '/progress', icon: TrendingUp, subtitle: 'Earned Value S-Curve & Trends' },
+      { label: 'Delays & Risks', href: '/risks', icon: TrendingDown, subtitle: 'Float Consumption & Risks' },
       { label: 'Schedule Health', href: '/health', icon: Activity, subtitle: 'CPM Logic & Field Hygiene Rules' },
-    ],
-  },
-  {
-    group: 'KNOWLEDGE',
-    items: [
-      { label: 'Reports & Memory', href: '/reports', icon: BookOpen, subtitle: 'Historical Variance Lessons & Cases' },
-      { label: 'Documentation & Guides', href: '/help', icon: FileText, subtitle: 'User Manuals & SOP Workflows' },
+      { label: 'Evidence & Audit', href: '/evidence', icon: ShieldCheck, subtitle: 'Immutable Ledger & Proof Repository' },
     ],
   },
   {
     group: 'SYSTEM',
     items: [
-      { label: 'Offline / Sync', href: '/sync', icon: Wifi },
+      { label: 'Messages', href: '/messages', icon: MessageSquare, subtitle: 'Cross-Project Communications' },
+      { label: 'Offline / Sync', href: '/sync', icon: Wifi, subtitle: 'Local Browser Queue' },
       { label: 'Help & Support', href: '/support', icon: HelpCircle, subtitle: 'System FAQs & Email Assistance' },
     ],
   },
@@ -329,7 +302,7 @@ export function Sidebar({ collapsed, onToggle, mobileMenuOpen, onCloseMobile }: 
                           }}
                           className={`w-full flex items-center justify-between px-2.5 py-2 rounded-lg text-xs transition-colors ${
                             isCurrent
-                              ? 'bg-[#006B61] dark:bg-[#243832] text-white dark:text-[#72C6AD] font-bold'
+                              ? 'bg-[#08786A] dark:bg-[#243832] text-white dark:text-[#72C6AD] font-bold'
                               : 'text-[#EEF3E8] dark:text-[#F2F4E9] hover:bg-[#194E46] dark:hover:bg-[#243832] font-medium'
                           }`}
                         >
@@ -384,7 +357,7 @@ export function Sidebar({ collapsed, onToggle, mobileMenuOpen, onCloseMobile }: 
                   onClick={onCloseMobile}
                   className={`flex items-center gap-2.5 px-3 py-2.5 md:py-2 min-h-[44px] md:min-h-0 rounded-lg text-xs transition-colors relative group ${
                     isActive
-                      ? 'bg-[#006B61] dark:bg-[#243832] text-white dark:text-[#72C6AD] font-semibold shadow-xs'
+                      ? 'bg-[#08786A] dark:bg-[#243832] text-white dark:text-[#72C6AD] font-semibold shadow-xs'
                       : 'text-[#EEF3E8] dark:text-[#B5C1B5] hover:bg-[#194E46] dark:hover:bg-[#243832] hover:text-white dark:hover:text-[#F2F4E9] font-normal'
                   }`}
                   title={item.subtitle ? `${item.label} — ${item.subtitle}` : (item.badge !== undefined ? `${item.label} [${item.badge}]` : item.label)}

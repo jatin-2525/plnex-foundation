@@ -9,7 +9,7 @@
 export const colors = {
   light: {
     bg: {
-      page: '#F6F7F3',          // Warm calm mineral page background
+      page: '#F5F7F3',          // Warm calm mineral page background
       surface: '#FFFFFF',       // Clean card & dialog surface
       surfaceRaised: '#EAF0E9', // Raised sections, input backgrounds, chips
       surfaceSunken: '#E2EAE1', // Subdued sunken surfaces, table headers
@@ -18,33 +18,33 @@ export const colors = {
       overlay: 'rgba(16, 63, 57, 0.50)',
     },
     text: {
-      primary: '#1A2B25',       // Deep mineral evergreen (> 14:1 contrast on #F6F7F3)
+      primary: '#182920',       // Deep mineral evergreen (> 14:1 contrast on #F5F7F3)
       secondary: '#52665D',     // Calm secondary evergreen (> 5.5:1 contrast)
       muted: '#52665D',
       tertiary: '#738A80',
       disabled: '#9EAEA5',
       inverse: '#FFFFFF',
       sidebar: '#EEF3E8',       // Light sage on dark evergreen sidebar (> 11:1 contrast)
-      link: '#006B61',
+      link: '#08786A',
     },
     accent: {
-      primary: '#006B61',       // Primary action evergreen
+      primary: '#08786A',       // Primary action evergreen
       primaryText: '#FFFFFF',   // White text on primary action (> 5.2:1 contrast)
-      primaryHover: '#00524A',
-      primaryActive: '#003D37',
+      primaryHover: '#066357',
+      primaryActive: '#044F45',
       sidebarActive: '#103F39',
-      warm: '#AC4B31',          // Warm brand accent (copper/terracotta)
+      warm: '#C7522A',          // Warm brand accent (copper/terracotta)
       brass: '#E5C185',         // Brass highlight
-      sea: '#006B61',
+      sea: '#08786A',
       sage: '#5A8A76',
     },
     brand: {
-      primary: '#006B61',
-      planned: '#006B61',       // Teal for planned baseline
-      actual: '#AC4B31',        // Copper for verified actual
-      forecast: '#D99B26',      // Amber for forecast trajectory
-      link: '#006B61',
-      warm: '#AC4B31',
+      primary: '#08786A',
+      planned: '#C8963E',       // Warm gold for planned baseline
+      actual: '#08786A',        // Mint for verified actual
+      forecast: '#7872A8',      // Muted lavender for forecast trajectory
+      link: '#08786A',
+      warm: '#C7522A',
       brass: '#E5C185',
     },
     status: {
@@ -111,7 +111,7 @@ export const colors = {
     border: {
       default: '#D9E2DA',       // Borders and dividers
       strong: '#52665D',
-      focus: '#006B61',
+      focus: '#08786A',
       subtle: '#EAF0E9',
     },
     interactive: {
@@ -125,7 +125,7 @@ export const colors = {
     bg: {
       page: '#101815',          // Deep evergreen-charcoal page background
       surface: '#17221D',       // Visibly distinct card surface
-      surfaceRaised: '#243832', // Raised sections and input backgrounds
+      surfaceRaised: '#203129', // Raised sections and input backgrounds
       surfaceSunken: '#0B120F', // Sunken surface
       surfacePanel: '#2D443D',  // Distinct panel foundation
       sidebar: '#17221D',       // Dark evergreen sidebar
@@ -147,19 +147,19 @@ export const colors = {
       primaryText: '#0B2822',   // Dark evergreen text on primary action (> 8:1 contrast)
       primaryHover: '#5CB69C',
       primaryActive: '#47A287',
-      warm: '#E58567',          // Warm brand accent (light copper)
-      brass: '#E9C46A',         // Brass highlight
+      warm: '#E5C185',          // Warm brand accent (brass/warm)
+      brass: '#E5C185',         // Brass highlight
       sea: '#72C6AD',
       sage: '#9AD5AF',
     },
     brand: {
       primary: '#72C6AD',
-      planned: '#72C6AD',       // Teal planned baseline
-      actual: '#E58567',        // Copper verified actual
-      forecast: '#E9C46A',      // Amber forecast trajectory
+      planned: '#E5C185',       // Warm gold planned baseline
+      actual: '#72C6AD',        // Mint verified actual
+      forecast: '#A9A3D8',      // Muted lavender forecast trajectory
       link: '#72C6AD',
-      warm: '#E58567',
-      brass: '#E9C46A',
+      warm: '#E5C185',
+      brass: '#E5C185',
     },
     status: {
       // Success: #9AD5AF text on #20382C bg (5.8:1 contrast)
