@@ -13,6 +13,16 @@ import {
   getSCurveSummary,
   getSCurveInterpretation,
 } from '@/lib/domain/sCurveData';
+import {
+  calculateProjectEVM,
+  formatCurrencyCr,
+  formatVarianceCr,
+  formatEVMIndex,
+  formatPercentPoints,
+  getEVMStatusBadgeConfig,
+  CANONICAL_BAC,
+  CANONICAL_ACTUAL_COST,
+} from '@/lib/domain/evmEngine';
 import { CHART_TOKENS, CHART_TOKENS_LIGHT, CHART_TOKENS_DARK } from '@/tokens/chartColors';
 import { useTheme } from '@/context/ThemeContext';
 import { usePreferences } from '@/context/PreferencesContext';
@@ -33,6 +43,7 @@ import {
   Check,
   X,
   ArrowRight,
+  BarChart3,
   Table as TableIcon,
   LineChart as LineChartIcon,
 } from 'lucide-react';
@@ -44,6 +55,7 @@ export interface SCurveChartProps {
   subtitle?: string;
   className?: string;
   showLedgerByDefault?: boolean;
+  showEVMScorecard?: boolean;
   onSelectPeriod?: (point: TimeSeriesPoint) => void;
 }
 
@@ -54,11 +66,13 @@ export function SCurveChart({
   subtitle = 'Cumulative physical progress curve across all WBS work packages',
   className = '',
   showLedgerByDefault = false,
+  showEVMScorecard = true,
   onSelectPeriod,
 }: SCurveChartProps) {
   const isCompact = variant === 'compact';
   const isDashboard = variant === 'dashboard';
   const [showDashboardAdvanced, setShowDashboardAdvanced] = useState(false);
+  const [showEVM, setShowEVM] = useState(showEVMScorecard);
   const svgRef = useRef<SVGSVGElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const liveRegionId = useId();
@@ -176,6 +190,18 @@ export function SCurveChart({
   }, [comparisonMode, timeRange]);
 
   const summary = getSCurveSummary(displayedData);
+
+  // Dynamic ANSI/EIA-748 Earned Value Management (EVM) Metrics Calculation
+  const evmMetrics = React.useMemo(() => {
+    return calculateProjectEVM(
+      CANONICAL_BAC,
+      summary.plannedAtDataDate,
+      summary.actualAtDataDate,
+      CANONICAL_ACTUAL_COST
+    );
+  }, [summary.plannedAtDataDate, summary.actualAtDataDate]);
+  const evmBadge = getEVMStatusBadgeConfig(evmMetrics.status);
+
   const dataDateIndex = displayedData.findIndex((d) => d.isDataDate) !== -1 ? displayedData.findIndex((d) => d.isDataDate) : 4;
 
   const activeIndex = hoveredPointIndex !== null ? hoveredPointIndex : Math.min(selectedPointIndex, displayedData.length - 1);
@@ -443,6 +469,20 @@ export function SCurveChart({
               <>
                 <button
                   type="button"
+                  onClick={() => setShowEVM(!showEVM)}
+                  className={`px-2.5 py-1 text-xs rounded border inline-flex items-center gap-1 transition-colors cursor-pointer ${
+                    showEVM
+                      ? 'bg-[#006B61] text-white border-[#006B61] shadow-xs'
+                      : 'bg-white dark:bg-[#243832] text-[#52665D] dark:text-[#B5C1B5] border-[#D9E2DA] dark:border-[#3A5146] hover:bg-[#EAF0E9] dark:hover:bg-[#243832]'
+                  }`}
+                  title="Toggle Contractual EVM Scorecard"
+                >
+                  <BarChart3 className="w-3.5 h-3.5" />
+                  <span>{showEVM ? 'Hide EVM' : 'EVM Scorecard'}</span>
+                </button>
+
+                <button
+                  type="button"
                   onClick={() => setShowDashboardAdvanced(!showDashboardAdvanced)}
                   className={`px-2.5 py-1 text-xs rounded border inline-flex items-center gap-1 transition-colors cursor-pointer ${
                     showDashboardAdvanced
@@ -489,6 +529,21 @@ export function SCurveChart({
                     Period Progress (%/Mo)
                   </button>
                 </div>
+
+                {/* EVM Scorecard Toggle */}
+                <button
+                  type="button"
+                  onClick={() => setShowEVM(!showEVM)}
+                  className={`p-1.5 rounded border text-xs flex items-center gap-1 cursor-pointer transition-colors ${
+                    showEVM
+                      ? 'bg-[#006B61] text-white border-[#006B61]'
+                      : 'bg-white dark:bg-[#243832] text-[#52665D] dark:text-[#B5C1B5] border-[#D9E2DA] dark:border-[#3A5146] hover:bg-[#EAF0E9] dark:hover:bg-[#243832]'
+                  }`}
+                  title="Toggle ANSI/EIA-748 EVM Summary Scorecard"
+                >
+                  <BarChart3 className="w-3.5 h-3.5" />
+                  <span className="hidden sm:inline">EVM Scorecard</span>
+                </button>
 
                 {/* Feature 14: Report Summary Toggle */}
                 <button
@@ -797,7 +852,9 @@ export function SCurveChart({
               </div>
               <div className="bg-white dark:bg-[#17221D] p-2 rounded border border-[#D9E2DA] dark:border-[#3A5146]">
                 <div className="text-[10px] text-[#52665D] dark:text-[#B5C1B5]">Schedule Perf Index (SPI)</div>
-                <div className="font-bold text-[#825700] dark:text-[#FBBF24]">0.91 (Critical)</div>
+                <div className="font-bold text-[#825700] dark:text-[#FBBF24]">
+                  {formatEVMIndex(evmMetrics.spi, 2)} ({evmMetrics.spi < 1 ? 'Behind' : 'On Track'})
+                </div>
               </div>
               <div className="bg-white dark:bg-[#17221D] p-2 rounded border border-[#D9E2DA] dark:border-[#3A5146]">
                 <div className="text-[10px] text-[#52665D] dark:text-[#B5C1B5]">Forecast COD Finish</div>
@@ -807,6 +864,163 @@ export function SCurveChart({
           </div>
         )}
       </div>
+
+      {/* ========================================================= */}
+      {/* CONTRACTUAL ANSI/EIA-748 EVM SUMMARY SCORECARD */}
+      {/* 11 Metrics: BAC, PV, EV, AC, CV, SV, CPI, SPI, EAC, VAC, TCPI */}
+      {/* ========================================================= */}
+      {showEVM && (
+        <div className="mx-4 mt-3 mb-1 p-3.5 bg-[#F6F7F3] dark:bg-[#101815] border border-[#D9E2DA] dark:border-[#3A5146] rounded-lg text-xs transition-colors">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3 pb-2 border-b border-[#D9E2DA]/80 dark:border-[#3A5146]/80">
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className="font-bold uppercase tracking-wider text-[11px] text-[#1A2B25] dark:text-[#F2F4E9] flex items-center gap-1.5 font-heading">
+                <BarChart3 className="w-3.5 h-3.5 text-[#006B61] dark:text-[#72C6AD]" />
+                Contractual EVM Summary Scorecard (ANSI/EIA-748)
+              </span>
+              <span className={`inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold border ${evmBadge.badgeClass}`}>
+                {evmBadge.label}
+              </span>
+            </div>
+            <div className="flex items-center gap-2 text-[11px] font-mono text-[#52665D] dark:text-[#B5C1B5]">
+              <span>Data Date: {asOfDate}</span>
+              <span>•</span>
+              <span>Baseline: {baselineRevision}</span>
+            </div>
+          </div>
+
+          {/* 11 Contractual Metric Cards Grid */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-11 gap-2">
+            {/* 1. BAC */}
+            <div className="bg-white dark:bg-[#17221D] p-2.5 rounded border border-[#D9E2DA] dark:border-[#3A5146] flex flex-col justify-between">
+              <div className="text-[10px] font-semibold text-[#52665D] dark:text-[#B5C1B5] uppercase">Budget (BAC)</div>
+              <div className="my-1 font-mono font-bold text-sm text-[#1A2B25] dark:text-[#F2F4E9]">
+                {formatCurrencyCr(evmMetrics.bac)}
+              </div>
+              <div className="text-[10px] text-[#52665D] dark:text-[#B5C1B5]">Contract Baseline</div>
+            </div>
+
+            {/* 2. PV */}
+            <div className="bg-white dark:bg-[#17221D] p-2.5 rounded border border-[#D9E2DA] dark:border-[#3A5146] flex flex-col justify-between">
+              <div className="text-[10px] font-semibold text-[#52665D] dark:text-[#B5C1B5] uppercase">Planned (PV)</div>
+              <div className="my-1 font-mono font-bold text-sm text-[#825700] dark:text-[#E5C185]">
+                {formatCurrencyCr(evmMetrics.pv)}
+              </div>
+              <div className="text-[10px] text-[#52665D] dark:text-[#B5C1B5]">{evmMetrics.plannedPct.toFixed(1)}% of BAC</div>
+            </div>
+
+            {/* 3. EV */}
+            <div className="bg-white dark:bg-[#17221D] p-2.5 rounded border border-[#D9E2DA] dark:border-[#3A5146] flex flex-col justify-between">
+              <div className="text-[10px] font-semibold text-[#52665D] dark:text-[#B5C1B5] uppercase">Earned (EV)</div>
+              <div className="my-1 font-mono font-bold text-sm text-[#08786A] dark:text-[#72C6AD]">
+                {formatCurrencyCr(evmMetrics.ev)}
+              </div>
+              <div className="text-[10px] text-[#52665D] dark:text-[#B5C1B5]">{evmMetrics.actualPct.toFixed(1)}% of BAC</div>
+            </div>
+
+            {/* 4. AC */}
+            <div className="bg-white dark:bg-[#17221D] p-2.5 rounded border border-[#D9E2DA] dark:border-[#3A5146] flex flex-col justify-between">
+              <div className="text-[10px] font-semibold text-[#52665D] dark:text-[#B5C1B5] uppercase">Actual Cost (AC)</div>
+              <div className="my-1 font-mono font-bold text-sm text-[#182920] dark:text-[#F2F4E9]">
+                {formatCurrencyCr(evmMetrics.ac)}
+              </div>
+              <div className="text-[10px] text-[#52665D] dark:text-[#B5C1B5]">Cumulative Spend</div>
+            </div>
+
+            {/* 5. CV */}
+            <div className="bg-white dark:bg-[#17221D] p-2.5 rounded border border-[#D9E2DA] dark:border-[#3A5146] flex flex-col justify-between">
+              <div className="text-[10px] font-semibold text-[#52665D] dark:text-[#B5C1B5] uppercase">Cost Var (CV)</div>
+              <div className={`my-1 font-mono font-bold text-sm ${evmMetrics.cv < 0 ? 'text-[#A43B36] dark:text-[#FF9E94]' : 'text-[#08786A] dark:text-[#72C6AD]'}`}>
+                {formatVarianceCr(evmMetrics.cv)}
+              </div>
+              <div className="text-[10px] text-[#A43B36] dark:text-[#FF9E94] font-medium">
+                {evmMetrics.cv < 0 ? 'Cost Overrun' : 'Cost Underrun'}
+              </div>
+            </div>
+
+            {/* 6. SV */}
+            <div className="bg-white dark:bg-[#17221D] p-2.5 rounded border border-[#D9E2DA] dark:border-[#3A5146] flex flex-col justify-between">
+              <div className="text-[10px] font-semibold text-[#52665D] dark:text-[#B5C1B5] uppercase flex items-center gap-0.5">
+                <span>Sched Var (SV)</span>
+                <TermHelp term="variance" />
+              </div>
+              <div className={`my-1 font-mono font-bold text-sm ${evmMetrics.sv < 0 ? 'text-[#A43B36] dark:text-[#FF9E94]' : 'text-[#08786A] dark:text-[#72C6AD]'}`}>
+                {formatVarianceCr(evmMetrics.sv)}
+              </div>
+              <div className="text-[10px] text-[#A43B36] dark:text-[#FF9E94] font-medium">
+                {formatPercentPoints(evmMetrics.svPct)}
+              </div>
+            </div>
+
+            {/* 7. CPI */}
+            <div className="bg-white dark:bg-[#17221D] p-2.5 rounded border border-[#D9E2DA] dark:border-[#3A5146] flex flex-col justify-between">
+              <div className="text-[10px] font-semibold text-[#52665D] dark:text-[#B5C1B5] uppercase flex items-center gap-0.5">
+                <span>CPI</span>
+                <TermHelp term="cpi" />
+              </div>
+              <div className={`my-1 font-mono font-bold text-base ${evmMetrics.cpi < 1 ? 'text-[#A43B36] dark:text-[#FF9E94]' : 'text-[#08786A] dark:text-[#72C6AD]'}`}>
+                {formatEVMIndex(evmMetrics.cpi, 2)}
+              </div>
+              <div className="text-[10px] font-mono text-[#52665D] dark:text-[#B5C1B5]">
+                {formatEVMIndex(evmMetrics.cpi, 4)} ({evmMetrics.cpi < 1 ? 'Overrun' : 'Favorable'})
+              </div>
+            </div>
+
+            {/* 8. SPI */}
+            <div className="bg-white dark:bg-[#17221D] p-2.5 rounded border border-[#D9E2DA] dark:border-[#3A5146] flex flex-col justify-between">
+              <div className="text-[10px] font-semibold text-[#52665D] dark:text-[#B5C1B5] uppercase flex items-center gap-0.5">
+                <span>SPI</span>
+                <TermHelp term="spi" />
+              </div>
+              <div className={`my-1 font-mono font-bold text-base ${evmMetrics.spi < 1 ? 'text-[#825700] dark:text-[#F3B765]' : 'text-[#08786A] dark:text-[#72C6AD]'}`}>
+                {formatEVMIndex(evmMetrics.spi, 2)}
+              </div>
+              <div className="text-[10px] font-mono text-[#52665D] dark:text-[#B5C1B5]">
+                {formatEVMIndex(evmMetrics.spi, 4)} ({evmMetrics.spi < 1 ? 'Lag' : 'On Track'})
+              </div>
+            </div>
+
+            {/* 9. EAC */}
+            <div className="bg-white dark:bg-[#17221D] p-2.5 rounded border border-[#D9E2DA] dark:border-[#3A5146] flex flex-col justify-between">
+              <div className="text-[10px] font-semibold text-[#52665D] dark:text-[#B5C1B5] uppercase">Estimate (EAC)</div>
+              <div className="my-1 font-mono font-bold text-sm text-[#A43B36] dark:text-[#FF9E94]">
+                {formatCurrencyCr(evmMetrics.eac)}
+              </div>
+              <div className="text-[10px] text-[#A43B36] dark:text-[#FF9E94]">
+                +{formatCurrencyCr(evmMetrics.eac - evmMetrics.bac)}
+              </div>
+            </div>
+
+            {/* 10. VAC */}
+            <div className="bg-white dark:bg-[#17221D] p-2.5 rounded border border-[#D9E2DA] dark:border-[#3A5146] flex flex-col justify-between">
+              <div className="text-[10px] font-semibold text-[#52665D] dark:text-[#B5C1B5] uppercase">Var at Comp (VAC)</div>
+              <div className="my-1 font-mono font-bold text-sm text-[#A43B36] dark:text-[#FF9E94]">
+                {formatVarianceCr(evmMetrics.vac)}
+              </div>
+              <div className="text-[10px] text-[#52665D] dark:text-[#B5C1B5]">Projected Slippage</div>
+            </div>
+
+            {/* 11. TCPI */}
+            <div className="bg-white dark:bg-[#17221D] p-2.5 rounded border border-[#D9E2DA] dark:border-[#3A5146] flex flex-col justify-between">
+              <div className="text-[10px] font-semibold text-[#52665D] dark:text-[#B5C1B5] uppercase">To-Complete (TCPI)</div>
+              <div className="my-1 font-mono font-bold text-sm text-[#825700] dark:text-[#F3B765]">
+                {formatEVMIndex(evmMetrics.tcpi, 4)}
+              </div>
+              <div className="text-[10px] text-[#825700] dark:text-[#F3B765]">Target BAC</div>
+            </div>
+          </div>
+
+          {/* Quick Contextual Summary */}
+          <div className="mt-2.5 pt-2 border-t border-[#D9E2DA]/60 dark:border-[#3A5146]/60 flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 text-[11px] text-[#52665D] dark:text-[#B5C1B5]">
+            <p>
+              <strong className="text-[#1A2B25] dark:text-[#F2F4E9]">Performance Verdict: </strong>
+              {evmMetrics.spiInterpretation} {evmMetrics.cpiInterpretation}
+            </p>
+            <div className="shrink-0 font-mono text-[10px]">
+              TCPI: {formatEVMIndex(evmMetrics.tcpi, 4)} required efficiency
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* ========================================================= */}
       {/* 2. SVG CHART CANVAS OR ACCESSIBLE DATA TABLE ALTERNATIVE */}

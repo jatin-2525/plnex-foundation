@@ -109,7 +109,7 @@ const INITIAL_ASSIGNED_ACTIVITIES: AssignedActivity[] = [
   {
     id: 'MEC-08-003',
     name: 'Align Centrifugal Gas Compressor Skid A',
-    wbs: '1.1.2.4.1',
+    wbs: '1.1.4.1.2',
     wbsLevel: 'L5',
     discipline: 'Mechanical',
     area: 'Compressor House Bay',
@@ -130,7 +130,7 @@ const INITIAL_ASSIGNED_ACTIVITIES: AssignedActivity[] = [
   {
     id: 'ELE-11-032',
     name: 'Cable Tray Installation - Substation to Bay',
-    wbs: '1.1.4.1.2',
+    wbs: '1.1.5.1.2',
     wbsLevel: 'L5',
     discipline: 'Electrical',
     area: 'Overhead Gallery Bay 1-4',
@@ -173,7 +173,7 @@ const INITIAL_ASSIGNED_ACTIVITIES: AssignedActivity[] = [
   {
     id: 'INS-02-005',
     name: 'Mount Smart Pressure Transmitters on Line 24-XX',
-    wbs: '1.1.5.2.1',
+    wbs: '1.1.6.2.1',
     wbsLevel: 'L5',
     discipline: 'Instrumentation',
     area: 'Unit A - Gas Processing Area',
@@ -195,7 +195,7 @@ const INITIAL_ASSIGNED_ACTIVITIES: AssignedActivity[] = [
   {
     id: 'CIV-11-001',
     name: 'Foundation Block A - Compressor Pedestal',
-    wbs: '1.1.2.1.1',
+    wbs: '1.1.1.1.1',
     wbsLevel: 'L5',
     discipline: 'Civil',
     area: 'Compressor House Bay',
@@ -216,7 +216,7 @@ const INITIAL_ASSIGNED_ACTIVITIES: AssignedActivity[] = [
   {
     id: 'CIV-12-004',
     name: 'Excavate Drainage Trench along Pipe Rack West',
-    wbs: '1.1.2.3.1',
+    wbs: '1.2.1.1.1',
     wbsLevel: 'L5',
     discipline: 'Civil',
     area: 'Unit A - Piperack West',
@@ -237,7 +237,7 @@ const INITIAL_ASSIGNED_ACTIVITIES: AssignedActivity[] = [
   {
     id: 'MEC-09-001',
     name: 'Mount Lube Oil Cooler & Piping Spool Loop',
-    wbs: '1.1.4.2.1',
+    wbs: '1.2.2.1.2',
     wbsLevel: 'L5',
     discipline: 'Mechanical',
     area: 'Compressor House Bay',
@@ -258,7 +258,7 @@ const INITIAL_ASSIGNED_ACTIVITIES: AssignedActivity[] = [
   {
     id: 'ELE-12-015',
     name: 'High Voltage Transformer Busduct Flange Bolting',
-    wbs: '1.1.5.3.2',
+    wbs: '1.1.5.2.1',
     wbsLevel: 'L5',
     discipline: 'Electrical',
     area: 'Substation Yard',

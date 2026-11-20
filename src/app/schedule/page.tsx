@@ -1,6 +1,6 @@
 ﻿'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
 import { useApp } from '../../context/AppContext';
 import { useToast } from '../../context/ToastContext';
@@ -13,6 +13,11 @@ import { ProgressBar } from '../../components/shared/ProgressBar';
 import { Modal } from '../../components/shared/Modal';
 import { WhyButton } from '../../components/shared/WhyButton';
 import { ScheduleActivity, WBSLevel, DisciplineType } from '../../types';
+import {
+  MASTER_CANONICAL_ACTIVITIES,
+  getCanonicalActivity,
+  CANONICAL_SCHEDULE_VERSION_LABEL,
+} from '../../lib/domain/canonicalModels';
 import {
   Upload,
   Calendar,
@@ -87,615 +92,106 @@ export interface ScheduleVersionItem {
 }
 
 // Complete Multi-Level WBS Activities Data (L1 Project down to L6 Sub-Activities)
-const INITIAL_SCHEDULE_ACTIVITIES: ScheduleActivity[] = [
-  // L1: Project (Root)
-  {
-    id: 'PRJ-OIL-01',
-    projectId: 'PRJ-OIL-2026-01',
-    name: 'Duliajan Gas Processing & Pipeline Interconnect',
-    wbs: '1.0',
-    wbsLevel: 'L1',
-    discipline: 'Piping',
-    area: 'Entire Field Asset',
-    plannedStart: '2026-08-01',
-    plannedFinish: '2026-12-15',
-    actualStart: '2026-08-01',
-    actualFinish: '',
-    plannedProgress: 80,
-    actualProgress: 73,
-    plannedQuantity: 1,
-    actualQuantity: 0.73,
-    unit: 'project',
-    variance: -7,
-    status: 'at-risk',
-    delayDays: 2,
-    predecessors: [],
-    successors: [],
-    isCritical: true,
-    assignedEngineer: 'Rajesh Sharma',
-    evidenceIds: [],
-    executionEventIds: [],
-    description: 'Overall capital investment project master baseline hierarchy',
-    parentId: undefined,
-  },
-  // L2: Area
-  {
-    id: 'AREA-100',
-    projectId: 'PRJ-OIL-2026-01',
-    name: 'Unit A - Gas Processing & Compression Area',
-    wbs: '1.1',
-    wbsLevel: 'L2',
-    discipline: 'Piping',
-    area: 'Unit A - Gas Processing',
-    plannedStart: '2026-08-15',
-    plannedFinish: '2026-11-30',
-    actualStart: '2026-08-15',
-    actualFinish: '',
-    plannedProgress: 78,
-    actualProgress: 72,
-    plannedQuantity: 1,
-    actualQuantity: 0.72,
-    unit: 'facility',
-    variance: -6,
-    status: 'at-risk',
-    delayDays: 2,
-    predecessors: [],
-    successors: ['AREA-200'],
-    isCritical: true,
-    assignedEngineer: 'Debajit Borah',
-    evidenceIds: [],
-    executionEventIds: [],
-    description: 'Gas dehydration, condensate stabilization, and main header area',
-    parentId: 'PRJ-OIL-01',
-  },
-  // L3: Civil Infrastructure
-  {
-    id: 'DISC-CIV-1',
-    projectId: 'PRJ-OIL-2026-01',
-    name: 'Civil & Structural Infrastructure Works',
-    wbs: '1.1.2',
-    wbsLevel: 'L3',
-    discipline: 'Civil',
-    area: 'Unit A - Gas Processing',
-    plannedStart: '2026-08-20',
-    plannedFinish: '2026-10-15',
-    actualStart: '2026-08-20',
-    actualFinish: '',
-    plannedProgress: 95,
-    actualProgress: 92,
-    plannedQuantity: 180,
-    actualQuantity: 165.6,
-    unit: 'm³ concrete',
-    variance: -3,
-    status: 'on-track',
-    delayDays: 0,
-    predecessors: [],
-    successors: ['DISC-PIP-3'],
-    isCritical: false,
-    assignedEngineer: 'Debajit Borah',
-    evidenceIds: ['EVD-001'],
-    executionEventIds: [],
-    description: 'Foundations, equipment plinths, and structural concrete trenches',
-    parentId: 'AREA-100',
-  },
-  // L4: Civil Work Package
-  {
-    id: 'WP-CIV-01',
-    projectId: 'PRJ-OIL-2026-01',
-    name: 'Equipment Foundation Packages & Plinths',
-    wbs: '1.1.2.1',
-    wbsLevel: 'L4',
-    discipline: 'Civil',
-    area: 'Unit A - Gas Processing',
-    plannedStart: '2026-09-01',
-    plannedFinish: '2026-09-20',
-    actualStart: '2026-09-01',
-    actualFinish: '',
-    plannedProgress: 100,
-    actualProgress: 98,
-    plannedQuantity: 90,
-    actualQuantity: 88.2,
-    unit: 'm³ concrete',
-    variance: -2,
-    status: 'completed',
-    delayDays: 0,
-    predecessors: [],
-    successors: ['WP-3.2'],
-    isCritical: false,
-    assignedEngineer: 'Debajit Borah',
-    evidenceIds: ['EVD-001'],
-    executionEventIds: [],
-    description: 'Reinforced concrete foundation blocks for high pressure machinery',
-    parentId: 'DISC-CIV-1',
-  },
-  // L5: Civil Activity
-  {
-    id: 'CIV-11-001',
-    projectId: 'PRJ-OIL-2026-01',
-    name: 'Foundation Block A - Compressor Pedestal',
-    wbs: '1.1.2.1.1',
-    wbsLevel: 'L5',
-    discipline: 'Civil',
-    area: 'Unit A - Gas Processing',
-    plannedStart: '2026-09-05',
-    plannedFinish: '2026-09-14',
-    actualStart: '2026-09-05',
-    actualFinish: '2026-09-14',
-    plannedProgress: 100,
-    actualProgress: 100,
-    plannedQuantity: 45,
-    actualQuantity: 45,
-    unit: 'm³ concrete',
-    variance: 0,
-    status: 'completed',
-    delayDays: 0,
-    predecessors: [],
-    successors: ['MEC-08-003'],
-    isCritical: true,
-    assignedEngineer: 'Debajit Borah',
-    evidenceIds: ['EVD-001'],
-    executionEventIds: [],
-    description: 'Reinforced concrete foundation pedestal for 3.5MW compressor package',
-    parentId: 'WP-CIV-01',
-  },
-  // L3: Piping Discipline
-  {
-    id: 'DISC-PIP-3',
-    projectId: 'PRJ-OIL-2026-01',
-    name: 'Piping Systems & Interconnecting Piperacks',
-    wbs: '1.1.3',
-    wbsLevel: 'L3',
-    discipline: 'Piping',
-    area: 'Unit A - Gas Processing',
-    plannedStart: '2026-09-01',
-    plannedFinish: '2026-10-31',
-    actualStart: '2026-09-01',
-    actualFinish: '',
-    plannedProgress: 85,
-    actualProgress: 70,
-    plannedQuantity: 420,
-    actualQuantity: 294,
-    unit: 'spools',
-    variance: -15,
-    status: 'in-progress',
-    delayDays: 2,
-    predecessors: ['DISC-CIV-1'],
-    successors: ['DISC-MEC-4'],
-    isCritical: true,
-    assignedEngineer: 'Debajit Borah',
-    evidenceIds: ['EVD-002', 'EVD-003'],
-    executionEventIds: ['EVT-2026-001'],
-    description: 'All carbon steel and stainless process lines on Rack B',
-    parentId: 'AREA-100',
-  },
-  // L4: Piping Work Package
-  {
-    id: 'WP-3.2',
-    projectId: 'PRJ-OIL-2026-01',
-    name: 'High-Pressure Header Piping Package (Line 24-XX)',
-    wbs: '1.1.3.2',
-    wbsLevel: 'L4',
-    discipline: 'Piping',
-    area: 'Unit A - Gas Processing',
-    line: 'Line 24-XX',
-    plannedStart: '2026-09-10',
-    plannedFinish: '2026-09-25',
-    actualStart: '2026-09-11',
-    actualFinish: '',
-    plannedProgress: 80,
-    actualProgress: 68,
-    plannedQuantity: 24,
-    actualQuantity: 16.3,
-    unit: 'joints',
-    variance: -12,
-    status: 'in-progress',
-    delayDays: 2,
-    predecessors: ['WP-CIV-01'],
-    successors: ['WP-3.3'],
-    isCritical: true,
-    assignedEngineer: 'Debajit Borah',
-    evidenceIds: ['EVD-002', 'EVD-004'],
-    executionEventIds: ['EVT-2026-001', 'EVT-2026-002'],
-    description: 'Complete 24-inch gas gathering header line from wellhead pad to slug catcher',
-    parentId: 'DISC-PIP-3',
-  },
-  // L5: Piping Activity 1
-  {
-    id: 'PIP-24-001',
-    projectId: 'PRJ-OIL-2026-01',
-    name: 'Erect Line 24-XX High Pressure Gas Header',
-    wbs: '1.1.3.2.1',
-    wbsLevel: 'L5',
-    discipline: 'Piping',
-    area: 'Unit A - Gas Processing',
-    line: 'Line 24-XX',
-    plannedStart: '2026-09-10',
-    plannedFinish: '2026-09-15',
-    actualStart: '2026-09-11',
-    actualFinish: '2026-09-17',
-    plannedProgress: 100,
-    actualProgress: 100,
-    plannedQuantity: 12,
-    actualQuantity: 12,
-    unit: 'spools',
-    variance: 0,
-    status: 'completed',
-    delayDays: 2,
-    predecessors: [],
-    successors: ['PIP-24-002'],
-    isCritical: true,
-    assignedEngineer: 'Debajit Borah',
-    evidenceIds: ['EVD-002', 'EVD-003'],
-    executionEventIds: ['EVT-2026-001'],
-    description: 'Erection of prefabricated 24-inch spool pieces on piperack section B',
-    parentId: 'WP-3.2',
-  },
-  // L6: Sub-Activity 1
-  {
-    id: 'SUB-24-01',
-    projectId: 'PRJ-OIL-2026-01',
-    name: 'Rigging & Spool Hoisting onto Piperack Section B',
-    wbs: '1.1.3.2.1.1',
-    wbsLevel: 'L6',
-    discipline: 'Piping',
-    area: 'Unit A - Gas Processing',
-    line: 'Line 24-XX',
-    plannedStart: '2026-09-10',
-    plannedFinish: '2026-09-13',
-    actualStart: '2026-09-11',
-    actualFinish: '2026-09-14',
-    plannedProgress: 100,
-    actualProgress: 100,
-    plannedQuantity: 12,
-    actualQuantity: 12,
-    unit: 'hoists',
-    variance: 0,
-    status: 'completed',
-    delayDays: 0,
-    predecessors: [],
-    successors: ['SUB-24-02'],
-    isCritical: true,
-    assignedEngineer: 'Debajit Borah',
-    evidenceIds: ['EVD-002'],
-    executionEventIds: ['EVT-2026-001'],
-    description: 'Heavy crane rigging and placement of spools onto spring hangers',
-    parentId: 'PIP-24-001',
-  },
-  // L6: Sub-Activity 2
-  {
-    id: 'SUB-24-02',
-    projectId: 'PRJ-OIL-2026-01',
-    name: 'Flange Alignment & Spring Support Load Setting',
-    wbs: '1.1.3.2.1.2',
-    wbsLevel: 'L6',
-    discipline: 'Piping',
-    area: 'Unit A - Gas Processing',
-    line: 'Line 24-XX',
-    plannedStart: '2026-09-14',
-    plannedFinish: '2026-09-15',
-    actualStart: '2026-09-15',
-    actualFinish: '2026-09-17',
-    plannedProgress: 100,
-    actualProgress: 100,
-    plannedQuantity: 12,
-    actualQuantity: 12,
-    unit: 'flanges',
-    variance: 0,
-    status: 'completed',
-    delayDays: 0,
-    predecessors: ['SUB-24-01'],
-    successors: ['PIP-24-002'],
-    isCritical: true,
-    assignedEngineer: 'Debajit Borah',
-    evidenceIds: ['EVD-002'],
-    executionEventIds: ['EVT-2026-001'],
-    description: 'Cold pull check, flange parallelism verification, and torqueing',
-    parentId: 'PIP-24-001',
-  },
-  // L5: Piping Activity 2
-  {
-    id: 'PIP-24-002',
-    projectId: 'PRJ-OIL-2026-01',
-    name: 'Weld Line 24-XX Field Joints & NDT Clearance',
-    wbs: '1.1.3.2.2',
-    wbsLevel: 'L5',
-    discipline: 'Piping',
-    area: 'Unit A - Gas Processing',
-    line: 'Line 24-XX',
-    plannedStart: '2026-09-16',
-    plannedFinish: '2026-09-20',
-    actualStart: '2026-09-16',
-    actualFinish: '',
-    plannedProgress: 85,
-    actualProgress: 70,
-    plannedQuantity: 12,
-    actualQuantity: 8.4,
-    unit: 'joints',
-    variance: -15,
-    status: 'delayed',
-    delayDays: 2,
-    predecessors: ['PIP-24-001'],
-    successors: ['PIP-24-003', 'INS-02-005'],
-    isCritical: true,
-    assignedEngineer: 'Debajit Borah',
-    evidenceIds: ['EVD-004'],
-    executionEventIds: ['EVT-2026-002'],
-    description: 'Field butt welding and 100% radiographic inspection of Line 24-XX joints',
-    parentId: 'WP-3.2',
-  },
-  // L5: Piping Activity 3
-  {
-    id: 'PIP-24-003',
-    projectId: 'PRJ-OIL-2026-01',
-    name: 'Hydrostatic Test Section Line 24-XX (150 bar)',
-    wbs: '1.1.3.2.3',
-    wbsLevel: 'L5',
-    discipline: 'Piping',
-    area: 'Unit A - Gas Processing',
-    line: 'Line 24-XX',
-    plannedStart: '2026-09-19',
-    plannedFinish: '2026-09-22',
-    actualStart: '',
-    actualFinish: '',
-    plannedProgress: 0,
-    actualProgress: 0,
-    plannedQuantity: 1,
-    actualQuantity: 0,
-    unit: 'test package',
-    variance: 0,
-    status: 'pending',
-    delayDays: 2,
-    predecessors: ['PIP-24-002'],
-    successors: ['PIP-24-004'],
-    isCritical: true,
-    assignedEngineer: 'Debajit Borah',
-    evidenceIds: [],
-    executionEventIds: [],
-    description: 'Hydrostatic pressure integrity validation at 1.5x design pressure',
-    parentId: 'WP-3.2',
-  },
-  // L3: Mechanical Discipline
-  {
-    id: 'DISC-MEC-4',
-    projectId: 'PRJ-OIL-2026-01',
-    name: 'Mechanical Systems & Rotating Equipment',
-    wbs: '1.1.4',
-    wbsLevel: 'L3',
-    discipline: 'Mechanical',
-    area: 'Unit A - Gas Processing',
-    plannedStart: '2026-09-10',
-    plannedFinish: '2026-11-15',
-    actualStart: '2026-09-10',
-    actualFinish: '',
-    plannedProgress: 35,
-    actualProgress: 30,
-    plannedQuantity: 8,
-    actualQuantity: 2.4,
-    unit: 'skid packages',
-    variance: -5,
-    status: 'on-track',
-    delayDays: 0,
-    predecessors: ['DISC-CIV-1'],
-    successors: ['DISC-ELE-5'],
-    isCritical: false,
-    assignedEngineer: 'Debajit Borah',
-    evidenceIds: [],
-    executionEventIds: [],
-    description: 'Heavy rotating compressors, pumps, and separator equipment skids',
-    parentId: 'AREA-100',
-  },
-  // L4: Mechanical Work Package
-  {
-    id: 'WP-MEC-01',
-    projectId: 'PRJ-OIL-2026-01',
-    name: 'Gas Compressor Skid Packages & Driver Alignment',
-    wbs: '1.1.4.1',
-    wbsLevel: 'L4',
-    discipline: 'Mechanical',
-    area: 'Unit A - Compressor House',
-    plannedStart: '2026-09-15',
-    plannedFinish: '2026-10-05',
-    actualStart: '2026-09-15',
-    actualFinish: '',
-    plannedProgress: 25,
-    actualProgress: 20,
-    plannedQuantity: 2,
-    actualQuantity: 0.4,
-    unit: 'skids',
-    variance: -5,
-    status: 'on-track',
-    delayDays: 0,
-    predecessors: ['WP-CIV-01'],
-    successors: ['WP-ELE-01'],
-    isCritical: false,
-    assignedEngineer: 'Debajit Borah',
-    evidenceIds: [],
-    executionEventIds: [],
-    description: 'Compressor trains skid rigging and preliminary shaft alignment',
-    parentId: 'DISC-MEC-4',
-  },
-  // L5: Mechanical Activity
-  {
-    id: 'MEC-08-003',
-    projectId: 'PRJ-OIL-2026-01',
-    name: 'Align Centrifugal Gas Compressor Skid A',
-    wbs: '1.1.4.1.2',
-    wbsLevel: 'L5',
-    discipline: 'Mechanical',
-    area: 'Unit A - Compressor House',
-    plannedStart: '2026-09-16',
-    plannedFinish: '2026-09-22',
-    actualStart: '2026-09-16',
-    actualFinish: '',
-    plannedProgress: 20,
-    actualProgress: 15,
-    plannedQuantity: 1,
-    actualQuantity: 0.15,
-    unit: 'skid package',
-    variance: -5,
-    status: 'on-track',
-    delayDays: 0,
-    predecessors: ['CIV-11-001'],
-    successors: ['ELE-11-032'],
-    isCritical: false,
-    assignedEngineer: 'Debajit Borah',
-    evidenceIds: [],
-    executionEventIds: [],
-    description: 'Precision laser alignment of motor and compressor shafts on foundation block A',
-    parentId: 'WP-MEC-01',
-  },
-  // L3: Electrical Discipline
-  {
-    id: 'DISC-ELE-5',
-    projectId: 'PRJ-OIL-2026-01',
-    name: 'Electrical, Power & Instrumentation Systems',
-    wbs: '1.1.5',
-    wbsLevel: 'L3',
-    discipline: 'Electrical',
-    area: 'Unit A - Gas Processing',
-    plannedStart: '2026-09-12',
-    plannedFinish: '2026-11-20',
-    actualStart: '2026-09-12',
-    actualFinish: '',
-    plannedProgress: 45,
-    actualProgress: 35,
-    plannedQuantity: 1200,
-    actualQuantity: 420,
-    unit: 'meters',
-    variance: -10,
-    status: 'at-risk',
-    delayDays: 1,
-    predecessors: ['DISC-PIP-3'],
-    successors: [],
-    isCritical: false,
-    assignedEngineer: 'Debajit Borah',
-    evidenceIds: [],
-    executionEventIds: [],
-    description: 'Power distribution, tray raceways, junction boxes, and field control loops',
-    parentId: 'AREA-100',
-  },
-  // L4: Electrical Work Package
-  {
-    id: 'WP-ELE-01',
-    projectId: 'PRJ-OIL-2026-01',
-    name: 'Cable Tray & Substation Infrastructure',
-    wbs: '1.1.4.1',
-    wbsLevel: 'L4',
-    discipline: 'Electrical',
-    area: 'Unit A - Substation',
-    plannedStart: '2026-09-14',
-    plannedFinish: '2026-09-30',
-    actualStart: '2026-09-14',
-    actualFinish: '',
-    plannedProgress: 55,
-    actualProgress: 45,
-    plannedQuantity: 450,
-    actualQuantity: 202.5,
-    unit: 'meters',
-    variance: -10,
-    status: 'at-risk',
-    delayDays: 1,
-    predecessors: ['WP-3.2'],
-    successors: ['WP-INS-02'],
-    isCritical: false,
-    assignedEngineer: 'Debajit Borah',
-    evidenceIds: [],
-    executionEventIds: [],
-    description: 'High-voltage cable ladders from main switchgear building to process units',
-    parentId: 'DISC-ELE-5',
-  },
-  // L5: Electrical Activity
-  {
-    id: 'ELE-11-032',
-    projectId: 'PRJ-OIL-2026-01',
-    name: 'Cable Tray Installation - Substation to Compressor Bay',
-    wbs: '1.1.4.1.2',
-    wbsLevel: 'L5',
-    discipline: 'Electrical',
-    area: 'Unit A - Substation',
-    plannedStart: '2026-09-15',
-    plannedFinish: '2026-09-23',
-    actualStart: '2026-09-15',
-    actualFinish: '',
-    plannedProgress: 50,
-    actualProgress: 40,
-    plannedQuantity: 320,
-    actualQuantity: 128,
-    unit: 'meters',
-    variance: -10,
-    status: 'at-risk',
-    delayDays: 1,
-    predecessors: ['MEC-08-003'],
-    successors: ['INS-02-005'],
-    isCritical: false,
-    assignedEngineer: 'Debajit Borah',
-    evidenceIds: [],
-    executionEventIds: [],
-    description: 'Heavy duty perforated ladder cable tray along pipe rack levels 1 & 2',
-    parentId: 'WP-ELE-01',
-  },
-  // L4: Instrumentation Work Package
-  {
-    id: 'WP-INS-02',
-    projectId: 'PRJ-OIL-2026-01',
-    name: 'Field Instrumentation & Transmitter Loops',
-    wbs: '1.1.5.2',
-    wbsLevel: 'L4',
-    discipline: 'Instrumentation',
-    area: 'Unit A - Gas Processing',
-    plannedStart: '2026-09-18',
-    plannedFinish: '2026-10-10',
-    actualStart: '',
-    actualFinish: '',
-    plannedProgress: 15,
-    actualProgress: 0,
-    plannedQuantity: 24,
-    actualQuantity: 0,
-    unit: 'transmitters',
-    variance: -15,
-    status: 'pending',
-    delayDays: 2,
-    predecessors: ['WP-3.2'],
-    successors: [],
-    isCritical: true,
-    assignedEngineer: 'Debajit Borah',
-    evidenceIds: [],
-    executionEventIds: [],
-    description: 'Pressure, temperature, and differential flow transmitter hookups',
-    parentId: 'DISC-ELE-5',
-  },
-  // L5: Instrumentation Activity
-  {
-    id: 'INS-02-005',
-    projectId: 'PRJ-OIL-2026-01',
-    name: 'Mount Smart Pressure Transmitters on Line 24-XX',
-    wbs: '1.1.5.2.1',
-    wbsLevel: 'L5',
-    discipline: 'Instrumentation',
-    area: 'Unit A - Gas Processing',
-    line: 'Line 24-XX',
-    plannedStart: '2026-09-21',
-    plannedFinish: '2026-09-25',
-    actualStart: '',
-    actualFinish: '',
-    plannedProgress: 15,
-    actualProgress: 0,
-    plannedQuantity: 6,
-    actualQuantity: 0,
-    unit: 'transmitters',
-    variance: -15,
-    status: 'pending',
-    delayDays: 2,
-    predecessors: ['PIP-24-002', 'ELE-11-032'],
-    successors: [],
-    isCritical: true,
-    assignedEngineer: 'Debajit Borah',
-    evidenceIds: [],
-    executionEventIds: [],
-    description: 'Installation and tubing of smart transmitters on Line 24-XX header',
-    parentId: 'WP-INS-02',
-  },
-];
+// Unified canonical activities (42 items spanning L1 to L6)
+// Authoritative baseline anchor: PIP-24-002 (wbs: '1.1.3.2.2', actualProgress: 70)
+const INITIAL_SCHEDULE_ACTIVITIES: ScheduleActivity[] = MASTER_CANONICAL_ACTIVITIES;
+
+// Baseline Comparison / Diff mapping between Rev 3.2 and Rev 3.1 (Monsoon Schedule Recovery)
+export interface BaselineDiffItem {
+  rev31Finish: string;
+  rev32Finish: string;
+  slipDays: number;
+  reason: string;
+  isNew?: boolean;
+}
+
+const REV_3_1_DIFFS: Record<string, BaselineDiffItem> = {
+  'PRJ-OIL-01': { rev31Finish: '2026-12-13', rev32Finish: '2026-12-15', slipDays: 2, reason: 'Overall plant completion date pushed 2 days due to monsoon welding hold' },
+  'AREA-100': { rev31Finish: '2026-11-28', rev32Finish: '2026-11-30', slipDays: 2, reason: 'Area 100 critical path header delay' },
+  'DISC-CIV-1': { rev31Finish: '2026-10-15', rev32Finish: '2026-10-15', slipDays: 0, reason: 'Civil works proceeding on schedule' },
+  'WP-CIV-01': { rev31Finish: '2026-09-20', rev32Finish: '2026-09-20', slipDays: 0, reason: 'Foundation plinths completed on schedule' },
+  'CIV-11-001': { rev31Finish: '2026-09-14', rev32Finish: '2026-09-14', slipDays: 0, reason: 'Pedestal pour completed on schedule' },
+  'CIV-11-002': { rev31Finish: '2026-09-18', rev32Finish: '2026-09-18', slipDays: 0, reason: 'Slug catcher saddle completed on schedule' },
+  'STR-02-004': { rev31Finish: '2026-09-15', rev32Finish: '2026-09-15', slipDays: 0, reason: 'Piperack steel framing completed on schedule' },
+  'DISC-PIP-3': { rev31Finish: '2026-10-29', rev32Finish: '2026-10-31', slipDays: 2, reason: 'Line 24-XX butt weld NDT delay' },
+  'WP-3.2': { rev31Finish: '2026-09-23', rev32Finish: '2026-09-25', slipDays: 2, reason: 'Header package duration extended' },
+  'PIP-24-001': { rev31Finish: '2026-09-15', rev32Finish: '2026-09-17', slipDays: 2, reason: 'Crane rigging permit delayed 2 days' },
+  'SUB-24-01': { rev31Finish: '2026-09-13', rev32Finish: '2026-09-14', slipDays: 1, reason: 'Crane rigging permit delay' },
+  'SUB-24-02': { rev31Finish: '2026-09-15', rev32Finish: '2026-09-17', slipDays: 2, reason: 'Support load adjustment' },
+  'PIP-24-002': { rev31Finish: '2026-09-18', rev32Finish: '2026-09-20', slipDays: 2, reason: 'Heavy rain interrupted radiographic gamma testing' },
+  'SUB-24-03': { rev31Finish: '2026-09-18', rev32Finish: '2026-09-18', slipDays: 0, reason: 'New L6 sub-activity added in Rev 3.2', isNew: true },
+  'SUB-24-04': { rev31Finish: '2026-09-18', rev32Finish: '2026-09-20', slipDays: 2, reason: 'New L6 sub-activity added in Rev 3.2', isNew: true },
+  'PIP-24-003': { rev31Finish: '2026-09-20', rev32Finish: '2026-09-22', slipDays: 2, reason: 'Hydrotest window shifted to accommodate predecessor NDT' },
+  'PIP-24-004': { rev31Finish: '2026-09-23', rev32Finish: '2026-09-25', slipDays: 2, reason: 'Golden weld tie-in shifted downstream' },
+  'DISC-MEC-4': { rev31Finish: '2026-11-12', rev32Finish: '2026-11-15', slipDays: 3, reason: 'OEM compressor skid delivery date shifted' },
+  'WP-MEC-01': { rev31Finish: '2026-10-02', rev32Finish: '2026-10-05', slipDays: 3, reason: 'Compressor skid train arrival' },
+  'MEC-08-003': { rev31Finish: '2026-09-19', rev32Finish: '2026-09-22', slipDays: 3, reason: 'Laser alignment window rescheduled' },
+  'MEC-03-010': { rev31Finish: '2026-09-26', rev32Finish: '2026-09-26', slipDays: 0, reason: 'Slug catcher demister on schedule' },
+  'DISC-ELE-5': { rev31Finish: '2026-11-18', rev32Finish: '2026-11-20', slipDays: 2, reason: 'Substation gallery cable ladder alignment' },
+  'WP-ELE-01': { rev31Finish: '2026-09-28', rev32Finish: '2026-09-30', slipDays: 2, reason: 'Cable tray erection sequence' },
+  'ELE-11-032': { rev31Finish: '2026-09-21', rev32Finish: '2026-09-23', slipDays: 2, reason: 'Overhead gallery tray mounting' },
+  'WP-ELE-02': { rev31Finish: '2026-10-15', rev32Finish: '2026-10-15', slipDays: 0, reason: 'Cable pulling on schedule' },
+  'ELE-12-015': { rev31Finish: '2026-09-29', rev32Finish: '2026-09-29', slipDays: 0, reason: 'Transformer busduct bolting on schedule' },
+  'DISC-INS-6': { rev31Finish: '2026-11-10', rev32Finish: '2026-11-10', slipDays: 0, reason: 'Instrumentation on schedule' },
+  'WP-INS-02': { rev31Finish: '2026-10-10', rev32Finish: '2026-10-10', slipDays: 0, reason: 'Transmitters hookup window' },
+  'INS-02-005': { rev31Finish: '2026-09-23', rev32Finish: '2026-09-25', slipDays: 2, reason: 'Impulse line mounting dependent on Header welding' },
+  'INS-04-015': { rev31Finish: '2026-09-24', rev32Finish: '2026-09-25', slipDays: 1, reason: 'Transmitter bench calibration awaiting line clearance' },
+  'AREA-200': { rev31Finish: '2026-12-05', rev32Finish: '2026-12-05', slipDays: 0, reason: 'Condensate terminal works on schedule' },
+  'DISC-CIV-2': { rev31Finish: '2026-10-20', rev32Finish: '2026-10-20', slipDays: 0, reason: 'Tank bund walls on schedule' },
+  'WP-CIV-03': { rev31Finish: '2026-09-25', rev32Finish: '2026-09-25', slipDays: 0, reason: 'Storage tank foundation on schedule' },
+  'CIV-12-004': { rev31Finish: '2026-09-20', rev32Finish: '2026-09-20', slipDays: 0, reason: 'Annular plate foundation on schedule' },
+  'DISC-PIP-4': { rev31Finish: '2026-11-25', rev32Finish: '2026-11-25', slipDays: 0, reason: 'Offsites piping on schedule' },
+  'WP-4.1': { rev31Finish: '2026-10-25', rev32Finish: '2026-10-25', slipDays: 0, reason: 'Tank farm interconnecting on schedule' },
+  'MEC-09-001': { rev31Finish: '2026-09-29', rev32Finish: '2026-09-29', slipDays: 0, reason: 'Export pump skid alignment on schedule' },
+  'AREA-300': { rev31Finish: '2026-12-01', rev32Finish: '2026-12-01', slipDays: 0, reason: 'Utilities and flare on schedule' },
+  'DISC-PIP-5': { rev31Finish: '2026-11-15', rev32Finish: '2026-11-15', slipDays: 0, reason: 'Flare network on schedule' },
+  'WP-5.1': { rev31Finish: '2026-10-10', rev32Finish: '2026-10-10', slipDays: 0, reason: 'Flare stack erection on schedule' },
+  'ELE-08-012': { rev31Finish: '2026-09-20', rev32Finish: '2026-09-20', slipDays: 0, reason: 'Diesel generator test completed on schedule' },
+  'COM-99-001': { rev31Finish: '2026-10-03', rev32Finish: '2026-10-05', slipDays: 2, reason: 'Pre-commissioning start shifted following battery limit tie-in' },
+};
+
+// Version baseline mapping logic
+function getVersionActivities(versionId: string, baseActivities: ScheduleActivity[]): ScheduleActivity[] {
+  if (versionId === 'V2') {
+    return baseActivities.map((act) => {
+      if (act.id === 'PRJ-OIL-01') return { ...act, plannedProgress: 60, actualProgress: 60, variance: 0, delayDays: 0, status: 'on-track', scheduleVersion: 'Rev 2.0 (P6 XML)' };
+      if (act.id === 'AREA-100') return { ...act, plannedProgress: 58, actualProgress: 58, variance: 0, delayDays: 0, status: 'on-track', scheduleVersion: 'Rev 2.0 (P6 XML)' };
+      if (act.id === 'CIV-11-001') return { ...act, plannedProgress: 100, actualProgress: 100, variance: 0, delayDays: 0, status: 'completed', scheduleVersion: 'Rev 2.0 (P6 XML)' };
+      if (act.id === 'PIP-24-001') return { ...act, plannedProgress: 40, actualProgress: 40, variance: 0, delayDays: 0, status: 'in-progress', scheduleVersion: 'Rev 2.0 (P6 XML)' };
+      if (act.id === 'PIP-24-002') return { ...act, plannedProgress: 0, actualProgress: 0, variance: 0, delayDays: 0, status: 'pending', scheduleVersion: 'Rev 2.0 (P6 XML)' };
+      if (act.id === 'PIP-24-003') return { ...act, plannedProgress: 0, actualProgress: 0, variance: 0, delayDays: 0, status: 'pending', scheduleVersion: 'Rev 2.0 (P6 XML)' };
+      if (act.id === 'MEC-08-003') return { ...act, plannedProgress: 0, actualProgress: 0, variance: 0, delayDays: 0, status: 'pending', scheduleVersion: 'Rev 2.0 (P6 XML)' };
+      if (act.id === 'ELE-11-032') return { ...act, plannedProgress: 0, actualProgress: 0, variance: 0, delayDays: 0, status: 'pending', scheduleVersion: 'Rev 2.0 (P6 XML)' };
+      return {
+        ...act,
+        plannedProgress: Math.min(act.plannedProgress, 40),
+        actualProgress: Math.min(act.actualProgress, 40),
+        variance: 0,
+        delayDays: 0,
+        status: act.plannedProgress > 0 ? (act.actualProgress >= 100 ? 'completed' : 'in-progress') : 'pending',
+        scheduleVersion: 'Rev 2.0 (P6 XML)',
+      };
+    });
+  }
+  if (versionId === 'V1') {
+    return baseActivities.map((act) => {
+      if (act.id === 'PRJ-OIL-01') return { ...act, plannedProgress: 35, actualProgress: 35, variance: 0, delayDays: 0, status: 'on-track', scheduleVersion: 'Rev 1.0 (P6 XML)' };
+      if (act.id === 'AREA-100') return { ...act, plannedProgress: 30, actualProgress: 30, variance: 0, delayDays: 0, status: 'on-track', scheduleVersion: 'Rev 1.0 (P6 XML)' };
+      if (act.id === 'CIV-11-001') return { ...act, plannedProgress: 30, actualProgress: 30, variance: 0, delayDays: 0, status: 'in-progress', scheduleVersion: 'Rev 1.0 (P6 XML)' };
+      return {
+        ...act,
+        plannedProgress: Math.min(act.plannedProgress, 20),
+        actualProgress: Math.min(act.actualProgress, 20),
+        variance: 0,
+        delayDays: 0,
+        status: act.id === 'CIV-11-001' ? 'in-progress' : (act.wbsLevel === 'L1' || act.wbsLevel === 'L2' ? 'on-track' : 'pending'),
+        scheduleVersion: 'Rev 1.0 (P6 XML)',
+      };
+    });
+  }
+  return baseActivities;
+}
+
 
 // Historical schedule versions
 const DEFAULT_VERSIONS: ScheduleVersionItem[] = [
@@ -801,7 +297,7 @@ const DEFAULT_VERSIONS: ScheduleVersionItem[] = [
 ];
 
 export default function SchedulePage() {
-  const { openActivityDrawer, openWhyExplanation, userSession, activityDrawerActivityId } = useApp();
+  const { activities: appActivities, openActivityDrawer, openWhyExplanation, userSession, activityDrawerActivityId } = useApp();
   const { addToast } = useToast();
 
   // Progressive Disclosure: Operational clean view vs Detailed Full P6 Matrix
@@ -866,8 +362,15 @@ export default function SchedulePage() {
   const [versions, setVersions] = useState<ScheduleVersionItem[]>(DEFAULT_VERSIONS);
   const [selectedVersionId, setSelectedVersionId] = useState<string>('V3');
 
-  // Master Activities State
-  const [activities] = useState<ScheduleActivity[]>(INITIAL_SCHEDULE_ACTIVITIES);
+  // Master Activities State (Synchronized with AppContext canonical activities)
+  const [activities, setActivities] = useState<ScheduleActivity[]>(() => appActivities || INITIAL_SCHEDULE_ACTIVITIES);
+
+  useEffect(() => {
+    if (appActivities && appActivities.length > 0) {
+      setActivities(appActivities);
+    }
+  }, [appActivities]);
+  const [isDiffMode, setIsDiffMode] = useState(false);
   const [isSimulatedEmpty, setIsSimulatedEmpty] = useState(false);
 
   // Selected Activity Drawer trigger
@@ -910,6 +413,11 @@ export default function SchedulePage() {
     return versions.find((v) => v.id === selectedVersionId) || versions[0];
   }, [versions, selectedVersionId]);
 
+  // Dynamic activities reflecting selected baseline version
+  const currentVersionActivities = useMemo(() => {
+    return getVersionActivities(selectedVersionId, activities);
+  }, [selectedVersionId, activities]);
+
   // Current active operational version
   const currentOperationalVersion = useMemo(() => {
     return versions.find((v) => v.status === 'current') || versions[0];
@@ -917,13 +425,13 @@ export default function SchedulePage() {
 
   // Unique Area list
   const areaOptions = useMemo(() => {
-    return Array.from(new Set(activities.map((a) => a.area).filter(Boolean)));
-  }, [activities]);
+    return Array.from(new Set(currentVersionActivities.map((a) => a.area).filter(Boolean)));
+  }, [currentVersionActivities]);
 
   // Unique Discipline list
   const disciplineOptions = useMemo(() => {
-    return Array.from(new Set(activities.map((a) => a.discipline).filter(Boolean)));
-  }, [activities]);
+    return Array.from(new Set(currentVersionActivities.map((a) => a.discipline).filter(Boolean)));
+  }, [currentVersionActivities]);
 
   // Toggle single node in the expandable tree
   const toggleNode = (nodeId: string) => {
@@ -940,7 +448,7 @@ export default function SchedulePage() {
 
   // Expand all parent nodes
   const handleExpandAll = () => {
-    const allParentIds = activities.map((a) => a.id);
+    const allParentIds = currentVersionActivities.map((a) => a.id);
     setExpandedNodeIds(new Set(allParentIds));
     addToast({
       type: 'info',
@@ -964,7 +472,7 @@ export default function SchedulePage() {
     const levelOrder: WBSLevel[] = ['L1', 'L2', 'L3', 'L4', 'L5', 'L6'];
     const maxIdx = levelOrder.indexOf(level);
     const toExpand = new Set<string>();
-    activities.forEach((act) => {
+    currentVersionActivities.forEach((act) => {
       const actIdx = levelOrder.indexOf(act.wbsLevel);
       if (actIdx < maxIdx) {
         toExpand.add(act.id);
@@ -983,7 +491,7 @@ export default function SchedulePage() {
     const childrenMap = new Map<string, ScheduleActivity[]>();
     const roots: ScheduleActivity[] = [];
 
-    for (const act of activities) {
+    for (const act of currentVersionActivities) {
       if (!act.parentId) {
         roots.push(act);
       } else {
@@ -1018,7 +526,7 @@ export default function SchedulePage() {
     }
 
     return result;
-  }, [activities]);
+  }, [currentVersionActivities]);
 
   const isFilteringOrSearching = Boolean(
     search.trim() ||
@@ -1324,8 +832,15 @@ export default function SchedulePage() {
       return v;
     });
 
+    // Update both version metadata and activities state with committed baseline
     setVersions([newVersionObj, ...updatedVersions]);
     setSelectedVersionId(newVerId);
+    setActivities((prev) =>
+      prev.map((act) => ({
+        ...act,
+        scheduleVersion: newVersionCode,
+      }))
+    );
     setImportStep(8); // Complete
     addToast({
       type: 'success',
@@ -1421,6 +936,15 @@ export default function SchedulePage() {
               </div>
 
               {/* Import Schedule Button */}
+              <Link
+                href="/schedule-twin"
+                className="px-3.5 py-2 text-xs font-semibold text-[#006B61] dark:text-[#72C6AD] bg-white dark:bg-[#17221D] hover:bg-[#EAF0E9] dark:hover:bg-[#203129] border border-[#006B61]/40 rounded-lg transition-colors inline-flex items-center gap-1.5 shadow-2xs"
+                title="Navigate directly to interactive 2D Gantt timeline view"
+              >
+                <Calendar className="w-3.5 h-3.5 text-[#006B61]" />
+                <span>Gantt Timeline View</span>
+              </Link>
+
               <button
                 type="button"
                 onClick={handleStartImport}
@@ -1678,6 +1202,37 @@ export default function SchedulePage() {
         </div>
 
         {/* =========================================================================
+            BASELINE COMPARISON / DIFF BANNER (Rev 3.2 vs Rev 3.1)
+            ========================================================================= */}
+        {isDiffMode && (
+          <div className="p-4 bg-[#F8EFDA] border border-[#E5C185] border-l-4 border-l-[#825700] rounded-lg flex flex-col md:flex-row md:items-center justify-between gap-3 text-xs shadow-xs">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-lg bg-white border border-[#E5C185] flex items-center justify-center text-[#825700] shrink-0 font-bold font-mono">
+                Δ
+              </div>
+              <div>
+                <div className="font-bold text-[#825700] text-sm flex items-center gap-2">
+                  <span>Baseline Diff Active: Rev 3.2 (Current) vs Rev 3.1 (Pre-Monsoon Recovery)</span>
+                  <span className="px-2 py-0.5 rounded text-[10px] bg-white border border-[#E5C185] font-mono">
+                    6 Slippages (+2d to +3d) · 2 New Sub-Activities
+                  </span>
+                </div>
+                <div className="text-[#52665D] mt-0.5">
+                  Showing schedule variance between revisions. Highlighted rows indicate altered start/finish dates following monsoon re-sequencing.
+                </div>
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={() => setIsDiffMode(false)}
+              className="px-3 py-1.5 text-xs font-semibold bg-white border border-[#E5C185] hover:bg-[#FDFBF7] text-[#825700] rounded-md transition-colors shrink-0"
+            >
+              Exit Comparison
+            </button>
+          </div>
+        )}
+
+        {/* =========================================================================
             SEARCH & FILTER BAR
             ========================================================================= */}
         <div className="bg-white dark:bg-[#17221D] border border-[#D9E2DA] dark:border-[#3A5146] rounded-lg p-4 space-y-3 shadow-xs">
@@ -1817,8 +1372,23 @@ export default function SchedulePage() {
             </div>
 
             {/* View Mode Toggle: Operational vs Detailed */}
-            <div className="flex items-center gap-2">
-              <span className="text-[11px] text-[#738A80]">Table View:</span>
+            <div className="flex items-center gap-2 flex-wrap">
+              {/* Baseline Comparison Diff Toggle */}
+              <button
+                type="button"
+                onClick={() => setIsDiffMode(!isDiffMode)}
+                className={`px-3 py-1 text-xs rounded-md border transition-colors inline-flex items-center gap-1.5 font-medium ${
+                  isDiffMode
+                    ? 'bg-[#F8EFDA] text-[#825700] border-[#E5C185] font-semibold shadow-2xs'
+                    : 'bg-white text-[#52665D] border-[#D9E2DA] hover:bg-[#EAF0E9]'
+                }`}
+                title="Toggle schedule variance diff comparison against Rev 3.1"
+              >
+                <SlidersHorizontal className="w-3 h-3" />
+                <span>{isDiffMode ? 'Exit Diff (Rev 3.1)' : 'Compare with Rev 3.1'}</span>
+              </button>
+
+              <span className="text-[11px] text-[#738A80]">View:</span>
               <div className="inline-flex items-center p-0.5 bg-[#EAF0E9] rounded-lg border border-[#D9E2DA]">
                 <button
                   type="button"
@@ -1842,6 +1412,14 @@ export default function SchedulePage() {
                 >
                   Full P6 Matrix (14 cols)
                 </button>
+                <Link
+                  href="/schedule-twin"
+                  className="px-3 py-1 text-xs rounded-md transition-colors text-[#52665D] hover:text-[#006B61] hover:bg-white inline-flex items-center gap-1 font-medium"
+                  title="Switch to Interactive 2D Gantt Timeline View on /schedule-twin"
+                >
+                  <Calendar className="w-3 h-3 text-[#006B61]" />
+                  <span>Gantt</span>
+                </Link>
               </div>
             </div>
           </div>

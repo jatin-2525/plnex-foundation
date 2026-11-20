@@ -769,7 +769,25 @@ function getDateOffsetPercent(dateStr: string, rangeStart: Date, rangeEnd: Date)
 }
 
 export default function ScheduleTwinPage() {
-  const { activeProject, openActivityDrawer, openWhyExplanation } = useApp();
+  const { activeProject, openActivityDrawer, openWhyExplanation, activities: appActivities } = useApp();
+
+  // Overlay live verified AppContext activity progress onto Twin Activities
+  const twinActivities: TwinActivityItem[] = useMemo(() => {
+    if (!appActivities || appActivities.length === 0) return TWIN_ACTIVITIES_RAW;
+    const actMap = new Map(appActivities.map((a) => [a.id, a]));
+    return TWIN_ACTIVITIES_RAW.map((item) => {
+      const live = actMap.get(item.id);
+      if (live) {
+        return {
+          ...item,
+          actualProgress: live.actualProgress,
+          verifiedActualProgress: live.verifiedActualProgress ?? live.actualProgress,
+          status: live.status as any,
+        };
+      }
+      return item;
+    });
+  }, [appActivities]);
 
   // Selected Activity State (Defaults to PIP-24-002 which shows rich Planned/Actual/Forecast variance)
   const [selectedActivityId, setSelectedActivityId] = useState<string>('PIP-24-002');
@@ -863,7 +881,7 @@ export default function ScheduleTwinPage() {
 
   // Filter activities
   const filteredActivities = useMemo(() => {
-    return TWIN_ACTIVITIES_RAW.filter((item) => {
+    return twinActivities.filter((item) => {
       if (criticalOnly && !item.isCritical) return false;
       if (levelFilter === 'L1-L2' && !['L1', 'L2'].includes(item.wbsLevel)) return false;
       if (levelFilter === 'L3' && item.wbsLevel !== 'L3') return false;
@@ -880,13 +898,13 @@ export default function ScheduleTwinPage() {
       }
       return true;
     });
-  }, [criticalOnly, levelFilter, searchQuery]);
+  }, [twinActivities, criticalOnly, levelFilter, searchQuery]);
 
   // Selected Activity Object
   const selectedActivity: TwinActivityItem = useMemo(() => {
-    const act = TWIN_ACTIVITIES_RAW.find((a) => a.id === selectedActivityId);
-    return act || TWIN_ACTIVITIES_RAW[10]; // fallback to PIP-24-002
-  }, [selectedActivityId]);
+    const act = twinActivities.find((a) => a.id === selectedActivityId);
+    return act || twinActivities[10] || TWIN_ACTIVITIES_RAW[10]; // fallback to PIP-24-002
+  }, [twinActivities, selectedActivityId]);
 
   // Linked Execution Events for selected activity
   const linkedEvents: ExecutionEvent[] = useMemo(() => {

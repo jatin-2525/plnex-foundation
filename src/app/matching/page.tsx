@@ -36,7 +36,7 @@ import {
 } from 'lucide-react';
 
 export default function MatchingPage() {
-  const { activeProject, userSession, openActivityDrawer } = useApp();
+  const { activeProject, userSession, openActivityDrawer, approveExecutionEvent } = useApp();
   const { addToast } = useToast();
 
   const [events, setEvents] = useState<ExecutionEvent[]>(MOCK_EXECUTION_EVENTS);
@@ -68,6 +68,7 @@ export default function MatchingPage() {
     }
 
     const res = await projectService.approveMatch(event.id, 'Approved via Planner Review Queue');
+    approveExecutionEvent(event.id, event.matchedActivityId);
     setEvents(events.map((e) => (e.id === event.id ? { ...res.data, status: 'approved' } : e)));
     setActiveReviewEvent(null);
     addToast({

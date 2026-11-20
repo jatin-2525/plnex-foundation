@@ -27,19 +27,19 @@ export const VERIFIED_CUSTOMER_REVIEWS: CustomerReviewSlot[] = [
   {
     id: 'review-slot-1',
     quotePlaceholder:
-      '[CUSTOMER REVIEW 1 PLACEHOLDER: Paste verified client quote here with explicit permission. Example: "PLnEX streamlined our daily site DPR signoffs across pipeline interconnects and reduced baseline reconciliation delays from 14 days to 48 hours."]',
+      '[Customer Testimonial Placeholder: Awaiting verified client feedback]',
     authorPlaceholder: '[Customer Full Name Placeholder]',
-    rolePlaceholder: '[Customer Job Title Placeholder, e.g. Chief Project Controls Manager]',
-    organizationPlaceholder: '[Client Organization Placeholder, e.g. Oil India Limited / Joint Venture Partner]',
-    datePlaceholder: '[Date Placeholder, e.g. Q4 2026]',
-    projectPlaceholder: '[Project Reference Placeholder, e.g. Duliajan Gas Processing Facility]',
+    rolePlaceholder: '[Customer Job Title Placeholder]',
+    organizationPlaceholder: '[Client Organization Placeholder]',
+    datePlaceholder: '[Date Placeholder]',
+    projectPlaceholder: '[Project Reference Placeholder]',
   },
   {
     id: 'review-slot-2',
     quotePlaceholder:
-      '[CUSTOMER REVIEW 2 PLACEHOLDER: Paste verified contractor or site engineer testimonial quote here.]',
+      '[Customer Testimonial Placeholder: Awaiting verified client feedback]',
     authorPlaceholder: '[Customer Full Name Placeholder]',
-    rolePlaceholder: '[Customer Job Title Placeholder, e.g. Lead Planning Engineer]',
+    rolePlaceholder: '[Customer Job Title Placeholder]',
     organizationPlaceholder: '[Client Organization Placeholder]',
     datePlaceholder: '[Date Placeholder]',
     projectPlaceholder: '[Project Reference Placeholder]',
@@ -47,9 +47,9 @@ export const VERIFIED_CUSTOMER_REVIEWS: CustomerReviewSlot[] = [
   {
     id: 'review-slot-3',
     quotePlaceholder:
-      '[CUSTOMER REVIEW 3 PLACEHOLDER: Paste third verified enterprise review quote here.]',
+      '[Customer Testimonial Placeholder: Awaiting verified client feedback]',
     authorPlaceholder: '[Customer Full Name Placeholder]',
-    rolePlaceholder: '[Customer Job Title Placeholder, e.g. GM Infrastructure & Pipeline Operations]',
+    rolePlaceholder: '[Customer Job Title Placeholder]',
     organizationPlaceholder: '[Client Organization Placeholder]',
     datePlaceholder: '[Date Placeholder]',
     projectPlaceholder: '[Project Reference Placeholder]',

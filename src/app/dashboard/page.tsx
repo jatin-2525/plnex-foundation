@@ -22,6 +22,16 @@ import { ExecutionEvent } from '../../types';
 import { CANONICAL_SCHEDULE_VERSION_LABEL } from '../../lib/domain/canonicalModels';
 import { formatProjectDate, PROJECT_REPORT_DATE } from '../../lib/domain/dateUtils';
 import {
+  calculateProjectEVM,
+  formatCurrencyCr,
+  formatVarianceCr,
+  formatEVMIndex,
+  formatPercentPoints,
+  getEVMStatusBadgeConfig,
+  CANONICAL_BAC,
+  CANONICAL_ACTUAL_COST,
+} from '../../lib/domain/evmEngine';
+import {
   AlertTriangle,
   AlertOctagon,
   CheckCircle2,
@@ -49,7 +59,7 @@ import {
 } from 'lucide-react';
 
 export default function ManagerDashboardPage() {
-  const { activeProject, openActivityDrawer, openWhyExplanation } = useApp();
+  const { activeProject, openActivityDrawer, openWhyExplanation, approveExecutionEvent } = useApp();
   const { effectiveStatus } = useOffline();
   const { addToast } = useToast();
   const { manager, shared } = usePreferences();
@@ -64,6 +74,15 @@ export default function ManagerDashboardPage() {
 
   // Feature 15: Dashboard Layout Controls (Density & Section Visibility wired to Display Preferences)
   const [dashboardDensity, setDashboardDensity] = useState<'comfortable' | 'compact'>(shared.density || 'comfortable');
+
+  // Dynamic ANSI/EIA-748 Earned Value Management Metrics
+  const evm = calculateProjectEVM(
+    CANONICAL_BAC,
+    activeProject.plannedProgress,
+    activeProject.overallProgress,
+    CANONICAL_ACTUAL_COST
+  );
+  const evmBadge = getEVMStatusBadgeConfig(evm.status);
   const [viewSettingsOpen, setViewSettingsOpen] = useState(false);
   const [visibleSections, setVisibleSections] = useState({
     kpis: manager.pinnedCards?.includes('kpi-summary') ?? true,
@@ -95,6 +114,7 @@ export default function ManagerDashboardPage() {
       event.id,
       'Approved via Manager Dashboard quick action'
     );
+    approveExecutionEvent(event.id, event.matchedActivityId);
     setReviewEvents((prev) => prev.filter((e) => e.id !== event.id));
     setSelectedReviewModalEvent(null);
     addToast({
@@ -566,13 +586,12 @@ export default function ManagerDashboardPage() {
               </span>
             </div>
 
-            <div className="border border-[#D9E2DA] dark:border-[#3A5146] rounded-lg shadow-xs overflow-hidden grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-px bg-[#D9E2DA] dark:bg-[#243832]">
+            <div className="border border-[#D9E2DA] dark:border-[#3A5146] rounded-lg shadow-xs overflow-hidden grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-px bg-[#D9E2DA] dark:bg-[#243832]">
               {/* 1. Schedule Health */}
               <div className={`${dashboardDensity === 'compact' ? 'p-3' : 'p-4 lg:p-5'} bg-white dark:bg-[#17221D] hover:bg-[#F9FAFC] dark:hover:bg-[#243832] transition-colors flex flex-col justify-between group`}>
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-semibold uppercase tracking-wider text-[#52665D] dark:text-[#B5C1B5] flex items-center gap-1">
                     Schedule Health
-                    <TermHelp term="spi" />
                   </span>
                   <div className="flex items-center gap-1.5">
                     <WhyButton
@@ -594,7 +613,7 @@ export default function ManagerDashboardPage() {
                     </span>
                   </div>
                   <p className="text-[11px] text-[#52665D] dark:text-[#B5C1B5] mt-1">
-                    Needs Attention — 5 Warnings
+                    DCMA 14-Point — 5 Warnings
                   </p>
                 </div>
                 <Link href="/health" className="text-[11px] text-[#08786A] dark:text-[#72C6AD] group-hover:underline font-semibold flex items-center gap-1">
@@ -635,7 +654,58 @@ export default function ManagerDashboardPage() {
                 </Link>
               </div>
 
-              {/* 3. Activities At Risk */}
+              {/* 3. EVM Performance: Schedule Velocity (SPI) & Cost Efficiency (CPI) */}
+              <div className={`${dashboardDensity === 'compact' ? 'p-3' : 'p-4 lg:p-5'} bg-white dark:bg-[#17221D] hover:bg-[#F9FAFC] dark:hover:bg-[#243832] transition-colors flex flex-col justify-between group`}>
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-semibold uppercase tracking-wider text-[#52665D] dark:text-[#B5C1B5] flex items-center gap-1">
+                    EVM Performance
+                  </span>
+                  <div className="flex items-center gap-1.5">
+                    <WhyButton
+                      onClick={() => openWhyExplanation('evm:performance')}
+                      title="Why is SPI 0.91 and CPI 0.96?"
+                    />
+                    <div className="p-1 rounded bg-[#F8EFDA] dark:bg-[#3D2808] text-[#825700] dark:text-[#F3B765]">
+                      <BarChart3 className="w-3.5 h-3.5" />
+                    </div>
+                  </div>
+                </div>
+                <div className="my-2 space-y-1">
+                  <div className="flex items-baseline justify-between">
+                    <span className="text-xs font-semibold text-[#52665D] dark:text-[#B5C1B5] flex items-center gap-0.5">
+                      <span>SPI</span>
+                      <TermHelp term="spi" />
+                    </span>
+                    <div className="flex items-baseline gap-1">
+                      <span className="text-xl sm:text-2xl font-bold font-mono text-[#825700] dark:text-[#F3B765] leading-none">
+                        {formatEVMIndex(evm.spi, 2)}
+                      </span>
+                      <span className="text-[10px] font-semibold text-[#825700] dark:text-[#F3B765]">
+                        ({evm.spi < 1 ? 'Lag' : 'Target'})
+                      </span>
+                    </div>
+                  </div>
+                  <div className="flex items-baseline justify-between border-t border-[#D9E2DA]/60 dark:border-[#3A5146]/60 pt-1">
+                    <span className="text-xs font-semibold text-[#52665D] dark:text-[#B5C1B5] flex items-center gap-0.5">
+                      <span>CPI</span>
+                      <TermHelp term="cpi" />
+                    </span>
+                    <div className="flex items-baseline gap-1">
+                      <span className="text-xl sm:text-2xl font-bold font-mono text-[#A43B36] dark:text-[#FF9E94] leading-none">
+                        {formatEVMIndex(evm.cpi, 2)}
+                      </span>
+                      <span className="text-[10px] font-semibold text-[#A43B36] dark:text-[#FF9E94]">
+                        ({evm.cpi < 1 ? 'Overrun' : 'Target'})
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <Link href="/progress" className="text-[11px] text-[#08786A] dark:text-[#72C6AD] group-hover:underline font-semibold flex items-center gap-1">
+                  ANSI/EIA-748 EVM &rarr;
+                </Link>
+              </div>
+
+              {/* 4. Activities At Risk */}
               <Link
                 href="/risks?filter=critical"
                 className={`${dashboardDensity === 'compact' ? 'p-3' : 'p-4 lg:p-5'} bg-white dark:bg-[#17221D] hover:bg-[#F9FAFC] dark:hover:bg-[#243832] transition-colors flex flex-col justify-between group`}
@@ -665,7 +735,7 @@ export default function ManagerDashboardPage() {
                 </span>
               </Link>
 
-              {/* 4. Pending Review */}
+              {/* 5. Pending Review */}
               <Link
                 href="/review"
                 className={`${dashboardDensity === 'compact' ? 'p-3' : 'p-4 lg:p-5'} bg-white dark:bg-[#17221D] hover:bg-[#F9FAFC] dark:hover:bg-[#243832] transition-colors flex flex-col justify-between group`}
@@ -694,8 +764,8 @@ export default function ManagerDashboardPage() {
                 </span>
               </Link>
 
-              {/* 5. Schedule Variance */}
-              <div className={`${dashboardDensity === 'compact' ? 'p-3' : 'p-4 lg:p-5'} bg-white dark:bg-[#17221D] hover:bg-[#F9FAFC] dark:hover:bg-[#243832] transition-colors flex flex-col justify-between sm:col-span-2 lg:col-span-1`}>
+              {/* 6. Schedule Variance */}
+              <div className={`${dashboardDensity === 'compact' ? 'p-3' : 'p-4 lg:p-5'} bg-white dark:bg-[#17221D] hover:bg-[#F9FAFC] dark:hover:bg-[#243832] transition-colors flex flex-col justify-between group`}>
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-semibold uppercase tracking-wider text-[#A43B36] dark:text-[#FF9E94] flex items-center gap-1">
                     Schedule Variance
@@ -719,12 +789,64 @@ export default function ManagerDashboardPage() {
                     <span className="text-xs font-bold text-[#A43B36] dark:text-[#FF9E94]">Slip</span>
                   </div>
                   <p className="text-[11px] text-[#A43B36] dark:text-[#FF9E94] font-semibold mt-1">
-                    +2 Days Behind Baseline Finish
+                    {formatVarianceCr(evm.sv)} ({formatPercentPoints(evm.svPct)})
                   </p>
                 </div>
                 <a href="#variance-table" className="text-[11px] text-[#08786A] dark:text-[#72C6AD] hover:underline font-semibold flex items-center gap-1">
                   Inspect Variance Table &rarr;
                 </a>
+              </div>
+            </div>
+
+            {/* Dedicated EVM Schedule Velocity & Cost Efficiency Widget */}
+            <div className="bg-white dark:bg-[#17221D] border border-[#D9E2DA] dark:border-[#3A5146] rounded-lg p-3 sm:p-4 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-3 transition-colors">
+              <div className="flex items-center gap-3">
+                <div className="p-2.5 rounded-lg bg-[#F8EFDA] dark:bg-[#3D2808] text-[#825700] dark:text-[#F3B765] shrink-0 border border-[#F2DCA8] dark:border-[#5C3F10]">
+                  <BarChart3 className="w-5 h-5" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <h3 className="text-sm font-bold text-[#182920] dark:text-[#F2F4E9] tracking-tight font-heading">
+                      EVM Schedule Velocity (SPI: {formatEVMIndex(evm.spi, 2)}) & Cost Efficiency (CPI: {formatEVMIndex(evm.cpi, 2)})
+                    </h3>
+                    <span className={`px-2 py-0.5 rounded text-[10px] font-bold border ${evmBadge.badgeClass}`}>
+                      {evmBadge.label}
+                    </span>
+                    <span className="text-[11px] font-mono text-[#738A80] dark:text-[#859688]">
+                      ANSI/EIA-748
+                    </span>
+                  </div>
+                  <p className="text-xs text-[#52665D] dark:text-[#B5C1B5] mt-0.5">
+                    {evm.spiInterpretation} {evm.cpiInterpretation}
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3 shrink-0 flex-wrap sm:flex-nowrap">
+                <div className="grid grid-cols-4 gap-2 text-center text-xs">
+                  <div className="px-2.5 py-1.5 rounded bg-[#F6F7F3] dark:bg-[#101815] border border-[#D9E2DA] dark:border-[#3A5146]">
+                    <div className="text-[10px] text-[#52665D] dark:text-[#B5C1B5]">Earned (EV)</div>
+                    <div className="font-mono font-bold text-[#08786A] dark:text-[#72C6AD]">{formatCurrencyCr(evm.ev)}</div>
+                  </div>
+                  <div className="px-2.5 py-1.5 rounded bg-[#F6F7F3] dark:bg-[#101815] border border-[#D9E2DA] dark:border-[#3A5146]">
+                    <div className="text-[10px] text-[#52665D] dark:text-[#B5C1B5]">Planned (PV)</div>
+                    <div className="font-mono font-bold text-[#825700] dark:text-[#E5C185]">{formatCurrencyCr(evm.pv)}</div>
+                  </div>
+                  <div className="px-2.5 py-1.5 rounded bg-[#F6F7F3] dark:bg-[#101815] border border-[#D9E2DA] dark:border-[#3A5146]">
+                    <div className="text-[10px] text-[#52665D] dark:text-[#B5C1B5]">Forecast EAC</div>
+                    <div className="font-mono font-bold text-[#A43B36] dark:text-[#FF9E94]">{formatCurrencyCr(evm.eac)}</div>
+                  </div>
+                  <div className="px-2.5 py-1.5 rounded bg-[#F6F7F3] dark:bg-[#101815] border border-[#D9E2DA] dark:border-[#3A5146]">
+                    <div className="text-[10px] text-[#52665D] dark:text-[#B5C1B5]">Req. TCPI</div>
+                    <div className="font-mono font-bold text-[#825700] dark:text-[#F3B765]">{formatEVMIndex(evm.tcpi, 4)}</div>
+                  </div>
+                </div>
+                <Link
+                  href="/progress"
+                  className="px-3 py-1.5 rounded text-xs font-semibold text-[#08786A] dark:text-[#72C6AD] hover:bg-[#EAF0E9] dark:hover:bg-[#243832] border border-[#D9E2DA] dark:border-[#3A5146] transition-colors flex items-center gap-1 whitespace-nowrap self-stretch sm:self-auto justify-center"
+                >
+                  <span>Full EVM Analysis</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
               </div>
             </div>
           </section>

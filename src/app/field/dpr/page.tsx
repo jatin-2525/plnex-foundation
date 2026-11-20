@@ -116,7 +116,7 @@ export interface DPREvidenceItem {
 
 export default function DPRPage() {
   const router = useRouter();
-  const { activeProject, userSession } = useApp();
+  const { activeProject, userSession, updateActivityProgress } = useApp();
   const { addToast } = useToast();
   const { isOffline, isSyncing, metrics, captureDPR } = useOffline();
 
@@ -600,6 +600,16 @@ export default function DPRPage() {
           })),
         });
       }
+
+      // Propagate verified field quantities directly to Master Schedule state
+      quantityItems.forEach((q) => {
+        if (q.activityId && q.actualToday > 0) {
+          const calculatedProgress = q.targetTotal
+            ? Math.min(100, Math.round(((q.cumulativeQty || q.actualToday) / q.targetTotal) * 100))
+            : 75;
+          updateActivityProgress(q.activityId, calculatedProgress, q.cumulativeQty || q.actualToday);
+        }
+      });
 
       if (isOffline) {
         setSubmissionState('Saved locally');

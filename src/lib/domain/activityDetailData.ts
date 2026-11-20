@@ -16,7 +16,7 @@ import {
   COMPREHENSIVE_EVIDENCE_ITEMS,
   COMPREHENSIVE_AUDIT_LOGS,
 } from './evidenceData';
-import { CANONICAL_SCHEDULE_VERSION_LABEL } from './canonicalModels';
+import { CANONICAL_SCHEDULE_VERSION_LABEL, MASTER_CANONICAL_ACTIVITIES, getCanonicalActivity, CanonicalActivity } from './canonicalModels';
 
 export type ActivityDrawerTab =
   | 'overview'
@@ -75,280 +75,163 @@ export interface EnrichedActivityDetail {
 }
 
 // Master catalogue of activities for deep inspection
-const EXTENDED_ACTIVITY_RECORDS: Record<string, Partial<ScheduleActivity>> = {
-  'PIP-24-002': {
-    id: 'PIP-24-002',
-    activityId: 'PIP-24-002',
-    projectId: 'PRJ-OIL-2026-01',
-    name: 'Weld Line 24-XX Field Joints & NDT Clearance',
-    activityName: 'Weld Line 24-XX Field Joints & NDT Clearance',
-    wbs: '1.1.3.2.2',
-    wbsLevel: 'L5',
-    discipline: 'Piping',
-    area: 'Unit A - Gas Processing Area',
-    line: 'Line 24-XX (24" High Pressure Natural Gas Header)',
-    plannedStart: '2026-09-16',
-    plannedFinish: '2026-09-20',
-    actualStart: '2026-09-16',
-    actualFinish: undefined,
-    plannedProgress: 85,
-    actualProgress: 70,
-    verifiedActualProgress: 70,
-    plannedQuantity: 12,
-    actualQuantity: 8.4,
-    unit: 'joints',
-    variance: -15,
-    status: 'delayed',
-    delayDays: 2,
-    scheduleVersion: CANONICAL_SCHEDULE_VERSION_LABEL,
-    progressHistory: [
-      {
-        progress: 65,
-        asOfDate: '2026-09-16T17:30:00+05:30',
-        formattedAsOf: '16 Sep 2026, 17:30 IST',
-        deltaPercent: 65,
-        recordedBy: 'Debajit Borah',
-        evidenceId: 'EVD-004',
-        notes: 'Initial 65% achieved; 4 welds complete on joints J-01 through J-04',
-      },
-      {
-        progress: 70,
-        asOfDate: '2026-09-18T17:30:00+05:30',
-        formattedAsOf: '18 Sep 2026, 17:30 IST',
-        deltaPercent: 5,
-        recordedBy: 'Debajit Borah',
-        evidenceId: 'EVD-004',
-        notes: '70% verified; Joint J-05 welded; 8 open joints pending radiographic testing (RT)',
-      },
-    ],
-    predecessors: ['PIP-24-001'],
-    successors: ['PIP-24-003', 'INS-04-015'],
-    isCritical: true,
-    assignedEngineer: 'Debajit Borah (Lead Site Execution Engineer)',
-    evidenceIds: ['EVD-004', 'EVD-002'],
-    executionEventIds: ['EVT-2026-002'],
-    description:
-      'Field butt welding of 24-inch Schedule 80 carbon steel pipe joints and 100% radiographic examination clearance for the high-pressure gas gathering header.',
-  },
-  'PIP-24-001': {
-    id: 'PIP-24-001',
-    projectId: 'PRJ-OIL-2026-01',
-    name: 'Erect Line 24-XX High Pressure Gas Header',
-    wbs: '1.1.3.2.1',
-    wbsLevel: 'L5',
-    discipline: 'Piping',
-    area: 'Unit A - Gas Processing Area',
-    line: 'Line 24-XX',
-    plannedStart: '2026-09-10',
-    plannedFinish: '2026-09-15',
-    actualStart: '2026-09-11',
-    actualFinish: '2026-09-17',
-    plannedProgress: 100,
-    actualProgress: 100,
-    plannedQuantity: 12,
-    actualQuantity: 12,
-    unit: 'spools',
-    variance: 0,
-    status: 'completed',
-    delayDays: 2,
-    predecessors: ['CIV-11-001'],
-    successors: ['PIP-24-002'],
-    isCritical: true,
-    assignedEngineer: 'Debajit Borah',
-    evidenceIds: ['EVD-001', 'EVD-002', 'EVD-003'],
-    executionEventIds: ['EVT-2026-001'],
-    description:
-      'Rigging and erection of 12 prefabricated 24-inch spool sections on structural piperack B at Unit A.',
-  },
-  'PIP-24-003': {
-    id: 'PIP-24-003',
-    projectId: 'PRJ-OIL-2026-01',
-    name: 'Hydrostatic Test Section Line 24-XX (150 bar)',
-    wbs: '1.1.3.2.3',
-    wbsLevel: 'L5',
-    discipline: 'Piping',
-    area: 'Unit A - Gas Processing Area',
-    line: 'Line 24-XX',
-    plannedStart: '2026-09-19',
-    plannedFinish: '2026-09-22',
-    actualStart: undefined,
-    actualFinish: undefined,
-    plannedProgress: 0,
-    actualProgress: 0,
-    plannedQuantity: 1,
-    actualQuantity: 0,
-    unit: 'test package',
-    variance: 0,
-    status: 'pending',
-    delayDays: 2,
-    predecessors: ['PIP-24-002'],
-    successors: ['INS-04-015'],
-    isCritical: true,
-    assignedEngineer: 'Debajit Borah',
-    evidenceIds: [],
-    executionEventIds: [],
-    description:
-      'High pressure water fill, pressurization up to 150 bar, holding for 24-hour chart recording and punchlist clearance.',
-  },
-  'CIV-11-001': {
-    id: 'CIV-11-001',
-    projectId: 'PRJ-OIL-2026-01',
-    name: 'Foundation Block A - Compressor Pedestal',
-    wbs: '1.1.2.1.1',
-    wbsLevel: 'L5',
-    discipline: 'Civil',
-    area: 'Unit A - Compressor House',
-    plannedStart: '2026-09-05',
-    plannedFinish: '2026-09-14',
-    actualStart: '2026-09-05',
-    actualFinish: '2026-09-14',
-    plannedProgress: 100,
-    actualProgress: 100,
-    plannedQuantity: 45,
-    actualQuantity: 45,
-    unit: 'm³ concrete',
-    variance: 0,
-    status: 'completed',
-    delayDays: 0,
-    predecessors: [],
-    successors: ['MEC-08-003', 'PIP-24-001'],
-    isCritical: true,
-    assignedEngineer: 'Debajit Borah',
-    evidenceIds: ['EVD-001'],
-    executionEventIds: ['EVT-CIV-001'],
-    description:
-      'Heavy mass concrete pour and anchor bolts setting for 3.5MW natural gas compressor pedestal foundation.',
-  },
-  'MEC-08-003': {
-    id: 'MEC-08-003',
-    projectId: 'PRJ-OIL-2026-01',
-    name: 'Align Centrifugal Gas Compressor Skid A',
-    wbs: '1.1.4.1.2',
-    wbsLevel: 'L5',
-    discipline: 'Mechanical',
-    area: 'Unit A - Compressor House',
-    plannedStart: '2026-09-16',
-    plannedFinish: '2026-09-22',
-    actualStart: '2026-09-16',
-    actualFinish: undefined,
-    plannedProgress: 20,
-    actualProgress: 15,
-    plannedQuantity: 1,
-    actualQuantity: 0.15,
-    unit: 'skid package',
-    variance: -5,
-    status: 'on-track',
-    delayDays: 0,
-    predecessors: ['CIV-11-001'],
-    successors: ['ELE-11-032'],
-    isCritical: false,
-    assignedEngineer: 'Debajit Borah',
-    evidenceIds: ['EVD-005'],
-    executionEventIds: [],
-    description:
-      'Laser alignment of electric drive motor and multi-stage barrel compressor coupling within 0.05mm tolerance.',
-  },
-  'ELE-11-032': {
-    id: 'ELE-11-032',
-    projectId: 'PRJ-OIL-2026-01',
-    name: 'Cable Tray Installation - Substation to Compressor Bay',
-    wbs: '1.1.5.1.1',
-    wbsLevel: 'L5',
-    discipline: 'Electrical',
-    area: 'Unit A - Overhead Gallery',
-    plannedStart: '2026-09-15',
-    plannedFinish: '2026-09-23',
-    actualStart: '2026-09-15',
-    actualFinish: undefined,
-    plannedProgress: 50,
-    actualProgress: 40,
-    plannedQuantity: 320,
-    actualQuantity: 128,
-    unit: 'meters',
-    variance: -10,
-    status: 'at-risk',
-    delayDays: 1,
-    predecessors: ['MEC-08-003'],
-    successors: ['INS-04-015'],
-    isCritical: false,
-    assignedEngineer: 'Debajit Borah',
-    evidenceIds: [],
-    executionEventIds: ['EVT-2026-003'],
-    description:
-      'Installation of 600mm heavy-duty hot-dip galvanized ladder-type cable trays across piperack elevation +6.5m.',
-  },
-  'INS-04-015': {
-    id: 'INS-04-015',
-    projectId: 'PRJ-OIL-2026-01',
-    name: 'Mount Pressure & Temperature Transmitters Unit A',
-    wbs: '1.1.6.2.1',
-    wbsLevel: 'L5',
-    discipline: 'Instrumentation',
-    area: 'Unit A - Gas Processing',
-    line: 'Line 24-XX',
-    plannedStart: '2026-09-22',
-    plannedFinish: '2026-09-28',
-    actualStart: undefined,
-    actualFinish: undefined,
-    plannedProgress: 0,
-    actualProgress: 0,
-    plannedQuantity: 18,
-    actualQuantity: 0,
-    unit: 'instruments',
-    variance: 0,
-    status: 'pending',
-    delayDays: 2,
-    predecessors: ['PIP-24-002', 'ELE-11-032'],
-    successors: [],
-    isCritical: true,
-    assignedEngineer: 'Debajit Borah',
-    evidenceIds: [],
-    executionEventIds: [],
-    description:
-      'Field bracket mounting, impulse line hookup, and loop wiring for Line 24-XX PT and TT smart transmitters.',
-  },
-};
+const EXTENDED_ACTIVITY_RECORDS: Record<string, Partial<ScheduleActivity>> = (() => {
+  const map: Record<string, Partial<ScheduleActivity>> = {};
+  for (const act of MASTER_CANONICAL_ACTIVITIES) {
+    map[act.id] = {
+      id: act.id,
+      activityId: act.activityId,
+      projectId: act.projectId,
+      name: act.name,
+      activityName: act.activityName,
+      wbs: act.wbs,
+      wbsLevel: act.wbsLevel,
+      discipline: act.discipline,
+      area: act.area,
+      line: act.line,
+      scheduleVersion: act.scheduleVersion,
+      plannedStart: act.plannedStart,
+      plannedFinish: act.plannedFinish,
+      actualStart: act.actualStart,
+      actualFinish: act.actualFinish,
+      plannedProgress: act.plannedProgress,
+      actualProgress: act.actualProgress,
+      verifiedActualProgress: act.verifiedActualProgress,
+      plannedQuantity: act.plannedQuantity,
+      actualQuantity: act.actualQuantity,
+      unit: act.unit,
+      variance: act.variance,
+      status: act.status,
+      delayDays: act.delayDays,
+      totalFloat: act.totalFloat,
+      freeFloat: act.freeFloat,
+      predecessors: act.predecessors,
+      successors: act.successors,
+      isCritical: act.isCritical,
+      assignedEngineer: act.assignedEngineer,
+      evidenceIds: act.evidenceIds,
+      executionEventIds: act.executionEventIds,
+      description: act.description,
+      progressHistory: act.progressHistory,
+      parentId: act.parentId,
+    };
+  }
+
+  // Deep engineering detail overrides for focal activities
+  if (map['PIP-24-002']) {
+    map['PIP-24-002'].description = 'Field butt welding and 100% radiographic inspection of Line 24-XX joints (24\" High Pressure Natural Gas Header)';
+    map['PIP-24-002'].line = 'Line 24-XX (24\" High Pressure Natural Gas Header)';
+  }
+  if (map['CIV-11-001']) {
+    map['CIV-11-001'].description = 'Reinforced concrete foundation pedestal for 3.5MW compressor package with heavy anchor bolt cages and vibration damping pad';
+  }
+  if (map['MEC-08-003']) {
+    map['MEC-08-003'].description = 'Precision laser shaft alignment of centrifugal compressor train and 6.6kV drive motor on Foundation Block A';
+  }
+  if (map['ELE-11-032']) {
+    map['ELE-11-032'].description = 'Installation of 600mm heavy-duty hot-dip galvanized ladder-type cable trays across piperack elevation +6.5m';
+  }
+  if (map['INS-04-015']) {
+    map['INS-04-015'].description = 'Field bracket mounting, impulse line hookup, 5-point bench calibration, and DCS loop wiring for Line 24-XX PT and TT smart transmitters';
+  }
+
+  return map;
+})();
 
 export function getEnrichedActivityDetail(activityId: string): EnrichedActivityDetail {
-  // 1. Look up base activity
-  const fromMock = MOCK_ACTIVITIES.find((a) => a.id === activityId);
+  // 1. Look up base activity with full fallback chain
   const fromExtended = EXTENDED_ACTIVITY_RECORDS[activityId];
+  const fromCanonical = getCanonicalActivity(activityId);
+  const fromMock = MOCK_ACTIVITIES.find((a) => a.id === activityId);
 
   const base: ScheduleActivity = {
     id: activityId,
-    projectId: 'PRJ-OIL-2026-01',
-    name: fromExtended?.name || fromMock?.name || `Activity ${activityId}`,
-    wbs: fromExtended?.wbs || fromMock?.wbs || '1.1.3.2.2',
-    wbsLevel: fromExtended?.wbsLevel || fromMock?.wbsLevel || 'L5',
-    discipline: fromExtended?.discipline || fromMock?.discipline || 'Piping',
-    area: fromExtended?.area || fromMock?.area || 'Unit A - Gas Processing Area',
-    line: fromExtended?.line || fromMock?.line || (activityId.includes('24') ? 'Line 24-XX' : undefined),
-    plannedStart: fromExtended?.plannedStart || fromMock?.plannedStart || '2026-09-12',
-    plannedFinish: fromExtended?.plannedFinish || fromMock?.plannedFinish || '2026-09-18',
-    actualStart: fromExtended?.actualStart ?? fromMock?.actualStart ?? '2026-09-14',
-    actualFinish: fromExtended?.actualFinish ?? fromMock?.actualFinish,
-    plannedProgress: fromExtended?.plannedProgress ?? fromMock?.plannedProgress ?? 100,
-    actualProgress: fromExtended?.actualProgress ?? fromMock?.actualProgress ?? 65,
-    plannedQuantity: fromExtended?.plannedQuantity ?? fromMock?.plannedQuantity ?? 24,
-    actualQuantity: fromExtended?.actualQuantity ?? fromMock?.actualQuantity ?? 16,
-    unit: fromExtended?.unit || fromMock?.unit || 'units',
-    variance: fromExtended?.variance ?? fromMock?.variance ?? -35,
-    status: fromExtended?.status || fromMock?.status || 'delayed',
-    delayDays: fromExtended?.delayDays ?? fromMock?.delayDays ?? 2,
-    predecessors: fromExtended?.predecessors || fromMock?.predecessors || ['PIP-24-001'],
-    successors: fromExtended?.successors || fromMock?.successors || ['PIP-24-003'],
-    isCritical: fromExtended?.isCritical ?? fromMock?.isCritical ?? true,
-    assignedEngineer: fromExtended?.assignedEngineer || fromMock?.assignedEngineer || 'Debajit Borah',
-    evidenceIds: fromExtended?.evidenceIds || fromMock?.evidenceIds || ['EVD-004'],
-    executionEventIds: fromExtended?.executionEventIds || fromMock?.executionEventIds || ['EVT-2026-002'],
+    activityId: fromExtended?.activityId || fromCanonical?.activityId || activityId,
+    projectId: fromExtended?.projectId || fromCanonical?.projectId || fromMock?.projectId || 'PRJ-OIL-2026-01',
+    name: fromExtended?.name || fromCanonical?.name || fromMock?.name || `Activity ${activityId}`,
+    activityName: fromExtended?.activityName || fromCanonical?.activityName || fromMock?.activityName || fromExtended?.name || fromCanonical?.name || `Activity ${activityId}`,
+    wbs: fromExtended?.wbs || fromCanonical?.wbs || fromMock?.wbs || '1.1.3.2.2',
+    wbsLevel: fromExtended?.wbsLevel || fromCanonical?.wbsLevel || fromMock?.wbsLevel || 'L5',
+    discipline: fromExtended?.discipline || fromCanonical?.discipline || fromMock?.discipline || 'Piping',
+    area: fromExtended?.area || fromCanonical?.area || fromMock?.area || 'Unit A - Gas Processing Area',
+    line: fromExtended?.line || fromCanonical?.line || fromMock?.line || (activityId.includes('24') ? 'Line 24-XX' : undefined),
+    scheduleVersion: fromExtended?.scheduleVersion || fromCanonical?.scheduleVersion || fromMock?.scheduleVersion || CANONICAL_SCHEDULE_VERSION_LABEL,
+    plannedStart: fromExtended?.plannedStart || fromCanonical?.plannedStart || fromMock?.plannedStart || '2026-09-12',
+    plannedFinish: fromExtended?.plannedFinish || fromCanonical?.plannedFinish || fromMock?.plannedFinish || '2026-09-18',
+    actualStart: fromExtended?.actualStart ?? fromCanonical?.actualStart ?? fromMock?.actualStart ?? (fromExtended?.plannedStart || fromCanonical?.plannedStart || '2026-09-12'),
+    actualFinish: fromExtended?.actualFinish ?? fromCanonical?.actualFinish ?? fromMock?.actualFinish,
+    plannedProgress: fromExtended?.plannedProgress ?? fromCanonical?.plannedProgress ?? fromMock?.plannedProgress ?? 0,
+    actualProgress: fromExtended?.actualProgress ?? fromCanonical?.actualProgress ?? fromMock?.actualProgress ?? 0,
+    verifiedActualProgress: fromExtended?.verifiedActualProgress ?? fromCanonical?.verifiedActualProgress ?? fromMock?.verifiedActualProgress ?? fromExtended?.actualProgress ?? 0,
+    plannedQuantity: fromExtended?.plannedQuantity ?? fromCanonical?.plannedQuantity ?? fromMock?.plannedQuantity ?? 1,
+    actualQuantity: fromExtended?.actualQuantity ?? fromCanonical?.actualQuantity ?? fromMock?.actualQuantity ?? 0,
+    unit: fromExtended?.unit || fromCanonical?.unit || fromMock?.unit || 'units',
+    variance: fromExtended?.variance ?? fromCanonical?.variance ?? fromMock?.variance ?? 0,
+    status: fromExtended?.status || fromCanonical?.status || fromMock?.status || 'pending',
+    delayDays: fromExtended?.delayDays ?? fromCanonical?.delayDays ?? fromMock?.delayDays ?? 0,
+    totalFloat: fromExtended?.totalFloat ?? fromCanonical?.totalFloat ?? (fromExtended?.isCritical ? 0 : 4),
+    freeFloat: fromExtended?.freeFloat ?? fromCanonical?.freeFloat ?? (fromExtended?.isCritical ? 0 : 2),
+    predecessors: fromExtended?.predecessors || fromCanonical?.predecessors || fromMock?.predecessors || [],
+    successors: fromExtended?.successors || fromCanonical?.successors || fromMock?.successors || [],
+    isCritical: fromExtended?.isCritical ?? fromCanonical?.isCritical ?? fromMock?.isCritical ?? false,
+    assignedEngineer: fromExtended?.assignedEngineer || fromCanonical?.assignedEngineer || fromMock?.assignedEngineer || 'Debajit Borah',
+    evidenceIds: fromExtended?.evidenceIds || fromCanonical?.evidenceIds || fromMock?.evidenceIds || [],
+    executionEventIds: fromExtended?.executionEventIds || fromCanonical?.executionEventIds || fromMock?.executionEventIds || [],
     description:
       fromExtended?.description ||
+      fromCanonical?.description ||
       fromMock?.description ||
       `Schedule execution activity ${activityId} under the Duliajan Gas Processing master baseline.`,
+    progressHistory: fromExtended?.progressHistory || fromCanonical?.progressHistory || [],
+    parentId: fromExtended?.parentId || fromCanonical?.parentId,
   };
 
-  // 2. Derive L1-L6 WBS Hierarchy
-  const hierarchy: WBSHierarchyStep[] = [
+  // 2. Derive L1-L6 WBS Hierarchy dynamically from master activities catalog
+  const hierarchyMap: Record<WBSLevel, { category: string }> = {
+    L1: { category: 'Project Baseline' },
+    L2: { category: 'Major Facility Area' },
+    L3: { category: 'Discipline Work Breakdown' },
+    L4: { category: 'Sub-System Work Package' },
+    L5: { category: 'Schedule Work Activity' },
+    L6: { category: 'Discrete Field Task' },
+  };
+
+  // Build breadcrumb steps by walking up parent tree
+  const hierarchySteps: WBSHierarchyStep[] = [];
+  let currentAct: ScheduleActivity | CanonicalActivity | undefined = base;
+  const visited = new Set<string>();
+
+  while (currentAct && !visited.has(currentAct.id)) {
+    visited.add(currentAct.id);
+    hierarchySteps.unshift({
+      level: currentAct.wbsLevel,
+      code: currentAct.wbs,
+      name: currentAct.name,
+      category: hierarchyMap[currentAct.wbsLevel as WBSLevel]?.category || 'Work Item',
+      isCurrent: currentAct.id === base.id,
+    });
+    if (currentAct.parentId) {
+      currentAct = getCanonicalActivity(currentAct.parentId);
+    } else {
+      break;
+    }
+  }
+
+  // Ensure root L1 is always represented
+  if (hierarchySteps.length > 0 && hierarchySteps[0].level !== 'L1') {
+    const root = getCanonicalActivity('PRJ-OIL-01');
+    if (root) {
+      hierarchySteps.unshift({
+        level: 'L1',
+        code: root.wbs,
+        name: root.name,
+        category: 'Project Baseline',
+      });
+    }
+  }
+
+  // If hierarchy has at least 1 item, use it; otherwise fallback to standard hierarchy
+  const hierarchy: WBSHierarchyStep[] = hierarchySteps.length > 0 ? hierarchySteps : [
     {
       level: 'L1',
       code: '1.0',
@@ -358,19 +241,19 @@ export function getEnrichedActivityDetail(activityId: string): EnrichedActivityD
     {
       level: 'L2',
       code: '1.1',
-      name: 'Unit A - Gas Processing & Compression Area',
+      name: base.area,
       category: 'Major Facility Area',
     },
     {
       level: 'L3',
       code: '1.1.3',
-      name: `${base.discipline} Systems & Interconnecting Piperacks`,
+      name: `${base.discipline} Systems & Infrastructure`,
       category: 'Discipline Work Breakdown',
     },
     {
       level: 'L4',
       code: '1.1.3.2',
-      name: base.line ? `${base.line} Delivery Package` : 'High-Pressure Header Package',
+      name: base.line ? `${base.line} Delivery Package` : 'Work Package',
       category: 'Sub-System Work Package',
     },
     {
@@ -379,12 +262,6 @@ export function getEnrichedActivityDetail(activityId: string): EnrichedActivityD
       name: base.name,
       category: 'Schedule Work Activity',
       isCurrent: true,
-    },
-    {
-      level: 'L6',
-      code: `${base.wbs}.1`,
-      name: `${base.name} — Field Execution & NDT Clearance Step`,
-      category: 'Discrete Field Task',
     },
   ];
 
@@ -399,7 +276,7 @@ export function getEnrichedActivityDetail(activityId: string): EnrichedActivityD
       (base.id === 'ELE-11-032' && e.id === 'EVT-2026-003')
   );
 
-  // If none found for a generic activity, synthesize a realistic verified field record
+  // If none found, synthesize authentic verified field record
   if (linkedExecutionEvents.length === 0) {
     linkedExecutionEvents.push({
       id: `EVT-${base.id}-01`,
@@ -455,7 +332,6 @@ export function getEnrichedActivityDetail(activityId: string): EnrichedActivityD
       (base.id === 'CIV-11-001' && ev.id === 'EVD-001')
   );
 
-  // If no evidence found, add a fallback evidence card
   if (linkedEvidenceItems.length === 0) {
     linkedEvidenceItems.push({
       id: `EVD-${base.id}-01`,
@@ -483,7 +359,7 @@ export function getEnrichedActivityDetail(activityId: string): EnrichedActivityD
 
   // 5. Predecessors & Successors
   const detailedPredecessors: DetailedDependency[] = base.predecessors.map((predId) => {
-    const p = EXTENDED_ACTIVITY_RECORDS[predId] || MOCK_ACTIVITIES.find((a) => a.id === predId);
+    const p = EXTENDED_ACTIVITY_RECORDS[predId] || getCanonicalActivity(predId) || MOCK_ACTIVITIES.find((a) => a.id === predId);
     return {
       id: predId,
       name: p?.name || `Predecessor Activity ${predId}`,
@@ -494,16 +370,16 @@ export function getEnrichedActivityDetail(activityId: string): EnrichedActivityD
       plannedPeriod: `${p?.plannedStart || '2026-09-10'} → ${p?.plannedFinish || '2026-09-15'}`,
       status: (p?.status as any) || 'completed',
       delayDays: p?.delayDays || 0,
-      isCritical: p?.isCritical ?? true,
+      isCritical: p?.isCritical ?? false,
       notes:
         predId === 'PIP-24-001'
           ? 'Completed 2 days late due to crane mobilization permit; pushed current activity start from 12 Sep to 14 Sep.'
-          : 'Driving predecessor link with zero float.',
+          : 'Driving predecessor relationship with contractual network dependency.',
     };
   });
 
   const detailedSuccessors: DetailedDependency[] = base.successors.map((succId) => {
-    const s = EXTENDED_ACTIVITY_RECORDS[succId] || MOCK_ACTIVITIES.find((a) => a.id === succId);
+    const s = EXTENDED_ACTIVITY_RECORDS[succId] || getCanonicalActivity(succId) || MOCK_ACTIVITIES.find((a) => a.id === succId);
     return {
       id: succId,
       name: s?.name || `Successor Activity ${succId}`,
@@ -514,18 +390,18 @@ export function getEnrichedActivityDetail(activityId: string): EnrichedActivityD
       plannedPeriod: `${s?.plannedStart || '2026-09-19'} → ${s?.plannedFinish || '2026-09-22'}`,
       status: (s?.status as any) || 'pending',
       delayDays: base.delayDays,
-      isCritical: s?.isCritical ?? true,
+      isCritical: s?.isCritical ?? false,
       notes:
         succId === 'PIP-24-003'
           ? 'Cannot begin hydrostatic pressure test until 100% field welds and radiographic clearance are completed.'
-          : 'Downstream electrical/instrumentation tie-in depends on piping line clearance.',
+          : 'Downstream execution milestone directly sequenced after this task.',
     };
   });
 
   // 6. Impact Data
   const impactData: DependencyImpactData = {
-    totalFloatDays: base.isCritical ? 0 : 4,
-    freeFloatDays: base.isCritical ? 0 : 2,
+    totalFloatDays: base.totalFloat ?? (base.isCritical ? 0 : 4),
+    freeFloatDays: base.freeFloat ?? (base.isCritical ? 0 : 2),
     isOnCriticalPath: base.isCritical,
     drivingPredecessorId: base.predecessors[0] || undefined,
     downstreamChain: [
@@ -533,7 +409,7 @@ export function getEnrichedActivityDetail(activityId: string): EnrichedActivityD
       ...(base.successors.length > 0
         ? base.successors.map((sid) => ({
             id: sid,
-            name: EXTENDED_ACTIVITY_RECORDS[sid]?.name || `Successor ${sid}`,
+            name: EXTENDED_ACTIVITY_RECORDS[sid]?.name || getCanonicalActivity(sid)?.name || `Successor ${sid}`,
             shiftDays: base.delayDays,
             isCritical: true,
           }))
@@ -547,87 +423,47 @@ export function getEnrichedActivityDetail(activityId: string): EnrichedActivityD
     ],
     projectedScheduleImpact: base.isCritical
       ? `Activity has 0 days total float. The current ${base.delayDays}-day variance directly delays successor ${base.successors[0] || 'activities'} and risks commercial gas target completion date (15 Dec 2026) unless recovered.`
-      : `Activity has 4 days total float. Current variance is absorbed within buffer float and does not push commercial commissioning date.`,
+      : `Activity has ${base.totalFloat ?? 4} days total float. Current variance is absorbed within buffer float and does not push commercial commissioning date.`,
     currentMitigation:
       base.id === 'PIP-24-002'
-        ? 'Mobilized 2 additional NDT radiographers for night shift inspection to compress weld clearance window by 36 hours.'
-        : 'Overtime crew assigned to clear field punchlist and restore baseline trajectory.',
+        ? 'Mobilized secondary welding team (Borah Crew 2) and accelerated NDT radiography crews during non-rain shifts.'
+        : 'Daily monitoring by project controls team with automated progress verification.',
     recommendedAction:
-      'Authorize double-shift welding protocol and prioritize radiography clearance ahead of monsoon forecast.',
+      base.id === 'PIP-24-002'
+        ? 'Authorise overtime for welder certified teams to close remaining 3.6 joints within next 48-hour window.'
+        : 'Maintain daily physical progress tracking and verify DPR submissions.',
   };
 
   // 7. Audit History
-  const allAudits = [...COMPREHENSIVE_AUDIT_LOGS, ...MOCK_AUDIT_LOGS];
-  const auditHistory = allAudits.filter(
-    (a) =>
-      a.objectId === base.id ||
-      a.objectTitle?.includes(base.id) ||
-      (base.id === 'PIP-24-002' && (a.id === 'AUD-002' || a.id === 'AUD-003' || a.objectId === 'EVT-2026-002')) ||
-      (base.id === 'PIP-24-001' && (a.id === 'AUD-001' || a.id === 'AUD-002'))
+  const auditHistory: AuditEntry[] = COMPREHENSIVE_AUDIT_LOGS.filter(
+    (log) =>
+      log.objectId === base.id ||
+      (base.id === 'PIP-24-002' && (log.id === 'AUD-001' || log.id === 'AUD-002'))
   );
 
-  // If no audits found, synthesize realistic audit entries
   if (auditHistory.length === 0) {
-    auditHistory.push(
-      {
-        id: `AUD-${base.id}-01`,
-        timestamp: '2026-09-17 18:30:15',
-        actor: 'Rajesh Sharma',
-        role: 'manager',
-        action: 'PROGRESS_VERIFIED_AND_COMMITTED',
-        actionCategory: 'Approval',
-        objectType: 'SCHEDULE_ACTIVITY',
-        objectId: base.id,
-        objectTitle: base.name,
-        whatChanged: 'Actual Progress updated with verified field quantities',
-        previousValue: `Progress: 50% (${base.actualQuantity - 4} ${base.unit})`,
-        newValue: `Progress: ${base.actualProgress}% (${base.actualQuantity} ${base.unit})`,
-        before: '50% Physical Completion',
-        after: `${base.actualProgress}% Physical Completion`,
-        details: `Approved DPR submission linked to verified field inspection certificate. Variance recorded as ${base.variance}%.`,
-      },
-      {
-        id: `AUD-${base.id}-02`,
-        timestamp: '2026-09-15 09:12:00',
-        actor: 'PLnEX Match Engine (Rule-Score v2.4)',
-        role: 'SYSTEM',
-        action: 'AI_LINK_ESTABLISHED',
-        actionCategory: 'AI Match',
-        objectType: 'EXECUTION_EVENT',
-        objectId: base.id,
-        objectTitle: base.name,
-        whatChanged: 'Candidate match auto-linked with high confidence',
-        previousValue: 'UNLINKED',
-        newValue: `Matched to ${base.id} (Score: 92%)`,
-        before: 'Uncorrelated Field Statement',
-        after: `Structured Event → ${base.id}`,
-        details: 'Discipline, area tag, and work description matched baseline WBS with 92% confidence score.',
-      },
-      {
-        id: `AUD-${base.id}-03`,
-        timestamp: '2026-08-01 10:00:00',
-        actor: 'Rajesh Sharma',
-        role: 'manager',
-        action: 'SCHEDULE_BASELINE_IMPORTED',
-        actionCategory: 'Schedule Import',
-        objectType: 'SCHEDULE_ACTIVITY',
-        objectId: base.id,
-        objectTitle: base.name,
-        whatChanged: 'Activity created in Rev 3.2 (P6 XML) Baseline Schedule',
-        previousValue: 'None',
-        newValue: `WBS ${base.wbs} (${base.plannedQuantity} ${base.unit})`,
-        before: 'Draft Schedule',
-        after: 'Baseline Rev 3.2 (P6 XML) Activated',
-        details: 'Imported from Primavera P6 XML master export with full CPM predecessor logic intact.',
-      }
-    );
+    auditHistory.push({
+      id: `AUD-${base.id}-01`,
+      timestamp: '18 Sep 2026, 17:30 IST',
+      actor: base.assignedEngineer,
+      role: 'engineer',
+      action: 'Progress Verified',
+      actionCategory: 'Approval',
+      objectType: 'Activity',
+      objectId: base.id,
+      objectTitle: base.name,
+      whatChanged: 'Verified Actual Progress',
+      previousValue: `${Math.max(0, base.actualProgress - 5)}%`,
+      newValue: `${base.actualProgress}%`,
+      details: `Verified ${base.actualProgress}% completion against physical field measurement.`,
+    });
   }
 
   return {
     activity: base,
     projectName: 'Duliajan Gas Processing & Pipeline Interconnect',
     projectCode: 'PRJ-OIL-2026-01',
-    location: 'Duliajan Field, Dibrugarh, Upper Assam',
+    location: 'Duliajan, Assam, India',
     hierarchy,
     linkedExecutionEvents,
     linkedEvidenceItems,
@@ -637,3 +473,4 @@ export function getEnrichedActivityDetail(activityId: string): EnrichedActivityD
     auditHistory,
   };
 }
+

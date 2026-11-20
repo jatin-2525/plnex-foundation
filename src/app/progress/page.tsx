@@ -18,6 +18,18 @@ import { TermHelp } from '../../components/shared/TermHelp';
 import { CANONICAL_SCHEDULE_VERSION_LABEL } from '../../lib/domain/canonicalModels';
 import { formatProjectDateTime, PROJECT_REPORT_DATE } from '../../lib/domain/dateUtils';
 import {
+  calculateProjectEVM,
+  formatCurrencyCr,
+  formatVarianceCr,
+  formatEVMIndex,
+  formatPercentPoints,
+  getEVMStatusBadgeConfig,
+  getEVMPeriodTimeSeries,
+  getEVMDisciplineBreakdown,
+  CANONICAL_BAC,
+  CANONICAL_ACTUAL_COST,
+} from '../../lib/domain/evmEngine';
+import {
   TrendingUp,
   TrendingDown,
   CheckCircle2,
@@ -48,6 +60,8 @@ import {
   Lock,
   Target,
   MapPin,
+  BarChart3,
+  FileSpreadsheet,
 } from 'lucide-react';
 
 // Semantics per requirement: Positive, Neutral, Negative
@@ -668,7 +682,21 @@ export default function ProgressVariancePage() {
   const [selectedSemanticFilter, setSelectedSemanticFilter] = useState<'ALL' | VarianceSemantic>('ALL');
   const [selectedStatusFilter, setSelectedStatusFilter] = useState<string>('ALL');
   const [searchQuery, setSearchQuery] = useState('');
-  const [activeTab, setActiveTab] = useState<'scurve' | 'breakdown' | 'ledger'>('scurve');
+  const [activeTab, setActiveTab] = useState<'scurve' | 'evm' | 'breakdown' | 'ledger'>('scurve');
+
+  // Dynamic ANSI/EIA-748 Earned Value Management Metrics
+  const evm = useMemo(() => {
+    return calculateProjectEVM(
+      CANONICAL_BAC,
+      activeProject?.plannedProgress ?? 80.0,
+      activeProject?.overallProgress ?? 73.0,
+      CANONICAL_ACTUAL_COST,
+      PROJECT_REPORT_DATE
+    );
+  }, [activeProject?.plannedProgress, activeProject?.overallProgress]);
+  const evmBadge = getEVMStatusBadgeConfig(evm.status);
+  const evmTimeSeries = useMemo(() => getEVMPeriodTimeSeries(evm.bac), [evm.bac]);
+  const evmDisciplines = useMemo(() => getEVMDisciplineBreakdown(evm.bac), [evm.bac]);
 
   // Selected Activity for Detail Drawer
   const [selectedActivity, setSelectedActivity] = useState<ProgressActivityRow | null>(null);
@@ -1081,6 +1109,21 @@ export default function ProgressVariancePage() {
           </button>
           <button
             type="button"
+            onClick={() => setActiveTab('evm')}
+            className={`px-4 py-2.5 text-xs font-bold border-b-2 transition-all flex items-center gap-2 whitespace-nowrap cursor-pointer ${
+              activeTab === 'evm'
+                ? 'border-[#006B61] text-[#006B61] dark:border-[#72C6AD] dark:text-[#72C6AD]'
+                : 'border-transparent text-[#52665D] dark:text-[#B5C1B5] hover:text-[#1A2B25] dark:hover:text-[#F2F4E9]'
+            }`}
+          >
+            <BarChart3 className="w-4 h-4" />
+            <span>Earned Value (EVM)</span>
+            <span className={`px-1.5 py-0.5 rounded text-[10px] font-mono font-bold ${evmBadge.badgeClass}`}>
+              SPI {formatEVMIndex(evm.spi, 2)} • CPI {formatEVMIndex(evm.cpi, 2)}
+            </span>
+          </button>
+          <button
+            type="button"
             onClick={() => setActiveTab('breakdown')}
             className={`px-4 py-2.5 text-xs font-bold border-b-2 transition-all flex items-center gap-2 whitespace-nowrap cursor-pointer ${
               activeTab === 'breakdown'
@@ -1122,6 +1165,369 @@ export default function ProgressVariancePage() {
               title="Project S-Curve — Planned vs. Actual vs. Forecast"
               subtitle={`Compares cumulative scheduled baseline progress against verified site execution up to ${reportingDate}.`}
             />
+          </div>
+        )}
+
+        {/* =========================================================================
+            3b. DEDICATED EVM SECTION (ANSI/EIA-748)
+            Authoritative Contractual Scorecard, Time Series & Discipline Breakdown
+            ========================================================================= */}
+        {activeTab === 'evm' && (
+          <div className="space-y-6">
+            {/* 1. EVM Executive Cockpit & Scorecard */}
+            <div className="bg-white dark:bg-[#17221D] border border-[#D9E2DA] dark:border-[#3A5146] rounded-xl p-4 sm:p-6 shadow-xs space-y-5 transition-colors">
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-3 border-b border-[#D9E2DA] dark:border-[#3A5146]">
+                <div>
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className="p-1 rounded bg-[#EAF0E9] dark:bg-[#203129] text-[#08786A] dark:text-[#72C6AD]">
+                      <BarChart3 className="w-4 h-4" />
+                    </span>
+                    <h3 className="text-base sm:text-lg font-bold text-[#182920] dark:text-[#F2F4E9] tracking-tight font-heading">
+                      Earned Value Management Analysis (ANSI/EIA-748-D)
+                    </h3>
+                    <span className={`inline-flex items-center px-2 py-0.5 rounded text-[11px] font-bold border ${evmBadge.badgeClass}`}>
+                      {evmBadge.label}
+                    </span>
+                  </div>
+                  <p className="text-xs text-[#52665D] dark:text-[#B5C1B5] mt-1">
+                    ANSI/EIA-748 project controls metrics calculated against Rev 3.2 P6 baseline with 100% verified field progress up to {reportingDate}.
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-2 font-mono text-xs flex-wrap self-start md:self-center">
+                  <span className="px-2 py-1 rounded bg-[#F5F7F3] dark:bg-[#243832] border border-[#D9E2DA] dark:border-[#3A5146] text-[#52665D] dark:text-[#B5C1B5]">
+                    BAC: <strong className="text-[#182920] dark:text-[#F2F4E9]">{formatCurrencyCr(evm.bac)}</strong>
+                  </span>
+                  <span className="px-2 py-1 rounded bg-[#F5F7F3] dark:bg-[#243832] border border-[#D9E2DA] dark:border-[#3A5146] text-[#52665D] dark:text-[#B5C1B5]">
+                    Actual Cost: <strong className="text-[#182920] dark:text-[#F2F4E9]">{formatCurrencyCr(evm.ac)}</strong>
+                  </span>
+                </div>
+              </div>
+
+              {/* 11 Contractual Metrics Grid */}
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-11 gap-2.5">
+                {/* 1. BAC */}
+                <div className="p-3 rounded-lg bg-[#F5F7F3] dark:bg-[#101815] border border-[#D9E2DA] dark:border-[#3A5146] flex flex-col justify-between">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#52665D] dark:text-[#B5C1B5]">Budget (BAC)</span>
+                  <div className="my-1.5 font-mono font-bold text-base text-[#182920] dark:text-[#F2F4E9]">
+                    {formatCurrencyCr(evm.bac)}
+                  </div>
+                  <span className="text-[10px] text-[#52665D] dark:text-[#B5C1B5]">Target Ceiling</span>
+                </div>
+
+                {/* 2. PV */}
+                <div className="p-3 rounded-lg bg-[#F5F7F3] dark:bg-[#101815] border border-[#D9E2DA] dark:border-[#3A5146] flex flex-col justify-between">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#52665D] dark:text-[#B5C1B5]">Planned (PV)</span>
+                  <div className="my-1.5 font-mono font-bold text-base text-[#825700] dark:text-[#E5C185]">
+                    {formatCurrencyCr(evm.pv)}
+                  </div>
+                  <span className="text-[10px] text-[#52665D] dark:text-[#B5C1B5]">{evm.plannedPct.toFixed(1)}% of BAC</span>
+                </div>
+
+                {/* 3. EV */}
+                <div className="p-3 rounded-lg bg-[#F5F7F3] dark:bg-[#101815] border border-[#D9E2DA] dark:border-[#3A5146] flex flex-col justify-between">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#52665D] dark:text-[#B5C1B5]">Earned (EV)</span>
+                  <div className="my-1.5 font-mono font-bold text-base text-[#08786A] dark:text-[#72C6AD]">
+                    {formatCurrencyCr(evm.ev)}
+                  </div>
+                  <span className="text-[10px] text-[#52665D] dark:text-[#B5C1B5]">{evm.actualPct.toFixed(1)}% of BAC</span>
+                </div>
+
+                {/* 4. AC */}
+                <div className="p-3 rounded-lg bg-[#F5F7F3] dark:bg-[#101815] border border-[#D9E2DA] dark:border-[#3A5146] flex flex-col justify-between">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#52665D] dark:text-[#B5C1B5]">Actual (AC)</span>
+                  <div className="my-1.5 font-mono font-bold text-base text-[#182920] dark:text-[#F2F4E9]">
+                    {formatCurrencyCr(evm.ac)}
+                  </div>
+                  <span className="text-[10px] text-[#52665D] dark:text-[#B5C1B5]">Cumulative Spend</span>
+                </div>
+
+                {/* 5. CV */}
+                <div className="p-3 rounded-lg bg-[#F5F7F3] dark:bg-[#101815] border border-[#D9E2DA] dark:border-[#3A5146] flex flex-col justify-between">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#52665D] dark:text-[#B5C1B5]">Cost Var (CV)</span>
+                  <div className={`my-1.5 font-mono font-bold text-base ${evm.cv < 0 ? 'text-[#A43B36] dark:text-[#FF9E94]' : 'text-[#08786A] dark:text-[#72C6AD]'}`}>
+                    {formatVarianceCr(evm.cv)}
+                  </div>
+                  <span className={`text-[10px] font-medium ${evm.cv < 0 ? 'text-[#A43B36] dark:text-[#FF9E94]' : 'text-[#08786A] dark:text-[#72C6AD]'}`}>
+                    {evm.cv < 0 ? 'Cost Overrun' : 'Cost Underrun'}
+                  </span>
+                </div>
+
+                {/* 6. SV */}
+                <div className="p-3 rounded-lg bg-[#F5F7F3] dark:bg-[#101815] border border-[#D9E2DA] dark:border-[#3A5146] flex flex-col justify-between">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#52665D] dark:text-[#B5C1B5] flex items-center gap-0.5">
+                    <span>Sched Var (SV)</span>
+                    <TermHelp term="variance" />
+                  </span>
+                  <div className={`my-1.5 font-mono font-bold text-base ${evm.sv < 0 ? 'text-[#A43B36] dark:text-[#FF9E94]' : 'text-[#08786A] dark:text-[#72C6AD]'}`}>
+                    {formatVarianceCr(evm.sv)}
+                  </div>
+                  <span className="text-[10px] text-[#A43B36] dark:text-[#FF9E94] font-medium">
+                    {formatPercentPoints(evm.svPct)}
+                  </span>
+                </div>
+
+                {/* 7. CPI */}
+                <div className="p-3 rounded-lg bg-[#F5F7F3] dark:bg-[#101815] border border-[#D9E2DA] dark:border-[#3A5146] flex flex-col justify-between">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#52665D] dark:text-[#B5C1B5] flex items-center gap-0.5">
+                    <span>CPI</span>
+                    <TermHelp term="cpi" />
+                  </span>
+                  <div className={`my-1.5 font-mono font-bold text-lg leading-tight ${evm.cpi < 1 ? 'text-[#A43B36] dark:text-[#FF9E94]' : 'text-[#08786A] dark:text-[#72C6AD]'}`}>
+                    {formatEVMIndex(evm.cpi, 4)}
+                  </div>
+                  <span className="text-[10px] text-[#A43B36] dark:text-[#FF9E94] font-medium">
+                    {evm.cpi < 1 ? 'Cost Inefficient' : 'Favorable'}
+                  </span>
+                </div>
+
+                {/* 8. SPI */}
+                <div className="p-3 rounded-lg bg-[#F5F7F3] dark:bg-[#101815] border border-[#D9E2DA] dark:border-[#3A5146] flex flex-col justify-between">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#52665D] dark:text-[#B5C1B5] flex items-center gap-0.5">
+                    <span>SPI</span>
+                    <TermHelp term="spi" />
+                  </span>
+                  <div className={`my-1.5 font-mono font-bold text-lg leading-tight ${evm.spi < 1 ? 'text-[#825700] dark:text-[#F3B765]' : 'text-[#08786A] dark:text-[#72C6AD]'}`}>
+                    {formatEVMIndex(evm.spi, 4)}
+                  </div>
+                  <span className="text-[10px] text-[#825700] dark:text-[#F3B765] font-medium">
+                    {evm.spi < 1 ? 'Schedule Lag' : 'On Track'}
+                  </span>
+                </div>
+
+                {/* 9. EAC */}
+                <div className="p-3 rounded-lg bg-[#F5F7F3] dark:bg-[#101815] border border-[#D9E2DA] dark:border-[#3A5146] flex flex-col justify-between">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#52665D] dark:text-[#B5C1B5]">Forecast (EAC)</span>
+                  <div className="my-1.5 font-mono font-bold text-base text-[#A43B36] dark:text-[#FF9E94]">
+                    {formatCurrencyCr(evm.eac)}
+                  </div>
+                  <span className="text-[10px] text-[#A43B36] dark:text-[#FF9E94] font-medium">
+                    +{formatCurrencyCr(evm.eac - evm.bac)}
+                  </span>
+                </div>
+
+                {/* 10. VAC */}
+                <div className="p-3 rounded-lg bg-[#F5F7F3] dark:bg-[#101815] border border-[#D9E2DA] dark:border-[#3A5146] flex flex-col justify-between">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#52665D] dark:text-[#B5C1B5]">Var at Comp (VAC)</span>
+                  <div className="my-1.5 font-mono font-bold text-base text-[#A43B36] dark:text-[#FF9E94]">
+                    {formatVarianceCr(evm.vac)}
+                  </div>
+                  <span className="text-[10px] text-[#A43B36] dark:text-[#FF9E94] font-medium">
+                    Overrun Projected
+                  </span>
+                </div>
+
+                {/* 11. TCPI */}
+                <div className="p-3 rounded-lg bg-[#F5F7F3] dark:bg-[#101815] border border-[#D9E2DA] dark:border-[#3A5146] flex flex-col justify-between">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#52665D] dark:text-[#B5C1B5]">To-Complete (TCPI)</span>
+                  <div className="my-1.5 font-mono font-bold text-lg leading-tight text-[#825700] dark:text-[#F3B765]">
+                    {formatEVMIndex(evm.tcpi, 4)}
+                  </div>
+                  <span className="text-[10px] text-[#825700] dark:text-[#F3B765] font-medium">
+                    Required Efficiency
+                  </span>
+                </div>
+              </div>
+
+              {/* Performance Verdict Strip */}
+              <div className="p-3.5 bg-[#F6F7F3] dark:bg-[#101815] border-l-4 border-[#08786A] dark:border-[#72C6AD] rounded-r-lg text-xs space-y-1">
+                <div className="font-bold text-[#182920] dark:text-[#F2F4E9]">
+                  ANSI/EIA-748 Earned Value Management Summary Assessment:
+                </div>
+                <div className="text-[#52665D] dark:text-[#B5C1B5] leading-relaxed">
+                  {evm.spiInterpretation} {evm.cpiInterpretation} {evm.tcpiInterpretation}
+                </div>
+              </div>
+            </div>
+
+            {/* 2. Historical Period-by-Period EVM Time Series Table */}
+            <div className="bg-white dark:bg-[#17221D] border border-[#D9E2DA] dark:border-[#3A5146] rounded-xl p-4 sm:p-6 shadow-xs space-y-4 transition-colors">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#D9E2DA]/60 dark:border-[#3A5146] pb-3">
+                <div>
+                  <div className="flex items-center gap-2">
+                    <Calendar className="w-4 h-4 text-[#08786A] dark:text-[#72C6AD]" />
+                    <h3 className="text-base font-bold text-[#182920] dark:text-[#F2F4E9] tracking-tight font-heading">
+                      EVM Time Series & Historical Burn Rate
+                    </h3>
+                  </div>
+                  <p className="text-xs text-[#52665D] dark:text-[#B5C1B5] mt-0.5">
+                    Monthly cumulative Earned Value progression, cost expenditures, and efficiency ratios from May 2026 to COD completion.
+                  </p>
+                </div>
+                <div className="text-xs font-mono text-[#52665D] dark:text-[#B5C1B5]">
+                  Anchor: Rev 3.2 Baseline (BAC: ₹ 142.50 Cr)
+                </div>
+              </div>
+
+              <div className="overflow-x-auto rounded-lg border border-[#D9E2DA] dark:border-[#3A5146]">
+                <table className="w-full min-w-[820px] text-left text-xs border-collapse">
+                  <thead className="bg-[#F6F7F3] dark:bg-[#243832] text-[#182920] dark:text-[#F2F4E9] border-b border-[#D9E2DA] dark:border-[#3A5146]">
+                    <tr className="h-10">
+                      <th className="py-2 px-3 font-semibold">Period</th>
+                      <th className="py-2 px-3 font-semibold">Cutoff Date</th>
+                      <th className="py-2 px-3 text-right font-semibold">Planned (PV)</th>
+                      <th className="py-2 px-3 text-right font-semibold">Earned (EV)</th>
+                      <th className="py-2 px-3 text-right font-semibold">Actual Cost (AC)</th>
+                      <th className="py-2 px-3 text-right font-semibold">Cost Var (CV)</th>
+                      <th className="py-2 px-3 text-right font-semibold">Sched Var (SV)</th>
+                      <th className="py-2 px-3 text-right font-semibold">CPI</th>
+                      <th className="py-2 px-3 text-right font-semibold">SPI</th>
+                      <th className="py-2 px-3 font-semibold">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-[#D9E2DA]/60 dark:divide-[#3A5146] font-mono text-[12px]">
+                    {evmTimeSeries.map((pt) => {
+                      const isDD = pt.isDataDate;
+                      return (
+                        <tr
+                          key={pt.period}
+                          className={`hover:bg-[#F5F7F3] dark:hover:bg-[#203129] transition-colors ${
+                            isDD ? 'bg-[#EAF0E9] dark:bg-[#203129] font-semibold' : ''
+                          }`}
+                        >
+                          <td className="py-2.5 px-3 font-sans font-medium text-[#182920] dark:text-[#F2F4E9] whitespace-nowrap">
+                            {pt.period}
+                            {isDD && (
+                              <span className="ml-2 inline-block px-1.5 py-0.5 rounded text-[10px] font-bold bg-[#08786A] text-white dark:bg-[#72C6AD] dark:text-[#0B2822]">
+                                Data Date
+                              </span>
+                            )}
+                          </td>
+                          <td className="py-2 px-3 font-sans text-[#52665D] dark:text-[#B5C1B5] whitespace-nowrap">
+                            {pt.dateLabel}
+                          </td>
+                          <td className="py-2 px-3 text-right text-[#825700] dark:text-[#E5C185]">
+                            {formatCurrencyCr(pt.pv)}
+                          </td>
+                          <td className="py-2 px-3 text-right text-[#08786A] dark:text-[#72C6AD]">
+                            {pt.ev !== null ? formatCurrencyCr(pt.ev) : '—'}
+                          </td>
+                          <td className="py-2 px-3 text-right text-[#182920] dark:text-[#F2F4E9]">
+                            {pt.ac !== null ? formatCurrencyCr(pt.ac) : '—'}
+                          </td>
+                          <td className={`py-2 px-3 text-right ${pt.cv !== null && pt.cv < 0 ? 'text-[#A43B36] dark:text-[#FF9E94]' : 'text-[#08786A] dark:text-[#72C6AD]'}`}>
+                            {pt.cv !== null ? formatVarianceCr(pt.cv) : '—'}
+                          </td>
+                          <td className={`py-2 px-3 text-right ${pt.sv !== null && pt.sv < 0 ? 'text-[#A43B36] dark:text-[#FF9E94]' : 'text-[#08786A] dark:text-[#72C6AD]'}`}>
+                            {pt.sv !== null ? formatVarianceCr(pt.sv) : '—'}
+                          </td>
+                          <td className={`py-2 px-3 text-right ${pt.cpi !== null && pt.cpi < 1 ? 'text-[#A43B36] dark:text-[#FF9E94]' : 'text-[#08786A] dark:text-[#72C6AD]'}`}>
+                            {pt.cpi !== null ? formatEVMIndex(pt.cpi, 4) : '—'}
+                          </td>
+                          <td className={`py-2 px-3 text-right ${pt.spi !== null && pt.spi < 1 ? 'text-[#825700] dark:text-[#F3B765]' : 'text-[#08786A] dark:text-[#72C6AD]'}`}>
+                            {pt.spi !== null ? formatEVMIndex(pt.spi, 4) : '—'}
+                          </td>
+                          <td className="py-2 px-3 font-sans">
+                            {pt.actualPct !== null ? (
+                              <span className={`inline-flex px-1.5 py-0.5 rounded text-[10px] font-semibold ${
+                                (pt.spi || 1) < 0.95
+                                  ? 'bg-[#F6E4E1] dark:bg-[#3D1418] text-[#A43B36] dark:text-[#FF9E94]'
+                                  : 'bg-[#EAF0E9] dark:bg-[#203129] text-[#08786A] dark:text-[#72C6AD]'
+                              }`}>
+                                {(pt.spi || 1) < 0.95 ? 'Behind' : 'On Track'}
+                              </span>
+                            ) : (
+                              <span className="text-[10px] text-[#52665D] dark:text-[#B5C1B5]">Projected</span>
+                            )}
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            {/* 3. Discipline-Level EVM Breakdown Table */}
+            <div className="bg-white dark:bg-[#17221D] border border-[#D9E2DA] dark:border-[#3A5146] rounded-xl p-4 sm:p-6 shadow-xs space-y-4 transition-colors">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#D9E2DA]/60 dark:border-[#3A5146] pb-3">
+                <div>
+                  <div className="flex items-center gap-2">
+                    <Layers className="w-4 h-4 text-[#08786A] dark:text-[#72C6AD]" />
+                    <h3 className="text-base font-bold text-[#182920] dark:text-[#F2F4E9] tracking-tight font-heading">
+                      Discipline-Level Earned Value & Cost Distribution
+                    </h3>
+                  </div>
+                  <p className="text-xs text-[#52665D] dark:text-[#B5C1B5] mt-0.5">
+                    Breakdown of BAC budget allocation, realized earned value, incurred spend, and performance indices across all 5 engineering disciplines.
+                  </p>
+                </div>
+                <div className="text-xs font-mono text-[#52665D] dark:text-[#B5C1B5]">
+                  5 Engineering Disciplines
+                </div>
+              </div>
+
+              <div className="overflow-x-auto rounded-lg border border-[#D9E2DA] dark:border-[#3A5146]">
+                <table className="w-full min-w-[820px] text-left text-xs border-collapse">
+                  <thead className="bg-[#F6F7F3] dark:bg-[#243832] text-[#182920] dark:text-[#F2F4E9] border-b border-[#D9E2DA] dark:border-[#3A5146]">
+                    <tr className="h-10">
+                      <th className="py-2 px-3 font-semibold">Discipline</th>
+                      <th className="py-2 px-3 text-right font-semibold">Weight</th>
+                      <th className="py-2 px-3 text-right font-semibold">Discipline BAC</th>
+                      <th className="py-2 px-3 text-right font-semibold">Planned (PV)</th>
+                      <th className="py-2 px-3 text-right font-semibold">Earned (EV)</th>
+                      <th className="py-2 px-3 text-right font-semibold">Actual Cost (AC)</th>
+                      <th className="py-2 px-3 text-right font-semibold">Cost Var (CV)</th>
+                      <th className="py-2 px-3 text-right font-semibold">Sched Var (SV)</th>
+                      <th className="py-2 px-3 text-right font-semibold">CPI</th>
+                      <th className="py-2 px-3 text-right font-semibold">SPI</th>
+                      <th className="py-2 px-3 text-center font-semibold">Package Status</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-[#D9E2DA]/60 dark:divide-[#3A5146] font-mono text-[12px]">
+                    {evmDisciplines.map((d) => {
+                      const isCritical = d.status === 'Critical';
+                      const isWarning = d.status === 'Warning';
+                      return (
+                        <tr key={d.discipline} className="hover:bg-[#F5F7F3] dark:hover:bg-[#203129] transition-colors">
+                          <td className="py-2.5 px-3 font-sans font-medium text-[#182920] dark:text-[#F2F4E9]">
+                            {d.discipline}
+                          </td>
+                          <td className="py-2 px-3 text-right text-[#52665D] dark:text-[#B5C1B5]">
+                            {d.weightPct.toFixed(1)}%
+                          </td>
+                          <td className="py-2 px-3 text-right text-[#182920] dark:text-[#F2F4E9] font-semibold">
+                            {formatCurrencyCr(d.bac)}
+                          </td>
+                          <td className="py-2 px-3 text-right text-[#825700] dark:text-[#E5C185]">
+                            {formatCurrencyCr(d.pv)}
+                          </td>
+                          <td className="py-2 px-3 text-right text-[#08786A] dark:text-[#72C6AD] font-semibold">
+                            {formatCurrencyCr(d.ev)}
+                          </td>
+                          <td className="py-2 px-3 text-right text-[#182920] dark:text-[#F2F4E9]">
+                            {formatCurrencyCr(d.ac)}
+                          </td>
+                          <td className={`py-2 px-3 text-right ${d.cv < 0 ? 'text-[#A43B36] dark:text-[#FF9E94]' : 'text-[#08786A] dark:text-[#72C6AD]'}`}>
+                            {formatVarianceCr(d.cv)}
+                          </td>
+                          <td className={`py-2 px-3 text-right ${d.sv < 0 ? 'text-[#A43B36] dark:text-[#FF9E94]' : 'text-[#08786A] dark:text-[#72C6AD]'}`}>
+                            {formatVarianceCr(d.sv)}
+                          </td>
+                          <td className={`py-2 px-3 text-right ${d.cpi < 1 ? 'text-[#A43B36] dark:text-[#FF9E94]' : 'text-[#08786A] dark:text-[#72C6AD]'}`}>
+                            {formatEVMIndex(d.cpi, 4)}
+                          </td>
+                          <td className={`py-2 px-3 text-right ${d.spi < 1 ? 'text-[#825700] dark:text-[#F3B765]' : 'text-[#08786A] dark:text-[#72C6AD]'}`}>
+                            {formatEVMIndex(d.spi, 4)}
+                          </td>
+                          <td className="py-2 px-3 font-sans text-center">
+                            <span className={`inline-flex px-2 py-0.5 rounded text-[10px] font-bold border ${
+                              isCritical
+                                ? 'bg-[#F6E4E1] dark:bg-[#3D1418] text-[#A43B36] dark:text-[#FF9E94] border-[#DCABA7] dark:border-[#5C2329]'
+                                : isWarning
+                                ? 'bg-[#F8EFDA] dark:bg-[#3D2808] text-[#825700] dark:text-[#F3B765] border-[#F2DCA8] dark:border-[#5C3F10]'
+                                : 'bg-[#EAF0E9] dark:bg-[#203129] text-[#08786A] dark:text-[#72C6AD] border-[#BDE4D0] dark:border-[#2A5949]'
+                            }`}>
+                              {d.status}
+                            </span>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
         )}
 

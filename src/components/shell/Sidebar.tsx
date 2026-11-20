@@ -29,6 +29,9 @@ import {
   ChevronDown,
   HelpCircle,
   MessageSquare,
+  GitBranch,
+  Sparkles,
+  FileSearch,
 } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 
@@ -104,6 +107,7 @@ export const managerNav: SidebarGroup[] = [
   {
     group: 'EXECUTION',
     items: [
+      { label: 'AI Match Engine', href: '/matching', icon: Sparkles, subtitle: 'Entity Extraction & Baseline Remap Engine' },
       { label: 'Review Queue', href: '/review', icon: ShieldCheck, badge: 3, subtitle: '3 Pending Verification Items' },
       { label: 'Execution Intelligence', href: '/execution', icon: Cpu, subtitle: 'Live Site Telemetry & Unstructured Stream' },
     ],
@@ -113,6 +117,7 @@ export const managerNav: SidebarGroup[] = [
     items: [
       { label: 'Progress & S-Curve', href: '/progress', icon: TrendingUp, subtitle: 'Earned Value S-Curve & Trend Analytics' },
       { label: 'Delays & Risks', href: '/risks', icon: TrendingDown, subtitle: 'Float Consumption & Critical Chain Risks' },
+      { label: 'Delay Chain & Root Cause', href: '/variance', icon: GitBranch, subtitle: 'Predecessor Delay Propagation & Root Causes' },
       { label: 'What-if Sandbox', href: '/what-if', icon: Sliders, subtitle: 'Predictive Forward-Pass Sandbox' },
       { label: 'Schedule Health', href: '/health', icon: Activity, subtitle: 'CPM Logic & Field Hygiene Rules' },
     ],
@@ -145,6 +150,7 @@ export const engineerNav: SidebarGroup[] = [
   {
     group: 'EXECUTION',
     items: [
+      { label: 'Entity Extraction Hub', href: '/field', icon: FileSearch, subtitle: 'Multi-Modal Ingestion & NLP Extraction' },
       { label: 'Field Capture', href: '/field/capture', icon: Camera, subtitle: 'Fast Mobile Entry for Single Site Events' },
       { label: 'DPR / Daily Progress', href: '/field/dpr', icon: FileText, subtitle: 'Official End-of-Shift Submission & Signoff' },
       { label: 'Execution Intelligence', href: '/execution', icon: Cpu, subtitle: 'Live Site Telemetry & Unstructured Stream' },
@@ -183,21 +189,34 @@ export const adminNav: SidebarGroup[] = [
     ],
   },
   {
-    group: 'PLAN & EXECUTION',
+    group: 'PLAN',
     items: [
       { label: 'Projects', href: '/projects', icon: FolderKanban, subtitle: 'Portfolio Projects Overview' },
       { label: 'Master Schedule', href: '/schedule', icon: Calendar, subtitle: 'Committed Baseline CPM Network' },
       { label: 'Schedule Twin', href: '/schedule-twin', icon: Layers, subtitle: 'Dynamic CPM Twin with Field Progress' },
+    ],
+  },
+  {
+    group: 'EXECUTION',
+    items: [
+      { label: 'AI Match Engine', href: '/matching', icon: Sparkles, subtitle: 'Entity Extraction & Baseline Remap Engine' },
+      { label: 'Entity Extraction Hub', href: '/field', icon: FileSearch, subtitle: 'Multi-Modal Ingestion & NLP Extraction' },
       { label: 'Review Queue', href: '/review', icon: ShieldCheck, badge: 3, subtitle: 'Pending Verification Items' },
       { label: 'Execution Stream', href: '/execution', icon: Cpu, subtitle: 'Live Site Telemetry' },
     ],
   },
   {
-    group: 'ANALYZE & EVIDENCE',
+    group: 'ANALYZE',
     items: [
       { label: 'Progress & S-Curve', href: '/progress', icon: TrendingUp, subtitle: 'Earned Value S-Curve & Trends' },
       { label: 'Delays & Risks', href: '/risks', icon: TrendingDown, subtitle: 'Float Consumption & Risks' },
+      { label: 'Delay Chain & Root Cause', href: '/variance', icon: GitBranch, subtitle: 'Predecessor Delay Propagation & Root Causes' },
       { label: 'Schedule Health', href: '/health', icon: Activity, subtitle: 'CPM Logic & Field Hygiene Rules' },
+    ],
+  },
+  {
+    group: 'EVIDENCE',
+    items: [
       { label: 'Evidence & Audit', href: '/evidence', icon: ShieldCheck, subtitle: 'Immutable Ledger & Proof Repository' },
     ],
   },

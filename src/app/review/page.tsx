@@ -728,7 +728,7 @@ const ALL_INITIAL_EVENTS: ReviewEvent[] = [
 ];
 
 export default function ReviewQueuePage() {
-  const { activeProject, openActivityDrawer, openWhyExplanation } = useApp();
+  const { activeProject, openActivityDrawer, openWhyExplanation, approveExecutionEvent } = useApp();
   const { addToast } = useToast();
 
   const [events, setEvents] = useState<ReviewEvent[]>(ALL_INITIAL_EVENTS);
@@ -904,6 +904,7 @@ export default function ReviewQueuePage() {
       setIsApproveConfirmOpen(false);
 
       // Mark as approved and commit to Twin
+      approveExecutionEvent(selectedEvent.id, selectedEvent.candidateActivityId);
       setEvents((prev) =>
         prev.map((e) =>
           e.id === selectedEvent.id
@@ -986,6 +987,7 @@ export default function ReviewQueuePage() {
       return;
     }
 
+    approveExecutionEvent(evt.id, evt.candidateActivityId);
     setEvents((prev) =>
       prev.map((e) =>
         e.id === evt.id
@@ -1042,6 +1044,10 @@ export default function ReviewQueuePage() {
         description: `Committed ${targetIds.length} eligible items. ${rawIds.length - targetIds.length} blocked/duplicate item(s) were excluded.`,
       });
     }
+
+    acceptableEvents.forEach((ev) => {
+      approveExecutionEvent(ev.id, ev.candidateActivityId);
+    });
 
     setEvents((prev) =>
       prev.map((e) =>
