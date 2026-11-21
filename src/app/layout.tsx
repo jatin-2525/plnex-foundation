@@ -53,6 +53,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem('plnex_theme_preference');if(t==='dark'||(!t&&window.matchMedia('(prefers-color-scheme: dark)').matches)){document.documentElement.classList.add('dark');}}catch(e){}})()`,
+          }}
+        />
+      </head>
       <body className="bg-[var(--background)] text-[var(--foreground)] antialiased font-sans transition-colors duration-150">
         <ThemeProvider>
           <PreferencesProvider>

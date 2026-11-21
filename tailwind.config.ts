@@ -10,6 +10,13 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        canvas: 'var(--background)',
+        surface: {
+          DEFAULT: 'var(--surface)',
+          raised: 'var(--surface-raised)',
+          sunken: 'var(--surface-sunken)',
+          panel: 'var(--surface-panel)',
+        },
         plnex: {
           bg: {
             page: 'var(--background)',

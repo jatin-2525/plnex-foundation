@@ -42,24 +42,24 @@ export function FilterBar({
 }: FilterBarProps) {
   return (
     <div
-      className={`bg-white border border-[#D9E2DA] rounded-lg p-4 flex flex-col md:flex-row md:items-center justify-between gap-3 ${className}`}
+      className={`bg-white dark:bg-[#17221D] border border-[#D9E2DA] dark:border-[#3A5146] rounded-lg p-4 flex flex-col md:flex-row md:items-center justify-between gap-3 ${className}`}
     >
       <div className="flex flex-1 flex-col sm:flex-row items-stretch sm:items-center gap-2">
         {/* Search Input */}
         {onSearchChange && (
           <div className="relative flex-1 min-w-[240px]">
-            <Search className="w-4 h-4 text-[#738A80] absolute left-3 top-1/2 -translate-y-1/2" />
+            <Search className="w-4 h-4 text-[#738A80] dark:text-[#859688] absolute left-3 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => onSearchChange(e.target.value)}
               placeholder={searchPlaceholder}
-              className="w-full pl-9 pr-8 py-1.5 text-xs bg-[#F6F7F3] border border-[#D9E2DA] focus:border-[#006B61] focus:bg-white rounded-md text-[#1A2B25] placeholder-[#7B8798] transition-colors outline-none"
+              className="w-full pl-9 pr-8 py-1.5 text-xs bg-[#F6F7F3] dark:bg-[#203129] border border-[#D9E2DA] dark:border-[#3A5146] focus:border-[#006B61] dark:focus:border-[#72C6AD] focus:bg-white dark:focus:bg-[#17221D] rounded-md text-[#1A2B25] dark:text-[#F2F4E9] placeholder-[#7B8798] dark:placeholder-[#859688] transition-colors outline-none"
             />
             {searchQuery && (
               <button
                 onClick={() => onSearchChange('')}
-                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[#738A80] hover:text-[#1A2B25]"
+                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[#738A80] dark:text-[#859688] hover:text-[#1A2B25] dark:hover:text-[#F2F4E9]"
                 aria-label="Clear search"
               >
                 <X className="w-3.5 h-3.5" />
@@ -74,7 +74,7 @@ export function FilterBar({
             <select
               value={filter.selectedValue || ''}
               onChange={(e) => onFilterChange && onFilterChange(filter.id, e.target.value)}
-              className="px-3 py-1.5 text-xs bg-white border border-[#D9E2DA] rounded-md text-[#1A2B25] focus:border-[#006B61] transition-colors outline-none cursor-pointer"
+              className="px-3 py-1.5 text-xs bg-white dark:bg-[#203129] border border-[#D9E2DA] dark:border-[#3A5146] rounded-md text-[#1A2B25] dark:text-[#F2F4E9] focus:border-[#006B61] dark:focus:border-[#72C6AD] transition-colors outline-none cursor-pointer"
             >
               <option value="">{filter.label}: All</option>
               {filter.options.map((opt) => (
@@ -90,7 +90,7 @@ export function FilterBar({
         {hasActiveFilters && onClearAll && (
           <button
             onClick={onClearAll}
-            className="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-medium text-[#A43B36] hover:bg-[#F6E4E1] rounded-md transition-colors"
+            className="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-medium text-[#A43B36] dark:text-[#FF9E94] hover:bg-[#F6E4E1] dark:hover:bg-[#3B2422] rounded-md transition-colors"
           >
             <X className="w-3.5 h-3.5" />
             Reset
@@ -101,8 +101,8 @@ export function FilterBar({
       {/* Right meta or extra actions */}
       <div className="flex items-center gap-3 justify-between sm:justify-end">
         {totalResults !== undefined && (
-          <span className="text-xs text-[#52665D] font-mono">
-            Showing <strong className="text-[#1A2B25]">{totalResults}</strong> records
+          <span className="text-xs text-[#52665D] dark:text-[#B5C1B5] font-mono">
+            Showing <strong className="text-[#1A2B25] dark:text-[#F2F4E9]">{totalResults}</strong> records
           </span>
         )}
         {extraActions}

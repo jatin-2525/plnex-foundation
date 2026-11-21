@@ -96,19 +96,19 @@ export function WhyExplanationModal({
   const getBadgeStyle = () => {
     switch (data.type) {
       case 'progress':
-        return 'bg-[#EAF0E9] text-[#006B61] border-[#D9E2DA]';
+        return 'bg-[#EAF0E9] dark:bg-[#203129] text-[#006B61] dark:text-[#72C6AD] border-[#D9E2DA] dark:border-[#3A5146]';
       case 'confidence':
-        return 'bg-[#EAF0E9] text-[#006B61] border-[#D9E2DA]';
+        return 'bg-[#EAF0E9] dark:bg-[#203129] text-[#006B61] dark:text-[#72C6AD] border-[#D9E2DA] dark:border-[#3A5146]';
       case 'health':
-        return 'bg-[#F8EFDA] text-[#825700] border-[#E5C185]';
+        return 'bg-[#F8EFDA] dark:bg-[#3A3120] text-[#825700] dark:text-[#F3D27E] border-[#E5C185] dark:border-[#5B4A2B]';
       case 'variance':
-        return 'bg-[#F6E4E1] text-[#A43B36] border-[#DCABA7]';
+        return 'bg-[#F6E4E1] dark:bg-[#3B2422] text-[#A43B36] dark:text-[#FF9E94] border-[#DCABA7] dark:border-[#5B3734]';
       case 'delay':
-        return 'bg-[#F6E4E1] text-[#A43B36] border-[#DCABA7]';
+        return 'bg-[#F6E4E1] dark:bg-[#3B2422] text-[#A43B36] dark:text-[#FF9E94] border-[#DCABA7] dark:border-[#5B3734]';
       case 'impact':
-        return 'bg-[#F6E4E1] text-[#A43B36] border-[#DCABA7]';
+        return 'bg-[#F6E4E1] dark:bg-[#3B2422] text-[#A43B36] dark:text-[#FF9E94] border-[#DCABA7] dark:border-[#5B3734]';
       default:
-        return 'bg-[#EAF0E9] text-[#1A2B25] border-[#D9E2DA]';
+        return 'bg-[#EAF0E9] dark:bg-[#203129] text-[#1A2B25] dark:text-[#F2F4E9] border-[#D9E2DA] dark:border-[#3A5146]';
     }
   };
 
@@ -121,8 +121,8 @@ export function WhyExplanationModal({
       width="md"
       footer={
         <div className="flex items-center justify-between w-full text-xs">
-          <div className="flex items-center gap-2 text-[#52665D] font-mono text-[11px] truncate max-w-xs">
-            <Clock className="w-3.5 h-3.5 text-[#738A80] shrink-0" />
+          <div className="flex items-center gap-2 text-[#52665D] dark:text-[#B5C1B5] font-mono text-[11px] truncate max-w-xs">
+            <Clock className="w-3.5 h-3.5 text-[#738A80] dark:text-[#859688] shrink-0" />
             <span className="truncate">{data.timestamp || 'Live Schedule Snapshot'}</span>
           </div>
 
@@ -134,7 +134,7 @@ export function WhyExplanationModal({
                   onClose();
                   onOpenActivityDrawer(data.subjectId);
                 }}
-                className="px-3 py-1.5 bg-[#EAF0E9] hover:bg-[#DCEBF1] text-[#006B61] border border-[#D9E2DA] rounded-lg font-semibold shadow-2xs transition-colors flex items-center gap-2 cursor-pointer text-xs"
+                className="px-3 py-1.5 bg-[#EAF0E9] dark:bg-[#203129] hover:bg-[#DCEBF1] dark:hover:bg-[#243832] text-[#006B61] dark:text-[#72C6AD] border border-[#D9E2DA] dark:border-[#3A5146] rounded-lg font-semibold shadow-2xs transition-colors flex items-center gap-2 cursor-pointer text-xs"
               >
                 <Layers className="w-3.5 h-3.5" />
                 <span>Open Activity</span>
@@ -144,7 +144,7 @@ export function WhyExplanationModal({
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-1.5 bg-[#103F39] hover:bg-[#0E1524] text-white rounded-lg font-semibold shadow-xs transition-colors cursor-pointer text-xs"
+              className="px-4 py-1.5 bg-[#103F39] hover:bg-[#0E1524] dark:bg-[#72C6AD] dark:hover:bg-[#5CB69C] text-white dark:text-[#0B2822] rounded-lg font-semibold shadow-xs transition-colors cursor-pointer text-xs"
             >
               Done
             </button>
@@ -231,12 +231,12 @@ export function WhyExplanationModal({
 
         {/* Actionable Next Step */}
         {data.recommendation && (
-          <div className="p-4 rounded-lg bg-[#E4F1E9] border border-[#B7DAC3] space-y-1">
-            <div className="flex items-center gap-2 font-semibold text-[#1F6B4E] text-xs">
-              <CheckCircle2 className="w-4 h-4 text-[#1F6B4E]" />
+          <div className="p-4 rounded-lg bg-[#E4F1E9] dark:bg-[#20382C] border border-[#B7DAC3] dark:border-[#315442] space-y-1">
+            <div className="flex items-center gap-2 font-semibold text-[#1F6B4E] dark:text-[#9AD5AF] text-xs">
+              <CheckCircle2 className="w-4 h-4 text-[#1F6B4E] dark:text-[#9AD5AF]" />
               <span>Recommended Operational Next Step</span>
             </div>
-            <p className="text-xs text-[#1A2B25] leading-relaxed">
+            <p className="text-xs text-[#1A2B25] dark:text-[#F2F4E9] leading-relaxed">
               {data.recommendation}
             </p>
           </div>
@@ -244,32 +244,32 @@ export function WhyExplanationModal({
 
         {/* Progressive Disclosure: Technical Details (Collapsed by Default) */}
         {data.algorithmOrRule && (
-          <div className="pt-2 border-t border-[#D9E2DA]/80">
+          <div className="pt-2 border-t border-[#D9E2DA]/80 dark:border-[#3A5146]">
             <button
               type="button"
               onClick={() => setShowTechnicalDetails(!showTechnicalDetails)}
-              className="w-full flex items-center justify-between p-2 rounded text-[11px] font-medium text-[#52665D] hover:text-[#1A2B25] hover:bg-[#EAF0E9] transition-colors cursor-pointer"
+              className="w-full flex items-center justify-between p-2 rounded text-[11px] font-medium text-[#52665D] dark:text-[#B5C1B5] hover:text-[#1A2B25] dark:hover:text-[#F2F4E9] hover:bg-[#EAF0E9] dark:hover:bg-[#203129] transition-colors cursor-pointer"
             >
               <span className="flex items-center gap-2">
-                <Cpu className="w-3.5 h-3.5 text-[#738A80]" />
+                <Cpu className="w-3.5 h-3.5 text-[#738A80] dark:text-[#859688]" />
                 <span>Technical Details</span>
               </span>
               {showTechnicalDetails ? (
-                <ChevronUp className="w-3.5 h-3.5 text-[#738A80]" />
+                <ChevronUp className="w-3.5 h-3.5 text-[#738A80] dark:text-[#859688]" />
               ) : (
-                <ChevronDown className="w-3.5 h-3.5 text-[#738A80]" />
+                <ChevronDown className="w-3.5 h-3.5 text-[#738A80] dark:text-[#859688]" />
               )}
             </button>
 
             {showTechnicalDetails && (
-              <div className="mt-2 p-3 rounded-lg bg-[#F6F7F3] border border-[#D9E2DA] space-y-2 text-[11px] font-mono">
+              <div className="mt-2 p-3 rounded-lg bg-[#F6F7F3] dark:bg-[#203129] border border-[#D9E2DA] dark:border-[#3A5146] space-y-2 text-[11px] font-mono">
                 <div className="flex items-start justify-between gap-2">
-                  <span className="text-[#738A80]">Calculation Baseline:</span>
-                  <span className="font-bold text-[#1A2B25] text-right">{data.algorithmOrRule}</span>
+                  <span className="text-[#738A80] dark:text-[#859688]">Calculation Baseline:</span>
+                  <span className="font-bold text-[#1A2B25] dark:text-[#F2F4E9] text-right">{data.algorithmOrRule}</span>
                 </div>
-                <div className="flex items-center justify-between text-[#738A80]">
+                <div className="flex items-center justify-between text-[#738A80] dark:text-[#859688]">
                   <span>Verification Signature:</span>
-                  <span className="text-[#006B61]">Verified Schedule Twin Calculation</span>
+                  <span className="text-[#006B61] dark:text-[#72C6AD]">Verified Schedule Twin Calculation</span>
                 </div>
               </div>
             )}

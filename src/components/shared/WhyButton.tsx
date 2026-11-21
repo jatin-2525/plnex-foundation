@@ -31,7 +31,7 @@ export function WhyButton({
         type="button"
         onClick={handleClick}
         title={title}
-        className={`inline-flex items-center gap-1 text-[11px] font-semibold text-[#006B61] hover:text-[#00524A] hover:underline transition-colors cursor-pointer ${className}`}
+        className={`inline-flex items-center gap-1 text-[11px] font-semibold text-[#006B61] dark:text-[#72C6AD] hover:text-[#00524A] dark:hover:text-[#5CB69C] hover:underline transition-colors cursor-pointer ${className}`}
       >
         <HelpCircle className="w-3 h-3" />
         <span>{label}</span>
@@ -45,9 +45,9 @@ export function WhyButton({
         type="button"
         onClick={handleClick}
         title={title}
-        className={`inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-semibold text-[#52665D] hover:text-[#006B61] hover:bg-[#EAF0E9] border border-transparent hover:border-[#D9E2DA] transition-colors cursor-pointer ${className}`}
+        className={`inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-semibold text-[#52665D] dark:text-[#B5C1B5] hover:text-[#006B61] dark:hover:text-[#72C6AD] hover:bg-[#EAF0E9] dark:hover:bg-[#203129] border border-transparent hover:border-[#D9E2DA] dark:hover:border-[#3A5146] transition-colors cursor-pointer ${className}`}
       >
-        <HelpCircle className="w-3 h-3 text-[#006B61]" />
+        <HelpCircle className="w-3 h-3 text-[#006B61] dark:text-[#72C6AD]" />
         <span>{label}</span>
       </button>
     );
@@ -61,7 +61,7 @@ export function WhyButton({
       type="button"
       onClick={handleClick}
       title={title}
-      className={`inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-mono font-semibold bg-[#EAF0E9] hover:bg-[#E0EFF5] text-[#006B61] border border-[#D9E2DA] transition-colors cursor-pointer shadow-2xs ${className}`}
+      className={`inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-mono font-semibold bg-[#EAF0E9] dark:bg-[#203129] hover:bg-[#E0EFF5] dark:hover:bg-[#2D443D] text-[#006B61] dark:text-[#72C6AD] border border-[#D9E2DA] dark:border-[#3A5146] transition-colors cursor-pointer shadow-2xs ${className}`}
     >
       <HelpCircle className="w-2.5 h-2.5" />
       <span>{displayLabel}</span>

@@ -32,12 +32,7 @@ export function VarianceBadge({
 
   return (
     <span
-      className={`inline-flex items-center gap-2 font-medium rounded-md border font-mono tracking-tight ${sizeClasses} ${className}`}
-      style={{
-        backgroundColor: config.bgColor,
-        color: config.color,
-        borderColor: config.borderColor,
-      }}
+      className={`inline-flex items-center gap-2 font-medium rounded-md border font-mono tracking-tight ${sizeClasses} ${config.badgeClass || ''} ${className}`}
       title={`Schedule Variance: ${daysDelay > 0 ? `+${daysDelay}` : daysDelay} ${suffix} (${config.label})`}
     >
       <span className="font-semibold">{formattedValue}</span>

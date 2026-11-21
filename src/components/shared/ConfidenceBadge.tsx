@@ -28,17 +28,11 @@ export function ConfidenceBadge({
 
   return (
     <span
-      className={`inline-flex items-center gap-2 font-medium rounded-md border tracking-tight ${sizeClasses} ${className}`}
-      style={{
-        backgroundColor: config.bgColor,
-        color: config.color,
-        borderColor: config.borderColor,
-      }}
+      className={`inline-flex items-center gap-2 font-medium rounded-md border tracking-tight ${sizeClasses} ${config.badgeClass || ''} ${className}`}
       title={`Confidence: ${score}% (${config.label})`}
     >
       <span
-        className="w-1.5 h-1.5 rounded-full shrink-0"
-        style={{ backgroundColor: config.color }}
+        className="w-1.5 h-1.5 rounded-full shrink-0 bg-current"
         aria-hidden="true"
       />
       <span className="font-mono font-bold">{score}%</span>

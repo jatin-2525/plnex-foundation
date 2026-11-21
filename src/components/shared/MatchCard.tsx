@@ -90,14 +90,14 @@ function renderFactorBadge(status: ScoringFactorStatus) {
   switch (status) {
     case 'matched':
       return (
-        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-bold bg-[#E4F1E9] text-[#1F6B4E] border border-[#B7DAC3]">
+        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-bold bg-[#E4F1E9] dark:bg-[#20382C] text-[#1F6B4E] dark:text-[#9AD5AF] border border-[#B7DAC3] dark:border-[#315442]">
           <span>✓</span>
           <span>matched</span>
         </span>
       );
     case 'partial':
       return (
-        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-bold bg-[#F8EFDA] text-[#825700] border border-[#E5C185]">
+        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-bold bg-[#F8EFDA] dark:bg-[#3A3120] text-[#825700] dark:text-[#F3D27E] border border-[#E5C185] dark:border-[#5B4A2B]">
           <span>△</span>
           <span>partial</span>
         </span>
@@ -105,7 +105,7 @@ function renderFactorBadge(status: ScoringFactorStatus) {
     case 'mismatch':
     default:
       return (
-        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-bold bg-[#F6E4E1] text-[#A43B36] border border-[#DCABA7]">
+        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-bold bg-[#F6E4E1] dark:bg-[#3B2422] text-[#A43B36] dark:text-[#FF9E94] border border-[#DCABA7] dark:border-[#5B3734]">
           <span>✕</span>
           <span>mismatch</span>
         </span>
@@ -196,33 +196,33 @@ export function MatchCard({
 
   return (
     <div
-      className={`bg-white border border-[#D9E2DA] rounded-lg overflow-hidden shadow-xs space-y-0 ${className}`}
+      className={`bg-white dark:bg-[#17221D] border border-[#D9E2DA] dark:border-[#3A5146] rounded-lg overflow-hidden shadow-xs space-y-0 ${className}`}
       data-testid="plnex-match-card"
     >
       {/* =========================================================================
           1. MATCH CARD HEADER: Suggested Activity, Activity ID, Confidence, Status
           ========================================================================= */}
-      <div className="p-4 sm:p-4 sm:p-6 bg-[#F6F7F3] border-b border-[#D9E2DA] space-y-4">
+      <div className="p-4 sm:p-4 sm:p-6 bg-[#F6F7F3] dark:bg-[#101815] border-b border-[#D9E2DA] dark:border-[#3A5146] space-y-4">
         {/* Field Statement Context if provided */}
         {fieldStatement && (
-          <div className="p-3 bg-[#EAF0E9] border border-[#D9E2DA] rounded-lg text-xs space-y-1">
-            <span className="text-[10px] uppercase font-semibold text-[#52665D] block tracking-wider">
+          <div className="p-3 bg-[#EAF0E9] dark:bg-[#203129] border border-[#D9E2DA] dark:border-[#3A5146] rounded-lg text-xs space-y-1">
+            <span className="text-[10px] uppercase font-semibold text-[#52665D] dark:text-[#B5C1B5] block tracking-wider">
               Field Execution Report:
             </span>
-            <p className="text-[#1A2B25] font-medium italic">
+            <p className="text-[#1A2B25] dark:text-[#F2F4E9] font-medium italic">
               &ldquo;{fieldStatement}&rdquo;
             </p>
           </div>
         )}
 
         {/* Primary Match Card Information */}
-        <div className="p-4 bg-white border border-[#D9E2DA] rounded-lg shadow-xs space-y-3">
+        <div className="p-4 bg-white dark:bg-[#17221D] border border-[#D9E2DA] dark:border-[#3A5146] rounded-lg shadow-xs space-y-3">
           <div className="flex items-center justify-between flex-wrap gap-2">
-            <span className="text-[10px] uppercase font-semibold tracking-wider text-[#52665D] flex items-center gap-2">
-              <Target className="w-3.5 h-3.5 text-[#006B61]" />
+            <span className="text-[10px] uppercase font-semibold tracking-wider text-[#52665D] dark:text-[#B5C1B5] flex items-center gap-2">
+              <Target className="w-3.5 h-3.5 text-[#006B61] dark:text-[#72C6AD]" />
               Suggested Match
             </span>
-            <span className="text-[11px] font-mono font-medium px-2 py-0.5 rounded bg-[#F6F7F3] text-[#52665D] border border-[#D9E2DA]">
+            <span className="text-[11px] font-mono font-medium px-2 py-0.5 rounded bg-[#F6F7F3] dark:bg-[#203129] text-[#52665D] dark:text-[#B5C1B5] border border-[#D9E2DA] dark:border-[#3A5146]">
               Assistive Suggestion · Not Final Authority
             </span>
           </div>
@@ -232,21 +232,21 @@ export function MatchCard({
               <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
                 <div>
                   <div className="flex items-center gap-2 flex-wrap">
-                    <span className="font-mono text-base font-extrabold text-[#006B61]">
+                    <span className="font-mono text-base font-extrabold text-[#006B61] dark:text-[#72C6AD]">
                       {activityId}
                     </span>
                     {wbs && (
-                      <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#EAF0E9] text-[#006B61] font-semibold border border-[#D9E2DA]">
+                      <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#EAF0E9] dark:bg-[#203129] text-[#006B61] dark:text-[#72C6AD] font-semibold border border-[#D9E2DA] dark:border-[#3A5146]">
                         WBS {wbs}
                       </span>
                     )}
                     {discipline && (
-                      <span className="text-[10px] px-2 py-0.5 rounded bg-[#F6F7F3] text-[#52665D] font-medium border border-[#D9E2DA]">
+                      <span className="text-[10px] px-2 py-0.5 rounded bg-[#F6F7F3] dark:bg-[#203129] text-[#52665D] dark:text-[#B5C1B5] font-medium border border-[#D9E2DA] dark:border-[#3A5146]">
                         {discipline}
                       </span>
                     )}
                   </div>
-                  <h3 className="text-sm sm:text-base font-bold text-[#1A2B25] mt-1">
+                  <h3 className="text-sm sm:text-base font-bold text-[#1A2B25] dark:text-[#F2F4E9] mt-1">
                     {activityName || 'Suggested Schedule Activity'}
                   </h3>
                 </div>
@@ -257,24 +257,24 @@ export function MatchCard({
                     <span
                       className={`w-2 h-2 rounded-full shrink-0 ${
                         isConfidenceHigh
-                          ? 'bg-[#2E7D5B]'
+                          ? 'bg-[#2E7D5B] dark:bg-[#72C6AD]'
                           : confidence >= 70
-                          ? 'bg-[#81500B]'
-                          : 'bg-[#92372F]'
+                          ? 'bg-[#81500B] dark:bg-[#E5C185]'
+                          : 'bg-[#92372F] dark:bg-[#FF9E94]'
                       }`}
                       aria-hidden="true"
                     />
-                    <span className="text-2xl font-black font-mono text-[#1A2B25]">
+                    <span className="text-2xl font-black font-mono text-[#1A2B25] dark:text-[#F2F4E9]">
                       {confidence}%
                     </span>
                   </div>
                   <span
                     className={`inline-flex items-center gap-1 px-3 py-0.5 rounded-md text-xs font-bold border ${
                       isConfidenceHigh
-                        ? 'bg-[#E4F1E9] text-[#1F6B4E] border-[#B7DAC3]'
+                        ? 'bg-[#E4F1E9] dark:bg-[#20382C] text-[#1F6B4E] dark:text-[#9AD5AF] border-[#B7DAC3] dark:border-[#315442]'
                         : confidence >= 70
-                        ? 'bg-[#F8EFDA] text-[#825700] border-[#E5C185]'
-                        : 'bg-[#F6E4E1] text-[#A43B36] border-[#DCABA7]'
+                        ? 'bg-[#F8EFDA] dark:bg-[#3A3120] text-[#825700] dark:text-[#F3D27E] border-[#E5C185] dark:border-[#5B4A2B]'
+                        : 'bg-[#F6E4E1] dark:bg-[#3B2422] text-[#A43B36] dark:text-[#FF9E94] border-[#DCABA7] dark:border-[#5B3734]'
                     }`}
                   >
                     {isConfidenceHigh ? (
@@ -295,28 +295,28 @@ export function MatchCard({
               </div>
 
               {(area || line) && (
-                <div className="flex items-center gap-3 text-xs text-[#52665D] pt-1 border-t border-[#D9E2DA]/60 flex-wrap">
+                <div className="flex items-center gap-3 text-xs text-[#52665D] dark:text-[#B5C1B5] pt-1 border-t border-[#D9E2DA]/60 dark:border-[#3A5146] flex-wrap">
                   {area && (
                     <span className="inline-flex items-center gap-1">
-                      <MapPin className="w-3.5 h-3.5 text-[#738A80]" />
-                      Area: <strong className="text-[#1A2B25]">{area}</strong>
+                      <MapPin className="w-3.5 h-3.5 text-[#738A80] dark:text-[#859688]" />
+                      Area: <strong className="text-[#1A2B25] dark:text-[#F2F4E9]">{area}</strong>
                     </span>
                   )}
                   {line && (
                     <span className="inline-flex items-center gap-1 font-mono">
-                      Line: <strong className="text-[#1A2B25]">{line}</strong>
+                      Line: <strong className="text-[#1A2B25] dark:text-[#F2F4E9]">{line}</strong>
                     </span>
                   )}
                 </div>
               )}
             </div>
           ) : (
-            <div className="p-3 bg-[#F6E4E1] border border-[#DCABA7] rounded-lg text-xs space-y-2 text-[#A43B36]">
+            <div className="p-3 bg-[#F6E4E1] dark:bg-[#3B2422] border border-[#DCABA7] dark:border-[#5B3734] rounded-lg text-xs space-y-2 text-[#A43B36] dark:text-[#FF9E94]">
               <div className="flex items-center gap-2 font-bold">
                 <XCircle className="w-4 h-4 shrink-0" />
                 <span>No sufficiently strong match exists</span>
               </div>
-              <p className="text-[11px] text-[#7A271A] flex items-center gap-2 flex-wrap">
+              <p className="text-[11px] text-[#7A271A] dark:text-[#FF9E94] flex items-center gap-2 flex-wrap">
                 <span>The score of</span>
                 <ConfidenceBadge score={confidence} size="sm" />
                 <span>falls below automated baseline correlation. No sufficiently strong match exists. Manual review or WBS assignment required.</span>
@@ -329,11 +329,11 @@ export function MatchCard({
             2. VERIFICATION: CLEARLY SEPARATE CONFIDENCE FROM VERIFICATION
                Example: Confidence: 94% | Verification: Pending
             ========================================================================= */}
-        <div className="p-4 bg-[#F6F7F3] border border-[#D9E2DA] rounded-lg flex items-center justify-between flex-wrap gap-3">
+        <div className="p-4 bg-[#F6F7F3] dark:bg-[#203129] border border-[#D9E2DA] dark:border-[#3A5146] rounded-lg flex items-center justify-between flex-wrap gap-3">
           <div className="flex items-center gap-6 flex-wrap">
             {/* Confidence metric */}
             <div>
-              <span className="text-[10px] uppercase font-semibold text-[#52665D] tracking-wider block">
+              <span className="text-[10px] uppercase font-semibold text-[#52665D] dark:text-[#B5C1B5] tracking-wider block">
                 Confidence:
               </span>
               <div className="mt-0.5">
@@ -341,11 +341,11 @@ export function MatchCard({
               </div>
             </div>
 
-            <div className="h-8 w-[1px] bg-[#D9E2DA] hidden sm:block" />
+            <div className="h-8 w-[1px] bg-[#D9E2DA] dark:bg-[#3A5146] hidden sm:block" />
 
             {/* Verification metric */}
             <div>
-              <span className="text-[10px] uppercase font-semibold text-[#52665D] tracking-wider block mb-1">
+              <span className="text-[10px] uppercase font-semibold text-[#52665D] dark:text-[#B5C1B5] tracking-wider block mb-1">
                 Verification:
               </span>
               <StatusBadge status={verificationStatus} size="xs" />
@@ -354,10 +354,10 @@ export function MatchCard({
 
           {/* DO NOT Display 94% = Verified Disclaimer */}
           <div className="text-right">
-            <span className="text-[11px] text-[#52665D] font-medium block">
+            <span className="text-[11px] text-[#52665D] dark:text-[#B5C1B5] font-medium block">
               Human-in-the-loop Gate
             </span>
-            <span className="text-[10px] font-mono text-[#738A80]">
+            <span className="text-[10px] font-mono text-[#738A80] dark:text-[#859688]">
               94% ≠ Verified · Zero silent updates
             </span>
           </div>
@@ -368,21 +368,21 @@ export function MatchCard({
           3. WHY? SECTION: Activity keywords, Area / Line, Discipline, Date / Context, Project / WBS
              Using: ✓ matched, △ partial, ✕ mismatch
           ========================================================================= */}
-      <div className="p-4 sm:p-4 sm:p-6 border-b border-[#D9E2DA] bg-white space-y-3">
+      <div className="p-4 sm:p-4 sm:p-6 border-b border-[#D9E2DA] dark:border-[#3A5146] bg-white dark:bg-[#17221D] space-y-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <ShieldCheck className="w-4 h-4 text-[#006B61]" />
-            <h4 className="font-bold text-xs uppercase tracking-wider text-[#1A2B25]">
+            <ShieldCheck className="w-4 h-4 text-[#006B61] dark:text-[#72C6AD]" />
+            <h4 className="font-bold text-xs uppercase tracking-wider text-[#1A2B25] dark:text-[#F2F4E9]">
               Why this match?
             </h4>
-            <span className="text-[10px] font-mono text-[#738A80]">
+            <span className="text-[10px] font-mono text-[#738A80] dark:text-[#859688]">
               (5 Evaluated Factors)
             </span>
           </div>
           <button
             type="button"
             onClick={() => setShowWhyDetails(!showWhyDetails)}
-            className="text-xs font-semibold text-[#006B61] hover:underline flex items-center gap-1"
+            className="text-xs font-semibold text-[#006B61] dark:text-[#72C6AD] hover:underline flex items-center gap-1 cursor-pointer"
           >
             <span>{showWhyDetails ? 'Collapse Why?' : 'Expand Why?'}</span>
             {showWhyDetails ? (
@@ -397,36 +397,36 @@ export function MatchCard({
           <div className="space-y-3 pt-1">
             {/* Canonical 4 dimensions for High Confidence */}
             {isConfidenceHigh && (
-              <div className="p-3 bg-[#F7FBF9] border border-[#D1EADC] rounded-lg space-y-2">
+              <div className="p-3 bg-[#F7FBF9] dark:bg-[#20382C] border border-[#D1EADC] dark:border-[#315442] rounded-lg space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-[#1A2B25] uppercase tracking-wider">
+                  <span className="text-xs font-bold text-[#1A2B25] dark:text-[#F2F4E9] uppercase tracking-wider">
                     Why?
                   </span>
-                  <span className="text-[11px] text-[#1F6B4E] font-medium">
+                  <span className="text-[11px] text-[#1F6B4E] dark:text-[#9AD5AF] font-medium">
                     Verified Match Dimensions
                   </span>
                 </div>
                 <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
-                  <li className="flex items-center gap-2 text-[#1A2B25]">
-                    <span className="w-4 h-4 rounded-full bg-[#E4F1E9] text-[#1F6B4E] flex items-center justify-center shrink-0">
+                  <li className="flex items-center gap-2 text-[#1A2B25] dark:text-[#F2F4E9]">
+                    <span className="w-4 h-4 rounded-full bg-[#E4F1E9] dark:bg-[#101815] text-[#1F6B4E] dark:text-[#9AD5AF] flex items-center justify-center shrink-0">
                       <Check className="w-3 h-3 stroke-[3]" />
                     </span>
                     <span className="font-medium">Activity match</span>
                   </li>
-                  <li className="flex items-center gap-2 text-[#1A2B25]">
-                    <span className="w-4 h-4 rounded-full bg-[#E4F1E9] text-[#1F6B4E] flex items-center justify-center shrink-0">
+                  <li className="flex items-center gap-2 text-[#1A2B25] dark:text-[#F2F4E9]">
+                    <span className="w-4 h-4 rounded-full bg-[#E4F1E9] dark:bg-[#101815] text-[#1F6B4E] dark:text-[#9AD5AF] flex items-center justify-center shrink-0">
                       <Check className="w-3 h-3 stroke-[3]" />
                     </span>
                     <span className="font-medium">Area match</span>
                   </li>
-                  <li className="flex items-center gap-2 text-[#1A2B25]">
-                    <span className="w-4 h-4 rounded-full bg-[#E4F1E9] text-[#1F6B4E] flex items-center justify-center shrink-0">
+                  <li className="flex items-center gap-2 text-[#1A2B25] dark:text-[#F2F4E9]">
+                    <span className="w-4 h-4 rounded-full bg-[#E4F1E9] dark:bg-[#101815] text-[#1F6B4E] dark:text-[#9AD5AF] flex items-center justify-center shrink-0">
                       <Check className="w-3 h-3 stroke-[3]" />
                     </span>
                     <span className="font-medium">Discipline match</span>
                   </li>
-                  <li className="flex items-center gap-2 text-[#1A2B25]">
-                    <span className="w-4 h-4 rounded-full bg-[#E4F1E9] text-[#1F6B4E] flex items-center justify-center shrink-0">
+                  <li className="flex items-center gap-2 text-[#1A2B25] dark:text-[#F2F4E9]">
+                    <span className="w-4 h-4 rounded-full bg-[#E4F1E9] dark:bg-[#101815] text-[#1F6B4E] dark:text-[#9AD5AF] flex items-center justify-center shrink-0">
                       <Check className="w-3 h-3 stroke-[3]" />
                     </span>
                     <span className="font-medium">Context match</span>
@@ -437,20 +437,20 @@ export function MatchCard({
             {effectiveFactors.map((factor, idx) => (
               <div
                 key={idx}
-                className="p-3 bg-[#F6F7F3] border border-[#D9E2DA] rounded-lg flex items-start justify-between gap-3 text-xs"
+                className="p-3 bg-[#F6F7F3] dark:bg-[#203129] border border-[#D9E2DA] dark:border-[#3A5146] rounded-lg flex items-start justify-between gap-3 text-xs"
               >
                 <div className="flex items-start gap-2 min-w-0">
-                  <div className="w-7 h-7 rounded-lg bg-white border border-[#D9E2DA] flex items-center justify-center shrink-0 mt-0.5">
+                  <div className="w-7 h-7 rounded-lg bg-white dark:bg-[#17221D] border border-[#D9E2DA] dark:border-[#3A5146] flex items-center justify-center shrink-0 mt-0.5">
                     {getFactorIcon(factor.name)}
                   </div>
                   <div className="space-y-0.5 min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <span className="font-bold text-xs text-[#1A2B25]">
+                      <span className="font-bold text-xs text-[#1A2B25] dark:text-[#F2F4E9]">
                         {factor.name}
                       </span>
                       {renderFactorBadge(factor.status)}
                     </div>
-                    <p className="text-[11px] text-[#52665D] leading-relaxed">
+                    <p className="text-[11px] text-[#52665D] dark:text-[#B5C1B5] leading-relaxed">
                       {factor.reason}
                     </p>
                   </div>
@@ -466,18 +466,18 @@ export function MatchCard({
              Example: PIP-24-001 (94%), PIP-24-003 (71%), PIP-24-009 (42%)
           ========================================================================= */}
       {alternatives.length > 0 && (
-        <div className="p-4 sm:p-4 sm:p-6 border-b border-[#D9E2DA] bg-white space-y-3">
+        <div className="p-4 sm:p-4 sm:p-6 border-b border-[#D9E2DA] dark:border-[#3A5146] bg-white dark:bg-[#17221D] space-y-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <GitCompare className="w-4 h-4 text-[#006B61]" />
-              <h4 className="font-bold text-xs uppercase tracking-wider text-[#1A2B25]">
+              <GitCompare className="w-4 h-4 text-[#006B61] dark:text-[#72C6AD]" />
+              <h4 className="font-bold text-xs uppercase tracking-wider text-[#1A2B25] dark:text-[#F2F4E9]">
                 Alternative Activities ({alternatives.length})
               </h4>
             </div>
             <button
               type="button"
               onClick={() => setShowAlternatives(!showAlternatives)}
-              className="text-xs font-semibold text-[#006B61] hover:underline flex items-center gap-1"
+              className="text-xs font-semibold text-[#006B61] dark:text-[#72C6AD] hover:underline flex items-center gap-1 cursor-pointer"
             >
               <span>{showAlternatives ? 'Hide Alternatives' : 'Show Alternatives'}</span>
               {showAlternatives ? (
@@ -493,24 +493,24 @@ export function MatchCard({
               {alternatives.map((alt) => (
                 <div
                   key={alt.activityId}
-                  className="p-3 bg-[#F6F7F3] border border-[#D9E2DA] rounded-lg flex items-center justify-between gap-3 text-xs hover:border-[#D9E2DA] transition-colors"
+                  className="p-3 bg-[#F6F7F3] dark:bg-[#203129] border border-[#D9E2DA] dark:border-[#3A5146] rounded-lg flex items-center justify-between gap-3 text-xs transition-colors"
                 >
                   <div className="space-y-0.5 min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <span className="font-mono font-bold text-[#006B61]">
+                      <span className="font-mono font-bold text-[#006B61] dark:text-[#72C6AD]">
                         {alt.activityId}
                       </span>
-                      <span className="font-bold text-[#1A2B25] truncate">
+                      <span className="font-bold text-[#1A2B25] dark:text-[#F2F4E9] truncate">
                         {alt.activityName}
                       </span>
                       {alt.wbs && (
-                        <span className="text-[10px] font-mono text-[#52665D] bg-white px-1.5 py-0.5 rounded border border-[#D9E2DA]">
+                        <span className="text-[10px] font-mono text-[#52665D] dark:text-[#B5C1B5] bg-white dark:bg-[#17221D] px-1.5 py-0.5 rounded border border-[#D9E2DA] dark:border-[#3A5146]">
                           WBS {alt.wbs}
                         </span>
                       )}
                     </div>
                     {alt.reasons && alt.reasons.length > 0 && (
-                      <p className="text-[11px] text-[#52665D]">
+                      <p className="text-[11px] text-[#52665D] dark:text-[#B5C1B5]">
                         {alt.reasons[0]}
                       </p>
                     )}
@@ -522,7 +522,7 @@ export function MatchCard({
                       <button
                         type="button"
                         onClick={() => onSelectAlternative(alt.activityId)}
-                        className="px-3 py-1 text-xs font-bold text-[#006B61] hover:bg-[#EAF0E9] border border-[#D9E2DA] rounded-lg transition-colors"
+                        className="px-3 py-1 text-xs font-bold text-[#006B61] dark:text-[#72C6AD] hover:bg-[#EAF0E9] dark:hover:bg-[#243832] border border-[#D9E2DA] dark:border-[#3A5146] rounded-lg transition-colors cursor-pointer"
                       >
                         Select
                       </button>
@@ -540,13 +540,13 @@ export function MatchCard({
              Approve Match, Choose Another, Reject, Mark Unmatched
           ========================================================================= */}
       {(onApprove || onChooseAnother || onReject || onMarkUnmatched) && (
-        <div className="p-4 sm:p-6 bg-[#F6F7F3] flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+        <div className="p-4 sm:p-6 bg-[#F6F7F3] dark:bg-[#101815] flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
           <div className="flex items-center gap-2 flex-wrap">
             {onReject && (
               <button
                 type="button"
                 onClick={onReject}
-                className="min-h-[44px] px-4 py-2 text-xs font-semibold text-[#A43B36] hover:bg-[#F6E4E1] border border-[#DCABA7] rounded-lg transition-colors flex items-center justify-center gap-2 cursor-pointer"
+                className="min-h-[44px] px-4 py-2 text-xs font-semibold text-[#A43B36] dark:text-[#FF9E94] hover:bg-[#F6E4E1] dark:hover:bg-[#3B2422] border border-[#DCABA7] dark:border-[#5B3734] rounded-lg transition-colors flex items-center justify-center gap-2 cursor-pointer"
               >
                 <X className="w-3.5 h-3.5" />
                 <span>Reject</span>
@@ -557,7 +557,7 @@ export function MatchCard({
               <button
                 type="button"
                 onClick={onMarkUnmatched}
-                className="min-h-[44px] px-4 py-2 text-xs font-semibold text-[#52665D] hover:text-[#1A2B25] hover:bg-white border border-[#D9E2DA] rounded-lg transition-colors flex items-center justify-center gap-2 cursor-pointer"
+                className="min-h-[44px] px-4 py-2 text-xs font-semibold text-[#52665D] dark:text-[#B5C1B5] hover:text-[#1A2B25] dark:hover:text-[#F2F4E9] hover:bg-white dark:hover:bg-[#203129] border border-[#D9E2DA] dark:border-[#3A5146] rounded-lg transition-colors flex items-center justify-center gap-2 cursor-pointer"
               >
                 <HelpCircle className="w-3.5 h-3.5" />
                 <span>Mark Unmatched</span>
@@ -570,7 +570,7 @@ export function MatchCard({
               <button
                 type="button"
                 onClick={onChooseAnother}
-                className="min-h-[44px] px-4 py-2 text-xs font-semibold text-[#1A2B25] bg-white hover:bg-[#EAF0E9] border border-[#D9E2DA] rounded-lg transition-colors flex items-center justify-center gap-2 cursor-pointer"
+                className="min-h-[44px] px-4 py-2 text-xs font-semibold text-[#1A2B25] dark:text-[#F2F4E9] bg-white dark:bg-[#203129] hover:bg-[#EAF0E9] dark:hover:bg-[#243832] border border-[#D9E2DA] dark:border-[#3A5146] rounded-lg transition-colors flex items-center justify-center gap-2 cursor-pointer"
               >
                 <SlidersHorizontal className="w-3.5 h-3.5" />
                 <span>Choose Another</span>
@@ -581,7 +581,7 @@ export function MatchCard({
               <button
                 type="button"
                 onClick={onApprove}
-                className="min-h-[44px] px-5 py-2 text-xs font-bold bg-[#006B61] hover:bg-[#00524A] text-white rounded-lg shadow-xs transition-colors flex items-center justify-center gap-2 cursor-pointer"
+                className="min-h-[44px] px-5 py-2 text-xs font-bold bg-[#006B61] hover:bg-[#00524A] dark:bg-[#72C6AD] dark:hover:bg-[#5CB69C] text-white dark:text-[#0B2822] rounded-lg shadow-xs transition-colors flex items-center justify-center gap-2 cursor-pointer"
               >
                 <Check className="w-3.5 h-3.5" />
                 <span>Approve Match</span>

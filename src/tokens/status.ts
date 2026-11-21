@@ -59,6 +59,10 @@ export interface StatusBadgeConfig {
   color: string;
   bgColor: string;
   borderColor: string;
+  badgeClass?: string;
+  darkColor?: string;
+  darkBgColor?: string;
+  darkBorderColor?: string;
 }
 
 export function getActivityStatusConfig(status: ActivityStatus): StatusBadgeConfig {
@@ -168,6 +172,10 @@ export function getMatchConfidenceConfig(confidence: MatchConfidence): StatusBad
         color: '#1F6B4E',
         bgColor: '#E4F1E9',
         borderColor: '#B7DAC3',
+        darkColor: '#9AD5AF',
+        darkBgColor: '#20382C',
+        darkBorderColor: '#315442',
+        badgeClass: 'bg-[#E4F1E9] text-[#1F6B4E] border-[#B7DAC3] dark:bg-[#20382C] dark:text-[#9AD5AF] dark:border-[#315442]',
       };
     case 'medium':
       return {
@@ -175,6 +183,10 @@ export function getMatchConfidenceConfig(confidence: MatchConfidence): StatusBad
         color: '#825700',
         bgColor: '#F8EFDA',
         borderColor: '#E5C185',
+        darkColor: '#F3D27E',
+        darkBgColor: '#3A3120',
+        darkBorderColor: '#5B4A2B',
+        badgeClass: 'bg-[#F8EFDA] text-[#825700] border-[#E5C185] dark:bg-[#3A3120] dark:text-[#F3D27E] dark:border-[#5B4A2B]',
       };
     case 'low':
     case 'unmatched':
@@ -184,6 +196,10 @@ export function getMatchConfidenceConfig(confidence: MatchConfidence): StatusBad
         color: '#52665D',
         bgColor: '#EAF0E9',
         borderColor: '#D9E2DA',
+        darkColor: '#B5C1B5',
+        darkBgColor: '#243832',
+        darkBorderColor: '#3A5146',
+        badgeClass: 'bg-[#EAF0E9] text-[#52665D] border-[#D9E2DA] dark:bg-[#243832] dark:text-[#B5C1B5] dark:border-[#3A5146]',
       };
   }
 }
@@ -202,6 +218,10 @@ export function getVarianceSeverityConfig(severity: VarianceSeverity): StatusBad
         color: '#1F6B4E',
         bgColor: '#E4F1E9',
         borderColor: '#B7DAC3',
+        darkColor: '#9AD5AF',
+        darkBgColor: '#20382C',
+        darkBorderColor: '#315442',
+        badgeClass: 'bg-[#E4F1E9] text-[#1F6B4E] border-[#B7DAC3] dark:bg-[#20382C] dark:text-[#9AD5AF] dark:border-[#315442]',
       };
     case 'neutral':
       return {
@@ -209,6 +229,10 @@ export function getVarianceSeverityConfig(severity: VarianceSeverity): StatusBad
         color: '#2C6475',
         bgColor: '#E3EEF1',
         borderColor: '#AECFD6',
+        darkColor: '#9CCBD4',
+        darkBgColor: '#20353A',
+        darkBorderColor: '#304E55',
+        badgeClass: 'bg-[#E3EEF1] text-[#2C6475] border-[#AECFD6] dark:bg-[#20353A] dark:text-[#9CCBD4] dark:border-[#304E55]',
       };
     case 'minor':
       return {
@@ -216,6 +240,10 @@ export function getVarianceSeverityConfig(severity: VarianceSeverity): StatusBad
         color: '#825700',
         bgColor: '#F8EFDA',
         borderColor: '#E5C185',
+        darkColor: '#F3D27E',
+        darkBgColor: '#3A3120',
+        darkBorderColor: '#5B4A2B',
+        badgeClass: 'bg-[#F8EFDA] text-[#825700] border-[#E5C185] dark:bg-[#3A3120] dark:text-[#F3D27E] dark:border-[#5B4A2B]',
       };
     case 'moderate':
       return {
@@ -223,6 +251,10 @@ export function getVarianceSeverityConfig(severity: VarianceSeverity): StatusBad
         color: '#825700',
         bgColor: '#F8EFDA',
         borderColor: '#E5C185',
+        darkColor: '#F3D27E',
+        darkBgColor: '#3A3120',
+        darkBorderColor: '#5B4A2B',
+        badgeClass: 'bg-[#F8EFDA] text-[#825700] border-[#E5C185] dark:bg-[#3A3120] dark:text-[#F3D27E] dark:border-[#5B4A2B]',
       };
     case 'severe':
       return {
@@ -230,6 +262,10 @@ export function getVarianceSeverityConfig(severity: VarianceSeverity): StatusBad
         color: '#A43B36',
         bgColor: '#F6E4E1',
         borderColor: '#DCABA7',
+        darkColor: '#FF9E94',
+        darkBgColor: '#3B2422',
+        darkBorderColor: '#5B3734',
+        badgeClass: 'bg-[#F6E4E1] text-[#A43B36] border-[#DCABA7] dark:bg-[#3B2422] dark:text-[#FF9E94] dark:border-[#5B3734]',
       };
   }
 }

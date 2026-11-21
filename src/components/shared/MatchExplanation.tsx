@@ -228,33 +228,33 @@ export function MatchExplanation({
       return {
         label: '90–100 High Confidence',
         sublabel: 'Pending Human Verification',
-        badgeClass: 'bg-[#E4F1E9] text-[#1F6B4E] border-[#B7DAC3]',
+        badgeClass: 'bg-[#E4F1E9] dark:bg-[#20382C] text-[#1F6B4E] dark:text-[#9AD5AF] border-[#B7DAC3] dark:border-[#315442]',
         barColor: 'bg-[#2E7D5B]',
-        icon: <CheckCircle2 className="w-4 h-4 text-[#1F6B4E]" />,
+        icon: <CheckCircle2 className="w-4 h-4 text-[#1F6B4E] dark:text-[#9AD5AF]" />,
       };
     }
     if (confidenceBracket === 'Review Required') {
       return {
         label: '70–89 Review Required',
         sublabel: 'Planner Attestation Required',
-        badgeClass: 'bg-[#F8EFDA] text-[#825700] border-[#E5C185]',
+        badgeClass: 'bg-[#F8EFDA] dark:bg-[#3A3120] text-[#825700] dark:text-[#F3D27E] border-[#E5C185] dark:border-[#5B4A2B]',
         barColor: 'bg-[#81500B]',
-        icon: <AlertTriangle className="w-4 h-4 text-[#825700]" />,
+        icon: <AlertTriangle className="w-4 h-4 text-[#825700] dark:text-[#F3D27E]" />,
       };
     }
     return {
       label: '<70 Unmatched',
       sublabel: 'Below Automated Threshold',
-      badgeClass: 'bg-[#F6E4E1] text-[#A43B36] border-[#DCABA7]',
+      badgeClass: 'bg-[#F6E4E1] dark:bg-[#3B2422] text-[#A43B36] dark:text-[#FF9E94] border-[#DCABA7] dark:border-[#5B3734]',
       barColor: 'bg-[#92372F]',
-      icon: <AlertCircle className="w-4 h-4 text-[#A43B36]" />,
+      icon: <AlertCircle className="w-4 h-4 text-[#A43B36] dark:text-[#FF9E94]" />,
     };
   }, [confidenceBracket]);
 
 
   return (
     <div
-      className={`bg-white rounded-lg border border-[#D9E2DA] overflow-hidden shadow-xs space-y-0 ${className}`}
+      className={`bg-white dark:bg-[#17221D] rounded-lg border border-[#D9E2DA] dark:border-[#3A5146] overflow-hidden shadow-xs space-y-0 ${className}`}
       data-testid="plnex-match-explanation"
     >
       {/* =========================================================================
